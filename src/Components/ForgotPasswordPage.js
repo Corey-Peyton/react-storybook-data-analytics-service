@@ -140,8 +140,10 @@ function ForgotPassword(props) {
     const handleResize = () =>
       setState({...state, windowWidth: window.innerWidth});
     window.addEventListener('resize', handleResize);
+    window.addEventListener('orientationchange', handleResize);
     return () => {
       window.removeEventListener('resize', handleResize);
+      window.removeEventListener('orientationchange', handleResize);
     };
   }, [state, state.screen3, t]);
 
