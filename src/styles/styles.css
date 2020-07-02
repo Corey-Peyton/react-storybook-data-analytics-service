@@ -8,3 +8,7 @@
   font-size: 100%;
   vertical-align: baseline;
 }
+
+html {
+  -webkit-text-size-adjust: 100%; 
+}
