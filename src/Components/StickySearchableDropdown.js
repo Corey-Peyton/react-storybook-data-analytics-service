@@ -56,6 +56,7 @@ const useStyles = makeStyles((theme) => ({
   noMatches: {
     marginLeft: theme.spacing(3),
   },
+  summary: {},
 }));
 
 export default function StickySearchableDropdown(props) {

@@ -127,15 +127,18 @@ export const useStyles = makeStyles({
       '&::before': {
         display: 'none',
       },
+      'boxShadow': 'none',
+      'padding': theme.spacing(1, 0),
+      'margin': [0, '!important'],
+      'borderBottomWidth': '1px',
+      'borderBottomStyle': 'solid',
+      'borderBottomColor': theme.palette.divider,
     },
     '.MuiExpansionPanelSummary-content': {
       margin: '0 !important',
     },
     '.MuiExpansionPanelSummary-root': {
       minHeight: [theme.spacing(3), '!important'],
-    },
-    '.MuiExpansionPanel-root:not(:last-child)': {
-      marginBottom: theme.spacing(2),
     },
 
     // Forms
@@ -250,19 +253,8 @@ export const useStyles = makeStyles({
       color: theme.palette.grey[600],
       fill: theme.palette.grey[600],
     },
-    '.icon-heading': {
-      'display': 'flex',
-      '& svg': {
-        verticalAlign: 'text-bottom',
-        paddingRight: theme.spacing(1),
-        color: theme.palette.grey[500],
-      },
-    },
     '.page-container': {
-      marginTop: theme.spacing(12),
-      [theme.breakpoints.down('sm')]: {
-        marginTop: theme.spacing(16.5),
-      },
+      marginTop: theme.spacing(8),
     },
     '.paper-heading': {
       display: 'flex',

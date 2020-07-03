@@ -5,7 +5,6 @@ import {makeStyles} from '@material-ui/styles';
 import {Link as RouterLink} from 'react-router-dom';
 
 import SearchBar from '../SearchBar';
-import ElevationScroll from './ElevationScroll';
 import Branding from './Branding';
 import Language from './Language';
 import NavMenu from './NavMenu';
@@ -16,29 +15,27 @@ export default function DefaultHeader(props) {
 
   return (
     <React.Fragment>
-      <ElevationScroll {...props}>
-        <AppBar className={classes.appBar}>
-          <Toolbar>
-            <div className={classes.navMenu}>
-              <NavMenu />
-            </div>
-            <div className={classes.branding}>
-              <Branding />
-            </div>
-            <div className={classes.search}>
-              <SearchBar label={t('Search')} placeholder={t('Start searching')} />
-            </div>
-            <div className={classes.lang}>
-              <Language />
-            </div>
-            <div className={classes.accountOptions}>
-              <Button component={RouterLink} to="/sign-in" variant="outlined" color="primary">
-                {t('Sign in')}
-              </Button>
-            </div>
-          </Toolbar>
-        </AppBar>
-      </ElevationScroll>
+      <AppBar className={classes.appBar}>
+        <Toolbar>
+          <div className={classes.navMenu}>
+            <NavMenu />
+          </div>
+          <div className={classes.branding}>
+            <Branding />
+          </div>
+          <div className={classes.search}>
+            <SearchBar label={t('Search')} placeholder={t('Start searching')} />
+          </div>
+          <div className={classes.lang}>
+            <Language />
+          </div>
+          <div className={classes.accountOptions}>
+            <Button component={RouterLink} to="/sign-in" variant="outlined" color="primary">
+              {t('Sign in')}
+            </Button>
+          </div>
+        </Toolbar>
+      </AppBar>
     </React.Fragment>
   );
 }

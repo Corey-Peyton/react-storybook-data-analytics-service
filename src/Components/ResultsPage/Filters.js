@@ -1,10 +1,23 @@
 import React from 'react';
 import {useTranslation} from 'react-i18next';
 import DateFnsUtils from '@date-io/date-fns';
-import {Button, ExpansionPanel, ExpansionPanelDetails, ExpansionPanelSummary, FormControl, FormLabel, Paper, Typography} from '@material-ui/core';
+import {
+  Button,
+  ExpansionPanel,
+  ExpansionPanelDetails,
+  ExpansionPanelSummary,
+  FormControl,
+  FormLabel,
+  Paper,
+  Typography,
+} from '@material-ui/core';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
-import TuneIcon from '@material-ui/icons/Tune';
-import {KeyboardDatePicker, MuiPickersUtilsProvider} from '@material-ui/pickers';
+import Icon from '@mdi/react';
+import {mdiTune} from '@mdi/js';
+import {
+  KeyboardDatePicker,
+  MuiPickersUtilsProvider,
+} from '@material-ui/pickers';
 import {makeStyles} from '@material-ui/styles';
 
 import {subjects, surveys} from '../../Data/fakeData';
@@ -12,34 +25,26 @@ import StickySearchableDropdown from '../StickySearchableDropdown';
 
 const useStyles = makeStyles((theme) => ({
   root: {
-    padding: theme.spacing(2),
-    margin: theme.spacing(-2, 2, 0, -4),
+    boxShadow: 'none',
+    borderRightWidth: '1px',
+    borderRightStyle: 'solid',
+    borderRightColor: theme.palette.divider,
     height: '100%',
+    padding: theme.spacing(3, 3, 0, 0),
+  },
+  filterHeader: {
+    display: 'flex',
+    alignItems: 'center',
+    padding: theme.spacing(0, 0, 3, 1),
+    borderBottomWidth: '1px',
+    borderBottomStyle: 'solid',
+    borderBottomColor: theme.palette.divider,
   },
   dateDetails: {
     flexDirection: 'column',
   },
   datePicker: {
     margin: theme.spacing(0, 0, 3, 0),
-  },
-  iconButton: {
-    padding: theme.spacing(1),
-  },
-  list: {
-    padding: theme.spacing(0, 0, 3, 0),
-    width: '100%',
-  },
-  listIcon: {
-    minWidth: theme.spacing(2),
-  },
-  listItem: {
-    padding: theme.spacing(0, 3, 0, 3),
-  },
-  geoOr: {
-    position: 'absolute',
-    top: '6px',
-    left: '52px',
-    backgroundColor: theme.palette.common.white,
   },
 }));
 
@@ -71,9 +76,11 @@ const Filters = React.forwardRef((props, ref) => {
       <Button className="screen-reader-text" onClick={handleClick}>
         {t('Skip filters')}
       </Button>
-      <div className="icon-heading mb-2 ml-3">
-        <TuneIcon />
-        <Typography variant="h6" component="h2">{t('Filters')}</Typography>
+      <div className={classes.filterHeader}>
+        <Icon path={mdiTune} size={1} />
+        <Typography variant="h6" component="h2" className="ml-2">
+          {t('Filters')}
+        </Typography>
       </div>
       <StickySearchableDropdown
         id="subjects"

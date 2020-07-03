@@ -38,17 +38,16 @@ function SearchBar(props) {
     }
   };
 
-  const handleInputChange = (e, value) => {
-    setValue(value);
-  };
-
   return (
     <div className={classes.root}>
       <Autocomplete
         id="search-bar"
         freeSolo
         disableOpenOnFocus
-        onInputChange={handleInputChange}
+        onInputChange={(e, inputValue) => {
+          setValue(inputValue);
+          console.log(value);
+        }}
         options={suggestions.map((option) => option.subject)}
         defaultValue={searchQuery}
         renderInput={(params) => {
