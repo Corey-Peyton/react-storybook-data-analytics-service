@@ -92,10 +92,9 @@ export default function Results(props) {
               <Grid container>
                 <Grid item xs={12} lg={10} className="mb-3">
                   <FilterPills
-                    searchTerm={state.searchTerm}
+                    searchTerm="Coal"
                     filters={state.filters}
                   />
-                  <Divider />
                   <Grid
                     container
                     justify="space-between"
