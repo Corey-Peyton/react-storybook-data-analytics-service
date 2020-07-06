@@ -3,6 +3,8 @@ import {useTranslation} from 'react-i18next';
 import {AppBar, Button, Toolbar} from '@material-ui/core';
 import {makeStyles} from '@material-ui/styles';
 import {Link as RouterLink} from 'react-router-dom';
+import {mdiAccountCircle} from '@mdi/js';
+import {Icon} from '@mdi/react';
 
 import SearchBar from '../SearchBar';
 import Branding from './Branding';
@@ -26,7 +28,13 @@ export default function DefaultHeader(props) {
             <Language />
           </div>
           <div className={classes.accountOptions}>
-            <Button component={RouterLink} to="/sign-in" variant="outlined" color="primary">
+            <Button
+              component={RouterLink}
+              to="/sign-in"
+              variant="outlined"
+              color="primary"
+              startIcon={<Icon path={mdiAccountCircle} size={1}/>}
+            >
               {t('Sign in')}
             </Button>
           </div>
