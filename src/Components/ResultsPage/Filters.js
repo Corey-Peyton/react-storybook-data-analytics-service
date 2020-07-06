@@ -102,7 +102,7 @@ const Filters = React.forwardRef((props, ref) => {
       />
       <ExpansionPanel>
         <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />}>
-          <Typography>Date</Typography>
+          <Typography variant="subtitle2">Date</Typography>
         </ExpansionPanelSummary>
         <ExpansionPanelDetails className={classes.dateDetails}>
           <FormControl component="fieldset">

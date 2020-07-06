@@ -128,7 +128,7 @@ export const useStyles = makeStyles({
         display: 'none',
       },
       'boxShadow': 'none',
-      'padding': theme.spacing(1, 0),
+      'padding': theme.spacing(0.5, 0),
       'margin': [0, '!important'],
       'borderBottomWidth': '1px',
       'borderBottomStyle': 'solid',
@@ -138,7 +138,8 @@ export const useStyles = makeStyles({
       margin: '0 !important',
     },
     '.MuiExpansionPanelSummary-root': {
-      minHeight: [theme.spacing(3), '!important'],
+      minHeight: [0, '!important'],
+      padding: theme.spacing(0, 1),
     },
 
     // Forms
@@ -255,6 +256,7 @@ export const useStyles = makeStyles({
     },
     '.page-container': {
       marginTop: theme.spacing(8),
+      padding: theme.spacing(0, 2),
     },
     '.paper-heading': {
       display: 'flex',
