@@ -6,16 +6,6 @@ import {makeStyles} from '@material-ui/styles';
 const useStyles = makeStyles((theme) => ({
   root: {
     padding: theme.spacing(3, 0, 3, 3),
-    // 'display': 'flex',
-    // 'flexWrap': 'wrap',
-    // 'alignItems': 'center',
-    // 'minHeight': theme.spacing(8),
-    // 'boxSizing': 'border-box',
-    // 'padding': theme.spacing(2, 0, 2, 1.5),
-    // 'marginTop': theme.spacing(-2),
-    // '& .MuiTypography-root': {
-    //   whiteSpace: 'nowrap',
-    // },
   },
   chipContainer: {
     display: 'flex',

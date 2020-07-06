@@ -1,6 +1,6 @@
 import React from 'react';
 import {useTranslation} from 'react-i18next';
-import {Container, Divider, FormControl, Grid, InputLabel, MenuItem, Select, Typography} from '@material-ui/core';
+import {Container, FormControl, Grid, InputLabel, MenuItem, Select, Typography} from '@material-ui/core';
 import {makeStyles} from '@material-ui/styles';
 import queryString from 'query-string';
 
@@ -16,22 +16,14 @@ import ResultItem from './ResultItem';
 
 const useStyles = makeStyles((theme) => ({
   sortContainer: {
-    marginTop: theme.spacing(4),
-    paddingLeft: theme.spacing(1.5),
+    paddingLeft: theme.spacing(3),
   },
   sort: {
     width: '100%',
   },
   results: {
-    margin: theme.spacing(4, 0, 8, 0),
-    paddingLeft: theme.spacing(1.5),
-  },
-  tab: {
-    'minWidth': 0,
-    '& svg': {
-      verticalAlign: 'middle',
-      marginRight: theme.spacing(0.5),
-    },
+    margin: theme.spacing(3, 0),
+    paddingLeft: theme.spacing(3),
   },
 }));
 
@@ -53,7 +45,6 @@ export default function Results(props) {
       frequency: [],
       geography: [],
     },
-    tab: 0,
   });
 
   const mainRef = React.createRef();
@@ -90,7 +81,7 @@ export default function Results(props) {
             </Grid>
             <Grid item xs={8} lg={9} ref={ref} tabIndex="-1">
               <Grid container>
-                <Grid item xs={12} lg={10} className="mb-3">
+                <Grid item xs={12} lg={12} className="mb-3">
                   <FilterPills
                     searchTerm="Coal"
                     filters={state.filters}
@@ -117,7 +108,7 @@ export default function Results(props) {
                             'id': 'sort-by',
                           }}
                         >
-                          <MenuItem value={10}>{t('Relevancy')}</MenuItem>
+                          <MenuItem value={10}>{t('Relevance')}</MenuItem>
                           <MenuItem value={20}>{t('Release date')}</MenuItem>
                         </Select>
                       </FormControl>
