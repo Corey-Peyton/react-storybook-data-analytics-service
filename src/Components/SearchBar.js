@@ -18,7 +18,6 @@ const useStyles = makeStyles((theme) => ({
   textfield: {
     '& .MuiOutlinedInput-root': {
       '& fieldset': {
-        'borderRadius': theme.spacing(4),
         '& legend': {
           display: 'inline',
         },

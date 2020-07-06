@@ -7,7 +7,6 @@ import {Link as RouterLink} from 'react-router-dom';
 import SearchBar from '../SearchBar';
 import Branding from './Branding';
 import Language from './Language';
-import NavMenu from './NavMenu';
 
 export default function DefaultHeader(props) {
   const classes = defaultStyles();
@@ -17,9 +16,6 @@ export default function DefaultHeader(props) {
     <React.Fragment>
       <AppBar className={classes.appBar}>
         <Toolbar>
-          <div className={classes.navMenu}>
-            <NavMenu />
-          </div>
           <div className={classes.branding}>
             <Branding />
           </div>

@@ -3,9 +3,6 @@ import {makeStyles} from '@material-ui/styles';
 
 export default function Branding() {
   const defaultStyles = makeStyles((theme) => ({
-    brandImage: {
-      margin: theme.spacing(1.5),
-    },
     brandLink: {
       '&:focus img': {
         border: '2px solid #0049b3',
