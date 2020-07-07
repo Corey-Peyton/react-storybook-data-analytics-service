@@ -1,6 +1,6 @@
 import React from 'react';
 import {useTranslation} from 'react-i18next';
-import {Chip, Typography, Divider} from '@material-ui/core';
+import {Chip, Typography, Divider, Box} from '@material-ui/core';
 import {makeStyles} from '@material-ui/styles';
 
 const useStyles = makeStyles((theme) => ({
@@ -54,9 +54,12 @@ export default function FilterPills(props) {
     <div className={classes.root}>
       {props.searchTerm && (
         <div className={classes.searchTerm}>
-          <Typography variant="h6">
-            {t('Search results for')} "{props.searchTerm}"
-          </Typography>
+          <Box component="h1" fontWeight="fontWeightRegular" fontSize="h6.fontSize" fontFamily="fontFamily">
+            {t('Search results for')}&nbsp;
+            <Typography variant="h6" component="span">
+            "{props.searchTerm}"
+            </Typography>
+          </Box>
         </div>
       )}
       <Divider />

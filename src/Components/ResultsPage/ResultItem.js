@@ -1,7 +1,7 @@
 import React from 'react';
 import Icon from '@mdi/react';
 import {mdiTable, mdiNewspaper, mdiChartBar} from '@mdi/js';
-import {Typography, Link, Chip} from '@material-ui/core';
+import {Typography, Link, Chip, Box} from '@material-ui/core';
 import {makeStyles} from '@material-ui/styles';
 import {Link as RouterLink} from 'react-router-dom';
 
@@ -57,7 +57,7 @@ export default function ResultItem(props) {
 
   return (
     <div className={classes.root}>
-      <Typography variant="h6" component="h2" noWrap>
+      <Box component="h2" fontWeight="fontWeightRegular" fontSize="h6.fontSize" fontFamily="fontFamily">
         <Link
           component={RouterLink}
           to="/"
@@ -66,7 +66,7 @@ export default function ResultItem(props) {
         >
           {props.title}
         </Link>
-      </Typography>
+      </Box>
       <Typography variant="body2" component="span" color="textSecondary">
         {new Intl.DateTimeFormat('en-US', {
           month: 'short',
