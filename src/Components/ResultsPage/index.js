@@ -95,7 +95,7 @@ export default function Results(props) {
             <Grid item xs={4} lg={3}>
               <Filters ref={ref} />
             </Grid>
-            <Grid item xs={8} lg={9} ref={ref} className="mb-6 pl-2" tabIndex="-1">
+            <Grid item xs={8} lg={9} ref={ref} className="pl-2" tabIndex="-1">
               <Grid container>
                 <Grid item xs={12} lg={12}>
                   <FilterPills searchTerm="Coal" filters={state.filters} />
