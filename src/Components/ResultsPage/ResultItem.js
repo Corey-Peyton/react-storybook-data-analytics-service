@@ -1,26 +1,23 @@
 import React from 'react';
-import {useTranslation} from 'react-i18next';
 import Icon from '@mdi/react';
 import {mdiTable, mdiNewspaper, mdiChartBar} from '@mdi/js';
-import {Typography, Link, Chip, Divider} from '@material-ui/core';
+import {Typography, Link, Chip} from '@material-ui/core';
 import {makeStyles} from '@material-ui/styles';
 import {Link as RouterLink} from 'react-router-dom';
 
 const useStyles = makeStyles((theme) => ({
   root: {
-    'marginBottom': theme.spacing(5),
-    '& .MuiDivider-root': {
-      margin: theme.spacing(1, 0),
-    },
-    'width': '100%',
+    'marginBottom': theme.spacing(3),
+    // 'width': '100%',
   },
   title: {
-    'maxWidth': '95%',
-    '& h2': {
-      maxWidth: '880px',
-    },
+    // 'maxWidth': '95%',
+    // '& h2': {
+    //   maxWidth: '880px',
+    // },
   },
   subjectTags: {
+    'marginTop': theme.spacing(1),
     '& .MuiChip-root': {
       marginRight: theme.spacing(1),
     },
@@ -29,7 +26,6 @@ const useStyles = makeStyles((theme) => ({
 
 export default function ResultItem(props) {
   const classes = useStyles();
-  const {t} = useTranslation();
 
   const MAX_LEN = 250;
   let trimmedAbstract = props.abstract.substring(0, MAX_LEN);
@@ -61,42 +57,37 @@ export default function ResultItem(props) {
 
   return (
     <div className={classes.root}>
-      <Link
-        component={RouterLink}
-        to="/"
-        color="primary"
-        className={classes.title}
-      >
-        <Typography variant="h5" component="h2" noWrap>
+      <Typography variant="h6" component="h2" noWrap>
+        <Link
+          component={RouterLink}
+          to="/"
+          color="primary"
+          className={classes.title}
+        >
           {props.title}
-        </Typography>
-      </Link>
+        </Link>
+      </Typography>
+      <Typography variant="body2" component="span" color="textSecondary">
+        {new Intl.DateTimeFormat('en-US', {
+          month: 'short',
+          day: 'numeric',
+          year: 'numeric',
+        }).format(new Date(props.dateReleased))}
+        {' '}&bull; {props.provider}{' '}&bull;{' '}{props.id}
+      </Typography>
       <Typography variant="body2">
-        <Typography variant="body2" component="span" color="textSecondary">
-          {new Intl.DateTimeFormat('en-US', {
-            month: 'short',
-            day: 'numeric',
-            year: 'numeric',
-          }).format(new Date(props.dateReleased))}
-        </Typography>
-        &nbsp;-&nbsp;
         {props.abstract.length <= MAX_LEN
           ? props.abstract
           : `${trimmedAbstract}...`}
       </Typography>
-      <Typography variant="body2" color="textSecondary">
-        {props.id} {t('provided by')} {props.provider}
-      </Typography>
-      <Divider />
       <div className={classes.subjectTags}>
         <Chip
           variant="outlined"
           icon={typeIcon}
           label={props.type}
-          className="mb-1"
         />
         {trimmedSubjects.map((subject) => {
-          return <Chip className="mb-1" variant="outlined" key={subject} label={subject} />;
+          return <Chip variant="outlined" key={subject} label={subject} />;
         })}
       </div>
     </div>

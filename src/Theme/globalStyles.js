@@ -20,70 +20,13 @@ export const useStyles = makeStyles({
     '.MuiButton-label, .MuiTab-wrapper, .MuiFab-label': {
       textTransform: 'none',
     },
-
     '.MuiInputLabel-outlined': {
       '&.MuiInputLabel-shrink': {
         transform: 'translate(14px, -6px) scale(0.857)',
       },
     },
-    // '.MuiButton-root': {
-    //   '&:focus': {
-    //     'backgroundColor': theme.palette.action.selected,
-    //     // '& .MuiTouchRipple-root': {
-    //     //   display: 'none',
-    //     // },
-    //   },
-    //   '&.MuiButton-textPrimary:focus': {
-    //     backgroundColor: fade(
-    //         theme.palette.primary.main,
-    //         theme.palette.action.selectedOpacity
-    //     ),
-    //   },
-    //   '&.MuiButton-textSecondary:focus': {
-    //     backgroundColor: fade(
-    //         theme.palette.secondary.main,
-    //         theme.palette.action.selectedOpacity
-    //     ),
-    //   },
-    //   '&.MuiButton-outlinedPrimary:focus': {
-    //     backgroundColor: fade(
-    //         theme.palette.primary.main,
-    //         theme.palette.action.selectedOpacity
-    //     ),
-    //   },
-    //   '&.MuiButton-outlinedSecondary:focus': {
-    //     backgroundColor: fade(
-    //         theme.palette.secondary.main,
-    //         theme.palette.action.selectedOpacity
-    //     ),
-    //   },
-    //   '&.MuiButton-contained:focus': {
-    //     backgroundColor: theme.palette.grey['A200'],
-    //   },
-    //   '&.MuiButton-containedPrimary:focus': {
-    //     backgroundColor: theme.palette.primary.dark,
-    //   },
-    //   '&.MuiButton-containedSecondary:focus': {
-    //     backgroundColor: theme.palette.secondary.dark,
-    //   },
-    // },
     '.MuiIconButton-root': {
       'padding': theme.spacing(1),
-    //   '&:focus': {
-    //     backgroundColor: theme.palette.action.selected,
-    //   },
-    //   '&.MuiIconButton-colorPrimary:focus': {
-    //     backgroundColor: fade(
-    //         theme.palette.primary.main,
-    //         theme.palette.action.selectedOpacity
-    //     ),
-    //   },
-    //   '&.MuiIconButton-colorSecondary:focus': {
-    //     backgroundColor: fade(
-    //         theme.palette.secondary.main,
-    //         theme.palette.action.selectedOpacity
-    //     ),
-      // },
     },
     '.MuiIconButton-edgeStart': {
       marginLeft: theme.spacing(-1),
@@ -91,36 +34,6 @@ export const useStyles = makeStyles({
     '.MuiIconButton-edgeEnd': {
       marginRight: theme.spacing(-1),
     },
-    // '.MuiFab-root': {
-    //   '&:focus': {
-    //     backgroundColor: theme.palette.grey['A200'],
-    //   },
-    //   '&.MuiFab-primary:focus': {
-    //     backgroundColor: theme.palette.primary.dark,
-    //   },
-    //   '&.MuiFab-secondary:focus': {
-    //     backgroundColor: theme.palette.secondary.dark,
-    //   },
-    // },
-
-    // // Checkboxes
-    // '.MuiCheckbox-root': {
-    //   '&:focus-within': {
-    //     backgroundColor: theme.palette.action.selected,
-    //   },
-    //   '&.MuiCheckbox-colorSecondary:focus-within': {
-    //     backgroundColor: fade(
-    //         theme.palette.secondary.main,
-    //         theme.palette.action.selectedOpacity
-    //     ),
-    //   },
-    //   '&.MuiCheckbox-colorPrimary:focus-within': {
-    //     backgroundColor: fade(
-    //         theme.palette.primary.main,
-    //         theme.palette.action.selectedOpacity
-    //     ),
-    //   },
-    // },
 
     // Expansion Panels
     '.MuiExpansionPanel-root': {
@@ -208,6 +121,13 @@ export const useStyles = makeStyles({
     },
     '.MuiTypography-colorError': {
       marginLeft: theme.spacing(2),
+    },
+
+    // Pagination
+    '.MuiPaginationItem-page': {
+      height: '2.5rem',
+      minWidth: '2.5rem',
+      borderRadius: '24px',
     },
     // *********** Custom styles **************
     '.avatar-orange': {

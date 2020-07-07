@@ -5,11 +5,11 @@ import {makeStyles} from '@material-ui/styles';
 
 const useStyles = makeStyles((theme) => ({
   root: {
-    padding: theme.spacing(3, 0, 3, 3),
+    padding: theme.spacing(3, 0),
   },
   chipContainer: {
     display: 'flex',
-    padding: theme.spacing(1, 0),
+    padding: theme.spacing(1, 0, 1, 1),
   },
   chip: {
     marginRight: theme.spacing(1),

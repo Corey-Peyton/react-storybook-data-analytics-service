@@ -30,7 +30,7 @@ const useStyles = makeStyles((theme) => ({
     borderRightStyle: 'solid',
     borderRightColor: theme.palette.divider,
     height: '100%',
-    padding: theme.spacing(3, 3, 0, 0),
+    padding: theme.spacing(3, 2, 0, 0),
   },
   filterHeader: {
     display: 'flex',
