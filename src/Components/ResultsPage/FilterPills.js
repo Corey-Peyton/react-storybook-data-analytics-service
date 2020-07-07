@@ -12,15 +12,11 @@ const useStyles = makeStyles((theme) => ({
     padding: theme.spacing(1, 0),
   },
   chip: {
-    '& .MuiChip-root:first-child': {
-      marginLeft: theme.spacing(1),
-    },
-    '& .MuiChip-root:not(:last-child)': {
-      marginRight: theme.spacing(1),
-    },
+    marginRight: theme.spacing(1),
   },
   clearContainer: {
     paddingRight: theme.spacing(2),
+    marginRight: theme.spacing(2),
     borderRightWidth: '1px',
     borderRightStyle: 'solid',
     borderRightColor: theme.palette.divider,
@@ -74,16 +70,18 @@ export default function FilterPills(props) {
                 aria-label="Clear all filters"
                 onDelete={handleDelete}
                 label={t('Clear all')}
+                variant="outlined"
               />
             </div>
           </React.Fragment>
         )}
         {filters.subjects && (
           <React.Fragment>
-            <div className={classes.chip}>
+            <div>
               {filters.subjects.map((subject) => {
                 return (
                   <Chip
+                    className={classes.chip}
                     component="button"
                     color="primary"
                     aria-label={`${t('Remove topic filter')}: ${subject}`}
@@ -103,10 +101,11 @@ export default function FilterPills(props) {
         )}
         {props.sources && (
           <React.Fragment>
-            <div className={classes.chip}>
+            <div>
               {filters.surveys.map((survey, index) => {
                 return (
                   <Chip
+                    className={classes.chip}
                     component="button"
                     color="primary"
                     aria-label={`${t('Remove survey filter')} ${survey}`}
@@ -126,8 +125,9 @@ export default function FilterPills(props) {
         )}
         {filters.date.startDate && filters.date.endDate && (
           <React.Fragment>
-            <div className={classes.chip}>
+            <div>
               <Chip
+                className={classes.chip}
                 component="button"
                 color="primary"
                 aria-label={`${t(
