@@ -20,70 +20,13 @@ export const useStyles = makeStyles({
     '.MuiButton-label, .MuiTab-wrapper, .MuiFab-label': {
       textTransform: 'none',
     },
-
     '.MuiInputLabel-outlined': {
       '&.MuiInputLabel-shrink': {
         transform: 'translate(14px, -6px) scale(0.857)',
       },
     },
-    // '.MuiButton-root': {
-    //   '&:focus': {
-    //     'backgroundColor': theme.palette.action.selected,
-    //     // '& .MuiTouchRipple-root': {
-    //     //   display: 'none',
-    //     // },
-    //   },
-    //   '&.MuiButton-textPrimary:focus': {
-    //     backgroundColor: fade(
-    //         theme.palette.primary.main,
-    //         theme.palette.action.selectedOpacity
-    //     ),
-    //   },
-    //   '&.MuiButton-textSecondary:focus': {
-    //     backgroundColor: fade(
-    //         theme.palette.secondary.main,
-    //         theme.palette.action.selectedOpacity
-    //     ),
-    //   },
-    //   '&.MuiButton-outlinedPrimary:focus': {
-    //     backgroundColor: fade(
-    //         theme.palette.primary.main,
-    //         theme.palette.action.selectedOpacity
-    //     ),
-    //   },
-    //   '&.MuiButton-outlinedSecondary:focus': {
-    //     backgroundColor: fade(
-    //         theme.palette.secondary.main,
-    //         theme.palette.action.selectedOpacity
-    //     ),
-    //   },
-    //   '&.MuiButton-contained:focus': {
-    //     backgroundColor: theme.palette.grey['A200'],
-    //   },
-    //   '&.MuiButton-containedPrimary:focus': {
-    //     backgroundColor: theme.palette.primary.dark,
-    //   },
-    //   '&.MuiButton-containedSecondary:focus': {
-    //     backgroundColor: theme.palette.secondary.dark,
-    //   },
-    // },
     '.MuiIconButton-root': {
       'padding': theme.spacing(1),
-    //   '&:focus': {
-    //     backgroundColor: theme.palette.action.selected,
-    //   },
-    //   '&.MuiIconButton-colorPrimary:focus': {
-    //     backgroundColor: fade(
-    //         theme.palette.primary.main,
-    //         theme.palette.action.selectedOpacity
-    //     ),
-    //   },
-    //   '&.MuiIconButton-colorSecondary:focus': {
-    //     backgroundColor: fade(
-    //         theme.palette.secondary.main,
-    //         theme.palette.action.selectedOpacity
-    //     ),
-      // },
     },
     '.MuiIconButton-edgeStart': {
       marginLeft: theme.spacing(-1),
@@ -91,51 +34,25 @@ export const useStyles = makeStyles({
     '.MuiIconButton-edgeEnd': {
       marginRight: theme.spacing(-1),
     },
-    // '.MuiFab-root': {
-    //   '&:focus': {
-    //     backgroundColor: theme.palette.grey['A200'],
-    //   },
-    //   '&.MuiFab-primary:focus': {
-    //     backgroundColor: theme.palette.primary.dark,
-    //   },
-    //   '&.MuiFab-secondary:focus': {
-    //     backgroundColor: theme.palette.secondary.dark,
-    //   },
-    // },
-
-    // // Checkboxes
-    // '.MuiCheckbox-root': {
-    //   '&:focus-within': {
-    //     backgroundColor: theme.palette.action.selected,
-    //   },
-    //   '&.MuiCheckbox-colorSecondary:focus-within': {
-    //     backgroundColor: fade(
-    //         theme.palette.secondary.main,
-    //         theme.palette.action.selectedOpacity
-    //     ),
-    //   },
-    //   '&.MuiCheckbox-colorPrimary:focus-within': {
-    //     backgroundColor: fade(
-    //         theme.palette.primary.main,
-    //         theme.palette.action.selectedOpacity
-    //     ),
-    //   },
-    // },
 
     // Expansion Panels
     '.MuiExpansionPanel-root': {
       '&::before': {
         display: 'none',
       },
+      'boxShadow': 'none',
+      'padding': theme.spacing(0.5, 0),
+      'margin': [0, '!important'],
+      'borderBottomWidth': '1px',
+      'borderBottomStyle': 'solid',
+      'borderBottomColor': theme.palette.divider,
     },
     '.MuiExpansionPanelSummary-content': {
       margin: '0 !important',
     },
     '.MuiExpansionPanelSummary-root': {
-      minHeight: [theme.spacing(3), '!important'],
-    },
-    '.MuiExpansionPanel-root:not(:last-child)': {
-      marginBottom: theme.spacing(2),
+      minHeight: [0, '!important'],
+      padding: theme.spacing(0, 1),
     },
 
     // Forms
@@ -205,6 +122,13 @@ export const useStyles = makeStyles({
     '.MuiTypography-colorError': {
       marginLeft: theme.spacing(2),
     },
+
+    // Pagination
+    '.MuiPaginationItem-page': {
+      height: '2.5rem',
+      minWidth: '2.5rem',
+      borderRadius: '24px',
+    },
     // *********** Custom styles **************
     '.avatar-orange': {
       color: theme.palette.getContrastText(deepOrange[500]),
@@ -250,19 +174,9 @@ export const useStyles = makeStyles({
       color: theme.palette.grey[600],
       fill: theme.palette.grey[600],
     },
-    '.icon-heading': {
-      'display': 'flex',
-      '& svg': {
-        verticalAlign: 'text-bottom',
-        paddingRight: theme.spacing(1),
-        color: theme.palette.grey[500],
-      },
-    },
     '.page-container': {
-      marginTop: theme.spacing(12),
-      [theme.breakpoints.down('sm')]: {
-        marginTop: theme.spacing(16.5),
-      },
+      marginTop: theme.spacing(8),
+      padding: theme.spacing(0, 2),
     },
     '.paper-heading': {
       display: 'flex',

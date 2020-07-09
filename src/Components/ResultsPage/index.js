@@ -1,37 +1,43 @@
 import React from 'react';
 import {useTranslation} from 'react-i18next';
-import {Container, Divider, FormControl, Grid, InputLabel, MenuItem, Select, Typography} from '@material-ui/core';
-import {makeStyles} from '@material-ui/styles';
+import {
+  Container,
+  FormControl,
+  Grid,
+  InputLabel,
+  MenuItem,
+  Select,
+  Typography,
+  Divider,
+} from '@material-ui/core';
 import queryString from 'query-string';
+import Pagination from '@material-ui/lab/Pagination';
+import {makeStyles} from '@material-ui/styles';
 
 import {datasets} from '../../Data/fakeData';
 import {sortByKey, sortByKeyDesc} from '../../Utils/sorting';
 import BypassBlocks from '../BypassBlocks';
 import Footer from '../Footers/Footer';
 import DefaultHeader from '../Headers/DefaultHeader';
-import Pagination from '../Pagination';
 import FilterPills from './FilterPills';
 import Filters from './Filters';
 import ResultItem from './ResultItem';
 
 const useStyles = makeStyles((theme) => ({
   sortContainer: {
-    marginTop: theme.spacing(4),
-    paddingLeft: theme.spacing(1.5),
+    padding: theme.spacing(0, 1),
   },
   sort: {
     width: '100%',
   },
   results: {
-    margin: theme.spacing(4, 0, 8, 0),
-    paddingLeft: theme.spacing(1.5),
+    margin: theme.spacing(3, 0),
+    padding: theme.spacing(0, 1),
   },
-  tab: {
-    'minWidth': 0,
-    '& svg': {
-      verticalAlign: 'middle',
-      marginRight: theme.spacing(0.5),
-    },
+  pagination: {
+    marginBottom: theme.spacing(6),
+    display: 'flex',
+    justifyContent: 'center',
   },
 }));
 
@@ -53,7 +59,6 @@ export default function Results(props) {
       frequency: [],
       geography: [],
     },
-    tab: 0,
   });
 
   const mainRef = React.createRef();
@@ -83,19 +88,17 @@ export default function Results(props) {
       <DefaultHeader />
       <main ref={mainRef} tabIndex="-1">
         <Container maxWidth="xl" className="page-container">
-          <Typography variant="h1" className="screen-reader-text">{t('Search results')}</Typography>
+          <Typography variant="h1" className="screen-reader-text">
+            {t('Search results')}
+          </Typography>
           <Grid container>
             <Grid item xs={4} lg={3}>
               <Filters ref={ref} />
             </Grid>
-            <Grid item xs={8} lg={9} ref={ref} tabIndex="-1">
+            <Grid item xs={8} lg={9} ref={ref} className="pl-2" tabIndex="-1">
               <Grid container>
-                <Grid item xs={12} lg={10} className="mb-3">
-                  <FilterPills
-                    searchTerm={state.searchTerm}
-                    filters={state.filters}
-                  />
-                  <Divider />
+                <Grid item xs={12} lg={12}>
+                  <FilterPills searchTerm="Coal" filters={state.filters} />
                   <Grid
                     container
                     justify="space-between"
@@ -115,10 +118,10 @@ export default function Results(props) {
                           labelId="sort-by-label"
                           margin="dense"
                           inputProps={{
-                            'id': 'sort-by',
+                            id: 'sort-by',
                           }}
                         >
-                          <MenuItem value={10}>{t('Relevancy')}</MenuItem>
+                          <MenuItem value={10}>{t('Relevance')}</MenuItem>
                           <MenuItem value={20}>{t('Release date')}</MenuItem>
                         </Select>
                       </FormControl>
@@ -138,9 +141,13 @@ export default function Results(props) {
                       return <ResultItem key={pumf.id} {...pumf} />;
                     })}
                   </Grid>
-                  <Pagination pageCount={Math.ceil(state.numResults / 8)} />
+                  <Pagination
+                    className={classes.pagination}
+                    count={Math.ceil(state.numResults / 8)}
+                  />
                 </Grid>
               </Grid>
+              <Divider />
               <Grid item xs={12}>
                 <Footer ref={aboutRef} />
               </Grid>

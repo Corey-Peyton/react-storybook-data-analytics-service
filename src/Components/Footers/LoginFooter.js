@@ -32,7 +32,7 @@ const useStyles = makeStyles((theme) => ({
     marginRight: theme.spacing(0.5),
     borderRightWidth: '1px',
     borderRightStyle: 'solid',
-    borderRightColor: theme.palette.grey[300],
+    borderRightColor: theme.palette.divider,
     display: 'inline-block',
     height: 'auto',
   },
