@@ -8,7 +8,11 @@ const useStyles = makeStyles((theme) => ({
   footer: {
     margin: theme.spacing(3, 0, 0, 0),
     display: 'flex',
+    flexWrap: 'wrap',
     alignItems: 'center',
+    [theme.breakpoints.down('sm')]: {
+      justifyContent: 'center',
+    },
   },
   footerBtn: {
     color: theme.palette.text.secondary,
@@ -19,6 +23,11 @@ const useStyles = makeStyles((theme) => ({
     flexGrow: 1,
     textAlign: 'right',
     paddingRight: theme.spacing(1),
+    [theme.breakpoints.down('sm')]: {
+      width: '100%',
+      marginTop: theme.spacing(3),
+      textAlign: 'center',
+    },
   },
   langBtnContainer: {
     paddingRight: theme.spacing(0.5),
