@@ -29,7 +29,6 @@ const defaultStyles = makeStyles((theme) => ({
   },
   branding: {
     [theme.breakpoints.down('sm')]: {
-      // order: 1,
       flexGrow: 1,
     },
     '& img': {
@@ -38,20 +37,11 @@ const defaultStyles = makeStyles((theme) => ({
   },
   lang: {
     marginRight: theme.spacing(1),
-    [theme.breakpoints.down('sm')]: {
-      // order: 2,
-    },
-  },
-  signIn: {
-    [theme.breakpoints.down('sm')]: {
-      // order: 3,
-    },
   },
   search: {
     'flexGrow': 1,
     'textAlign': 'center',
     [theme.breakpoints.down('sm')]: {
-      // order: 4,
       flexBasis: '100%',
     },
     '& > div': {
@@ -107,7 +97,6 @@ export default function DefaultHeader(props) {
             <Language />
           </div>
           <Button
-            className={classes.signIn}
             component={RouterLink}
             to="/sign-in"
             variant="outlined"

@@ -19,6 +19,7 @@ import {
   MuiPickersUtilsProvider,
 } from '@material-ui/pickers';
 import {makeStyles} from '@material-ui/styles';
+import {SM_SCREEN} from '../../Theme/constants';
 
 import {subjects, surveys} from '../../Data/fakeData';
 import StickySearchableDropdown from '../StickySearchableDropdown';
@@ -50,6 +51,40 @@ const useStyles = makeStyles((theme) => ({
 
 const Filters = React.forwardRef((props, ref) => {
   const classes = useStyles();
+
+  const [state, setState] = React.useState({
+    windowWidth: window.innerWidth,
+  });
+
+  const isSmScreen = state.windowWidth < SM_SCREEN;
+
+  React.useEffect(() => {
+    // Detect screen size
+    const handleResize = () =>
+      setState({...state, windowWidth: window.innerWidth});
+    window.addEventListener('resize', handleResize);
+    window.addEventListener('orientationchange', handleResize);
+    return () => {
+      window.removeEventListener('resize', handleResize);
+      window.removeEventListener('orientationchange', handleResize);
+    };
+  }, [state]);
+
+  return (
+    <React.Fragment>
+      {isSmScreen ? (
+        ''
+      ) : (
+        <Paper className={classes.root}>
+          <FiltersContent ref={ref} />
+        </Paper>
+      )}
+    </React.Fragment>
+  );
+});
+
+function FiltersContent(props) {
+  const classes = useStyles();
   const {t} = useTranslation();
 
   const [state, setState] = React.useState({
@@ -67,13 +102,16 @@ const Filters = React.forwardRef((props, ref) => {
     setState({...state, selectedToDate: date});
   };
 
-  const handleClick = () => {
-    ref.current.focus();
-  };
+  // const handleClick = () => {
+  //   props.ref.current.focus();
+  // };
 
   return (
-    <Paper className={classes.root}>
-      <Button className="screen-reader-text" onClick={handleClick}>
+    <React.Fragment>
+      <Button
+        className="screen-reader-text"
+        // onClick={handleClick}
+      >
         {t('Skip filters')}
       </Button>
       <div className={classes.filterHeader}>
@@ -146,8 +184,8 @@ const Filters = React.forwardRef((props, ref) => {
           </FormControl>
         </ExpansionPanelDetails>
       </ExpansionPanel>
-    </Paper>
+    </React.Fragment>
   );
-});
+}
 
 export default Filters;

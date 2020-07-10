@@ -42,7 +42,7 @@ function SearchBar(props) {
       <Autocomplete
         id="search-bar"
         freeSolo
-        disableOpenOnFocus
+        // disableOpenOnFocus
         onInputChange={(e, inputValue) => {
           setValue(inputValue);
           console.log(value);

@@ -177,6 +177,9 @@ export const useStyles = makeStyles({
     '.page-container': {
       marginTop: theme.spacing(8),
       padding: theme.spacing(0, 2),
+      [theme.breakpoints.down('sm')]: {
+        marginTop: theme.spacing(16),
+      },
     },
     '.paper-heading': {
       display: 'flex',
