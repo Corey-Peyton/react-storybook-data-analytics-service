@@ -200,11 +200,11 @@ export default function Results(props) {
                   count={Math.ceil(state.numResults / 8)}
                 />
               )}
+              <Divider />
+              <Grid item xs={12}>
+                <Footer ref={aboutRef} />
+              </Grid>
             </Grid>
-          </Grid>
-          <Divider />
-          <Grid item xs={12}>
-            <Footer ref={aboutRef} />
           </Grid>
           {/* </Grid>
             </Grid>*/}

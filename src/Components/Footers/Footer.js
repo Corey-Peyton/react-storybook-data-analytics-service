@@ -6,7 +6,7 @@ import Icon from '@mdi/react';
 import {mdiFacebook, mdiTwitter} from '@mdi/js';
 const useStyles = makeStyles((theme) => ({
   footer: {
-    margin: theme.spacing(3, 0, 0, 0),
+    margin: theme.spacing(3, 0, 3, 0),
     display: 'flex',
     flexWrap: 'wrap',
     alignItems: 'center',
@@ -16,7 +16,7 @@ const useStyles = makeStyles((theme) => ({
   },
   footerBtn: {
     color: theme.palette.text.secondary,
-    margin: theme.spacing(0, 0.5),
+    margin: theme.spacing(0, 0.5, 0, 0),
   },
   canadaLogo: {
     height: '24px',
