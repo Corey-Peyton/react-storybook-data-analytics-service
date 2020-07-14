@@ -124,6 +124,9 @@ export const useStyles = makeStyles({
     },
 
     // Pagination
+    '.MuiPaginationItem-root': {
+      margin: '0px',
+    },
     '.MuiPaginationItem-page': {
       height: '2.5rem',
       minWidth: '2.5rem',

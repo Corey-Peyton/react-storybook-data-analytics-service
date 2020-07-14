@@ -14,7 +14,7 @@ import {
 import queryString from 'query-string';
 import Pagination from '@material-ui/lab/Pagination';
 import {makeStyles} from '@material-ui/styles';
-import {SM_SCREEN} from '../../Theme/constants';
+import {XS_SCREEN, SM_SCREEN} from '../../Theme/constants';
 import Icon from '@mdi/react';
 import {mdiTune} from '@mdi/js';
 
@@ -82,6 +82,7 @@ export default function Results(props) {
   const aboutRef = React.createRef();
   const ref = React.createRef();
   const isSmScreen = state.windowWidth < SM_SCREEN;
+  const isXsScreen = state.windowWidth < XS_SCREEN;
 
   const handleChangeSort = (event) => {
     setState({...state, sortBy: event.target.value});
@@ -144,8 +145,6 @@ export default function Results(props) {
               className={isSmScreen ? '' : 'pl-2'}
               tabIndex="-1"
             >
-              {/* <Grid container>
-              <Grid item xs={12} sm={12}>*/}
               <FilterPills searchTerm="Coal" filters={state.filters} />
               <Grid
                 container
@@ -194,7 +193,14 @@ export default function Results(props) {
                   return <ResultItem key={pumf.id} {...pumf} />;
                 })}
               </Grid>
-              {!isSmScreen && (
+              {isXsScreen ? (
+                <Pagination
+                  className={classes.pagination}
+                  count={Math.ceil(state.numResults / 8)}
+                  defaultPage={1}
+                  siblingCount={0}
+                />
+              ) : (
                 <Pagination
                   className={classes.pagination}
                   count={Math.ceil(state.numResults / 8)}
@@ -206,8 +212,6 @@ export default function Results(props) {
               </Grid>
             </Grid>
           </Grid>
-          {/* </Grid>
-            </Grid>*/}
         </Container>
       </main>
     </React.Fragment>
