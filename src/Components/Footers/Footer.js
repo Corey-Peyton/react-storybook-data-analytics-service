@@ -38,12 +38,12 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const LoginFooter = (props) => {
+const Footer = React.forwardRef((props, ref) => {
   const {t} = useTranslation();
   const classes = useStyles();
 
   return (
-    <footer className={classes.footer}>
+    <footer className={classes.footer} ref={ref}>
       <div className={classes.langBtnContainer}>
         <h2 className="screen-reader-text">{t('Language selection')}</h2>
         <Button id="test" className={classes.footerBtn}>
@@ -75,6 +75,6 @@ const LoginFooter = (props) => {
       </div>
     </footer>
   );
-};
+});
 
-export default LoginFooter;
+export default Footer;

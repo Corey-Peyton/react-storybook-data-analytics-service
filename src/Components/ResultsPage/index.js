@@ -75,6 +75,7 @@ export default function Results(props) {
       geography: [],
     },
     windowWidth: window.innerWidth,
+    drawer: false,
   });
 
   const mainRef = React.createRef();
@@ -90,6 +91,16 @@ export default function Results(props) {
     } else {
       sortByKey(datasets, 'id');
     }
+  };
+
+  const toggleDrawer = (open) => (event) => {
+    if (
+      event.type === 'keydown' &&
+      (event.key === 'Tab' || event.key === 'Shift')
+    ) {
+      return;
+    }
+    setState({...state, drawer: open});
   };
 
   React.useEffect(() => {
@@ -117,7 +128,12 @@ export default function Results(props) {
           </Typography>
           <Grid container>
             <Grid item sm={3} lg={3}>
-              <Filters ref={ref} />
+              <Filters
+                ref={ref}
+                drawer={state.drawer}
+                toggleDrawer={toggleDrawer}
+                isSmScreen={isSmScreen}
+              />
             </Grid>
             <Grid
               item
@@ -125,78 +141,73 @@ export default function Results(props) {
               sm={12}
               md={9}
               ref={ref}
-              className={!isSmScreen && 'pl-2'}
+              className={isSmScreen ? '' : 'pl-2'}
               tabIndex="-1"
             >
-              <Grid container>
-                <Grid item xs={12} lg={12}>
-                  <FilterPills searchTerm="Coal" filters={state.filters} />
-                  <Grid
-                    container
-                    justify="space-between"
-                    alignItems="center"
-                    className={classes.sortContainer}
-                  >
-                    <Grid item xs={12} sm={12} lg={4}>
-                      <FormControl variant="outlined" className={classes.sort}>
-                        <InputLabel id="sort-by-label">
-                          {t('Sort by')}
-                        </InputLabel>
-                        <Select
-                          id="sort-by"
-                          value={state.sortBy}
-                          onChange={handleChangeSort}
-                          labelId="sort-by-label"
-                          margin="dense"
-                          label={t('Sort by')}
-                        >
-                          <MenuItem value={10}>{t('Relevance')}</MenuItem>
-                          <MenuItem value={20}>{t('Release date')}</MenuItem>
-                        </Select>
-                      </FormControl>
-                      {isSmScreen && (
-                        <IconButton
-                          aria-label={t('Filters')}
-                          className={classes.filtersBtn}
-                          edge="end"
-                        >
-                          <Icon path={mdiTune} size={1} />
-                        </IconButton>
-                      )}
-                    </Grid>
-                    <Grid item>
-                      <Typography
-                        className={classes.numResults}
-                        variant="body2"
-                        color="textSecondary"
-                      >
-                        {state.numResults} {t('results')} (0.78 {t('seconds')})
-                      </Typography>
-                    </Grid>
-                  </Grid>
-                  <Grid
-                    container
-                    direction="column"
-                    className={classes.results}
-                  >
-                    {datasets.map((pumf) => {
-                      return <ResultItem key={pumf.id} {...pumf} />;
-                    })}
-                  </Grid>
-                  {!isSmScreen && (
-                    <Pagination
-                      className={classes.pagination}
-                      count={Math.ceil(state.numResults / 8)}
-                    />
+              {/* <Grid container>
+              <Grid item xs={12} sm={12}>*/}
+              <FilterPills searchTerm="Coal" filters={state.filters} />
+              <Grid
+                container
+                justify="space-between"
+                alignItems="center"
+                className={classes.sortContainer}
+              >
+                <Grid item xs={12} sm={12} md={5} lg={4}>
+                  <FormControl variant="outlined" className={classes.sort}>
+                    <InputLabel id="sort-by-label">{t('Sort by')}</InputLabel>
+                    <Select
+                      id="sort-by"
+                      value={state.sortBy}
+                      onChange={handleChangeSort}
+                      labelId="sort-by-label"
+                      margin="dense"
+                      label={t('Sort by')}
+                    >
+                      <MenuItem value={10}>{t('Relevance')}</MenuItem>
+                      <MenuItem value={20}>{t('Release date')}</MenuItem>
+                    </Select>
+                  </FormControl>
+                  {isSmScreen && (
+                    <IconButton
+                      aria-label={t('Filters')}
+                      className={classes.filtersBtn}
+                      edge="end"
+                      onClick={toggleDrawer(true)}
+                    >
+                      <Icon path={mdiTune} size={1} />
+                    </IconButton>
                   )}
                 </Grid>
+                <Grid item>
+                  <Typography
+                    className={classes.numResults}
+                    variant="body2"
+                    color="textSecondary"
+                  >
+                    {state.numResults} {t('results')} (0.78 {t('seconds')})
+                  </Typography>
+                </Grid>
               </Grid>
-              <Divider />
-              <Grid item xs={12}>
-                <Footer ref={aboutRef} />
+              <Grid container direction="column" className={classes.results}>
+                {datasets.map((pumf) => {
+                  return <ResultItem key={pumf.id} {...pumf} />;
+                })}
               </Grid>
+              {!isSmScreen && (
+                <Pagination
+                  className={classes.pagination}
+                  count={Math.ceil(state.numResults / 8)}
+                />
+              )}
             </Grid>
           </Grid>
+          <Divider />
+          <Grid item xs={12}>
+            <Footer ref={aboutRef} />
+          </Grid>
+          {/* </Grid>
+            </Grid>*/}
         </Container>
       </main>
     </React.Fragment>

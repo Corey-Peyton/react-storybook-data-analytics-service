@@ -10,10 +10,12 @@ import {
   FormLabel,
   Paper,
   Typography,
+  Drawer,
+  IconButton,
 } from '@material-ui/core';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import Icon from '@mdi/react';
-import {mdiTune} from '@mdi/js';
+import {mdiTune, mdiClose} from '@mdi/js';
 import {
   KeyboardDatePicker,
   MuiPickersUtilsProvider,
@@ -41,11 +43,20 @@ const useStyles = makeStyles((theme) => ({
     borderBottomStyle: 'solid',
     borderBottomColor: theme.palette.divider,
   },
+  closeBtn: {
+    flexGrow: 1,
+    textAlign: 'right',
+  },
   dateDetails: {
     flexDirection: 'column',
   },
   datePicker: {
     margin: theme.spacing(0, 0, 3, 0),
+  },
+  drawer: {
+    '&>.MuiPaper-root': {
+      padding: theme.spacing(3, 2, 2, 2),
+    },
   },
 }));
 
@@ -73,17 +84,32 @@ const Filters = React.forwardRef((props, ref) => {
   return (
     <React.Fragment>
       {isSmScreen ? (
-        ''
+        <Drawer
+          anchor="left"
+          open={props.drawer}
+          onClose={props.toggleDrawer(false)}
+          className={classes.drawer}
+        >
+          <FiltersContent
+            ref={ref}
+            toggleDrawer={props.toggleDrawer}
+            isSmScreen={props.isSmScreen}
+          />
+        </Drawer>
       ) : (
         <Paper className={classes.root}>
-          <FiltersContent ref={ref} />
+          <FiltersContent
+            ref={ref}
+            toggleDrawer={props.toggleDrawer}
+            isSmScreen={props.isSmScreen}
+          />
         </Paper>
       )}
     </React.Fragment>
   );
 });
 
-function FiltersContent(props) {
+const FiltersContent = React.forwardRef((props, ref) => {
   const classes = useStyles();
   const {t} = useTranslation();
 
@@ -102,16 +128,13 @@ function FiltersContent(props) {
     setState({...state, selectedToDate: date});
   };
 
-  // const handleClick = () => {
-  //   props.ref.current.focus();
-  // };
+  const handleClick = () => {
+    ref.current.focus();
+  };
 
   return (
     <React.Fragment>
-      <Button
-        className="screen-reader-text"
-        // onClick={handleClick}
-      >
+      <Button className="screen-reader-text" onClick={handleClick}>
         {t('Skip filters')}
       </Button>
       <div className={classes.filterHeader}>
@@ -119,6 +142,17 @@ function FiltersContent(props) {
         <Typography variant="h6" component="h2" className="ml-2">
           {t('Filters')}
         </Typography>
+        {props.isSmScreen && (
+          <div className={classes.closeBtn}>
+            <IconButton
+              onClick={props.toggleDrawer(false)}
+              id="filters-close"
+              aria-label="Filters panel - close panel"
+            >
+              <Icon path={mdiClose} size={1} />
+            </IconButton>
+          </div>
+        )}
       </div>
       <StickySearchableDropdown
         id="subjects"
@@ -186,6 +220,6 @@ function FiltersContent(props) {
       </ExpansionPanel>
     </React.Fragment>
   );
-}
+});
 
 export default Filters;

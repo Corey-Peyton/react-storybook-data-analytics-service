@@ -17,6 +17,7 @@ const useStyles = makeStyles((theme) => ({
       'flexWrap': 'nowrap',
       '-ms-overflow-style': 'none',
       'scrollbarWidth': 'none',
+      'marginRight': theme.spacing(-2),
     },
     '&::-webkit-scrollbar': {
       display: 'none',

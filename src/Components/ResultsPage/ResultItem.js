@@ -1,25 +1,33 @@
 import React from 'react';
 import Icon from '@mdi/react';
 import {mdiTable, mdiNewspaper, mdiChartBar} from '@mdi/js';
-import {Typography, Link, Chip, Box} from '@material-ui/core';
+import {Typography, Link, Chip, Box, Grid} from '@material-ui/core';
 import {makeStyles} from '@material-ui/styles';
 import {Link as RouterLink} from 'react-router-dom';
 
 const useStyles = makeStyles((theme) => ({
   root: {
     'marginBottom': theme.spacing(3),
-    // 'width': '100%',
   },
   title: {
-    // 'maxWidth': '95%',
-    // '& h2': {
-    //   maxWidth: '880px',
-    // },
   },
   subjectTags: {
+    'display': 'flex',
+    'flexWrap': 'wrap',
     'marginTop': theme.spacing(1),
     '& .MuiChip-root': {
       marginRight: theme.spacing(1),
+    },
+    [theme.breakpoints.down('sm')]: {
+      'overflowX': 'auto',
+      'overflowY': 'hidden',
+      'flexWrap': 'nowrap',
+      '-ms-overflow-style': 'none',
+      'scrollbarWidth': 'none',
+      'marginRight': theme.spacing(-3),
+    },
+    '&::-webkit-scrollbar': {
+      display: 'none',
     },
   },
 }));
@@ -56,7 +64,7 @@ export default function ResultItem(props) {
   const trimmedSubjects = props.subjects.slice(0, 3); // grab first 3 subjects
 
   return (
-    <div className={classes.root}>
+    <Grid item xs={12} sm={12} className={classes.root}>
       <Box component="h2" fontWeight="fontWeightRegular" fontSize="h6.fontSize" fontFamily="fontFamily">
         <Link
           component={RouterLink}
@@ -90,6 +98,6 @@ export default function ResultItem(props) {
           return <Chip variant="outlined" key={subject} label={subject} />;
         })}
       </div>
-    </div>
+    </Grid>
   );
 }
