@@ -51,7 +51,7 @@ const useStyles = makeStyles((theme) => ({
     minWidth: theme.spacing(2),
   },
   listItem: {
-    padding: theme.spacing(0, 3, 0, 3),
+    padding: theme.spacing(0, 2, 0, 2),
   },
   noMatches: {
     marginLeft: theme.spacing(3),

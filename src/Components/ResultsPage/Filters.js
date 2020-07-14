@@ -10,15 +10,18 @@ import {
   FormLabel,
   Paper,
   Typography,
+  Drawer,
+  IconButton,
 } from '@material-ui/core';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import Icon from '@mdi/react';
-import {mdiTune} from '@mdi/js';
+import {mdiTune, mdiClose} from '@mdi/js';
 import {
   KeyboardDatePicker,
   MuiPickersUtilsProvider,
 } from '@material-ui/pickers';
 import {makeStyles} from '@material-ui/styles';
+import {SM_SCREEN} from '../../Theme/constants';
 
 import {subjects, surveys} from '../../Data/fakeData';
 import StickySearchableDropdown from '../StickySearchableDropdown';
@@ -30,6 +33,7 @@ const useStyles = makeStyles((theme) => ({
     borderRightStyle: 'solid',
     borderRightColor: theme.palette.divider,
     height: '100%',
+    boxSizing: 'border-box',
     padding: theme.spacing(3, 2, 0, 0),
   },
   filterHeader: {
@@ -40,15 +44,73 @@ const useStyles = makeStyles((theme) => ({
     borderBottomStyle: 'solid',
     borderBottomColor: theme.palette.divider,
   },
+  closeBtn: {
+    flexGrow: 1,
+    textAlign: 'right',
+  },
   dateDetails: {
     flexDirection: 'column',
   },
   datePicker: {
     margin: theme.spacing(0, 0, 3, 0),
   },
+  drawer: {
+    '&>.MuiPaper-root': {
+      padding: theme.spacing(3, 2, 2, 2),
+    },
+  },
 }));
 
 const Filters = React.forwardRef((props, ref) => {
+  const classes = useStyles();
+
+  const [state, setState] = React.useState({
+    windowWidth: window.innerWidth,
+  });
+
+  const isSmScreen = state.windowWidth < SM_SCREEN;
+
+  React.useEffect(() => {
+    // Detect screen size
+    const handleResize = () =>
+      setState({...state, windowWidth: window.innerWidth});
+    window.addEventListener('resize', handleResize);
+    window.addEventListener('orientationchange', handleResize);
+    return () => {
+      window.removeEventListener('resize', handleResize);
+      window.removeEventListener('orientationchange', handleResize);
+    };
+  }, [state]);
+
+  return (
+    <React.Fragment>
+      {isSmScreen ? (
+        <Drawer
+          anchor="left"
+          open={props.drawer}
+          onClose={props.toggleDrawer(false)}
+          className={classes.drawer}
+        >
+          <FiltersContent
+            ref={ref}
+            toggleDrawer={props.toggleDrawer}
+            isSmScreen={props.isSmScreen}
+          />
+        </Drawer>
+      ) : (
+        <Paper className={classes.root}>
+          <FiltersContent
+            ref={ref}
+            toggleDrawer={props.toggleDrawer}
+            isSmScreen={props.isSmScreen}
+          />
+        </Paper>
+      )}
+    </React.Fragment>
+  );
+});
+
+const FiltersContent = React.forwardRef((props, ref) => {
   const classes = useStyles();
   const {t} = useTranslation();
 
@@ -72,7 +134,7 @@ const Filters = React.forwardRef((props, ref) => {
   };
 
   return (
-    <Paper className={classes.root}>
+    <React.Fragment>
       <Button className="screen-reader-text" onClick={handleClick}>
         {t('Skip filters')}
       </Button>
@@ -81,6 +143,17 @@ const Filters = React.forwardRef((props, ref) => {
         <Typography variant="h6" component="h2" className="ml-2">
           {t('Filters')}
         </Typography>
+        {props.isSmScreen && (
+          <div className={classes.closeBtn}>
+            <IconButton
+              onClick={props.toggleDrawer(false)}
+              id="filters-close"
+              aria-label="Filters panel - close panel"
+            >
+              <Icon path={mdiClose} size={1} />
+            </IconButton>
+          </div>
+        )}
       </div>
       <StickySearchableDropdown
         id="subjects"
@@ -146,7 +219,7 @@ const Filters = React.forwardRef((props, ref) => {
           </FormControl>
         </ExpansionPanelDetails>
       </ExpansionPanel>
-    </Paper>
+    </React.Fragment>
   );
 });
 

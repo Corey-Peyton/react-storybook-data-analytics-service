@@ -6,19 +6,28 @@ import Icon from '@mdi/react';
 import {mdiFacebook, mdiTwitter} from '@mdi/js';
 const useStyles = makeStyles((theme) => ({
   footer: {
-    margin: theme.spacing(3, 0, 0, 0),
+    margin: theme.spacing(3, 0, 3, 0),
     display: 'flex',
+    flexWrap: 'wrap',
     alignItems: 'center',
+    [theme.breakpoints.down('sm')]: {
+      justifyContent: 'center',
+    },
   },
   footerBtn: {
     color: theme.palette.text.secondary,
-    margin: theme.spacing(0, 0.5),
+    margin: theme.spacing(0, 0.5, 0, 0),
   },
   canadaLogo: {
     height: '24px',
     flexGrow: 1,
     textAlign: 'right',
     paddingRight: theme.spacing(1),
+    [theme.breakpoints.down('sm')]: {
+      width: '100%',
+      marginTop: theme.spacing(3),
+      textAlign: 'center',
+    },
   },
   langBtnContainer: {
     paddingRight: theme.spacing(0.5),
@@ -29,12 +38,12 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const LoginFooter = (props) => {
+const Footer = React.forwardRef((props, ref) => {
   const {t} = useTranslation();
   const classes = useStyles();
 
   return (
-    <footer className={classes.footer}>
+    <footer className={classes.footer} ref={ref}>
       <div className={classes.langBtnContainer}>
         <h2 className="screen-reader-text">{t('Language selection')}</h2>
         <Button id="test" className={classes.footerBtn}>
@@ -66,6 +75,6 @@ const LoginFooter = (props) => {
       </div>
     </footer>
   );
-};
+});
 
-export default LoginFooter;
+export default Footer;

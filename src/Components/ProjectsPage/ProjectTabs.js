@@ -11,13 +11,15 @@ import {
 } from '@material-ui/core';
 import {makeStyles} from '@material-ui/styles';
 import Projects from './Projects';
+import {HEAD_H, FOOT_H} from '../../Theme/constants';
 
 const useStyles = makeStyles((theme) => ({
   tabPanel: {
     '& .MuiBox-root': {
       paddingTop: 0,
-      minHeight: 'calc(100vh - 184px - 144px)',
-      maxHeight: 'calc(100vh - 184px - 144px)',
+      boxSizing: 'border-box',
+      minHeight: `calc(100vh - ${HEAD_H}px - ${FOOT_H}px - 88px)`,
+      maxHeight: `calc(100vh - ${HEAD_H}px - ${FOOT_H}px - 88px)`,
       overflowY: 'auto',
     },
   },

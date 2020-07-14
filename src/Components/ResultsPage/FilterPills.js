@@ -8,8 +8,20 @@ const useStyles = makeStyles((theme) => ({
     padding: theme.spacing(3, 0),
   },
   chipContainer: {
-    display: 'flex',
-    padding: theme.spacing(1, 0, 1, 1),
+    'display': 'flex',
+    'padding': theme.spacing(1, 0, 1, 1),
+    'flexWrap': 'wrap',
+    [theme.breakpoints.down('sm')]: {
+      'overflowX': 'auto',
+      'overflowY': 'hidden',
+      'flexWrap': 'nowrap',
+      '-ms-overflow-style': 'none',
+      'scrollbarWidth': 'none',
+      'marginRight': theme.spacing(-2),
+    },
+    '&::-webkit-scrollbar': {
+      display: 'none',
+    },
   },
   chip: {
     marginRight: theme.spacing(1),
@@ -80,67 +92,61 @@ export default function FilterPills(props) {
         )}
         {filters.subjects && (
           <React.Fragment>
-            <div>
-              {filters.subjects.map((subject) => {
-                return (
-                  <Chip
-                    className={classes.chip}
-                    component="button"
-                    color="primary"
-                    aria-label={`${t('Remove topic filter')}: ${subject}`}
-                    key={subject}
-                    label={
+            {filters.subjects.map((subject) => {
+              return (
+                <Chip
+                  className={classes.chip}
+                  component="button"
+                  color="primary"
+                  aria-label={`${t('Remove topic filter')}: ${subject}`}
+                  key={subject}
+                  label={
                       subject.length <= 25
                         ? subject
                         : `${subject.substring(0, 25)}...`
-                    }
-                    onDelete={handleDelete}
-                    variant="outlined"
-                  />
-                );
-              })}
-            </div>
+                  }
+                  onDelete={handleDelete}
+                  variant="outlined"
+                />
+              );
+            })}
           </React.Fragment>
         )}
         {props.sources && (
           <React.Fragment>
-            <div>
-              {filters.surveys.map((survey, index) => {
-                return (
-                  <Chip
-                    className={classes.chip}
-                    component="button"
-                    color="primary"
-                    aria-label={`${t('Remove survey filter')} ${survey}`}
-                    key={survey}
-                    label={
+            {filters.surveys.map((survey, index) => {
+              return (
+                <Chip
+                  className={classes.chip}
+                  component="button"
+                  color="primary"
+                  aria-label={`${t('Remove survey filter')} ${survey}`}
+                  key={survey}
+                  label={
                       survey.length <= 25
                         ? survey
                         : `${survey.substring(0, 25)}...`
-                    }
-                    onDelete={handleDelete}
-                    variant="outlined"
-                  />
-                );
-              })}
-            </div>
+                  }
+                  onDelete={handleDelete}
+                  variant="outlined"
+                />
+              );
+            })}
           </React.Fragment>
         )}
         {filters.date.startDate && filters.date.endDate && (
           <React.Fragment>
-            <div>
-              <Chip
-                className={classes.chip}
-                component="button"
-                color="primary"
-                aria-label={`${t(
-                    'Remove date filter'
-                )}: ${startDate} - ${endDate}`}
-                label={`${startDate} - ${endDate}`}
-                onDelete={handleDelete}
-                variant="outlined"
-              />
-            </div>
+            <Chip
+              className={classes.chip}
+              component="button"
+              color="primary"
+              aria-label={`${t(
+                  'Remove date filter'
+              )}: ${startDate} - ${endDate}`}
+              label={`${startDate} - ${endDate}`}
+              onDelete={handleDelete}
+              variant="outlined"
+            />
           </React.Fragment>
         )}
       </div>

@@ -9,10 +9,14 @@ import {
   Select,
   Typography,
   Divider,
+  IconButton,
 } from '@material-ui/core';
 import queryString from 'query-string';
 import Pagination from '@material-ui/lab/Pagination';
 import {makeStyles} from '@material-ui/styles';
+import {XS_SCREEN, SM_SCREEN} from '../../Theme/constants';
+import Icon from '@mdi/react';
+import {mdiTune} from '@mdi/js';
 
 import {datasets} from '../../Data/fakeData';
 import {sortByKey, sortByKeyDesc} from '../../Utils/sorting';
@@ -25,10 +29,18 @@ import ResultItem from './ResultItem';
 
 const useStyles = makeStyles((theme) => ({
   sortContainer: {
-    padding: theme.spacing(0, 1),
+    'padding': theme.spacing(0, 1),
+    '& .MuiGrid-item': {
+      display: 'flex',
+    },
   },
   sort: {
-    width: '100%',
+    flexGrow: 1,
+  },
+  numResults: {
+    [theme.breakpoints.down('sm')]: {
+      marginTop: theme.spacing(3),
+    },
   },
   results: {
     margin: theme.spacing(3, 0),
@@ -38,6 +50,9 @@ const useStyles = makeStyles((theme) => ({
     marginBottom: theme.spacing(6),
     display: 'flex',
     justifyContent: 'center',
+  },
+  filtersBtn: {
+    marginLeft: theme.spacing(1),
   },
 }));
 
@@ -59,13 +74,15 @@ export default function Results(props) {
       frequency: [],
       geography: [],
     },
+    windowWidth: window.innerWidth,
+    drawer: false,
   });
 
   const mainRef = React.createRef();
   const aboutRef = React.createRef();
   const ref = React.createRef();
-  const inputLabel = React.useRef(null);
-  const [labelWidth, setLabelWidth] = React.useState(0);
+  const isSmScreen = state.windowWidth < SM_SCREEN;
+  const isXsScreen = state.windowWidth < XS_SCREEN;
 
   const handleChangeSort = (event) => {
     setState({...state, sortBy: event.target.value});
@@ -77,10 +94,29 @@ export default function Results(props) {
     }
   };
 
+  const toggleDrawer = (open) => (event) => {
+    if (
+      event.type === 'keydown' &&
+      (event.key === 'Tab' || event.key === 'Shift')
+    ) {
+      return;
+    }
+    setState({...state, drawer: open});
+  };
+
   React.useEffect(() => {
     document.title = `${t('DAaaS - Results for')} ${state.searchTerm}`;
-    setLabelWidth(inputLabel.current.offsetWidth);
-  }, [state.searchTerm, t]);
+
+    // Detect screen size
+    const handleResize = () =>
+      setState({...state, windowWidth: window.innerWidth});
+    window.addEventListener('resize', handleResize);
+    window.addEventListener('orientationchange', handleResize);
+    return () => {
+      window.removeEventListener('resize', handleResize);
+      window.removeEventListener('orientationchange', handleResize);
+    };
+  }, [state, state.searchTerm, t]);
 
   return (
     <React.Fragment>
@@ -92,61 +128,84 @@ export default function Results(props) {
             {t('Search results')}
           </Typography>
           <Grid container>
-            <Grid item xs={4} lg={3}>
-              <Filters ref={ref} />
+            <Grid item sm={3} lg={3}>
+              <Filters
+                ref={ref}
+                drawer={state.drawer}
+                toggleDrawer={toggleDrawer}
+                isSmScreen={isSmScreen}
+              />
             </Grid>
-            <Grid item xs={8} lg={9} ref={ref} className="pl-2" tabIndex="-1">
-              <Grid container>
-                <Grid item xs={12} lg={12}>
-                  <FilterPills searchTerm="Coal" filters={state.filters} />
-                  <Grid
-                    container
-                    justify="space-between"
-                    alignItems="center"
-                    className={classes.sortContainer}
+            <Grid
+              item
+              xs={12}
+              sm={12}
+              md={9}
+              ref={ref}
+              className={isSmScreen ? '' : 'pl-2'}
+              tabIndex="-1"
+            >
+              <FilterPills searchTerm="Coal" filters={state.filters} />
+              <Grid
+                container
+                justify="space-between"
+                alignItems="center"
+                className={classes.sortContainer}
+              >
+                <Grid item xs={12} sm={12} md={5} lg={4}>
+                  <FormControl variant="outlined" className={classes.sort}>
+                    <InputLabel id="sort-by-label">{t('Sort by')}</InputLabel>
+                    <Select
+                      id="sort-by"
+                      value={state.sortBy}
+                      onChange={handleChangeSort}
+                      labelId="sort-by-label"
+                      margin="dense"
+                      label={t('Sort by')}
+                    >
+                      <MenuItem value={10}>{t('Relevance')}</MenuItem>
+                      <MenuItem value={20}>{t('Release date')}</MenuItem>
+                    </Select>
+                  </FormControl>
+                  {isSmScreen && (
+                    <IconButton
+                      aria-label={t('Filters')}
+                      className={classes.filtersBtn}
+                      edge="end"
+                      onClick={toggleDrawer(true)}
+                    >
+                      <Icon path={mdiTune} size={1} />
+                    </IconButton>
+                  )}
+                </Grid>
+                <Grid item>
+                  <Typography
+                    className={classes.numResults}
+                    variant="body2"
+                    color="textSecondary"
                   >
-                    <Grid item xs={3} lg={2}>
-                      <FormControl variant="outlined" className={classes.sort}>
-                        <InputLabel id="sort-by-label" ref={inputLabel}>
-                          {t('Sort by')}
-                        </InputLabel>
-                        <Select
-                          value={state.sortBy}
-                          onChange={handleChangeSort}
-                          variant="outlined"
-                          labelWidth={labelWidth}
-                          labelId="sort-by-label"
-                          margin="dense"
-                          inputProps={{
-                            id: 'sort-by',
-                          }}
-                        >
-                          <MenuItem value={10}>{t('Relevance')}</MenuItem>
-                          <MenuItem value={20}>{t('Release date')}</MenuItem>
-                        </Select>
-                      </FormControl>
-                    </Grid>
-                    <Grid item>
-                      <Typography variant="body2" color="textSecondary">
-                        {state.numResults} {t('results')} (0.78 {t('seconds')})
-                      </Typography>
-                    </Grid>
-                  </Grid>
-                  <Grid
-                    container
-                    direction="column"
-                    className={classes.results}
-                  >
-                    {datasets.map((pumf) => {
-                      return <ResultItem key={pumf.id} {...pumf} />;
-                    })}
-                  </Grid>
-                  <Pagination
-                    className={classes.pagination}
-                    count={Math.ceil(state.numResults / 8)}
-                  />
+                    {state.numResults} {t('results')} (0.78 {t('seconds')})
+                  </Typography>
                 </Grid>
               </Grid>
+              <Grid container direction="column" className={classes.results}>
+                {datasets.map((pumf) => {
+                  return <ResultItem key={pumf.id} {...pumf} />;
+                })}
+              </Grid>
+              {isXsScreen ? (
+                <Pagination
+                  className={classes.pagination}
+                  count={Math.ceil(state.numResults / 8)}
+                  defaultPage={1}
+                  siblingCount={0}
+                />
+              ) : (
+                <Pagination
+                  className={classes.pagination}
+                  count={Math.ceil(state.numResults / 8)}
+                />
+              )}
               <Divider />
               <Grid item xs={12}>
                 <Footer ref={aboutRef} />

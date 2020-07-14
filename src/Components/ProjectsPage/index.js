@@ -5,10 +5,10 @@ import {AppBar, Badge, Tab, Tabs, Toolbar, Typography} from '@material-ui/core';
 import {makeStyles} from '@material-ui/styles';
 import clsx from 'clsx';
 
-import {EXP_HEAD_H, HEAD_H} from '../../Theme/constants';
+import {HEAD_H, HEAD_H_XS} from '../../Theme/constants';
 import BypassBlocks from '../BypassBlocks';
 import Footer from '../Footers/Footer';
-import FlatHeader from '../Headers/FlatHeader';
+import DefaultHeader from '../Headers/DefaultHeader';
 import ProjectApps from './ProjectApps';
 import ProjectDatasets from './ProjectDatasets';
 import ProjectDetails from './ProjectDetails';
@@ -25,9 +25,12 @@ const useStyles = makeStyles((theme) => ({
     left: 'auto',
   },
   toolbar: {
-    minHeight: `calc(${EXP_HEAD_H} - ${HEAD_H})`,
+    minHeight: '88px',
     display: 'block',
     marginTop: HEAD_H,
+    [theme.breakpoints.down('xs')]: {
+      marginTop: HEAD_H_XS,
+    },
   },
   hide: {
     display: 'none',
@@ -38,7 +41,10 @@ const useStyles = makeStyles((theme) => ({
       easing: theme.transitions.easing.sharp,
       duration: theme.transitions.duration.leavingScreen,
     }),
-    marginTop: EXP_HEAD_H,
+    marginTop: `calc(88px + ${HEAD_H}px)`,
+    [theme.breakpoints.down('xs')]: {
+      marginTop: `calc(88px + ${HEAD_H_XS}px)`,
+    },
     marginRight: 0,
   },
   contentShift: {
@@ -170,7 +176,7 @@ export default function ProjectsPage(props) {
   return (
     <React.Fragment>
       <BypassBlocks ref={{main: mainRef, about: aboutRef}} />
-      <FlatHeader />
+      <DefaultHeader flat={true}/>
       <AppBar
         position="fixed"
         component="div"

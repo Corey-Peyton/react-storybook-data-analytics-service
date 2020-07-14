@@ -15,7 +15,7 @@ import {
 import {makeStyles} from '@material-ui/styles';
 import CloseIcon from '@material-ui/icons/Close';
 import ArrowBackIcon from '@material-ui/icons/ArrowBack';
-import {EXP_HEAD_H} from '../../Theme/constants';
+import {HEAD_H} from '../../Theme/constants';
 import {DRAWER_WIDTH} from './index';
 
 const useStyles = makeStyles((theme) => ({
@@ -27,8 +27,8 @@ const useStyles = makeStyles((theme) => ({
   drawerPaper: {
     boxSizing: 'border-box',
     width: DRAWER_WIDTH,
-    height: `calc(100vh - ${EXP_HEAD_H}px)`,
-    marginTop: EXP_HEAD_H,
+    height: `calc(100vh - 88px - ${HEAD_H}px)`,
+    marginTop: `calc(88px + ${HEAD_H}px)`,
     zIndex: 1000,
   },
   drawerHeader: {

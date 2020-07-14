@@ -124,6 +124,9 @@ export const useStyles = makeStyles({
     },
 
     // Pagination
+    '.MuiPaginationItem-root': {
+      margin: '0px',
+    },
     '.MuiPaginationItem-page': {
       height: '2.5rem',
       minWidth: '2.5rem',
@@ -177,6 +180,9 @@ export const useStyles = makeStyles({
     '.page-container': {
       marginTop: theme.spacing(8),
       padding: theme.spacing(0, 2),
+      [theme.breakpoints.down('sm')]: {
+        marginTop: theme.spacing(16),
+      },
     },
     '.paper-heading': {
       display: 'flex',
