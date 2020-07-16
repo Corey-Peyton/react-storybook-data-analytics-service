@@ -49,7 +49,7 @@ const Footer = React.forwardRef((props, ref) => {
   const classes = useStyles();
 
   return (
-    <footer className={classes.footer} ref={ref}>
+    <footer className={classes.footer} ref={ref} tabindex="-1">
       <ul className="list-horizontal">
         <li>
           <div className={classes.langBtnContainer}>
