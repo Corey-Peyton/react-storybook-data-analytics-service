@@ -11,7 +11,13 @@ const useStyles = makeStyles((theme) => ({
     flexWrap: 'wrap',
     alignItems: 'center',
     [theme.breakpoints.down('sm')]: {
-      justifyContent: 'center',
+      'justifyContent': 'center',
+      '& ul': {
+        display: 'flex',
+        flexWrap: 'wrap',
+        justifyContent: 'center',
+        alignItems: 'center',
+      },
     },
   },
   footerBtn: {
@@ -44,13 +50,15 @@ const Footer = React.forwardRef((props, ref) => {
 
   return (
     <footer className={classes.footer} ref={ref}>
-      <div className={classes.langBtnContainer}>
-        <h2 className="screen-reader-text">{t('Language selection')}</h2>
-        <Button id="test" className={classes.footerBtn}>
-          <span lang="fr">Français</span>
-        </Button>
-      </div>
       <ul className="list-horizontal">
+        <li>
+          <div className={classes.langBtnContainer}>
+            <h2 className="screen-reader-text">{t('Language selection')}</h2>
+            <Button id="test" className={classes.footerBtn}>
+              <span lang="fr">Français</span>
+            </Button>
+          </div>
+        </li>
         <li>
           <IconButton
             aria-label={t('Facebook')}
