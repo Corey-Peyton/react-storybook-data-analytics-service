@@ -105,7 +105,8 @@ export default function Results(props) {
   };
 
   React.useEffect(() => {
-    document.title = `${t('DAaaS - Results for')} ${state.searchTerm}`;
+    document.title = `${t('DAaaS - Results for Coal')}`;
+    // document.title = `${t('DAaaS - Results for')} ${state.searchTerm}`;
 
     // Detect screen size
     const handleResize = () =>
