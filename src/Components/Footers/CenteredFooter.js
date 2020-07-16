@@ -6,8 +6,7 @@ import Icon from '@mdi/react';
 import {mdiFacebook, mdiTwitter} from '@mdi/js';
 const useStyles = makeStyles((theme) => ({
   footer: {
-    marginTop: theme.spacing(6),
-    marginBottom: theme.spacing(6),
+    margin: theme.spacing(6, 0, 6, 0),
     textAlign: 'center',
     [theme.breakpoints.down('xs')]: {
       marginTop: 0,
@@ -16,7 +15,7 @@ const useStyles = makeStyles((theme) => ({
   },
   footerBtn: {
     color: theme.palette.text.secondary,
-    margin: theme.spacing(0, 0.5),
+    margin: theme.spacing(0, 0.5, 0, 0),
   },
   canadaLogo: {
     display: 'block',
@@ -38,7 +37,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const LoginFooter = (props) => {
+const CenteredFooter = (props) => {
   const {t} = useTranslation();
   const classes = useStyles();
 
@@ -50,23 +49,33 @@ const LoginFooter = (props) => {
           <span lang="fr">Français</span>
         </Button>
       </div>
-      <IconButton
-        aria-label={t('Facebook')}
-        href="https://www.facebook.com/StatisticsCanada/"
-        className={classes.footerBtn}
-      >
-        <Icon path={mdiFacebook} size={1} className="icon-grey" />
-      </IconButton>
-      <IconButton
-        aria-label={t('Twitter')}
-        href="https://twitter.com/StatCan_eng"
-        className={classes.footerBtn}
-      >
-        <Icon path={mdiTwitter} size={1} className="icon-grey" />
-      </IconButton>
-      <Button className={classes.footerBtn}>{t('About')}</Button>
-      <Button className={classes.footerBtn}>{t('Terms and conditions')}</Button>
-      <Button className={classes.footerBtn}>{t('Privacy')}</Button>
+      <ul className="list-horizontal">
+        <li>
+          <IconButton
+            aria-label={t('Facebook')}
+            href="https://www.facebook.com/StatisticsCanada/"
+            className={classes.footerBtn}
+          >
+            <Icon path={mdiFacebook} size={1} className="icon-grey" />
+          </IconButton></li>
+        <li>
+          <IconButton
+            aria-label={t('Twitter')}
+            href="https://twitter.com/StatCan_eng"
+            className={classes.footerBtn}
+          >
+            <Icon path={mdiTwitter} size={1} className="icon-grey" />
+          </IconButton></li>
+        <li>
+          <Button className={classes.footerBtn}>{t('About')}</Button>
+        </li>
+        <li>
+          <Button className={classes.footerBtn}>{t('Terms and conditions')}</Button>
+        </li>
+        <li>
+          <Button className={classes.footerBtn}>{t('Privacy')}</Button>
+        </li>
+      </ul>
       <img
         src={process.env.PUBLIC_URL + '/images/wmms.svg'}
         alt={t('Symbol of the Government of Canada')}
@@ -76,4 +85,4 @@ const LoginFooter = (props) => {
   );
 };
 
-export default LoginFooter;
+export default CenteredFooter;

@@ -50,23 +50,35 @@ const Footer = React.forwardRef((props, ref) => {
           <span lang="fr">Français</span>
         </Button>
       </div>
-      <IconButton
-        aria-label={t('Facebook')}
-        href="https://www.facebook.com/StatisticsCanada/"
-        className={classes.footerBtn}
-      >
-        <Icon path={mdiFacebook} size={1} className="icon-grey" />
-      </IconButton>
-      <IconButton
-        aria-label={t('Twitter')}
-        href="https://twitter.com/StatCan_eng"
-        className={classes.footerBtn}
-      >
-        <Icon path={mdiTwitter} size={1} className="icon-grey" />
-      </IconButton>
-      <Button className={classes.footerBtn}>{t('About')}</Button>
-      <Button className={classes.footerBtn}>{t('Terms and conditions')}</Button>
-      <Button className={classes.footerBtn}>{t('Privacy')}</Button>
+      <ul className="list-horizontal">
+        <li>
+          <IconButton
+            aria-label={t('Facebook')}
+            href="https://www.facebook.com/StatisticsCanada/"
+            className={classes.footerBtn}
+          >
+            <Icon path={mdiFacebook} size={1} className="icon-grey" />
+          </IconButton>
+        </li>
+        <li>
+          <IconButton
+            aria-label={t('Twitter')}
+            href="https://twitter.com/StatCan_eng"
+            className={classes.footerBtn}
+          >
+            <Icon path={mdiTwitter} size={1} className="icon-grey" />
+          </IconButton>
+        </li>
+        <li>
+          <Button className={classes.footerBtn}>{t('About')}</Button>
+        </li>
+        <li>
+          <Button className={classes.footerBtn}>{t('Terms and conditions')}</Button>
+        </li>
+        <li>
+          <Button className={classes.footerBtn}>{t('Privacy')}</Button>
+        </li>
+      </ul>
       <div className={classes.canadaLogo}>
         <img
           src={process.env.PUBLIC_URL + '/images/wmms.svg'}

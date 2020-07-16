@@ -7,7 +7,7 @@ import Visibility from '@material-ui/icons/Visibility';
 import VisibilityOff from '@material-ui/icons/VisibilityOff';
 
 import {XS_SCREEN} from '../Theme/constants';
-import LoginFooter from './Footers/LoginFooter';
+import CenteredFooter from './Footers/CenteredFooter';
 
 // import ReactDOM from 'react-dom';
 
@@ -514,7 +514,7 @@ function ForgotPassword(props) {
             {isXsScreen && <Divider className={classes.loginDivider} />}
           </Paper>
         )}
-        <LoginFooter />
+        <CenteredFooter />
       </Grid>
     </Grid>
   );

@@ -177,6 +177,13 @@ export const useStyles = makeStyles({
       color: theme.palette.grey[600],
       fill: theme.palette.grey[600],
     },
+    '.list-horizontal': {
+      'display': 'inline-block',
+      'padding': 0,
+      '& li': {
+        display: 'inline-block',
+      },
+    },
     '.page-container': {
       marginTop: theme.spacing(8),
       padding: theme.spacing(0, 2),
