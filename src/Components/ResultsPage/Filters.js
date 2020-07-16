@@ -135,9 +135,9 @@ const FiltersContent = React.forwardRef((props, ref) => {
 
   return (
     <React.Fragment>
-      <Button className="screen-reader-text" onClick={handleClick}>
+      {!props.isSmScreen && (<Button className="screen-reader-text" onClick={handleClick}>
         {t('Skip filters')}
-      </Button>
+      </Button>)}
       <div className={classes.filterHeader}>
         <Icon path={mdiTune} size={1} />
         <Typography variant="h6" component="h2" className="ml-2">
