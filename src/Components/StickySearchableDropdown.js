@@ -98,7 +98,7 @@ export default function StickySearchableDropdown(props) {
         }}
         expandIcon={<ExpandMoreIcon />}
       >
-        <Typography variant="subtitle2">{props.summary}</Typography>
+        <Typography variant="subtitle2" component="h3">{props.summary}</Typography>
       </ExpansionPanelSummary>
       <ExpansionPanelDetails className={classes.details}>
         {props.filterable && (
