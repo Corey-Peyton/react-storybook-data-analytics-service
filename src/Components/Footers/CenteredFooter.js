@@ -6,12 +6,11 @@ import Icon from '@mdi/react';
 import {mdiFacebook, mdiTwitter} from '@mdi/js';
 const useStyles = makeStyles((theme) => ({
   footer: {
-    margin: theme.spacing(3, 0, 3, 0),
-    display: 'flex',
-    flexWrap: 'wrap',
-    alignItems: 'center',
-    [theme.breakpoints.down('sm')]: {
-      'justifyContent': 'center',
+    margin: theme.spacing(6, 0, 6, 0),
+    textAlign: 'center',
+    [theme.breakpoints.down('xs')]: {
+      'marginTop': 0,
+      'marginBottom': theme.spacing(3),
       '& ul': {
         display: 'flex',
         flexWrap: 'wrap',
@@ -25,14 +24,12 @@ const useStyles = makeStyles((theme) => ({
     margin: theme.spacing(0, 0.5, 0, 0),
   },
   canadaLogo: {
+    display: 'block',
+    margin: 'auto',
+    marginTop: theme.spacing(6),
     height: '24px',
-    flexGrow: 1,
-    textAlign: 'right',
-    paddingRight: theme.spacing(1),
-    [theme.breakpoints.down('sm')]: {
-      width: '100%',
+    [theme.breakpoints.down('xs')]: {
       marginTop: theme.spacing(3),
-      textAlign: 'center',
     },
   },
   langBtnContainer: {
@@ -41,15 +38,17 @@ const useStyles = makeStyles((theme) => ({
     borderRightWidth: '1px',
     borderRightStyle: 'solid',
     borderRightColor: theme.palette.divider,
+    display: 'inline-block',
+    height: 'auto',
   },
 }));
 
-const Footer = React.forwardRef((props, ref) => {
+const CenteredFooter = (props) => {
   const {t} = useTranslation();
   const classes = useStyles();
 
   return (
-    <footer className={classes.footer} ref={ref} tabIndex="-1">
+    <footer className={classes.footer}>
       <ul className="list-horizontal">
         <li>
           <div className={classes.langBtnContainer}>
@@ -66,8 +65,7 @@ const Footer = React.forwardRef((props, ref) => {
             className={classes.footerBtn}
           >
             <Icon path={mdiFacebook} size={1} className="icon-grey" />
-          </IconButton>
-        </li>
+          </IconButton></li>
         <li>
           <IconButton
             aria-label={t('Twitter')}
@@ -75,8 +73,7 @@ const Footer = React.forwardRef((props, ref) => {
             className={classes.footerBtn}
           >
             <Icon path={mdiTwitter} size={1} className="icon-grey" />
-          </IconButton>
-        </li>
+          </IconButton></li>
         <li>
           <Button className={classes.footerBtn}>{t('About')}</Button>
         </li>
@@ -87,14 +84,13 @@ const Footer = React.forwardRef((props, ref) => {
           <Button className={classes.footerBtn}>{t('Privacy')}</Button>
         </li>
       </ul>
-      <div className={classes.canadaLogo}>
-        <img
-          src={process.env.PUBLIC_URL + '/images/wmms.svg'}
-          alt={t('Symbol of the Government of Canada')}
-        />
-      </div>
+      <img
+        src={process.env.PUBLIC_URL + '/images/wmms.svg'}
+        alt={t('Symbol of the Government of Canada')}
+        className={classes.canadaLogo}
+      />
     </footer>
   );
-});
+};
 
-export default Footer;
+export default CenteredFooter;

@@ -5,7 +5,7 @@ import {Button, Divider, Grid, Paper} from '@material-ui/core';
 import {makeStyles} from '@material-ui/core/styles';
 
 import {XS_SCREEN} from '../Theme/constants';
-import LoginFooter from './Footers/LoginFooter';
+import CenteredFooter from './Footers/CenteredFooter';
 
 const useStyles = makeStyles((theme) => ({
   container: {
@@ -139,7 +139,7 @@ function SplashPage(props) {
           </div>
           {isXsScreen && <Divider className={classes.splashDivider} />}
         </Paper>
-        <LoginFooter />
+        <CenteredFooter />
       </Grid>
     </Grid>
   );

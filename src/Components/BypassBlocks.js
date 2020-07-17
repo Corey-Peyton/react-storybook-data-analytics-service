@@ -45,11 +45,12 @@ const BypassBlocks = React.forwardRef((props, ref) => {
   };
 
   const handleMainClick = () => {
+    console.log(ref.main);
     ref.main.current.focus();
   };
 
   const handleAboutClick = () => {
-    console.log(ref);
+    console.log(ref.about);
     ref.about.current.focus();
   };
 

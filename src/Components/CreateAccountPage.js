@@ -8,7 +8,7 @@ import VisibilityOff from '@material-ui/icons/VisibilityOff';
 import {Link as RouterLink, withRouter} from 'react-router-dom';
 
 import {XS_SCREEN} from '../Theme/constants';
-import LoginFooter from './Footers/LoginFooter';
+import CenteredFooter from './Footers/CenteredFooter';
 
 const useStyles = makeStyles((theme) => ({
   bodyText: {
@@ -483,7 +483,7 @@ function CreateAccountPage(props) {
               {isXsScreen && <Divider className={classes.loginDivider} />}
             </Paper>
           )}
-        <LoginFooter />
+        <CenteredFooter />
       </Grid>
     </Grid>
   );
