@@ -65,8 +65,8 @@ export default function RequestListAnalyst(props) {
   const projectsSorted = sortByKey(projects, 'title');
 
   return (
-    <React.Fragment>        
-        <h1>Request list analyst</h1>
+    <React.Fragment>
+      <h1>Request list analyst</h1>
       {/* {projectsSorted.map((project) => {
         if (project.status === props.status || props.status === 'All') {
           const isActive = project.status === 'Active';

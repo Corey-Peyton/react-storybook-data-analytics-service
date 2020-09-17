@@ -66,7 +66,6 @@ export default function RequestListResearcher(props) {
 
   return (
     <React.Fragment>
-        <h1>Request list researcher</h1>
       {/* {projectsSorted.map((project) => {
         if (project.status === props.status || props.status === 'All') {
           const isActive = project.status === 'Active';

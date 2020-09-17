@@ -39,14 +39,14 @@ function Index() {
           <Link to="/sign-in/verify-identity">Forgot password</Link>
         </li>
         <li>
-          <strong>Vetting app</strong>          
+          <strong>Vetting app</strong>
         </li>
         <ul>
           <li>
             <Link to="/vetting-app/request-list-researcher">Requests list researcher</Link>
           </li>
           <li>
-            <Link to="/vetting-app/request-list-analyst">Requests list analyst</Link>            
+            <Link to="/vetting-app/request-list-analyst">Requests list analyst</Link>
           </li>
         </ul>
       </ul>
