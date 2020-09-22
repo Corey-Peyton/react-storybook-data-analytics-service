@@ -21,6 +21,8 @@ import {useStyles} from '../Theme/globalStyles';
 import {theme} from '../Theme/theme';
 import Index from './Index';
 
+import VettingRequestResearcher from '../Components/VettingApp/VettingRequestResearcher';
+
 export default function AppRouter() {
   useStyles();
 
@@ -28,7 +30,8 @@ export default function AppRouter() {
     <HashRouter>
       <ThemeProvider theme={theme}>
         <Switch>
-          <Route path="/" component={SplashPage} exact={true} />
+          {/* FIX THISSSSSSSs*/}
+          <Route path="/" component={VettingRequestResearcher} exact={true} />
           <Route path="/index" component={Index} /> {/* PROTOTYPE ONLY */}
           <Route path="/sign-in" component={SignInPage} exact={true}/>
           <Route path="/sign-in/verify-identity" component={ForgotPassword} />
