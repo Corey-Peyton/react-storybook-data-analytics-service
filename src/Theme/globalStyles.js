@@ -75,6 +75,7 @@ export const useStyles = makeStyles({
     '.MuiFormLabel-root': {
       fontSize: '0.875rem',
       marginTop: '1px',
+      color: theme.palette.text.primary,
     },
     '.MuiInputBase-input': {
       fontSize: '0.875rem',
