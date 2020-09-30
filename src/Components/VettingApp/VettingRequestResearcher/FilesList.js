@@ -28,11 +28,6 @@ const useStyles = makeStyles((theme) => ({
       maxWidth: '350px',
     },
   },
-  // tableBody: {
-  //   borderBottomStyle: 'solid',
-  //   borderBottomWidth: '1px',
-  //   borderBottomColor: theme.palette.grey[600],
-  // },
 }));
 
 const files = [
@@ -80,56 +75,52 @@ function FilesList(props) {
 
   return (
     <React.Fragment>
-      <Grid container justify="center" className="mb-4">
-        <Grid item xs={8}>
-          <Typography>
-            A brief explanation is needed to explain to external users what and
-            why they need to complete this section.
-          </Typography>
-          <Divider className={classes.divider} />
-          <Typography component="h2" variant="h6">
-            Output files
-          </Typography>
-          <Table className={classes.table}>
-            <TableHead>
-              <TableRow>
-                <TableCell sortDirection={order}>
-                  <TableSortLabel
-                    active={true}
-                    direction={order}
-                    onClick={handleRequestSort}
-                  >
-                    File name
-                    <span className="screen-reader-text">
-                      {order === 'desc'
-                        ? 'sorted descending'
-                        : 'sorted ascending'}
-                    </span>
-                  </TableSortLabel>
+      <Typography>
+        A brief explanation is needed to explain to external users what and why
+        they need to complete this section.
+      </Typography>
+      <Divider className={classes.divider} />
+      <Typography component="h2" variant="h6">
+        Output files
+      </Typography>
+      <Table className={classes.table}>
+        <TableHead>
+          <TableRow>
+            <TableCell sortDirection={order}>
+              <TableSortLabel
+                active={true}
+                direction={order}
+                onClick={handleRequestSort}
+              >
+                File name
+                <span className="screen-reader-text">
+                  {order === 'desc' ? 'sorted descending' : 'sorted ascending'}
+                </span>
+              </TableSortLabel>
+            </TableCell>
+            <TableCell align="right">Actions</TableCell>
+          </TableRow>
+        </TableHead>
+        <TableBody>
+          {stableSort(files, getComparator(order, 'name')).map((file) => {
+            return (
+              <TableRow key={file.name}>
+                <TableCell className={classes.fileName}>
+                  <Typography variant="body2">{file.name}</Typography>
                 </TableCell>
-                <TableCell align="right">Actions</TableCell>
+                <TableCell align="right">
+                  <IconButton aria-label={`options for ${file.name}`}>
+                    <MoreVertIcon />
+                  </IconButton>
+                </TableCell>
               </TableRow>
-            </TableHead>
-            <TableBody>
-              {stableSort(files, getComparator(order, 'name')).map((file) => {
-                return (
-                  <TableRow key={file.name}>
-                    <TableCell className={classes.fileName}>
-                      <Typography variant="body2">{file.name}</Typography>
-                    </TableCell>
-                    <TableCell align="right">
-                      <IconButton aria-label={`options for ${file.name}`}>
-                        <MoreVertIcon />
-                      </IconButton>
-                    </TableCell>
-                  </TableRow>
-                );
-              })}
-            </TableBody>
-          </Table>
-          <Button variant="contained" color="primary">Add Output File</Button>
-        </Grid>
-      </Grid>
+            );
+          })}
+        </TableBody>
+      </Table>
+      <Button variant="contained" color="primary">
+        Add Output File
+      </Button>
     </React.Fragment>
   );
 }
