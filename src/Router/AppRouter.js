@@ -31,13 +31,14 @@ export default function AppRouter() {
       <ThemeProvider theme={theme}>
         <Switch>
           {/* FIX THISSSSSSSs*/}
-          <Route path="/" component={VettingRequestResearcher} exact={true} />
-          <Route path="/index" component={Index} /> {/* PROTOTYPE ONLY */}
+          <Route path="/" component={Index} exact={true} /> {/* PROTOTYPE ONLY */}
+          <Route path="/splash" component={SplashPage} />
           <Route path="/sign-in" component={SignInPage} exact={true}/>
           <Route path="/sign-in/verify-identity" component={ForgotPassword} />
           <Route path="/sign-in/create-account" component={CreateAccountPage} />
           <Route path="/projects" component={ProjectsPage} />
           <Route path="/results" component={ResultsPage} exact={true} />
+          <Route path="/vetting-app/request-researcher" component={VettingRequestResearcher} />
 
           {/* Routes for archived pages */}
           <Route path="/archived/home" component={LandingPage} />
