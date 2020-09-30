@@ -4,6 +4,8 @@ import {Paper, Container, Grid, Button} from '@material-ui/core';
 import ArrowForwardIosIcon from '@material-ui/icons/ArrowForwardIos';
 import ArrowBackIosIcon from '@material-ui/icons/ArrowBackIos';
 
+import Header from './CommonComponents/Header';
+import Footer from './CommonComponents/Footer';
 import ResearcherInfo from './ResearcherInfo';
 import FilesList from './FilesList';
 import ModifyFile from './ModifyFile';
@@ -33,45 +35,49 @@ function VettingRequestResearcher(props) {
   const classes = useStyles();
 
   return (
-    <main className={classes.main} tabIndex="-1">
-      <Container maxWidth="xl" className="page-container">
-        <Paper className={classes.paper}>
-          <Grid container justify="center" className="mb-4">
-            <Grid item xs={6}>
-              <ResearcherInfo />
-              {/* <FilesList /> */}
-              {/* <ModifyFile /> */}
+    <React.Fragment>
+      <Header />
+      <main className={classes.main} tabIndex="-1">
+        <Container maxWidth="xl" className="page-container">
+          <Paper className={classes.paper}>
+            <Grid container justify="center" className="mb-4">
+              <Grid item xs={6}>
+                <ResearcherInfo />
+                {/* <FilesList /> */}
+                {/* <ModifyFile /> */}
+              </Grid>
             </Grid>
-          </Grid>
-          <Grid
-            container
-            justify="space-between"
-            className={classes.navButtons}
-          >
-            <Grid item>
-              <Button
-                variant="contained"
-                color="primary"
-                className={classes.button}
-                startIcon={<ArrowBackIosIcon />}
-              >
-                Back
-              </Button>
+            <Grid
+              container
+              justify="space-between"
+              className={classes.navButtons}
+            >
+              <Grid item>
+                <Button
+                  variant="contained"
+                  color="primary"
+                  className={classes.button}
+                  startIcon={<ArrowBackIosIcon />}
+                >
+                  Back
+                </Button>
+              </Grid>
+              <Grid item>
+                <Button
+                  variant="contained"
+                  color="primary"
+                  className={classes.button}
+                  endIcon={<ArrowForwardIosIcon />}
+                >
+                  Next
+                </Button>
+              </Grid>
             </Grid>
-            <Grid item>
-              <Button
-                variant="contained"
-                color="primary"
-                className={classes.button}
-                endIcon={<ArrowForwardIosIcon />}
-              >
-                Next
-              </Button>
-            </Grid>
-          </Grid>
-        </Paper>
-      </Container>
-    </main>
+          </Paper>
+        </Container>
+      </main>
+      <Footer />
+    </React.Fragment>
   );
 }
 export default VettingRequestResearcher;
