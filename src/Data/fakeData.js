@@ -265,6 +265,7 @@ export const projects = [
 
 export const requestListResearchers = [
   {
+    id: '1001-1234567',
     name: 'DAaas-1234567',
     status: 'Awaiting review',
     cancellationReason: '',
@@ -284,6 +285,7 @@ export const requestListResearchers = [
     summary: 'Some summary content goes here',
   },
   {
+    id: '1001-1234569',
     name: 'DAaas-0000001',
     status: 'Approved',
     cancellationReason: '',
@@ -303,6 +305,7 @@ export const requestListResearchers = [
     summary: 'Some summary content goes here',
   },
   {
+    id: '1001-1234501',
     name: 'DAaas-0000002',
     status: 'Draft',
     cancellationReason: '',
@@ -322,8 +325,9 @@ export const requestListResearchers = [
     summary: 'Some summary content goes here',
   },
   {
+    id: '1001-1234502',
     name: 'DAaas-0000003',
-    status: 'Denied',
+    status: 'Closed',
     cancellationReason: '',
     submitted: 'August 20, 2020',
     updated: 'August 24, 2020',
@@ -339,8 +343,9 @@ export const requestListResearchers = [
     summary: 'Some summary content goes here',
   },
   {
+    id: '1001-1234503',
     name: 'DAaas-0000004',
-    status: 'Cancel',
+    status: 'Closed',
     cancellationReason: 'No supporting documentation was provided by the researcher.',
     submitted: 'August 20, 2020',
     updated: 'August 24, 2020',
@@ -354,6 +359,7 @@ export const requestListResearchers = [
     summary: 'Some summary content goes here',
   },
   {
+    id: '1001-1234504',
     name: 'DAaas-0000005',
     status: 'Draft',
     cancellationReason: '',
@@ -369,6 +375,7 @@ export const requestListResearchers = [
     summary: 'Some summary content goes here',
   },
   {
+    id: '1001-1234505',
     name: 'DAaas-0000006',
     status: 'Awaiting review',
     cancellationReason: '',
@@ -385,6 +392,7 @@ export const requestListResearchers = [
     summary: 'Some summary content goes here',
   },
   {
+    id: '1001-1234506',
     name: 'DAaas-0000007',
     status: 'Approved',
     cancellationReason: '',
@@ -400,6 +408,7 @@ export const requestListResearchers = [
     summary: 'Some summary content goes here',
   },
   {
+    id: '1001-1234507',
     name: 'DAaas-0000008',
     status: 'Approved',
     cancellationReason: '',
@@ -416,6 +425,7 @@ export const requestListResearchers = [
     summary: 'Some summary content goes here',
   },
   {
+    id: '1001-1234508',
     name: 'DAaas-0000009',
     status: 'Draft',
     cancellationReason: '',
@@ -431,6 +441,7 @@ export const requestListResearchers = [
     summary: 'Some summary content goes here',
   },
   {
+    id: '1001-1234509',
     name: 'DAaas-0000010',
     status: 'Draft',
     cancellationReason: '',
@@ -446,6 +457,7 @@ export const requestListResearchers = [
     summary: 'Some summary content goes here',
   },
   {
+    id: '1001-1234510',
     name: 'DAaas-0000011',
     status: 'Draft',
     cancellationReason: '',
@@ -461,6 +473,7 @@ export const requestListResearchers = [
     summary: 'Some summary content goes here',
   },
   {
+    id: '1001-1234511',
     name: 'DAaas-0000012',
     status: 'Awaiting review',
     cancellationReason: '',
@@ -480,6 +493,7 @@ export const requestListResearchers = [
     summary: 'Some summary content goes here',
   },
   {
+    id: '1001-1234512',
     name: 'DAaas-0000013',
     status: 'Approved',
     cancellationReason: '',
@@ -499,6 +513,7 @@ export const requestListResearchers = [
     summary: 'Some summary content goes here',
   },
   {
+    id: '1001-1234513',
     name: 'DAaas-0000014',
     status: 'Draft',
     cancellationReason: '',
@@ -518,8 +533,9 @@ export const requestListResearchers = [
     summary: 'Some summary content goes here',
   },
   {
+    id: '1001-1234514',
     name: 'DAaas-0000015',
-    status: 'Denied',
+    status: 'Closed',
     cancellationReason: '',
     submitted: 'August 20, 2020',
     updated: 'August 24, 2020',
@@ -535,8 +551,9 @@ export const requestListResearchers = [
     summary: 'Some summary content goes here',
   },
   {
+    id: '1001-1234515',
     name: 'DAaas-0000016',
-    status: 'Cancel',
+    status: 'Closed',
     cancellationReason: 'No supporting documentation was provided by the researcher.',
     submitted: 'August 20, 2020',
     updated: 'August 24, 2020',
@@ -550,6 +567,7 @@ export const requestListResearchers = [
     summary: 'Some summary content goes here',
   },
   {
+    id: '1001-1234516',
     name: 'DAaas-0000017',
     status: 'Draft',
     cancellationReason: '',

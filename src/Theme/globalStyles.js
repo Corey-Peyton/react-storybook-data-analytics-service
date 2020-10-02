@@ -132,6 +132,12 @@ export const useStyles = makeStyles({
       minWidth: '2.5rem',
       borderRadius: '24px',
     },
+
+    // Autocomplete
+    '.MuiAutocomplete-endAdornment': {
+      top: 5.5,
+    },
+
     // *********** Custom styles **************
     '.avatar-orange': {
       color: theme.palette.getContrastText(deepOrange[500]),

@@ -1,227 +1,287 @@
+
 import React from 'react';
 import {useTranslation} from 'react-i18next';
-import Icon from '@mdi/react';
-import {
-  mdiMonitorCellphone,
-  mdiCheckCircle,
-  mdiWindows,
-  mdiInformationOutline,
-} from '@mdi/js';
-import {
-  Typography,
-  TableCell,
-  TableRow,
-  Grid,
-  IconButton,
-  LinearProgress,
-} from '@material-ui/core';
-import {makeStyles} from '@material-ui/styles';
-import ReplayIcon from '@material-ui/icons/Replay';
-import StopIcon from '@material-ui/icons/Stop';
-import PlayArrowIcon from '@material-ui/icons/PlayArrow';
+import {AppBar, Tab, Tabs, Toolbar, Typography, TextField, Button} from '@material-ui/core';
+import InputLabel from '@material-ui/core/InputLabel';
+import MenuItem from '@material-ui/core/MenuItem';
+import FormControl from '@material-ui/core/FormControl';
+import Select from '@material-ui/core/Select';
 import {sortByKey} from '../../Utils/sorting';
-import {projects} from '../../Data/fakeData';
+import {makeStyles} from '@material-ui/styles';
+import clsx from 'clsx';
+
+import {HEAD_H, HEAD_H_XS} from '../../Theme/constants';
+import BypassBlocks from '../BypassBlocks';
+import Footer from '../Footers/Footer';
+import Header from './CommonComponents/Header';
+import ProjectDetails from './ProjectDetails';
+import ProjectTabs from './ProjectTabs';
+
+export const DRAWER_WIDTH = 420;
 
 const useStyles = makeStyles((theme) => ({
-  info: {
-    borderLeftWidth: '1px',
-    borderLeftStyle: 'solid',
-    borderLeftColor: theme.palette.grey[300],
-    padding: [theme.spacing(0, 1), '!important'],
+  appBar: {
+    color: theme.palette.text.primary,
+    backgroundColor: theme.palette.common.white,
+    position: 'fixed',
+    top: 0,
+    left: 'auto',
   },
-  storage: {
+  toolbar: {
+    minHeight: '88px',
+    display: 'block',
+    marginTop: HEAD_H,
+    [theme.breakpoints.down('xs')]: {
+      marginTop: HEAD_H_XS,
+    },
+  },
+  appBarDiv1: {
+    display: 'flex',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    marginBottom: theme.spacing(2),
+  },
+  appBarDiv2: {
+    display: 'flex',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+  },
+  hide: {
+    display: 'none',
+  },
+  content: {
     flexGrow: 1,
-  },
-  storageBar: {
-    height: theme.spacing(1),
-    width: '100%',
-    backgroundColor: theme.palette.grey[300],
-    margin: theme.spacing(0.5, 0),
-  },
-  storageBarGrey: {
-    '& .MuiLinearProgress-bar': {
-      backgroundColor: theme.palette.grey[500],
+    transition: theme.transitions.create('margin', {
+      easing: theme.transitions.easing.sharp,
+      duration: theme.transitions.duration.leavingScreen,
+    }),
+    marginTop: `calc(120px + ${HEAD_H}px)`,
+    [theme.breakpoints.down('xs')]: {
+      marginTop: `calc(88px + ${HEAD_H_XS}px)`,
     },
+    marginRight: 0,
   },
-  storageBarFull: {
-    '& .MuiLinearProgress-bar': {
-      backgroundColor: theme.palette.error.main,
-    },
+  contentShift: {
+    transition: theme.transitions.create('margin', {
+      easing: theme.transitions.easing.easeOut,
+      duration: theme.transitions.duration.enteringScreen,
+    }),
+    marginRight: DRAWER_WIDTH,
   },
-  greyedOutIcon: {
-    fill: theme.palette.grey[400],
+  projectDropdown: {
+    float: 'right',
+    marginLeft: 'auto',
+    marginBottom: theme.spacing(1),
   },
-  tableRow: {
-    '& svg': {
-      verticalAlign: 'middle',
-    },
+  tabs: {
+    float: 'left',
+  },
+  selectTab: {
+    marginLeft: 'auto',
+    width: 300,
+    float: 'right',
+    marginBottom: theme.spacing(1),
   },
 }));
+
+function a11yProps(index) {
+  return {
+    'id': `projects-tab-${index}`,
+    'aria-controls': `projects-tabpanel-${index}`,
+  };
+}
 
 export default function RequestListResearcher(props) {
   const classes = useStyles();
   const {t} = useTranslation();
 
-  const projectsSorted = sortByKey(projects, 'title');
+  const [open, setOpen] = React.useState({
+    details: false,
+    apps: false,
+    datasets: false,
+  });
+  const mainRef = React.createRef();
+  const aboutRef = React.createRef();
+
+  const [value, setValue] = React.useState(0);
+
+  const handleChange = (event, newValue) => {
+    setValue(newValue);
+  };
+
+  if (!Element.prototype.matches) {
+    Element.prototype.matches = Element.prototype.msMatchesSelector || Element.prototype.webkitMatchesSelector;
+  }
+
+  if (!Element.prototype.closest) {
+    Element.prototype.closest = function(s) {
+      let el = this;
+
+      do {
+        if (Element.prototype.matches.call(el, s)) return el;
+        el = el.parentElement || el.parentNode;
+      } while (el !== null && el.nodeType === 1);
+      return null;
+    };
+  }
+
+  const toggleDetailsDrawer = (event) => {
+    setOpen({...open, details: !open.details});
+    if (!open.details) {
+      if (document.getElementById('active-btn') != null) { // search the page for existing active-btn ID and remove it
+        document.getElementById('active-btn').removeAttribute('id');
+      }
+      if (event.target !== document.querySelector('button')) { // check if the clicked element is on exactly the <button>
+        event.target.closest('button').setAttribute('id', 'active-btn'); // traverse to <button>, designate it the active-btn
+      } else {
+        event.target.setAttribute('id', 'active-btn'); // if <button> element was clicked, designate it active-btn
+      }
+      setTimeout(() => { // change focus to close button within details drawer
+        document.getElementById('details-close').focus();
+      }, 200);
+    } else {
+      if (event.target.closest('button').classList.contains('info-btn') && event.target.closest('button').id !== 'active-btn' ) {
+        setOpen({...open, details: false});
+        document.getElementById('active-btn').removeAttribute('id');
+        event.target.closest('button').setAttribute('id', 'active-btn'); // if <button> element was clicked, designate it active-btn
+
+        setTimeout(() => {
+          setOpen({...open, details: true});
+          document.getElementById('details-close').focus();
+        }, 500);
+      } else {
+        setTimeout(() => { // change focus to active-btn
+          document.querySelector('#active-btn').focus();
+        }, 200);
+      }
+    }
+  };
+
+  const projectList = [
+    {title: 'DAaas-1234567'},
+    {title: 'DAaas-3395795'},
+    {title: 'A short project name'},
+    {title: 'A very very very very very long project name'},
+  ];
+
+  // const projectsSorted = sortByKey(projectList, 'title');
+
+  React.useEffect(() => {
+    document.title = t('DAaaS - Vetting requests list');
+  });
 
   return (
     <React.Fragment>
-      {/* {projectsSorted.map((project) => {
-        if (project.status === props.status || props.status === 'All') {
-          const isActive = project.status === 'Active';
-          const spaceUsed =
-            (project.storage.used / project.storage.total) * 100;
-          const isAlmostFull = spaceUsed >= 90;
-
-          return (
-            <TableRow
-              key={project.id}
-              hover={isActive ? true : false}
-              className={classes.tableRow}
+      <BypassBlocks ref={{main: mainRef, about: aboutRef}} />
+      <Header flat={true}/>
+      <AppBar
+        position="fixed"
+        component="div"
+        elevation={4}
+        className={classes.appBar}
+        ref={mainRef} tabIndex="-1"
+      >
+        <Toolbar className={classes.toolbar}>
+          <div className={classes.appBarDiv1}>
+            <Typography component="h1" variant="h6" gutterBottom>
+              {t('Vetting requests list')}
+            </Typography>
+            <Button variant="contained" color="primary">
+              {t('New vetting request')}
+            </Button>
+          </div>
+          <div className={classes.appBarDiv2}>
+            <Tabs
+              value={value}
+              onChange={handleChange}
+              indicatorColor="primary"
+              textColor="primary"
+              aria-label={t('Projects list')}
+              className={classes.tabs}
             >
-              <TableCell>
-                <Grid container spacing={2} alignItems="center" wrap="nowrap">
-                  <Grid item>
-                    <Icon
-                      path={mdiMonitorCellphone}
-                      size={1}
-                      className={isActive ? '' : classes.greyedOutIcon}
-                    />
-                  </Grid>
-                  <Grid item>
-                    <Typography
-                      variant="body2"
-                      color={isActive ? 'textPrimary' : 'textSecondary'}
-                    >
-                      {project.title}
-                    </Typography>
-                    <Typography
-                      variant="caption"
-                      color={isActive ? 'textPrimary' : 'textSecondary'}
-                    >
-                      {t('ID')} {project.id}
-                    </Typography>
-                  </Grid>
-                </Grid>
-              </TableCell>
-              <TableCell>
-                <Grid container spacing={2} alignItems="center" wrap="nowrap">
-                  <Grid item>
-                    <Icon
-                      path={mdiCheckCircle}
-                      size={1}
-                      className={isActive ? '' : classes.greyedOutIcon}
-                    />
-                  </Grid>
-                  <Grid item>
-                    <Typography
-                      variant="body2"
-                      color={isActive ? 'textPrimary' : 'textSecondary'}
-                    >
-                      {project.status}
-                    </Typography>
-                    <Typography
-                      variant="caption"
-                      color={isActive ? 'textPrimary' : 'textSecondary'}
-                    >
-                      {t('Expiring on')}{' '}
-                      {new Intl.DateTimeFormat('en-US', {
-                        month: 'long',
-                        day: '2-digit',
-                        year: 'numeric',
-                      }).format(new Date(project.expiry))}
-                    </Typography>
-                  </Grid>
-                </Grid>
-              </TableCell>
-              <TableCell>
-                <Grid container spacing={2} alignItems="center" wrap="nowrap">
-                  <Grid item>
-                    <Icon
-                      path={mdiWindows}
-                      size={1}
-                      className={isActive ? '' : classes.greyedOutIcon}
-                    />
-                  </Grid>
-                  <Grid item className={classes.storage}>
-                    <Typography
-                      variant="body2"
-                      color={isActive ? 'textPrimary' : 'textSecondary'}
-                    >
-                      {project.state}
-                    </Typography>
-                    <LinearProgress
-                      className={`${classes.storageBar} ${
-                        // add correct color class if inactive or almost full
-                        !isActive
-                          ? classes.storageBarGrey
-                          : isAlmostFull
-                          ? classes.storageBarFull
-                          : ''
-                      }`}
-                      variant="determinate"
-                      value={spaceUsed}
-                    />
-                    <Typography
-                      variant="caption"
-                      color={isActive ? 'textPrimary' : 'textSecondary'}
-                    >
-                      {project.storage.used} {project.storage.units} of{' '}
-                      {project.storage.total} {project.storage.units} used
-                    </Typography>
-                  </Grid>
-                  <Grid item>
-                    <IconButton
-                      aria-label="start"
-                      disabled={
-                        project.state === 'Running' || !isActive ? true : false
-                      }
-                    >
-                      <PlayArrowIcon />
-                    </IconButton>
-                  </Grid>
-                  <Grid item>
-                    <IconButton
-                      aria-label="restart"
-                      disabled={
-                        project.state === 'Running' && isActive ? false : true
-                      }
-                    >
-                      <ReplayIcon />
-                    </IconButton>
-                  </Grid>
-                  <Grid item>
-                    <IconButton
-                      aria-label="stop"
-                      disabled={
-                        project.state === 'Running' && isActive ? false : true
-                      }
-                    >
-                      <StopIcon />
-                    </IconButton>
-                  </Grid>
-                  <Grid item className={classes.info}>
-                    <IconButton
-                      aria-label="information"
-                      onClick={props.toggleDetailsDrawer}
-                      disabled={isActive ? false : true}
-                      className="info-btn"
-                    >
-                      <Icon
-                        path={mdiInformationOutline}
-                        size={1}
-                        className={isActive ? 'icon-grey' : classes.greyedOutIcon}
-                      />
-                    </IconButton>
-                  </Grid>
-                </Grid>
-              </TableCell>
-            </TableRow>
-          );
-        } else {
-          return '';
-        }
-      })} */}
+              <Tab
+                label={
+                  <React.Fragment>
+                    <span className="tab-badge">
+                      {t('All')}{' '}
+                    </span>
+                  </React.Fragment>
+                }
+                {...a11yProps(0)}
+              />
+              <Tab
+                label={
+                  <React.Fragment>
+                    <span className="tab-badge">
+                      {t('Draft')}{' '}
+                    </span>
+                  </React.Fragment>
+                }
+                {...a11yProps(1)}
+              />
+              <Tab
+                label={
+                  <React.Fragment>
+                    <span className="tab-badge">
+                      {t('Awaiting review')}{' '}
+                    </span>
+                  </React.Fragment>
+                }
+                {...a11yProps(2)}
+              />
+              <Tab
+                label={
+                  <React.Fragment>
+                    <span className="tab-badge">
+                      {t('Approved')}{' '}
+                    </span>
+                  </React.Fragment>
+                }
+                {...a11yProps(3)}
+              />
+              <Tab
+                label={
+                  <React.Fragment>
+                    <span className="tab-badge">
+                      {t('Closed')}{' '}
+                    </span>
+                  </React.Fragment>
+                }
+                {...a11yProps(4)}
+              />
+            </Tabs>
+            <FormControl variant="outlined" className={classes.selectTab}>
+              <InputLabel id="demo-simple-select-outlined-label">Search project</InputLabel>
+              <Select
+                labelId="demo-simple-select-outlined-label"
+                id="demo-simple-select-outlined"
+                label="Search project"
+              >
+                <MenuItem value="">&nbsp;</MenuItem>
+                {projectList.map((project) => {
+                  return (
+                    <MenuItem value={project.title}>{project.title}</MenuItem>
+                  );
+                })}
+              </Select>
+            </FormControl>
+          </div></Toolbar>
+      </AppBar>
+      <div
+        className={clsx(classes.content, {
+          [classes.contentShift]: open.details || open.apps || open.datasets,
+        })}
+      >
+        <ProjectTabs
+          toggleDetailsDrawer={toggleDetailsDrawer}
+          value={value}
+        />
+        <ProjectDetails
+          open={open.details}
+          toggleDetailsDrawer={toggleDetailsDrawer}
+        />
+        <Footer ref={aboutRef} tabindex="-1"/>
+      </div>
     </React.Fragment>
   );
 }
