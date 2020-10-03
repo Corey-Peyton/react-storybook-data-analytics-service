@@ -26,14 +26,79 @@ import BypassBlocks from '../BypassBlocks';
 
 import {requestListResearchers} from '../../Data/fakeData';
 
+const useStyles = makeStyles((theme) => ({
+  root: {
+    width: '100%',
+    backgroundColor: '#f0f0f0',
+  },
+  paper: {
+    width: '100%',
+    marginBottom: theme.spacing(2),
+    backgroundColor: '#f0f0f0',
+  },
+  appBar: {
+    color: theme.palette.text.primary,
+    backgroundColor: theme.palette.common.white,
+    position: 'static',
+    top: 0,
+    left: 'auto',
+  },
+  tableContainer: {
+    backgroundColor: 'white',
+    width: 'auto',
+    margin: '100px',
+  },
+  table: {
+  },
+  visuallyHidden: {
+    border: 0,
+    clip: 'rect(0 0 0 0)',
+    height: 1,
+    margin: -1,
+    overflow: 'hidden',
+    padding: 0,
+    position: 'absolute',
+    top: 20,
+    width: 1,
+  },
+  thead: {
+    width: '15.7%',
+  },
+  tabPanel: {
+    '& .MuiBox-root': {
+      paddingTop: 0,
+      boxSizing: 'border-box',
+      minHeight: `calc(100vh - ${HEAD_H}px - ${FOOT_H}px - 88px)`,
+      maxHeight: `calc(100vh - ${HEAD_H}px - ${FOOT_H}px - 88px)`,
+      overflowY: 'auto',
+    },
+  },
+  tableHead: {
+    '& th': {
+      padding: theme.spacing(2.5, 1),
+    },
+  },
+}));
+
 function createData(submitted, updated, requesterEmail, analystEmail, status, files) {
   return {submitted, updated, requesterEmail, analystEmail, status, files};
 }
 
+let tabStatus = 'All';
+
 const rows = requestListResearchers.map((el, index) =>
   createData(el.submitted, el.updated, el.requesterEmail, el.analystEmail, el.status, el.files)
 );
-console.log(rows);
+
+const filteredRows = () => {
+  if (tabStatus === 'All') {
+    return rows;
+  } else {
+    return (
+      rows.filter((val) => val.status === tabStatus)
+    );
+  }
+};
 
 function descendingComparator(a, b, orderBy) {
   if (b[orderBy] < a[orderBy]) {
@@ -115,60 +180,6 @@ EnhancedTableHead.propTypes = {
   rowCount: PropTypes.number.isRequired,
 };
 
-const useStyles = makeStyles((theme) => ({
-  root: {
-    width: '100%',
-    backgroundColor: '#f0f0f0',
-  },
-  paper: {
-    width: '100%',
-    marginBottom: theme.spacing(2),
-    backgroundColor: '#f0f0f0',
-  },
-  appBar: {
-    color: theme.palette.text.primary,
-    backgroundColor: theme.palette.common.white,
-    position: 'static',
-    top: 0,
-    left: 'auto',
-  },
-  tableContainer: {
-    backgroundColor: 'white',
-    width: 'auto',
-    margin: '100px',
-  },
-  table: {
-  },
-  visuallyHidden: {
-    border: 0,
-    clip: 'rect(0 0 0 0)',
-    height: 1,
-    margin: -1,
-    overflow: 'hidden',
-    padding: 0,
-    position: 'absolute',
-    top: 20,
-    width: 1,
-  },
-  thead: {
-    width: '15.7%',
-  },
-  tabPanel: {
-    '& .MuiBox-root': {
-      paddingTop: 0,
-      boxSizing: 'border-box',
-      minHeight: `calc(100vh - ${HEAD_H}px - ${FOOT_H}px - 88px)`,
-      maxHeight: `calc(100vh - ${HEAD_H}px - ${FOOT_H}px - 88px)`,
-      overflowY: 'auto',
-    },
-  },
-  tableHead: {
-    '& th': {
-      padding: theme.spacing(2.5, 1),
-    },
-  },
-}));
-
 // /////////// TABPANEL
 function TabPanel(props) {
   const {children, value, index, ...other} = props;
@@ -245,7 +256,7 @@ function TableContainerComponent(props) {
     setPage(0);
   };
 
-  const emptyRows = rowsPerPage - Math.min(rowsPerPage, rows.length - page * rowsPerPage);
+  const emptyRows = rowsPerPage - Math.min(rowsPerPage, filteredRows().length - page * rowsPerPage);
 
   return (
     <TableContainer
@@ -262,36 +273,38 @@ function TableContainerComponent(props) {
           order={order}
           orderBy={orderBy}
           onRequestSort={handleRequestSort}
-          rowCount={rows.length}
+          rowCount={filteredRows().length}
         />
         <TableBody>
-          {stableSort(rows, getComparator(order, orderBy))
-              .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-              .map((row, index) => {
-                const labelId = `enhanced-table-checkbox-${index}`;
+          {
+            stableSort(filteredRows(), getComparator(order, orderBy))
+                .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+                .map((row, index) => {
+                  const labelId = `enhanced-table-checkbox-${index}`;
 
-                return (
-                  <TableRow
-                    hover
-                    onClick={(event) => handleClick(event, row.name)}
-                    role="checkbox"
-                    tabIndex={-1}
-                    key={row.name}
-                  >
-                    <TableCell component="th" id={labelId} scope="row" padding="none">{row.submitted}</TableCell>
-                    <TableCell>{row.updated}</TableCell>
-                    <TableCell>{row.requesterEmail}</TableCell>
-                    <TableCell>{row.analystEmail}</TableCell>
-                    <TableCell>{row.status}</TableCell>
-                    <TableCell align='center'>{row.files.length}</TableCell>
-                    <TableCell align='right'>
-                      <MoreVertIcon aria-label="More actions"/>
-                    </TableCell>
-                  </TableRow>
-                );
-              })}
+                  return (
+                    <TableRow
+                      hover
+                      onClick={(event) => handleClick(event, row.name)}
+                      role="checkbox"
+                      tabIndex={-1}
+                      key={row.name}
+                    >
+                      <TableCell component="th" id={labelId} scope="row" padding="none">{row.submitted}</TableCell>
+                      <TableCell>{row.updated}</TableCell>
+                      <TableCell>{row.requesterEmail}</TableCell>
+                      <TableCell>{row.analystEmail}</TableCell>
+                      <TableCell>{row.status}</TableCell>
+                      <TableCell align='center'>{row.files.length}</TableCell>
+                      <TableCell align='right'>
+                        <MoreVertIcon aria-label="More actions"/>
+                      </TableCell>
+                    </TableRow>
+                  );
+                })
+          }
           {emptyRows > 0 && (
-            <TableRow style={{height: (53) * emptyRows}}>
+            <TableRow style={{height: (47) * emptyRows}}>
               <TableCell colSpan={6} />
             </TableRow>
           )}
@@ -301,7 +314,7 @@ function TableContainerComponent(props) {
         rowsPerPageOptions={[5, 10, 25]}
         className={classes.tablePagination}
         component="div"
-        count={rows.length}
+        count={filteredRows().length}
         rowsPerPage={rowsPerPage}
         page={page}
         onChangePage={handleChangePage}
@@ -317,6 +330,25 @@ export default function VettingDashboardDeveloper() {
 
   const handleChange = (event, newValue) => {
     setValue(newValue);
+    switch (newValue) {
+      case 0:
+        tabStatus = 'All';
+        break;
+      case 1:
+        tabStatus = 'Draft';
+        break;
+      case 2:
+        tabStatus = 'Awaiting review';
+        break;
+      case 3:
+        tabStatus = 'Approved';
+        break;
+      case 4:
+        tabStatus = 'Closed';
+        break;
+      default:
+        tabStatus = 'All';
+    }
   };
 
   const mainRef = React.createRef();
@@ -344,7 +376,19 @@ export default function VettingDashboardDeveloper() {
           </Tabs>
         </AppBar>
         <TabPanel value={value} index={0} className={classes.tabPanel}>
-          <TableContainerComponent />
+          <TableContainerComponent status="All"/>
+        </TabPanel>
+        <TabPanel value={value} index={1} className={classes.tabPanel}>
+          <TableContainerComponent status="Draft"/>
+        </TabPanel>
+        <TabPanel value={value} index={2} className={classes.tabPanel}>
+          <TableContainerComponent status="Awaiting review"/>
+        </TabPanel>
+        <TabPanel value={value} index={3} className={classes.tabPanel}>
+          <TableContainerComponent status="Approved"/>
+        </TabPanel>
+        <TabPanel value={value} index={4} className={classes.tabPanel}>
+          <TableContainerComponent status="Closed"/>
         </TabPanel>
       </Paper>
     </div>
