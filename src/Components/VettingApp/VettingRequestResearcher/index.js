@@ -29,11 +29,11 @@ import ResearcherInfo from './ResearcherInfo';
 import FilesList from './FilesList';
 import ResidualDisclosure from './ResidualDisclosure';
 import AdditionalInfo from './AdditionalInfo';
-import {getThemeProps} from '@material-ui/styles';
 
 const useStyles = makeStyles((theme) => ({
   main: {
     background: theme.palette.grey[100],
+    paddingBottom: theme.spacing(6),
   },
   divider: {
     margin: theme.spacing(3, 0),
@@ -188,7 +188,6 @@ function VettingRequestResearcher(props) {
               Vetting requests dashboard
             </Typography>
             <Button
-              variant="default"
               color="default"
               className={classes.headerBtn}
               startIcon={<ExitToAppIcon />}
