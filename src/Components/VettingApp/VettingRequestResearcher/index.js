@@ -4,8 +4,8 @@ import {Paper, Container, Grid, Button} from '@material-ui/core';
 import ArrowForwardIosIcon from '@material-ui/icons/ArrowForwardIos';
 import ArrowBackIosIcon from '@material-ui/icons/ArrowBackIos';
 
-import Header from './CommonComponents/Header';
-import Footer from './CommonComponents/Footer';
+import Header from '../CommonComponents/Header';
+import Footer from '../CommonComponents/Footer';
 import ResearcherInfo from './ResearcherInfo';
 import FilesList from './FilesList';
 import ModifyFile from './ModifyFile';
