@@ -78,8 +78,10 @@ export const useStyles = makeStyles({
       color: theme.palette.text.primary,
     },
     '.MuiInputBase-input': {
-      fontSize: '0.875rem',
-      height: '1em',
+      'fontSize': '0.875rem',
+      '&:not(.MuiInputBase-inputMultiline)': {
+        height: '1em',
+      },
     },
     '.MuiOutlinedInput-inputMarginDense': {
       paddingTop: '13px',

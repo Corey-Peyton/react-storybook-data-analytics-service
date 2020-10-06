@@ -15,13 +15,14 @@ import {
   Tooltip,
   Typography,
   Divider,
+  Button,
 } from '@material-ui/core';
 import Autocomplete from '@material-ui/lab/Autocomplete';
 import InfoIcon from '@material-ui/icons/Info';
 
 const useStyles = makeStyles((theme) => ({
   inputMargin: {
-    margin: theme.spacing(1, 0),
+    marginBottom: theme.spacing(2),
   },
   divider: {
     margin: theme.spacing(3, 0),
@@ -30,15 +31,76 @@ const useStyles = makeStyles((theme) => ({
     background: '#ECEEF1',
     padding: theme.spacing(2),
     marginBottom: theme.spacing(2),
+    borderLeftStyle: 'solid',
+    borderLeftWidth: '5px',
+    borderLeftColor: theme.palette.primary.main,
   },
   tooltipLabel: {
+    '& svg': {
+      verticalAlign: 'middle',
+    },
+  },
+  buttonTooltip: {
     'display': 'flex',
     'alignItems': 'center',
+    'marginBottom': theme.spacing(3),
     '& svg': {
-      paddingLeft: theme.spacing(1),
+      marginLeft: theme.spacing(1),
     },
   },
 }));
+
+const outputMethods = {
+  '1.Descriptive': [
+    'ANOVA',
+    'Correlation matrix',
+    'Cross-tabular analysis',
+    'Distributions',
+    'Frequencies',
+    'Kurtosis',
+    'Means',
+    'Medians',
+    'Modes',
+    'Percentages',
+    'Quartiles',
+    'Ranges',
+    'Ratios',
+    'Regression models with only one independent variable',
+    'Skewness',
+    'Standard deviations',
+    'Totals',
+    'Variances',
+  ],
+  '2.Scaling': ['Factor Analysis'],
+  '3.Graphs': ['Histograms'],
+  '4.Multivariable regression analysis': [
+    'Logistic Regression',
+    'OLS',
+    'Poisson',
+    'Probit',
+    'Tobit',
+  ],
+  '5.Complex modeling': [
+    'Event History Analysis',
+    'Fixed Effects Models',
+    'Growth Analysis',
+    'Hierarchical Linear Modeling',
+    'Random Effects Models',
+    'Simultaneous-Equations Models',
+    'Structural equation modeling',
+    'Survival Analysis',
+  ],
+  '6.Other': [],
+};
+
+const outputMethodsTerms = [];
+for (const [key, value] of Object.entries(outputMethods)) {
+  if (value.length > 0) {
+    for (const term of value) {
+      outputMethodsTerms.push({method: key, term: term});
+    }
+  }
+}
 
 function ModifyFile(props) {
   const classes = useStyles();
@@ -59,7 +121,7 @@ function ModifyFile(props) {
       <Grid container spacing={3}>
         <Grid item xs={6}>
           <FormControl
-            classname={classes.inputMargin}
+            className={classes.inputMargin}
             margin="dense"
             required
             variant="outlined"
@@ -99,7 +161,7 @@ function ModifyFile(props) {
             </FormHelperText>
           </FormControl>
           <TextField
-            classname={classes.inputMargin}
+            className={classes.inputMargin}
             margin="dense"
             id="sheetName"
             // name={'outputFiles[' + index + '].sheetName'}
@@ -111,7 +173,7 @@ function ModifyFile(props) {
             required
           />
           <TextField
-            classname={classes.inputMargin}
+            className={classes.inputMargin}
             margin="dense"
             id="datasetName"
             // name={'outputFiles[' + index + '].datasetName'}
@@ -122,7 +184,7 @@ function ModifyFile(props) {
             required
           />
           <FormControl
-            classname={classes.inputMargin}
+            className={classes.inputMargin}
             margin="dense"
             variant="outlined"
             fullWidth
@@ -176,7 +238,7 @@ function ModifyFile(props) {
             </Typography>
             <Autocomplete
               id="outputMethodSearch"
-              // options={outputMethodsTerms}
+              options={outputMethodsTerms}
               // onChange={(e, val) => {
               //   setValue('outputMethod', val.method);
               // }}
@@ -202,36 +264,6 @@ function ModifyFile(props) {
               }}
             />
           </div>
-          {/* {watchFields['outputFiles[' + index + '].outputMethod'] ===
-                  '6.Other' && ( */}
-          {/* <TextField
-            classname={classes.inputMargin}
-            margin="dense"
-            id="outputMethodDescription"
-            // name={
-            //   'outputFiles[' + index + '].outputMethodDescription'
-            // }
-            label="Description of output Method"
-            variant="outlined"
-            // inputRef={register({required: requiredErrorMessage})}
-            // error={
-            //   errors.outputFiles &&
-            //   errors.outputFiles[index].outputMethodDescription
-            //     ? true
-            //     : false
-            // }
-            // helperText={
-            //   errors.outputFiles &&
-            //   errors.outputFiles[index].outputMethodDescription
-            //     ? errors.outputFiles[index].outputMethodDescription
-            //         .message
-            //     : ''
-            // }
-            required
-            fullWidth
-            multiline
-          /> */}
-          {/* )} */}
           <FormControl
             component="fieldset"
             required
@@ -251,10 +283,9 @@ function ModifyFile(props) {
               id="includeWeightVariable"
               // onChange={onChange}
               // value={value}
-              row
             >
-              <FormControlLabel value="Yes" control={<Radio />} label="Yes" />
-              <FormControlLabel value="No" control={<Radio />} label="No" />
+              <FormControlLabel value="Yes" control={<Radio color="primary"/>} label="Yes" />
+              <FormControlLabel value="No" control={<Radio color="primary" />} label="No" />
             </RadioGroup>
             {/* )}
                       name={"outputFiles[" + index + "].includeWeightVariable"}
@@ -316,16 +347,15 @@ function ModifyFile(props) {
                   id="weightVariableType"
                   // onChange={onChange}
                   // value={value}
-                  row
                 >
                   <FormControlLabel
                     value="Scaled"
-                    control={<Radio />}
+                    control={<Radio color="primary" />}
                     label="Scaled"
                   />
                   <FormControlLabel
                     value="Normalized"
-                    control={<Radio />}
+                    control={<Radio color="primary" />}
                     label="Normalized"
                   />
                 </RadioGroup>
@@ -370,9 +400,12 @@ function ModifyFile(props) {
           />
         </Grid>
         <Grid item xs={12}>
-          <Typography variant="subtitle2" className="mb-2">Output supporting files</Typography>
+          <Typography variant="subtitle2" className="mb-2">
+            Output supporting files
+          </Typography>
           <FormControl
             component="fieldset"
+            className={classes.inputMargin}
             required
             // error={
             //   errors.outputFiles && errors.outputFiles[index].linkedData
@@ -387,23 +420,10 @@ function ModifyFile(props) {
               id="linkedData"
               // onChange={onChange}
               // value={value}
-              row
             >
-              <FormControlLabel
-                value="Yes"
-                control={<Radio />}
-                label="Yes"
-              />
-              <FormControlLabel
-                value="No"
-                control={<Radio />}
-                label="No"
-              />
-              <FormControlLabel
-                value="NA"
-                control={<Radio />}
-                label="N/A"
-              />
+              <FormControlLabel value="Yes" control={<Radio color="primary" />} label="Yes" />
+              <FormControlLabel value="No" control={<Radio color="primary" />} label="No" />
+              <FormControlLabel value="NA" control={<Radio color="primary" />} label="N/A" />
             </RadioGroup>
             {/* )}
                       name={'outputFiles[' + index + '].linkedData'}
@@ -416,32 +436,6 @@ function ModifyFile(props) {
                         : false} */}
             </FormHelperText>
           </FormControl>
-          {/* {watchFields["outputFiles[" + index + "].linkedData"] ===
-                  "Yes" && ( */}
-          {/* <TextField
-            id="linkedDataDescription"
-            // name={"outputFiles[" + index + "].linkedDataDescription"}
-            label="Describe how linkage was done"
-            variant="outlined"
-            // inputRef={register({ required: requiredErrorMessage })}
-            // error={
-            //   errors.outputFiles &&
-            //   errors.outputFiles[index].linkedDataDescription
-            //     ? true
-            //     : false
-            // }
-            // helperText={
-            //   errors.outputFiles &&
-            //   errors.outputFiles[index].linkedDataDescription
-            //     ? errors.outputFiles[index].linkedDataDescription
-            //         .message
-            //     : "Examples: person-based, record-based, matching geographies"
-            // }
-            required
-            fullWidth
-            multiline
-          /> */}
-          {/* )} */}
           <FormControl
             className={classes.inputMargin}
             component="fieldset"
@@ -454,11 +448,12 @@ function ModifyFile(props) {
             // }
           >
             <FormLabel component="legend" className={classes.tooltipLabel}>
-                  Are variables related to income, earnings, tax and/or dollar
-                  values included?
+              Are variables related to income, earnings, tax and/or dollar
+              values included?{' '}
               <Tooltip
-                title="If yes, check the vetting guidelines and requirements for these kinds of variables. Consult your analyst if needed."
+                title="If no, future vetting release reuests under this contract may be restricted due to residual disclosure. You are strongly encouraged to consult with your analyst."
                 arrow
+                placement="right"
               >
                 <InfoIcon />
               </Tooltip>
@@ -480,15 +475,10 @@ function ModifyFile(props) {
               //   )
               // }
               // value={value}
-              row
             >
-              <FormControlLabel
-                value="Yes"
-                control={<Radio />}
-                label="Yes"
-              />
-              <FormControlLabel value="No" control={<Radio />} label="No" />
-              <FormControlLabel value="NA" control={<Radio />} label="N/A" />
+              <FormControlLabel value="Yes" control={<Radio color="primary" />} label="Yes" />
+              <FormControlLabel value="No" control={<Radio color="primary" />} label="No" />
+              <FormControlLabel value="NA" control={<Radio color="primary" />} label="N/A" />
             </RadioGroup>
             {/* )} name={"outputFiles[" + index + "].dollarIncluded"}
                   control={control}
@@ -511,7 +501,7 @@ function ModifyFile(props) {
             // }
           >
             <FormLabel component="legend">
-                    Does the request include descriptive statistics?
+              Does the request include descriptive statistics?
             </FormLabel>
             {/* <Controller
                       render={({ onBlur, onChange, value }) => ( */}
@@ -528,23 +518,10 @@ function ModifyFile(props) {
               //   )
               // }
               // value={value}
-              row
             >
-              <FormControlLabel
-                value="Yes"
-                control={<Radio />}
-                label="Yes"
-              />
-              <FormControlLabel
-                value="No"
-                control={<Radio />}
-                label="No"
-              />
-              <FormControlLabel
-                value="NA"
-                control={<Radio />}
-                label="N/A"
-              />
+              <FormControlLabel value="Yes" control={<Radio />} label="Yes" />
+              <FormControlLabel value="No" control={<Radio />} label="No" />
+              <FormControlLabel value="NA" control={<Radio />} label="N/A" />
             </RadioGroup>
             {/* )} name={"outputFiles[" + index + "].descriptiveStats"}
                     control={control}
@@ -556,539 +533,308 @@ function ModifyFile(props) {
                         : ""} */}
             </FormHelperText>
           </FormControl>
-          {/* {watchFields["outputFiles[" + index + "].descriptiveStats"] ===
-                  "Yes" && ( */}
-              <>
-                <Grid item xs={12}>
-                  <FormControl
-                    component="fieldset"
-                    // error={
-                    //   errors.outputFiles &&
-                    //   errors.outputFiles[index].outputLabelled
-                    //     ? true
-                    //     : false
-                    // }
-                    required
-                  >
-                    <FormLabel component="legend">
-                      Is the output clearly labelled (tables have a title and
-                      every variable and category is labelled)?
-                    </FormLabel>
-                    {/* <Controller
-                          render={({ onBlur, onChange, value }) => ( */}
-                    <RadioGroup
-                      id="outputLabelled"
-                      // onChange={onChange}
-                      // value={value}
-                      row
-                    >
-                      <FormControlLabel
-                        value="Yes"
-                        control={<Radio />}
-                        label="Yes"
-                      />
-                      <FormControlLabel
-                        value="No"
-                        control={<Radio />}
-                        label="No"
-                      />
-                    </RadioGroup>
-                    {/* )} name={"outputFiles[" + index + "].outputLabelled"}
-                      control={control}
-                      rules={{ required: requiredErrorMessage }}
-                      /> */}
-                    <FormHelperText>
-                      {/* {errors.outputFiles &&
-                        errors.outputFiles[index].outputLabelled
-                          ? errors.outputFiles[index].outputLabelled.message
-                          : ""} */}
-                    </FormHelperText>
-                  </FormControl>
-                </Grid>
-                <Grid item xs={12}>
-                  <FormControl
-                    component="fieldset"
-                    // error={
-                    //   errors.outputFiles &&
-                    //   errors.outputFiles[index].minCellSize
-                    //     ? true
-                    //     : false
-                    // }
-                    required
-                  >
-                    <FormLabel component="legend">
-                      Are minimum cell sizes met as per the rules for the data?
-                    </FormLabel>
-                    {/* <Controller
-                        render={({ onBlur, onChange, value }) => ( */}
-                    <RadioGroup
-                      id="minCellSize"
-                      // onChange={onChange}
-                      // value={value}
-                      row
-                    >
-                      <FormControlLabel
-                        value="Yes"
-                        control={<Radio />}
-                        label="Yes"
-                      />
-                      <FormControlLabel
-                        value="No"
-                        control={<Radio />}
-                        label="No"
-                      />
-                    </RadioGroup>
-                    {/* )} name={"outputFiles[" + index + "].minCellSize"}
-                      control={control}
-                      rules={{ required: requiredErrorMessage }}
-                      /> */}
-                    <FormHelperText>
-                      {/* {errors.outputFiles &&
-                        errors.outputFiles[index].minCellSize
-                          ? errors.outputFiles[index].minCellSize.message
-                          : ""} */}
-                    </FormHelperText>
-                  </FormControl>
-                </Grid>
-              </>
-              {/* )} */}
-              <FormControl
-                component="fieldset"
-                // error={
-                //   errors.outputFiles &&
-                //   errors.outputFiles[index].equivalentDescriptiveStats
-                //     ? true
-                //     : false
-                // }
+          <FormControl
+            className={classes.inputMargin}
+            component="fieldset"
+            // error={
+            //   errors.outputFiles &&
+            //   errors.outputFiles[index].equivalentDescriptiveStats
+            //     ? true
+            //     : false
+            // }
+          >
+            <FormLabel component="legend" className={classes.tooltipLabel}>
+              Does this request include model output or graphs that are
+              equivalent to a descriptive statistics?{' '}
+              <Tooltip
+                title="Examples: a model with a single independant variable, a model with all possible interactions, histograms"
+                arrow
+                placement="right"
               >
-                <FormLabel component="legend">
-                  Does this request include model output or graphs that are
-                  equivalent to a descriptive statistics?
-                  <Tooltip
-                    title="Examples: a model with a single independant variable, a model with all possible interactions, histograms"
-                    arrow
-                  >
-                    <InfoIcon />
-                  </Tooltip>
-                </FormLabel>
-                {/* <Controller
+                <InfoIcon />
+              </Tooltip>
+            </FormLabel>
+            {/* <Controller
                     render={({ onBlur, onChange, value }) => ( */}
-                <RadioGroup
-                  id="equivalentDescriptiveStats"
-                  // onChange={(e) =>
-                  //   handleMandatoryChange(
-                  //     e,
-                  //     "Yes",
-                  //     ["unweighted frequency table for respondent counts"],
-                  //     onChange
-                  //   )
-                  // }
-                  // value={value}
-                  row
-                >
-                  <FormControlLabel
-                    value="Yes"
-                    control={<Radio />}
-                    label="Yes"
-                  />
-                  <FormControlLabel value="No" control={<Radio />} label="No" />
-                  <FormControlLabel value="NA" control={<Radio />} label="N/A" />
-                </RadioGroup>
-                {/* )} name=
+            <RadioGroup
+              id="equivalentDescriptiveStats"
+              // onChange={(e) =>
+              //   handleMandatoryChange(
+              //     e,
+              //     "Yes",
+              //     ["unweighted frequency table for respondent counts"],
+              //     onChange
+              //   )
+              // }
+              // value={value}
+            >
+              <FormControlLabel value="Yes" control={<Radio color="primary" />} label="Yes" />
+              <FormControlLabel value="No" control={<Radio color="primary" />} label="No" />
+              <FormControlLabel value="NA" control={<Radio color="primary" />} label="N/A" />
+            </RadioGroup>
+            {/* )} name=
                   {"outputFiles[" + index + "].equivalentDescriptiveStats"}
                   control={control}
                   /> */}
-                <FormHelperText>
-                  {/* {errors.outputFiles &&
+            <FormHelperText>
+              {/* {errors.outputFiles &&
                     errors.outputFiles[index].equivalentDescriptiveStats
                       ? errors.outputFiles[index].equivalentDescriptiveStats
                           .message
                       : ""} */}
-                </FormHelperText>
-              </FormControl>
-              <FormControl
-                component="fieldset"
-                // error={
-                //   errors.outputFiles &&
-                //   errors.outputFiles[index].modifiedWeights
-                //     ? true
-                //     : false
-                // }
+            </FormHelperText>
+          </FormControl>
+          <FormControl
+            className={classes.inputMargin}
+            component="fieldset"
+            // error={
+            //   errors.outputFiles &&
+            //   errors.outputFiles[index].modifiedWeights
+            //     ? true
+            //     : false
+            // }
+          >
+            <FormLabel component="legend" className={classes.tooltipLabel}>
+              Did you apply modified (e.g. standardized) weights in the
+              analysis?{' '}
+              <Tooltip
+                title="If yes, consult with your analyst about the vetting rules for modified weights."
+                arrow
+                placement="right"
               >
-                <FormLabel component="legend">
-                    Did you apply modified (e.g. standardized) weights in the
-                    analysis?
-                  <Tooltip
-                    title="If yes, consult with your analyst about the vetting rules for modified weights."
-                    arrow
-                  >
-                    <InfoIcon />
-                  </Tooltip>
-                </FormLabel>
-                {/* <Controller
+                <InfoIcon />
+              </Tooltip>
+            </FormLabel>
+            {/* <Controller
                       render={({ onBlur, onChange, value }) => ( */}
-                <RadioGroup
-                  id="modifiedWeights"
-                  // onChange={onChange}
-                  // value={value}
-                  row
-                >
-                  <FormControlLabel
-                    value="Yes"
-                    control={<Radio />}
-                    label="Yes"
-                  />
-                  <FormControlLabel
-                    value="No"
-                    control={<Radio />}
-                    label="No"
-                  />
-                  <FormControlLabel
-                    value="NA"
-                    control={<Radio />}
-                    label="N/A"
-                  />
-                </RadioGroup>
-                {/* )} name={"outputFiles[" + index + "].modifiedWeights"}
+            <RadioGroup
+              id="modifiedWeights"
+              // onChange={onChange}
+              // value={value}
+            >
+              <FormControlLabel value="Yes" control={<Radio color="primary" />} label="Yes" />
+              <FormControlLabel value="No" control={<Radio color="primary" />} label="No" />
+              <FormControlLabel value="NA" control={<Radio color="primary" />} label="N/A" />
+            </RadioGroup>
+            {/* )} name={"outputFiles[" + index + "].modifiedWeights"}
                     control={control}
                     /> */}
-                <FormHelperText>
-                  {/* {errors.outputFiles &&
+            <FormHelperText>
+              {/* {errors.outputFiles &&
                       errors.outputFiles[index].modifiedWeights
                         ? errors.outputFiles[index].modifiedWeights
                         : ""} */}
-                </FormHelperText>
-              </FormControl>
-              {/* {watchFields["outputFiles[" + index + "].modifiedWeights"] ===
-                  "Yes" && ( */}
-              <TextField
-                id="modifiedWeightsDescription"
-                // name={
-                //   "outputFiles[" + index + "].modifiedWeightsDescription"
-                // }
-                label="Describe why and how the weights were modified"
-                variant="outlined"
-                // inputRef={register({ required: requiredErrorMessage })}
-                // error={
-                //   errors.outputFiles &&
-                //   errors.outputFiles[index].modifiedWeightsDescription
-                //     ? true
-                //     : false
-                // }
-                // helperText={
-                //   errors.outputFiles &&
-                //   errors.outputFiles[index].modifiedWeightsDescription
-                //     ? errors.outputFiles[index].modifiedWeightsDescription
-                //         .message
-                //     : ""
-                // }
-                required
-                fullWidth
-                multiline
-              />
-              {/* )} */}
-              <FormControl
-                component="fieldset"
-                // error={
-                //   errors.outputFiles &&
-                //   errors.outputFiles[index].includeMatrix
-                //     ? true
-                //     : false
-                // }
-              >
-                <FormLabel component="legend">
-                    Does this output include a correlation or covariance matrix?
-                </FormLabel>
-                {/* <Controller
+            </FormHelperText>
+          </FormControl>
+          <FormControl
+            className={classes.inputMargin}
+            component="fieldset"
+            // error={
+            //   errors.outputFiles &&
+            //   errors.outputFiles[index].includeMatrix
+            //     ? true
+            //     : false
+            // }
+          >
+            <FormLabel component="legend">
+              Does this output include a correlation or covariance matrix?
+            </FormLabel>
+            {/* <Controller
                       render={({ onBlur, onChange, value }) => ( */}
-                <RadioGroup
-                  id="includeMatrix"
-                  // onChange={onChange}
-                  // value={value}
-                  row
-                >
-                  <FormControlLabel
-                    value="Yes"
-                    control={<Radio />}
-                    label="Yes"
-                  />
-                  <FormControlLabel
-                    value="No"
-                    control={<Radio />}
-                    label="No"
-                  />
-                  <FormControlLabel
-                    value="NA"
-                    control={<Radio />}
-                    label="N/A"
-                  />
-                </RadioGroup>
-                {/* )} name={"outputFiles[" + index + "].includeMatrix"}
+            <RadioGroup
+              id="includeMatrix"
+              // onChange={onChange}
+              // value={value}
+            >
+              <FormControlLabel value="Yes" control={<Radio color="primary" />} label="Yes" />
+              <FormControlLabel value="No" control={<Radio color="primary" />} label="No" />
+              <FormControlLabel value="NA" control={<Radio color="primary" />} label="N/A" />
+            </RadioGroup>
+            {/* )} name={"outputFiles[" + index + "].includeMatrix"}
                     control={control}
                     /> */}
-                <FormHelperText>
-                  {/* {errors.outputFiles &&
+            <FormHelperText>
+              {/* {errors.outputFiles &&
                       errors.outputFiles[index].includeMatrix
                         ? errors.outputFiles[index].includeMatrix.message
                         : ""} */}
-                </FormHelperText>
-              </FormControl>
-              {/* {watchFields["outputFiles[" + index + "].includeMatrix"] ===
-                  "Yes" && ( */}
-              <>
-                  <FormControl
-                    component="fieldset"
-                    // error={
-                    //   errors.outputFiles &&
-                    //   errors.outputFiles[index].continuousVariables
-                    //     ? true
-                    //     : false
-                    // }
-                    required
-                  >
-                    <FormLabel component="legend">
-                      Does the matrix include continuous variables?
-                    </FormLabel>
-                    {/* <Controller
-                          render={({ onBlur, onChange, value }) => ( */}
-                    <RadioGroup
-                      id="continuousVariables"
-                      // onChange={(e) =>
-                      //   handleMandatoryChange(
-                      //     e,
-                      //     "Yes",
-                      //     ["unweighted sample size"],
-                      //     onChange
-                      //   )
-                      // }
-                      // value={value}
-                      row
-                    >
-                      <FormControlLabel
-                        value="Yes"
-                        control={<Radio />}
-                        label="Yes"
-                      />
-                      <FormControlLabel
-                        value="No"
-                        control={<Radio />}
-                        label="No"
-                      />
-                    </RadioGroup>
-                    {/* )} name={"outputFiles[" + index + "].continuousVariables"}
-                      control={control}
-                      rules={{ required: requiredErrorMessage }}
-                      /> */}
-                    <FormHelperText>
-                      {/* {errors.outputFiles &&
-                        errors.outputFiles[index].continuousVariables
-                          ? errors.outputFiles[index].continuousVariables
-                              .message
-                          : ""} */}
-                    </FormHelperText>
-                  </FormControl>
-                  <FormControl
-                    component="fieldset"
-                    // error={
-                    //   errors.outputFiles &&
-                    //   errors.outputFiles[index].dichotomousVariables
-                    //     ? true
-                    //     : false
-                    // }
-                    required
-                  >
-                    <FormLabel component="legend">
-                      Does the matrix inclue dichotomous variables?
-                    </FormLabel>
-                    {/* <Controller
-                        render={({ onBlur, onChange, value }) => ( */}
-                    <RadioGroup
-                      id="dichotomousVariables"
-                      // onChange={(e) =>
-                      //   handleMandatoryChange(
-                      //     e,
-                      //     "Yes",
-                      //     ["unweighted cross-tabulation table"],
-                      //     onChange
-                      //   )
-                      // }
-                      // value={value}
-                      row
-                    >
-                      <FormControlLabel
-                        value="Yes"
-                        control={<Radio />}
-                        label="Yes"
-                      />
-                      <FormControlLabel
-                        value="No"
-                        control={<Radio />}
-                        label="No"
-                      />
-                    </RadioGroup>
-                    {/* )} name=
-                      {"outputFiles[" + index + "].dichotomousVariables"}
-                      control={control}
-                      rules={{ required: requiredErrorMessage }}
-                      /> */}
-                    <FormHelperText>
-                      {/* {errors.outputFiles &&
-                        errors.outputFiles[index].dichotomousVariables
-                          ? errors.outputFiles[index].dichotomousVariables
-                              .message
-                          : ""} */}
-                    </FormHelperText>
-                  </FormControl>
-                  <FormControl
-                    component="fieldset"
-                    // error={
-                    //   errors.outputFiles &&
-                    //   errors.outputFiles[index].correlatedVariables
-                    //     ? true
-                    //     : false
-                    // }
-                    required
-                  >
-                    <FormLabel component="legend">
-                      Does the matrix include a dichotomous variable correlated
-                      with a continuous variable
-                    </FormLabel>
-                    {/* <Controller
-                        render={({ onBlur, onChange, value }) => ( */}
-                    <RadioGroup
-                      id="correlatedVariables"
-                      // onChange={(e) =>
-                      //   handleMandatoryChange(
-                      //     e,
-                      //     "Yes",
-                      //     [
-                      //       "unweighted sub-totals for the categories of the dichotomous variable correlated with a continuous variable",
-                      //     ],
-                      //     onChange
-                      //   )
-                      // }
-                      // value={value}
-                      row
-                    >
-                      <FormControlLabel
-                        value="Yes"
-                        control={<Radio />}
-                        label="Yes"
-                      />
-                      <FormControlLabel
-                        value="No"
-                        control={<Radio />}
-                        label="No"
-                      />
-                    </RadioGroup>
-                    {/* )} name={"outputFiles[" + index + "].correlatedVariables"}
-                      control={control}
-                      rules={{ required: requiredErrorMessage }}
-                      /> */}
-                    <FormHelperText>
-                      {/* {errors.outputFiles &&
-                        errors.outputFiles[index].correlatedVariables
-                          ? errors.outputFiles[index].correlatedVariables
-                              .message
-                          : ""} */}
-                    </FormHelperText>
-                  </FormControl>
-              </>
-              {/* )} */}
-              <FormControl
-                component="fieldset"
-                // error={
-                //   errors.outputFiles &&
-                //   errors.outputFiles[index].roundingOutput
-                //     ? true
-                //     : false
-                // }
+            </FormHelperText>
+          </FormControl>
+          <FormControl
+            className={classes.inputMargin}
+            component="fieldset"
+            // error={
+            //   errors.outputFiles &&
+            //   errors.outputFiles[index].roundingOutput
+            //     ? true
+            //     : false
+            // }
+          >
+            <FormLabel component="legend" className={classes.tooltipLabel}>
+              Is rounding of output required for this vetting request?{' '}
+              <Tooltip
+                title="If yes, ensure that any forced rounding to zero is shown."
+                arrow
+                placement="right"
               >
-                <FormLabel component="legend">
-                    Is rounding of output required for this vetting request?
-                  <Tooltip
-                    title="If yes, ensure that any forced rounding to zero is shown."
-                    arrow
-                  >
-                    <InfoIcon />
-                  </Tooltip>
-                </FormLabel>
-                {/* <Controller
+                <InfoIcon />
+              </Tooltip>
+            </FormLabel>
+            {/* <Controller
                       render={({ onBlur, onChange, value }) => ( */}
-                <RadioGroup
-                  id="roundingOutput"
-                  // onChange={(e) =>
-                  //   handleMandatoryChange(
-                  //     e,
-                  //     "Yes",
-                  //     ["unrounded version of this output"],
-                  //     onChange
-                  //   )
-                  // }
-                  // value={value}
-                  row
-                >
-                  <FormControlLabel
-                    value="Yes"
-                    control={<Radio />}
-                    label="Yes"
-                  />
-                  <FormControlLabel
-                    value="No"
-                    control={<Radio />}
-                    label="No"
-                  />
-                  <FormControlLabel
-                    value="NA"
-                    control={<Radio />}
-                    label="N/A"
-                  />
-                </RadioGroup>
-                {/* )} name={"outputFiles[" + index + "].roundingOutput"}
+            <RadioGroup
+              id="roundingOutput"
+              // onChange={(e) =>
+              //   handleMandatoryChange(
+              //     e,
+              //     "Yes",
+              //     ["unrounded version of this output"],
+              //     onChange
+              //   )
+              // }
+              // value={value}
+            >
+              <FormControlLabel value="Yes" control={<Radio color="primary" />} label="Yes" />
+              <FormControlLabel value="No" control={<Radio color="primary" />} label="No" />
+              <FormControlLabel value="NA" control={<Radio color="primary" />} label="N/A" />
+            </RadioGroup>
+            {/* )} name={"outputFiles[" + index + "].roundingOutput"}
                     control={control}
                     /> */}
-                <FormHelperText>
-                  {/* {errors.outputFiles &&
+            <FormHelperText>
+              {/* {errors.outputFiles &&
                       errors.outputFiles[index].roundingOutput
                         ? errors.outputFiles[index].roundingOutput.message
                         : ""} */}
-                </FormHelperText>
-              </FormControl>
-              {/* {watchFields["outputFiles[" + index + "].roundingOutput"] ===
-                  "Yes" && ( */}
-              <TextField
-                id="roundingOutputDescription"
-                // name={
-                //   "outputFiles[" + index + "].roundingOutputDescription"
-                // }
-                label="Describe the approach to rounding and rounding base"
-                variant="outlined"
-                // inputRef={register({ required: requiredErrorMessage })}
-                // error={
-                //   errors.outputFiles &&
-                //   errors.outputFiles[index].roundingOutputDescription
-                //     ? true
-                //     : false
-                // }
-                // helperText={
-                //   errors.outputFiles &&
-                //   errors.outputFiles[index].roundingOutputDescription
-                //     ? errors.outputFiles[index].roundingOutputDescription
-                //         .message
-                //     : ""
-                // }
+            </FormHelperText>
+          </FormControl>
+          <div className={classes.emphasisBox}>
+            <Typography variant="subtitle2" className="mb-2">
+              Mandatory supporting files:
+            </Typography>
+            <ul className="mb-3">
+              <li>
+                <Typography variant="body2" gutterBottom={true}>
+                  Unweighted supporting sample counts.
+                </Typography>
+              </li>
+              <li>
+                <Typography variant="body2" gutterBottom={true}>
+                  Syntax used for variable creation, analysis and running the
+                  vetting tests.
+                </Typography>
+              </li>
+              <li>
+                <Typography variant="body2" gutterBottom={true}>
+                  Vetting the results (e..g. test of magnitude, dominance, etc).
+                </Typography>
+              </li>
+            </ul>
+            <Typography variant="subtitle2">
+              NOTE: supporting files will not be released. Please name your
+              support files to allow easy pairing of the corresponding output
+              file.
+            </Typography>
+          </div>
+          <div className={classes.buttonTooltip}>
+            <Button variant="outlined" color="primary">
+              Add Supporting File
+            </Button>
+            <Tooltip
+              title="In addition to the mandatory files listed, include other files as required by the Survey Specific Guidelines, syntax files or other files requested by the analyst."
+              arrow
+              placement="right"
+            >
+              <InfoIcon />
+            </Tooltip>
+          </div>
+          <Grid container spacing={3}>
+            <Grid item xs={6}>
+              <Typography variant="subtitle2">Supporting file #1</Typography>
+              <FormControl
+                className={classes.inputMargin}
+                margin="dense"
                 required
+                variant="outlined"
                 fullWidth
-                multiline
+              >
+                <InputLabel id="outputFolder1-label">Output Folder Name</InputLabel>
+                <Select
+                  id="outputFolder1"
+                  label="Output Folder Name *"
+                  labelId="outputFolder1-label"
+                >
+                  <MenuItem>Folder 1</MenuItem>
+                  <MenuItem>Folder 2</MenuItem>
+                </Select>
+              </FormControl>
+              <TextField
+                className={classes.inputMargin}
+                margin="dense"
+                id="fileContents1"
+                // name={'outputFiles[' + index + '].sheetName'}
+                label="File Contents"
+                variant="outlined"
+                // inputRef={register}
+                fullWidth
+                required
               />
-              {/* )} */}
-              {/* <RequestSupportingFilesList
-                  control={control}
-                  errors={errors}
-                  mandatories={mandatories}
-                  files={files}
-                  index={index}
-                /> */}
+              <TextField
+                className={classes.inputMargin}
+                margin="dense"
+                id="notes1"
+                label="Notes"
+                multiline
+                rows={4}
+                variant="outlined"
+                fullWidth
+                required
+              />
+              <Typography variant="subtitle2">Supporting file #2</Typography>
+              <FormControl
+                className={classes.inputMargin}
+                margin="dense"
+                required
+                variant="outlined"
+                fullWidth
+              >
+                <InputLabel id="outputFolder2-label">Output Folder Name</InputLabel>
+                <Select
+                  id="outputFolder2"
+                  label="Output Folder Name *"
+                  labelId="outputFolder2-label"
+                >
+                  <MenuItem>Folder 1</MenuItem>
+                  <MenuItem>Folder 2</MenuItem>
+                </Select>
+              </FormControl>
+              <TextField
+                className={classes.inputMargin}
+                margin="dense"
+                id="fileContents2"
+                // name={'outputFiles[' + index + '].sheetName'}
+                label="File Contents"
+                variant="outlined"
+                // inputRef={register}
+                fullWidth
+                required
+              />
+              <TextField
+                className={classes.inputMargin}
+                margin="dense"
+                id="notes2"
+                label="Notes"
+                multiline
+                rows={4}
+                variant="outlined"
+                fullWidth
+                required
+              />
+              <Button variant="contained" color="primary">
+                Save Changes
+              </Button>
+            </Grid>
+          </Grid>
         </Grid>
       </Grid>
       {/* <ActionBar /> */}

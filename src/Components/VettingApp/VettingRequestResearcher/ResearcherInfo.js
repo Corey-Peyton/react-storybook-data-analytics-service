@@ -20,7 +20,7 @@ import InfoIcon from '@material-ui/icons/Info';
 
 const useStyles = makeStyles((theme) => ({
   inputMargin: {
-    margin: theme.spacing(1, 0),
+    marginBottom: theme.spacing(2),
   },
   divider: {
     margin: theme.spacing(3, 0),
@@ -29,6 +29,9 @@ const useStyles = makeStyles((theme) => ({
     background: '#ECEEF1',
     padding: theme.spacing(2),
     marginBottom: theme.spacing(2),
+    borderLeftStyle: 'solid',
+    borderLeftWidth: '5px',
+    borderLeftColor: theme.palette.primary.main,
   },
   tooltipLabel: {
     'display': 'flex',
@@ -68,7 +71,7 @@ function ResearcherInfo(props) {
           <TextField
             id="project"
             name="project"
-            label="Project Title"
+            label="Project title"
             variant="outlined"
             // inputRef={register({required: requiredErrorMessage})}
             required
@@ -81,7 +84,7 @@ function ResearcherInfo(props) {
           <TextField
             id="contract"
             name="contract"
-            label="Contract Number"
+            label="Contract number"
             variant="outlined"
             // inputRef={register({required: requiredErrorMessage})}
             required
@@ -99,12 +102,12 @@ function ResearcherInfo(props) {
             // error={!!errors.outputFilesFolder}
             className={classes.inputMargin}
           >
-            <InputLabel id="outputFilesFolder-label">Output Folder</InputLabel>
+            <InputLabel id="outputFilesFolder-label">Output folder</InputLabel>
             {/* <Controller
                     render={({onBlur, onChange, value}) => ( */}
             <Select
               id="outputFilesFolder"
-              label="Output Folder *"
+              label="Output folder *"
               labelId="outputFilesFolder-label"
               // onChange={(e) => handleFileChange(e, onChange)}
               // value={value}
@@ -134,13 +137,13 @@ function ResearcherInfo(props) {
             className={classes.inputMargin}
           >
             <InputLabel id="supportingFilesFolder-label">
-              Supporting Folder
+              Supporting folder
             </InputLabel>
             {/* <Controller
                     render={({onBlur, onChange, value}) => ( */}
             <Select
               id="supportingFilesFolder"
-              label="Supporting Folder *"
+              label="Supporting folder *"
               labelId="supportingFilesFolder-label"
               // onChange={onChange}
               // value={value}
@@ -171,7 +174,7 @@ function ResearcherInfo(props) {
           <TextField
             id="first-name"
             name="first-name"
-            label="First Name"
+            label="First name"
             variant="outlined"
             // inputRef={register({required: requiredErrorMessage})}
             required
@@ -179,14 +182,14 @@ function ResearcherInfo(props) {
             margin="dense"
             // error={!!errors.name}
             // helperText={errors.name?.message}
+            defaultValue="Rose"
             className={classes.inputMargin}
+            InputProps={{readOnly: true}}
           />
-        </Grid>
-        <Grid item xs={6}>
           <TextField
             id="last-name"
             name="last-name"
-            label="Last Name"
+            label="Last name"
             variant="outlined"
             // inputRef={register({required: requiredErrorMessage})}
             required
@@ -194,12 +197,10 @@ function ResearcherInfo(props) {
             margin="dense"
             // error={!!errors.name}
             // helperText={errors.name?.message}
+            defaultValue="Temple"
             className={classes.inputMargin}
+            InputProps={{readOnly: true}}
           />
-        </Grid>
-      </Grid>
-      <Grid container spacing={1}>
-        <Grid item xs={6} className={classes.pt0}>
           <TextField
             id="date"
             name="date"
@@ -211,7 +212,8 @@ function ResearcherInfo(props) {
             margin="dense"
             // error={!!errors.date}
             // helperText={errors.date?.message}
-            inputProps={{readOnly: true}}
+            defaultValue="Aug. 28, 2020"
+            InputProps={{readOnly: true}}
             className={classes.inputMargin}
           />
           <TextField
@@ -223,6 +225,8 @@ function ResearcherInfo(props) {
             required
             fullWidth
             margin="dense"
+            InputProps={{readOnly: true}}
+            defaultValue="rose_temple"
             // error={!!errors.username}
             // helperText={errors.username?.message}
           />
@@ -268,7 +272,6 @@ function ResearcherInfo(props) {
           id="consistentOutput"
           // onChange={onChange}
           // value={value}
-          row
         >
           <FormControlLabel
             value="Yes"
@@ -310,7 +313,6 @@ function ResearcherInfo(props) {
           id="vettingRules"
           // onChange={onChange}
           // value={value}
-          row
         >
           <FormControlLabel
             value="Yes"
@@ -357,7 +359,6 @@ function ResearcherInfo(props) {
           id="finalOutput"
           // onChange={onChange}
           // value={value}
-          row
         >
           <FormControlLabel
             value="Yes"

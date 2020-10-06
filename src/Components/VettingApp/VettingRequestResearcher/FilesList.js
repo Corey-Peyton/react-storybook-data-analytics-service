@@ -3,7 +3,6 @@ import {makeStyles} from '@material-ui/core/styles';
 import {
   Divider,
   Typography,
-  Grid,
   TableHead,
   TableRow,
   TableCell,
