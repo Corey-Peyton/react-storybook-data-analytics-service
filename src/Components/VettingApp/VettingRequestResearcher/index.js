@@ -3,12 +3,9 @@ import {makeStyles} from '@material-ui/core/styles';
 import {Paper, Container, Grid, Button} from '@material-ui/core';
 import ArrowForwardIosIcon from '@material-ui/icons/ArrowForwardIos';
 import ArrowBackIosIcon from '@material-ui/icons/ArrowBackIos';
-
 import Header from '../CommonComponents/Header';
 import Footer from '../CommonComponents/Footer';
 import ResearcherInfo from './ResearcherInfo';
-import FilesList from './FilesList';
-import ModifyFile from './ModifyFile';
 
 const useStyles = makeStyles((theme) => ({
   main: {
@@ -69,7 +66,7 @@ function VettingRequestResearcher(props) {
                   className={classes.button}
                   endIcon={<ArrowForwardIosIcon />}
                 >
-                  Next
+                  <span>Next</span>
                 </Button>
               </Grid>
             </Grid>

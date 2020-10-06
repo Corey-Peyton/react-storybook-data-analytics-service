@@ -5,7 +5,7 @@ import {makeStyles} from '@material-ui/styles';
 import Notifications from '@material-ui/icons/Notifications';
 import Avatar from '@material-ui/core/Avatar';
 import Menu from '@material-ui/icons/Menu';
-
+import {deepPurple} from '@material-ui/core/colors';
 import {SM_SCREEN} from '../../../Theme/constants';
 import BrandingStatsCan from '../../../Components/Headers/BrandingStatsCan';
 import Language from '../../../Components/Headers/Language';
@@ -20,10 +20,12 @@ const defaultStyles = makeStyles((theme) => ({
   notification: {
     paddingRight: theme.spacing(2),
     paddingLeft: theme.spacing(1),
+    color: theme.palette.grey[600],
   },
   small: {
     width: theme.spacing(4),
     height: theme.spacing(4),
+    backgroundColor: deepPurple[500],
   },
   toolbar: {
     display: 'flex',
@@ -47,6 +49,9 @@ const defaultStyles = makeStyles((theme) => ({
   },
   menu: {
     margin: theme.spacing(3, 0, 3, 0),
+  },
+  purple: {
+    backgroundColor: deepPurple[500],
   },
 }));
 
@@ -86,7 +91,7 @@ export default function DefaultHeader(props) {
             <Language />
           </div>
           <Notifications className={classes.notification}/>
-          <Avatar className={classes.small}>A
+          <Avatar className={classes.small}><span classnName={classes.purple}>A</span>
           </Avatar>
         </Toolbar>
       </AppBar>
