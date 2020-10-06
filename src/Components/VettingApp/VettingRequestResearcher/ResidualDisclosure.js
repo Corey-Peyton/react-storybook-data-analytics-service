@@ -38,7 +38,7 @@ const useStyles = makeStyles((theme) => ({
 function ResidualDisclosure(props) {
   const classes = useStyles();
   const [state, setState] = React.useState({
-    weightVar: true,
+    weightVar: false,
   });
 
   const weightOnChange = (e) => {

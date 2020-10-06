@@ -17,6 +17,7 @@ import ArrowBackIosIcon from '@material-ui/icons/ArrowBackIos';
 import ResearcherInfo from './ResearcherInfo';
 import FilesList from './FilesList';
 import ResidualDisclosure from './ResidualDisclosure';
+import AdditionalInfo from './AdditionalInfo';
 
 const useStyles = makeStyles((theme) => ({
   main: {
@@ -56,7 +57,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 function getSteps() {
-  return ['Researcher information', 'Files list request', 'Residual disclosure'];
+  return ['Researcher information', 'Files list request', 'Residual disclosure', 'Additional information'];
 }
 
 function getStepContent(step) {
@@ -67,6 +68,8 @@ function getStepContent(step) {
       return <FilesList />;
     case 2:
       return <ResidualDisclosure />;
+    case 3:
+      return <AdditionalInfo />;
     default:
       return 'Unknown step';
   }
@@ -74,7 +77,7 @@ function getStepContent(step) {
 
 function VettingRequestResearcher(props) {
   const classes = useStyles();
-  const [activeStep, setActiveStep] = React.useState(2);
+  const [activeStep, setActiveStep] = React.useState(3);
   const [completed, setCompleted] = React.useState({});
   const steps = getSteps();
 
@@ -122,15 +125,6 @@ function VettingRequestResearcher(props) {
   const handleReset = () => {
     setActiveStep(0);
     setCompleted({});
-  };
-
-  const navButtonStyle = () => {
-    const numSteps = getSteps().length;
-    switch (activeStep) {
-      case 0: return 'flex-end';
-      case (numSteps-1): return 'flex-start';
-      default: return 'space-between';
-    }
   };
 
   return (
@@ -191,7 +185,7 @@ function VettingRequestResearcher(props) {
           </div>
           <Grid
             container
-            justify={navButtonStyle()}
+            justify={activeStep === 0 ? 'flex-end' : 'space-between'}
             className={classes.navButtons}
           >
             {activeStep !== 0 && (
@@ -205,7 +199,17 @@ function VettingRequestResearcher(props) {
                 </Button>
               </Grid>
             )}
-            {activeStep !== getSteps().length - 1 && (
+            {activeStep === getSteps().length - 1 ? (
+              <Grid item>
+                <Button
+                  variant="contained"
+                  color="primary"
+                  className={classes.button}
+                >
+                  Send request
+                </Button>
+              </Grid>
+            ) : (
               <Grid item>
                 <Button
                   variant="contained"
