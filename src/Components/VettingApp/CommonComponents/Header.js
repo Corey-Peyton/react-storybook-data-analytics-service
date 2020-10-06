@@ -17,7 +17,7 @@ const defaultStyles = makeStyles((theme) => ({
     backgroundColor: theme.palette.common.white,
     color: theme.palette.text.primary,
   },
-  notification:{
+  notification: {
     paddingRight: theme.spacing(2),
     paddingLeft: theme.spacing(1),
   },
