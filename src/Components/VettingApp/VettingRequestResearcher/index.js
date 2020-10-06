@@ -15,6 +15,11 @@ import {
   AppBar,
   Toolbar,
   IconButton,
+  Dialog,
+  DialogTitle,
+  DialogContent,
+  DialogContentText,
+  DialogActions,
 } from '@material-ui/core';
 import ArrowForwardIosIcon from '@material-ui/icons/ArrowForwardIos';
 import ArrowBackIosIcon from '@material-ui/icons/ArrowBackIos';
@@ -83,6 +88,9 @@ const useStyles = makeStyles((theme) => ({
   deleteBtn: {
     color: theme.palette.error.main,
   },
+  dialogActions: {
+    padding: theme.spacing(0, 3, 3, 3),
+  },
 }));
 
 function getSteps() {
@@ -96,21 +104,32 @@ function getSteps() {
 
 function VettingRequestResearcher(props) {
   const classes = useStyles();
-  const [activeStep, setActiveStep] = React.useState(0);
-  const [completed, setCompleted] = React.useState({});
-  const [title, setTitle] = React.useState('New vetting request');
+  const [state, setState] = React.useState({
+    activeStep: 0,
+    completed: {},
+    title: 'New vetting request',
+    open: false,
+  });
   const steps = getSteps();
+
+  const handleDialogOpen = () => {
+    setState({...state, open: true});
+  };
+
+  const handleDialogClose = () => {
+    setState({...state, open: false});
+  };
 
   const totalSteps = () => {
     return steps.length;
   };
 
   const completedSteps = () => {
-    return Object.keys(completed).length;
+    return Object.keys(state.completed).length;
   };
 
   const isLastStep = () => {
-    return activeStep === totalSteps() - 1;
+    return state.activeStep === totalSteps() - 1;
   };
 
   const allStepsCompleted = () => {
@@ -122,17 +141,17 @@ function VettingRequestResearcher(props) {
       isLastStep() && !allStepsCompleted()
         ? // It's the last step, but not all steps have been completed,
           // find the first step that has been completed
-          steps.findIndex((step, i) => !(i in completed))
-        : activeStep + 1;
-    setActiveStep(newActiveStep);
+          steps.findIndex((step, i) => !(i in state.completed))
+        : state.activeStep + 1;
+    setState({...state, activeStep: newActiveStep});
   };
 
   const handleBack = () => {
-    setActiveStep((prevActiveStep) => prevActiveStep - 1);
+    setState({...state, activeStep: (prevActiveStep) => prevActiveStep - 1});
   };
 
   const handleStep = (step) => () => {
-    setActiveStep(step);
+    setState({...state, activeStep: step});
   };
 
   // const handleComplete = () => {
@@ -160,15 +179,15 @@ function VettingRequestResearcher(props) {
   const handleTitleChange = (e) => {
     const title = e.target.value;
     if (title !== '') {
-      setTitle(e.target.value);
+      setState({...state, title: e.target.value});
     } else {
-      setTitle('New vetting request');
+      setState({...state, title: 'New vetting request'});
     }
   };
 
   const handleReset = () => {
-    setActiveStep(0);
-    setCompleted({});
+    setState({...state, activeStep: 0});
+    setState({...state, completed: {}});
   };
 
   return (
@@ -191,6 +210,7 @@ function VettingRequestResearcher(props) {
               color="default"
               className={classes.headerBtn}
               startIcon={<ExitToAppIcon />}
+              onClick={handleDialogOpen}
             >
               Withdraw
             </Button>
@@ -215,7 +235,7 @@ function VettingRequestResearcher(props) {
         <Paper className={classes.paper}>
           <Grid container alignItems="center">
             <Grid item className={classes.title}>
-              <Typography variant="h6">{title}</Typography>
+              <Typography variant="h6">{state.title}</Typography>
               <Typography variant="caption" color="textSecondary">
                 ID: 10_2020_232425255
               </Typography>
@@ -237,7 +257,7 @@ function VettingRequestResearcher(props) {
           </Grid>
           <Divider className={classes.divider} />
           <div className={classes.stepperContainer}>
-            {activeStep !== 0 && (
+            {state.activeStep !== 0 && (
               <Button
                 onClick={handleBack}
                 className={classes.stepperBackBtn}
@@ -246,19 +266,19 @@ function VettingRequestResearcher(props) {
                 Back
               </Button>
             )}
-            <Stepper nonLinear activeStep={activeStep}>
+            <Stepper nonLinear activeStep={state.activeStep}>
               {steps.map((label, index) => (
                 <Step key={label}>
                   <StepButton
                     onClick={handleStep(index)}
-                    completed={completed[index]}
+                    completed={state.completed[index]}
                   >
                     {label}
                   </StepButton>
                 </Step>
               ))}
             </Stepper>
-            {activeStep !== getSteps().length - 1 && (
+            {state.activeStep !== getSteps().length - 1 && (
               <Button
                 onClick={handleNext}
                 className={classes.stepperNextBtn}
@@ -281,7 +301,7 @@ function VettingRequestResearcher(props) {
               <div>
                 <Grid container justify="center" className="mb-4">
                   <Grid item xs={6}>
-                    {getStepContent(activeStep)}
+                    {getStepContent(state.activeStep)}
                   </Grid>
                 </Grid>
               </div>
@@ -289,10 +309,10 @@ function VettingRequestResearcher(props) {
           </div>
           <Grid
             container
-            justify={activeStep === 0 ? 'flex-end' : 'space-between'}
+            justify={state.activeStep === 0 ? 'flex-end' : 'space-between'}
             className={classes.navButtons}
           >
-            {activeStep !== 0 && (
+            {state.activeStep !== 0 && (
               <Grid item>
                 <Button
                   variant="contained"
@@ -303,7 +323,7 @@ function VettingRequestResearcher(props) {
                 </Button>
               </Grid>
             )}
-            {activeStep === getSteps().length - 1 ? (
+            {state.activeStep === getSteps().length - 1 ? (
               <Grid item>
                 <Button
                   variant="contained"
@@ -327,6 +347,29 @@ function VettingRequestResearcher(props) {
           </Grid>
         </Paper>
       </Container>
+
+      <Dialog
+        open={state.open}
+        onClose={handleDialogClose}
+        aria-labelledby="alert-dialog-title"
+        aria-describedby="alert-dialog-description"
+      >
+        <DialogTitle id="alert-dialog-title">Delete vetting request</DialogTitle>
+        <DialogContent className="pb-0">
+          <DialogContentText id="alert-dialog-description">
+            <Typography variant="body2">{`Are you sure you want to delete the Vetting disclosure request "${state.title}"?`}</Typography>
+          </DialogContentText>
+          <Divider className={classes.divider} />
+        </DialogContent>
+        <DialogActions className={classes.dialogActions}>
+          <Button onClick={handleDialogClose} color="primary" variant="outlined">
+            Cancel
+          </Button>
+          <Button onClick={handleDialogClose} color="primary" variant="contained" className="ml-2">
+          Delete request
+          </Button>
+        </DialogActions>
+      </Dialog>
     </main>
   );
 }
