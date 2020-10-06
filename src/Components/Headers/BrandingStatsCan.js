@@ -5,13 +5,7 @@ import {SM_SCREEN} from '../../Theme/constants';
 const defaultStyles = makeStyles((theme) => ({
   brandImage: {
     margin: theme.spacing(1.5),
-    height: '28px !important',
-  },
-  brandLink: {
-    '&:focus img': {
-      border: '2px solid #0049b3',
-      borderRadius: '2px',
-    },
+    height: '40px !important',
   },
 }));
 
@@ -52,7 +46,7 @@ export default function BrandingStatsCan() {
       ) : (
         <a href="https://www.statcan.gc.ca/eng/start" className={classes.brandLink}>
           <img
-            src={process.env.PUBLIC_URL + '/images/sig-sc-en.svg'}
+            src={process.env.PUBLIC_URL + '/images/sig-stats-can-blk-en.svg'}
             alt=""
             className={classes.brandImage}
           />
