@@ -10,14 +10,26 @@ import {
   StepButton,
   Typography,
   Divider,
+  Chip,
+  Tooltip,
+  AppBar,
+  Toolbar,
+  IconButton,
 } from '@material-ui/core';
 import ArrowForwardIosIcon from '@material-ui/icons/ArrowForwardIos';
 import ArrowBackIosIcon from '@material-ui/icons/ArrowBackIos';
+import ArrowBackIcon from '@material-ui/icons/ArrowBack';
+import ExitToAppIcon from '@material-ui/icons/ExitToApp';
+import SaveIcon from '@material-ui/icons/Save';
+import SendIcon from '@material-ui/icons/Send';
+import Icon from '@mdi/react';
+import {mdiLockOpenVariant} from '@mdi/js';
 
 import ResearcherInfo from './ResearcherInfo';
 import FilesList from './FilesList';
 import ResidualDisclosure from './ResidualDisclosure';
 import AdditionalInfo from './AdditionalInfo';
+import {getThemeProps} from '@material-ui/styles';
 
 const useStyles = makeStyles((theme) => ({
   main: {
@@ -26,11 +38,28 @@ const useStyles = makeStyles((theme) => ({
   divider: {
     margin: theme.spacing(3, 0),
   },
+  appBar: {
+    margin: theme.spacing(0, -2),
+    width: 'auto',
+    backgroundColor: theme.palette.common.white,
+  },
+  headerBtn: {
+    marginLeft: theme.spacing(3),
+  },
   paper: {
     maxWidth: '1280px',
     margin: 'auto',
     boxSizing: 'border-box',
     padding: theme.spacing(3),
+  },
+  title: {
+    flexGrow: 1,
+  },
+  lockTooltip: {
+    padding: theme.spacing(0.5, 2),
+    borderLeftWidth: '1px',
+    borderLeftStyle: 'solid',
+    borderLeftColor: theme.palette.divider,
   },
   stepperContainer: {
     'display': 'flex',
@@ -57,28 +86,19 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 function getSteps() {
-  return ['Researcher information', 'Files list request', 'Residual disclosure', 'Additional information'];
-}
-
-function getStepContent(step) {
-  switch (step) {
-    case 0:
-      return <ResearcherInfo />;
-    case 1:
-      return <FilesList />;
-    case 2:
-      return <ResidualDisclosure />;
-    case 3:
-      return <AdditionalInfo />;
-    default:
-      return 'Unknown step';
-  }
+  return [
+    'Researcher information',
+    'Files list request',
+    'Residual disclosure',
+    'Additional information',
+  ];
 }
 
 function VettingRequestResearcher(props) {
   const classes = useStyles();
-  const [activeStep, setActiveStep] = React.useState(3);
+  const [activeStep, setActiveStep] = React.useState(0);
   const [completed, setCompleted] = React.useState({});
+  const [title, setTitle] = React.useState('New vetting request');
   const steps = getSteps();
 
   const totalSteps = () => {
@@ -122,6 +142,30 @@ function VettingRequestResearcher(props) {
   //   handleNext();
   // };
 
+  const getStepContent = (step) => {
+    switch (step) {
+      case 0:
+        return <ResearcherInfo handleTitleChange={handleTitleChange} />;
+      case 1:
+        return <FilesList />;
+      case 2:
+        return <ResidualDisclosure />;
+      case 3:
+        return <AdditionalInfo />;
+      default:
+        return 'Unknown step';
+    }
+  };
+
+  const handleTitleChange = (e) => {
+    const title = e.target.value;
+    if (title !== '') {
+      setTitle(e.target.value);
+    } else {
+      setTitle('New vetting request');
+    }
+  };
+
   const handleReset = () => {
     setActiveStep(0);
     setCompleted({});
@@ -130,7 +174,68 @@ function VettingRequestResearcher(props) {
   return (
     <main className={classes.main} tabIndex="-1">
       <Container maxWidth="xl" className="page-container">
+        <AppBar position="static" className={classes.appBar} color="default">
+          <Toolbar>
+            <IconButton
+              edge="start"
+              className={classes.menuButton}
+              color="inherit"
+              aria-label="menu"
+            >
+              <ArrowBackIcon />
+            </IconButton>
+            <Typography variant="body2" className={classes.title}>
+              Vetting requests dashboard
+            </Typography>
+            <Button
+              variant="default"
+              color="default"
+              className={classes.headerBtn}
+              startIcon={<ExitToAppIcon />}
+            >
+              Withdraw
+            </Button>
+            <Button
+              variant="outlined"
+              color="primary"
+              className={classes.headerBtn}
+              startIcon={<SaveIcon />}
+            >
+              Save
+            </Button>
+            <Button
+              variant="contained"
+              color="primary"
+              className={classes.headerBtn}
+              startIcon={<SendIcon />}
+            >
+              Send request
+            </Button>
+          </Toolbar>
+        </AppBar>
         <Paper className={classes.paper}>
+          <Grid container alignItems="center">
+            <Grid item className={classes.title}>
+              <Typography variant="h6">{title}</Typography>
+              <Typography variant="caption" color="textSecondary">
+                ID: 10_2020_232425255
+              </Typography>
+            </Grid>
+            <Grid item>
+              <Chip label="Draft" className="mr-2" />
+            </Grid>
+            <Grid item>
+              <div className={classes.lockTooltip}>
+                <Tooltip title="This vetting request is unlocked and marked as “Draft.” You can either send or withdraw this vetting request.">
+                  <Icon
+                    path={mdiLockOpenVariant}
+                    size={1}
+                    className="icon-grey"
+                  />
+                </Tooltip>
+              </div>
+            </Grid>
+          </Grid>
           <Divider className={classes.divider} />
           <div className={classes.stepperContainer}>
             {activeStep !== 0 && (

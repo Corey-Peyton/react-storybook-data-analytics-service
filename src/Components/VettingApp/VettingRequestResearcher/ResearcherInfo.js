@@ -73,6 +73,7 @@ function ResearcherInfo(props) {
             name="project"
             label="Project title"
             variant="outlined"
+            onChange={props.handleTitleChange}
             // inputRef={register({required: requiredErrorMessage})}
             required
             fullWidth
