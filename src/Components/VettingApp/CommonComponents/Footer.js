@@ -1,8 +1,11 @@
 import React from 'react';
+import ReactDOM from 'react-dom';
 import {useTranslation} from 'react-i18next';
 import {Button, IconButton} from '@material-ui/core';
 import {makeStyles} from '@material-ui/core/styles';
-import Icon from '@mdi/react';
+import moment from 'moment';
+
+const date = moment().format('YYYY-MM-DD');
 
 const useStyles = makeStyles((theme) => ({
   footer: {
@@ -24,6 +27,13 @@ const useStyles = makeStyles((theme) => ({
     color: theme.palette.text.secondary,
     margin: theme.spacing(0, 0.5, 0, 0),
   },
+  dateModified: {
+    fontFamily: 'Roboto !important',
+    color: '#0000008A',
+    fontSize: '14px',
+    fontWeight: '500',
+    fontStyle: 'italic',
+  },
   canadaLogo: {
     height: '24px',
     flexGrow: 1,
@@ -43,6 +53,7 @@ const useStyles = makeStyles((theme) => ({
     borderRightColor: theme.palette.divider,
   },
 }));
+
 
 const Footer = React.forwardRef((props, ref) => {
   const {t} = useTranslation();
@@ -64,6 +75,9 @@ const Footer = React.forwardRef((props, ref) => {
         </li>
         <li>
           <Button className={classes.footerBtn}>{t('Privacy')}</Button>
+        </li>
+        <li>
+          <span className={classes.dateModified}>V1 / Date modified: {date}</span>
         </li>
       </ul>
       <div className={classes.canadaLogo}>
