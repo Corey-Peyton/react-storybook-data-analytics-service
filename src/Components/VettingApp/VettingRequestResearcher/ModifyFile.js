@@ -119,8 +119,15 @@ function ModifyFile(props) {
     <React.Fragment>
       <AppBar position="static" className={classes.appBar} color="default">
         <Toolbar>
-          <Typography variant="h6" className={classes.title}>Modify file</Typography>
-          <IconButton aria-label="delete" className={classes.margin} edge="end">
+          <Typography variant="h6" className={classes.title}>
+            Modify file
+          </Typography>
+          <IconButton
+            aria-label="delete"
+            className={classes.margin}
+            edge="end"
+            onClick={props.toggleDrawer(false)}
+          >
             <CloseIcon />
           </IconButton>
         </Toolbar>
@@ -238,8 +245,8 @@ function ModifyFile(props) {
       </FormControl>
       <div className={classes.emphasisBox}>
         <Typography variant="subtitle2">
-              If you are not sure about the Output Method above, you can search
-              for the proper one below:
+          If you are not sure about the Output Method above, you can search for
+          the proper one below:
         </Typography>
         <Autocomplete
           id="outputMethodSearch"
@@ -249,9 +256,9 @@ function ModifyFile(props) {
           // }}
           getOptionLabel={(option) => option.term}
           renderOption={(option) => (
-                <>
-                  {option.term} - {option.method}
-                </>
+            <>
+              {option.term} - {option.method}
+            </>
           )}
           renderInput={(params) => (
             <TextField
@@ -263,9 +270,7 @@ function ModifyFile(props) {
             />
           )}
           getOptionSelected={(option, value) => {
-            return (
-              option.term === value.term && option.method === value.method
-            );
+            return option.term === value.term && option.method === value.method;
           }}
         />
       </div>
@@ -280,7 +285,7 @@ function ModifyFile(props) {
         // }
       >
         <FormLabel component="legend">
-              Does this output include a weight variable?
+          Does this output include a weight variable?
         </FormLabel>
         {/* <Controller
                       render={({ onBlur, onChange, value }) => ( */}
@@ -289,8 +294,16 @@ function ModifyFile(props) {
           // onChange={onChange}
           // value={value}
         >
-          <FormControlLabel value="Yes" control={<Radio color="primary"/>} label="Yes" />
-          <FormControlLabel value="No" control={<Radio color="primary" />} label="No" />
+          <FormControlLabel
+            value="Yes"
+            control={<Radio color="primary" />}
+            label="Yes"
+          />
+          <FormControlLabel
+            value="No"
+            control={<Radio color="primary" />}
+            label="No"
+          />
         </RadioGroup>
         {/* )}
                       name={"outputFiles[" + index + "].includeWeightVariable"}
@@ -308,76 +321,76 @@ function ModifyFile(props) {
         {/* {watchFields[
                   "outputFiles[" + index + "].includeWeightVariable"
                 ] === "Yes" && ( */}
-            <>
-              <TextField
-                className={classes.inputMargin}
-                margin="dense"
-                id="weightVariableName"
-                // name={"outputFiles[" + index + "].weightVariableName"}
-                label="Name of weight variable"
-                variant="outlined"
-                // inputRef={register({ required: requiredErrorMessage })}
-                // error={
-                //   errors.outputFiles &&
-                //   errors.outputFiles[index].weightVariableName
-                //     ? true
-                //     : false
-                // }
-                // helperText={
-                //   errors.outputFiles &&
-                //   errors.outputFiles[index].weightVariableName
-                //     ? errors.outputFiles[index].weightVariableName
-                //         .message
-                //     : ""
-                // }
-                required
-                fullWidth
-              />
-              <FormControl
-                component="fieldset"
-                required
-                // error={
-                //   errors.outputFiles &&
-                //   errors.outputFiles[index].weightVariableType
-                //     ? true
-                //     : false
-                // }
-              >
-                <FormLabel component="legend" className="screen-reader-text">
-                  Is the weight variable scaled or normalized?
-                </FormLabel>
-                {/* <Controller
+        <>
+          <TextField
+            className={classes.inputMargin}
+            margin="dense"
+            id="weightVariableName"
+            // name={"outputFiles[" + index + "].weightVariableName"}
+            label="Name of weight variable"
+            variant="outlined"
+            // inputRef={register({ required: requiredErrorMessage })}
+            // error={
+            //   errors.outputFiles &&
+            //   errors.outputFiles[index].weightVariableName
+            //     ? true
+            //     : false
+            // }
+            // helperText={
+            //   errors.outputFiles &&
+            //   errors.outputFiles[index].weightVariableName
+            //     ? errors.outputFiles[index].weightVariableName
+            //         .message
+            //     : ""
+            // }
+            required
+            fullWidth
+          />
+          <FormControl
+            component="fieldset"
+            required
+            // error={
+            //   errors.outputFiles &&
+            //   errors.outputFiles[index].weightVariableType
+            //     ? true
+            //     : false
+            // }
+          >
+            <FormLabel component="legend" className="screen-reader-text">
+              Is the weight variable scaled or normalized?
+            </FormLabel>
+            {/* <Controller
                           render={({onBlur, onChange, value}) => ( */}
-                <RadioGroup
-                  id="weightVariableType"
-                  // onChange={onChange}
-                  // value={value}
-                >
-                  <FormControlLabel
-                    value="Scaled"
-                    control={<Radio color="primary" />}
-                    label="Scaled"
-                  />
-                  <FormControlLabel
-                    value="Normalized"
-                    control={<Radio color="primary" />}
-                    label="Normalized"
-                  />
-                </RadioGroup>
-                {/* )}
+            <RadioGroup
+              id="weightVariableType"
+              // onChange={onChange}
+              // value={value}
+            >
+              <FormControlLabel
+                value="Scaled"
+                control={<Radio color="primary" />}
+                label="Scaled"
+              />
+              <FormControlLabel
+                value="Normalized"
+                control={<Radio color="primary" />}
+                label="Normalized"
+              />
+            </RadioGroup>
+            {/* )}
                           name={'outputFiles[' + index + '].weightVariableType'}
                           control={control}
                           rules={{required: requiredErrorMessage}}
                         /> */}
-                <FormHelperText>
-                  {/* {errors.outputFiles &&
+            <FormHelperText>
+              {/* {errors.outputFiles &&
                           errors.outputFiles[index].weightVariableType
                             ? errors.outputFiles[index].weightVariableType
                                 .message
                             : ""} */}
-                </FormHelperText>
-              </FormControl>
-            </>
+            </FormHelperText>
+          </FormControl>
+        </>
       </div>
       {/* )} */}
       <TextField
@@ -406,7 +419,7 @@ function ModifyFile(props) {
       {/* </Grid>
         <Grid item xs={12}> */}
       <Typography variant="subtitle2" className="mb-2">
-            Output supporting files
+        Output supporting files
       </Typography>
       <FormControl
         component="fieldset"
@@ -426,9 +439,21 @@ function ModifyFile(props) {
           // onChange={onChange}
           // value={value}
         >
-          <FormControlLabel value="Yes" control={<Radio color="primary" />} label="Yes" />
-          <FormControlLabel value="No" control={<Radio color="primary" />} label="No" />
-          <FormControlLabel value="NA" control={<Radio color="primary" />} label="N/A" />
+          <FormControlLabel
+            value="Yes"
+            control={<Radio color="primary" />}
+            label="Yes"
+          />
+          <FormControlLabel
+            value="No"
+            control={<Radio color="primary" />}
+            label="No"
+          />
+          <FormControlLabel
+            value="NA"
+            control={<Radio color="primary" />}
+            label="N/A"
+          />
         </RadioGroup>
         {/* )}
                       name={'outputFiles[' + index + '].linkedData'}
@@ -453,8 +478,8 @@ function ModifyFile(props) {
         // }
       >
         <FormLabel component="legend" className={classes.tooltipLabel}>
-              Are variables related to income, earnings, tax and/or dollar
-              values included?{' '}
+          Are variables related to income, earnings, tax and/or dollar values
+          included?{' '}
           <Tooltip
             title="If no, future vetting release reuests under this contract may be restricted due to residual disclosure. You are strongly encouraged to consult with your analyst."
             arrow
@@ -481,9 +506,21 @@ function ModifyFile(props) {
           // }
           // value={value}
         >
-          <FormControlLabel value="Yes" control={<Radio color="primary" />} label="Yes" />
-          <FormControlLabel value="No" control={<Radio color="primary" />} label="No" />
-          <FormControlLabel value="NA" control={<Radio color="primary" />} label="N/A" />
+          <FormControlLabel
+            value="Yes"
+            control={<Radio color="primary" />}
+            label="Yes"
+          />
+          <FormControlLabel
+            value="No"
+            control={<Radio color="primary" />}
+            label="No"
+          />
+          <FormControlLabel
+            value="NA"
+            control={<Radio color="primary" />}
+            label="N/A"
+          />
         </RadioGroup>
         {/* )} name={"outputFiles[" + index + "].dollarIncluded"}
                   control={control}
@@ -506,7 +543,7 @@ function ModifyFile(props) {
         // }
       >
         <FormLabel component="legend">
-              Does the request include descriptive statistics?
+          Does the request include descriptive statistics?
         </FormLabel>
         {/* <Controller
                       render={({ onBlur, onChange, value }) => ( */}
@@ -549,8 +586,8 @@ function ModifyFile(props) {
         // }
       >
         <FormLabel component="legend" className={classes.tooltipLabel}>
-              Does this request include model output or graphs that are
-              equivalent to a descriptive statistics?{' '}
+          Does this request include model output or graphs that are equivalent
+          to a descriptive statistics?{' '}
           <Tooltip
             title="Examples: a model with a single independant variable, a model with all possible interactions, histograms"
             arrow
@@ -573,9 +610,21 @@ function ModifyFile(props) {
           // }
           // value={value}
         >
-          <FormControlLabel value="Yes" control={<Radio color="primary" />} label="Yes" />
-          <FormControlLabel value="No" control={<Radio color="primary" />} label="No" />
-          <FormControlLabel value="NA" control={<Radio color="primary" />} label="N/A" />
+          <FormControlLabel
+            value="Yes"
+            control={<Radio color="primary" />}
+            label="Yes"
+          />
+          <FormControlLabel
+            value="No"
+            control={<Radio color="primary" />}
+            label="No"
+          />
+          <FormControlLabel
+            value="NA"
+            control={<Radio color="primary" />}
+            label="N/A"
+          />
         </RadioGroup>
         {/* )} name=
                   {"outputFiles[" + index + "].equivalentDescriptiveStats"}
@@ -600,8 +649,7 @@ function ModifyFile(props) {
         // }
       >
         <FormLabel component="legend" className={classes.tooltipLabel}>
-              Did you apply modified (e.g. standardized) weights in the
-              analysis?{' '}
+          Did you apply modified (e.g. standardized) weights in the analysis?{' '}
           <Tooltip
             title="If yes, consult with your analyst about the vetting rules for modified weights."
             arrow
@@ -617,9 +665,21 @@ function ModifyFile(props) {
           // onChange={onChange}
           // value={value}
         >
-          <FormControlLabel value="Yes" control={<Radio color="primary" />} label="Yes" />
-          <FormControlLabel value="No" control={<Radio color="primary" />} label="No" />
-          <FormControlLabel value="NA" control={<Radio color="primary" />} label="N/A" />
+          <FormControlLabel
+            value="Yes"
+            control={<Radio color="primary" />}
+            label="Yes"
+          />
+          <FormControlLabel
+            value="No"
+            control={<Radio color="primary" />}
+            label="No"
+          />
+          <FormControlLabel
+            value="NA"
+            control={<Radio color="primary" />}
+            label="N/A"
+          />
         </RadioGroup>
         {/* )} name={"outputFiles[" + index + "].modifiedWeights"}
                     control={control}
@@ -642,7 +702,7 @@ function ModifyFile(props) {
         // }
       >
         <FormLabel component="legend">
-              Does this output include a correlation or covariance matrix?
+          Does this output include a correlation or covariance matrix?
         </FormLabel>
         {/* <Controller
                       render={({ onBlur, onChange, value }) => ( */}
@@ -651,9 +711,21 @@ function ModifyFile(props) {
           // onChange={onChange}
           // value={value}
         >
-          <FormControlLabel value="Yes" control={<Radio color="primary" />} label="Yes" />
-          <FormControlLabel value="No" control={<Radio color="primary" />} label="No" />
-          <FormControlLabel value="NA" control={<Radio color="primary" />} label="N/A" />
+          <FormControlLabel
+            value="Yes"
+            control={<Radio color="primary" />}
+            label="Yes"
+          />
+          <FormControlLabel
+            value="No"
+            control={<Radio color="primary" />}
+            label="No"
+          />
+          <FormControlLabel
+            value="NA"
+            control={<Radio color="primary" />}
+            label="N/A"
+          />
         </RadioGroup>
         {/* )} name={"outputFiles[" + index + "].includeMatrix"}
                     control={control}
@@ -676,7 +748,7 @@ function ModifyFile(props) {
         // }
       >
         <FormLabel component="legend" className={classes.tooltipLabel}>
-              Is rounding of output required for this vetting request?{' '}
+          Is rounding of output required for this vetting request?{' '}
           <Tooltip
             title="If yes, ensure that any forced rounding to zero is shown."
             arrow
@@ -699,9 +771,21 @@ function ModifyFile(props) {
           // }
           // value={value}
         >
-          <FormControlLabel value="Yes" control={<Radio color="primary" />} label="Yes" />
-          <FormControlLabel value="No" control={<Radio color="primary" />} label="No" />
-          <FormControlLabel value="NA" control={<Radio color="primary" />} label="N/A" />
+          <FormControlLabel
+            value="Yes"
+            control={<Radio color="primary" />}
+            label="Yes"
+          />
+          <FormControlLabel
+            value="No"
+            control={<Radio color="primary" />}
+            label="No"
+          />
+          <FormControlLabel
+            value="NA"
+            control={<Radio color="primary" />}
+            label="N/A"
+          />
         </RadioGroup>
         {/* )} name={"outputFiles[" + index + "].roundingOutput"}
                     control={control}
@@ -715,35 +799,34 @@ function ModifyFile(props) {
       </FormControl>
       <div className={classes.emphasisBox}>
         <Typography variant="subtitle2" className="mb-2">
-              Mandatory supporting files:
+          Mandatory supporting files:
         </Typography>
         <ul className="mb-3">
           <li>
             <Typography variant="body2" gutterBottom={true}>
-                  Unweighted supporting sample counts.
+              Unweighted supporting sample counts.
             </Typography>
           </li>
           <li>
             <Typography variant="body2" gutterBottom={true}>
-                  Syntax used for variable creation, analysis and running the
-                  vetting tests.
+              Syntax used for variable creation, analysis and running the
+              vetting tests.
             </Typography>
           </li>
           <li>
             <Typography variant="body2" gutterBottom={true}>
-                  Vetting the results (e..g. test of magnitude, dominance, etc).
+              Vetting the results (e..g. test of magnitude, dominance, etc).
             </Typography>
           </li>
         </ul>
         <Typography variant="subtitle2">
-              NOTE: supporting files will not be released. Please name your
-              support files to allow easy pairing of the corresponding output
-              file.
+          NOTE: supporting files will not be released. Please name your support
+          files to allow easy pairing of the corresponding output file.
         </Typography>
       </div>
       <div className={classes.buttonTooltip}>
         <Button variant="outlined" color="primary">
-              Add Supporting File
+          Add Supporting File
         </Button>
         <Tooltip
           title="In addition to the mandatory files listed, include other files as required by the Survey Specific Guidelines, syntax files or other files requested by the analyst."
@@ -834,7 +917,7 @@ function ModifyFile(props) {
         required
       />
       <Button variant="contained" color="primary">
-                Save Changes
+        Save Changes
       </Button>
     </React.Fragment>
   );

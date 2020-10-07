@@ -217,7 +217,7 @@ function FilesList(props) {
         </TableBody>
       </Table>
       <Button variant="contained" color="primary" onClick={toggleDrawer(true)}>
-        Add Output File
+        Add output file
       </Button>
       <Drawer
         anchor="right"
@@ -225,7 +225,7 @@ function FilesList(props) {
         onClose={toggleDrawer(false)}
         className={classes.drawer}
       >
-        <ModifyFile />
+        <ModifyFile toggleDrawer={toggleDrawer} />
       </Drawer>
     </React.Fragment>
   );
