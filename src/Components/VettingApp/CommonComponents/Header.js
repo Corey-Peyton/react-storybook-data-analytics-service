@@ -1,15 +1,48 @@
 import React from 'react';
 import {useTranslation} from 'react-i18next';
-import {AppBar, Toolbar} from '@material-ui/core';
+import {AppBar, Toolbar, MenuItem, Button, ListItemIcon, ListItemText} from '@material-ui/core';
 import {makeStyles} from '@material-ui/styles';
-import Notifications from '@material-ui/icons/Notifications';
+import {withStyles} from '@material-ui/styles';
 import Avatar from '@material-ui/core/Avatar';
 import Menu from '@material-ui/icons/Menu';
 import {deepPurple} from '@material-ui/core/colors';
 import {SM_SCREEN} from '../../../Theme/constants';
 import BrandingStatsCan from '../../../Components/Headers/BrandingStatsCan';
 import Language from '../../../Components/Headers/Language';
+import DraftsIcon from '@material-ui/icons/Drafts';
+import InboxIcon from '@material-ui/icons/MoveToInbox';
+import SendIcon from '@material-ui/icons/Send';
 
+const StyledMenu = withStyles({
+  paper: {
+    border: '1px solid #d3d4d5',
+  },
+})((props) => (
+  <Menu
+    elevation={0}
+    getContentAnchorEl={null}
+    anchorOrigin={{
+      vertical: 'bottom',
+      horizontal: 'center',
+    }}
+    transformOrigin={{
+      vertical: 'top',
+      horizontal: 'center',
+    }}
+    {...props}
+  />
+));
+
+const StyledMenuItem = withStyles((theme) => ({
+  root: {
+    '&:focus': {
+      backgroundColor: theme.palette.primary.main,
+      '& .MuiListItemIcon-root, & .MuiListItemText-primary': {
+        color: theme.palette.common.white,
+      },
+    },
+  },
+}))(MenuItem);
 
 const defaultStyles = makeStyles((theme) => ({
   appBar: {
@@ -61,8 +94,18 @@ export default function DefaultHeader(props) {
 
   const [state, setState] = React.useState({
     windowWidth: window.innerWidth,
-  });
+  }
+  );
 
+  const [anchorEl, setAnchorEl] = React.useState(null);
+
+  const handleClick = (event) => {
+    setAnchorEl(event.currentTarget);
+  };
+
+  const handleClose = () => {
+    setAnchorEl(null);}
+ 
   const isSmScreen = state.windowWidth < SM_SCREEN;
 
   React.useEffect(() => {
@@ -90,11 +133,48 @@ export default function DefaultHeader(props) {
           <div className={classes.lang}>
             <Language />
           </div>
-          <Notifications className={classes.notification}/>
-          <Avatar className={classes.small}><span classnName={classes.purple}>A</span>
+         <Avatar className={classes.small}><span className={classes.purple}>A</span>
+          
           </Avatar>
+          <Button
+        aria-controls="customized-menu"
+        aria-haspopup="true"
+        variant="contained"
+        color="primary"
+        onClick={handleClick}
+      >
+        Open Menu
+      </Button>
+      <StyledMenu
+        id="customized-menu"
+        anchorEl={anchorEl}
+        keepMounted
+        open={Boolean(anchorEl)}
+        onClose={handleClose}
+      >
+        <StyledMenuItem>
+          <ListItemIcon>
+            <SendIcon fontSize="small" />
+          </ListItemIcon>
+          <ListItemText primary="Sent mail" />
+        </StyledMenuItem>
+        <StyledMenuItem>
+          <ListItemIcon>
+            <DraftsIcon fontSize="small" />
+          </ListItemIcon>
+          <ListItemText primary="Drafts" />
+        </StyledMenuItem>
+        <StyledMenuItem>
+          <ListItemIcon>
+            <InboxIcon fontSize="small" />
+          </ListItemIcon>
+          <ListItemText primary="Inbox" />
+        </StyledMenuItem>
+      </StyledMenu>
         </Toolbar>
+        
       </AppBar>
     </React.Fragment>
   );
 }
+
