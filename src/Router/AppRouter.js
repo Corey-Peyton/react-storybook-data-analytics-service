@@ -19,7 +19,7 @@ import SignInPage from '../Components/SignInPage';
 import SplashPage from '../Components/SplashPage';
 import RequestListResearcher from '../Components/VettingApp/RequestListResearcher';
 import RequestListAnalyst from '../Components/VettingApp/RequestListAnalyst';
-import VettingDashboardDeveloper from '../Components/VettingApp/VettingDashboardDeveloper';
+import VettingDashboardDeveloper from '../Components/VettingApp/Dashboard/VettingDashboardDeveloper';
 import {useStyles} from '../Theme/globalStyles';
 import {theme} from '../Theme/theme';
 import Index from './Index';
