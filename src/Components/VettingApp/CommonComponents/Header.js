@@ -1,6 +1,6 @@
 import React from 'react';
 import {useTranslation} from 'react-i18next';
-import {AppBar, Toolbar, MenuItem, Button, ListItemIcon, ListItemText, Menu} from '@material-ui/core';
+import {AppBar, Toolbar, MenuItem, Button, ListItemText, Menu} from '@material-ui/core';
 import {makeStyles} from '@material-ui/styles';
 import {withStyles} from '@material-ui/styles';
 import Avatar from '@material-ui/core/Avatar';
@@ -111,8 +111,9 @@ export default function DefaultHeader(props) {
   };
 
   const handleClose = () => {
-    setAnchorEl(null);}
- 
+    setAnchorEl(null);
+  };
+
   const isSmScreen = state.windowWidth < SM_SCREEN;
 
   React.useEffect(() => {
