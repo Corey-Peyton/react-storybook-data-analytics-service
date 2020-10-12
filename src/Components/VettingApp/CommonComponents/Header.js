@@ -1,17 +1,15 @@
 import React from 'react';
 import {useTranslation} from 'react-i18next';
-import {AppBar, Toolbar, MenuItem, Button, ListItemIcon, ListItemText} from '@material-ui/core';
+import {AppBar, Toolbar, MenuItem, Button, ListItemIcon, ListItemText, Menu} from '@material-ui/core';
 import {makeStyles} from '@material-ui/styles';
 import {withStyles} from '@material-ui/styles';
 import Avatar from '@material-ui/core/Avatar';
-import Menu from '@material-ui/icons/Menu';
 import {deepPurple} from '@material-ui/core/colors';
 import {SM_SCREEN} from '../../../Theme/constants';
 import BrandingStatsCan from '../../../Components/Headers/BrandingStatsCan';
 import Language from '../../../Components/Headers/Language';
-import DraftsIcon from '@material-ui/icons/Drafts';
-import InboxIcon from '@material-ui/icons/MoveToInbox';
 import SendIcon from '@material-ui/icons/Send';
+import ExitToApp from '@material-ui/icons/ExitToApp';
 
 const StyledMenu = withStyles({
   paper: {
@@ -36,9 +34,9 @@ const StyledMenu = withStyles({
 const StyledMenuItem = withStyles((theme) => ({
   root: {
     '&:focus': {
-      backgroundColor: theme.palette.primary.main,
+      'backgroundColor': theme.palette.common.white,
       '& .MuiListItemIcon-root, & .MuiListItemText-primary': {
-        color: theme.palette.common.white,
+        color: theme.palette.common.black,
       },
     },
   },
@@ -83,6 +81,15 @@ const defaultStyles = makeStyles((theme) => ({
   menu: {
     margin: theme.spacing(3, 0, 3, 0),
   },
+  button: {
+    'backgroundColor': 'white',
+    'boxShadow': 'none',
+    '&:hover': {
+      backgroundColor: 'white',
+      color: '#FFF',
+      boxShadow: 'none',
+    },
+  },
   purple: {
     backgroundColor: deepPurple[500],
   },
@@ -94,7 +101,7 @@ export default function DefaultHeader(props) {
 
   const [state, setState] = React.useState({
     windowWidth: window.innerWidth,
-  }
+  },
   );
 
   const [anchorEl, setAnchorEl] = React.useState(null);
@@ -133,46 +140,31 @@ export default function DefaultHeader(props) {
           <div className={classes.lang}>
             <Language />
           </div>
-         <Avatar className={classes.small}><span className={classes.purple}>A</span>
-          
-          </Avatar>
           <Button
-        aria-controls="customized-menu"
-        aria-haspopup="true"
-        variant="contained"
-        color="primary"
-        onClick={handleClick}
-      >
-        Open Menu
-      </Button>
-      <StyledMenu
-        id="customized-menu"
-        anchorEl={anchorEl}
-        keepMounted
-        open={Boolean(anchorEl)}
-        onClose={handleClose}
-      >
-        <StyledMenuItem>
-          <ListItemIcon>
-            <SendIcon fontSize="small" />
-          </ListItemIcon>
-          <ListItemText primary="Sent mail" />
-        </StyledMenuItem>
-        <StyledMenuItem>
-          <ListItemIcon>
-            <DraftsIcon fontSize="small" />
-          </ListItemIcon>
-          <ListItemText primary="Drafts" />
-        </StyledMenuItem>
-        <StyledMenuItem>
-          <ListItemIcon>
-            <InboxIcon fontSize="small" />
-          </ListItemIcon>
-          <ListItemText primary="Inbox" />
-        </StyledMenuItem>
-      </StyledMenu>
+            aria-controls="customized-menu"
+            aria-haspopup="true"
+            variant="contained"
+            className={classes.button}
+            onClick={handleClick}
+          >
+            <Avatar className={classes.small}><span className={classes.purple}>A</span>
+            </Avatar>
+          </Button>
+          <StyledMenu
+            id="customized-menu"
+            anchorEl={anchorEl}
+            keepMounted
+            open={Boolean(anchorEl)}
+            onClose={handleClose}
+          >
+            <StyledMenuItem>
+              <ExitToApp>
+                <SendIcon fontSize="small" />
+              </ExitToApp>
+              <ListItemText primary="Logout" />
+            </StyledMenuItem>
+          </StyledMenu>
         </Toolbar>
-        
       </AppBar>
     </React.Fragment>
   );
