@@ -1,9 +1,10 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
 import {useTranslation} from 'react-i18next';
-import {Button, IconButton} from '@material-ui/core';
+import {Button} from '@material-ui/core';
 import {makeStyles} from '@material-ui/core/styles';
 import moment from 'moment';
+import 'fontsource-roboto';
+import Typography from '@material-ui/core/Typography';
 
 const date = moment().format('YYYY-MM-DD');
 
@@ -77,7 +78,7 @@ const Footer = React.forwardRef((props, ref) => {
           <Button className={classes.footerBtn}>{t('Privacy')}</Button>
         </li>
         <li>
-          <span className={classes.dateModified}>V1 / Date modified: {date}</span>
+          <Typography variant="subtitle2" component="subtitle2" color="textSecondary"> Date modified: {date}</Typography>
         </li>
       </ul>
       <div className={classes.canadaLogo}>
