@@ -226,11 +226,11 @@ function SignInPage(props) {
                   margin="dense"
                   error={Boolean(state.pWordErr)}
                   inputProps={
-                    state.pWordErr
-                      ? {
+                    state.pWordErr ?
+                      {
                         'aria-describedby': 'passwordHelperErr',
-                      }
-                      : {}
+                      } :
+                      {}
                   }
                   endAdornment={
                     <InputAdornment position="end">

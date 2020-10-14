@@ -173,7 +173,7 @@ function CreateAccountPage(props) {
       errors.pWordErr = t('Enter a password.');
     } else if (
       !state.password.match(
-          /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$/g
+          /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$/g,
       )
     ) {
       isError = true;
@@ -295,9 +295,9 @@ function CreateAccountPage(props) {
                       error={Boolean(state.pWordErr)}
                       inputProps={{
                         'aria-describedby': `${
-                          state.pWordErr
-                            ? 'passwordHelperErr'
-                            : 'passwordHelper'
+                          state.pWordErr ?
+                            'passwordHelperErr' :
+                            'passwordHelper'
                         }`,
                       }}
                       endAdornment={
@@ -361,11 +361,11 @@ function CreateAccountPage(props) {
                       margin="dense"
                       error={Boolean(state.pWordConfErr)}
                       inputProps={
-                        state.pWordConfErr
-                          ? {
+                        state.pWordConfErr ?
+                          {
                             'aria-describedby': 'passwordConfHelperErr',
-                          }
-                          : {}
+                          } :
+                          {}
                       }
                       endAdornment={
                         <InputAdornment position="end">
