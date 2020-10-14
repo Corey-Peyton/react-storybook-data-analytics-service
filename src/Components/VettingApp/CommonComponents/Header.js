@@ -1,11 +1,9 @@
 import React from 'react';
-import {useTranslation} from 'react-i18next';
 import {AppBar, Toolbar, MenuItem, Button, ListItemText, Menu} from '@material-ui/core';
 import {makeStyles} from '@material-ui/styles';
 import {withStyles} from '@material-ui/styles';
 import Avatar from '@material-ui/core/Avatar';
 import {deepPurple} from '@material-ui/core/colors';
-import {SM_SCREEN} from '../../../Theme/constants';
 import BrandingStatsCan from '../../../Components/Headers/BrandingStatsCan';
 import Language from '../../../Components/Headers/Language';
 import SendIcon from '@material-ui/icons/Send';
@@ -92,7 +90,6 @@ const defaultStyles = makeStyles((theme) => ({
 
 export default function DefaultHeader(props) {
   const classes = defaultStyles();
-  const {t} = useTranslation();
 
   const [state, setState] = React.useState({
     windowWidth: window.innerWidth,
@@ -108,8 +105,6 @@ export default function DefaultHeader(props) {
   const handleClose = () => {
     setAnchorEl(null);
   };
-
-  const isSmScreen = state.windowWidth < SM_SCREEN;
 
   React.useEffect(() => {
     // Detect screen size

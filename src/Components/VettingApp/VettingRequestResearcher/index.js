@@ -6,7 +6,6 @@ import ArrowBackIosIcon from '@material-ui/icons/ArrowBackIos';
 import Header from '../CommonComponents/Header';
 import Footer from '../CommonComponents/Footer';
 import ResearcherInfo from './ResearcherInfo';
-import {CustomizedMenus} from '../CommonComponents/Header';
 
 const useStyles = makeStyles((theme) => ({
   main: {
