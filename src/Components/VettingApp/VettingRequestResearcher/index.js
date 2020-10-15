@@ -6,6 +6,7 @@ import ArrowBackIosIcon from '@material-ui/icons/ArrowBackIos';
 import Header from '../CommonComponents/Header';
 import Footer from '../CommonComponents/Footer';
 import ResearcherInfo from './ResearcherInfo';
+import FloatingSupportButton from '../CommonComponents/Support';
 
 const useStyles = makeStyles((theme) => ({
   main: {
@@ -71,6 +72,7 @@ function VettingRequestResearcher(props) {
               </Grid>
             </Grid>
           </Paper>
+          <FloatingSupportButton />
         </Container>
       </main>
       <Footer />
