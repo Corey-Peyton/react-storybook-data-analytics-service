@@ -1,9 +1,8 @@
 import React from 'react';
 import {useTranslation} from 'react-i18next';
-import {AppBar, Button, Toolbar} from '@material-ui/core';
+import {AppBar, Toolbar} from '@material-ui/core';
 import {makeStyles} from '@material-ui/styles';
-import {Link as RouterLink} from 'react-router-dom';
-import {mdiAccountCircle, mdiBell} from '@mdi/js';
+import {mdiBell} from '@mdi/js';
 import {Icon} from '@mdi/react';
 import {SM_SCREEN} from '../../../Theme/constants';
 
@@ -13,9 +12,9 @@ import Language from '../../../Components/Headers/Language';
 
 const defaultStyles = makeStyles((theme) => ({
   appBar: {
-    zIndex: 1200,
     backgroundColor: theme.palette.common.white,
     color: theme.palette.text.primary,
+    position: 'fixed',
   },
   flatHeader: {
     boxShadow: 'none',

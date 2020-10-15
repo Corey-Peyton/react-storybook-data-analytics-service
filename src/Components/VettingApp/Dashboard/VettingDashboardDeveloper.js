@@ -29,7 +29,7 @@ import BypassBlocks from '../../BypassBlocks';
 import {requestListResearchers} from '../../../Data/fakeData';
 import CustomizedMenus from '../CommonComponents/ContextMenu';
 
-export const DRAWER_WIDTH = 420;
+export const DRAWER_WIDTH = 240;
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -37,9 +37,8 @@ const useStyles = makeStyles((theme) => ({
     backgroundColor: '#f0f0f0',
   },
   paper: {
-    marginBottom: theme.spacing(2),
     backgroundColor: '#f0f0f0',
-    padding: '5%',
+    padding: '10% 5% 0%',
   },
   appBar: {
     color: theme.palette.text.primary,
@@ -50,7 +49,6 @@ const useStyles = makeStyles((theme) => ({
     width: '100%',
     paddingLeft: theme.spacing(1),
     paddingRight: theme.spacing(1),
-    zIndex: 1200,
   },
   appBarHeader: {
     color: theme.palette.text.primary,
@@ -355,7 +353,7 @@ function TableContainerComponent(props) {
                 })
           }
           {emptyRows > 0 && (
-            <TableRow style={{height: (47) * emptyRows}}>
+            <TableRow style={{height: (57) * emptyRows}}>
               <TableCell colSpan={7} />
             </TableRow>
           )}
@@ -454,7 +452,7 @@ export default function VettingDashboardDeveloper() {
           </Tabs>
         </AppBar>
         <TabPanel value={value} index={0} className={classes.tabPanel}>
-          <TableContainerComponent status="active"/>
+          <TableContainerComponent status="active" />
         </TabPanel>
         <TabPanel value={value} index={1} className={classes.tabPanel}>
           <TableContainerComponent status="withdrawn"/>

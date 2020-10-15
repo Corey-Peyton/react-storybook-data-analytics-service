@@ -1,12 +1,11 @@
 
 import React from 'react';
 import {useTranslation} from 'react-i18next';
-import {AppBar, Tab, Tabs, Toolbar, Typography, TextField, Button} from '@material-ui/core';
+import {AppBar, Tab, Tabs, Toolbar, Typography, Button} from '@material-ui/core';
 import InputLabel from '@material-ui/core/InputLabel';
 import MenuItem from '@material-ui/core/MenuItem';
 import FormControl from '@material-ui/core/FormControl';
 import Select from '@material-ui/core/Select';
-import {sortByKey} from '../../Utils/sorting';
 import {makeStyles} from '@material-ui/styles';
 import clsx from 'clsx';
 
@@ -17,7 +16,7 @@ import Header from './CommonComponents/Header';
 import ProjectDetails from './ProjectDetails';
 import ProjectTabs from './ProjectTabs';
 
-export const DRAWER_WIDTH = 420;
+export const DRAWER_WIDTH = 240;
 
 const useStyles = makeStyles((theme) => ({
   appBar: {

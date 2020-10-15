@@ -138,6 +138,11 @@ export const useStyles = makeStyles({
       top: 5.5,
     },
 
+    // Treeview
+    '.MuiTreeItem-content': {
+      flexDirection: 'column',
+    },
+
     // *********** Custom styles **************
     '.avatar-orange': {
       color: theme.palette.getContrastText(deepOrange[500]),

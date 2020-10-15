@@ -600,4 +600,21 @@ export const requestListResearchers = [
     ],
     summary: 'Some summary content goes here',
   },
+  {
+    id: '1001-1234517',
+    name: 'DAaas-0000017',
+    statusHead: 'active',
+    status: 'Draft',
+    cancellationReason: '',
+    submitted: 'August 20, 2020',
+    updated: 'August 23, 2020',
+    expiration: 'September 20, 2020',
+    researcherEmail: 'anotheremail@cloud.statcan.ca',
+    analystEmail: 'eva.silver@cloud.statcan.ca',
+    files: [
+      'File 4',
+      'File 5',
+    ],
+    summary: 'Some summary content goes here',
+  },
 ];
