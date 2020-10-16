@@ -24,6 +24,8 @@ import {useStyles} from '../Theme/globalStyles';
 import {theme} from '../Theme/theme';
 import Index from './Index';
 
+import VettingRequestResearcher from '../Components/VettingApp/VettingRequestResearcher';
+
 export default function AppRouter() {
   useStyles();
 
@@ -31,16 +33,16 @@ export default function AppRouter() {
     <HashRouter>
       <ThemeProvider theme={theme}>
         <Switch>
-          <Route path="/" component={SplashPage} exact={true} />
-          <Route path="/index" component={Index} /> {/* PROTOTYPE ONLY */}
+          {/* FIX THISSSSSSSs*/}
+          <Route path="/" component={Index} exact={true} /> {/* PROTOTYPE ONLY */}
+          <Route path="/splash" component={SplashPage} />
           <Route path="/sign-in" component={SignInPage} exact={true}/>
           <Route path="/sign-in/verify-identity" component={ForgotPassword} />
           <Route path="/sign-in/create-account" component={CreateAccountPage} />
           <Route path="/projects" component={ProjectsPage} />
           <Route path="/results" component={ResultsPage} exact={true} />
-          <Route path="/vetting-app/request-list-researcher" component={RequestListResearcher} />
-          <Route path="/vetting-app/request-list-analyst" component={RequestListAnalyst} />
           <Route path="/vetting-app/dashboard-developer" component={VettingDashboardDeveloper} />
+          <Route path="/vetting-app/request-researcher" component={VettingRequestResearcher} />
 
           {/* Routes for archived pages */}
           <Route path="/archived/home" component={LandingPage} />
