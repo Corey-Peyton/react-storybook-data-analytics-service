@@ -17,6 +17,9 @@ import ProjectsPage from '../Components/ProjectsPage';
 import ResultsPage from '../Components/ResultsPage';
 import SignInPage from '../Components/SignInPage';
 import SplashPage from '../Components/SplashPage';
+import RequestListResearcher from '../Components/VettingApp/RequestListResearcher';
+import RequestListAnalyst from '../Components/VettingApp/RequestListAnalyst';
+import VettingDashboardDeveloper from '../Components/VettingApp/Dashboard/VettingDashboardDeveloper';
 import {useStyles} from '../Theme/globalStyles';
 import {theme} from '../Theme/theme';
 import Index from './Index';
@@ -38,6 +41,7 @@ export default function AppRouter() {
           <Route path="/sign-in/create-account" component={CreateAccountPage} />
           <Route path="/projects" component={ProjectsPage} />
           <Route path="/results" component={ResultsPage} exact={true} />
+          <Route path="/vetting-app/dashboard-developer" component={VettingDashboardDeveloper} />
           <Route path="/vetting-app/request-researcher" component={VettingRequestResearcher} />
 
           {/* Routes for archived pages */}
