@@ -262,7 +262,6 @@ function a11yProps(index) {
 
 
 function TableContainerComponent(props) {
-  const {children, value, index, ...other} = props;
   const [order, setOrder] = React.useState('asc');
   const [orderBy, setOrderBy] = React.useState('calories');
   const [selected, setSelected] = React.useState([]);
