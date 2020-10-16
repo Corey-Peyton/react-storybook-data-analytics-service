@@ -165,7 +165,7 @@ export default function DashboardDrawer(props) {
     >
       <div className={classes.drawerHeader}>
         <Typography>
-          Projects
+          {t('Projects')}
         </Typography>
       </div>
       <TreeView
@@ -175,9 +175,9 @@ export default function DashboardDrawer(props) {
         defaultExpandIcon={<ArrowRightIcon />}
         defaultEndIcon={<div style={{width: 24}} />}
       >
-        <StyledTreeItem nodeId="1" selected labelText="Project 1" labelIcon={FolderOpenIcon} />
-        <StyledTreeItem nodeId="2" labelText="Project 2" labelIcon={FolderOpenIcon} />
-        <StyledTreeItem nodeId="3" labelText="Project 3" labelIcon={FolderOpenIcon} />
+        <StyledTreeItem nodeId="1" selected labelText={t('Project 1')} labelIcon={FolderOpenIcon} />
+        <StyledTreeItem nodeId="2" labelText={t('Project 2')} labelIcon={FolderOpenIcon} />
+        <StyledTreeItem nodeId="3" labelText={t('Project 3')} labelIcon={FolderOpenIcon} />
       </TreeView>
     </Drawer>
   );

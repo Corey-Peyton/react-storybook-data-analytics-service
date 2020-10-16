@@ -17,8 +17,6 @@ import ProjectsPage from '../Components/ProjectsPage';
 import ResultsPage from '../Components/ResultsPage';
 import SignInPage from '../Components/SignInPage';
 import SplashPage from '../Components/SplashPage';
-import RequestListResearcher from '../Components/VettingApp/RequestListResearcher';
-import RequestListAnalyst from '../Components/VettingApp/RequestListAnalyst';
 import VettingDashboardDeveloper from '../Components/VettingApp/Dashboard/VettingDashboardDeveloper';
 import {useStyles} from '../Theme/globalStyles';
 import {theme} from '../Theme/theme';
