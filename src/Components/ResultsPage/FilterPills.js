@@ -101,9 +101,9 @@ export default function FilterPills(props) {
                   aria-label={`${t('Remove topic filter')}: ${subject}`}
                   key={subject}
                   label={
-                      subject.length <= 25
-                        ? subject
-                        : `${subject.substring(0, 25)}...`
+                      subject.length <= 25 ?
+                        subject :
+                        `${subject.substring(0, 25)}...`
                   }
                   onDelete={handleDelete}
                   variant="outlined"
@@ -123,9 +123,9 @@ export default function FilterPills(props) {
                   aria-label={`${t('Remove survey filter')} ${survey}`}
                   key={survey}
                   label={
-                      survey.length <= 25
-                        ? survey
-                        : `${survey.substring(0, 25)}...`
+                      survey.length <= 25 ?
+                        survey :
+                        `${survey.substring(0, 25)}...`
                   }
                   onDelete={handleDelete}
                   variant="outlined"
@@ -141,7 +141,7 @@ export default function FilterPills(props) {
               component="button"
               color="primary"
               aria-label={`${t(
-                  'Remove date filter'
+                  'Remove date filter',
               )}: ${startDate} - ${endDate}`}
               label={`${startDate} - ${endDate}`}
               onDelete={handleDelete}

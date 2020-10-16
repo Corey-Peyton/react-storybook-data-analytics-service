@@ -114,7 +114,7 @@ function createData(id, statusHead, status, researcherEmail, analystEmail, submi
 let tabStatus = 'active';
 
 const rows = requestListResearchers.map((el, index) =>
-  createData(el.id, el.statusHead, el.status, el.researcherEmail, el.analystEmail, el.submitted, el.updated)
+  createData(el.id, el.statusHead, el.status, el.researcherEmail, el.analystEmail, el.submitted, el.updated),
 );
 
 const filteredRows = () => {
@@ -141,9 +141,9 @@ function descendingComparator(a, b, orderBy) {
 }
 
 function getComparator(order, orderBy) {
-  return order === 'desc'
-    ? (a, b) => descendingComparator(a, b, orderBy)
-    : (a, b) => -descendingComparator(a, b, orderBy);
+  return order === 'desc' ?
+    (a, b) => descendingComparator(a, b, orderBy) :
+    (a, b) => -descendingComparator(a, b, orderBy);
 }
 
 function stableSort(array, comparator) {
