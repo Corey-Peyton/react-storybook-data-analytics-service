@@ -153,11 +153,11 @@ export default function Projects(props) {
                     <LinearProgress
                       className={`${classes.storageBar} ${
                         // add correct color class if inactive or almost full
-                        !isActive
-                          ? classes.storageBarGrey
-                          : isAlmostFull
-                          ? classes.storageBarFull
-                          : ''
+                        !isActive ?
+                          classes.storageBarGrey :
+                          isAlmostFull ?
+                          classes.storageBarFull :
+                          ''
                       }`}
                       variant="determinate"
                       value={spaceUsed}

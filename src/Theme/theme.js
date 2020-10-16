@@ -61,6 +61,14 @@ export const theme = createMuiTheme({
   typography: {
     fontFamily: ['"Roboto"', 'sans-serif'],
   },
+  overrides: {
+    MuiTooltip: {
+      tooltip: {
+        fontSize: '0.75rem',
+        backgroundColor: '#616161E6',
+      },
+    },
+  },
 });
 
 

@@ -21,7 +21,7 @@ function Index() {
       </Typography>
       <ul>
         <li>
-          <Link to="/">Splash</Link>
+          <Link to="/splash">Splash</Link>
         </li>
         <li>
           <Link to="/results">Search results</Link>
@@ -43,13 +43,10 @@ function Index() {
         </li>
         <ul>
           <li>
-            <Link to="/vetting-app/request-list-researcher">Requests list researcher</Link>
-          </li>
-          <li>
-            <Link to="/vetting-app/request-list-analyst">Requests list analyst</Link>
-          </li>
-          <li>
             <Link to="/vetting-app/dashboard-developer">Dashboard developer</Link>
+          </li>
+          <li>
+            <Link to="/vetting-app/request-researcher">Request - researcher</Link>
           </li>
         </ul>
       </ul>
