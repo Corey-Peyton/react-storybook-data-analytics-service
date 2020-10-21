@@ -22,8 +22,8 @@ import Paper from '@material-ui/core/Paper';
 import Button from '@material-ui/core/Button';
 
 import Header from '../CommonComponents/Header';
+import Footer from '../CommonComponents/Footer';
 import DashboardDrawer from './DashboardDrawer';
-import {HEAD_H, FOOT_H} from '../../../Theme/constants';
 import BypassBlocks from '../../BypassBlocks';
 
 import {requestListResearchers} from '../../../Data/fakeData';
@@ -32,13 +32,10 @@ import CustomizedMenus from '../CommonComponents/ContextMenu';
 export const DRAWER_WIDTH = 240;
 
 const useStyles = makeStyles((theme) => ({
-  root: {
-    width: '100%',
-    backgroundColor: '#f0f0f0',
-  },
-  paper: {
-    backgroundColor: '#f0f0f0',
-    padding: '10% 5% 0%',
+  main: {
+    background: theme.palette.grey[100],
+    padding: '100px',
+    minHeight: `calc(100vh - 284px)`,
   },
   appBar: {
     color: theme.palette.text.primary,
@@ -52,14 +49,14 @@ const useStyles = makeStyles((theme) => ({
   },
   appBarHeader: {
     color: theme.palette.text.primary,
-    backgroundColor: '#f0f0f0',
+    background: theme.palette.grey[100],
     position: 'static',
     top: 0,
     left: 'auto',
     width: '100%',
     paddingBottom: theme.spacing(3),
     paddingRight: '0px !important',
-    boxShadow: 'none',
+    boxShadow: 'none !important',
     display: 'flex',
     flexDirection: 'row',
     justifyContent: 'space-between',
@@ -114,8 +111,8 @@ const useStyles = makeStyles((theme) => ({
       width: '100%',
       padding: 0,
       boxSizing: 'border-box',
-      minHeight: `calc(100vh - ${HEAD_H}px - ${FOOT_H}px - 88px)`,
       overflowY: 'auto',
+      boxShadow: '0px 2px 4px -1px rgba(117,117,117,0.2), 0px 4px 5px 0px rgba(117,117,117,0.14), 0px 1px 10px 0px rgba(117,117,117,0.12)',
     },
   },
   tableHead: {
@@ -408,61 +405,68 @@ export default function VettingDashboardDeveloper() {
 
 
   return (
-    <div className={classes.root}>
-      <BypassBlocks ref={{main: mainRef, about: aboutRef}} />
+    <React.Fragment>
       <Header clickHandler={toggleDrawer}/>
-      <Paper
-        className={clsx(classes.content, classes.paper, {
-          [classes.contentShift]: open.drawer,
-        })}>
-        <DashboardDrawer
-          open={open.drawer}
-        />
-        <AppBar className={classes.appBarHeader}>
-          <Typography
-            variant="h4"
-            component="h2"
-          >
-            Vetting request dashboard
-          </Typography>
-          <Button variant="contained" color="primary">
-            New Vetting request
-          </Button>
-        </AppBar>
-        <AppBar
-          position="static"
-          component="div"
-          elevation={4}
-          className={classes.appBar}
-          ref={mainRef} tabIndex="-1"
+      <main className={classes.main}>
+        <BypassBlocks ref={{main: mainRef, about: aboutRef}} />
+        <Paper
+          className={clsx(classes.content, classes.paper, {
+            [classes.contentShift]: open.drawer,
+          })}
+          elevation={0}
         >
-          <Tabs
-            value={value}
-            onChange={handleChange}
-            aria-label="Vetting request tabs"
-            indicatorColor="primary"
-            textColor="primary"
-            className={classes.tabs}
+          <DashboardDrawer
+            open={open.drawer}
+          />
+          <AppBar
+            className={classes.appBarHeader}
+            elevation={0}
           >
-            <Tab label="ACTIVE" {...a11yProps(0)} />
-            <Tab label="WITHDRAWN" {...a11yProps(1)} />
-            <Tab label="APPROVED" {...a11yProps(2)} />
-            <Tab label="CANCELLED" {...a11yProps(3)} />
-          </Tabs>
-        </AppBar>
-        <TabPanel value={value} index={0} className={classes.tabPanel}>
-          <TableContainerComponent status="active" />
-        </TabPanel>
-        <TabPanel value={value} index={1} className={classes.tabPanel}>
-          <TableContainerComponent status="withdrawn"/>
-        </TabPanel>
-        <TabPanel value={value} index={2} className={classes.tabPanel}>
-          <TableContainerComponent status="approved"/>
-        </TabPanel>
-        <TabPanel value={value} index={3} className={classes.tabPanel}>
-          <TableContainerComponent status="cancelled"/>
-        </TabPanel>
-      </Paper>
-    </div>
+            <Typography
+              variant="h4"
+              component="h2"
+            >
+            Vetting request dashboard
+            </Typography>
+            <Button variant="contained" color="primary">
+            New Vetting request
+            </Button>
+          </AppBar>
+          <AppBar
+            position="static"
+            component="div"
+            className={classes.appBar}
+            ref={mainRef} tabIndex="-1"
+          >
+            <Tabs
+              value={value}
+              onChange={handleChange}
+              aria-label="Vetting request tabs"
+              indicatorColor="primary"
+              textColor="primary"
+              className={classes.tabs}
+            >
+              <Tab label="ACTIVE" {...a11yProps(0)} />
+              <Tab label="WITHDRAWN" {...a11yProps(1)} />
+              <Tab label="APPROVED" {...a11yProps(2)} />
+              <Tab label="CANCELLED" {...a11yProps(3)} />
+            </Tabs>
+          </AppBar>
+          <TabPanel value={value} index={0} className={classes.tabPanel}>
+            <TableContainerComponent status="active" />
+          </TabPanel>
+          <TabPanel value={value} index={1} className={classes.tabPanel}>
+            <TableContainerComponent status="withdrawn"/>
+          </TabPanel>
+          <TabPanel value={value} index={2} className={classes.tabPanel}>
+            <TableContainerComponent status="approved"/>
+          </TabPanel>
+          <TabPanel value={value} index={3} className={classes.tabPanel}>
+            <TableContainerComponent status="cancelled"/>
+          </TabPanel>
+        </Paper>
+      </main>
+      <Footer />
+    </React.Fragment>
   );
 }

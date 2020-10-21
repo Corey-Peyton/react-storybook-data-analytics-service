@@ -7,8 +7,6 @@ import {
 } from '@material-ui/core';
 import TreeView from '@material-ui/lab/TreeView';
 import TreeItem from '@material-ui/lab/TreeItem';
-import ArrowDropDownIcon from '@material-ui/icons/ArrowDropDown';
-import ArrowRightIcon from '@material-ui/icons/ArrowRight';
 import FolderOpenIcon from '@material-ui/icons/FolderOpen';
 import {makeStyles} from '@material-ui/styles';
 import {HEAD_H} from '../../../Theme/constants';
@@ -114,7 +112,8 @@ function StyledTreeItem(props) {
   return (
     <TreeItem
       label={
-        <div className={classes.labelRoot}>
+        <div className={classes.labelRoot}
+        >
           <LabelIcon color="inherit" className={classes.labelIcon} />
           <Typography variant="body2" className={classes.labelText}>
             {labelText}
@@ -149,6 +148,10 @@ StyledTreeItem.propTypes = {
   labelText: PropTypes.string.isRequired,
 };
 
+function handleProjectChange(event, value) {
+  // restructer the array that populates the table
+};
+
 export default function DashboardDrawer(props) {
   const classes = useStyles();
   const {t} = useTranslation();
@@ -170,12 +173,10 @@ export default function DashboardDrawer(props) {
       </div>
       <TreeView
         className={classes.root}
-        defaultExpanded={['3']}
-        defaultCollapseIcon={<ArrowDropDownIcon />}
-        defaultExpandIcon={<ArrowRightIcon />}
-        defaultEndIcon={<div style={{width: 24}} />}
+        defaultSelected={['1']}
+        onNodeSelect={handleProjectChange}
       >
-        <StyledTreeItem nodeId="1" selected labelText={t('All projects')} labelIcon={FolderOpenIcon} />
+        <StyledTreeItem nodeId="1" selected labelText={t('All projects')} labelIcon={FolderOpenIcon}/>
         <StyledTreeItem nodeId="2" labelText={t('Project 1')} labelIcon={FolderOpenIcon} />
         <StyledTreeItem nodeId="3" labelText={t('Project 2')} labelIcon={FolderOpenIcon} />
         <StyledTreeItem nodeId="4" labelText={t('Project 3')} labelIcon={FolderOpenIcon} />
