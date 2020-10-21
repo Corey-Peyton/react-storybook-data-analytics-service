@@ -1,5 +1,7 @@
 import React from 'react';
 import {makeStyles} from '@material-ui/core/styles';
+import StepLabel from '@material-ui/core/StepLabel';
+import Check from '@material-ui/icons/Check';
 import {
   Paper,
   Container,
@@ -27,9 +29,10 @@ import ArrowBackIcon from '@material-ui/icons/ArrowBack';
 import ExitToAppIcon from '@material-ui/icons/ExitToApp';
 import SaveIcon from '@material-ui/icons/Save';
 import SendIcon from '@material-ui/icons/Send';
+import DeleteIcon from '@material-ui/icons/Delete';
+import ReplayIcon from '@material-ui/icons/Replay';
 import Icon from '@mdi/react';
 import {mdiLockOpenVariant} from '@mdi/js';
-
 import ResearcherInfo from './ResearcherInfo';
 import FilesList from './FilesList';
 import ResidualDisclosure from './ResidualDisclosure';
@@ -90,6 +93,20 @@ const useStyles = makeStyles((theme) => ({
   },
   dialogActions: {
     padding: theme.spacing(0, 3, 3, 3),
+  },
+  circle: {
+    width: 8,
+    height: 8,
+    borderRadius: '50%',
+    backgroundColor: 'currentColor',
+  },
+  completed: {
+    color: '#784af4',
+    zIndex: 1,
+    fontSize: 18,
+  },
+  active: {
+    color: '#784af4',
   },
 }));
 
@@ -160,7 +177,7 @@ function VettingRequestResearcher(props) {
   //   newCompleted[activeStep] = true;
   //   setCompleted(newCompleted);
   //   handleNext();
-  // };
+  //== };
 
   const getStepContent = (step) => {
     switch (step) {
@@ -229,7 +246,7 @@ function VettingRequestResearcher(props) {
               className={classes.headerBtn}
               startIcon={<SendIcon />}
             >
-              Send request
+              Submit request
             </Button>
           </Toolbar>
         </AppBar>
@@ -331,7 +348,7 @@ function VettingRequestResearcher(props) {
                   color="primary"
                   className={classes.button}
                 >
-                  Send request
+                  Submit request
                 </Button>
               </Grid>
             ) : (
