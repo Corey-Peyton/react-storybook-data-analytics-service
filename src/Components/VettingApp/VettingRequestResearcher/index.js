@@ -177,7 +177,7 @@ function VettingRequestResearcher(props) {
   //   newCompleted[activeStep] = true;
   //   setCompleted(newCompleted);
   //   handleNext();
-  //== };
+  // == };
 
   const getStepContent = (step) => {
     switch (step) {
