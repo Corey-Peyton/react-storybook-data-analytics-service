@@ -172,12 +172,12 @@ function VettingRequestResearcher(props) {
     setState({...state, activeStep: step});
   };
 
-  // const handleComplete = () => {
-  //   const newCompleted = completed;
-  //   newCompleted[activeStep] = true;
-  //   setCompleted(newCompleted);
-  //   handleNext();
-  // == };
+  const handleComplete = () => {
+    const newCompleted = state.completed;
+    newCompleted[state.activeStep] = true;
+    setState({...state, completed: newCompleted});
+    handleNext();
+  };
 
   const getStepContent = (step) => {
     switch (step) {
@@ -357,6 +357,7 @@ function VettingRequestResearcher(props) {
                   variant="contained"
                   color="primary"
                   className={classes.button}
+                  onClick={handleComplete}
                 >
                   Next
                 </Button>
