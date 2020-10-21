@@ -273,6 +273,7 @@ export const requestListResearchers = [
     submitted: 'August 28, 2020',
     updated: 'August 29, 2020',
     expiration: 'September 20, 2020',
+    project: '1',
     researcherEmail: 'eltonjohn@cloud.statcan.ca',
     analystEmail: 'brian.bill@cloud.statcan.ca',
     files: [
@@ -294,6 +295,7 @@ export const requestListResearchers = [
     submitted: 'August 21, 2020',
     updated: 'August 24, 2020',
     expiration: 'September 20, 2020',
+    project: '2',
     researcherEmail: 'leonardcohen@cloud.statcan.ca',
     analystEmail: 'julie.trll@cloud.statcan.ca',
     files: [
@@ -315,6 +317,7 @@ export const requestListResearchers = [
     submitted: 'August 20, 2020',
     updated: 'August 24, 2020',
     expiration: 'September 20, 2020',
+    project: '3',
     researcherEmail: 'averylongemailgoeshere@cloud.statcan.ca',
     analystEmail: 'julie.trll@cloud.statcan.ca',
     files: [
@@ -336,6 +339,7 @@ export const requestListResearchers = [
     submitted: 'August 20, 2020',
     updated: 'August 24, 2020',
     expiration: 'September 20, 2020',
+    project: '4',
     researcherEmail: 'someemail@cloud.statcan.ca',
     analystEmail: 'paul.colton@cloud.statcan.ca',
     files: [
@@ -355,6 +359,7 @@ export const requestListResearchers = [
     submitted: 'August 20, 2020',
     updated: 'August 24, 2020',
     expiration: 'September 20, 2020',
+    project: '1',
     researcherEmail: 'someemail@cloud.statcan.ca',
     analystEmail: 'philip.duran@cloud.statcan.ca',
     files: [
@@ -372,6 +377,7 @@ export const requestListResearchers = [
     submitted: 'August 20, 2020',
     updated: 'August 23, 2020',
     expiration: 'September 20, 2020',
+    project: '2',
     researcherEmail: 'anotheremail@cloud.statcan.ca',
     analystEmail: 'eva.silver@cloud.statcan.ca',
     files: [
@@ -389,6 +395,7 @@ export const requestListResearchers = [
     submitted: 'August 20, 2020',
     updated: 'August 22, 2020',
     expiration: 'September 20, 2020',
+    project: '3',
     researcherEmail: 'anotheremail@cloud.statcan.ca',
     analystEmail: 'adrian.bonjour@cloud.statcan.ca',
     files: [
@@ -407,6 +414,7 @@ export const requestListResearchers = [
     submitted: 'August 20, 2020',
     updated: 'August 22, 2020',
     expiration: 'September 20, 2020',
+    project: '4',
     researcherEmail: 'perfectworks@cloud.statcan.ca',
     analystEmail: 'eva.silver@cloud.statcan.ca',
     files: [
@@ -424,6 +432,7 @@ export const requestListResearchers = [
     submitted: 'August 20, 2020',
     updated: 'August 22, 2020',
     expiration: 'September 20, 2020',
+    project: '1',
     researcherEmail: 'perfectworks@cloud.statcan.ca',
     analystEmail: 'eva.silver@cloud.statcan.ca',
     files: [
@@ -442,6 +451,7 @@ export const requestListResearchers = [
     submitted: 'August 20, 2020',
     updated: 'August 22, 2020',
     expiration: 'September 20, 2020',
+    project: '2',
     researcherEmail: 'torontostuff@cloud.statcan.ca',
     analystEmail: 'eva.silver@cloud.statcan.ca',
     files: [
@@ -459,6 +469,7 @@ export const requestListResearchers = [
     submitted: 'August 20, 2020',
     updated: 'August 22, 2020',
     expiration: 'September 20, 2020',
+    project: '3',
     researcherEmail: 'ottawarules@cloud.statcan.ca',
     analystEmail: 'eva.silver@cloud.statcan.ca',
     files: [
@@ -476,6 +487,7 @@ export const requestListResearchers = [
     submitted: 'August 20, 2020',
     updated: 'August 22, 2020',
     expiration: 'September 20, 2020',
+    project: '4',
     researcherEmail: 'ottawarules@cloud.statcan.ca',
     analystEmail: 'eva.silver@cloud.statcan.ca',
     files: [
@@ -493,6 +505,7 @@ export const requestListResearchers = [
     submitted: 'August 28, 2020',
     updated: 'August 29, 2020',
     expiration: 'September 20, 2020',
+    project: '1',
     researcherEmail: 'eltonjohn@cloud.statcan.ca',
     analystEmail: 'brian.bill@cloud.statcan.ca',
     files: [
@@ -514,6 +527,7 @@ export const requestListResearchers = [
     submitted: 'August 21, 2020',
     updated: 'August 24, 2020',
     expiration: 'September 20, 2020',
+    project: '2',
     researcherEmail: 'leonardcohen@cloud.statcan.ca',
     analystEmail: 'julie.trll@cloud.statcan.ca',
     files: [
@@ -535,6 +549,7 @@ export const requestListResearchers = [
     submitted: 'August 20, 2020',
     updated: 'August 24, 2020',
     expiration: 'September 20, 2020',
+    project: '3',
     researcherEmail: 'averylongemailgoeshere@cloud.statcan.ca',
     analystEmail: 'julie.trll@cloud.statcan.ca',
     files: [
@@ -556,6 +571,7 @@ export const requestListResearchers = [
     submitted: 'August 20, 2020',
     updated: 'August 24, 2020',
     expiration: 'September 20, 2020',
+    project: '4',
     researcherEmail: 'someemail@cloud.statcan.ca',
     analystEmail: 'paul.colton@cloud.statcan.ca',
     files: [
@@ -575,6 +591,7 @@ export const requestListResearchers = [
     submitted: 'August 20, 2020',
     updated: 'August 24, 2020',
     expiration: 'September 20, 2020',
+    project: '1',
     researcherEmail: 'someemail@cloud.statcan.ca',
     analystEmail: 'philip.duran@cloud.statcan.ca',
     files: [
@@ -592,6 +609,7 @@ export const requestListResearchers = [
     submitted: 'August 20, 2020',
     updated: 'August 23, 2020',
     expiration: 'September 20, 2020',
+    project: '2',
     researcherEmail: 'anotheremail@cloud.statcan.ca',
     analystEmail: 'eva.silver@cloud.statcan.ca',
     files: [
@@ -609,6 +627,7 @@ export const requestListResearchers = [
     submitted: 'August 20, 2020',
     updated: 'August 23, 2020',
     expiration: 'September 20, 2020',
+    project: '3',
     researcherEmail: 'anotheremail@cloud.statcan.ca',
     analystEmail: 'eva.silver@cloud.statcan.ca',
     files: [

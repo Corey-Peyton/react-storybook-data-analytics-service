@@ -410,7 +410,7 @@ export default function VettingDashboardDeveloper() {
   return (
     <div className={classes.root}>
       <BypassBlocks ref={{main: mainRef, about: aboutRef}} />
-      <Header />
+      <Header clickHandler={toggleDrawer}/>
       <Paper
         className={clsx(classes.content, classes.paper, {
           [classes.contentShift]: open.drawer,
@@ -425,7 +425,7 @@ export default function VettingDashboardDeveloper() {
           >
             Vetting request dashboard
           </Typography>
-          <Button variant="contained" color="primary" onClick={toggleDrawer}>
+          <Button variant="contained" color="primary">
             New Vetting request
           </Button>
         </AppBar>

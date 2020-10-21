@@ -45,8 +45,6 @@ export default function CustomizedMenus(props) {
     setAnchorEl(null);
   };
 
-  console.log(props.status);
-
   if (props.status === 'active') {
     StyledMenuVar = (
       <StyledMenu
