@@ -10,7 +10,7 @@ import TreeItem from '@material-ui/lab/TreeItem';
 import FolderOpenIcon from '@material-ui/icons/FolderOpen';
 import {makeStyles} from '@material-ui/styles';
 import {HEAD_H} from '../../../Theme/constants';
-import {DRAWER_WIDTH} from './VettingDashboardDeveloper';
+import {DRAWER_WIDTH} from '.';
 
 const useStyles = makeStyles((theme) => ({
   drawer: {
@@ -148,13 +148,34 @@ StyledTreeItem.propTypes = {
   labelText: PropTypes.string.isRequired,
 };
 
-function handleProjectChange(event, value) {
-  // restructer the array that populates the table
-};
-
 export default function DashboardDrawer(props) {
   const classes = useStyles();
   const {t} = useTranslation();
+
+  const projectsArray = ['All projects', 'Project 1', 'Project 2', 'Project 3'];
+
+  function handleProjectChange(el, value) {
+    let title = undefined;
+    switch (value) {
+      case '0':
+        title = 'All projects';
+        break;
+      case '1':
+        title = 'Project 1';
+        break;
+      case '2':
+        title = 'Project 2';
+        break;
+      case '3':
+        title = 'Project 3';
+        break;
+      default:
+        title = 'All projects';
+        break;
+    }
+    console.log(title);
+    props.projectTitle(title);
+  };
 
   return (
     <Drawer
@@ -173,13 +194,14 @@ export default function DashboardDrawer(props) {
       </div>
       <TreeView
         className={classes.root}
-        defaultSelected={['1']}
+        defaultSelected={['0']}
         onNodeSelect={handleProjectChange}
       >
-        <StyledTreeItem nodeId="1" selected labelText={t('All projects')} labelIcon={FolderOpenIcon}/>
-        <StyledTreeItem nodeId="2" labelText={t('Project 1')} labelIcon={FolderOpenIcon} />
-        <StyledTreeItem nodeId="3" labelText={t('Project 2')} labelIcon={FolderOpenIcon} />
-        <StyledTreeItem nodeId="4" labelText={t('Project 3')} labelIcon={FolderOpenIcon} />
+        {projectsArray.map((el, index) => (
+          <StyledTreeItem nodeId={`${index}`} labelText={el} labelIcon={FolderOpenIcon} />
+        ),
+        )
+        }
       </TreeView>
     </Drawer>
   );
