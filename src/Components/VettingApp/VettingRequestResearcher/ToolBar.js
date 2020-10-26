@@ -10,7 +10,7 @@ const useStyles = makeStyles((theme) => ({
   main: {
     background: theme.palette.grey[100],
     paddingBottom: theme.spacing(6),
-  }
+  },
 }));
 
 const handleDialogOpen = () => {
