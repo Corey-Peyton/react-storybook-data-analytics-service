@@ -7,6 +7,8 @@ import {deepPurple} from '@material-ui/core/colors';
 import BrandingStatsCan from '../../../Components/Headers/BrandingStatsCan';
 import Language from '../../../Components/Headers/Language';
 import SendIcon from '@material-ui/icons/Send';
+import MenuIcon from '@material-ui/icons/Menu';
+import IconButton from '@material-ui/core/IconButton';
 import ExitToApp from '@material-ui/icons/ExitToApp';
 
 const StyledMenu = withStyles({
@@ -88,6 +90,19 @@ const defaultStyles = makeStyles((theme) => ({
   },
 }));
 
+function ShowMenuButton(props) {
+  const hashVar = window.location.hash.substring(2);
+  if (hashVar === 'vetting-app/dashboard-developer'|| hashVar === 'vetting-app/dashboard-developer') {
+    return (
+      <IconButton onClick={props.clickHandler}>
+        <MenuIcon />
+      </IconButton>
+    );
+  } else {
+    return false;
+  }
+};
+
 export default function DefaultHeader(props) {
   const classes = defaultStyles();
 
@@ -125,6 +140,7 @@ export default function DefaultHeader(props) {
       >
         <Toolbar className={classes.toolbar}>
           <Menu className={classes.menu} />
+          <ShowMenuButton clickHandler={props.clickHandler}/>
           <div className={classes.branding}>
             <BrandingStatsCan />
           </div>

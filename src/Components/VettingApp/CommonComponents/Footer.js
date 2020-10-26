@@ -9,10 +9,13 @@ const date = moment().format('YYYY-MM-DD');
 
 const useStyles = makeStyles((theme) => ({
   footer: {
-    margin: theme.spacing(3, 0, 3, 0),
+    position: 'relative',
+    zIndex: 1200,
+    padding: theme.spacing(3, 0, 3, 0),
     display: 'flex',
     flexWrap: 'wrap',
     alignItems: 'center',
+    background: 'white',
     [theme.breakpoints.down('sm')]: {
       'justifyContent': 'center',
       '& ul': {

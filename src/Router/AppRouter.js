@@ -17,7 +17,7 @@ import ProjectsPage from '../Components/ProjectsPage';
 import ResultsPage from '../Components/ResultsPage';
 import SignInPage from '../Components/SignInPage';
 import SplashPage from '../Components/SplashPage';
-import VettingDashboardDeveloper from '../Components/VettingApp/Dashboard/VettingDashboardDeveloper';
+import VettingDashboardDeveloper from '../Components/VettingApp/Dashboard/index';
 import {useStyles} from '../Theme/globalStyles';
 import {theme} from '../Theme/theme';
 import Index from './Index';
@@ -31,7 +31,7 @@ export default function AppRouter() {
     <HashRouter>
       <ThemeProvider theme={theme}>
         <Switch>
-          {/* FIX THISSSSSSSs*/}
+          {/* FIX THISSSSSSS*/}
           <Route path="/" component={Index} exact={true} /> {/* PROTOTYPE ONLY */}
           <Route path="/splash" component={SplashPage} />
           <Route path="/sign-in" component={SignInPage} exact={true}/>
