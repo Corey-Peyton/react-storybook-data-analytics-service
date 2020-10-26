@@ -144,6 +144,12 @@ export const useStyles = makeStyles({
       flexDirection: 'column',
     },
 
+    // Dialog
+    '.MuiDialog-paperWidthSm': {
+      minWidth: 400,
+    },
+
+
     // *********** Custom styles **************
     '.avatar-orange': {
       color: theme.palette.getContrastText(deepOrange[500]),

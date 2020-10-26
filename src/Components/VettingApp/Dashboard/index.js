@@ -24,7 +24,7 @@ import Button from '@material-ui/core/Button';
 import Header from '../CommonComponents/Header';
 import Footer from '../CommonComponents/Footer';
 import DashboardDrawer from './DashboardDrawer';
-import AnalystModal from './AnalystModal';
+import AnalystDialog from './AnalystDialog';
 import BypassBlocks from '../../BypassBlocks';
 
 import {requestListResearchers} from '../../../Data/fakeData';
@@ -35,8 +35,6 @@ export const DRAWER_WIDTH = 240;
 const useStyles = makeStyles((theme) => ({
   main: {
     background: theme.palette.grey[100],
-    padding: '100px',
-    minHeight: `calc(100vh - 284px)`,
   },
   appBar: {
     color: theme.palette.text.primary,
@@ -63,6 +61,9 @@ const useStyles = makeStyles((theme) => ({
     justifyContent: 'space-between',
   },
   content: {
+    background: theme.palette.grey[100],
+    padding: '100px',
+    minHeight: `calc(100vh - 284px)`,
     flexGrow: 1,
     transition: theme.transitions.create('margin', {
       easing: theme.transitions.easing.sharp,
@@ -307,10 +308,6 @@ function TableContainerComponent(props) {
     setPage(0);
   };
 
-  // const openAnalystModal = (event, el) => {
-  //   console.log(event);
-  // };
-
   const emptyRows = rowsPerPage - Math.min(rowsPerPage, filteredRows().length - page * rowsPerPage);
 
   return (
@@ -355,7 +352,7 @@ function TableContainerComponent(props) {
                       </TableCell>
                       <TableCell className={classes.tablesCellsFlex}>
                         <Typography variant="body2" noWrap='true'>{row.analystEmail}</Typography>
-                        <AnalystModal/>
+                        <AnalystDialog/>
                       </TableCell>
                       <TableCell>
                         <Typography variant="body2" noWrap='true'>{row.submitted}</Typography>
@@ -395,7 +392,7 @@ export default function VettingDashboardDeveloper() {
   const classes = useStyles();
   const [value, setValue] = React.useState(0);
   const [open, setOpen] = React.useState({
-    drawer: false,
+    drawer: true,
   });
   const [project, setProject] = React.useState({
     title: 'All projects',

@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import {makeStyles} from '@material-ui/core/styles';
 import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
+import Divider from '@material-ui/core/Divider';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import IconButton from '@material-ui/core/IconButton';
 import Dialog from '@material-ui/core/Dialog';
@@ -12,9 +13,6 @@ import AddCircleOutlineIcon from '@material-ui/icons/AddCircleOutline';
 import {Typography} from '@material-ui/core';
 
 const useStyles = makeStyles((theme) => ({
-  hr: {
-    borderBottom: '1px solid #dedede',
-  },
   avatar: {
     backgroundColor: '#4CAF50',
     color: theme.palette.grey[100],
@@ -61,7 +59,7 @@ function SimpleDialog(props) {
           </IconButton>
         </div>
       </DialogTitle>
-      <hr className={classes.hr} />
+      <Divider />
       <div className={classes.dialogRow}>
         <Avatar className={classes.avatar}>A</Avatar>
         <Typography className={classes.dialogText}>brian.bill@cloud.statcan.ca</Typography>
@@ -73,7 +71,7 @@ function SimpleDialog(props) {
         </Avatar>
         <Typography className={classes.dialogText}>+1 343 567 7878</Typography>
       </div>
-      <hr className={classes.hr} />
+      <Divider />
       <div className={classes.dialogFooter}>
         <Button variant="contained" color="primary" onClick={handleClose}>
             Go back
