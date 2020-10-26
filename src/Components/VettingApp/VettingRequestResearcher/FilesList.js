@@ -1,5 +1,8 @@
 import React from 'react';
+import Alert from '@material-ui/lab/Alert';
 import {makeStyles, withStyles} from '@material-ui/core/styles';
+import Snackbar from '@material-ui/core/Snackbar';
+import CloseIcon from '@material-ui/icons/Close';
 import {
   Divider,
   Typography,
@@ -144,6 +147,12 @@ function FilesList(props) {
     setState({...state, anchorEl: null});
   };
 
+  const [open, setOpen] = React.useState(false);
+
+  const handleClick = () => {
+    setOpen(true);
+  };
+
   return (
     <React.Fragment>
       <Typography>
@@ -197,17 +206,18 @@ function FilesList(props) {
                     open={Boolean(state.anchorEl)}
                     onClose={handleMenuClose}
                   >
-                    <StyledMenuItem>
+                    <StyledMenuItem onClick={toggleDrawer(true)}>
                       <ListItemIcon>
                         <EditIcon fontSize="small" />
                       </ListItemIcon>
                       <ListItemText primary="Modify" />
                     </StyledMenuItem>
-                    <StyledMenuItem>
+                    <StyledMenuItem onClick={handleClick}>
                       <ListItemIcon>
                         <DeleteIcon fontSize="small" />
                       </ListItemIcon>
-                      <ListItemText primary="Delete" />
+                      <ListItemText primary="Delete" 
+                      />
                     </StyledMenuItem>
                   </StyledMenu>
                 </TableCell>
@@ -216,6 +226,16 @@ function FilesList(props) {
           })}
         </TableBody>
       </Table>
+      <Snackbar
+        anchorOrigin={{
+          vertical: 'bottom',
+          horizontal: 'left',
+          backgroundColor: 'green',
+        }}
+        open={open}
+        autoHideDuration={1000}
+        message='The supporting file has been added' />
+      
       <Button variant="contained" color="primary" onClick={toggleDrawer(true)}>
         Add output file
       </Button>

@@ -13,14 +13,12 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const handleDialogOpen = () => {
-  setOpen(true);
-};
-
-const setOpen = React.useState(false);
-
 function ToolBar() {
   const classes = useStyles();
+  const setOpen = React.useState(false);
+  const handleDialogOpen = () => {
+    setOpen(true);
+  };
   return (
     <Toolbar>
       <IconButton

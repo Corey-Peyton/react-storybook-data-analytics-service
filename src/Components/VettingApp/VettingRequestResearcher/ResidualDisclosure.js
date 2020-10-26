@@ -1,5 +1,10 @@
-import React from 'react';
+import React, {useState} from 'react';
 import {makeStyles} from '@material-ui/core/styles';
+import Dialog from '@material-ui/core/Dialog';
+import DialogActions from '@material-ui/core/DialogActions';
+import DialogContent from '@material-ui/core/DialogContent';
+import DialogTitle from '@material-ui/core/DialogTitle';
+import Snackbar from '@material-ui/core/Snackbar';
 import {
   Typography,
   Divider,
@@ -15,6 +20,7 @@ import {
   MenuItem,
   TextField,
   IconButton,
+  TextareaAutosize,
 } from '@material-ui/core';
 import DeleteIcon from '@material-ui/icons/Delete';
 
@@ -47,6 +53,18 @@ function ResidualDisclosure(props) {
     } else {
       setState({...state, weightVar: false});
     }
+  };
+
+  const [isOpen, setIsOpen] = useState(false);
+
+  const [open, setOpen] = React.useState(false);
+
+  const handleClickOpen = () => {
+    setOpen(true);
+  };
+
+  const handleClose = () => {
+    setOpen(false);
   };
 
   return (
@@ -110,9 +128,63 @@ function ResidualDisclosure(props) {
               </li>
             </ul>
           </div>
-          <Button variant="contained" color="primary" className="mb-3">
-            Add supporting file
+          <FormControl
+            className={classes.inputMargin}
+            margin="dense"
+            required
+            variant="outlined"
+            fullWidth />
+          <Button variant="contained" color="primary" className="mb-3" onClick={handleClickOpen}>
+            Add output file
           </Button>
+          <Dialog
+            open={open}
+            onClose={handleClose}
+            aria-labelledby="form-dialog-title"
+
+          >
+            <DialogTitle id="form-dialog-title">Add supporting file</DialogTitle>
+            <DialogContent>
+              <FormControl
+                required
+                variant="outlined"
+                fullWidth
+                margin="dense"
+                className={classes.inputMargin}
+              >
+                <InputLabel id="outputFolder-label">
+              Output folder name
+                </InputLabel>
+                <Select
+                  id="supportingFilesFolder"
+                  label="Supporting folder *"
+                  labelId="supportingFilesFolder-label"
+                >
+                  <MenuItem key={-1} value="">
+                None
+                  </MenuItem>
+                </Select>
+              </FormControl>
+              <Typography variant="subtitle2">File #1 *</Typography>
+              <Typography variant="subtitle2">Residual tables (see the vetting orientation)</Typography>
+              <TextField
+                className={classes.inputMargin}
+                margin="dense"
+                id="notes2"
+                label="Notes"
+                multiline
+                rows={4}
+                variant="outlined"
+                fullWidth
+                required
+              />
+            </DialogContent>
+            <DialogActions>
+              <Button onClick={handleClose} color="primary" variant="outlined">Cancel</Button>
+              <Button onClick={handleClose} color="primary" variant="contained">Add supporting file</Button>
+            </DialogActions>
+          </Dialog>
+          <FormControl />
           <Grid container spacing={3}>
             <Grid item xs={6}>
               <Grid container justify="space-between" alignItems="center">

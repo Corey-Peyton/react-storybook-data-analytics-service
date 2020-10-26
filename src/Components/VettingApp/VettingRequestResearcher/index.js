@@ -29,14 +29,14 @@ import ArrowBackIcon from '@material-ui/icons/ArrowBack';
 import ExitToAppIcon from '@material-ui/icons/ExitToApp';
 import SaveIcon from '@material-ui/icons/Save';
 import SendIcon from '@material-ui/icons/Send';
-import DeleteIcon from '@material-ui/icons/Delete';
-import ReplayIcon from '@material-ui/icons/Replay';
 import Icon from '@mdi/react';
 import {mdiLockOpenVariant} from '@mdi/js';
 import ResearcherInfo from './ResearcherInfo';
 import FilesList from './FilesList';
 import ResidualDisclosure from './ResidualDisclosure';
 import AdditionalInfo from './AdditionalInfo';
+import ToolBarDelete from './ToolBarDelete';
+import ToolBar from './ToolBar';
 
 const useStyles = makeStyles((theme) => ({
   main: {
@@ -179,6 +179,10 @@ function VettingRequestResearcher(props) {
     handleNext();
   };
 
+  const isStepFailed = (step) => {
+    return step === 1;
+  };
+
   const getStepContent = (step) => {
     switch (step) {
       case 0:
@@ -211,8 +215,9 @@ function VettingRequestResearcher(props) {
   return (
     <main className={classes.main} tabIndex="-1">
       <Container maxWidth="xl" className="page-container">
-        <AppBar position="static" className={classes.appBar} color="default">
-          <Toolbar>
+        <AppBar position="static" className={classes.appBar} color="default">       
+            {state.completed ? <ToolBarDelete /> : <ToolBar />}
+          {/* <Toolbar>
             <IconButton
               edge="start"
               className={classes.menuButton}
@@ -248,7 +253,7 @@ function VettingRequestResearcher(props) {
             >
               Submit request
             </Button>
-          </Toolbar>
+          </Toolbar> */}
         </AppBar>
         <Paper className={classes.paper}>
           <Grid container alignItems="center">
@@ -336,6 +341,7 @@ function VettingRequestResearcher(props) {
                   variant="contained"
                   color="primary"
                   className={classes.button}
+                  onClick={handleBack}
                 >
                   Back
                 </Button>

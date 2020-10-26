@@ -1,5 +1,9 @@
 import React from 'react';
 import {makeStyles} from '@material-ui/core/styles';
+import Dialog from '@material-ui/core/Dialog';
+import DialogActions from '@material-ui/core/DialogActions';
+import DialogContent from '@material-ui/core/DialogContent';
+import DialogTitle from '@material-ui/core/DialogTitle';
 import {
   FormControl,
   InputLabel,
@@ -21,6 +25,7 @@ import {
 import Autocomplete from '@material-ui/lab/Autocomplete';
 import InfoIcon from '@material-ui/icons/Info';
 import CloseIcon from '@material-ui/icons/Close';
+import Snackbar from '@material-ui/core/Snackbar';
 
 const useStyles = makeStyles((theme) => ({
   inputMargin: {
@@ -114,6 +119,20 @@ for (const [key, value] of Object.entries(outputMethods)) {
 
 function ModifyFile(props) {
   const classes = useStyles();
+
+  const handleClickOpen = () => {
+    setOpen(true);
+  };
+
+  const handleClose = () => {
+    setOpen(false);
+  };
+
+  const [open, setOpen] = React.useState(false);
+
+  const handleClick = () => {
+    setOpen(true);
+  };
 
   return (
     <React.Fragment>
@@ -825,9 +844,57 @@ function ModifyFile(props) {
         </Typography>
       </div>
       <div className={classes.buttonTooltip}>
-        <Button variant="outlined" color="primary">
+        <Button variant="contained" color="primary" onClick={handleClickOpen}>
           Add Supporting File
         </Button>
+        <Dialog
+          open={open}
+          onClose={handleClose}
+          aria-labelledby="form-dialog-title"
+
+        >
+          <DialogTitle id="form-dialog-title">Add supporting file</DialogTitle>
+          <DialogContent>
+            <FormControl
+              required
+              variant="outlined"
+              fullWidth
+              margin="dense"
+              className={classes.inputMargin}
+            >
+              <InputLabel id="outputFolder-label">
+              Output folder name
+              </InputLabel>
+              <Select
+                id="supportingFilesFolder"
+                label="Supporting folder *"
+                labelId="supportingFilesFolder-label"
+              >
+                <MenuItem key={-1} value="">
+                None
+                </MenuItem>
+              </Select>
+            </FormControl>
+            <Typography variant="subtitle2">File #1 *</Typography>
+            <Typography variant="subtitle2">Residual tables (see the vetting orientation)</Typography>
+            <TextField
+              className={classes.inputMargin}
+              margin="dense"
+              id="notes2"
+              label="Notes"
+              multiline
+              rows={4}
+              variant="outlined"
+              fullWidth
+              required
+            />
+          </DialogContent>
+          <DialogActions>
+            <Button onClick={handleClose} color="primary" variant="outlined">Cancel</Button>
+            <Button onClick={handleClose} color="primary" variant="contained">Add supporting file</Button>
+          </DialogActions>
+        </Dialog>
+
         <Tooltip
           title="In addition to the mandatory files listed, include other files as required by the Survey Specific Guidelines, syntax files or other files requested by the analyst."
           arrow
@@ -916,9 +983,19 @@ function ModifyFile(props) {
         fullWidth
         required
       />
-      <Button variant="contained" color="primary">
+      <Button variant="contained" color="primary"
+        onClick={handleClick}>
         Save Changes
       </Button>
+      <Snackbar
+        anchorOrigin={{
+          vertical: 'bottom',
+          horizontal: 'center',
+          backgroundColor: 'green',
+        }}
+        open={open}
+        autoHideDuration={17000}
+        message='The supporting file has been added' />
     </React.Fragment>
   );
 }
