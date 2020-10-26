@@ -215,8 +215,8 @@ function VettingRequestResearcher(props) {
   return (
     <main className={classes.main} tabIndex="-1">
       <Container maxWidth="xl" className="page-container">
-        <AppBar position="static" className={classes.appBar} color="default">       
-            {state.completed ? <ToolBarDelete /> : <ToolBar />}
+        <AppBar position="static" className={classes.appBar} color="default">    
+          {state.completed ? <ToolBarDelete /> : <ToolBar />}
           {/* <Toolbar>
             <IconButton
               edge="start"

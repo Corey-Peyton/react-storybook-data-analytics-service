@@ -216,7 +216,7 @@ function FilesList(props) {
                       <ListItemIcon>
                         <DeleteIcon fontSize="small" />
                       </ListItemIcon>
-                      <ListItemText primary="Delete" 
+                      <ListItemText primary="Delete"
                       />
                     </StyledMenuItem>
                   </StyledMenu>
@@ -235,7 +235,6 @@ function FilesList(props) {
         open={open}
         autoHideDuration={1000}
         message='The supporting file has been added' />
-      
       <Button variant="contained" color="primary" onClick={toggleDrawer(true)}>
         Add output file
       </Button>
