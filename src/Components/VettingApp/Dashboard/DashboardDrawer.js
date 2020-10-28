@@ -10,7 +10,7 @@ import TreeItem from '@material-ui/lab/TreeItem';
 import FolderOpenIcon from '@material-ui/icons/FolderOpen';
 import {makeStyles} from '@material-ui/styles';
 import {HEAD_H} from '../../../Theme/constants';
-import {DRAWER_WIDTH} from '.';
+import {DRAWER_WIDTH} from './DashboardSupport';
 
 const useStyles = makeStyles((theme) => ({
   drawer: {
@@ -22,16 +22,19 @@ const useStyles = makeStyles((theme) => ({
   drawerPaper: {
     boxSizing: 'border-box',
     width: DRAWER_WIDTH,
-    height: `100vh`,
-    paddingTop: `calc(${HEAD_H}px - 13px)`,
+    height: `calc(100% - 70px)`,
+    marginTop: `calc(${HEAD_H}px - 13px)`,
+    paddingBottom: '84px',
     paddingRight: '10px',
     zIndex: '10 !important',
+    overflowX: 'hidden',
   },
   drawerHeader: {
     'display': 'flex',
     'alignItems': 'center',
     'zIndex': 10,
     'height': '4em',
+    'width': '100%',
     'minHeight': '4em',
     'position': 'sticky',
     'top': 0,
@@ -39,7 +42,7 @@ const useStyles = makeStyles((theme) => ({
     '& > svg': {
       marginRight: theme.spacing(2),
     },
-    'padding': theme.spacing(0, 2),
+    'padding': theme.spacing(0, 0, 0, 3),
   },
   drawerSection: {
     padding: theme.spacing(3, 2, 0, 2),
@@ -47,6 +50,11 @@ const useStyles = makeStyles((theme) => ({
   },
   drawerSectionIndex: {
     zIndex: -10,
+  },
+  treeItem: {
+    '&:last-child': {
+      paddingBottom: 84,
+    },
   },
   closeBtn: {
     flexGrow: 1,
@@ -94,10 +102,11 @@ const useStyles = makeStyles((theme) => ({
     display: 'flex',
     alignItems: 'center',
     padding: theme.spacing(0.5, 0, 0.5, 0.5),
+    paddingLeft: 0,
   },
   labelIcon: {
-    PaddingRight: theme.spacing(1),
-    paddingLeft: theme.spacing(1),
+    paddingLeft: theme.spacing(3),
+    paddingRight: theme.spacing(2),
   },
   labelText: {
     fontWeight: 'inherit',
@@ -173,7 +182,6 @@ export default function DashboardDrawer(props) {
         title = 'All projects';
         break;
     }
-    console.log(title);
     props.projectTitle(title);
   };
 
@@ -188,7 +196,7 @@ export default function DashboardDrawer(props) {
       }}
     >
       <div className={classes.drawerHeader}>
-        <Typography>
+        <Typography variant='subtitle2'>
           {t('Projects')}
         </Typography>
       </div>
@@ -198,7 +206,7 @@ export default function DashboardDrawer(props) {
         onNodeSelect={handleProjectChange}
       >
         {projectsArray.map((el, index) => (
-          <StyledTreeItem nodeId={`${index}`} labelText={el} labelIcon={FolderOpenIcon} />
+          <StyledTreeItem nodeId={`${index}`} labelText={el} labelIcon={FolderOpenIcon} className={classes.treeItem}/>
         ),
         )
         }
