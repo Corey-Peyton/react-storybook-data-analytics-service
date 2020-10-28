@@ -21,7 +21,7 @@ import VettingDashboardDeveloper from '../Components/VettingApp/Dashboard/Vettin
 import {useStyles} from '../Theme/globalStyles';
 import {theme} from '../Theme/theme';
 import Index from './Index';
-
+import AnalystInfo from '../Components/VettingApp/VettingRequestAnalyst';
 import VettingRequestResearcher from '../Components/VettingApp/VettingRequestResearcher';
 
 export default function AppRouter() {
@@ -41,6 +41,7 @@ export default function AppRouter() {
           <Route path="/results" component={ResultsPage} exact={true} />
           <Route path="/vetting-app/dashboard-developer" component={VettingDashboardDeveloper} />
           <Route path="/vetting-app/request-researcher" component={VettingRequestResearcher} />
+          <Route path="/vetting-app/request-analyst" component={AnalystInfo} />
 
           {/* Routes for archived pages */}
           <Route path="/archived/home" component={LandingPage} />
