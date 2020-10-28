@@ -1,5 +1,5 @@
 import React from 'react';
-import {AppBar, Toolbar, MenuItem, Button, ListItemText, Menu} from '@material-ui/core';
+import {AppBar, Toolbar, MenuItem, ListItemText, Menu} from '@material-ui/core';
 import {makeStyles} from '@material-ui/styles';
 import {withStyles} from '@material-ui/styles';
 import Avatar from '@material-ui/core/Avatar';
@@ -85,6 +85,9 @@ const defaultStyles = makeStyles((theme) => ({
       boxShadow: 'none',
     },
   },
+  iconButton: {
+    marginRight: '-4px',
+  },
   purple: {
     backgroundColor: deepPurple[500],
   },
@@ -92,9 +95,10 @@ const defaultStyles = makeStyles((theme) => ({
 
 function ShowMenuButton(props) {
   const hashVar = window.location.hash.substring(2);
+  const classes = defaultStyles();
   if (hashVar === 'vetting-app/dashboard-developer'|| hashVar === 'vetting-app/dashboard-developer') {
     return (
-      <IconButton onClick={props.clickHandler}>
+      <IconButton onClick={props.clickHandler} className={classes.iconButton} edge="start">
         <MenuIcon />
       </IconButton>
     );
@@ -147,16 +151,17 @@ export default function DefaultHeader(props) {
           <div className={classes.lang}>
             <Language />
           </div>
-          <Button
+          <IconButton
             aria-controls="customized-menu"
             aria-haspopup="true"
             variant="contained"
             className={classes.button}
             onClick={handleClick}
+            edge='end'
           >
             <Avatar className={classes.small}><span className={classes.purple}>A</span>
             </Avatar>
-          </Button>
+          </IconButton>
           <StyledMenu
             id="customized-menu"
             anchorEl={anchorEl}

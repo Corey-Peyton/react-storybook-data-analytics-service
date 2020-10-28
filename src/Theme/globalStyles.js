@@ -116,6 +116,9 @@ export const useStyles = makeStyles({
     '.MuiTableCell-stickyHeader': {
       backgroundColor: 'white',
     },
+    '.MuiTableRow-root.Mui-selected, .MuiTableRow-root.Mui-selected:hover': {
+      backgroundColor: '#1A73E82B',
+    },
     // Typography
     '.MuiTypography-gutterBottom': {
       marginBottom: '0.5em',
