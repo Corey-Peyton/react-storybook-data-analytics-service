@@ -1,7 +1,6 @@
 import React from 'react';
 import {makeStyles} from '@material-ui/core/styles';
 import StepLabel from '@material-ui/core/StepLabel';
-import Check from '@material-ui/icons/Check';
 import {
   Paper,
   Container,
@@ -155,11 +154,7 @@ function VettingRequestResearcher(props) {
 
   const handleNext = () => {
     const newActiveStep =
-      isLastStep() && !allStepsCompleted()
-        ? // It's the last step, but not all steps have been completed,
-          // find the first step that has been completed
-          steps.findIndex((step, i) => !(i in state.completed))
-        : state.activeStep + 1;
+      isLastStep() && !allStepsCompleted() ? steps.findIndex((step, i) => !(i in state.completed)) : state.activeStep + 1;
     setState({...state, activeStep: newActiveStep});
   };
 
@@ -215,9 +210,9 @@ function VettingRequestResearcher(props) {
   return (
     <main className={classes.main} tabIndex="-1">
       <Container maxWidth="xl" className="page-container">
-        <AppBar position="static" className={classes.appBar} color="default"> 
-          {state.completed ? <ToolBarDelete /> : <ToolBar />}
-          {/* <Toolbar>
+        <AppBar position="static" className={classes.appBar} color="default">
+          {state.completed ? <ToolBarDelete /> : <ToolBar props={handleDialogOpen}/>}
+          <Toolbar>
             <IconButton
               edge="start"
               className={classes.menuButton}
@@ -253,7 +248,7 @@ function VettingRequestResearcher(props) {
             >
               Submit request
             </Button>
-          </Toolbar> */}
+          </Toolbar>
         </AppBar>
         <Paper className={classes.paper}>
           <Grid container alignItems="center">

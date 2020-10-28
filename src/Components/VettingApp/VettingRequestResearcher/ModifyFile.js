@@ -129,9 +129,10 @@ function ModifyFile(props) {
   };
 
   const [open, setOpen] = React.useState(false);
+  const [openSnackbar, setOpenSnackbar] = React.useState(false);
 
   const handleClick = () => {
-    setOpen(true);
+    setOpenSnackbar(true);
   };
 
   return (
@@ -993,7 +994,7 @@ function ModifyFile(props) {
           horizontal: 'center',
           backgroundColor: 'green',
         }}
-        open={open}
+        open={openSnackbar}
         autoHideDuration={17000}
         message='The supporting file has been added' />
     </React.Fragment>

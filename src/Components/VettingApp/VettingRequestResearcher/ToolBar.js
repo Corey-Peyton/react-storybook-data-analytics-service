@@ -11,14 +11,17 @@ const useStyles = makeStyles((theme) => ({
     background: theme.palette.grey[100],
     paddingBottom: theme.spacing(6),
   },
+  title: {
+    flexGrow: 1,
+  },
 }));
 
-function ToolBar() {
+function ToolBar(props) {
   const classes = useStyles();
-  const setOpen = React.useState(false);
+  /* const setOpen = React.useState(false);
   const handleDialogOpen = () => {
     setOpen(true);
-  };
+  }; */
   return (
     <Toolbar>
       <IconButton
@@ -36,7 +39,7 @@ function ToolBar() {
         color="default"
         className={classes.headerBtn}
         startIcon={<ExitToAppIcon />}
-        onClick={handleDialogOpen}
+        onClick={props.handleDialogOpen}
       >
               Withdraw
       </Button>
