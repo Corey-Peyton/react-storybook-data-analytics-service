@@ -86,11 +86,11 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
+let tabStatus = 'active';
+
 function createData(id, statusHead, status, researcherEmail, analystEmail, submitted, updated) {
   return {id, statusHead, status, researcherEmail, analystEmail, submitted, updated};
 }
-
-let tabStatus = 'active';
 
 const rows = requestListResearchers.map((el, index) =>
   createData(el.id, el.statusHead, el.status, el.researcherEmail, el.analystEmail, el.submitted, el.updated),
@@ -101,6 +101,16 @@ const filteredRows = () => {
     rows.filter((val) => val.statusHead === tabStatus)
   );
 };
+
+const headCells = [
+  {id: 'id', narrow: false, disablePadding: true, label: 'ID'},
+  {id: 'status', narrow: false, disablePadding: false, label: 'Status'},
+  {id: 'researcher', narrow: false, disablePadding: false, label: 'Researcher'}, // not sorting
+  {id: 'analystEmail', narrow: false, disablePadding: false, label: 'Analyst'},
+  {id: 'created', narrow: false, disablePadding: false, label: 'Created on'}, // not sorting
+  {id: 'updated', narrow: false, disablePadding: false, label: 'Updated on'},
+  {id: 'actions', narrow: true, disablePadding: false, label: 'Actions'},
+];
 
 function a11yProps(index) {
   return {
@@ -201,16 +211,16 @@ export default function VettingDashboardSupport() {
             </Tabs>
           </AppBar>
           <TabPanel value={value} index={0} className={classes.tabPanel}>
-            <TableContainerComponent status="active" filteredRows={filteredRows} />
+            <TableContainerComponent status="active" filteredRows={filteredRows} headCells={headCells}/>
           </TabPanel>
           <TabPanel value={value} index={1} className={classes.tabPanel}>
-            <TableContainerComponent status="withdrawn" filteredRows={filteredRows}/>
+            <TableContainerComponent status="withdrawn" filteredRows={filteredRows} headCells={headCells}/>
           </TabPanel>
           <TabPanel value={value} index={2} className={classes.tabPanel}>
-            <TableContainerComponent status="approved" filteredRows={filteredRows}/>
+            <TableContainerComponent status="approved" filteredRows={filteredRows} headCells={headCells}/>
           </TabPanel>
           <TabPanel value={value} index={3} className={classes.tabPanel}>
-            <TableContainerComponent status="denied" filteredRows={filteredRows}/>
+            <TableContainerComponent status="denied" filteredRows={filteredRows} headCells={headCells}/>
           </TabPanel>
         </Paper>
         <Footer />

@@ -122,6 +122,7 @@ export default function TableContainerComponent(props) {
           orderBy={orderBy}
           onRequestSort={handleRequestSort}
           rowCount={props.filteredRows.length}
+          headCells={props.headCells}
         />
         <TableBody>
           {
