@@ -10,7 +10,7 @@ import TreeItem from '@material-ui/lab/TreeItem';
 import FolderOpenIcon from '@material-ui/icons/FolderOpen';
 import {makeStyles} from '@material-ui/styles';
 import {HEAD_H} from '../../../Theme/constants';
-import {DRAWER_WIDTH} from './DashboardSupport';
+import {DRAWER_WIDTH} from './DashboardPageSupport';
 
 const useStyles = makeStyles((theme) => ({
   drawer: {
@@ -208,8 +208,7 @@ export default function DashboardDrawer(props) {
         {projectsArray.map((el, index) => (
           <StyledTreeItem nodeId={`${index}`} labelText={el} labelIcon={FolderOpenIcon} className={classes.treeItem}/>
         ),
-        )
-        }
+        )}
       </TreeView>
     </Drawer>
   );

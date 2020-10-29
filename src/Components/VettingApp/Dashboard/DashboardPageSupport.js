@@ -88,12 +88,12 @@ const useStyles = makeStyles((theme) => ({
 
 let tabStatus = 'active';
 
-function createData(id, statusHead, status, researcherEmail, analystEmail, submitted, updated) {
-  return {id, statusHead, status, researcherEmail, analystEmail, submitted, updated};
+function createData(id, statusHead, status, supporter, lead, submitted, updated) {
+  return {id, statusHead, status, supporter, lead, submitted, updated};
 }
 
 const rows = requestListResearchers.map((el, index) =>
-  createData(el.id, el.statusHead, el.status, el.researcherEmail, el.analystEmail, el.submitted, el.updated),
+  createData(el.id, el.statusHead, el.status, el.supporter, el.lead, el.submitted, el.updated),
 );
 
 const filteredRows = () => {
@@ -106,7 +106,7 @@ const headCells = [
   {id: 'id', narrow: false, disablePadding: true, label: 'ID'},
   {id: 'status', narrow: false, disablePadding: false, label: 'Status'},
   {id: 'researcher', narrow: false, disablePadding: false, label: 'Researcher'}, // not sorting
-  {id: 'analystEmail', narrow: false, disablePadding: false, label: 'Analyst'},
+  {id: 'lead', narrow: false, disablePadding: false, label: 'Analyst'},
   {id: 'created', narrow: false, disablePadding: false, label: 'Created on'}, // not sorting
   {id: 'updated', narrow: false, disablePadding: false, label: 'Updated on'},
   {id: 'actions', narrow: true, disablePadding: false, label: 'Actions'},
@@ -119,7 +119,7 @@ function a11yProps(index) {
   };
 }
 
-export default function VettingDashboardSupport() {
+export default function DashboardPageSupport() {
   const classes = useStyles();
   const [value, setValue] = React.useState(0);
   const [open, setOpen] = React.useState({

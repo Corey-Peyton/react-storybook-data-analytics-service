@@ -30,6 +30,9 @@ const useStyles = makeStyles((theme) => ({
     justifyContent: 'space-between',
     alignItems: 'center',
   },
+  tableRow: {
+    cursor: 'pointer',
+  },
 }));
 
 function descendingComparator(a, b, orderBy) {
@@ -61,7 +64,7 @@ function stableSort(array, comparator) {
 export default function TableContainerComponent(props) {
   const [order, setOrder] = React.useState('asc');
   const [orderBy, setOrderBy] = React.useState('calories');
-  const [selected, setSelected] = React.useState([]);
+  // const [selected, setSelected] = React.useState([]);
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(5);
   const {t} = useTranslation();
@@ -73,27 +76,26 @@ export default function TableContainerComponent(props) {
     setOrderBy(property);
   };
 
-  const handleClick = (event, name) => {
-    const selectedIndex = selected.indexOf(name);
-    let newSelected = [];
+  // const handleClick = (event, name) => {
+  //   const selectedIndex = selected.indexOf(name);
+  //   let newSelected = [];
 
-    if (selectedIndex === -1) {
-      newSelected = newSelected.concat(selected, name);
-    } else if (selectedIndex === 0) {
-      newSelected = newSelected.concat(selected.slice(1));
-    } else if (selectedIndex === selected.length - 1) {
-      newSelected = newSelected.concat(selected.slice(0, -1));
-    } else if (selectedIndex > 0) {
-      newSelected = newSelected.concat(
-          selected.slice(0, selectedIndex),
-          selected.slice(selectedIndex + 1),
-      );
-    }
+  //   if (selectedIndex === -1) {
+  //     newSelected = newSelected.concat(selected, name);
+  //   } else if (selectedIndex === 0) {
+  //     newSelected = newSelected.concat(selected.slice(1));
+  //   } else if (selectedIndex === selected.length - 1) {
+  //     newSelected = newSelected.concat(selected.slice(0, -1));
+  //   } else if (selectedIndex > 0) {
+  //     newSelected = newSelected.concat(
+  //         selected.slice(0, selectedIndex),
+  //         selected.slice(selectedIndex + 1),
+  //     );
+  //   }
+  //   setSelected(newSelected);
+  // };
 
-    setSelected(newSelected);
-  };
-
-  const isSelected = (name) => selected.indexOf(name) !== -1;
+  // const isSelected = (name) => selected.indexOf(name) !== -1;
 
   const handleChangePage = (event, newPage) => {
     setPage(newPage);
@@ -129,17 +131,18 @@ export default function TableContainerComponent(props) {
             stableSort(props.filteredRows(), getComparator(order, orderBy))
                 .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                 .map((row, index) => {
-                  const isItemSelected = isSelected(row.id);
+                  // const isItemSelected = isSelected(row.id);
                   const labelId = `enhanced-table-checkbox-${index}`;
 
                   return (
                     <TableRow
                       hover
-                      onClick={(event) => handleClick(event, row.id)}
                       tabIndex={-1}
                       key={row.id}
-                      aria-checked={isItemSelected}
-                      selected={isItemSelected}
+                      className={classes.tableRow}
+                      // onClick={(event) => handleClick(event, row.id)}
+                      // aria-checked={isItemSelected}
+                      // selected={isItemSelected}
                     >
                       <TableCell id={labelId} className={classes.tablesCells}>
                         <Typography variant="body2" noWrap='true'>{row.id}</Typography>
@@ -148,10 +151,10 @@ export default function TableContainerComponent(props) {
                         <Typography variant="body2" noWrap='true'>{row.status}</Typography>
                       </TableCell>
                       <TableCell>
-                        <Typography variant="body2" noWrap='true'>{row.researcherEmail}</Typography>
+                        <Typography variant="body2" noWrap='true'>{row.supporter}</Typography>
                       </TableCell>
                       <TableCell className={classes.tablesCellsFlex}>
-                        <Typography variant="body2" noWrap='true'>{row.analystEmail}</Typography>
+                        <Typography variant="body2" noWrap='true'>{row.lead}</Typography>
                         <AnalystDialog/>
                       </TableCell>
                       <TableCell>
