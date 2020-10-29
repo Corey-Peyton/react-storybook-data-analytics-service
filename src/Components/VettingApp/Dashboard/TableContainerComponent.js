@@ -1,5 +1,4 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import {useTranslation} from 'react-i18next';
 import {makeStyles} from '@material-ui/core/styles';
 import {
@@ -10,12 +9,11 @@ import {
   TableContainer,
   TablePagination,
   TableRow,
-  TableHead,
-  TableSortLabel,
 } from '@material-ui/core';
 
 import AnalystDialog from './AnalystDialog';
 import CustomizedMenus from '../CommonComponents/ContextMenu';
+import EnhancedTableHead from './DashboardTableHeads';
 
 const useStyles = makeStyles((theme) => ({
   tableContainer: {
@@ -32,62 +30,10 @@ const useStyles = makeStyles((theme) => ({
     justifyContent: 'space-between',
     alignItems: 'center',
   },
+  tableRow: {
+    cursor: 'pointer',
+  },
 }));
-
-const headCells = [
-  {id: 'id', narrow: false, disablePadding: true, label: 'ID'},
-  {id: 'status', narrow: false, disablePadding: false, label: 'Status'},
-  {id: 'researcher', narrow: false, disablePadding: false, label: 'Researcher'},
-  {id: 'analystEmail', narrow: false, disablePadding: false, label: 'Analyst'},
-  {id: 'created', narrow: false, disablePadding: false, label: 'Created on'},
-  {id: 'updated', narrow: false, disablePadding: false, label: 'Updated on'},
-  {id: 'actions', narrow: true, disablePadding: false, label: 'Actions'},
-];
-
-function EnhancedTableHead(props) {
-  const {classes, order, orderBy, onRequestSort} = props;
-  const createSortHandler = (property) => (event) => {
-    onRequestSort(event, property);
-  };
-
-  return (
-    <TableHead>
-      <TableRow>
-        {headCells.map((headCell) => (
-          <TableCell
-            key={headCell.id}
-            align='left'
-            padding={headCell.disablePadding ? 'none' : 'default'}
-            sortDirection={orderBy === headCell.id ? order : false}
-            className={headCell.narrow ? classes.theadNarrow : classes.thead}
-          >
-            <TableSortLabel
-              active={orderBy === headCell.id}
-              direction={orderBy === headCell.id ? order : 'asc'}
-              onClick={createSortHandler(headCell.id)}
-            >
-              <Typography noWrap='true'>{headCell.label}</Typography>
-              {orderBy === headCell.id ? (
-                <span className={classes.visuallyHidden}>
-                  {order === 'desc' ? 'sorted descending' : 'sorted ascending'}
-                </span>
-              ) : null}
-            </TableSortLabel>
-          </TableCell>
-        ))}
-      </TableRow>
-    </TableHead>
-  );
-}
-
-EnhancedTableHead.propTypes = {
-  classes: PropTypes.object.isRequired,
-  onRequestSort: PropTypes.func.isRequired,
-  order: PropTypes.oneOf(['asc', 'desc']).isRequired,
-  orderBy: PropTypes.string.isRequired,
-  rowCount: PropTypes.number.isRequired,
-};
-
 
 function descendingComparator(a, b, orderBy) {
   if (b[orderBy] < a[orderBy]) {
@@ -118,7 +64,7 @@ function stableSort(array, comparator) {
 export default function TableContainerComponent(props) {
   const [order, setOrder] = React.useState('asc');
   const [orderBy, setOrderBy] = React.useState('calories');
-  const [selected, setSelected] = React.useState([]);
+  // const [selected, setSelected] = React.useState([]);
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(5);
   const {t} = useTranslation();
@@ -130,27 +76,26 @@ export default function TableContainerComponent(props) {
     setOrderBy(property);
   };
 
-  const handleClick = (event, name) => {
-    const selectedIndex = selected.indexOf(name);
-    let newSelected = [];
+  // const handleClick = (event, name) => {
+  //   const selectedIndex = selected.indexOf(name);
+  //   let newSelected = [];
 
-    if (selectedIndex === -1) {
-      newSelected = newSelected.concat(selected, name);
-    } else if (selectedIndex === 0) {
-      newSelected = newSelected.concat(selected.slice(1));
-    } else if (selectedIndex === selected.length - 1) {
-      newSelected = newSelected.concat(selected.slice(0, -1));
-    } else if (selectedIndex > 0) {
-      newSelected = newSelected.concat(
-          selected.slice(0, selectedIndex),
-          selected.slice(selectedIndex + 1),
-      );
-    }
+  //   if (selectedIndex === -1) {
+  //     newSelected = newSelected.concat(selected, name);
+  //   } else if (selectedIndex === 0) {
+  //     newSelected = newSelected.concat(selected.slice(1));
+  //   } else if (selectedIndex === selected.length - 1) {
+  //     newSelected = newSelected.concat(selected.slice(0, -1));
+  //   } else if (selectedIndex > 0) {
+  //     newSelected = newSelected.concat(
+  //         selected.slice(0, selectedIndex),
+  //         selected.slice(selectedIndex + 1),
+  //     );
+  //   }
+  //   setSelected(newSelected);
+  // };
 
-    setSelected(newSelected);
-  };
-
-  const isSelected = (name) => selected.indexOf(name) !== -1;
+  // const isSelected = (name) => selected.indexOf(name) !== -1;
 
   const handleChangePage = (event, newPage) => {
     setPage(newPage);
@@ -179,23 +124,25 @@ export default function TableContainerComponent(props) {
           orderBy={orderBy}
           onRequestSort={handleRequestSort}
           rowCount={props.filteredRows.length}
+          headCells={props.headCells}
         />
         <TableBody>
           {
             stableSort(props.filteredRows(), getComparator(order, orderBy))
                 .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                 .map((row, index) => {
-                  const isItemSelected = isSelected(row.id);
+                  // const isItemSelected = isSelected(row.id);
                   const labelId = `enhanced-table-checkbox-${index}`;
 
                   return (
                     <TableRow
                       hover
-                      onClick={(event) => handleClick(event, row.id)}
                       tabIndex={-1}
                       key={row.id}
-                      aria-checked={isItemSelected}
-                      selected={isItemSelected}
+                      className={classes.tableRow}
+                      // onClick={(event) => handleClick(event, row.id)}
+                      // aria-checked={isItemSelected}
+                      // selected={isItemSelected}
                     >
                       <TableCell id={labelId} className={classes.tablesCells}>
                         <Typography variant="body2" noWrap='true'>{row.id}</Typography>
@@ -204,10 +151,10 @@ export default function TableContainerComponent(props) {
                         <Typography variant="body2" noWrap='true'>{row.status}</Typography>
                       </TableCell>
                       <TableCell>
-                        <Typography variant="body2" noWrap='true'>{row.researcherEmail}</Typography>
+                        <Typography variant="body2" noWrap='true'>{row.supporter}</Typography>
                       </TableCell>
                       <TableCell className={classes.tablesCellsFlex}>
-                        <Typography variant="body2" noWrap='true'>{row.analystEmail}</Typography>
+                        <Typography variant="body2" noWrap='true'>{row.lead}</Typography>
                         <AnalystDialog/>
                       </TableCell>
                       <TableCell>

@@ -1,11 +1,9 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import clsx from 'clsx';
 import {makeStyles} from '@material-ui/core/styles';
 import {
   AppBar,
   Typography,
-  Box,
 } from '@material-ui/core';
 import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
@@ -13,6 +11,7 @@ import Paper from '@material-ui/core/Paper';
 import Button from '@material-ui/core/Button';
 
 import TableContainerComponent from './TableContainerComponent';
+import TabPanel from './DashboardTabPanel';
 import Header from '../CommonComponents/Header';
 import Footer from '../CommonComponents/Footer';
 import DashboardDrawer from './DashboardDrawer';
@@ -53,7 +52,7 @@ const useStyles = makeStyles((theme) => ({
   content: {
     background: '#F7F7F7',
     padding: theme.spacing(0, 3, 3, 3),
-    paddingTop: `calc(24px + 64px)`,
+    paddingTop: `88px`,
     minHeight: `calc(100vh - 284px)`,
     flexGrow: 1,
     transition: theme.transitions.create('margin', {
@@ -72,23 +71,6 @@ const useStyles = makeStyles((theme) => ({
   button: {
     height: 36,
   },
-  visuallyHidden: {
-    border: 0,
-    clip: 'rect(0 0 0 0)',
-    height: 1,
-    margin: -1,
-    overflow: 'hidden',
-    padding: 0,
-    position: 'absolute',
-    top: 20,
-    width: 1,
-  },
-  thead: {
-    width: '15.7%',
-  },
-  theadNarrow: {
-    width: '7%',
-  },
   tabs: {
     borderBottom: '1px solid',
     borderBottomColor: theme.palette.grey[300],
@@ -102,21 +84,16 @@ const useStyles = makeStyles((theme) => ({
       boxShadow: '0px 2px 4px -1px rgba(117,117,117,0.2), 0px 4px 5px 0px rgba(117,117,117,0.14), 0px 1px 10px 0px rgba(117,117,117,0.12)',
     },
   },
-  tableHead: {
-    '& th': {
-      padding: theme.spacing(2.5, 1),
-    },
-  },
 }));
-
-function createData(id, statusHead, status, researcherEmail, analystEmail, submitted, updated) {
-  return {id, statusHead, status, researcherEmail, analystEmail, submitted, updated};
-}
 
 let tabStatus = 'active';
 
+function createData(id, statusHead, status, supporter, lead, submitted, updated) {
+  return {id, statusHead, status, supporter, lead, submitted, updated};
+}
+
 const rows = requestListResearchers.map((el, index) =>
-  createData(el.id, el.statusHead, el.status, el.researcherEmail, el.analystEmail, el.submitted, el.updated),
+  createData(el.id, el.statusHead, el.status, el.supporter, el.lead, el.submitted, el.updated),
 );
 
 const filteredRows = () => {
@@ -125,29 +102,15 @@ const filteredRows = () => {
   );
 };
 
-// /////////// TABPANEL
-function TabPanel(props) {
-  const {children, value, index, ...other} = props;
-
-  return (
-    <Typography
-      component="div"
-      role="tabpanel"
-      hidden={value !== index}
-      id={`projects-tabpanel-${index}`}
-      aria-labelledby={`projects-tab-${index}`}
-      {...other}
-    >
-      {value === index && <Box p={3}>{children}</Box>}
-    </Typography>
-  );
-}
-
-TabPanel.propTypes = {
-  children: PropTypes.node,
-  index: PropTypes.any.isRequired,
-  value: PropTypes.any.isRequired,
-};
+const headCells = [
+  {id: 'id', narrow: false, disablePadding: true, label: 'ID'},
+  {id: 'status', narrow: false, disablePadding: false, label: 'Status'},
+  {id: 'researcher', narrow: false, disablePadding: false, label: 'Researcher'}, // not sorting
+  {id: 'lead', narrow: false, disablePadding: false, label: 'Analyst'},
+  {id: 'created', narrow: false, disablePadding: false, label: 'Created on'}, // not sorting
+  {id: 'updated', narrow: false, disablePadding: false, label: 'Updated on'},
+  {id: 'actions', narrow: true, disablePadding: false, label: 'Actions'},
+];
 
 function a11yProps(index) {
   return {
@@ -156,7 +119,7 @@ function a11yProps(index) {
   };
 }
 
-export default function VettingDashboardSupport() {
+export default function DashboardPageSupport() {
   const classes = useStyles();
   const [value, setValue] = React.useState(0);
   const [open, setOpen] = React.useState({
@@ -248,16 +211,16 @@ export default function VettingDashboardSupport() {
             </Tabs>
           </AppBar>
           <TabPanel value={value} index={0} className={classes.tabPanel}>
-            <TableContainerComponent status="active" filteredRows={filteredRows} />
+            <TableContainerComponent status="active" filteredRows={filteredRows} headCells={headCells}/>
           </TabPanel>
           <TabPanel value={value} index={1} className={classes.tabPanel}>
-            <TableContainerComponent status="withdrawn" filteredRows={filteredRows}/>
+            <TableContainerComponent status="withdrawn" filteredRows={filteredRows} headCells={headCells}/>
           </TabPanel>
           <TabPanel value={value} index={2} className={classes.tabPanel}>
-            <TableContainerComponent status="approved" filteredRows={filteredRows}/>
+            <TableContainerComponent status="approved" filteredRows={filteredRows} headCells={headCells}/>
           </TabPanel>
           <TabPanel value={value} index={3} className={classes.tabPanel}>
-            <TableContainerComponent status="denied" filteredRows={filteredRows}/>
+            <TableContainerComponent status="denied" filteredRows={filteredRows} headCells={headCells}/>
           </TabPanel>
         </Paper>
         <Footer />
