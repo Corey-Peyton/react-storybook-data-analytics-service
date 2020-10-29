@@ -37,14 +37,13 @@ const useStyles = makeStyles((theme) => ({
   },
   appBarHeader: {
     color: theme.palette.text.primary,
-    background: '#F7F7F7',
+    background: 'white',
     position: 'static',
     top: 0,
     left: 'auto',
     width: '100%',
-    paddingBottom: theme.spacing(3),
-    paddingRight: '0px !important',
-    boxShadow: 'none !important',
+    padding: theme.spacing(2, 1, 1),
+    // boxShadow: 'none !important',
     display: 'flex',
     flexDirection: 'row',
     justifyContent: 'space-between',
@@ -177,25 +176,25 @@ export default function DashboardPageSupport() {
             projectTitle={handleProjectTitle}
           />
           <AppBar
-            className={classes.appBarHeader}
-            elevation={0}
-          >
-            <Typography
-              variant="h6"
-              component="h1"
-            >
-              {project.title}
-            </Typography>
-            <Button variant="contained" color="primary" className={classes.button}>
-            New vetting request
-            </Button>
-          </AppBar>
-          <AppBar
             position="static"
             component="div"
             className={classes.appBar}
             ref={mainRef} tabIndex="-1"
           >
+            <AppBar
+              className={classes.appBarHeader}
+              elevation={0}
+            >
+              <Typography
+                variant="h6"
+                component="h1"
+              >
+                {project.title}
+              </Typography>
+              <Button variant="contained" color="primary" className={classes.button}>
+            New vetting request
+              </Button>
+            </AppBar>
             <Tabs
               value={value}
               onChange={handleChange}
