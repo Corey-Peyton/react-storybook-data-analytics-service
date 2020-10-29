@@ -11,7 +11,8 @@ import TreeItem from '@material-ui/lab/TreeItem';
 import FolderOpenIcon from '@material-ui/icons/FolderOpen';
 import {makeStyles} from '@material-ui/styles';
 import {HEAD_H} from '../../../Theme/constants';
-import {DRAWER_WIDTH} from './DashboardPageSupport';
+
+export const DRAWER_WIDTH = 240;
 
 const useStyles = makeStyles((theme) => ({
   drawer: {

@@ -16,14 +16,13 @@ import Header from '../CommonComponents/Header';
 import Footer from '../CommonComponents/Footer';
 import DashboardDrawer from './DashboardDrawer';
 import BypassBlocks from '../../BypassBlocks';
-import {requestListResearchers} from '../../../Data/fakeData';
 
-export const DRAWER_WIDTH = 240;
+import {requestListResearchers} from '../../../Data/fakeData';
+import {DRAWER_WIDTH} from './DashboardDrawer';
 
 const useStyles = makeStyles((theme) => ({
   main: {
     background: '#F7F7F7',
-    height: 'calc(100% - 84px)',
   },
   appBar: {
     color: theme.palette.text.primary,
@@ -43,7 +42,6 @@ const useStyles = makeStyles((theme) => ({
     left: 'auto',
     width: '100%',
     padding: theme.spacing(2, 1, 1),
-    // boxShadow: 'none !important',
     display: 'flex',
     flexDirection: 'row',
     justifyContent: 'space-between',
@@ -52,7 +50,6 @@ const useStyles = makeStyles((theme) => ({
     background: '#F7F7F7',
     padding: theme.spacing(0, 3, 3, 3),
     paddingTop: `88px`,
-    minHeight: `calc(100vh - 284px)`,
     flexGrow: 1,
     transition: theme.transitions.create('margin', {
       easing: theme.transitions.easing.sharp,
@@ -165,16 +162,16 @@ export default function DashboardPageSupport() {
       <Header clickHandler={toggleDrawer}/>
       <main className={classes.main}>
         <BypassBlocks ref={{main: mainRef, about: aboutRef}} />
+        <DashboardDrawer
+          open={open.drawer}
+          projectTitle={handleProjectTitle}
+        />
         <Paper
           className={clsx(classes.content, classes.paper, {
             [classes.contentShift]: open.drawer,
           })}
           elevation={0}
         >
-          <DashboardDrawer
-            open={open.drawer}
-            projectTitle={handleProjectTitle}
-          />
           <AppBar
             position="static"
             component="div"
@@ -222,7 +219,7 @@ export default function DashboardPageSupport() {
             <TableContainerComponent status="denied" filteredRows={filteredRows} headCells={headCells}/>
           </TabPanel>
         </Paper>
-        <Footer />
+        <Footer open={open.drawer} />
       </main>
     </React.Fragment>
   );
