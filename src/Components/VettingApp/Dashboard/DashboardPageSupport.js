@@ -16,14 +16,13 @@ import Header from '../CommonComponents/Header';
 import Footer from '../CommonComponents/Footer';
 import DashboardDrawer from './DashboardDrawer';
 import BypassBlocks from '../../BypassBlocks';
-import {requestListResearchers} from '../../../Data/fakeData';
 
-export const DRAWER_WIDTH = 240;
+import {requestListResearchers} from '../../../Data/fakeData';
+import {DRAWER_WIDTH} from './DashboardDrawer';
 
 const useStyles = makeStyles((theme) => ({
   main: {
     background: '#F7F7F7',
-    height: 'calc(100% - 84px)',
   },
   appBar: {
     color: theme.palette.text.primary,
@@ -37,14 +36,12 @@ const useStyles = makeStyles((theme) => ({
   },
   appBarHeader: {
     color: theme.palette.text.primary,
-    background: '#F7F7F7',
+    background: 'white',
     position: 'static',
     top: 0,
     left: 'auto',
     width: '100%',
-    paddingBottom: theme.spacing(3),
-    paddingRight: '0px !important',
-    boxShadow: 'none !important',
+    padding: theme.spacing(2, 1, 1),
     display: 'flex',
     flexDirection: 'row',
     justifyContent: 'space-between',
@@ -53,7 +50,6 @@ const useStyles = makeStyles((theme) => ({
     background: '#F7F7F7',
     padding: theme.spacing(0, 3, 3, 3),
     paddingTop: `88px`,
-    minHeight: `calc(100vh - 284px)`,
     flexGrow: 1,
     transition: theme.transitions.create('margin', {
       easing: theme.transitions.easing.sharp,
@@ -166,36 +162,36 @@ export default function DashboardPageSupport() {
       <Header clickHandler={toggleDrawer}/>
       <main className={classes.main}>
         <BypassBlocks ref={{main: mainRef, about: aboutRef}} />
+        <DashboardDrawer
+          open={open.drawer}
+          projectTitle={handleProjectTitle}
+        />
         <Paper
           className={clsx(classes.content, classes.paper, {
             [classes.contentShift]: open.drawer,
           })}
           elevation={0}
         >
-          <DashboardDrawer
-            open={open.drawer}
-            projectTitle={handleProjectTitle}
-          />
-          <AppBar
-            className={classes.appBarHeader}
-            elevation={0}
-          >
-            <Typography
-              variant="h6"
-              component="h1"
-            >
-              {project.title}
-            </Typography>
-            <Button variant="contained" color="primary" className={classes.button}>
-            New vetting request
-            </Button>
-          </AppBar>
           <AppBar
             position="static"
             component="div"
             className={classes.appBar}
             ref={mainRef} tabIndex="-1"
           >
+            <AppBar
+              className={classes.appBarHeader}
+              elevation={0}
+            >
+              <Typography
+                variant="h6"
+                component="h1"
+              >
+                {project.title}
+              </Typography>
+              <Button variant="contained" color="primary" className={classes.button}>
+            New vetting request
+              </Button>
+            </AppBar>
             <Tabs
               value={value}
               onChange={handleChange}
@@ -223,7 +219,7 @@ export default function DashboardPageSupport() {
             <TableContainerComponent status="denied" filteredRows={filteredRows} headCells={headCells}/>
           </TabPanel>
         </Paper>
-        <Footer />
+        <Footer open={open.drawer} />
       </main>
     </React.Fragment>
   );

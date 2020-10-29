@@ -13,7 +13,7 @@ import {
 
 import AnalystDialog from './AnalystDialog';
 import CustomizedMenus from '../CommonComponents/ContextMenu';
-import EnhancedTableHead from './DashboardTableHeads';
+import DashboardTableHead from './DashboardTableHead';
 
 const useStyles = makeStyles((theme) => ({
   tableContainer: {
@@ -118,7 +118,7 @@ export default function TableContainerComponent(props) {
         size='medium'
         stickyHeader
       >
-        <EnhancedTableHead
+        <DashboardTableHead
           classes={classes}
           order={order}
           orderBy={orderBy}

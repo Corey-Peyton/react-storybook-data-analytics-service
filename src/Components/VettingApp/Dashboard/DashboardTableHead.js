@@ -29,7 +29,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function EnhancedTableHead(props) {
+export default function DashboardTableHead(props) {
   const {order, orderBy, onRequestSort} = props;
   const classes = useStyles();
   const createSortHandler = (property) => (event) => {
@@ -68,7 +68,7 @@ export default function EnhancedTableHead(props) {
   );
 }
 
-EnhancedTableHead.propTypes = {
+DashboardTableHead.propTypes = {
   classes: PropTypes.object.isRequired,
   onRequestSort: PropTypes.func.isRequired,
   order: PropTypes.oneOf(['asc', 'desc']).isRequired,

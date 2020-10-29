@@ -4,13 +4,15 @@ import PropTypes from 'prop-types';
 import {
   Typography,
   Drawer,
+  Tooltip,
 } from '@material-ui/core';
 import TreeView from '@material-ui/lab/TreeView';
 import TreeItem from '@material-ui/lab/TreeItem';
 import FolderOpenIcon from '@material-ui/icons/FolderOpen';
 import {makeStyles} from '@material-ui/styles';
 import {HEAD_H} from '../../../Theme/constants';
-import {DRAWER_WIDTH} from './DashboardPageSupport';
+
+export const DRAWER_WIDTH = 240;
 
 const useStyles = makeStyles((theme) => ({
   drawer: {
@@ -69,7 +71,7 @@ const useStyles = makeStyles((theme) => ({
     },
     '&:focus > $content, &$selected > $content': {
       backgroundColor: `#1A73E82B`,
-      color: 'var(--tree-view-color)',
+      color: '#1473e6',
     },
     '&:focus > $content $label, &:hover > $content $label, &$selected > $content $label': {
       backgroundColor: 'transparent',
@@ -111,26 +113,32 @@ const useStyles = makeStyles((theme) => ({
   labelText: {
     fontWeight: 'inherit',
     flexGrow: 1,
+    maxWidth: '150px',
+    whiteSpace: 'nowrap',
+    overflow: 'hidden',
+    textOverflow: 'ellipsis',
   },
 }));
 
 function StyledTreeItem(props) {
   const classes = useStyles();
-  const {labelText, labelIcon: LabelIcon, labelInfo, color, bgColor, ...other} = props;
+  const {labelText, labelIcon: LabelIcon, labelInfo, tooltip, color, bgColor, ...other} = props;
 
   return (
     <TreeItem
       label={
-        <div className={classes.labelRoot}
-        >
-          <LabelIcon color="inherit" className={classes.labelIcon} />
-          <Typography variant="body2" className={classes.labelText}>
-            {labelText}
-          </Typography>
-          <Typography variant="caption" color="inherit">
-            {labelInfo}
-          </Typography>
-        </div>
+        <Tooltip title={tooltip} placement="top" arrow>
+          <div className={classes.labelRoot}
+          >
+            <LabelIcon color="inherit" className={classes.labelIcon} />
+            <Typography variant="body2" className={classes.labelText}>
+              {labelText}
+            </Typography>
+            <Typography variant="caption" color="inherit">
+              {labelInfo}
+            </Typography>
+          </div>
+        </Tooltip>
       }
       style={{
         '--tree-view-color': color,
@@ -206,7 +214,7 @@ export default function DashboardDrawer(props) {
         onNodeSelect={handleProjectChange}
       >
         {projectsArray.map((el, index) => (
-          <StyledTreeItem nodeId={`${index}`} labelText={el} labelIcon={FolderOpenIcon} className={classes.treeItem}/>
+          <StyledTreeItem nodeId={`${index}`} labelText={el} labelIcon={FolderOpenIcon} className={classes.treeItem} tooltip={el}/>
         ),
         )}
       </TreeView>

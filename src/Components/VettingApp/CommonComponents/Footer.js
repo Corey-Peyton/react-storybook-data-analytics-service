@@ -1,9 +1,12 @@
 import React from 'react';
+import clsx from 'clsx';
 import {useTranslation} from 'react-i18next';
 import {Button} from '@material-ui/core';
 import {makeStyles} from '@material-ui/core/styles';
 import moment from 'moment';
 import Typography from '@material-ui/core/Typography';
+
+import {DRAWER_WIDTH} from '../Dashboard/DashboardDrawer';
 
 const date = moment().format('YYYY-MM-DD');
 
@@ -55,6 +58,13 @@ const useStyles = makeStyles((theme) => ({
     borderRightStyle: 'solid',
     borderRightColor: theme.palette.divider,
   },
+  contentShift: {
+    transition: theme.transitions.create('margin', {
+      easing: theme.transitions.easing.easeOut,
+      duration: theme.transitions.duration.enteringScreen,
+    }),
+    marginLeft: DRAWER_WIDTH,
+  },
 }));
 
 
@@ -63,7 +73,12 @@ const Footer = React.forwardRef((props, ref) => {
   const classes = useStyles();
 
   return (
-    <footer className={classes.footer} ref={ref} tabIndex="-1">
+    <footer
+      className={clsx(classes.footer, {
+        [classes.contentShift]: props.open,
+      })}
+      ref={ref}
+      tabIndex="-1">
       <ul className="list-horizontal">
         <li>
           <div className={classes.langBtnContainer}>
