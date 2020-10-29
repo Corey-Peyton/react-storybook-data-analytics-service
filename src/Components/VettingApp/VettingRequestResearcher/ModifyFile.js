@@ -4,6 +4,7 @@ import Dialog from '@material-ui/core/Dialog';
 import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogTitle from '@material-ui/core/DialogTitle';
+import Alert from '@material-ui/lab/Alert';
 import {
   FormControl,
   InputLabel,
@@ -54,6 +55,9 @@ const useStyles = makeStyles((theme) => ({
     '& svg': {
       verticalAlign: 'middle',
     },
+  },
+  button: {
+    marginBottom: theme.spacing(2),
   },
   buttonTooltip: {
     'display': 'flex',
@@ -128,6 +132,10 @@ function ModifyFile(props) {
     setOpen(false);
   };
 
+  const snackbarhandleClose = () => {
+    setOpenSnackbar(false);
+  };
+
   const [open, setOpen] = React.useState(false);
   const [openSnackbar, setOpenSnackbar] = React.useState(false);
 
@@ -158,49 +166,25 @@ function ModifyFile(props) {
         required
         variant="outlined"
         fullWidth
-        // error={
-        //   errors.outputFiles && errors.outputFiles[index].outputFile
-        //     ? true
-        //     : false
-        // }
       >
         <InputLabel id="outputFile-label">File for release</InputLabel>
-        {/* <Controller
-                    render={({ onBlur, onChange, value }) => ( */}
         <Select
           id="outputFile"
           label="File for release *"
           labelId="outputFile-label"
-          // onChange={onChange}
-          // value={value}
         >
-          {/* {files.map((item, index) => (
-                      <MenuItem key={index} value={item}>
-                        {item}
-                      </MenuItem>
-                    ))} */}
           <MenuItem>File number 2</MenuItem>
         </Select>
-        {/* )}
-                    name={"outputFiles[" + index + "].outputFile"}
-                    control={control}
-                    rules={{ required: requiredErrorMessage }}
-                  /> */}
         <FormHelperText>
-          {/* {errors.outputFiles && errors.outputFiles[index].outputFile
-                      ? errors.outputFiles[index].outputFile.message
-                      : ''} */}
         </FormHelperText>
       </FormControl>
       <TextField
         className={classes.inputMargin}
         margin="dense"
         id="sheetName"
-        // name={'outputFiles[' + index + '].sheetName'}
         label="Sheet name"
         variant="outlined"
         helperText="Each sheet for a spreadsheet file should be listed separately."
-        // inputRef={register}
         fullWidth
         required
       />
@@ -208,10 +192,8 @@ function ModifyFile(props) {
         className={classes.inputMargin}
         margin="dense"
         id="datasetName"
-        // name={'outputFiles[' + index + '].datasetName'}
         label="Survey or dataset name and cycle(s)"
         variant="outlined"
-        // inputRef={register}
         fullWidth
         required
       />
@@ -221,46 +203,16 @@ function ModifyFile(props) {
         variant="outlined"
         fullWidth
         required
-        // error={
-        //   errors.outputFiles &&
-        //   errors.outputFiles[index].outputMethod
-        //     ? true
-        //     : false
-        // }
       >
         <InputLabel id="outputMethod-label">Output method</InputLabel>
-        {/* <Controller
-                      render={({ onBlur, onChange, value }) => ( */}
         <Select
           id="outputMethod"
           label="Output Method *"
           labelId="outputMethod-label"
-          // onChange={(e) =>
-          //   handleMandatoryChange(
-          //       e,
-          //       '3.Graphs',
-          //       ['supporting tabulations for graphs'],
-          //       onChange
-          //   )
-          // }
-          // value={value}
         >
-          {/* {Object.keys(outputMethods).map((item, index) => (
-                        <MenuItem key={index} value={item}>
-                          {item}
-                        </MenuItem>
-                      ))} */}
           <MenuItem>Descriptive</MenuItem>
         </Select>
-        {/* )}
-                      name={"outputFiles[" + index + "].outputMethod"}
-                      control={control}
-                    /> */}
         <FormHelperText>
-          {/* {errors.outputFiles &&
-                      errors.outputFiles[index].outputMethod
-                        ? errors.outputFiles[index].outputMethod.message
-                        : ''} */}
         </FormHelperText>
       </FormControl>
       <div className={classes.emphasisBox}>
@@ -271,9 +223,6 @@ function ModifyFile(props) {
         <Autocomplete
           id="outputMethodSearch"
           options={outputMethodsTerms}
-          // onChange={(e, val) => {
-          //   setValue('outputMethod', val.method);
-          // }}
           getOptionLabel={(option) => option.term}
           renderOption={(option) => (
             <>
@@ -297,22 +246,12 @@ function ModifyFile(props) {
       <FormControl
         component="fieldset"
         required
-        // error={
-        //   errors.outputFiles &&
-        //   errors.outputFiles[index].includeWeightVariable
-        //     ? true
-        //     : false
-        // }
       >
         <FormLabel component="legend">
           Does this output include a weight variable?
         </FormLabel>
-        {/* <Controller
-                      render={({ onBlur, onChange, value }) => ( */}
         <RadioGroup
           id="includeWeightVariable"
-          // onChange={onChange}
-          // value={value}
         >
           <FormControlLabel
             value="Yes"
@@ -325,66 +264,29 @@ function ModifyFile(props) {
             label="No"
           />
         </RadioGroup>
-        {/* )}
-                      name={"outputFiles[" + index + "].includeWeightVariable"}
-                      control={control}
-                    /> */}
         <FormHelperText>
-          {/* {errors.outputFiles &&
-                      errors.outputFiles[index].includeWeightVariable
-                        ? errors.outputFiles[index].includeWeightVariable
-                            .message
-                        : ""} */}
         </FormHelperText>
       </FormControl>
       <div className={classes.emphasisBox}>
-        {/* {watchFields[
-                  "outputFiles[" + index + "].includeWeightVariable"
-                ] === "Yes" && ( */}
         <>
           <TextField
             className={classes.inputMargin}
             margin="dense"
             id="weightVariableName"
-            // name={"outputFiles[" + index + "].weightVariableName"}
             label="Name of weight variable"
             variant="outlined"
-            // inputRef={register({ required: requiredErrorMessage })}
-            // error={
-            //   errors.outputFiles &&
-            //   errors.outputFiles[index].weightVariableName
-            //     ? true
-            //     : false
-            // }
-            // helperText={
-            //   errors.outputFiles &&
-            //   errors.outputFiles[index].weightVariableName
-            //     ? errors.outputFiles[index].weightVariableName
-            //         .message
-            //     : ""
-            // }
             required
             fullWidth
           />
           <FormControl
             component="fieldset"
             required
-            // error={
-            //   errors.outputFiles &&
-            //   errors.outputFiles[index].weightVariableType
-            //     ? true
-            //     : false
-            // }
           >
             <FormLabel component="legend" className="screen-reader-text">
               Is the weight variable scaled or normalized?
             </FormLabel>
-            {/* <Controller
-                          render={({onBlur, onChange, value}) => ( */}
             <RadioGroup
               id="weightVariableType"
-              // onChange={onChange}
-              // value={value}
             >
               <FormControlLabel
                 value="Scaled"
@@ -397,31 +299,18 @@ function ModifyFile(props) {
                 label="Normalized"
               />
             </RadioGroup>
-            {/* )}
-                          name={'outputFiles[' + index + '].weightVariableType'}
-                          control={control}
-                          rules={{required: requiredErrorMessage}}
-                        /> */}
             <FormHelperText>
-              {/* {errors.outputFiles &&
-                          errors.outputFiles[index].weightVariableType
-                            ? errors.outputFiles[index].weightVariableType
-                                .message
-                            : ""} */}
             </FormHelperText>
           </FormControl>
         </>
       </div>
-      {/* )} */}
       <TextField
         className={classes.inputMargin}
         margin="dense"
         id="sampleUsed"
-        // name={"outputFiles[" + index + "].sampleUsed"}
         label="Sample, sub-sample or inclusions/exclusions used"
         variant="outlined"
         helperText="Example: males 50 years of age or older. Required if you subsetted or selected only a certain set of respondents from the data for all or part of the analysis"
-        // inputRef={register}
         fullWidth
         required
       />
@@ -429,15 +318,11 @@ function ModifyFile(props) {
         className={classes.inputMargin}
         margin="dense"
         id="geographyLevel"
-        // name={"outputFiles[" + index + "].geographyLevel"}
         label="Level of Geography"
         variant="outlined"
         helperText="Examples: national, provincial"
-        // inputRef={register}
         fullWidth
       />
-      {/* </Grid>
-        <Grid item xs={12}> */}
       <Typography variant="subtitle2" className="mb-2">
         Output supporting files
       </Typography>
@@ -445,19 +330,10 @@ function ModifyFile(props) {
         component="fieldset"
         className={classes.inputMargin}
         required
-        // error={
-        //   errors.outputFiles && errors.outputFiles[index].linkedData
-        //     ? true
-        //     : false
-        // }
       >
         <FormLabel component="legend">Is linked data used?</FormLabel>
-        {/* <Controller
-                      render={({onBlur, onChange, value}) => ( */}
         <RadioGroup
           id="linkedData"
-          // onChange={onChange}
-          // value={value}
         >
           <FormControlLabel
             value="Yes"
@@ -475,27 +351,13 @@ function ModifyFile(props) {
             label="N/A"
           />
         </RadioGroup>
-        {/* )}
-                      name={'outputFiles[' + index + '].linkedData'}
-                      control={control}
-                    /> */}
         <FormHelperText>
-          {/* {errors.outputFiles &&
-                      errors.outputFiles[index].linkedData
-                        ? errors.outputFiles[index].linkedData.message
-                        : false} */}
         </FormHelperText>
       </FormControl>
       <FormControl
         className={classes.inputMargin}
         component="fieldset"
         required
-        // error={
-        //   errors.outputFiles &&
-        //   errors.outputFiles[index].dollarIncluded
-        //     ? true
-        //     : false
-        // }
       >
         <FormLabel component="legend" className={classes.tooltipLabel}>
           Are variables related to income, earnings, tax and/or dollar values
@@ -508,23 +370,8 @@ function ModifyFile(props) {
             <InfoIcon />
           </Tooltip>
         </FormLabel>
-        {/* <Controller
-                    render={({ onBlur, onChange, value }) => ( */}
         <RadioGroup
           id="dollarIncluded"
-          // onChange={(e) =>
-          //   handleMandatoryChange(
-          //     e,
-          //     "Yes",
-          //     [
-          //       "unweighted supporting sample counts",
-          //       "syntax used for variable creation, analysis and running the vetting tests",
-          //       "vetting test results (e.g. test of magnitude, dominance, etc)",
-          //     ],
-          //     onChange
-          //   )
-          // }
-          // value={value}
         >
           <FormControlLabel
             value="Yes"
@@ -542,68 +389,29 @@ function ModifyFile(props) {
             label="N/A"
           />
         </RadioGroup>
-        {/* )} name={"outputFiles[" + index + "].dollarIncluded"}
-                  control={control}
-                  /> */}
         <FormHelperText>
-          {/* {errors.outputFiles &&
-                    errors.outputFiles[index].dollarIncluded
-                      ? errors.outputFiles[index].dollarIncluded.message
-                      : ""} */}
         </FormHelperText>
       </FormControl>
       <FormControl
         className={classes.inputMargin}
         component="fieldset"
-        // error={
-        //   errors.outputFiles &&
-        //   errors.outputFiles[index].descriptiveStats
-        //     ? true
-        //     : false
-        // }
       >
         <FormLabel component="legend">
           Does the request include descriptive statistics?
         </FormLabel>
-        {/* <Controller
-                      render={({ onBlur, onChange, value }) => ( */}
         <RadioGroup
           id="descriptiveStats"
-          // onChange={(e) =>
-          //   handleMandatoryChange(
-          //     e,
-          //     "Yes",
-          //     [
-          //       "correct supporting documentation according to the vetting rules (e.g. counts are unweighted / weighted / weighted and rounded)",
-          //     ],
-          //     onChange
-          //   )
-          // }
-          // value={value}
         >
           <FormControlLabel value="Yes" control={<Radio />} label="Yes" />
           <FormControlLabel value="No" control={<Radio />} label="No" />
           <FormControlLabel value="NA" control={<Radio />} label="N/A" />
         </RadioGroup>
-        {/* )} name={"outputFiles[" + index + "].descriptiveStats"}
-                    control={control}
-                    /> */}
         <FormHelperText>
-          {/* {errors.outputFiles &&
-                      errors.outputFiles[index].descriptiveStats
-                        ? errors.outputFiles[index].descriptiveStats.message
-                        : ""} */}
         </FormHelperText>
       </FormControl>
       <FormControl
         className={classes.inputMargin}
         component="fieldset"
-        // error={
-        //   errors.outputFiles &&
-        //   errors.outputFiles[index].equivalentDescriptiveStats
-        //     ? true
-        //     : false
-        // }
       >
         <FormLabel component="legend" className={classes.tooltipLabel}>
           Does this request include model output or graphs that are equivalent
@@ -616,19 +424,8 @@ function ModifyFile(props) {
             <InfoIcon />
           </Tooltip>
         </FormLabel>
-        {/* <Controller
-                    render={({ onBlur, onChange, value }) => ( */}
         <RadioGroup
           id="equivalentDescriptiveStats"
-          // onChange={(e) =>
-          //   handleMandatoryChange(
-          //     e,
-          //     "Yes",
-          //     ["unweighted frequency table for respondent counts"],
-          //     onChange
-          //   )
-          // }
-          // value={value}
         >
           <FormControlLabel
             value="Yes"
@@ -646,27 +443,12 @@ function ModifyFile(props) {
             label="N/A"
           />
         </RadioGroup>
-        {/* )} name=
-                  {"outputFiles[" + index + "].equivalentDescriptiveStats"}
-                  control={control}
-                  /> */}
         <FormHelperText>
-          {/* {errors.outputFiles &&
-                    errors.outputFiles[index].equivalentDescriptiveStats
-                      ? errors.outputFiles[index].equivalentDescriptiveStats
-                          .message
-                      : ""} */}
         </FormHelperText>
       </FormControl>
       <FormControl
         className={classes.inputMargin}
         component="fieldset"
-        // error={
-        //   errors.outputFiles &&
-        //   errors.outputFiles[index].modifiedWeights
-        //     ? true
-        //     : false
-        // }
       >
         <FormLabel component="legend" className={classes.tooltipLabel}>
           Did you apply modified (e.g. standardized) weights in the analysis?{' '}
@@ -678,12 +460,8 @@ function ModifyFile(props) {
             <InfoIcon />
           </Tooltip>
         </FormLabel>
-        {/* <Controller
-                      render={({ onBlur, onChange, value }) => ( */}
         <RadioGroup
           id="modifiedWeights"
-          // onChange={onChange}
-          // value={value}
         >
           <FormControlLabel
             value="Yes"
@@ -701,35 +479,18 @@ function ModifyFile(props) {
             label="N/A"
           />
         </RadioGroup>
-        {/* )} name={"outputFiles[" + index + "].modifiedWeights"}
-                    control={control}
-                    /> */}
         <FormHelperText>
-          {/* {errors.outputFiles &&
-                      errors.outputFiles[index].modifiedWeights
-                        ? errors.outputFiles[index].modifiedWeights
-                        : ""} */}
         </FormHelperText>
       </FormControl>
       <FormControl
         className={classes.inputMargin}
         component="fieldset"
-        // error={
-        //   errors.outputFiles &&
-        //   errors.outputFiles[index].includeMatrix
-        //     ? true
-        //     : false
-        // }
       >
         <FormLabel component="legend">
           Does this output include a correlation or covariance matrix?
         </FormLabel>
-        {/* <Controller
-                      render={({ onBlur, onChange, value }) => ( */}
         <RadioGroup
           id="includeMatrix"
-          // onChange={onChange}
-          // value={value}
         >
           <FormControlLabel
             value="Yes"
@@ -747,25 +508,12 @@ function ModifyFile(props) {
             label="N/A"
           />
         </RadioGroup>
-        {/* )} name={"outputFiles[" + index + "].includeMatrix"}
-                    control={control}
-                    /> */}
         <FormHelperText>
-          {/* {errors.outputFiles &&
-                      errors.outputFiles[index].includeMatrix
-                        ? errors.outputFiles[index].includeMatrix.message
-                        : ""} */}
         </FormHelperText>
       </FormControl>
       <FormControl
         className={classes.inputMargin}
         component="fieldset"
-        // error={
-        //   errors.outputFiles &&
-        //   errors.outputFiles[index].roundingOutput
-        //     ? true
-        //     : false
-        // }
       >
         <FormLabel component="legend" className={classes.tooltipLabel}>
           Is rounding of output required for this vetting request?{' '}
@@ -777,19 +525,8 @@ function ModifyFile(props) {
             <InfoIcon />
           </Tooltip>
         </FormLabel>
-        {/* <Controller
-                      render={({ onBlur, onChange, value }) => ( */}
         <RadioGroup
           id="roundingOutput"
-          // onChange={(e) =>
-          //   handleMandatoryChange(
-          //     e,
-          //     "Yes",
-          //     ["unrounded version of this output"],
-          //     onChange
-          //   )
-          // }
-          // value={value}
         >
           <FormControlLabel
             value="Yes"
@@ -807,14 +544,7 @@ function ModifyFile(props) {
             label="N/A"
           />
         </RadioGroup>
-        {/* )} name={"outputFiles[" + index + "].roundingOutput"}
-                    control={control}
-                    /> */}
         <FormHelperText>
-          {/* {errors.outputFiles &&
-                      errors.outputFiles[index].roundingOutput
-                        ? errors.outputFiles[index].roundingOutput.message
-                        : ""} */}
         </FormHelperText>
       </FormControl>
       <div className={classes.emphasisBox}>
@@ -926,10 +656,8 @@ function ModifyFile(props) {
         className={classes.inputMargin}
         margin="dense"
         id="fileContents1"
-        // name={'outputFiles[' + index + '].sheetName'}
         label="File Contents"
         variant="outlined"
-        // inputRef={register}
         fullWidth
         required
       />
@@ -966,10 +694,8 @@ function ModifyFile(props) {
         className={classes.inputMargin}
         margin="dense"
         id="fileContents2"
-        // name={'outputFiles[' + index + '].sheetName'}
         label="File Contents"
         variant="outlined"
-        // inputRef={register}
         fullWidth
         required
       />
@@ -984,19 +710,20 @@ function ModifyFile(props) {
         fullWidth
         required
       />
-      <Button variant="contained" color="primary"
+      <Button variant="contained" className={classes.button} color="primary"
         onClick={handleClick}>
         Save Changes
       </Button>
-      <Snackbar
-        anchorOrigin={{
-          vertical: 'bottom',
-          horizontal: 'center',
-          backgroundColor: 'green',
-        }}
-        open={openSnackbar}
-        autoHideDuration={17000}
-        message='The supporting file has been added' />
+      <Snackbar open={openSnackbar} autoHideDuration={6000}>
+        <Alert
+          onClose={snackbarhandleClose}
+          severity="success"
+          className={classes.alert}
+          variant="filled"
+        >
+          The supporting file has been added
+        </Alert>
+      </Snackbar>
     </React.Fragment>
   );
 }

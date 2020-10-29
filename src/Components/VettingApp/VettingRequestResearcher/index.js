@@ -93,20 +93,6 @@ const useStyles = makeStyles((theme) => ({
   dialogActions: {
     padding: theme.spacing(0, 3, 3, 3),
   },
-  circle: {
-    width: 8,
-    height: 8,
-    borderRadius: '50%',
-    backgroundColor: 'currentColor',
-  },
-  completed: {
-    color: '#784af4',
-    zIndex: 1,
-    fontSize: 18,
-  },
-  active: {
-    color: '#784af4',
-  },
 }));
 
 function getSteps() {
@@ -211,8 +197,8 @@ function VettingRequestResearcher(props) {
     <main className={classes.main} tabIndex="-1">
       <Container maxWidth="xl" className="page-container">
         <AppBar position="static" className={classes.appBar} color="default">
-          {state.completed ? <ToolBarDelete /> : <ToolBar props={handleDialogOpen}/>}
-          <Toolbar>
+          {state.activeStep === 3 ? <ToolBarDelete /> : <ToolBar />}
+          {/*      <Toolbar>
             <IconButton
               edge="start"
               className={classes.menuButton}
@@ -248,7 +234,7 @@ function VettingRequestResearcher(props) {
             >
               Submit request
             </Button>
-          </Toolbar>
+          </Toolbar> */}
         </AppBar>
         <Paper className={classes.paper}>
           <Grid container alignItems="center">

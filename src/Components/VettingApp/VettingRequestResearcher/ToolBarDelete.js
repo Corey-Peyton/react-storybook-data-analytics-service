@@ -15,6 +15,9 @@ const useStyles = makeStyles((theme) => ({
   title: {
     flexGrow: 1,
   },
+  headerBtn: {
+    marginLeft: theme.spacing(3),
+  },
 }));
 
 function ToolBarDelete() {

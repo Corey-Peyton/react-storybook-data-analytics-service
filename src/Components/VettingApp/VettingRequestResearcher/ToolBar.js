@@ -14,6 +14,9 @@ const useStyles = makeStyles((theme) => ({
   title: {
     flexGrow: 1,
   },
+  headerBtn: {
+    marginLeft: theme.spacing(3),
+  },
 }));
 
 function ToolBar(props) {
@@ -64,4 +67,5 @@ function ToolBar(props) {
 }
 
 export default ToolBar;
+
 
