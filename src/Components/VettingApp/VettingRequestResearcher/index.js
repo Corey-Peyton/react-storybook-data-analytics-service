@@ -1,5 +1,5 @@
-import React from "react";
-import { makeStyles } from "@material-ui/core/styles";
+import React from 'react';
+import {makeStyles} from '@material-ui/core/styles';
 import {
   Paper,
   Container,
@@ -19,19 +19,19 @@ import {
   DialogContent,
   DialogContentText,
   DialogActions,
-} from "@material-ui/core";
-import ArrowForwardIosIcon from "@material-ui/icons/ArrowForwardIos";
-import ArrowBackIosIcon from "@material-ui/icons/ArrowBackIos";
-import Icon from "@mdi/react";
-import { mdiLockOpenVariant } from "@mdi/js";
-import ResearcherInfo from "./ResearcherInfo";
-import FilesList from "./FilesList";
-import ResidualDisclosure from "./ResidualDisclosure";
-import AdditionalInfo from "./AdditionalInfo";
-import ToolBarDelete from "./ToolBarDelete";
-import ToolBar from "./ToolBar";
-import Snackbar from "@material-ui/core/Snackbar";
-import Alert from "@material-ui/lab/Alert";
+} from '@material-ui/core';
+import ArrowForwardIosIcon from '@material-ui/icons/ArrowForwardIos';
+import ArrowBackIosIcon from '@material-ui/icons/ArrowBackIos';
+import Icon from '@mdi/react';
+import {mdiLockOpenVariant} from '@mdi/js';
+import ResearcherInfo from './ResearcherInfo';
+import FilesList from './FilesList';
+import ResidualDisclosure from './ResidualDisclosure';
+import AdditionalInfo from './AdditionalInfo';
+import ToolBarDelete from './ToolBarDelete';
+import ToolBar from './ToolBar';
+import Snackbar from '@material-ui/core/Snackbar';
+import Alert from '@material-ui/lab/Alert';
 
 const useStyles = makeStyles((theme) => ({
   main: {
@@ -43,16 +43,16 @@ const useStyles = makeStyles((theme) => ({
   },
   appBar: {
     margin: theme.spacing(0, -2),
-    width: "auto",
+    width: 'auto',
     backgroundColor: theme.palette.common.white,
   },
   headerBtn: {
     marginLeft: theme.spacing(3),
   },
   paper: {
-    maxWidth: "1280px",
-    margin: "auto",
-    boxSizing: "border-box",
+    maxWidth: '1280px',
+    margin: 'auto',
+    boxSizing: 'border-box',
     padding: theme.spacing(3),
   },
   title: {
@@ -60,13 +60,13 @@ const useStyles = makeStyles((theme) => ({
   },
   lockTooltip: {
     padding: theme.spacing(0.5, 2),
-    borderLeftWidth: "1px",
-    borderLeftStyle: "solid",
+    borderLeftWidth: '1px',
+    borderLeftStyle: 'solid',
     borderLeftColor: theme.palette.divider,
   },
   stepperContainer: {
-    display: "flex",
-    "& .MuiStepper-root": {
+    'display': 'flex',
+    '& .MuiStepper-root': {
       flexGrow: 1,
       padding: 0,
     },
@@ -79,8 +79,8 @@ const useStyles = makeStyles((theme) => ({
   },
   navButtons: {
     paddingTop: theme.spacing(3),
-    borderTopStyle: "solid",
-    borderTopWidth: "1px",
+    borderTopStyle: 'solid',
+    borderTopWidth: '1px',
     borderTopColor: theme.palette.grey[600],
   },
   deleteBtn: {
@@ -91,16 +91,16 @@ const useStyles = makeStyles((theme) => ({
   },
   errorMsg: {
     margin: 0,
-    textAlign: "left",
+    textAlign: 'left',
   },
 }));
 
 function getSteps() {
   return [
-    "Researcher information",
-    "Files list request",
-    "Residual disclosure",
-    "Additional information",
+    'Researcher information',
+    'Files list request',
+    'Residual disclosure',
+    'Additional information',
   ];
 }
 
@@ -109,18 +109,18 @@ function VettingRequestResearcher(props) {
   const [state, setState] = React.useState({
     activeStep: 0,
     completed: {},
-    title: "New vetting request",
+    title: 'New vetting request',
     open: false,
     errors: [1, 0, 0, 0],
   });
   const steps = getSteps();
 
   const handleDialogOpen = () => {
-    setState({ ...state, open: true });
+    setState({...state, open: true});
   };
 
   const handleDialogClose = () => {
-    setState({ ...state, open: false });
+    setState({...state, open: false});
   };
 
   const totalSteps = () => {
@@ -144,22 +144,22 @@ function VettingRequestResearcher(props) {
       isLastStep() && !allStepsCompleted()
         ? steps.findIndex((step, i) => !(i in state.completed))
         : state.activeStep + 1;
-    setState({ ...state, activeStep: newActiveStep });
+    setState({...state, activeStep: newActiveStep});
   };
 
   const handleBack = () => {
     const prevActiveStep = state.activeStep;
-    setState({ ...state, activeStep: prevActiveStep - 1 });
+    setState({...state, activeStep: prevActiveStep - 1});
   };
 
   const handleStep = (step) => () => {
-    setState({ ...state, activeStep: step });
+    setState({...state, activeStep: step});
   };
 
   const handleComplete = () => {
     const newCompleted = state.completed;
     newCompleted[state.activeStep] = true;
-    setState({ ...state, completed: newCompleted });
+    setState({...state, completed: newCompleted});
     handleNext();
   };
 
@@ -184,22 +184,22 @@ function VettingRequestResearcher(props) {
       case 3:
         return <AdditionalInfo />;
       default:
-        return "Unknown step";
+        return 'Unknown step';
     }
   };
 
   const handleTitleChange = (e) => {
     const title = e.target.value;
-    if (title !== "") {
-      setState({ ...state, title: e.target.value });
+    if (title !== '') {
+      setState({...state, title: e.target.value});
     } else {
-      setState({ ...state, title: "New vetting request" });
+      setState({...state, title: 'New vetting request'});
     }
   };
 
   const handleReset = () => {
-    setState({ ...state, activeStep: 0 });
-    setState({ ...state, completed: {} });
+    setState({...state, activeStep: 0});
+    setState({...state, completed: {}});
   };
 
   const isStepFailed = (step) => {
@@ -310,7 +310,7 @@ function VettingRequestResearcher(props) {
           </div>
           <Grid
             container
-            justify={state.activeStep === 0 ? "flex-end" : "space-between"}
+            justify={state.activeStep === 0 ? 'flex-end' : 'space-between'}
             className={classes.navButtons}
           >
             {state.activeStep !== 0 && (

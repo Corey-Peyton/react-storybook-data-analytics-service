@@ -1,8 +1,6 @@
 import React from 'react';
-import Alert from '@material-ui/lab/Alert';
 import {makeStyles, withStyles} from '@material-ui/core/styles';
 import Snackbar from '@material-ui/core/Snackbar';
-import CloseIcon from '@material-ui/icons/Close';
 import {
   Divider,
   Typography,
