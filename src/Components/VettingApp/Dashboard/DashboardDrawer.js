@@ -10,6 +10,7 @@ import TreeView from '@material-ui/lab/TreeView';
 import TreeItem from '@material-ui/lab/TreeItem';
 import FolderOpenIcon from '@material-ui/icons/FolderOpen';
 import {makeStyles} from '@material-ui/styles';
+import {createMuiTheme, MuiThemeProvider} from '@material-ui/core/styles';
 import {HEAD_H} from '../../../Theme/constants';
 
 export const DRAWER_WIDTH = 240;
@@ -70,7 +71,7 @@ const useStyles = makeStyles((theme) => ({
       backgroundColor: theme.palette.action.hover,
     },
     '&:focus > $content, &$selected > $content': {
-      backgroundColor: `#1A73E82B`,
+      backgroundColor: `#d4e6ff`,
       color: '#1473e6',
     },
     '&:focus > $content $label, &:hover > $content $label, &$selected > $content $label': {
@@ -120,6 +121,19 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
+const theme = createMuiTheme((theme) => ({
+  overrides: {
+    MuiTooltip: {
+      tooltip: {
+        fontSize: '14px',
+        color: 'white',
+        backgroundColor: 'grey',
+        border: '1px solid grey',
+      },
+    },
+  },
+}));
+
 function StyledTreeItem(props) {
   const classes = useStyles();
   const {labelText, labelIcon: LabelIcon, labelInfo, tooltip, color, bgColor, ...other} = props;
@@ -127,18 +141,20 @@ function StyledTreeItem(props) {
   return (
     <TreeItem
       label={
-        <Tooltip title={tooltip} placement="top" arrow>
-          <div className={classes.labelRoot}
-          >
-            <LabelIcon color="inherit" className={classes.labelIcon} />
-            <Typography variant="body2" className={classes.labelText}>
-              {labelText}
-            </Typography>
-            <Typography variant="caption" color="inherit">
-              {labelInfo}
-            </Typography>
-          </div>
-        </Tooltip>
+        <MuiThemeProvider theme={theme}>
+          <Tooltip title={labelText} placement="top" arrow>
+            <div className={classes.labelRoot}
+            >
+              <LabelIcon color="inherit" className={classes.labelIcon} />
+              <Typography variant="body2" className={classes.labelText}>
+                {labelText}
+              </Typography>
+              <Typography variant="caption" color="inherit">
+                {labelInfo}
+              </Typography>
+            </div>
+          </Tooltip>
+        </MuiThemeProvider>
       }
       style={{
         '--tree-view-color': color,
