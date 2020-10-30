@@ -17,7 +17,7 @@ import ProjectsPage from '../Components/ProjectsPage';
 import ResultsPage from '../Components/ResultsPage';
 import SignInPage from '../Components/SignInPage';
 import SplashPage from '../Components/SplashPage';
-import VettingDashboardDeveloper from '../Components/VettingApp/Dashboard/VettingDashboardDeveloper';
+import DashboardPageSupport from '../Components/VettingApp/Dashboard/DashboardPageSupport';
 import {useStyles} from '../Theme/globalStyles';
 import {theme} from '../Theme/theme';
 import Index from './Index';
@@ -31,7 +31,7 @@ export default function AppRouter() {
     <HashRouter>
       <ThemeProvider theme={theme}>
         <Switch>
-          {/* FIX THISSSSSSSs*/}
+          {/* FIX THISSSSSSS*/}
           <Route path="/" component={Index} exact={true} /> {/* PROTOTYPE ONLY */}
           <Route path="/splash" component={SplashPage} />
           <Route path="/sign-in" component={SignInPage} exact={true}/>
@@ -39,7 +39,7 @@ export default function AppRouter() {
           <Route path="/sign-in/create-account" component={CreateAccountPage} />
           <Route path="/projects" component={ProjectsPage} />
           <Route path="/results" component={ResultsPage} exact={true} />
-          <Route path="/vetting-app/dashboard-developer" component={VettingDashboardDeveloper} />
+          <Route path="/vetting-app/dashboard-developer" component={DashboardPageSupport} />
           <Route path="/vetting-app/request-researcher" component={VettingRequestResearcher} />
           <Route path="/vetting-app/request-analyst" component={AnalystInfo} />
 

@@ -1,5 +1,5 @@
 import React from 'react';
-import {AppBar, Toolbar, MenuItem, Button, ListItemText, Menu} from '@material-ui/core';
+import {AppBar, Toolbar, MenuItem, ListItemText, Menu} from '@material-ui/core';
 import {makeStyles} from '@material-ui/styles';
 import {withStyles} from '@material-ui/styles';
 import Avatar from '@material-ui/core/Avatar';
@@ -7,6 +7,8 @@ import {deepPurple} from '@material-ui/core/colors';
 import BrandingStatsCan from '../../../Components/Headers/BrandingStatsCan';
 import Language from '../../../Components/Headers/Language';
 import SendIcon from '@material-ui/icons/Send';
+import MenuIcon from '@material-ui/icons/Menu';
+import IconButton from '@material-ui/core/IconButton';
 import ExitToApp from '@material-ui/icons/ExitToApp';
 
 const StyledMenu = withStyles({
@@ -83,10 +85,27 @@ const defaultStyles = makeStyles((theme) => ({
       boxShadow: 'none',
     },
   },
+  iconButton: {
+    marginRight: '-4px',
+  },
   purple: {
     backgroundColor: deepPurple[500],
   },
 }));
+
+function ShowMenuButton(props) {
+  const hashVar = window.location.hash.substring(2);
+  const classes = defaultStyles();
+  if (hashVar === 'vetting-app/dashboard-developer'|| hashVar === 'vetting-app/dashboard-developer') {
+    return (
+      <IconButton onClick={props.clickHandler} className={classes.iconButton} edge="start">
+        <MenuIcon />
+      </IconButton>
+    );
+  } else {
+    return false;
+  }
+};
 
 export default function DefaultHeader(props) {
   const classes = defaultStyles();
@@ -125,22 +144,24 @@ export default function DefaultHeader(props) {
       >
         <Toolbar className={classes.toolbar}>
           <Menu className={classes.menu} />
+          <ShowMenuButton clickHandler={props.clickHandler}/>
           <div className={classes.branding}>
             <BrandingStatsCan />
           </div>
           <div className={classes.lang}>
             <Language />
           </div>
-          <Button
+          <IconButton
             aria-controls="customized-menu"
             aria-haspopup="true"
             variant="contained"
             className={classes.button}
             onClick={handleClick}
+            edge='end'
           >
             <Avatar className={classes.small}><span className={classes.purple}>A</span>
             </Avatar>
-          </Button>
+          </IconButton>
           <StyledMenu
             id="customized-menu"
             anchorEl={anchorEl}

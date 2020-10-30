@@ -116,6 +116,9 @@ export const useStyles = makeStyles({
     '.MuiTableCell-stickyHeader': {
       backgroundColor: 'white',
     },
+    '.MuiTableRow-root.Mui-selected, .MuiTableRow-root.Mui-selected:hover': {
+      backgroundColor: '#1A73E82B',
+    },
     // Typography
     '.MuiTypography-gutterBottom': {
       marginBottom: '0.5em',
@@ -143,6 +146,12 @@ export const useStyles = makeStyles({
     '.MuiTreeItem-content': {
       flexDirection: 'column',
     },
+
+    // Dialog
+    '.MuiDialog-paperWidthSm': {
+      minWidth: 400,
+    },
+
 
     // *********** Custom styles **************
     '.avatar-orange': {

@@ -4,15 +4,16 @@ import PropTypes from 'prop-types';
 import {
   Typography,
   Drawer,
+  Tooltip,
 } from '@material-ui/core';
 import TreeView from '@material-ui/lab/TreeView';
 import TreeItem from '@material-ui/lab/TreeItem';
-import ArrowDropDownIcon from '@material-ui/icons/ArrowDropDown';
-import ArrowRightIcon from '@material-ui/icons/ArrowRight';
 import FolderOpenIcon from '@material-ui/icons/FolderOpen';
 import {makeStyles} from '@material-ui/styles';
+import {createMuiTheme, MuiThemeProvider} from '@material-ui/core/styles';
 import {HEAD_H} from '../../../Theme/constants';
-import {DRAWER_WIDTH} from './VettingDashboardDeveloper';
+
+export const DRAWER_WIDTH = 240;
 
 const useStyles = makeStyles((theme) => ({
   drawer: {
@@ -24,16 +25,19 @@ const useStyles = makeStyles((theme) => ({
   drawerPaper: {
     boxSizing: 'border-box',
     width: DRAWER_WIDTH,
-    height: `100vh`,
-    paddingTop: `calc(${HEAD_H}px - 13px)`,
+    height: `calc(100% - 70px)`,
+    marginTop: `calc(${HEAD_H}px - 13px)`,
+    paddingBottom: '84px',
     paddingRight: '10px',
     zIndex: '10 !important',
+    overflowX: 'hidden',
   },
   drawerHeader: {
     'display': 'flex',
     'alignItems': 'center',
     'zIndex': 10,
     'height': '4em',
+    'width': '100%',
     'minHeight': '4em',
     'position': 'sticky',
     'top': 0,
@@ -41,7 +45,7 @@ const useStyles = makeStyles((theme) => ({
     '& > svg': {
       marginRight: theme.spacing(2),
     },
-    'padding': theme.spacing(0, 2),
+    'padding': theme.spacing(0, 0, 0, 3),
   },
   drawerSection: {
     padding: theme.spacing(3, 2, 0, 2),
@@ -49,6 +53,11 @@ const useStyles = makeStyles((theme) => ({
   },
   drawerSectionIndex: {
     zIndex: -10,
+  },
+  treeItem: {
+    '&:last-child': {
+      paddingBottom: 84,
+    },
   },
   closeBtn: {
     flexGrow: 1,
@@ -62,8 +71,8 @@ const useStyles = makeStyles((theme) => ({
       backgroundColor: theme.palette.action.hover,
     },
     '&:focus > $content, &$selected > $content': {
-      backgroundColor: `#1A73E82B`,
-      color: 'var(--tree-view-color)',
+      backgroundColor: `#d4e6ff`,
+      color: '#1473e6',
     },
     '&:focus > $content $label, &:hover > $content $label, &$selected > $content $label': {
       backgroundColor: 'transparent',
@@ -96,33 +105,56 @@ const useStyles = makeStyles((theme) => ({
     display: 'flex',
     alignItems: 'center',
     padding: theme.spacing(0.5, 0, 0.5, 0.5),
+    paddingLeft: 0,
   },
   labelIcon: {
-    PaddingRight: theme.spacing(1),
-    paddingLeft: theme.spacing(1),
+    paddingLeft: theme.spacing(3),
+    paddingRight: theme.spacing(2),
   },
   labelText: {
     fontWeight: 'inherit',
     flexGrow: 1,
+    maxWidth: '150px',
+    whiteSpace: 'nowrap',
+    overflow: 'hidden',
+    textOverflow: 'ellipsis',
+  },
+}));
+
+const theme = createMuiTheme((theme) => ({
+  overrides: {
+    MuiTooltip: {
+      tooltip: {
+        fontSize: '14px',
+        color: 'white',
+        backgroundColor: 'grey',
+        border: '1px solid grey',
+      },
+    },
   },
 }));
 
 function StyledTreeItem(props) {
   const classes = useStyles();
-  const {labelText, labelIcon: LabelIcon, labelInfo, color, bgColor, ...other} = props;
+  const {labelText, labelIcon: LabelIcon, labelInfo, tooltip, color, bgColor, ...other} = props;
 
   return (
     <TreeItem
       label={
-        <div className={classes.labelRoot}>
-          <LabelIcon color="inherit" className={classes.labelIcon} />
-          <Typography variant="body2" className={classes.labelText}>
-            {labelText}
-          </Typography>
-          <Typography variant="caption" color="inherit">
-            {labelInfo}
-          </Typography>
-        </div>
+        <MuiThemeProvider theme={theme}>
+          <Tooltip title={labelText} placement="top" arrow>
+            <div className={classes.labelRoot}
+            >
+              <LabelIcon color="inherit" className={classes.labelIcon} />
+              <Typography variant="body2" className={classes.labelText}>
+                {labelText}
+              </Typography>
+              <Typography variant="caption" color="inherit">
+                {labelInfo}
+              </Typography>
+            </div>
+          </Tooltip>
+        </MuiThemeProvider>
       }
       style={{
         '--tree-view-color': color,
@@ -153,6 +185,30 @@ export default function DashboardDrawer(props) {
   const classes = useStyles();
   const {t} = useTranslation();
 
+  const projectsArray = ['All projects', 'Project 1', 'Project 2', 'Project 3'];
+
+  function handleProjectChange(el, value) {
+    let title = undefined;
+    switch (value) {
+      case '0':
+        title = 'All projects';
+        break;
+      case '1':
+        title = 'Project 1';
+        break;
+      case '2':
+        title = 'Project 2';
+        break;
+      case '3':
+        title = 'Project 3';
+        break;
+      default:
+        title = 'All projects';
+        break;
+    }
+    props.projectTitle(title);
+  };
+
   return (
     <Drawer
       className={classes.drawer}
@@ -164,20 +220,19 @@ export default function DashboardDrawer(props) {
       }}
     >
       <div className={classes.drawerHeader}>
-        <Typography>
+        <Typography variant='subtitle2'>
           {t('Projects')}
         </Typography>
       </div>
       <TreeView
         className={classes.root}
-        defaultExpanded={['3']}
-        defaultCollapseIcon={<ArrowDropDownIcon />}
-        defaultExpandIcon={<ArrowRightIcon />}
-        defaultEndIcon={<div style={{width: 24}} />}
+        defaultSelected={['0']}
+        onNodeSelect={handleProjectChange}
       >
-        <StyledTreeItem nodeId="1" selected labelText={t('Project 1')} labelIcon={FolderOpenIcon} />
-        <StyledTreeItem nodeId="2" labelText={t('Project 2')} labelIcon={FolderOpenIcon} />
-        <StyledTreeItem nodeId="3" labelText={t('Project 3')} labelIcon={FolderOpenIcon} />
+        {projectsArray.map((el, index) => (
+          <StyledTreeItem nodeId={`${index}`} labelText={el} labelIcon={FolderOpenIcon} className={classes.treeItem} tooltip={el}/>
+        ),
+        )}
       </TreeView>
     </Drawer>
   );
