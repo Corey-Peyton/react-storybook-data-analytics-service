@@ -36,6 +36,8 @@ import ResidualDisclosure from './ResidualDisclosure';
 import AdditionalInfo from './AdditionalInfo';
 import ToolBarDelete from './ToolBarDelete';
 import ToolBar from './ToolBar';
+import Snackbar from '@material-ui/core/Snackbar';
+import Alert from '@material-ui/lab/Alert';
 
 const useStyles = makeStyles((theme) => ({
   main: {
@@ -160,8 +162,14 @@ function VettingRequestResearcher(props) {
     handleNext();
   };
 
-  const isStepFailed = (step) => {
-    return step === 1;
+  const snackbarhandleClose = () => {
+    setOpenSnackbar(false);
+  };
+
+  const [openSnackbar, setOpenSnackbar] = React.useState(false);
+
+  const handleClick = () => {
+    setOpenSnackbar(true);
   };
 
   const getStepContent = (step) => {
@@ -334,9 +342,19 @@ function VettingRequestResearcher(props) {
                   variant="contained"
                   color="primary"
                   className={classes.button}
-                >
+                  onClick={handleClick}>
                   Submit request
                 </Button>
+                <Snackbar open={openSnackbar} autoHideDuration={6000}>
+                  <Alert
+                    onClose={snackbarhandleClose}
+                    severity="error"
+                    className={classes.alert}
+                    variant="filled"
+                  >
+          This vetting request has been already submitted. You will be notified with any updates.
+                  </Alert>
+                </Snackbar>
               </Grid>
             ) : (
               <Grid item>
