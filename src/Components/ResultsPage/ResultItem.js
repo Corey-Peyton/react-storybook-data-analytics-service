@@ -39,7 +39,7 @@ export default function ResultItem(props) {
   let trimmedAbstract = props.abstract.substring(0, MAX_LEN);
   trimmedAbstract = trimmedAbstract.substring(
       0,
-      Math.min(MAX_LEN, trimmedAbstract.lastIndexOf(' '))
+      Math.min(MAX_LEN, trimmedAbstract.lastIndexOf(' ')),
   );
 
   let typeIcon;
@@ -84,9 +84,9 @@ export default function ResultItem(props) {
         {' '}&bull; {props.provider}{' '}&bull;{' '}{props.id}
       </Typography>
       <Typography variant="body2">
-        {props.abstract.length <= MAX_LEN
-          ? props.abstract
-          : `${trimmedAbstract}...`}
+        {props.abstract.length <= MAX_LEN ?
+          props.abstract :
+          `${trimmedAbstract}...`}
       </Typography>
       <div className={classes.subjectTags}>
         <Chip

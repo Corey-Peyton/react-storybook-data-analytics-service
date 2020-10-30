@@ -101,9 +101,9 @@ function descendingComparator(a, b, orderBy) {
 }
 
 function getComparator(order, orderBy) {
-  return order === 'desc'
-    ? (a, b) => descendingComparator(a, b, orderBy)
-    : (a, b) => -descendingComparator(a, b, orderBy);
+  return order === 'desc' ?
+    (a, b) => descendingComparator(a, b, orderBy) :
+    (a, b) => -descendingComparator(a, b, orderBy);
 }
 
 function stableSort(array, comparator) {
@@ -174,9 +174,9 @@ function FilesList(props) {
               >
                 File name
                 <span className="screen-reader-text">
-                  {state.order === 'desc'
-                    ? 'sorted descending'
-                    : 'sorted ascending'}
+                  {state.order === 'desc' ?
+                    'sorted descending' :
+                    'sorted ascending'}
                 </span>
               </TableSortLabel>
             </TableCell>

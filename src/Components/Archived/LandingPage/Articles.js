@@ -191,7 +191,7 @@ const Articles = React.forwardRef((props, ref) => {
               let trimmedDescrption = article.description.substring(0, MAX_LEN);
               trimmedDescrption = trimmedDescrption.substring(
                   0,
-                  Math.min(MAX_LEN, trimmedDescrption.lastIndexOf(' '))
+                  Math.min(MAX_LEN, trimmedDescrption.lastIndexOf(' ')),
               );
               const trimmedSubjects = article.subjects.slice(0, 3); // grab first 3 subjects
               return (
@@ -211,9 +211,9 @@ const Articles = React.forwardRef((props, ref) => {
                       {article.title}
                     </Typography>
                     <Typography variant="body1">
-                      {article.description.length <= MAX_LEN
-                        ? article.description
-                        : `${trimmedDescrption}...`}
+                      {article.description.length <= MAX_LEN ?
+                        article.description :
+                        `${trimmedDescrption}...`}
                     </Typography>
                   </CardContent>
                   <CardActions className={classes.articleCardActions}>

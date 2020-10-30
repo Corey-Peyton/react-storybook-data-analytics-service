@@ -47,7 +47,6 @@ const useStyles = makeStyles((theme) => ({
 
 function ResearcherInfo(props) {
   const classes = useStyles();
-
   return (
     <React.Fragment>
       <Typography>
@@ -78,8 +77,8 @@ function ResearcherInfo(props) {
             required
             fullWidth
             margin="dense"
-            // error={!!errors.project}
-            // helperText={errors.project?.message}
+            error
+            helperText="Project title is required"
             className={classes.inputMargin}
           />
           <TextField
