@@ -2,12 +2,14 @@ import React from 'react';
 import {makeStyles} from '@material-ui/core/styles';
 import {Button, Toolbar, IconButton, Typography} from '@material-ui/core';
 import Icon from '@mdi/react';
-import {mdiaccountremove} from '@mdi/js';
+// import {mdiaccountremove} from '@mdi/js';
 import DeleteIcon from '@material-ui/icons/Delete';
 import ReplayIcon from '@material-ui/icons/Replay';
 import SaveIcon from '@material-ui/icons/Save';
 import CachedIcon from '@material-ui/icons/Cached';
 import ArrowBackIcon from '@material-ui/icons/ArrowBack';
+import {mdiAccountRemoveOutline} from '@mdi/js';
+
 
 const useStyles = makeStyles((theme) => ({
   main: {
@@ -17,9 +19,12 @@ const useStyles = makeStyles((theme) => ({
   title: {
     flexGrow: 1,
   },
+  headerBtn: {
+    marginLeft: theme.spacing(3),
+  },
 }));
 
-function ToolBarDelete() {
+function ToolBarUnassign() {
   const classes = useStyles();
   return (
     <Toolbar>
@@ -34,14 +39,8 @@ function ToolBarDelete() {
       <Typography variant="body2" className={classes.title}>
               Vetting requests dashboard
       </Typography>
-      <Icon path={mdiaccountremove} size={1} className="icon-grey" />
-      <Button
-        variant="outlined"
-        color="primary"
-        className={classes.headerBtn}
-      >
-              Unassign from me
-      </Button>
+      <Icon path={mdiAccountRemoveOutline} className="icon-grey" />
+      <Typography>Unassign from me</Typography>
       <Button
         variant="outlined"
         color="primary"
@@ -78,5 +77,5 @@ function ToolBarDelete() {
   );
 }
 
-export default ToolBarDelete;
+export default ToolBarUnassign;
 

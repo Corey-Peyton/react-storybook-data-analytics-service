@@ -34,8 +34,9 @@ import AnalystInfo from './AnalystInfo';
 import FilesList from './FilesList';
 import ResidualDisclosure from './ResidualDisclosure';
 import AdditionalInfo from './Additionalnfo';
-import UnToolBarAssign from './ToolBarUnAssign';
+import ToolBarUnassign from './ToolBarUnAssign';
 import ToolBarAssign from './ToolBarAssign';
+
 
 const useStyles = makeStyles((theme) => ({
   main: {
@@ -211,8 +212,8 @@ function VettingRequestAnalyst(props) {
     <main className={classes.main} tabIndex="-1">
       <Container maxWidth="xl" className="page-container">
         <AppBar position="static" className={classes.appBar} color="default">
-          {/* {state.completed ? <ToolBarDelete /> : <ToolBar props={handleDialogOpen}/>} */}
-          <Toolbar>
+          {state.completed ? <ToolBarUnassign /> : <ToolBarAssign />}
+          {/* <Toolbar>
             <IconButton
               edge="start"
               className={classes.menuButton}
@@ -248,7 +249,7 @@ function VettingRequestAnalyst(props) {
             >
               Submit request
             </Button>
-          </Toolbar>
+          </Toolbar> */}
         </AppBar>
         <Paper className={classes.paper}>
           <Grid container alignItems="center">
@@ -259,7 +260,10 @@ function VettingRequestAnalyst(props) {
               </Typography>
             </Grid>
             <Grid item>
-              <Chip label="Draft" className="mr-2" />
+              <Chip label="DISCLOSURE ANALYSIS" className="mr-2" />
+            </Grid>
+            <Grid item>
+              <Chip label="brian.bill@cloud.statcan.ca" className="mr-2" />
             </Grid>
             <Grid item>
               <div className={classes.lockTooltip}>
