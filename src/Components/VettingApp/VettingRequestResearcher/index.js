@@ -141,9 +141,7 @@ function VettingRequestResearcher(props) {
 
   const handleNext = () => {
     const newActiveStep =
-      isLastStep() && !allStepsCompleted()
-        ? steps.findIndex((step, i) => !(i in state.completed))
-        : state.activeStep + 1;
+      isLastStep() && !allStepsCompleted() ? steps.findIndex((step, i) => !(i in state.completed)) : state.activeStep + 1;
     setState({...state, activeStep: newActiveStep});
   };
 
