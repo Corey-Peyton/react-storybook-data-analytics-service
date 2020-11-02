@@ -16,13 +16,12 @@ import Header from '../CommonComponents/Header';
 import Footer from '../CommonComponents/Footer';
 import DashboardDrawer from './DashboardDrawer';
 import BypassBlocks from '../../BypassBlocks';
-
 import {requestListResearchers} from '../../../Data/fakeData';
 import {DRAWER_WIDTH} from './DashboardDrawer';
 
 const useStyles = makeStyles((theme) => ({
   main: {
-    background: '#F7F7F7',
+    background: theme.palette.grey[100],
   },
   appBar: {
     color: theme.palette.text.primary,
@@ -47,9 +46,9 @@ const useStyles = makeStyles((theme) => ({
     justifyContent: 'space-between',
   },
   content: {
-    background: '#F7F7F7',
+    background: theme.palette.grey[100],
     padding: theme.spacing(0, 3, 3, 3),
-    paddingTop: `88px`,
+    paddingTop: theme.spacing(11),
     flexGrow: 1,
     transition: theme.transitions.create('margin', {
       easing: theme.transitions.easing.sharp,
@@ -77,7 +76,7 @@ const useStyles = makeStyles((theme) => ({
       padding: 0,
       boxSizing: 'border-box',
       overflowY: 'auto',
-      boxShadow: '0px 2px 4px -1px rgba(117,117,117,0.2), 0px 4px 5px 0px rgba(117,117,117,0.14), 0px 1px 10px 0px rgba(117,117,117,0.12)',
+      boxShadow: theme.shadows[4],
     },
   },
 }));

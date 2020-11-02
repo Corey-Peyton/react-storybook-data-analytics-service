@@ -10,7 +10,7 @@ import TreeView from '@material-ui/lab/TreeView';
 import TreeItem from '@material-ui/lab/TreeItem';
 import FolderOpenIcon from '@material-ui/icons/FolderOpen';
 import {makeStyles} from '@material-ui/styles';
-import {createMuiTheme, MuiThemeProvider} from '@material-ui/core/styles';
+import {createMuiTheme, MuiThemeProvider, fade} from '@material-ui/core/styles';
 import {HEAD_H} from '../../../Theme/constants';
 
 export const DRAWER_WIDTH = 240;
@@ -27,8 +27,8 @@ const useStyles = makeStyles((theme) => ({
     width: DRAWER_WIDTH,
     height: `calc(100% - 70px)`,
     marginTop: `calc(${HEAD_H}px - 13px)`,
-    paddingBottom: '84px',
-    paddingRight: '10px',
+    paddingBottom: theme.spacing(10.5),
+    paddingRight: theme.spacing(1.25),
     zIndex: '10 !important',
     overflowX: 'hidden',
   },
@@ -56,7 +56,7 @@ const useStyles = makeStyles((theme) => ({
   },
   treeItem: {
     '&:last-child': {
-      paddingBottom: 84,
+      paddingBottom: theme.spacing(10.5),
     },
   },
   closeBtn: {
@@ -71,8 +71,8 @@ const useStyles = makeStyles((theme) => ({
       backgroundColor: theme.palette.action.hover,
     },
     '&:focus > $content, &$selected > $content': {
-      backgroundColor: `#d4e6ff`,
-      color: '#1473e6',
+      backgroundColor: fade(theme.palette.primary.main, 0.25),
+      color: theme.palette.primary.main,
     },
     '&:focus > $content $label, &:hover > $content $label, &$selected > $content $label': {
       backgroundColor: 'transparent',

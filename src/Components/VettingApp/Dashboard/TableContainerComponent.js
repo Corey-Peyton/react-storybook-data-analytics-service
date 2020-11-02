@@ -11,9 +11,11 @@ import {
   TableRow,
 } from '@material-ui/core';
 
-import AnalystDialog from './AnalystDialog';
+import DialogBox from './DialogBox';
 import CustomizedMenus from '../CommonComponents/ContextMenu';
 import DashboardTableHead from './DashboardTableHead';
+
+const ROW_HEIGHT = 57;
 
 const useStyles = makeStyles((theme) => ({
   tableContainer: {
@@ -32,6 +34,7 @@ const useStyles = makeStyles((theme) => ({
   },
   tableRow: {
     cursor: 'pointer',
+    height: ROW_HEIGHT,
   },
 }));
 
@@ -75,27 +78,6 @@ export default function TableContainerComponent(props) {
     setOrder(isAsc ? 'desc' : 'asc');
     setOrderBy(property);
   };
-
-  // const handleClick = (event, name) => {
-  //   const selectedIndex = selected.indexOf(name);
-  //   let newSelected = [];
-
-  //   if (selectedIndex === -1) {
-  //     newSelected = newSelected.concat(selected, name);
-  //   } else if (selectedIndex === 0) {
-  //     newSelected = newSelected.concat(selected.slice(1));
-  //   } else if (selectedIndex === selected.length - 1) {
-  //     newSelected = newSelected.concat(selected.slice(0, -1));
-  //   } else if (selectedIndex > 0) {
-  //     newSelected = newSelected.concat(
-  //         selected.slice(0, selectedIndex),
-  //         selected.slice(selectedIndex + 1),
-  //     );
-  //   }
-  //   setSelected(newSelected);
-  // };
-
-  // const isSelected = (name) => selected.indexOf(name) !== -1;
 
   const handleChangePage = (event, newPage) => {
     setPage(newPage);
@@ -155,7 +137,7 @@ export default function TableContainerComponent(props) {
                       </TableCell>
                       <TableCell className={classes.tablesCellsFlex}>
                         <Typography variant="body2" noWrap='true'>{row.lead}</Typography>
-                        <AnalystDialog/>
+                        <DialogBox />
                       </TableCell>
                       <TableCell>
                         <Typography variant="body2" noWrap='true'>{row.submitted}</Typography>
@@ -171,7 +153,7 @@ export default function TableContainerComponent(props) {
                 })
           }
           {emptyRows > 0 && (
-            <TableRow style={{height: (57) * emptyRows}}>
+            <TableRow style={{height: (ROW_HEIGHT) * emptyRows}}>
               <TableCell colSpan={7} />
             </TableRow>
           )}

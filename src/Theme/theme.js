@@ -18,6 +18,9 @@ export const theme = createMuiTheme({
     grey: {
       500: '#949494', // has 3:1 color contrast with white
     },
+    // green: {
+    //   500: '#4caf50',
+    // },
     action: {
       hover: 'rgba(0,0,0,0.08)',
       hoverOpacity: 0.08,

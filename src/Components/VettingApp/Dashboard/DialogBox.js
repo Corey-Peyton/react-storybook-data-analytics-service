@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import {makeStyles} from '@material-ui/core/styles';
+import {green} from '@material-ui/core/colors';
 import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
 import Divider from '@material-ui/core/Divider';
@@ -14,7 +15,7 @@ import {Typography} from '@material-ui/core';
 
 const useStyles = makeStyles((theme) => ({
   avatar: {
-    backgroundColor: '#4CAF50',
+    backgroundColor: green[500],
     color: theme.palette.grey[100],
   },
   avatarTransparent: {
@@ -29,7 +30,7 @@ const useStyles = makeStyles((theme) => ({
   dialogRow: {
     display: 'flex',
     alignItems: 'center',
-    padding: '16px 24px',
+    padding: theme.spacing(2, 3),
   },
   dialogText: {
     paddingLeft: theme.spacing(1),
@@ -41,7 +42,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-function SimpleDialog(props) {
+function DialogBox(props) {
   const classes = useStyles();
   const {onClose, selectedValue, open} = props;
 
@@ -81,7 +82,7 @@ function SimpleDialog(props) {
   );
 }
 
-SimpleDialog.propTypes = {
+DialogBox.propTypes = {
   onClose: PropTypes.func.isRequired,
   open: PropTypes.bool.isRequired,
   selectedValue: PropTypes.string.isRequired,
@@ -103,7 +104,7 @@ export default function AnalystDialog() {
       <IconButton onClick={handleClickOpen}>
         <AddCircleOutlineIcon />
       </IconButton>
-      <SimpleDialog open={open} onClose={handleClose} />
+      <DialogBox open={open} onClose={handleClose} />
     </div>
   );
 }

@@ -28,7 +28,7 @@ const StyledMenu = withStyles({
 })((props) => (
   <Menu
     disableScrollLock={false}
-    elevation={0}
+    elevation={4}
     getContentAnchorEl={null}
     anchorOrigin={{
       vertical: 'bottom',

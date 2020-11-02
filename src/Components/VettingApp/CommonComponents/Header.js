@@ -86,7 +86,7 @@ const defaultStyles = makeStyles((theme) => ({
     },
   },
   iconButton: {
-    marginRight: '-4px',
+    marginRight: theme.spacing(-0.5),
   },
   purple: {
     backgroundColor: deepPurple[500],
