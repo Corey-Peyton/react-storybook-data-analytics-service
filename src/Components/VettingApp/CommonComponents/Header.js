@@ -73,9 +73,6 @@ const defaultStyles = makeStyles((theme) => ({
     textAlign: 'right',
     flexGrow: 1,
   },
-  menu: {
-    margin: theme.spacing(3, 0, 3, 0),
-  },
   button: {
     'backgroundColor': 'white',
     'boxShadow': 'none',
@@ -96,7 +93,7 @@ const defaultStyles = makeStyles((theme) => ({
 function ShowMenuButton(props) {
   const hashVar = window.location.hash.substring(2);
   const classes = defaultStyles();
-  if (hashVar === 'vetting-app/dashboard-developer'|| hashVar === 'vetting-app/dashboard-developer') {
+  if (hashVar === 'vetting-app/dashboard-support'|| hashVar === 'vetting-app/dashboard-lead') {
     return (
       <IconButton onClick={props.clickHandler} className={classes.iconButton} edge="start">
         <MenuIcon />
@@ -143,7 +140,6 @@ export default function DefaultHeader(props) {
         className={`${classes.appBar} ${props.flat && classes.flatHeader}`}
       >
         <Toolbar className={classes.toolbar}>
-          <Menu className={classes.menu} />
           <ShowMenuButton clickHandler={props.clickHandler}/>
           <div className={classes.branding}>
             <BrandingStatsCan />

@@ -51,8 +51,8 @@ function DialogBox(props) {
   };
 
   return (
-    <Dialog onClose={handleClose} aria-labelledby="simple-dialog-title" open={open}>
-      <DialogTitle id="simple-dialog-title">
+    <Dialog onClose={handleClose} aria-labelledby="dashboard-dialog-title" open={open}>
+      <DialogTitle id="dashboard-dialog-title">
         <div className={classes.dialogTitle}>
           <Typography>Analyst information</Typography>
           <IconButton onClick={handleClose}>
@@ -85,7 +85,6 @@ function DialogBox(props) {
 DialogBox.propTypes = {
   onClose: PropTypes.func.isRequired,
   open: PropTypes.bool.isRequired,
-  selectedValue: PropTypes.string.isRequired,
 };
 
 export default function AnalystDialog() {

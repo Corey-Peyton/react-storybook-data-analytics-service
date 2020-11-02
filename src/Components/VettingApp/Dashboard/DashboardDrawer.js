@@ -230,7 +230,14 @@ export default function DashboardDrawer(props) {
         onNodeSelect={handleProjectChange}
       >
         {projectsArray.map((el, index) => (
-          <StyledTreeItem nodeId={`${index}`} labelText={el} labelIcon={FolderOpenIcon} className={classes.treeItem} tooltip={el}/>
+          <StyledTreeItem
+            nodeId={`${index}`}
+            key={`${index}`}
+            labelText={el}
+            labelIcon={FolderOpenIcon}
+            className={classes.treeItem}
+            tooltip={el}
+          />
         ),
         )}
       </TreeView>

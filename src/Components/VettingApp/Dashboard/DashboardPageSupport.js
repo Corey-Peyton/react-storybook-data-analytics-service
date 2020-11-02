@@ -83,12 +83,12 @@ const useStyles = makeStyles((theme) => ({
 
 let tabStatus = 'active';
 
-function createData(id, statusHead, status, supporter, lead, submitted, updated) {
-  return {id, statusHead, status, supporter, lead, submitted, updated};
+function createData(id, statusHead, status, researcher, lead, created, updated) {
+  return {id, statusHead, status, researcher, lead, created, updated};
 }
 
 const rows = requestListResearchers.map((el, index) =>
-  createData(el.id, el.statusHead, el.status, el.supporter, el.lead, el.submitted, el.updated),
+  createData(el.id, el.statusHead, el.status, el.researcher, el.lead, el.created, el.updated),
 );
 
 const filteredRows = () => {
@@ -109,8 +109,8 @@ const headCells = [
 
 function a11yProps(index) {
   return {
-    'id': `simple-tab-${index}`,
-    'aria-controls': `simple-tabpanel-${index}`,
+    'id': `dashboard-tab-${index}`,
+    'aria-controls': `dashboard-tabpanel-${index}`,
   };
 }
 

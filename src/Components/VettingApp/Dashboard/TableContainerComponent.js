@@ -127,23 +127,23 @@ export default function TableContainerComponent(props) {
                       // selected={isItemSelected}
                     >
                       <TableCell id={labelId} className={classes.tablesCells}>
-                        <Typography variant="body2" noWrap='true'>{row.id}</Typography>
+                        <Typography variant="body2" noWrap={true}>{row.id}</Typography>
                       </TableCell>
                       <TableCell>
-                        <Typography variant="body2" noWrap='true'>{row.status}</Typography>
+                        <Typography variant="body2" noWrap={true}>{row.status}</Typography>
                       </TableCell>
                       <TableCell>
-                        <Typography variant="body2" noWrap='true'>{row.supporter}</Typography>
+                        <Typography variant="body2" noWrap={true}>{row.researcher}</Typography>
                       </TableCell>
                       <TableCell className={classes.tablesCellsFlex}>
-                        <Typography variant="body2" noWrap='true'>{row.lead}</Typography>
-                        <DialogBox />
+                        <Typography variant="body2" noWrap={true}>{row.lead}</Typography>
+                        <DialogBox selectedValue='null'/>
                       </TableCell>
                       <TableCell>
-                        <Typography variant="body2" noWrap='true'>{row.submitted}</Typography>
+                        <Typography variant="body2" noWrap={true}>{row.created}</Typography>
                       </TableCell>
                       <TableCell>
-                        <Typography variant="body2" noWrap='true'>{row.updated}</Typography>
+                        <Typography variant="body2" noWrap={true}>{row.updated}</Typography>
                       </TableCell>
                       <TableCell align='center'>
                         <CustomizedMenus status={row.statusHead}/>

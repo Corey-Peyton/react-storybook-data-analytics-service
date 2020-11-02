@@ -54,7 +54,7 @@ export default function DashboardTableHead(props) {
               direction={orderBy === headCell.id ? order : 'asc'}
               onClick={createSortHandler(headCell.id)}
             >
-              <Typography noWrap='true'>{headCell.label}</Typography>
+              <Typography noWrap={true}>{headCell.label}</Typography>
               {orderBy === headCell.id ? (
                 <span className={classes.visuallyHidden}>
                   {order === 'desc' ? 'sorted descending' : 'sorted ascending'}

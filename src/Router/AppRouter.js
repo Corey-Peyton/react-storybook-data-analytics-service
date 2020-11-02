@@ -39,7 +39,7 @@ export default function AppRouter() {
           <Route path="/sign-in/create-account" component={CreateAccountPage} />
           <Route path="/projects" component={ProjectsPage} />
           <Route path="/results" component={ResultsPage} exact={true} />
-          <Route path="/vetting-app/dashboard-developer" component={DashboardPageSupport} />
+          <Route path="/vetting-app/dashboard-support" component={DashboardPageSupport} />
           <Route path="/vetting-app/request-researcher" component={VettingRequestResearcher} />
 
           {/* Routes for archived pages */}
