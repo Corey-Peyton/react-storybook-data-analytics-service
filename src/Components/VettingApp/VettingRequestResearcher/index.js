@@ -32,6 +32,7 @@ import ToolBarDelete from './ToolBarDelete';
 import ToolBar from './ToolBar';
 import Snackbar from '@material-ui/core/Snackbar';
 import Alert from '@material-ui/lab/Alert';
+import FloatingSupportButton from '../CommonComponents/Support';
 
 const useStyles = makeStyles((theme) => ({
   main: {
@@ -359,6 +360,7 @@ function VettingRequestResearcher(props) {
             )}
           </Grid>
         </Paper>
+        <FloatingSupportButton />
       </Container>
 
       <Dialog
