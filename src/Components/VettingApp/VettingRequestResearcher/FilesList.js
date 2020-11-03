@@ -1,6 +1,5 @@
 import React from 'react';
 import {makeStyles, withStyles} from '@material-ui/core/styles';
-import Snackbar from '@material-ui/core/Snackbar';
 import {
   Divider,
   Typography,
@@ -143,12 +142,6 @@ function FilesList(props) {
 
   const handleMenuClose = () => {
     setState({...state, anchorEl: null});
-  };
-
-  const [open, setOpen] = React.useState(false);
-
-  const handleClick = () => {
-    setOpen(true);
   };
 
   return (
