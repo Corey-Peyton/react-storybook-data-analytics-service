@@ -43,6 +43,9 @@ function Index() {
         </li>
         <ul>
           <li>
+            <Link to="/vetting-app/dashboard-support">Dashboard support</Link>
+          </li>
+          <li>
             <Link to="/vetting-app/request-researcher">Request - researcher</Link>
           </li>
         </ul>

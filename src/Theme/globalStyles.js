@@ -1,4 +1,4 @@
-import {makeStyles} from '@material-ui/core/styles';
+import {makeStyles, fade} from '@material-ui/core/styles';
 import {deepOrange, deepPurple, green} from '@material-ui/core/colors';
 import {theme} from './theme';
 
@@ -117,6 +117,9 @@ export const useStyles = makeStyles({
     },
     '.MuiTableCell-stickyHeader': {
       backgroundColor: 'white',
+    },
+    '.MuiTableRow-root.Mui-selected, .MuiTableRow-root.Mui-selected:hover': {
+      backgroundColor: fade(theme.palette.primary.main),
     },
     // Typography
     '.MuiTypography-gutterBottom': {
