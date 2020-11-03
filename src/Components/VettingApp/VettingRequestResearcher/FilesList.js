@@ -210,7 +210,7 @@ function FilesList(props) {
                       </ListItemIcon>
                       <ListItemText primary="Modify" />
                     </StyledMenuItem>
-                    <StyledMenuItem onClick={handleClick}>
+                    <StyledMenuItem>
                       <ListItemIcon>
                         <DeleteIcon fontSize="small" />
                       </ListItemIcon>
@@ -224,15 +224,6 @@ function FilesList(props) {
           })}
         </TableBody>
       </Table>
-      <Snackbar
-        anchorOrigin={{
-          vertical: 'bottom',
-          horizontal: 'left',
-          backgroundColor: 'green',
-        }}
-        open={open}
-        autoHideDuration={1000}
-        message='The supporting file has been added' />
       <Button variant="contained" color="primary" onClick={toggleDrawer(true)}>
         Add output file
       </Button>
