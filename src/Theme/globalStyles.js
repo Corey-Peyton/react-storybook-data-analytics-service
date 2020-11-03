@@ -78,8 +78,10 @@ export const useStyles = makeStyles({
       color: theme.palette.text.primary,
     },
     '.MuiInputBase-input': {
-      fontSize: '0.875rem',
-      height: '1em',
+      'fontSize': '0.875rem',
+      '&:not(.MuiInputBase-inputMultiline)': {
+        height: '1em',
+      },
     },
     '.MuiOutlinedInput-inputMarginDense': {
       paddingTop: '13px',
@@ -116,9 +118,6 @@ export const useStyles = makeStyles({
     '.MuiTableCell-stickyHeader': {
       backgroundColor: 'white',
     },
-    '.MuiTableRow-root.Mui-selected, .MuiTableRow-root.Mui-selected:hover': {
-      backgroundColor: '#1A73E82B',
-    },
     // Typography
     '.MuiTypography-gutterBottom': {
       marginBottom: '0.5em',
@@ -136,23 +135,6 @@ export const useStyles = makeStyles({
       minWidth: '2.5rem',
       borderRadius: '24px',
     },
-
-    // Autocomplete
-    '.MuiAutocomplete-endAdornment': {
-      top: 5.5,
-    },
-
-    // Treeview
-    '.MuiTreeItem-content': {
-      flexDirection: 'column',
-    },
-
-    // Dialog
-    '.MuiDialog-paperWidthSm': {
-      minWidth: 400,
-    },
-
-
     // *********** Custom styles **************
     '.avatar-orange': {
       color: theme.palette.getContrastText(deepOrange[500]),

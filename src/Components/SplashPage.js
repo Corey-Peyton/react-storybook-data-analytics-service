@@ -120,7 +120,7 @@ function SplashPage(props) {
                   variant="contained"
                   color="primary"
                   component={RouterLink}
-                  to="/index"
+                  to="/home"
                 >
                 English
                 </Button>
@@ -130,7 +130,7 @@ function SplashPage(props) {
                   variant="contained"
                   color="primary"
                   component={RouterLink}
-                  to="/index"
+                  to="/home"
                 >
                   Français
                 </Button>

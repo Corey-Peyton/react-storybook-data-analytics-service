@@ -1,5 +1,6 @@
 import React from 'react';
-import {makeStyles} from '@material-ui/core/styles';
+import {makeStyles, withStyles} from '@material-ui/core/styles';
+import Snackbar from '@material-ui/core/Snackbar';
 import {
   Divider,
   Typography,
@@ -11,8 +12,17 @@ import {
   TableBody,
   IconButton,
   Button,
+  Drawer,
+  Menu,
+  MenuItem,
+  ListItemIcon,
+  ListItemText,
 } from '@material-ui/core';
 import MoreVertIcon from '@material-ui/icons/MoreVert';
+import EditIcon from '@material-ui/icons/Edit';
+import DeleteIcon from '@material-ui/icons/Delete';
+
+import ModifyFile from './ModifyFile';
 
 const useStyles = makeStyles((theme) => ({
   divider: {
@@ -27,7 +37,48 @@ const useStyles = makeStyles((theme) => ({
       maxWidth: '350px',
     },
   },
+  drawer: {
+    '& .MuiDrawer-paper': {
+      maxWidth: '400px',
+      padding: theme.spacing(0, 3, 3, 3),
+    },
+  },
 }));
+
+const StyledMenu = withStyles({
+  paper: {
+    border: '1px solid #d3d4d5',
+  },
+})((props) => (
+  <Menu
+    elevation={0}
+    getContentAnchorEl={null}
+    anchorOrigin={{
+      vertical: 'bottom',
+      horizontal: 'center',
+    }}
+    transformOrigin={{
+      vertical: 'top',
+      horizontal: 'center',
+    }}
+    {...props}
+  />
+));
+
+const StyledMenuItem = withStyles((theme) => ({
+  root: {
+    '& .MuiListItemIcon-root': {
+      minWidth: 0,
+      paddingRight: theme.spacing(2),
+    },
+    '&:focus': {
+      'backgroundColor': theme.palette.primary.main,
+      '& .MuiListItemIcon-root, & .MuiListItemText-primary': {
+        color: theme.palette.common.white,
+      },
+    },
+  },
+}))(MenuItem);
 
 const files = [
   {name: 'Output file example with a very long name.'},
@@ -65,11 +116,39 @@ function stableSort(array, comparator) {
 
 function FilesList(props) {
   const classes = useStyles();
-  const [order, setOrder] = React.useState('desc');
+  const [state, setState] = React.useState({
+    order: 'desc',
+    open: false,
+    anchorEl: null,
+  });
 
   const handleRequestSort = (e) => {
-    const isAsc = order === 'asc';
-    setOrder(isAsc ? 'desc' : 'asc');
+    const isAsc = state.order === 'asc';
+    setState({...state, order: isAsc ? 'desc' : 'asc'});
+  };
+
+  const toggleDrawer = (open) => (event) => {
+    if (
+      event.type === 'keydown' &&
+      (event.key === 'Tab' || event.key === 'Shift')
+    ) {
+      return;
+    }
+    setState({...state, open: open});
+  };
+
+  const handleMenuOpen = (event) => {
+    setState({...state, anchorEl: event.currentTarget});
+  };
+
+  const handleMenuClose = () => {
+    setState({...state, anchorEl: null});
+  };
+
+  const [open, setOpen] = React.useState(false);
+
+  const handleClick = () => {
+    setOpen(true);
   };
 
   return (
@@ -85,15 +164,17 @@ function FilesList(props) {
       <Table className={classes.table}>
         <TableHead>
           <TableRow>
-            <TableCell sortDirection={order}>
+            <TableCell sortDirection={state.order}>
               <TableSortLabel
                 active={true}
-                direction={order}
+                direction={state.order}
                 onClick={handleRequestSort}
               >
                 File name
                 <span className="screen-reader-text">
-                  {order === 'desc' ? 'sorted descending' : 'sorted ascending'}
+                  {state.order === 'desc' ?
+                    'sorted descending' :
+                    'sorted ascending'}
                 </span>
               </TableSortLabel>
             </TableCell>
@@ -101,25 +182,68 @@ function FilesList(props) {
           </TableRow>
         </TableHead>
         <TableBody>
-          {stableSort(files, getComparator(order, 'name')).map((file) => {
+          {stableSort(files, getComparator(state.order, 'name')).map((file) => {
             return (
               <TableRow key={file.name}>
                 <TableCell className={classes.fileName}>
                   <Typography variant="body2">{file.name}</Typography>
                 </TableCell>
                 <TableCell align="right">
-                  <IconButton aria-label={`options for ${file.name}`}>
+                  <IconButton
+                    aria-label={`options for ${file.name}`}
+                    aria-controls="actions-menu"
+                    aria-haspopup="true"
+                    onClick={handleMenuOpen}
+                  >
                     <MoreVertIcon />
                   </IconButton>
+                  <StyledMenu
+                    id="actions-menu"
+                    anchorEl={state.anchorEl}
+                    keepMounted
+                    open={Boolean(state.anchorEl)}
+                    onClose={handleMenuClose}
+                  >
+                    <StyledMenuItem onClick={toggleDrawer(true)}>
+                      <ListItemIcon>
+                        <EditIcon fontSize="small" />
+                      </ListItemIcon>
+                      <ListItemText primary="Modify" />
+                    </StyledMenuItem>
+                    <StyledMenuItem onClick={handleClick}>
+                      <ListItemIcon>
+                        <DeleteIcon fontSize="small" />
+                      </ListItemIcon>
+                      <ListItemText primary="Delete"
+                      />
+                    </StyledMenuItem>
+                  </StyledMenu>
                 </TableCell>
               </TableRow>
             );
           })}
         </TableBody>
       </Table>
-      <Button variant="contained" color="primary">
-        Add Output File
+      <Snackbar
+        anchorOrigin={{
+          vertical: 'bottom',
+          horizontal: 'left',
+          backgroundColor: 'green',
+        }}
+        open={open}
+        autoHideDuration={1000}
+        message='The supporting file has been added' />
+      <Button variant="contained" color="primary" onClick={toggleDrawer(true)}>
+        Add output file
       </Button>
+      <Drawer
+        anchor="right"
+        open={state.open}
+        onClose={toggleDrawer(false)}
+        className={classes.drawer}
+      >
+        <ModifyFile toggleDrawer={toggleDrawer} />
+      </Drawer>
     </React.Fragment>
   );
 }

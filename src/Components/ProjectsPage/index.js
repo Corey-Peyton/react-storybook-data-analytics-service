@@ -41,7 +41,7 @@ const useStyles = makeStyles((theme) => ({
       easing: theme.transitions.easing.sharp,
       duration: theme.transitions.duration.leavingScreen,
     }),
-    paddingTop: `calc(88px + ${HEAD_H}px)`,
+    marginTop: `calc(88px + ${HEAD_H}px)`,
     [theme.breakpoints.down('xs')]: {
       marginTop: `calc(88px + ${HEAD_H_XS}px)`,
     },
