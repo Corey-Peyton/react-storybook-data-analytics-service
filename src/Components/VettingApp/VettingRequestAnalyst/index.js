@@ -167,9 +167,8 @@ function VettingRequestAnalyst(props) {
     setState({...state, completed: newCompleted});
     handleNext();
   };
-
-  const isStepFailed = (step) => {
-    return step === 1;
+  const searchhandleClose = () => {
+    setOpen(false);
   };
 
   const getStepContent = (step) => {
@@ -201,6 +200,12 @@ function VettingRequestAnalyst(props) {
     setState({...state, completed: {}});
   };
 
+  const [open, setOpen] = React.useState(false);
+
+  const handleClickOpen = () => {
+    setOpen(true);
+  };
+
   return (
     <main className={classes.main} tabIndex="-1">
       <Container maxWidth="xl" className="page-container">
@@ -219,18 +224,10 @@ function VettingRequestAnalyst(props) {
               <Chip label="DISCLOSURE ANALYSIS" className="mr-2" />
             </Grid>
             <Grid item>
-              <Chip label="brian.bill@cloud.statcan.ca" className="mr-2" />
+              <Chip label="brian.bill@cloud.statcan.ca" className="mr-2" onClick={handleClickOpen}> /</Chip>
             </Grid>
             <Grid item>
-              <div className={classes.lockTooltip}>
-                <Tooltip title="This vetting request is unlocked and marked as “Draft.” You can either send or withdraw this vetting request.">
-                  <Icon
-                    path={mdiLockOpenVariant}
-                    size={1}
-                    className="icon-grey"
-                  />
-                </Tooltip>
-              </div>
+              <Chip label="+2" className="mr-2" />
             </Grid>
           </Grid>
           <Divider className={classes.divider} />
@@ -329,7 +326,7 @@ function VettingRequestAnalyst(props) {
       </Container>
 
       <Dialog
-        open={state.open}
+        open={open}
         onClose={handleDialogClose}
         aria-labelledby="alert-dialog-title"
         aria-describedby="alert-dialog-description"
@@ -342,10 +339,10 @@ function VettingRequestAnalyst(props) {
           <Divider className={classes.divider} />
         </DialogContent>
         <DialogActions className={classes.dialogActions}>
-          <Button onClick={handleDialogClose} color="primary" variant="outlined">
+          <Button onClick={searchhandleClose} color="primary" variant="outlined">
             Cancel
           </Button>
-          <Button onClick={handleDialogClose} color="primary" variant="contained" className="ml-2">
+          <Button onClick={searchhandleClose} color="primary" variant="contained" className="ml-2">
           Delete request
           </Button>
         </DialogActions>

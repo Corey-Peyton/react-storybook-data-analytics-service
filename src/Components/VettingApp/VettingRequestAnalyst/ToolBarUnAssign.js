@@ -5,7 +5,7 @@ import Icon from '@mdi/react';
 import ReplayIcon from '@material-ui/icons/Replay';
 import SaveIcon from '@material-ui/icons/Save';
 import ArrowBackIcon from '@material-ui/icons/ArrowBack';
-import {mdiAccountRemoveOutline} from '@mdi/js';
+import {mdiAccountPlus} from '@mdi/js';
 import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
 import ArrowDropDownIcon from '@material-ui/icons/ArrowDropDown';
@@ -47,8 +47,12 @@ function ToolBarUnassign() {
       <Typography variant="body2" className={classes.title}>
               Vetting requests dashboard
       </Typography>
-      <Icon path={mdiAccountRemoveOutline} className="icon-grey" />
-      <Typography>Unassign from me</Typography>
+      <Button
+        color="primary"
+        className={classes.headerBtn}>
+        <Icon path={mdiAccountPlus} className="icon-grey" size={1} />
+        <Typography variant="subtitle4" color="textSecondary">Unassign to me</Typography>
+      </Button>
       <Button
         variant="outlined"
         color="primary"
