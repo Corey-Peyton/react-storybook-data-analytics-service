@@ -2,14 +2,13 @@ import React from 'react';
 import {makeStyles} from '@material-ui/core/styles';
 import {Button, Toolbar, IconButton, Typography} from '@material-ui/core';
 import Icon from '@mdi/react';
-// import {mdiaccountremove} from '@mdi/js';
-import DeleteIcon from '@material-ui/icons/Delete';
 import ReplayIcon from '@material-ui/icons/Replay';
 import SaveIcon from '@material-ui/icons/Save';
-import CachedIcon from '@material-ui/icons/Cached';
 import ArrowBackIcon from '@material-ui/icons/ArrowBack';
 import {mdiAccountRemoveOutline} from '@mdi/js';
-
+import Menu from '@material-ui/core/Menu';
+import MenuItem from '@material-ui/core/MenuItem';
+import ArrowDropDownIcon from '@material-ui/icons/ArrowDropDown';
 
 const useStyles = makeStyles((theme) => ({
   main: {
@@ -26,6 +25,15 @@ const useStyles = makeStyles((theme) => ({
 
 function ToolBarUnassign() {
   const classes = useStyles();
+  const [anchorEl, setAnchorEl] = React.useState(null);
+
+  const handleClick = (event) => {
+    setAnchorEl(event.currentTarget);
+  };
+
+  const handleClose = () => {
+    setAnchorEl(null);
+  };
   return (
     <Toolbar>
       <IconButton
@@ -45,34 +53,31 @@ function ToolBarUnassign() {
         variant="outlined"
         color="primary"
         className={classes.headerBtn}
-        startIcon={<ReplayIcon />}
+        startIcon={<SaveIcon />}
       >
-              Request an update
+              Save
       </Button>
       <Button
         variant="outlined"
         color="primary"
         className={classes.headerBtn}
-        startIcon={<SaveIcon />}
+        startIcon={<ReplayIcon />}
       >
-              Save
+              Request an update
       </Button>
-      {/*  <Button
-        variant="contained"
-        color="primary"
-        className={classes.headerBtn}
-        startIcon={<SendIcon />}
-      >
-              Submit request
-      </Button> */}
-      <span class="mdi mdi-name"></span>
-      <Button
-        color="default"
-        className={classes.headerBtn}
-        startIcon={<DeleteIcon />}
-      >
-              Delete
+      <Button aria-controls="simple-menu" aria-haspopup="true" onClick={handleClick} variant="contained" color="primary" className={classes.headerBtn}>
+  Resolve<ArrowDropDownIcon />
       </Button>
+      <Menu
+        id="simple-menu"
+        anchorEl={anchorEl}
+        keepMounted
+        open={Boolean(anchorEl)}
+        onClose={handleClose}
+      >
+        <MenuItem onClick={handleClose}>Approve</MenuItem>
+        <MenuItem onClick={handleClose}>Deny</MenuItem>
+      </Menu>
     </Toolbar>
   );
 }

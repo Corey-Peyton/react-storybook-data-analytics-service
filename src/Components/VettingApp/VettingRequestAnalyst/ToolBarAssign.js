@@ -1,10 +1,10 @@
 import React from 'react';
 import {makeStyles} from '@material-ui/core/styles';
 import {Button, Toolbar, IconButton, Typography} from '@material-ui/core';
-import ExitToAppIcon from '@material-ui/icons/ExitToApp';
+import Icon from '@mdi/react';
 import SaveIcon from '@material-ui/icons/Save';
-import SendIcon from '@material-ui/icons/Send';
 import ArrowBackIcon from '@material-ui/icons/ArrowBack';
+import {mdiAccountPlus} from '@mdi/js';
 
 const useStyles = makeStyles((theme) => ({
   main: {
@@ -14,14 +14,13 @@ const useStyles = makeStyles((theme) => ({
   title: {
     flexGrow: 1,
   },
+  headerBtn: {
+    marginLeft: theme.spacing(3),
+  },
 }));
 
 function ToolBarAssign(props) {
   const classes = useStyles();
-  /* const setOpen = React.useState(false);
-  const handleDialogOpen = () => {
-    setOpen(true);
-  }; */
   return (
     <Toolbar>
       <IconButton
@@ -32,17 +31,11 @@ function ToolBarAssign(props) {
       >
         <ArrowBackIcon />
       </IconButton>
-      <Typography variant="body2" className={classes.title}>
+      <Typography variant="subtitle1" className={classes.title}>
               Vetting requests dashboard
       </Typography>
-      <Button
-        color="default"
-        className={classes.headerBtn}
-        startIcon={<ExitToAppIcon />}
-        onClick={props.handleDialogOpen}
-      >
-              Withdraw
-      </Button>
+      <Icon path={mdiAccountPlus} className="icon-grey" />
+      <Typography>Assign to me</Typography>
       <Button
         variant="outlined"
         color="primary"
@@ -51,14 +44,7 @@ function ToolBarAssign(props) {
       >
               Save
       </Button>
-      <Button
-        variant="contained"
-        color="primary"
-        className={classes.headerBtn}
-        startIcon={<SendIcon />}
-      >
-              Submit request
-      </Button>
+      <Icon path={mdiAccountPlus} className="icon-grey" />
     </Toolbar>
   );
 }

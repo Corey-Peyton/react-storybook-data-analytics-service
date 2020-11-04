@@ -14,8 +14,6 @@ import {
   Chip,
   Tooltip,
   AppBar,
-  Toolbar,
-  IconButton,
   Dialog,
   DialogTitle,
   DialogContent,
@@ -24,10 +22,6 @@ import {
 } from '@material-ui/core';
 import ArrowForwardIosIcon from '@material-ui/icons/ArrowForwardIos';
 import ArrowBackIosIcon from '@material-ui/icons/ArrowBackIos';
-import ArrowBackIcon from '@material-ui/icons/ArrowBack';
-import ExitToAppIcon from '@material-ui/icons/ExitToApp';
-import SaveIcon from '@material-ui/icons/Save';
-import SendIcon from '@material-ui/icons/Send';
 import Icon from '@mdi/react';
 import {mdiLockOpenVariant} from '@mdi/js';
 import AnalystInfo from './AnalystInfo';
@@ -36,7 +30,6 @@ import ResidualDisclosure from './ResidualDisclosure';
 import AdditionalInfo from './Additionalnfo';
 import ToolBarUnassign from './ToolBarUnAssign';
 import ToolBarAssign from './ToolBarAssign';
-
 
 const useStyles = makeStyles((theme) => ({
   main: {
@@ -212,44 +205,7 @@ function VettingRequestAnalyst(props) {
     <main className={classes.main} tabIndex="-1">
       <Container maxWidth="xl" className="page-container">
         <AppBar position="static" className={classes.appBar} color="default">
-          {state.completed ? <ToolBarUnassign /> : <ToolBarAssign />}
-          {/* <Toolbar>
-            <IconButton
-              edge="start"
-              className={classes.menuButton}
-              color="inherit"
-              aria-label="menu"
-            >
-              <ArrowBackIcon />
-            </IconButton>
-            <Typography variant="body2" className={classes.title}>
-              Vetting requests dashboard
-            </Typography>
-            <Button
-              color="default"
-              className={classes.headerBtn}
-              startIcon={<ExitToAppIcon />}
-              onClick={handleDialogOpen}
-            >
-              Withdraw
-            </Button>
-            <Button
-              variant="outlined"
-              color="primary"
-              className={classes.headerBtn}
-              startIcon={<SaveIcon />}
-            >
-              Save
-            </Button>
-            <Button
-              variant="contained"
-              color="primary"
-              className={classes.headerBtn}
-              startIcon={<SendIcon />}
-            >
-              Submit request
-            </Button>
-          </Toolbar> */}
+          {state.activeStep === 3 ? <ToolBarUnassign /> : <ToolBarAssign />}
         </AppBar>
         <Paper className={classes.paper}>
           <Grid container alignItems="center">
