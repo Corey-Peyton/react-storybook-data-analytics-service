@@ -1,6 +1,5 @@
 import React from 'react';
 import {makeStyles, withStyles} from '@material-ui/core/styles';
-import Snackbar from '@material-ui/core/Snackbar';
 import {
   Divider,
   Typography,
@@ -145,12 +144,6 @@ function FilesList(props) {
     setState({...state, anchorEl: null});
   };
 
-  const [open, setOpen] = React.useState(false);
-
-  const handleClick = () => {
-    setOpen(true);
-  };
-
   return (
     <React.Fragment>
       <Typography>
@@ -210,7 +203,7 @@ function FilesList(props) {
                       </ListItemIcon>
                       <ListItemText primary="Modify" />
                     </StyledMenuItem>
-                    <StyledMenuItem onClick={handleClick}>
+                    <StyledMenuItem>
                       <ListItemIcon>
                         <DeleteIcon fontSize="small" />
                       </ListItemIcon>
@@ -224,15 +217,6 @@ function FilesList(props) {
           })}
         </TableBody>
       </Table>
-      <Snackbar
-        anchorOrigin={{
-          vertical: 'bottom',
-          horizontal: 'left',
-          backgroundColor: 'green',
-        }}
-        open={open}
-        autoHideDuration={1000}
-        message='The supporting file has been added' />
       <Button variant="contained" color="primary" onClick={toggleDrawer(true)}>
         Add output file
       </Button>
