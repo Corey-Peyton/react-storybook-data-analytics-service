@@ -33,7 +33,7 @@ function ToolBarDelete() {
         <ArrowBackIcon />
       </IconButton>
       <Typography variant="body2" className={classes.title}>
-              Vetting requests dashboard
+              Dashboard
       </Typography>
       <Button
         color="default"

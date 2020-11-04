@@ -185,6 +185,7 @@ function ResearcherInfo(props) {
             defaultValue="Rose"
             className={classes.inputMargin}
             InputProps={{readOnly: true}}
+            disabled
           />
           <TextField
             id="last-name"
@@ -200,6 +201,7 @@ function ResearcherInfo(props) {
             defaultValue="Temple"
             className={classes.inputMargin}
             InputProps={{readOnly: true}}
+            disabled
           />
           <TextField
             id="date"
@@ -215,6 +217,7 @@ function ResearcherInfo(props) {
             defaultValue="Aug. 28, 2020"
             InputProps={{readOnly: true}}
             className={classes.inputMargin}
+            disabled
           />
           <TextField
             id="username"
@@ -227,6 +230,7 @@ function ResearcherInfo(props) {
             margin="dense"
             InputProps={{readOnly: true}}
             defaultValue="rose_temple"
+            disabled
             // error={!!errors.username}
             // helperText={errors.username?.message}
           />
