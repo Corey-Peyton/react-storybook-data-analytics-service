@@ -6,7 +6,7 @@ import {makeStyles} from '@material-ui/core/styles';
 import moment from 'moment';
 import Typography from '@material-ui/core/Typography';
 
-import {DRAWER_WIDTH} from '../Dashboard/DashboardDrawer';
+import {DRAWER_WIDTH} from '../Dashboard/ProjectsDrawer';
 
 const date = moment().format('YYYY-MM-DD');
 

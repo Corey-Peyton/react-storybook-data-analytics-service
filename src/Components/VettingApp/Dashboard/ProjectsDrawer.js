@@ -181,7 +181,7 @@ StyledTreeItem.propTypes = {
   labelText: PropTypes.string.isRequired,
 };
 
-export default function DashboardDrawer(props) {
+export default function ProjectsDrawer(props) {
   const classes = useStyles();
   const {t} = useTranslation();
 
