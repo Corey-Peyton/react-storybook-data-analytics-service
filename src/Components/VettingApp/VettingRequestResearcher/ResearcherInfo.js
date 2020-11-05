@@ -43,20 +43,25 @@ const useStyles = makeStyles((theme) => ({
   pt0: {
     paddingTop: [0, '!important'],
   },
+  Typography: {
+    fontSize: '0.9375rem',
+    color: '#000000',
+    lineHeight: '1.43rem',
+  },
 }));
 
 function ResearcherInfo(props) {
   const classes = useStyles();
   return (
     <React.Fragment>
-      <Typography>
+      <Typography className={classes.Typography}>
         Vetting disclosure requests are required by Statistics Canada’s to
         ensure data protection. Disclosure analysts will review all external
         users vetting requests for accessing to confidential microdata. These
         vetting requests are subject to a risk-based assessment of potential
         disclosure based on established rules and procedures. For more
-        information please visit the “
-        <Link href="#">Vetting guidelines website</Link>.”
+        information please visit the
+        <Link href="#">Vetting guidelines website</Link>.
       </Typography>
       <Divider className={classes.divider} />
       <Typography className="mb-2" variant="subtitle2">
@@ -184,7 +189,7 @@ function ResearcherInfo(props) {
             // helperText={errors.name?.message}
             defaultValue="Rose"
             className={classes.inputMargin}
-            InputProps={{readOnly: true}}
+            // InputProps={{readOnly: true}}
             disabled
           />
           <TextField
@@ -200,7 +205,6 @@ function ResearcherInfo(props) {
             // helperText={errors.name?.message}
             defaultValue="Temple"
             className={classes.inputMargin}
-            InputProps={{readOnly: true}}
             disabled
           />
           <TextField
@@ -215,7 +219,6 @@ function ResearcherInfo(props) {
             // error={!!errors.date}
             // helperText={errors.date?.message}
             defaultValue="Aug. 28, 2020"
-            InputProps={{readOnly: true}}
             className={classes.inputMargin}
             disabled
           />
@@ -228,7 +231,6 @@ function ResearcherInfo(props) {
             required
             fullWidth
             margin="dense"
-            InputProps={{readOnly: true}}
             defaultValue="rose_temple"
             disabled
             // error={!!errors.username}

@@ -622,7 +622,7 @@ function ModifyFile(props) {
           </DialogContent>
           <DialogActions>
             <Button onClick={handleClose} color="primary" variant="outlined">Cancel</Button>
-            <Button onClick={handleClose} color="primary" variant="contained">Add supporting file</Button>
+            <Button color="primary" variant="contained" onClick={props.toggleDrawer(false)}>Add supporting file</Button>
           </DialogActions>
         </Dialog>
 
