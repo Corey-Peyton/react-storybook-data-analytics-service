@@ -57,7 +57,7 @@ export default function FloatingSupportButton() {
         fullWidth="false"
       >
         <DialogTitle id="alert-dialog-title">
-          Get support 
+          Get support
         </DialogTitle>
         <DialogContent className="pb-0">
           <DialogContentText id="alert-dialog-description">
