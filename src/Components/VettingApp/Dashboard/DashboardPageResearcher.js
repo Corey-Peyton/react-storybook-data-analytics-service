@@ -114,7 +114,7 @@ function a11yProps(index) {
   };
 }
 
-export default function DashboardPageSupport() {
+export default function DashboardPageResearcher() {
   const classes = useStyles();
   const [value, setValue] = React.useState(0);
   const [open, setOpen] = React.useState({
