@@ -119,6 +119,12 @@ for (const [key, value] of Object.entries(outputMethods)) {
 
 function ModifyFile(props) {
   const classes = useStyles();
+  const [state, setState] = React.useState({
+    includeWeightVariable: null,
+    linkedData: null,
+    descriptiveStats: null,
+    modifiedWeights: null,
+  });
 
   const handleClickOpen = () => {
     setOpen(true);
@@ -133,6 +139,14 @@ function ModifyFile(props) {
 
   const handleClick = () => {
     setOpenSnackbar(true);
+  };
+
+  const handleRadioChange = (event) => {
+    const name = event.target.name;
+    setState({
+      ...state,
+      [name]: event.target.value,
+    });
   };
 
   return (
@@ -167,8 +181,7 @@ function ModifyFile(props) {
         >
           <MenuItem>File number 2</MenuItem>
         </Select>
-        <FormHelperText>
-        </FormHelperText>
+        <FormHelperText></FormHelperText>
       </FormControl>
       <TextField
         className={classes.inputMargin}
@@ -204,8 +217,7 @@ function ModifyFile(props) {
         >
           <MenuItem>Descriptive</MenuItem>
         </Select>
-        <FormHelperText>
-        </FormHelperText>
+        <FormHelperText></FormHelperText>
       </FormControl>
       <div className={classes.emphasisBox}>
         <Typography variant="subtitle2">
@@ -235,15 +247,15 @@ function ModifyFile(props) {
           }}
         />
       </div>
-      <FormControl
-        component="fieldset"
-        required
-      >
+      <FormControl component="fieldset" required>
         <FormLabel component="legend">
           Does this output include a weight variable?
         </FormLabel>
         <RadioGroup
           id="includeWeightVariable"
+          value={state.includeWeightVariable}
+          name="includeWeightVariable"
+          onChange={handleRadioChange}
         >
           <FormControlLabel
             value="Yes"
@@ -256,46 +268,41 @@ function ModifyFile(props) {
             label="No"
           />
         </RadioGroup>
-        <FormHelperText>
-        </FormHelperText>
+        <FormHelperText></FormHelperText>
       </FormControl>
-      <div className={classes.emphasisBox}>
-        <>
-          <TextField
-            className={classes.inputMargin}
-            margin="dense"
-            id="weightVariableName"
-            label="Name of weight variable"
-            variant="outlined"
-            required
-            fullWidth
-          />
-          <FormControl
-            component="fieldset"
-            required
-          >
-            <FormLabel component="legend" className="screen-reader-text">
-              Is the weight variable scaled or normalized?
-            </FormLabel>
-            <RadioGroup
-              id="weightVariableType"
-            >
-              <FormControlLabel
-                value="Scaled"
-                control={<Radio color="primary" />}
-                label="Scaled"
-              />
-              <FormControlLabel
-                value="Normalized"
-                control={<Radio color="primary" />}
-                label="Normalized"
-              />
-            </RadioGroup>
-            <FormHelperText>
-            </FormHelperText>
-          </FormControl>
-        </>
-      </div>
+      {state.includeWeightVariable === 'Yes' && (
+        <div className={classes.emphasisBox}>
+          <>
+            <TextField
+              className={classes.inputMargin}
+              margin="dense"
+              id="weightVariableName"
+              label="Name of weight variable"
+              variant="outlined"
+              required
+              fullWidth
+            />
+            <FormControl component="fieldset" required>
+              <FormLabel component="legend" className="screen-reader-text">
+                Is the weight variable scaled or normalized?
+              </FormLabel>
+              <RadioGroup id="weightVariableType">
+                <FormControlLabel
+                  value="Scaled"
+                  control={<Radio color="primary" />}
+                  label="Scaled"
+                />
+                <FormControlLabel
+                  value="Normalized"
+                  control={<Radio color="primary" />}
+                  label="Normalized"
+                />
+              </RadioGroup>
+              <FormHelperText></FormHelperText>
+            </FormControl>
+          </>
+        </div>
+      )}
       <TextField
         className={classes.inputMargin}
         margin="dense"
@@ -326,6 +333,9 @@ function ModifyFile(props) {
         <FormLabel component="legend">Is linked data used?</FormLabel>
         <RadioGroup
           id="linkedData"
+          value={state.linkedData}
+          name="linkedData"
+          onChange={handleRadioChange}
         >
           <FormControlLabel
             value="Yes"
@@ -343,9 +353,20 @@ function ModifyFile(props) {
             label="N/A"
           />
         </RadioGroup>
-        <FormHelperText>
-        </FormHelperText>
+        <FormHelperText></FormHelperText>
       </FormControl>
+      {state.linkedData === 'Yes' && (
+        <TextField
+          className={classes.inputMargin}
+          margin="dense"
+          id="linkageDescription"
+          label="Describe how linkage was done"
+          variant="outlined"
+          helperText="Examples: person-based, record-based, matching geographies"
+          fullWidth
+          required
+        />
+      )}
       <FormControl
         className={classes.inputMargin}
         component="fieldset"
@@ -362,9 +383,7 @@ function ModifyFile(props) {
             <InfoIcon />
           </Tooltip>
         </FormLabel>
-        <RadioGroup
-          id="dollarIncluded"
-        >
+        <RadioGroup id="dollarIncluded">
           <FormControlLabel
             value="Yes"
             control={<Radio color="primary" />}
@@ -381,30 +400,38 @@ function ModifyFile(props) {
             label="N/A"
           />
         </RadioGroup>
-        <FormHelperText>
-        </FormHelperText>
+        <FormHelperText></FormHelperText>
       </FormControl>
-      <FormControl
-        className={classes.inputMargin}
-        component="fieldset"
-      >
+      <FormControl className={classes.inputMargin} component="fieldset">
         <FormLabel component="legend">
           Does the request include descriptive statistics?
         </FormLabel>
         <RadioGroup
           id="descriptiveStats"
+          value={state.descriptiveStats}
+          name="descriptiveStats"
+          onChange={handleRadioChange}
         >
           <FormControlLabel value="Yes" control={<Radio />} label="Yes" />
           <FormControlLabel value="No" control={<Radio />} label="No" />
           <FormControlLabel value="NA" control={<Radio />} label="N/A" />
         </RadioGroup>
-        <FormHelperText>
-        </FormHelperText>
+        <FormHelperText></FormHelperText>
       </FormControl>
-      <FormControl
-        className={classes.inputMargin}
-        component="fieldset"
-      >
+      {state.descriptiveStats === 'Yes' && (
+        <FormControl className={classes.inputMargin} component="fieldset">
+          <FormLabel component="legend">
+            Is the output clearly labelled (tables have a title and every
+            variable and category is labelled)?
+          </FormLabel>
+          <RadioGroup id="outpuLabelled">
+            <FormControlLabel value="Yes" control={<Radio />} label="Yes" />
+            <FormControlLabel value="No" control={<Radio />} label="No" />
+          </RadioGroup>
+          <FormHelperText></FormHelperText>
+        </FormControl>
+      )}
+      <FormControl className={classes.inputMargin} component="fieldset">
         <FormLabel component="legend" className={classes.tooltipLabel}>
           Does this request include model output or graphs that are equivalent
           to a descriptive statistics?{' '}
@@ -416,9 +443,7 @@ function ModifyFile(props) {
             <InfoIcon />
           </Tooltip>
         </FormLabel>
-        <RadioGroup
-          id="equivalentDescriptiveStats"
-        >
+        <RadioGroup id="equivalentDescriptiveStats">
           <FormControlLabel
             value="Yes"
             control={<Radio color="primary" />}
@@ -435,13 +460,9 @@ function ModifyFile(props) {
             label="N/A"
           />
         </RadioGroup>
-        <FormHelperText>
-        </FormHelperText>
+        <FormHelperText></FormHelperText>
       </FormControl>
-      <FormControl
-        className={classes.inputMargin}
-        component="fieldset"
-      >
+      <FormControl className={classes.inputMargin} component="fieldset">
         <FormLabel component="legend" className={classes.tooltipLabel}>
           Did you apply modified (e.g. standardized) weights in the analysis?{' '}
           <Tooltip
@@ -454,6 +475,9 @@ function ModifyFile(props) {
         </FormLabel>
         <RadioGroup
           id="modifiedWeights"
+          value={state.modifiedWeights}
+          name="modifiedWeights"
+          onChange={handleRadioChange}
         >
           <FormControlLabel
             value="Yes"
@@ -471,19 +495,24 @@ function ModifyFile(props) {
             label="N/A"
           />
         </RadioGroup>
-        <FormHelperText>
-        </FormHelperText>
+        <FormHelperText></FormHelperText>
       </FormControl>
-      <FormControl
-        className={classes.inputMargin}
-        component="fieldset"
-      >
+      {state.modifiedWeights === 'Yes' && (
+        <TextField
+          className={classes.inputMargin}
+          margin="dense"
+          id="modifiedDesc"
+          label="Describe why and how the weights were modified"
+          variant="outlined"
+          fullWidth
+          required
+        />
+      )}
+      <FormControl className={classes.inputMargin} component="fieldset">
         <FormLabel component="legend">
           Does this output include a correlation or covariance matrix?
         </FormLabel>
-        <RadioGroup
-          id="includeMatrix"
-        >
+        <RadioGroup id="includeMatrix">
           <FormControlLabel
             value="Yes"
             control={<Radio color="primary" />}
@@ -500,13 +529,9 @@ function ModifyFile(props) {
             label="N/A"
           />
         </RadioGroup>
-        <FormHelperText>
-        </FormHelperText>
+        <FormHelperText></FormHelperText>
       </FormControl>
-      <FormControl
-        className={classes.inputMargin}
-        component="fieldset"
-      >
+      <FormControl className={classes.inputMargin} component="fieldset">
         <FormLabel component="legend" className={classes.tooltipLabel}>
           Is rounding of output required for this vetting request?{' '}
           <Tooltip
@@ -519,6 +544,9 @@ function ModifyFile(props) {
         </FormLabel>
         <RadioGroup
           id="roundingOutput"
+          value={state.roundingOutput}
+          name="roundingOutput"
+          onChange={handleRadioChange}
         >
           <FormControlLabel
             value="Yes"
@@ -536,9 +564,19 @@ function ModifyFile(props) {
             label="N/A"
           />
         </RadioGroup>
-        <FormHelperText>
-        </FormHelperText>
+        <FormHelperText></FormHelperText>
       </FormControl>
+      {state.roundingOutput === 'Yes' && (
+        <TextField
+          className={classes.inputMargin}
+          margin="dense"
+          id="roundingDesc"
+          label="Describe the approach to rounding and rounding base"
+          variant="outlined"
+          fullWidth
+          required
+        />
+      )}
       <div className={classes.emphasisBox}>
         <Typography variant="subtitle2" className="mb-2">
           Mandatory supporting files:
@@ -574,7 +612,6 @@ function ModifyFile(props) {
           open={open}
           onClose={handleClose}
           aria-labelledby="form-dialog-title"
-
         >
           <DialogTitle id="form-dialog-title">Add supporting file</DialogTitle>
           <DialogContent>
@@ -586,7 +623,7 @@ function ModifyFile(props) {
               className={classes.inputMargin}
             >
               <InputLabel id="outputFolder-label">
-              Output folder name
+                Output folder name
               </InputLabel>
               <Select
                 id="supportingFilesFolder"
@@ -594,12 +631,14 @@ function ModifyFile(props) {
                 labelId="supportingFilesFolder-label"
               >
                 <MenuItem key={-1} value="">
-                None
+                  None
                 </MenuItem>
               </Select>
             </FormControl>
             <Typography variant="subtitle2">File #1 *</Typography>
-            <Typography variant="subtitle2">Residual tables (see the vetting orientation)</Typography>
+            <Typography variant="subtitle2">
+              Residual tables (see the vetting orientation)
+            </Typography>
             <TextField
               className={classes.inputMargin}
               margin="dense"
@@ -613,8 +652,12 @@ function ModifyFile(props) {
             />
           </DialogContent>
           <DialogActions>
-            <Button onClick={handleClose} color="primary" variant="outlined">Cancel</Button>
-            <Button onClick={handleClose} color="primary" variant="contained">Add supporting file</Button>
+            <Button onClick={handleClose} color="primary" variant="outlined">
+              Cancel
+            </Button>
+            <Button onClick={handleClose} color="primary" variant="contained">
+              Add supporting file
+            </Button>
           </DialogActions>
         </Dialog>
 
@@ -702,8 +745,7 @@ function ModifyFile(props) {
         fullWidth
         required
       />
-      <Button variant="contained" color="primary"
-        onClick={handleClick}>
+      <Button variant="contained" color="primary" onClick={handleClick}>
         Save Changes
       </Button>
       <Snackbar
@@ -714,7 +756,8 @@ function ModifyFile(props) {
         }}
         open={openSnackbar}
         autoHideDuration={17000}
-        message='The supporting file has been added' />
+        message="The supporting file has been added"
+      />
     </React.Fragment>
   );
 }

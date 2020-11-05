@@ -210,7 +210,7 @@ function FilesList(props) {
                       </ListItemIcon>
                       <ListItemText primary="Modify" />
                     </StyledMenuItem>
-                    <StyledMenuItem onClick={handleClick}>
+                    <StyledMenuItem>
                       <ListItemIcon>
                         <DeleteIcon fontSize="small" />
                       </ListItemIcon>

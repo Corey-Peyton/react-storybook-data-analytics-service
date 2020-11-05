@@ -51,7 +51,7 @@ function ToolBarUnassign() {
         color="primary"
         className={classes.headerBtn}>
         <Icon path={mdiAccountPlus} className="icon-grey" size={1} />
-        <Typography variant="subtitle4" color="textSecondary">Unassign to me</Typography>
+        <Typography variant="subtitle2" color="textSecondary">Unassign to me</Typography>
       </Button>
       <Button
         variant="outlined"
