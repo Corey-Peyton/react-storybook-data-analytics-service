@@ -600,6 +600,7 @@ function ModifyFile(props) {
                 id="supportingFilesFolder"
                 label="Supporting folder *"
                 labelId="supportingFilesFolder-label"
+                variant="standard"
               >
                 <MenuItem key={-1} value="">
                 None
