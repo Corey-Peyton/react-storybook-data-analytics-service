@@ -121,7 +121,7 @@ export default function CustomizedMenus(props) {
           <ListItemIcon className={classes.listItemIcon}>
             <Icon path={mdiFileDocumentOutline} size={1} className="icon-grey" />
           </ListItemIcon>
-          <ListItemText primary={<Typography variant="body2">Summary</Typography>} />
+          <ListItemText primary={<Typography variant="body2" onClick={props.contextSummaryClick}>Summary</Typography>} />
         </MenuItem>
       </StyledMenu>
     );
@@ -156,7 +156,7 @@ export default function CustomizedMenus(props) {
           <ListItemIcon className={classes.listItemIcon}>
             <Icon path={mdiFileDocumentOutline} size={1} className="icon-grey" />
           </ListItemIcon>
-          <ListItemText primary={<Typography variant="body2">Summary</Typography>} />
+          <ListItemText primary={<Typography variant="body2" onClick={props.contextSummaryClick}>Summary</Typography>} />
         </MenuItem>
       </StyledMenu>
     );
@@ -179,7 +179,7 @@ export default function CustomizedMenus(props) {
           <ListItemIcon className={classes.listItemIcon}>
             <Icon path={mdiFileDocumentOutline} size={1} className="icon-grey" />
           </ListItemIcon>
-          <ListItemText primary={<Typography variant="body2">Summary</Typography>} />
+          <ListItemText primary={<Typography variant="body2" onClick={props.contextSummaryClick}>Summary</Typography>} />
         </MenuItem>
       </StyledMenu>
     );
@@ -208,7 +208,7 @@ export default function CustomizedMenus(props) {
           <ListItemIcon className={classes.listItemIcon}>
             <Icon path={mdiFileDocumentOutline} size={1} className="icon-grey" />
           </ListItemIcon>
-          <ListItemText primary={<Typography variant="body2">Summary</Typography>} />
+          <ListItemText primary={<Typography variant="body2" onClick={props.contextSummaryClick}>Summary</Typography>} />
         </MenuItem>
       </StyledMenu>
     );
@@ -225,7 +225,7 @@ export default function CustomizedMenus(props) {
           <ListItemIcon className={classes.listItemIcon}>
             <Icon path={mdiFileDocumentOutline} size={1} className="icon-grey" />
           </ListItemIcon>
-          <ListItemText primary={<Typography variant="body2">Summary</Typography>} />
+          <ListItemText primary={<Typography variant="body2" onClick={props.contextSummaryClick}>Summary</Typography>} />
         </MenuItem>
       </StyledMenu>
     );
@@ -242,7 +242,7 @@ export default function CustomizedMenus(props) {
           <ListItemIcon className={classes.listItemIcon}>
             <Icon path={mdiFileDocumentOutline} size={1} className="icon-grey" />
           </ListItemIcon>
-          <ListItemText primary={<Typography variant="body2">Summary</Typography>} />
+          <ListItemText primary={<Typography variant="body2" onClick={props.contextSummaryClick}>Summary</Typography>} />
         </MenuItem>
       </StyledMenu>
     );

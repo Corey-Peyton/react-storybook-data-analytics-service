@@ -149,7 +149,7 @@ export default function TableContainerComponent(props) {
                         <Typography variant="body2" noWrap={true}>{row.updated}</Typography>
                       </TableCell>
                       <TableCell align='center'>
-                        <CustomizedMenus status={row.status}/>
+                        <CustomizedMenus status={row.status} contextSummaryClick={props.contextSummaryClick}/>
                       </TableCell>
                     </TableRow>
                   );

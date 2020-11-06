@@ -216,16 +216,16 @@ export default function DashboardPageResearcher() {
             </Tabs>
           </AppBar>
           <TabPanel value={value} index={0} className={classes.tabPanel}>
-            <TableContainerComponent status="active" filteredRows={filteredRows} headCells={headCells}/>
+            <TableContainerComponent status="active" filteredRows={filteredRows} headCells={headCells} contextSummaryClick={toggleSummaryDrawer}/>
           </TabPanel>
           <TabPanel value={value} index={1} className={classes.tabPanel}>
-            <TableContainerComponent status="withdrawn" filteredRows={filteredRows} headCells={headCells}/>
+            <TableContainerComponent status="withdrawn" filteredRows={filteredRows} headCells={headCells} contextSummaryClick={toggleSummaryDrawer}/>
           </TabPanel>
           <TabPanel value={value} index={2} className={classes.tabPanel}>
-            <TableContainerComponent status="approved" filteredRows={filteredRows} headCells={headCells}/>
+            <TableContainerComponent status="approved" filteredRows={filteredRows} headCells={headCells} contextSummaryClick={toggleSummaryDrawer}/>
           </TabPanel>
           <TabPanel value={value} index={3} className={classes.tabPanel}>
-            <TableContainerComponent status="denied" filteredRows={filteredRows} headCells={headCells}/>
+            <TableContainerComponent status="denied" filteredRows={filteredRows} headCells={headCells} contextSummaryClick={toggleSummaryDrawer}/>
           </TabPanel>
         </Paper>
         <Footer open={open.projectsDrawer} />
