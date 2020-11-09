@@ -31,7 +31,9 @@ const useStyles = makeStyles((theme) => ({
     'position': 'sticky',
     'top': 0,
     'background': 'white',
-    'borderBottom': '1px solid rgba(0, 0, 0, 0.12)',
+    'borderBottomWidth': '1px',
+    'borderBottomStyle': 'solid',
+    'borderBottomColor': theme.palette.divider,
     '& > svg': {
       marginRight: theme.spacing(2),
     },
