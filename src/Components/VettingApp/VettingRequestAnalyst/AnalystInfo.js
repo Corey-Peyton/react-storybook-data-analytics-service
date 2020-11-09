@@ -214,7 +214,6 @@ function AnalystInfo(props) {
         </FormLabel>
         <RadioGroup
           id="consistentOutput"
-          row
         >
           <FormControlLabel
             value="Yes"
@@ -245,7 +244,6 @@ function AnalystInfo(props) {
         </FormLabel>
         <RadioGroup
           id="vettingRules"
-          row
         >
           <FormControlLabel
             value="Yes"
@@ -281,7 +279,6 @@ function AnalystInfo(props) {
         </FormLabel>
         <RadioGroup
           id="finalOutput"
-          row
         >
           <FormControlLabel
             value="Yes"
