@@ -19,6 +19,8 @@ import {
   mdiShare,
 } from '@mdi/js';
 
+import CustomizedSnackbar from '../CommonComponents/CustomizedSnackbar';
+
 const useStyles = makeStyles((theme) => ({
   listItemIcon: {
     width: 'auto',
@@ -49,9 +51,14 @@ const StyledMenu = withStyles({
 ));
 
 export default function CustomizedMenus(props) {
-  const [anchorEl, setAnchorEl] = React.useState(null);
-  const classes = useStyles();
   let StyledMenuVar;
+
+  const classes = useStyles();
+  const [anchorEl, setAnchorEl] = React.useState(null);
+  const [open, setOpen] = React.useState({
+    snackbar: false,
+    severity: 'success',
+  });
 
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
@@ -59,6 +66,12 @@ export default function CustomizedMenus(props) {
 
   const handleClose = () => {
     setAnchorEl(null);
+  };
+
+  const toggleSnackbar = (value) => {
+    setOpen({...open, snackbar: !open.snackbar});
+    // setOpen({...open, severity: value});
+    handleClose();
   };
 
   if (props.status === 'Draft') {
@@ -76,13 +89,13 @@ export default function CustomizedMenus(props) {
           </ListItemIcon>
           <ListItemText primary={<Typography variant="body2">Edit</Typography>} />
         </MenuItem>
-        <MenuItem onClick={handleClose}>
+        <MenuItem onClick={toggleSnackbar}>
           <ListItemIcon className={classes.listItemIcon}>
             <SendIcon fontSize="small" />
           </ListItemIcon>
-          <ListItemText primary={<Typography variant="body2">Send request</Typography>} />
+          <ListItemText primary={<Typography variant="body2">Submit request</Typography>} />
         </MenuItem>
-        <MenuItem onClick={handleClose}>
+        <MenuItem onClick={toggleSnackbar}>
           <ListItemIcon className={classes.listItemIcon}>
             <ExitToAppIcon fontSize="small" />
           </ListItemIcon>
@@ -111,7 +124,7 @@ export default function CustomizedMenus(props) {
           </ListItemIcon>
           <ListItemText primary={<Typography variant="body2">View request</Typography>} />
         </MenuItem>
-        <MenuItem onClick={handleClose}>
+        <MenuItem onClick={toggleSnackbar}>
           <ListItemIcon className={classes.listItemIcon}>
             <ExitToAppIcon fontSize="small" />
           </ListItemIcon>
@@ -140,13 +153,13 @@ export default function CustomizedMenus(props) {
           </ListItemIcon>
           <ListItemText primary={<Typography variant="body2">View</Typography>} />
         </MenuItem>
-        <MenuItem onClick={handleClose}>
+        <MenuItem onClick={toggleSnackbar}>
           <ListItemIcon className={classes.listItemIcon}>
             <ExitToAppIcon fontSize="small" />
           </ListItemIcon>
           <ListItemText primary={<Typography variant="body2">Withdraw</Typography>} />
         </MenuItem>
-        <MenuItem onClick={handleClose}>
+        <MenuItem onClick={toggleSnackbar}>
           <ListItemIcon className={classes.listItemIcon}>
             <Icon path={mdiShare} size={1} className="icon-grey" />
           </ListItemIcon>
@@ -169,7 +182,7 @@ export default function CustomizedMenus(props) {
         open={Boolean(anchorEl)}
         onClose={handleClose}
       >
-        <MenuItem onClick={handleClose}>
+        <MenuItem onClick={toggleSnackbar}>
           <ListItemIcon className={classes.listItemIcon}>
             <ExitToAppIcon fontSize="small" />
           </ListItemIcon>
@@ -192,13 +205,13 @@ export default function CustomizedMenus(props) {
         open={Boolean(anchorEl)}
         onClose={handleClose}
       >
-        <MenuItem onClick={handleClose}>
+        <MenuItem onClick={toggleSnackbar}>
           <ListItemIcon className={classes.listItemIcon}>
             <PageReloadIcon width={20} height={20} />
           </ListItemIcon>
           <ListItemText primary={<Typography variant="body2">Reopen</Typography>} />
         </MenuItem>
-        <MenuItem onClick={handleClose}>
+        <MenuItem onClick={toggleSnackbar}>
           <ListItemIcon className={classes.listItemIcon}>
             <DeleteIcon fontSize="small" />
           </ListItemIcon>
@@ -254,6 +267,8 @@ export default function CustomizedMenus(props) {
         <MoreVertIcon />
       </IconButton>
       {StyledMenuVar}
+
+      <CustomizedSnackbar open={open.snackbar} severity={open.severity} toggleSnackbar={toggleSnackbar}/>
     </div>
   );
 }

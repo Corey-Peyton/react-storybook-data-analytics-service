@@ -16,7 +16,6 @@ import Header from '../CommonComponents/Header';
 import Footer from '../CommonComponents/Footer';
 import SummaryDrawer from './SummaryDrawer';
 import ProjectsDrawer from './ProjectsDrawer';
-import CustomizedSnackbar from '../CommonComponents/CustomizedSnackbar';
 import BypassBlocks from '../../BypassBlocks';
 import {requestListResearchers} from '../../../Data/fakeData';
 import {DRAWER_WIDTH} from './ProjectsDrawer';
@@ -122,7 +121,6 @@ export default function DashboardPageResearcher() {
   const [open, setOpen] = React.useState({
     projectsDrawer: true,
     summaryDrawer: false,
-    snackbar: false,
   });
   const [project, setProject] = React.useState({
     title: 'All projects',
@@ -158,10 +156,6 @@ export default function DashboardPageResearcher() {
 
   const handleProjectTitle = (value) => {
     setProject({...project, title: value});
-  };
-
-  const toggleSnackbar = () => {
-    setOpen({...open, snackbar: !open.snackbar});
   };
 
   const mainRef = React.createRef();
@@ -223,7 +217,6 @@ export default function DashboardPageResearcher() {
           </AppBar>
           <TabPanel value={value} index={0} className={classes.tabPanel}>
             <TableContainerComponent status="active" filteredRows={filteredRows} headCells={headCells} contextSummaryClick={toggleSummaryDrawer}/>
-            <CustomizedSnackbar open={open.snackbar} toggleSnackbar={toggleSnackbar} severity="warning"/>
           </TabPanel>
           <TabPanel value={value} index={1} className={classes.tabPanel}>
             <TableContainerComponent status="withdrawn" filteredRows={filteredRows} headCells={headCells} contextSummaryClick={toggleSummaryDrawer}/>
