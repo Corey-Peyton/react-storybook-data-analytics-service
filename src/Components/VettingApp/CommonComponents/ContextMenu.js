@@ -57,8 +57,26 @@ export default function CustomizedMenus(props) {
   const [anchorEl, setAnchorEl] = React.useState(null);
   const [open, setOpen] = React.useState({
     snackbar: false,
-    severity: 'success',
   });
+  const [action, setAction] = React.useState({
+    message: '',
+    severity: '',
+  });
+
+  const actionList= {
+    message: {
+      withdraw: 'Vetting request has been withdrawn',
+      reopen: 'Vetting request has been reopened',
+      submit: 'Vetting request has been submitted',
+      delete: 'Vetting request has been deleted',
+    },
+    severity: {
+      withdraw: 'success',
+      reopen: 'success',
+      submit: 'success',
+      delete: 'error',
+    },
+  };
 
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
@@ -68,9 +86,19 @@ export default function CustomizedMenus(props) {
     setAnchorEl(null);
   };
 
+  const triggerAction = (messageVal, severityVal) => {
+    setAction({...action, message: messageVal, severity: severityVal});
+    setOpen({...open, snackbar: true});
+    handleClose();
+  };
+
+  const toggleSummary = () =>{
+    handleClose();
+    props.contextSummaryClick();
+  };
+
   const toggleSnackbar = (value) => {
     setOpen({...open, snackbar: !open.snackbar});
-    // setOpen({...open, severity: value});
     handleClose();
   };
 
@@ -89,19 +117,19 @@ export default function CustomizedMenus(props) {
           </ListItemIcon>
           <ListItemText primary={<Typography variant="body2">Edit</Typography>} />
         </MenuItem>
-        <MenuItem onClick={toggleSnackbar}>
+        <MenuItem onClick={() => triggerAction(actionList.message.submit, actionList.severity.submit)}>
           <ListItemIcon className={classes.listItemIcon}>
             <SendIcon fontSize="small" />
           </ListItemIcon>
           <ListItemText primary={<Typography variant="body2">Submit request</Typography>} />
         </MenuItem>
-        <MenuItem onClick={toggleSnackbar}>
+        <MenuItem onClick={() => triggerAction(actionList.message.withdraw, actionList.severity.withdraw)}>
           <ListItemIcon className={classes.listItemIcon}>
             <ExitToAppIcon fontSize="small" />
           </ListItemIcon>
           <ListItemText primary={<Typography variant="body2">Withdraw</Typography>} />
         </MenuItem>
-        <MenuItem onClick={handleClose}>
+        <MenuItem onClick={toggleSummary}>
           <ListItemIcon className={classes.listItemIcon}>
             <Icon path={mdiFileDocumentOutline} size={1} className="icon-grey" />
           </ListItemIcon>
@@ -124,17 +152,17 @@ export default function CustomizedMenus(props) {
           </ListItemIcon>
           <ListItemText primary={<Typography variant="body2">View request</Typography>} />
         </MenuItem>
-        <MenuItem onClick={toggleSnackbar}>
+        <MenuItem onClick={() => triggerAction(actionList.message.withdraw, actionList.severity.withdraw)}>
           <ListItemIcon className={classes.listItemIcon}>
             <ExitToAppIcon fontSize="small" />
           </ListItemIcon>
           <ListItemText primary={<Typography variant="body2">Withdraw</Typography>} />
         </MenuItem>
-        <MenuItem onClick={handleClose}>
+        <MenuItem onClick={toggleSummary}>
           <ListItemIcon className={classes.listItemIcon}>
             <Icon path={mdiFileDocumentOutline} size={1} className="icon-grey" />
           </ListItemIcon>
-          <ListItemText primary={<Typography variant="body2" onClick={props.contextSummaryClick}>Summary</Typography>} />
+          <ListItemText primary={<Typography variant="body2">Summary</Typography>} />
         </MenuItem>
       </StyledMenu>
     );
@@ -153,23 +181,23 @@ export default function CustomizedMenus(props) {
           </ListItemIcon>
           <ListItemText primary={<Typography variant="body2">View</Typography>} />
         </MenuItem>
-        <MenuItem onClick={toggleSnackbar}>
+        <MenuItem onClick={() => triggerAction(actionList.message.withdraw, actionList.severity.withdraw)}>
           <ListItemIcon className={classes.listItemIcon}>
             <ExitToAppIcon fontSize="small" />
           </ListItemIcon>
           <ListItemText primary={<Typography variant="body2">Withdraw</Typography>} />
         </MenuItem>
-        <MenuItem onClick={toggleSnackbar}>
+        <MenuItem onClick={() => triggerAction(actionList.message.submit, actionList.severity.submit)}>
           <ListItemIcon className={classes.listItemIcon}>
             <Icon path={mdiShare} size={1} className="icon-grey" />
           </ListItemIcon>
           <ListItemText primary={<Typography variant="body2">Resubmit request</Typography>} />
         </MenuItem>
-        <MenuItem onClick={handleClose}>
+        <MenuItem onClick={toggleSummary}>
           <ListItemIcon className={classes.listItemIcon}>
             <Icon path={mdiFileDocumentOutline} size={1} className="icon-grey" />
           </ListItemIcon>
-          <ListItemText primary={<Typography variant="body2" onClick={props.contextSummaryClick}>Summary</Typography>} />
+          <ListItemText primary={<Typography variant="body2">Summary</Typography>} />
         </MenuItem>
       </StyledMenu>
     );
@@ -182,17 +210,17 @@ export default function CustomizedMenus(props) {
         open={Boolean(anchorEl)}
         onClose={handleClose}
       >
-        <MenuItem onClick={toggleSnackbar}>
+        <MenuItem onClick={() => triggerAction(actionList.message.withdraw, actionList.severity.withdraw)}>
           <ListItemIcon className={classes.listItemIcon}>
             <ExitToAppIcon fontSize="small" />
           </ListItemIcon>
           <ListItemText primary={<Typography variant="body2">Withdraw</Typography>} />
         </MenuItem>
-        <MenuItem onClick={handleClose}>
+        <MenuItem onClick={toggleSummary}>
           <ListItemIcon className={classes.listItemIcon}>
             <Icon path={mdiFileDocumentOutline} size={1} className="icon-grey" />
           </ListItemIcon>
-          <ListItemText primary={<Typography variant="body2" onClick={props.contextSummaryClick}>Summary</Typography>} />
+          <ListItemText primary={<Typography variant="body2">Summary</Typography>} />
         </MenuItem>
       </StyledMenu>
     );
@@ -205,23 +233,23 @@ export default function CustomizedMenus(props) {
         open={Boolean(anchorEl)}
         onClose={handleClose}
       >
-        <MenuItem onClick={toggleSnackbar}>
+        <MenuItem onClick={() => triggerAction(actionList.message.reopen, actionList.severity.reopen)}>
           <ListItemIcon className={classes.listItemIcon}>
             <PageReloadIcon width={20} height={20} />
           </ListItemIcon>
           <ListItemText primary={<Typography variant="body2">Reopen</Typography>} />
         </MenuItem>
-        <MenuItem onClick={toggleSnackbar}>
+        <MenuItem onClick={() => triggerAction(actionList.message.delete, actionList.severity.delete)}>
           <ListItemIcon className={classes.listItemIcon}>
             <DeleteIcon fontSize="small" />
           </ListItemIcon>
           <ListItemText primary={<Typography variant="body2">Delete</Typography>} />
         </MenuItem>
-        <MenuItem onClick={handleClose}>
+        <MenuItem onClick={toggleSummary}>
           <ListItemIcon className={classes.listItemIcon}>
             <Icon path={mdiFileDocumentOutline} size={1} className="icon-grey" />
           </ListItemIcon>
-          <ListItemText primary={<Typography variant="body2" onClick={props.contextSummaryClick}>Summary</Typography>} />
+          <ListItemText primary={<Typography variant="body2">Summary</Typography>} />
         </MenuItem>
       </StyledMenu>
     );
@@ -234,11 +262,11 @@ export default function CustomizedMenus(props) {
         open={Boolean(anchorEl)}
         onClose={handleClose}
       >
-        <MenuItem onClick={handleClose}>
+        <MenuItem onClick={toggleSummary}>
           <ListItemIcon className={classes.listItemIcon}>
             <Icon path={mdiFileDocumentOutline} size={1} className="icon-grey" />
           </ListItemIcon>
-          <ListItemText primary={<Typography variant="body2" onClick={props.contextSummaryClick}>Summary</Typography>} />
+          <ListItemText primary={<Typography variant="body2">Summary</Typography>} />
         </MenuItem>
       </StyledMenu>
     );
@@ -251,11 +279,11 @@ export default function CustomizedMenus(props) {
         open={Boolean(anchorEl)}
         onClose={handleClose}
       >
-        <MenuItem onClick={handleClose}>
+        <MenuItem onClick={toggleSummary}>
           <ListItemIcon className={classes.listItemIcon}>
             <Icon path={mdiFileDocumentOutline} size={1} className="icon-grey" />
           </ListItemIcon>
-          <ListItemText primary={<Typography variant="body2" onClick={props.contextSummaryClick}>Summary</Typography>} />
+          <ListItemText primary={<Typography variant="body2">Summary</Typography>} />
         </MenuItem>
       </StyledMenu>
     );
@@ -268,7 +296,11 @@ export default function CustomizedMenus(props) {
       </IconButton>
       {StyledMenuVar}
 
-      <CustomizedSnackbar open={open.snackbar} severity={open.severity} toggleSnackbar={toggleSnackbar}/>
+      <CustomizedSnackbar
+        open={open.snackbar}
+        severity={action.severity}
+        message={action.message}
+        toggleSnackbar={toggleSnackbar}/>
     </div>
   );
 }
