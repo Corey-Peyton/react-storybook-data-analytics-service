@@ -286,41 +286,39 @@ function ModifyFile(props) {
       </FormControl>
       {state.includeWeightVariable === 'Yes' && (
         <div className={classes.emphasisBox}>
-          <>
-            <TextField
-              className={classes.inputMargin}
-              margin="dense"
-              id="weightVariableName"
-              label="Name of weight variable"
-              variant="outlined"
-              required
-              fullWidth
-            />
-            <FormControl
-              component="fieldset"
-              required
+          <TextField
+            className={classes.inputMargin}
+            margin="dense"
+            id="weightVariableName"
+            label="Name of weight variable"
+            variant="outlined"
+            required
+            fullWidth
+          />
+          <FormControl
+            component="fieldset"
+            required
+          >
+            <FormLabel component="legend" className="screen-reader-text">
+             Is the weight variable scaled or normalized?
+            </FormLabel>
+            <RadioGroup
+              id="weightVariableType"
             >
-              <FormLabel component="legend" className="screen-reader-text">
-              Is the weight variable scaled or normalized?
-              </FormLabel>
-              <RadioGroup
-                id="weightVariableType"
-              >
-                <FormControlLabel
-                  value="Scaled"
-                  control={<Radio color="primary" />}
-                  label="Scaled"
-                />
-                <FormControlLabel
-                  value="Normalized"
-                  control={<Radio color="primary" />}
-                  label="Normalized"
-                />
-              </RadioGroup>
-              <FormHelperText>
-              </FormHelperText>
-            </FormControl>
-          </>
+              <FormControlLabel
+                value="Scaled"
+                control={<Radio color="primary" />}
+                label="Scaled"
+              />
+              <FormControlLabel
+                value="Normalized"
+                control={<Radio color="primary" />}
+                label="Normalized"
+              />
+            </RadioGroup>
+            <FormHelperText>
+            </FormHelperText>
+          </FormControl>
         </div>
       )}
       <TextField
@@ -701,7 +699,7 @@ function ModifyFile(props) {
           </DialogContent>
           <DialogActions>
             <Button onClick={handleClose} color="primary" variant="outlined">Cancel</Button>
-            <Button color="primary" variant="contained"onClick={handleClick}>Add supporting file</Button>
+            <Button color="primary" variant="contained" onClick={handleClick}>Add supporting file</Button>
           </DialogActions>
         </Dialog>
 
