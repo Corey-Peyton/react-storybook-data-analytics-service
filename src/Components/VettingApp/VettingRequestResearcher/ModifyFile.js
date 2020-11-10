@@ -701,7 +701,7 @@ function ModifyFile(props) {
           </DialogContent>
           <DialogActions>
             <Button onClick={handleClose} color="primary" variant="outlined">Cancel</Button>
-            <Button color="primary" variant="contained" onClick={props.toggleDrawer(false)}>Add supporting file</Button>
+            <Button color="primary" variant="contained"onClick={handleClick}>Add supporting file</Button>
           </DialogActions>
         </Dialog>
 
@@ -790,12 +790,11 @@ function ModifyFile(props) {
         required
       />
       <Button variant="contained" className={classes.button} color="primary"
-        onClick={handleClick}>
+        onClick={props.toggleDrawer(false)}>
         Save Changes
       </Button>
-      <Snackbar open={openSnackbar} autoHideDuration={6000}>
+      <Snackbar open={openSnackbar} autoHideDuration={6000} onClose={snackbarhandleClose}>
         <Alert
-          onClose={snackbarhandleClose}
           severity="success"
           className={classes.alert}
           variant="filled"
