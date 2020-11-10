@@ -22,12 +22,7 @@ import DashboardPageResearcher from '../Components/VettingApp/Dashboard/Dashboar
 import {useStyles} from '../Theme/globalStyles';
 import {theme} from '../Theme/theme';
 import Index from './Index';
-<<<<<<< HEAD
 import AnalystInfo from '../Components/VettingApp/VettingRequestAnalyst';
-import VettingRequestResearcher from '../Components/VettingApp/VettingRequestResearcher';
-=======
-
->>>>>>> a97ebe43bd23a79e575b9a24737f303c293dca96
 
 export default function AppRouter() {
   useStyles();
