@@ -36,6 +36,9 @@ const useStyles = makeStyles((theme) => ({
     cursor: 'pointer',
     height: ROW_HEIGHT,
   },
+  status: {
+    textTransform: 'uppercase',
+  },
 }));
 
 function descendingComparator(a, b, orderBy) {
@@ -130,7 +133,7 @@ export default function TableContainerComponent(props) {
                         <Typography variant="body2" noWrap={true}>{row.id}</Typography>
                       </TableCell>
                       <TableCell>
-                        <Typography variant="body2" noWrap={true}>{row.status}</Typography>
+                        <Typography variant="body2" noWrap={true} className={classes.status}>{row.status}</Typography>
                       </TableCell>
                       <TableCell>
                         <Typography variant="body2" noWrap={true}>{row.researcher}</Typography>
@@ -146,7 +149,7 @@ export default function TableContainerComponent(props) {
                         <Typography variant="body2" noWrap={true}>{row.updated}</Typography>
                       </TableCell>
                       <TableCell align='center'>
-                        <CustomizedMenus status={row.statusHead}/>
+                        <CustomizedMenus status={row.status} contextSummaryClick={props.contextSummaryClick}/>
                       </TableCell>
                     </TableRow>
                   );

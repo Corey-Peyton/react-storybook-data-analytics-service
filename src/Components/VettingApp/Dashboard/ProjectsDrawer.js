@@ -11,7 +11,6 @@ import TreeItem from '@material-ui/lab/TreeItem';
 import FolderOpenIcon from '@material-ui/icons/FolderOpen';
 import {makeStyles} from '@material-ui/styles';
 import {createMuiTheme, MuiThemeProvider, fade} from '@material-ui/core/styles';
-import {HEAD_H} from '../../../Theme/constants';
 
 export const DRAWER_WIDTH = 240;
 
@@ -26,7 +25,7 @@ const useStyles = makeStyles((theme) => ({
     boxSizing: 'border-box',
     width: DRAWER_WIDTH,
     height: `calc(100% - 70px)`,
-    marginTop: `calc(${HEAD_H}px - 13px)`,
+    marginTop: theme.spacing(8),
     paddingBottom: theme.spacing(10.5),
     paddingRight: theme.spacing(1.25),
     zIndex: '10 !important',
@@ -36,16 +35,13 @@ const useStyles = makeStyles((theme) => ({
     'display': 'flex',
     'alignItems': 'center',
     'zIndex': 10,
-    'height': '4em',
-    'width': '100%',
-    'minHeight': '4em',
     'position': 'sticky',
     'top': 0,
     'background': 'white',
     '& > svg': {
       marginRight: theme.spacing(2),
     },
-    'padding': theme.spacing(0, 0, 0, 3),
+    'padding': theme.spacing(3, 0, 2, 3),
   },
   drawerSection: {
     padding: theme.spacing(3, 2, 0, 2),
@@ -86,6 +82,10 @@ const useStyles = makeStyles((theme) => ({
     '$expanded > &': {
       'fontWeight': theme.typography.fontWeightRegular,
     },
+    '&>.MuiTreeItem-iconContainer': {
+      width: 0,
+      margin: 0,
+    },
   },
   group: {
     'marginLeft': 0,
@@ -100,6 +100,7 @@ const useStyles = makeStyles((theme) => ({
     color: 'inherit',
     borderTopRightRadius: theme.spacing(2),
     borderBottomRightRadius: theme.spacing(2),
+    paddingLeft: 0,
   },
   labelRoot: {
     display: 'flex',
@@ -181,7 +182,7 @@ StyledTreeItem.propTypes = {
   labelText: PropTypes.string.isRequired,
 };
 
-export default function DashboardDrawer(props) {
+export default function ProjectsDrawer(props) {
   const classes = useStyles();
   const {t} = useTranslation();
 

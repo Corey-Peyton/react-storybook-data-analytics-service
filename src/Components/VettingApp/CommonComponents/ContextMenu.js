@@ -12,7 +12,14 @@ import ExitToAppIcon from '@material-ui/icons/ExitToApp';
 import MoreVertIcon from '@material-ui/icons/MoreVert';
 import Icon from '@mdi/react';
 import PageReloadIcon from '../CommonComponents/PageReloadIcon';
-import {mdiFileDocumentOutline} from '@mdi/js';
+import {
+  mdiFileDocumentOutline,
+  mdiPencil,
+  mdiEye,
+  mdiShare,
+} from '@mdi/js';
+
+import CustomizedSnackbar from '../CommonComponents/CustomizedSnackbar';
 
 const useStyles = makeStyles((theme) => ({
   listItemIcon: {
@@ -44,9 +51,14 @@ const StyledMenu = withStyles({
 ));
 
 export default function CustomizedMenus(props) {
-  const [anchorEl, setAnchorEl] = React.useState(null);
-  const classes = useStyles();
   let StyledMenuVar;
+
+  const classes = useStyles();
+  const [anchorEl, setAnchorEl] = React.useState(null);
+  const [open, setOpen] = React.useState({
+    snackbar: false,
+    severity: 'success',
+  });
 
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
@@ -56,7 +68,13 @@ export default function CustomizedMenus(props) {
     setAnchorEl(null);
   };
 
-  if (props.status === 'active') {
+  const toggleSnackbar = (value) => {
+    setOpen({...open, snackbar: !open.snackbar});
+    // setOpen({...open, severity: value});
+    handleClose();
+  };
+
+  if (props.status === 'Draft') {
     StyledMenuVar = (
       <StyledMenu
         id="customized-menu"
@@ -67,11 +85,17 @@ export default function CustomizedMenus(props) {
       >
         <MenuItem onClick={handleClose}>
           <ListItemIcon className={classes.listItemIcon}>
+            <Icon path={mdiPencil} size={1} className="icon-grey" />
+          </ListItemIcon>
+          <ListItemText primary={<Typography variant="body2">Edit</Typography>} />
+        </MenuItem>
+        <MenuItem onClick={toggleSnackbar}>
+          <ListItemIcon className={classes.listItemIcon}>
             <SendIcon fontSize="small" />
           </ListItemIcon>
-          <ListItemText primary={<Typography variant="body2">Send request</Typography>} />
+          <ListItemText primary={<Typography variant="body2">Submit request</Typography>} />
         </MenuItem>
-        <MenuItem onClick={handleClose}>
+        <MenuItem onClick={toggleSnackbar}>
           <ListItemIcon className={classes.listItemIcon}>
             <ExitToAppIcon fontSize="small" />
           </ListItemIcon>
@@ -85,7 +109,7 @@ export default function CustomizedMenus(props) {
         </MenuItem>
       </StyledMenu>
     );
-  } else if (props.status === 'withdrawn') {
+  } else if (props.status === 'Submitted') {
     StyledMenuVar = (
       <StyledMenu
         id="customized-menu"
@@ -96,11 +120,98 @@ export default function CustomizedMenus(props) {
       >
         <MenuItem onClick={handleClose}>
           <ListItemIcon className={classes.listItemIcon}>
+            <Icon path={mdiEye} size={1} className="icon-grey" />
+          </ListItemIcon>
+          <ListItemText primary={<Typography variant="body2">View request</Typography>} />
+        </MenuItem>
+        <MenuItem onClick={toggleSnackbar}>
+          <ListItemIcon className={classes.listItemIcon}>
+            <ExitToAppIcon fontSize="small" />
+          </ListItemIcon>
+          <ListItemText primary={<Typography variant="body2">Withdraw</Typography>} />
+        </MenuItem>
+        <MenuItem onClick={handleClose}>
+          <ListItemIcon className={classes.listItemIcon}>
+            <Icon path={mdiFileDocumentOutline} size={1} className="icon-grey" />
+          </ListItemIcon>
+          <ListItemText primary={<Typography variant="body2" onClick={props.contextSummaryClick}>Summary</Typography>} />
+        </MenuItem>
+      </StyledMenu>
+    );
+  } else if (props.status === 'Update requested') {
+    StyledMenuVar = (
+      <StyledMenu
+        id="customized-menu"
+        anchorEl={anchorEl}
+        keepMounted
+        open={Boolean(anchorEl)}
+        onClose={handleClose}
+      >
+        <MenuItem onClick={handleClose}>
+          <ListItemIcon className={classes.listItemIcon}>
+            <Icon path={mdiEye} size={1} className="icon-grey" />
+          </ListItemIcon>
+          <ListItemText primary={<Typography variant="body2">View</Typography>} />
+        </MenuItem>
+        <MenuItem onClick={toggleSnackbar}>
+          <ListItemIcon className={classes.listItemIcon}>
+            <ExitToAppIcon fontSize="small" />
+          </ListItemIcon>
+          <ListItemText primary={<Typography variant="body2">Withdraw</Typography>} />
+        </MenuItem>
+        <MenuItem onClick={toggleSnackbar}>
+          <ListItemIcon className={classes.listItemIcon}>
+            <Icon path={mdiShare} size={1} className="icon-grey" />
+          </ListItemIcon>
+          <ListItemText primary={<Typography variant="body2">Resubmit request</Typography>} />
+        </MenuItem>
+        <MenuItem onClick={handleClose}>
+          <ListItemIcon className={classes.listItemIcon}>
+            <Icon path={mdiFileDocumentOutline} size={1} className="icon-grey" />
+          </ListItemIcon>
+          <ListItemText primary={<Typography variant="body2" onClick={props.contextSummaryClick}>Summary</Typography>} />
+        </MenuItem>
+      </StyledMenu>
+    );
+  } else if (props.status === 'Disclosure analysis') {
+    StyledMenuVar = (
+      <StyledMenu
+        id="customized-menu"
+        anchorEl={anchorEl}
+        keepMounted
+        open={Boolean(anchorEl)}
+        onClose={handleClose}
+      >
+        <MenuItem onClick={toggleSnackbar}>
+          <ListItemIcon className={classes.listItemIcon}>
+            <ExitToAppIcon fontSize="small" />
+          </ListItemIcon>
+          <ListItemText primary={<Typography variant="body2">Withdraw</Typography>} />
+        </MenuItem>
+        <MenuItem onClick={handleClose}>
+          <ListItemIcon className={classes.listItemIcon}>
+            <Icon path={mdiFileDocumentOutline} size={1} className="icon-grey" />
+          </ListItemIcon>
+          <ListItemText primary={<Typography variant="body2" onClick={props.contextSummaryClick}>Summary</Typography>} />
+        </MenuItem>
+      </StyledMenu>
+    );
+  } else if (props.status === 'Withdrawn') {
+    StyledMenuVar = (
+      <StyledMenu
+        id="customized-menu"
+        anchorEl={anchorEl}
+        keepMounted
+        open={Boolean(anchorEl)}
+        onClose={handleClose}
+      >
+        <MenuItem onClick={toggleSnackbar}>
+          <ListItemIcon className={classes.listItemIcon}>
             <PageReloadIcon width={20} height={20} />
           </ListItemIcon>
           <ListItemText primary={<Typography variant="body2">Reopen</Typography>} />
         </MenuItem>
-        <MenuItem onClick={handleClose}>
+        <MenuItem onClick={toggleSnackbar}>
           <ListItemIcon className={classes.listItemIcon}>
             <DeleteIcon fontSize="small" />
           </ListItemIcon>
@@ -110,11 +221,11 @@ export default function CustomizedMenus(props) {
           <ListItemIcon className={classes.listItemIcon}>
             <Icon path={mdiFileDocumentOutline} size={1} className="icon-grey" />
           </ListItemIcon>
-          <ListItemText primary={<Typography variant="body2">Summary</Typography>} />
+          <ListItemText primary={<Typography variant="body2" onClick={props.contextSummaryClick}>Summary</Typography>} />
         </MenuItem>
       </StyledMenu>
     );
-  } else if (props.status === 'approved') {
+  } else if (props.status === 'Approved') {
     StyledMenuVar = (
       <StyledMenu
         id="customized-menu"
@@ -127,7 +238,7 @@ export default function CustomizedMenus(props) {
           <ListItemIcon className={classes.listItemIcon}>
             <Icon path={mdiFileDocumentOutline} size={1} className="icon-grey" />
           </ListItemIcon>
-          <ListItemText primary={<Typography variant="body2">Summary</Typography>} />
+          <ListItemText primary={<Typography variant="body2" onClick={props.contextSummaryClick}>Summary</Typography>} />
         </MenuItem>
       </StyledMenu>
     );
@@ -144,7 +255,7 @@ export default function CustomizedMenus(props) {
           <ListItemIcon className={classes.listItemIcon}>
             <Icon path={mdiFileDocumentOutline} size={1} className="icon-grey" />
           </ListItemIcon>
-          <ListItemText primary={<Typography variant="body2">Summary</Typography>} />
+          <ListItemText primary={<Typography variant="body2" onClick={props.contextSummaryClick}>Summary</Typography>} />
         </MenuItem>
       </StyledMenu>
     );
@@ -156,6 +267,8 @@ export default function CustomizedMenus(props) {
         <MoreVertIcon />
       </IconButton>
       {StyledMenuVar}
+
+      <CustomizedSnackbar open={open.snackbar} severity={open.severity} toggleSnackbar={toggleSnackbar}/>
     </div>
   );
 }
