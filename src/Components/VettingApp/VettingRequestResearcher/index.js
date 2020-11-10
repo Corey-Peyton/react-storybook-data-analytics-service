@@ -19,7 +19,9 @@ import {
   DialogContent,
   DialogContentText,
   DialogActions,
+  Snackbar,
 } from '@material-ui/core';
+import Alert from '@material-ui/lab/Alert';
 import ArrowForwardIosIcon from '@material-ui/icons/ArrowForwardIos';
 import ArrowBackIosIcon from '@material-ui/icons/ArrowBackIos';
 import Icon from '@mdi/react';
@@ -30,13 +32,17 @@ import ResidualDisclosure from './ResidualDisclosure';
 import AdditionalInfo from './AdditionalInfo';
 import ToolBarDelete from './ToolBarDelete';
 import ToolBar from './ToolBar';
-import Snackbar from '@material-ui/core/Snackbar';
-import Alert from '@material-ui/lab/Alert';
+import FloatingSupportButton from '../CommonComponents/Support';
+import Header from '../CommonComponents/Header';
+import Footer from '../CommonComponents/Footer';
 
 const useStyles = makeStyles((theme) => ({
   main: {
     background: theme.palette.grey[100],
     paddingBottom: theme.spacing(6),
+    borderBottomWidth: '1px',
+    borderBottomStyle: 'solid',
+    borderBottomColor: theme.palette.grey[300],
   },
   divider: {
     margin: theme.spacing(3, 0),
@@ -54,6 +60,10 @@ const useStyles = makeStyles((theme) => ({
     margin: 'auto',
     boxSizing: 'border-box',
     padding: theme.spacing(3),
+    borderRadius: 0,
+    borderTopWidth: '1px',
+    borderTopStyle: 'solid',
+    borderTopColor: theme.palette.grey[300],
   },
   title: {
     flexGrow: 1,
@@ -205,91 +215,93 @@ function VettingRequestResearcher(props) {
   };
 
   return (
-    <main className={classes.main} tabIndex="-1">
-      <Container maxWidth="xl" className="page-container">
-        <AppBar position="static" className={classes.appBar} color="default">
-          {state.activeStep === 3 ? (
-            <ToolBarDelete />
+    <React.Fragment>
+      <Header />
+      <main className={classes.main} tabIndex="-1">
+        <Container maxWidth={false} className="page-container">
+          <AppBar position="static" className={classes.appBar} color="default">
+            {state.activeStep === 3 ? (
+            <ToolBarDelete handleDialogOpen={handleDialogOpen} />
           ) : (
-            <ToolBar handleDialogOpen={handleDialogOpen} />
+            <ToolBar />
           )}
-        </AppBar>
-        <Paper className={classes.paper}>
-          <Grid container alignItems="center">
-            <Grid item className={classes.title}>
-              <Typography variant="h6">{state.title}</Typography>
-              <Typography variant="caption" color="textSecondary">
+          </AppBar>
+          <Paper className={classes.paper}>
+            <Grid container alignItems="center">
+              <Grid item className={classes.title}>
+                <Typography variant="h6">{state.title}</Typography>
+                <Typography variant="caption" color="textSecondary">
                 ID: 10_2020_232425255
-              </Typography>
+                </Typography>
+              </Grid>
+              <Grid item>
+                <Chip label="Draft" className="mr-2" />
+              </Grid>
+              <Grid item>
+                <div className={classes.lockTooltip}>
+                  <Tooltip title="This vetting request is unlocked and marked as “Draft.” You can either send or withdraw this vetting request.">
+                    <Icon
+                      path={mdiLockOpenVariant}
+                      size={1}
+                      className="icon-grey"
+                    />
+                  </Tooltip>
+                </div>
+              </Grid>
             </Grid>
-            <Grid item>
-              <Chip label="Draft" className="mr-2" />
-            </Grid>
-            <Grid item>
-              <div className={classes.lockTooltip}>
-                <Tooltip title="This vetting request is unlocked and marked as “Draft.” You can either send or withdraw this vetting request.">
-                  <Icon
-                    path={mdiLockOpenVariant}
-                    size={1}
-                    className="icon-grey"
-                  />
-                </Tooltip>
-              </div>
-            </Grid>
-          </Grid>
-          <Divider className={classes.divider} />
-          <div className={classes.stepperContainer}>
-            {state.activeStep !== 0 && (
-              <Button
-                onClick={handleBack}
-                className={classes.stepperBackBtn}
-                startIcon={<ArrowBackIosIcon />}
-              >
+            <Divider className={classes.divider} />
+            <div className={classes.stepperContainer}>
+              {state.activeStep !== 0 && (
+                <Button
+                  onClick={handleBack}
+                  className={classes.stepperBackBtn}
+                  startIcon={<ArrowBackIosIcon />}
+                >
                 Back
-              </Button>
-            )}
-            <Stepper nonLinear activeStep={state.activeStep}>
-              {steps.map((label, index) => {
-                const labelProps = {};
-                const buttonProps = {};
-                if (isStepFailed(index)) {
-                  labelProps.error = true;
-                  buttonProps.optional = (
-                    <Typography
-                      className={classes.errorMsg}
-                      variant="body2"
-                      color="error"
-                    >
+                </Button>
+              )}
+              <Stepper nonLinear activeStep={state.activeStep}>
+                {steps.map((label, index) => {
+                  const labelProps = {};
+                  const buttonProps = {};
+                  if (isStepFailed(index)) {
+                    labelProps.error = true;
+                    buttonProps.optional = (
+                      <Typography
+                        className={classes.errorMsg}
+                        variant="body2"
+                        color="error"
+                      >
                       +{state.errors[index]} errors
-                    </Typography>
+                      </Typography>
+                    );
+                  }
+                  return (
+                    <Step key={label}>
+                      <StepButton
+                        {...buttonProps}
+                        onClick={handleStep(index)}
+                        completed={state.completed[index]}
+                      >
+                        <StepLabel {...labelProps}>{label}</StepLabel>
+                      </StepButton>
+                    </Step>
                   );
-                }
-                return (
-                  <Step key={label}>
-                    <StepButton
-                      {...buttonProps}
-                      onClick={handleStep(index)}
-                      completed={state.completed[index]}
-                    >
-                      <StepLabel {...labelProps}>{label}</StepLabel>
-                    </StepButton>
-                  </Step>
-                );
-              })}
-            </Stepper>
-            {state.activeStep !== getSteps().length - 1 && (
-              <Button
-                onClick={handleNext}
-                className={classes.stepperNextBtn}
-                endIcon={<ArrowForwardIosIcon />}
-              >
+                })}
+              </Stepper>
+              {state.activeStep !== getSteps().length - 1 && (
+                <Button
+                  onClick={handleNext}
+                  className={classes.stepperNextBtn}
+                  endIcon={<ArrowForwardIosIcon />}
+                >
                 Next
-              </Button>
-            )}
-          </div>
-          <Divider className={classes.divider} />
-          <div>
-            {allStepsCompleted() ? (
+                </Button>
+              )}
+            </div>
+            <Divider className={classes.divider} />
+            <div>
+              {allStepsCompleted() ? (
               <div>
                 <Typography className={classes.instructions}>
                   All steps completed - you&apos;re finished
@@ -305,25 +317,25 @@ function VettingRequestResearcher(props) {
                 </Grid>
               </div>
             )}
-          </div>
-          <Grid
-            container
-            justify={state.activeStep === 0 ? 'flex-end' : 'space-between'}
-            className={classes.navButtons}
-          >
-            {state.activeStep !== 0 && (
-              <Grid item>
-                <Button
-                  variant="contained"
-                  color="primary"
-                  className={classes.button}
-                  onClick={handleBack}
-                >
+            </div>
+            <Grid
+              container
+              justify={state.activeStep === 0 ? 'flex-end' : 'space-between'}
+              className={classes.navButtons}
+            >
+              {state.activeStep !== 0 && (
+                <Grid item>
+                  <Button
+                    variant="contained"
+                    color="primary"
+                    className={classes.button}
+                    onClick={handleBack}
+                  >
                   Back
-                </Button>
-              </Grid>
-            )}
-            {state.activeStep === getSteps().length - 1 ? (
+                  </Button>
+                </Grid>
+              )}
+              {state.activeStep === getSteps().length - 1 ? (
               <Grid item>
                 <Button
                   variant="contained"
@@ -357,44 +369,47 @@ function VettingRequestResearcher(props) {
                 </Button>
               </Grid>
             )}
-          </Grid>
-        </Paper>
-      </Container>
+            </Grid>
+          </Paper>
+          <FloatingSupportButton />
+        </Container>
 
-      <Dialog
-        open={state.open}
-        onClose={handleDialogClose}
-        aria-labelledby="alert-dialog-title"
-        aria-describedby="alert-dialog-description"
-      >
-        <DialogTitle id="alert-dialog-title">
+        <Dialog
+          open={state.open}
+          onClose={handleDialogClose}
+          aria-labelledby="alert-dialog-title"
+          aria-describedby="alert-dialog-description"
+        >
+          <DialogTitle id="alert-dialog-title">
           Delete vetting request
-        </DialogTitle>
-        <DialogContent className="pb-0">
-          <DialogContentText id="alert-dialog-description">
-            <Typography variant="body2">{`Are you sure you want to delete the Vetting disclosure request "${state.title}"?`}</Typography>
-          </DialogContentText>
-          <Divider className={classes.divider} />
-        </DialogContent>
-        <DialogActions className={classes.dialogActions}>
-          <Button
-            onClick={handleDialogClose}
-            color="primary"
-            variant="outlined"
-          >
+          </DialogTitle>
+          <DialogContent className="pb-0">
+            <DialogContentText id="alert-dialog-description">
+              <Typography variant="body2">{`Are you sure you want to delete the Vetting disclosure request "${state.title}"?`}</Typography>
+            </DialogContentText>
+            <Divider className={classes.divider} />
+          </DialogContent>
+          <DialogActions className={classes.dialogActions}>
+            <Button
+              onClick={handleDialogClose}
+              color="primary"
+              variant="outlined"
+            >
             Cancel
-          </Button>
-          <Button
-            onClick={handleDialogClose}
-            color="primary"
-            variant="contained"
-            className="ml-2"
-          >
+            </Button>
+            <Button
+              onClick={handleDialogClose}
+              color="primary"
+              variant="contained"
+              className="ml-2"
+            >
             Delete request
-          </Button>
-        </DialogActions>
-      </Dialog>
-    </main>
+            </Button>
+          </DialogActions>
+        </Dialog>
+      </main>
+      <Footer />
+    </React.Fragment>
   );
 }
 export default VettingRequestResearcher;
