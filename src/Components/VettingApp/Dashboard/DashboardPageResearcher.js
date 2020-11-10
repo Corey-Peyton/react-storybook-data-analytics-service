@@ -152,6 +152,7 @@ export default function DashboardPageResearcher() {
 
   const toggleSummaryDrawer = () => {
     setOpen({...open, summaryDrawer: !open.summaryDrawer});
+    console.log(open);
   };
 
   const handleProjectTitle = (value) => {
@@ -197,7 +198,7 @@ export default function DashboardPageResearcher() {
               >
                 {project.title}
               </Typography>
-              <Button variant="contained" color="primary" className={classes.button} onClick={toggleSummaryDrawer}>
+              <Button variant="contained" color="primary" className={classes.button}>
             New vetting request
               </Button>
             </AppBar>
@@ -216,16 +217,31 @@ export default function DashboardPageResearcher() {
             </Tabs>
           </AppBar>
           <TabPanel value={value} index={0} className={classes.tabPanel}>
-            <TableContainerComponent status="active" filteredRows={filteredRows} headCells={headCells} contextSummaryClick={toggleSummaryDrawer}/>
+            <TableContainerComponent
+              status="active"
+              filteredRows={filteredRows}
+              headCells={headCells}
+              contextSummaryClick={toggleSummaryDrawer}/>
           </TabPanel>
           <TabPanel value={value} index={1} className={classes.tabPanel}>
-            <TableContainerComponent status="withdrawn" filteredRows={filteredRows} headCells={headCells} contextSummaryClick={toggleSummaryDrawer}/>
+            <TableContainerComponent
+              status="withdrawn"
+              filteredRows={filteredRows}
+              headCells={headCells}
+              contextSummaryClick={toggleSummaryDrawer}/>
           </TabPanel>
           <TabPanel value={value} index={2} className={classes.tabPanel}>
-            <TableContainerComponent status="approved" filteredRows={filteredRows} headCells={headCells} contextSummaryClick={toggleSummaryDrawer}/>
+            <TableContainerComponent
+              status="approved"
+              filteredRows={filteredRows}
+              headCells={headCells}
+              contextSummaryClick={toggleSummaryDrawer}/>
           </TabPanel>
           <TabPanel value={value} index={3} className={classes.tabPanel}>
-            <TableContainerComponent status="denied" filteredRows={filteredRows} headCells={headCells} contextSummaryClick={toggleSummaryDrawer}/>
+            <TableContainerComponent
+              status="denied" filteredRows={filteredRows}
+              headCells={headCells}
+              contextSummaryClick={toggleSummaryDrawer}/>
           </TabPanel>
         </Paper>
         <Footer open={open.projectsDrawer} />
