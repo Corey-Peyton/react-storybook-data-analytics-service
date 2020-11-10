@@ -151,7 +151,7 @@ export default function CustomizedMenus(props) {
           <ListItemIcon className={classes.listItemIcon}>
             <Icon path={mdiEye} size={1} className="icon-grey" />
           </ListItemIcon>
-          <ListItemText primary={<Typography variant="body2">View</Typography>} />
+          <ListItemText primary={<Typography variant="body2">View request</Typography>} />
         </MenuItem>
         <MenuItem onClick={toggleSnackbar}>
           <ListItemIcon className={classes.listItemIcon}>
