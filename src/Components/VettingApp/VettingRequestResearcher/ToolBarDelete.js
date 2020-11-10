@@ -20,7 +20,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-function ToolBarDelete() {
+function ToolBarDelete(props) {
   const classes = useStyles();
   return (
     <Toolbar>
@@ -33,7 +33,7 @@ function ToolBarDelete() {
         <ArrowBackIcon />
       </IconButton>
       <Typography variant="body2" className={classes.title}>
-              Vetting requests dashboard
+              Dashboard
       </Typography>
       <Button
         color="default"
@@ -62,6 +62,7 @@ function ToolBarDelete() {
         color="default"
         className={classes.headerBtn}
         startIcon={<DeleteIcon />}
+        onClick={props.handleDialogOpen}
       >
               Delete
       </Button>
