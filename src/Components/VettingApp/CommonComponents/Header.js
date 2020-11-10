@@ -93,7 +93,7 @@ const defaultStyles = makeStyles((theme) => ({
 function ShowMenuButton(props) {
   const hashVar = window.location.hash.substring(2);
   const classes = defaultStyles();
-  if (hashVar === 'vetting-app/dashboard-support'|| hashVar === 'vetting-app/dashboard-lead') {
+  if (hashVar === 'vetting-app/dashboard-researcher'|| hashVar === 'vetting-app/dashboard-analyst') {
     return (
       <IconButton onClick={props.clickHandler} className={classes.iconButton} edge="start">
         <MenuIcon />

@@ -31,7 +31,7 @@ export default function CustomizedSnackbar(props) {
         }}
       >
         <Alert onClose={props.toggleSnackbar} severity={props.severity}>
-          This is a success message!
+          {props.message}
         </Alert>
       </Snackbar>
     </div>
