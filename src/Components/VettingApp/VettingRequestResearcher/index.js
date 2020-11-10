@@ -221,9 +221,9 @@ function VettingRequestResearcher(props) {
         <Container maxWidth={false} className="page-container">
           <AppBar position="static" className={classes.appBar} color="default">
             {state.activeStep === 3 ? (
-            <ToolBarDelete />
+            <ToolBarDelete handleDialogOpen={handleDialogOpen} />
           ) : (
-            <ToolBar handleDialogOpen={handleDialogOpen} />
+            <ToolBar />
           )}
           </AppBar>
           <Paper className={classes.paper}>

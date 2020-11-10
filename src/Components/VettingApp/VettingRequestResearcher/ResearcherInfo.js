@@ -49,14 +49,14 @@ function ResearcherInfo(props) {
   const classes = useStyles();
   return (
     <React.Fragment>
-      <Typography>
+      <Typography variant="body2">
         Vetting disclosure requests are required by Statistics Canada’s to
         ensure data protection. Disclosure analysts will review all external
         users vetting requests for accessing to confidential microdata. These
         vetting requests are subject to a risk-based assessment of potential
         disclosure based on established rules and procedures. For more
-        information please visit the “
-        <Link href="#">Vetting guidelines website</Link>.”
+        information please visit the
+        <Link href="#">Vetting guidelines website</Link>.
       </Typography>
       <Divider className={classes.divider} />
       <Typography className="mb-2" variant="subtitle2">
@@ -185,7 +185,7 @@ function ResearcherInfo(props) {
             defaultValue="Rose"
             className={classes.inputMargin}
             InputProps={{readOnly: true}}
-          />
+          / >
           <TextField
             id="last-name"
             name="last-name"
@@ -213,8 +213,8 @@ function ResearcherInfo(props) {
             // error={!!errors.date}
             // helperText={errors.date?.message}
             defaultValue="Aug. 28, 2020"
-            InputProps={{readOnly: true}}
             className={classes.inputMargin}
+            InputProps={{readOnly: true}}
           />
           <TextField
             id="username"
@@ -225,8 +225,8 @@ function ResearcherInfo(props) {
             required
             fullWidth
             margin="dense"
-            InputProps={{readOnly: true}}
             defaultValue="rose_temple"
+            InputProps={{readOnly: true}}
             // error={!!errors.username}
             // helperText={errors.username?.message}
           />

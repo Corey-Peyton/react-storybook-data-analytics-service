@@ -123,6 +123,12 @@ for (const [key, value] of Object.entries(outputMethods)) {
 
 function ModifyFile(props) {
   const classes = useStyles();
+  const [state, setState] = React.useState({
+    includeWeightVariable: null,
+    linkedData: null,
+    descriptiveStats: null,
+    modifiedWeights: null,
+  });
 
   const handleClickOpen = () => {
     setOpen(true);
@@ -141,6 +147,14 @@ function ModifyFile(props) {
 
   const handleClick = () => {
     setOpenSnackbar(true);
+  };
+
+  const handleRadioChange = (event) => {
+    const name = event.target.name;
+    setState({
+      ...state,
+      [name]: event.target.value,
+    });
   };
 
   return (
@@ -252,6 +266,9 @@ function ModifyFile(props) {
         </FormLabel>
         <RadioGroup
           id="includeWeightVariable"
+          value={state.includeWeightVariable}
+          name="includeWeightVariable"
+          onChange={handleRadioChange}
         >
           <FormControlLabel
             value="Yes"
@@ -267,8 +284,8 @@ function ModifyFile(props) {
         <FormHelperText>
         </FormHelperText>
       </FormControl>
-      <div className={classes.emphasisBox}>
-        <>
+      {state.includeWeightVariable === 'Yes' && (
+        <div className={classes.emphasisBox}>
           <TextField
             className={classes.inputMargin}
             margin="dense"
@@ -283,7 +300,7 @@ function ModifyFile(props) {
             required
           >
             <FormLabel component="legend" className="screen-reader-text">
-              Is the weight variable scaled or normalized?
+             Is the weight variable scaled or normalized?
             </FormLabel>
             <RadioGroup
               id="weightVariableType"
@@ -302,8 +319,8 @@ function ModifyFile(props) {
             <FormHelperText>
             </FormHelperText>
           </FormControl>
-        </>
-      </div>
+        </div>
+      )}
       <TextField
         className={classes.inputMargin}
         margin="dense"
@@ -334,6 +351,9 @@ function ModifyFile(props) {
         <FormLabel component="legend">Is linked data used?</FormLabel>
         <RadioGroup
           id="linkedData"
+          value={state.linkedData}
+          name="linkedData"
+          onChange={handleRadioChange}
         >
           <FormControlLabel
             value="Yes"
@@ -354,6 +374,18 @@ function ModifyFile(props) {
         <FormHelperText>
         </FormHelperText>
       </FormControl>
+      {state.linkedData === 'Yes' && (
+        <TextField
+          className={classes.inputMargin}
+          margin="dense"
+          id="linkageDescription"
+          label="Describe how linkage was done"
+          variant="outlined"
+          helperText="Examples: person-based, record-based, matching geographies"
+          fullWidth
+          required
+        />
+      )}
       <FormControl
         className={classes.inputMargin}
         component="fieldset"
@@ -401,6 +433,9 @@ function ModifyFile(props) {
         </FormLabel>
         <RadioGroup
           id="descriptiveStats"
+          value={state.descriptiveStats}
+          name="descriptiveStats"
+          onChange={handleRadioChange}
         >
           <FormControlLabel value="Yes" control={<Radio />} label="Yes" />
           <FormControlLabel value="No" control={<Radio />} label="No" />
@@ -409,6 +444,19 @@ function ModifyFile(props) {
         <FormHelperText>
         </FormHelperText>
       </FormControl>
+      {state.descriptiveStats === 'Yes' && (
+        <FormControl className={classes.inputMargin} component="fieldset">
+          <FormLabel component="legend">
+            Is the output clearly labelled (tables have a title and every
+            variable and category is labelled)?
+          </FormLabel>
+          <RadioGroup id="outpuLabelled">
+            <FormControlLabel value="Yes" control={<Radio />} label="Yes" />
+            <FormControlLabel value="No" control={<Radio />} label="No" />
+          </RadioGroup>
+          <FormHelperText></FormHelperText>
+        </FormControl>
+      )}
       <FormControl
         className={classes.inputMargin}
         component="fieldset"
@@ -462,6 +510,9 @@ function ModifyFile(props) {
         </FormLabel>
         <RadioGroup
           id="modifiedWeights"
+          value={state.modifiedWeights}
+          name="modifiedWeights"
+          onChange={handleRadioChange}
         >
           <FormControlLabel
             value="Yes"
@@ -482,6 +533,17 @@ function ModifyFile(props) {
         <FormHelperText>
         </FormHelperText>
       </FormControl>
+      {state.modifiedWeights === 'Yes' && (
+        <TextField
+          className={classes.inputMargin}
+          margin="dense"
+          id="modifiedDesc"
+          label="Describe why and how the weights were modified"
+          variant="outlined"
+          fullWidth
+          required
+        />
+      )}
       <FormControl
         className={classes.inputMargin}
         component="fieldset"
@@ -527,6 +589,9 @@ function ModifyFile(props) {
         </FormLabel>
         <RadioGroup
           id="roundingOutput"
+          value={state.roundingOutput}
+          name="roundingOutput"
+          onChange={handleRadioChange}
         >
           <FormControlLabel
             value="Yes"
@@ -547,6 +612,17 @@ function ModifyFile(props) {
         <FormHelperText>
         </FormHelperText>
       </FormControl>
+      {state.roundingOutput === 'Yes' && (
+        <TextField
+          className={classes.inputMargin}
+          margin="dense"
+          id="roundingDesc"
+          label="Describe the approach to rounding and rounding base"
+          variant="outlined"
+          fullWidth
+          required
+        />
+      )}
       <div className={classes.emphasisBox}>
         <Typography variant="subtitle2" className="mb-2">
           Mandatory supporting files:
@@ -600,6 +676,7 @@ function ModifyFile(props) {
                 id="supportingFilesFolder"
                 label="Supporting folder *"
                 labelId="supportingFilesFolder-label"
+                variant="standard"
               >
                 <MenuItem key={-1} value="">
                 None
@@ -622,7 +699,7 @@ function ModifyFile(props) {
           </DialogContent>
           <DialogActions>
             <Button onClick={handleClose} color="primary" variant="outlined">Cancel</Button>
-            <Button onClick={handleClose} color="primary" variant="contained">Add supporting file</Button>
+            <Button color="primary" variant="contained" onClick={handleClick}>Add supporting file</Button>
           </DialogActions>
         </Dialog>
 
@@ -711,12 +788,11 @@ function ModifyFile(props) {
         required
       />
       <Button variant="contained" className={classes.button} color="primary"
-        onClick={handleClick}>
+        onClick={props.toggleDrawer(false)}>
         Save Changes
       </Button>
-      <Snackbar open={openSnackbar} autoHideDuration={6000}>
+      <Snackbar open={openSnackbar} autoHideDuration={6000} onClose={snackbarhandleClose}>
         <Alert
-          onClose={snackbarhandleClose}
           severity="success"
           className={classes.alert}
           variant="filled"

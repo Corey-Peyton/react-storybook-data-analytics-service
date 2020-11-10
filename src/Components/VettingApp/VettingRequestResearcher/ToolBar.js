@@ -19,7 +19,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-function ToolBar(props) {
+function ToolBar() {
   const classes = useStyles();
   /* const setOpen = React.useState(false);
   const handleDialogOpen = () => {
@@ -36,13 +36,13 @@ function ToolBar(props) {
         <ArrowBackIcon />
       </IconButton>
       <Typography variant="body2" className={classes.title}>
-              Vetting requests dashboard
+              Dashboard
       </Typography>
       <Button
         color="default"
         className={classes.headerBtn}
         startIcon={<ExitToAppIcon />}
-        onClick={props.handleDialogOpen}
+        // onClick={props.handleDialogOpen}
       >
               Withdraw
       </Button>

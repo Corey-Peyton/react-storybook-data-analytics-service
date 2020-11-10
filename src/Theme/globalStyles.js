@@ -128,6 +128,13 @@ export const useStyles = makeStyles({
     '.MuiTypography-colorError': {
       marginLeft: theme.spacing(2),
     },
+    '.MuiPaper-root, .MuiFormLabel-root, .MuiTableCell-body': {
+      color: [theme.palette.common.black],
+    },
+
+    '.MuiAlert-filledError, .MuiAlert-message, .MuiAlert-icon': {
+      color: [theme.palette.common.white],
+    },
 
     // Pagination
     '.MuiPaginationItem-root': {
