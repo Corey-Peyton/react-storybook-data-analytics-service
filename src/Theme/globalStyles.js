@@ -76,6 +76,7 @@ export const useStyles = makeStyles({
       fontSize: '0.875rem',
       marginTop: '1px',
       color: theme.palette.text.primary,
+      lineHeight: 1.5,
     },
     '.MuiInputBase-input': {
       'fontSize': '0.875rem',
