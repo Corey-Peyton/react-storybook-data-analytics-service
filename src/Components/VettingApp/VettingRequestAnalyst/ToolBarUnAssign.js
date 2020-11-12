@@ -1,6 +1,6 @@
 import React from 'react';
 import {makeStyles} from '@material-ui/core/styles';
-import {Button, Toolbar, IconButton, Typography} from '@material-ui/core';
+import {Button, Toolbar, IconButton, Typography, TextField} from '@material-ui/core';
 import Icon from '@mdi/react';
 import ReplayIcon from '@material-ui/icons/Replay';
 import SaveIcon from '@material-ui/icons/Save';
@@ -9,6 +9,12 @@ import {mdiAccountPlus} from '@mdi/js';
 import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
 import ArrowDropDownIcon from '@material-ui/icons/ArrowDropDown';
+import {
+  Dialog,
+  DialogTitle,
+  DialogContent,
+  DialogActions,
+} from '@material-ui/core';
 
 const useStyles = makeStyles((theme) => ({
   main: {
@@ -33,6 +39,16 @@ function ToolBarUnassign() {
 
   const handleClose = () => {
     setAnchorEl(null);
+  };
+
+  const [open, setOpen] = React.useState(false);
+
+  const handleClickOpen = () => {
+    setOpen(true);
+  };
+
+  const handleDialogClose = () => {
+    setOpen(false);
   };
   return (
     <Toolbar>
@@ -66,6 +82,7 @@ function ToolBarUnassign() {
         color="primary"
         className={classes.headerBtn}
         startIcon={<ReplayIcon />}
+        onClick={handleClickOpen}
       >
               Request an update
       </Button>
@@ -82,6 +99,33 @@ function ToolBarUnassign() {
         <MenuItem onClick={handleClose}>Approve</MenuItem>
         <MenuItem onClick={handleClose}>Deny</MenuItem>
       </Menu>
+      <Dialog
+        open={open}
+        onClose={handleDialogClose}
+        aria-labelledby="alert-dialog-title"
+        aria-describedby="alert-dialog-description"
+      >
+        <DialogTitle id="alert-dialog-title">Request an update</DialogTitle>
+        <DialogContent className="pb-0">
+          <TextField
+            className={classes.inputMargin}
+            margin="dense"
+            id="Phone number"
+            label="+1 343-455-6767"
+            variant="outlined"
+            fullWidth
+            required
+          />
+        </DialogContent>
+        <DialogActions className={classes.dialogActions}>
+          <Button onClick={handleDialogClose} color="primary" variant="outlined">
+            Cancel
+          </Button>
+          <Button onClick={handleDialogClose} color="primary" variant="contained" className="ml-2">
+          Delete request
+          </Button>
+        </DialogActions>
+      </Dialog>
     </Toolbar>
   );
 }
