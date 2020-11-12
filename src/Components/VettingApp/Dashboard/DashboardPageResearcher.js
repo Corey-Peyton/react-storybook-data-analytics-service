@@ -14,10 +14,11 @@ import TableContainerComponent from './TableContainerComponent';
 import TabPanel from './DashboardTabPanel';
 import Header from '../CommonComponents/Header';
 import Footer from '../CommonComponents/Footer';
-import DashboardDrawer from './DashboardDrawer';
+import SummaryDrawer from './SummaryDrawer';
+import ProjectsDrawer from './ProjectsDrawer';
 import BypassBlocks from '../../BypassBlocks';
 import {requestListResearchers} from '../../../Data/fakeData';
-import {DRAWER_WIDTH} from './DashboardDrawer';
+import {DRAWER_WIDTH} from './ProjectsDrawer';
 
 const useStyles = makeStyles((theme) => ({
   main: {
@@ -118,7 +119,8 @@ export default function DashboardPageResearcher() {
   const classes = useStyles();
   const [value, setValue] = React.useState(0);
   const [open, setOpen] = React.useState({
-    drawer: true,
+    projectsDrawer: true,
+    summaryDrawer: false,
   });
   const [project, setProject] = React.useState({
     title: 'All projects',
@@ -144,8 +146,13 @@ export default function DashboardPageResearcher() {
     }
   };
 
-  const toggleDrawer = () => {
-    setOpen({...open, drawer: !open.drawer});
+  const toggleProjectsDrawer = () => {
+    setOpen({...open, projectsDrawer: !open.projectsDrawer});
+  };
+
+  const toggleSummaryDrawer = () => {
+    setOpen({...open, summaryDrawer: !open.summaryDrawer});
+    console.log(open);
   };
 
   const handleProjectTitle = (value) => {
@@ -158,19 +165,23 @@ export default function DashboardPageResearcher() {
 
   return (
     <React.Fragment>
-      <Header clickHandler={toggleDrawer}/>
+      <Header clickHandler={toggleProjectsDrawer}/>
       <main className={classes.main}>
         <BypassBlocks ref={{main: mainRef, about: aboutRef}} />
-        <DashboardDrawer
-          open={open.drawer}
+        <ProjectsDrawer
+          open={open.projectsDrawer}
           projectTitle={handleProjectTitle}
         />
         <Paper
           className={clsx(classes.content, classes.paper, {
-            [classes.contentShift]: open.drawer,
+            [classes.contentShift]: open.projectsDrawer,
           })}
           elevation={0}
         >
+          <SummaryDrawer
+            open={open.summaryDrawer}
+            clickHandler={toggleSummaryDrawer}
+          />
           <AppBar
             position="static"
             component="div"
@@ -206,19 +217,34 @@ export default function DashboardPageResearcher() {
             </Tabs>
           </AppBar>
           <TabPanel value={value} index={0} className={classes.tabPanel}>
-            <TableContainerComponent status="active" filteredRows={filteredRows} headCells={headCells}/>
+            <TableContainerComponent
+              status="active"
+              filteredRows={filteredRows}
+              headCells={headCells}
+              contextSummaryClick={toggleSummaryDrawer}/>
           </TabPanel>
           <TabPanel value={value} index={1} className={classes.tabPanel}>
-            <TableContainerComponent status="withdrawn" filteredRows={filteredRows} headCells={headCells}/>
+            <TableContainerComponent
+              status="withdrawn"
+              filteredRows={filteredRows}
+              headCells={headCells}
+              contextSummaryClick={toggleSummaryDrawer}/>
           </TabPanel>
           <TabPanel value={value} index={2} className={classes.tabPanel}>
-            <TableContainerComponent status="approved" filteredRows={filteredRows} headCells={headCells}/>
+            <TableContainerComponent
+              status="approved"
+              filteredRows={filteredRows}
+              headCells={headCells}
+              contextSummaryClick={toggleSummaryDrawer}/>
           </TabPanel>
           <TabPanel value={value} index={3} className={classes.tabPanel}>
-            <TableContainerComponent status="denied" filteredRows={filteredRows} headCells={headCells}/>
+            <TableContainerComponent
+              status="denied" filteredRows={filteredRows}
+              headCells={headCells}
+              contextSummaryClick={toggleSummaryDrawer}/>
           </TabPanel>
         </Paper>
-        <Footer open={open.drawer} />
+        <Footer open={open.projectsDrawer} />
       </main>
     </React.Fragment>
   );
