@@ -64,7 +64,7 @@ function ToolBarAssign(props) {
         onClose={handleClose}
         aria-labelledby="form-dialog-title"
       >
-        <DialogTitle id="form-dialog-title">Assign vetting request to me</DialogTitle>
+        <DialogTitle id="form-dialog-title">Manage team</DialogTitle>
         <DialogContent>
           <Typography variant="subtitle2">Provide a phone number</Typography>
           <TextField

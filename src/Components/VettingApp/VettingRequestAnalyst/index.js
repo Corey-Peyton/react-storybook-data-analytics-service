@@ -331,7 +331,7 @@ function VettingRequestAnalyst(props) {
         aria-labelledby="alert-dialog-title"
         aria-describedby="alert-dialog-description"
       >
-        <DialogTitle id="alert-dialog-title">Delete vetting request</DialogTitle>
+        <DialogTitle id="alert-dialog-title">Manage team</DialogTitle>
         <DialogContent className="pb-0">
           <DialogContentText id="alert-dialog-description">
             <Typography variant="body2">{`Are you sure you want to delete the Vetting disclosure request "${state.title}"?`}</Typography>
@@ -339,11 +339,8 @@ function VettingRequestAnalyst(props) {
           <Divider className={classes.divider} />
         </DialogContent>
         <DialogActions className={classes.dialogActions}>
-          <Button onClick={searchhandleClose} color="primary" variant="outlined">
-            Cancel
-          </Button>
           <Button onClick={searchhandleClose} color="primary" variant="contained" className="ml-2">
-          Delete request
+          Go back
           </Button>
         </DialogActions>
       </Dialog>
