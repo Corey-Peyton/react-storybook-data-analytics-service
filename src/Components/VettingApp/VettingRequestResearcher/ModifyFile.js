@@ -138,9 +138,9 @@ function ModifyFile(props) {
     setOpen(false);
   };
 
-  /* const snackbarhandleClose = () => {
+  const snackbarhandleClose = () => {
     setOpenSnackbar(false);
-  }; */
+  };
 
   const [open, setOpen] = React.useState(false);
   const [openSnackbar, setOpenSnackbar] = React.useState(false);
@@ -795,7 +795,7 @@ function ModifyFile(props) {
         onClick={props.toggleDrawer(false)}>
         Save Changes
       </Button>
-      <Snackbar open={openSnackbar} autoHideDuration={6000}anchorOrigin={{
+      <Snackbar open={openSnackbar} autoHideDuration={6000} onClose={snackbarhandleClose} anchorOrigin={{
         vertical: 'bottom',
         horizontal: 'left',
       }}>
@@ -803,6 +803,7 @@ function ModifyFile(props) {
           severity="success"
           className={classes.alert}
           variant="filled"
+          onClose={snackbarhandleClose}
         >
           The supporting file has been added
         </Alert>
