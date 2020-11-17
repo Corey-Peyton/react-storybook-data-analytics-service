@@ -138,9 +138,9 @@ function ModifyFile(props) {
     setOpen(false);
   };
 
-  const snackbarhandleClose = () => {
+  /* const snackbarhandleClose = () => {
     setOpenSnackbar(false);
-  };
+  }; */
 
   const [open, setOpen] = React.useState(false);
   const [openSnackbar, setOpenSnackbar] = React.useState(false);
@@ -699,7 +699,11 @@ function ModifyFile(props) {
           </DialogContent>
           <DialogActions>
             <Button onClick={handleClose} color="primary" variant="outlined">Cancel</Button>
-            <Button color="primary" variant="contained" onClick={handleClick}>Add supporting file</Button>
+            <Button color="primary" variant="contained"
+              onClick={() => {
+                handleClick();
+                handleClose();
+              }}>Add supporting file</Button>
           </DialogActions>
         </Dialog>
 
@@ -791,7 +795,10 @@ function ModifyFile(props) {
         onClick={props.toggleDrawer(false)}>
         Save Changes
       </Button>
-      <Snackbar open={openSnackbar} autoHideDuration={6000} onClose={snackbarhandleClose}>
+      <Snackbar open={openSnackbar} autoHideDuration={6000}anchorOrigin={{
+        vertical: 'bottom',
+        horizontal: 'left',
+      }}>
         <Alert
           severity="success"
           className={classes.alert}

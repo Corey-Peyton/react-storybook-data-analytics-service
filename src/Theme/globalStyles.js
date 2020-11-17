@@ -133,8 +133,8 @@ export const useStyles = makeStyles({
       color: [theme.palette.common.black],
     },
 
-    '.MuiAlert-filledError, .MuiAlert-message, .MuiAlert-icon': {
-      color: [theme.palette.common.white],
+    '.MuiAlert-filledError, .MuiAlert-message, .MuiAlert-icon, .MuiAlert-action': {
+      color: [theme.palette.common.white, '!important'],
     },
 
     // Pagination

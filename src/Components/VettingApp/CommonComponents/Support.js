@@ -18,9 +18,9 @@ const useStyles = makeStyles((theme) => ({
   root: {
     '& > *': {
       margin: theme.spacing(1),
-      position: 'absolute',
+      position: 'relative',
       left: '88%',
-      top: '50%',
+      top: '70%',
     },
   },
   extendedIcon: {
@@ -61,7 +61,7 @@ export default function FloatingSupportButton() {
         </DialogTitle>
         <DialogContent className="pb-0">
           <DialogContentText id="alert-dialog-description">
-            <Typography>Click submit and one of our support staff will reach out to help you with your enquiry.</Typography>
+            <Typography variant="body2" color="textPrimary">Click submit and one of our support staff will reach out to help you with your enquiry.</Typography>
           </DialogContentText>
           <Divider className={classes.divider} />
         </DialogContent>
