@@ -181,6 +181,16 @@ function VettingRequestResearcher(props) {
     setOpenSnackbar(true);
   };
 
+  const [openSnackbarDelete, setOpenSnackbarDelete] = React.useState(false);
+
+  const handleClickDelete = () => {
+    setOpenSnackbarDelete(true);
+  };
+
+  const snackbardeletehandleClose = () => {
+    setOpenSnackbarDelete(false);
+  };
+
   const getStepContent = (step) => {
     switch (step) {
       case 0:
@@ -345,10 +355,13 @@ function VettingRequestResearcher(props) {
                 >
                   Submit request
                 </Button>
-                <Snackbar open={openSnackbar} autoHideDuration={6000}>
+                <Snackbar open={openSnackbar} onClose={snackbarhandleClose} autoHideDuration={6000} anchorOrigin={{
+                  vertical: 'bottom',
+                  horizontal: 'left',
+                }}>
                   <Alert
                     onClose={snackbarhandleClose}
-                    severity="error"
+                    severity="success"
                     className={classes.alert}
                     variant="filled"
                   >
@@ -398,15 +411,30 @@ function VettingRequestResearcher(props) {
             Cancel
             </Button>
             <Button
-              onClick={handleDialogClose}
               color="primary"
               variant="contained"
               className="ml-2"
-            >
+              onClick={() => {
+                handleClickDelete();
+                handleDialogClose();
+              }}>
             Delete request
             </Button>
           </DialogActions>
         </Dialog>
+        <Snackbar open={openSnackbarDelete} onClose={snackbardeletehandleClose} autoHideDuration={6000} anchorOrigin={{
+          vertical: 'bottom',
+          horizontal: 'left',
+        }}>
+          <Alert
+            onClose={snackbardeletehandleClose}
+            severity="success"
+            className={classes.alert}
+            variant="filled"
+          >
+                    Your request has been deleted
+          </Alert>
+        </Snackbar>
       </main>
       <Footer />
     </React.Fragment>
