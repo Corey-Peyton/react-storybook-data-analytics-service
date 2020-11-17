@@ -17,8 +17,7 @@ function AdditionalInfo(props) {
   return (
     <React.Fragment>
       <Typography>
-        A brief introduction is needed to explain to external users why on this
-        section it is important to provide as much details as possible.
+        Use this section to add any information that you think might be helpful for the Lead analyst while reviewing your vetting request.
       </Typography>
       <Divider className={classes.divider} />
       <TextField
@@ -29,7 +28,6 @@ function AdditionalInfo(props) {
         multiline
         rows={2}
         variant="outlined"
-        helperText="Add additional information which may helpful to the disclosure analyst."
         fullWidth
       />
     </React.Fragment>

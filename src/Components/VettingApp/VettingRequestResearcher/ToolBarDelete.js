@@ -2,7 +2,7 @@ import React from 'react';
 import {makeStyles} from '@material-ui/core/styles';
 import {Button, Toolbar, IconButton, Typography} from '@material-ui/core';
 import DeleteIcon from '@material-ui/icons/Delete';
-import ReplayIcon from '@material-ui/icons/Replay';
+import ExitToAppIcon from '@material-ui/icons/ExitToApp';
 import SaveIcon from '@material-ui/icons/Save';
 import SendIcon from '@material-ui/icons/Send';
 import ArrowBackIcon from '@material-ui/icons/ArrowBack';
@@ -38,9 +38,9 @@ function ToolBarDelete(props) {
       <Button
         color="default"
         className={classes.headerBtn}
-        startIcon={<ReplayIcon />}
+        startIcon={<ExitToAppIcon />}
       >
-              Convert to draft
+              Withdraw
       </Button>
       <Button
         variant="outlined"

@@ -76,6 +76,7 @@ export const useStyles = makeStyles({
       fontSize: '0.875rem',
       marginTop: '1px',
       color: theme.palette.text.primary,
+      lineHeight: 1.5,
     },
     '.MuiInputBase-input': {
       'fontSize': '0.875rem',
@@ -132,8 +133,8 @@ export const useStyles = makeStyles({
       color: [theme.palette.common.black],
     },
 
-    '.MuiAlert-filledError, .MuiAlert-message, .MuiAlert-icon': {
-      color: [theme.palette.common.white],
+    '.MuiAlert-filledError, .MuiAlert-message, .MuiAlert-icon, .MuiAlert-action': {
+      color: [theme.palette.common.white, '!important'],
     },
 
     // Pagination
