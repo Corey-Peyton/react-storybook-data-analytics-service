@@ -60,11 +60,43 @@ const useStyles = makeStyles((theme) => ({
     alignSelf: 'flex-end',
     margin: theme.spacing(0, 2, 2, 2),
   },
+  chip: {
+    backgroundColor: 'green',
+  },
 }));
 
 export default function SummaryDrawer(props) {
   const classes = useStyles();
   const {t} = useTranslation();
+  let bgColor = 'FF9800';
+  const [background, setBackground] = React.useState(bgColor);
+
+  function backgroundFunc() {
+    switch (props.status) {
+      case 'Approved':
+        bgColor = '#4CAF50';
+        break;
+      case 'Denied':
+        bgColor = '#F2453D';
+        break;
+      case 'Submitted':
+        bgColor = '#1A73E8';
+        break;
+      case 'Draft':
+      case 'Withdrawn':
+        bgColor = '#E0E0E0';
+        break;
+      case 'Disclosure analysis':
+      case 'Update requested':
+        bgColor = '#FF9800';
+        break;
+      default:
+        bgColor = '#FF9800';
+        break;
+    }
+    console.log(props.bgColor);
+    setBackground(bgColor);
+  };
 
   const content = () => (
     <div className={classes.drawerContent}>
@@ -82,7 +114,7 @@ export default function SummaryDrawer(props) {
       </div>
       <div className={classes.drawerText}>
         <div className={classes.drawerSection}>
-          <Chip label="Draft" />
+          <Chip label="Draft" style={{backgroundColor: background}} />
         </div>
         <div className={classes.drawerSection}>
           <Typography component="h3" variant="subtitle2">{t('Project Name')}</Typography>
@@ -113,7 +145,7 @@ export default function SummaryDrawer(props) {
           <Typography variant="body2">15 {t('Hours')}</Typography>
         </div>
       </div>
-      <Button variant="contained" color="primary" className={classes.drawerButton}>
+      <Button variant="contained" color="primary" className={classes.drawerButton} onClick={backgroundFunc}>
             New vetting request
       </Button>
     </div>

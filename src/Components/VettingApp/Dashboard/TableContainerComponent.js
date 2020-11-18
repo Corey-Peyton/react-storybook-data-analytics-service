@@ -31,6 +31,7 @@ const useStyles = makeStyles((theme) => ({
     display: 'flex',
     justifyContent: 'space-between',
     alignItems: 'center',
+    minHeight: `calc(${ROW_HEIGHT}px - ${theme.spacing(2)}px)`,
   },
   tableRow: {
     cursor: 'pointer',
@@ -149,7 +150,11 @@ export default function TableContainerComponent(props) {
                         <Typography variant="body2" noWrap={true}>{row.updated}</Typography>
                       </TableCell>
                       <TableCell align='center'>
-                        <CustomizedMenus status={row.status} contextSummaryClick={props.contextSummaryClick}/>
+                        <CustomizedMenus
+                          status={row.status}
+                          contextSummaryClick={props.contextSummaryClick}
+                          contextStatusClick={props.contextStatusClick}
+                        />
                       </TableCell>
                     </TableRow>
                   );

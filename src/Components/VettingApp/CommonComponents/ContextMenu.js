@@ -80,6 +80,7 @@ export default function CustomizedMenus(props) {
 
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
+    props.contextStatusClick(props.status);
   };
 
   const handleClose = () => {
