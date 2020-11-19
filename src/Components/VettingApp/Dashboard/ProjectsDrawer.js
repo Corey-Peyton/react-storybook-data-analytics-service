@@ -185,8 +185,15 @@ StyledTreeItem.propTypes = {
 export default function ProjectsDrawer(props) {
   const classes = useStyles();
   const {t} = useTranslation();
+  const hashVar = window.location.hash.substring(2);
 
-  const projectsArray = ['All projects', 'Project 1', 'Project 2', 'Project 3'];
+  const projectsArray = () => {
+    if (hashVar === 'vetting-app/dashboard-researcher') {
+      return ['Project 1', 'Project 2', 'Project 3'];
+    } else {
+      return ['All projects', 'Project 1', 'Project 2', 'Project 3'];
+    }
+  };
 
   function handleProjectChange(el, value) {
     let title = undefined;
@@ -230,7 +237,7 @@ export default function ProjectsDrawer(props) {
         defaultSelected={['0']}
         onNodeSelect={handleProjectChange}
       >
-        {projectsArray.map((el, index) => (
+        {projectsArray().map((el, index) => (
           <StyledTreeItem
             nodeId={`${index}`}
             key={`${index}`}

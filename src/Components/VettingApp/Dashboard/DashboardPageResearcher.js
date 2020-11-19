@@ -121,9 +121,10 @@ export default function DashboardPageResearcher() {
   const [open, setOpen] = React.useState({
     projectsDrawer: true,
     summaryDrawer: false,
+    summaryStatus: '',
   });
   const [project, setProject] = React.useState({
-    title: 'All projects',
+    title: 'Project 1',
   });
 
   const handleChange = (event, newValue) => {
@@ -152,11 +153,14 @@ export default function DashboardPageResearcher() {
 
   const toggleSummaryDrawer = () => {
     setOpen({...open, summaryDrawer: !open.summaryDrawer});
-    console.log(open);
   };
 
   const handleProjectTitle = (value) => {
     setProject({...project, title: value});
+  };
+
+  const contextStatusClick = (value) => {
+    setOpen({...open, summaryStatus: value});
   };
 
   const mainRef = React.createRef();
@@ -181,6 +185,7 @@ export default function DashboardPageResearcher() {
           <SummaryDrawer
             open={open.summaryDrawer}
             clickHandler={toggleSummaryDrawer}
+            status={open.summaryStatus}
           />
           <AppBar
             position="static"
@@ -221,27 +226,36 @@ export default function DashboardPageResearcher() {
               status="active"
               filteredRows={filteredRows}
               headCells={headCells}
-              contextSummaryClick={toggleSummaryDrawer}/>
+              contextSummaryClick={toggleSummaryDrawer}
+              contextStatusClick={contextStatusClick}
+
+            />
           </TabPanel>
           <TabPanel value={value} index={1} className={classes.tabPanel}>
             <TableContainerComponent
               status="withdrawn"
               filteredRows={filteredRows}
               headCells={headCells}
-              contextSummaryClick={toggleSummaryDrawer}/>
+              contextSummaryClick={toggleSummaryDrawer}
+              contextStatusClick={contextStatusClick}
+            />
           </TabPanel>
           <TabPanel value={value} index={2} className={classes.tabPanel}>
             <TableContainerComponent
               status="approved"
               filteredRows={filteredRows}
               headCells={headCells}
-              contextSummaryClick={toggleSummaryDrawer}/>
+              contextSummaryClick={toggleSummaryDrawer}
+              contextStatusClick={contextStatusClick}
+            />
           </TabPanel>
           <TabPanel value={value} index={3} className={classes.tabPanel}>
             <TableContainerComponent
               status="denied" filteredRows={filteredRows}
               headCells={headCells}
-              contextSummaryClick={toggleSummaryDrawer}/>
+              contextSummaryClick={toggleSummaryDrawer}
+              contextStatusClick={contextStatusClick}
+            />
           </TabPanel>
         </Paper>
         <Footer open={open.projectsDrawer} />

@@ -80,6 +80,7 @@ export default function CustomizedMenus(props) {
 
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
+    props.contextStatusClick(props.status);
   };
 
   const handleClose = () => {
@@ -179,7 +180,7 @@ export default function CustomizedMenus(props) {
           <ListItemIcon className={classes.listItemIcon}>
             <Icon path={mdiEye} size={1} className="icon-grey" />
           </ListItemIcon>
-          <ListItemText primary={<Typography variant="body2">View</Typography>} />
+          <ListItemText primary={<Typography variant="body2">View request</Typography>} />
         </MenuItem>
         <MenuItem onClick={() => triggerAction(actionList.message.withdraw, actionList.severity.withdraw)}>
           <ListItemIcon className={classes.listItemIcon}>

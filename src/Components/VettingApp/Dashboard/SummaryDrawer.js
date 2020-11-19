@@ -1,4 +1,5 @@
 import React from 'react';
+import clsx from 'clsx';
 import {makeStyles} from '@material-ui/core/styles';
 import {
   Typography,
@@ -7,6 +8,10 @@ import {
   Chip,
   Button,
 } from '@material-ui/core';
+import {
+  green,
+  orange,
+} from '@material-ui/core/colors';
 import {useTranslation} from 'react-i18next';
 import CloseIcon from '@material-ui/icons/Close';
 
@@ -60,6 +65,26 @@ const useStyles = makeStyles((theme) => ({
     alignSelf: 'flex-end',
     margin: theme.spacing(0, 2, 2, 2),
   },
+  chipGreen: {
+    backgroundColor: green[500],
+    color: 'white',
+  },
+  chipRed: {
+    backgroundColor: theme.palette.error.main,
+    color: 'white',
+  },
+  chipBlue: {
+    backgroundColor: theme.palette.primary.main,
+    color: 'white',
+  },
+  chipGrey: {
+    backgroundColor: theme.palette.grey[300],
+    color: 'black',
+  },
+  chipOrange: {
+    backgroundColor: orange[500],
+    color: 'white',
+  },
 }));
 
 export default function SummaryDrawer(props) {
@@ -82,7 +107,14 @@ export default function SummaryDrawer(props) {
       </div>
       <div className={classes.drawerText}>
         <div className={classes.drawerSection}>
-          <Chip label="Draft" />
+          <Chip label={props.status}
+            className={clsx({
+              [classes.chipGreen]: props.status === 'Approved',
+              [classes.chipRed]: props.status === 'Denied',
+              [classes.chipBlue]: props.status === 'Submitted',
+              [classes.chipGrey]: props.status === 'Draft' || props.status === 'Withdrawn',
+              [classes.chipOrange]: props.status === 'Disclosure analysis' || props.status === 'Update requested',
+            })} />
         </div>
         <div className={classes.drawerSection}>
           <Typography component="h3" variant="subtitle2">{t('Project Name')}</Typography>
@@ -113,7 +145,7 @@ export default function SummaryDrawer(props) {
           <Typography variant="body2">15 {t('Hours')}</Typography>
         </div>
       </div>
-      <Button variant="contained" color="primary" className={classes.drawerButton}>
+      <Button variant="contained" color="primary" className={classes.drawerButton} >
             New vetting request
       </Button>
     </div>
