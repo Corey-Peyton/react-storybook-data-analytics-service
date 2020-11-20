@@ -60,7 +60,7 @@ const useStyles = makeStyles((theme) => ({
     justifyContent: 'flex-end',
   },
   footerBtns: {
-    marginLeft: theme.spacing(1),
+    marginLeft: theme.spacing(2),
   },
 }));
 
@@ -84,7 +84,7 @@ export function DialogAnalyst(props) {
       <Dialog onClose={handleClose} aria-labelledby="dashboard-dialog-title" open={open}>
         <DialogTitle id="dashboard-dialog-title">
           <div className={classes.dialogTitle}>
-            <Typography>Analyst information</Typography>
+            <Typography variant='h6'>Analyst information</Typography>
             <IconButton
               onClick={handleClose}
               edge='end'>
@@ -92,7 +92,7 @@ export function DialogAnalyst(props) {
             </IconButton>
           </div>
         </DialogTitle>
-        <Divider className="mb-1" />
+        <Divider className="mb-2" />
         <div className={classes.dialogRow}>
           <Avatar className={classes.avatar}>A</Avatar>
           <Typography className={classes.dialogText}>brian.bill@cloud.statcan.ca</Typography>
@@ -104,7 +104,7 @@ export function DialogAnalyst(props) {
           </Avatar>
           <Typography className={classes.dialogText}>+1 343 567 7878</Typography>
         </div>
-        <Divider className="mt-1" />
+        <Divider className="mt-2" />
         <div className={classes.dialogFooter}>
           <Button variant="contained" color="primary" onClick={handleClose}>
             Go back
@@ -139,7 +139,7 @@ export function DialogWithdraw(props) {
       >
         <DialogTitle id="dashboard-dialog-title">
           <div className={classes.dialogTitle}>
-            <Typography>Withdraw Request</Typography>
+            <Typography variant='h6'>Withdraw Request</Typography>
             <IconButton
               onClick={toggleDialog}
               edge='end'>
@@ -147,7 +147,7 @@ export function DialogWithdraw(props) {
             </IconButton>
           </div>
         </DialogTitle>
-        <Divider className="mb-1" />
+        <Divider className="mb-2" />
         <div className={classes.dialogRow}>
           <TextField
             id="outlined-basic"
@@ -157,7 +157,7 @@ export function DialogWithdraw(props) {
             multiline
           />
         </div>
-        <Divider className="mt-1" />
+        <Divider className="mt-2" />
         <div className={classes.dialogFooter}>
           <Button variant="outlined" color="primary" onClick={toggleDialog} className={classes.footerBtns}>
             Cancel
