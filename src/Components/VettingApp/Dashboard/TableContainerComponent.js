@@ -11,7 +11,7 @@ import {
   TableRow,
 } from '@material-ui/core';
 
-import DialogBox from './DialogBox';
+import {DialogAnalyst} from './DialogBox';
 import CustomizedMenus from '../CommonComponents/ContextMenu';
 import DashboardTableHead from './DashboardTableHead';
 
@@ -141,7 +141,7 @@ export default function TableContainerComponent(props) {
                       </TableCell>
                       <TableCell className={classes.tablesCellsFlex}>
                         <Typography variant="body2" noWrap={true}>{row.lead}</Typography>
-                        <DialogBox selectedValue='null'/>
+                        <DialogAnalyst selectedValue='null'/>
                       </TableCell>
                       <TableCell>
                         <Typography variant="body2" noWrap={true}>{row.created}</Typography>
