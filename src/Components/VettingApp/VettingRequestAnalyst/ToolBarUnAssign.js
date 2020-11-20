@@ -1,6 +1,6 @@
 import React from 'react';
 import {makeStyles} from '@material-ui/core/styles';
-import {Button, Toolbar, IconButton, Typography, TextField} from '@material-ui/core';
+import {Button, Toolbar, IconButton, Typography, TextField, FormControl} from '@material-ui/core';
 import Icon from '@mdi/react';
 import ReplayIcon from '@material-ui/icons/Replay';
 import SaveIcon from '@material-ui/icons/Save';
@@ -14,6 +14,8 @@ import {
   DialogTitle,
   DialogContent,
   DialogActions,
+  Select,
+  InputLabel,
 } from '@material-ui/core';
 
 const useStyles = makeStyles((theme) => ({
@@ -42,14 +44,24 @@ function ToolBarUnassign() {
   };
 
   const [open, setOpen] = React.useState(false);
+  const [snackbaropen, setSnackbarOpen] = React.useState(false);
 
   const handleClickOpen = () => {
     setOpen(true);
   };
 
+  const handleSnackbarClickOpen = () => {
+    setSnackbarOpen(true);
+  };
+
   const handleDialogClose = () => {
     setOpen(false);
   };
+
+  const handleDialogSnackbarClose = () => {
+    setSnackbarOpen(false);
+  };
+
   return (
     <Toolbar>
       <IconButton
@@ -97,8 +109,57 @@ function ToolBarUnassign() {
         onClose={handleClose}
       >
         <MenuItem onClick={handleClose}>Approve</MenuItem>
-        <MenuItem onClick={handleClose}>Deny</MenuItem>
+        <MenuItem onClick={handleSnackbarClickOpen}>Deny</MenuItem>
       </Menu>
+
+
+      <Dialog
+        open={snackbaropen}
+        onClose={handleDialogClose}
+        aria-labelledby="alert-dialog-title"
+        aria-describedby="alert-dialog-description"
+      >
+        <DialogTitle id="alert-dialog-title">Denied request</DialogTitle>
+        <DialogContent className="pb-0">
+          <TextField
+            className={classes.inputMargin}
+            margin="dense"
+            id="Billable hours"
+            label="Billable hours"
+            variant="outlined"
+            required
+            placeholder="3.5"
+            helperText="Only numbers"
+          />
+          <FormControl
+            className={classes.inputMargin}
+            margin="dense"
+            required
+            variant="outlined"
+            fullWidth
+          >
+            <InputLabel id="outputMethod-label">Denied reason</InputLabel>
+            <Select
+            >
+              <MenuItem>Non-SSI project</MenuItem>
+              <MenuItem>Confidentiality requirements are not met</MenuItem>
+              <MenuItem>Request is missing information</MenuItem>
+              <MenuItem>Output file(s) are not in line with the project proposal</MenuItem>
+              <MenuItem>Other</MenuItem>
+            </Select>
+          </FormControl>
+        </DialogContent>
+        <DialogActions className={classes.dialogActions}>
+          <Button onClick={handleDialogSnackbarClose} color="primary" variant="outlined">
+            Cancel
+          </Button>
+          <Button onClick={handleDialogSnackbarClose} color="primary" variant="contained" className="ml-2">
+          Submit
+          </Button>
+        </DialogActions>
+      </Dialog>
+
+
       <Dialog
         open={open}
         onClose={handleDialogClose}
@@ -110,11 +171,12 @@ function ToolBarUnassign() {
           <TextField
             className={classes.inputMargin}
             margin="dense"
-            id="Phone number"
-            label="+1 343-455-6767"
+            defaultValue="Please provide the supporting files requested."
+            label="Comments"
             variant="outlined"
             fullWidth
             required
+            multiline
           />
         </DialogContent>
         <DialogActions className={classes.dialogActions}>
@@ -122,7 +184,7 @@ function ToolBarUnassign() {
             Cancel
           </Button>
           <Button onClick={handleDialogClose} color="primary" variant="contained" className="ml-2">
-          Delete request
+          Submit request
           </Button>
         </DialogActions>
       </Dialog>

@@ -141,8 +141,6 @@ function AnalystInfo(props) {
             margin="dense"
             className={classes.inputMargin}
           />
-        </Grid>
-        <Grid item xs={6}>
           <TextField
             id="last-name"
             name="last-name"

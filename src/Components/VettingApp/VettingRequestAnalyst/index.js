@@ -1,6 +1,5 @@
 import React from 'react';
 import {makeStyles} from '@material-ui/core/styles';
-import StepLabel from '@material-ui/core/StepLabel';
 import {
   Paper,
   Container,
@@ -12,24 +11,27 @@ import {
   Typography,
   Divider,
   Chip,
-  Tooltip,
   AppBar,
   Dialog,
   DialogTitle,
   DialogContent,
   DialogContentText,
+  IconButton,
   DialogActions,
 } from '@material-ui/core';
 import ArrowForwardIosIcon from '@material-ui/icons/ArrowForwardIos';
+import Avatar from '@material-ui/core/Avatar';
 import ArrowBackIosIcon from '@material-ui/icons/ArrowBackIos';
-import Icon from '@mdi/react';
-import {mdiLockOpenVariant} from '@mdi/js';
 import AnalystInfo from './AnalystInfo';
 import FilesList from './FilesList';
 import ResidualDisclosure from './ResidualDisclosure';
 import AdditionalInfo from './Additionalnfo';
 import ToolBarUnassign from './ToolBarUnAssign';
 import ToolBarAssign from './ToolBarAssign';
+import MoreVertIcon from '@material-ui/icons/MoreVert';
+import SearchBar from '../../SearchBar';
+import Menu from '@material-ui/core/Menu';
+import MenuItem from '@material-ui/core/MenuItem';
 
 const useStyles = makeStyles((theme) => ({
   main: {
@@ -52,6 +54,15 @@ const useStyles = makeStyles((theme) => ({
     margin: 'auto',
     boxSizing: 'border-box',
     padding: theme.spacing(3),
+  },
+  searchIcon: {
+    padding: theme.spacing(0, 2),
+    height: '100%',
+    position: 'absolute',
+    pointerEvents: 'none',
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
   },
   title: {
     flexGrow: 1,
@@ -101,6 +112,18 @@ const useStyles = makeStyles((theme) => ({
   active: {
     color: '#784af4',
   },
+  negativeMargin: {
+    marginTop: '-17%',
+    marginLeft: '20%',
+    paddingBottom: '6%',
+  },
+  negativeMargin2: {
+    marginTop: '-10%',
+    marginLeft: '20%',
+  },
+  paddingBottom: {
+    paddingBottom: '10px',
+  },
 }));
 
 function getSteps() {
@@ -121,10 +144,6 @@ function VettingRequestAnalyst(props) {
     open: false,
   });
   const steps = getSteps();
-
-  const handleDialogOpen = () => {
-    setState({...state, open: true});
-  };
 
   const handleDialogClose = () => {
     setState({...state, open: false});
@@ -169,6 +188,16 @@ function VettingRequestAnalyst(props) {
   };
   const searchhandleClose = () => {
     setOpen(false);
+  };
+
+  const [anchorEl, setAnchorEl] = React.useState(null);
+
+  const handleClick = (event) => {
+    setAnchorEl(event.currentTarget);
+  };
+
+  const handleClose = () => {
+    setAnchorEl(null);
   };
 
   const getStepContent = (step) => {
@@ -332,12 +361,40 @@ function VettingRequestAnalyst(props) {
         aria-describedby="alert-dialog-description"
       >
         <DialogTitle id="alert-dialog-title">Manage team</DialogTitle>
+        <Divider className={classes.divider} />
         <DialogContent className="pb-0">
           <DialogContentText id="alert-dialog-description">
-            <Typography variant="body2">{`Are you sure you want to delete the Vetting disclosure request "${state.title}"?`}</Typography>
+            <Typography variant="subtitle2" className={classes.paddingBottom}><strong>Lead</strong></Typography>
+            <Avatar src="/broken-image.jpg" /><Typography variant="body2" className={classes.negativeMargin}>Brian Bill</Typography>
+            <Typography variant="body2" className={classes.negativeMargin2}>brian.bill@canada.ca<IconButton aria-haspopup="true" onClick={handleClick}>
+              <MoreVertIcon />
+            </IconButton><Menu
+              id="simple-menu"
+              anchorEl={anchorEl}
+              keepMounted
+              open={Boolean(anchorEl)}
+              onClose={handleClose}
+            ><MenuItem onClick={handleClose}>Unassign from me</MenuItem>
+              <MenuItem onClick={handleClose}>Make me lead</MenuItem></Menu></Typography>
+            <Divider className={classes.divider} />
+            <SearchBar placeholder="Search support analysts"/>
           </DialogContentText>
-          <Divider className={classes.divider} />
+          <DialogContentText id="alert-dialog-description">
+            <Typography variant="subtitle2" className={classes.paddingBottom}><strong>Support Analysts</strong></Typography>
+            <Avatar src="/broken-image.jpg" /><Typography variant="body2" className={classes.negativeMargin}>Tony Stark </Typography>
+            <Typography variant="body2" className={classes.negativeMargin2}>tony.stark@canada.ca<IconButton aria-haspopup="true" onClick={handleClick}>
+              <MoreVertIcon />
+            </IconButton><Menu
+              id="simple-menu"
+              anchorEl={anchorEl}
+              keepMounted
+              open={Boolean(anchorEl)}
+              onClose={handleClose}
+            ><MenuItem onClick={handleClose}>Unassign from me</MenuItem>
+              <MenuItem onClick={handleClose}>Make me lead</MenuItem></Menu></Typography>
+          </DialogContentText>
         </DialogContent>
+        <Divider className={classes.divider} />
         <DialogActions className={classes.dialogActions}>
           <Button onClick={searchhandleClose} color="primary" variant="contained" className="ml-2">
           Go back
