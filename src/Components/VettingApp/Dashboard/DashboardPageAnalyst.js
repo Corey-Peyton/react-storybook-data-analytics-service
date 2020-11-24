@@ -82,7 +82,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-let tabStatus = 'active';
+let tabStatus = 'assigned to me';
 
 function createData(id, statusHead, status, researcher, lead, created, updated) {
   return {id, statusHead, status, researcher, lead, created, updated};
@@ -102,7 +102,7 @@ const headCells = [
   {id: 'id', narrow: false, disablePadding: true, label: 'ID'},
   {id: 'status', narrow: false, disablePadding: false, label: 'Status'},
   {id: 'researcher', narrow: false, disablePadding: false, label: 'Researcher'}, // not sorting
-  {id: 'lead', narrow: false, disablePadding: false, label: 'Analyst'},
+  {id: 'lead', narrow: false, disablePadding: false, label: 'Lead'},
   {id: 'created', narrow: false, disablePadding: false, label: 'Created on'}, // not sorting
   {id: 'updated', narrow: false, disablePadding: false, label: 'Updated on'},
   {id: 'actions', narrow: true, disablePadding: false, label: 'Actions'},
@@ -124,26 +124,29 @@ export default function DashboardPageAnalyst() {
     summaryStatus: '',
   });
   const [project, setProject] = React.useState({
-    title: 'Project 1',
+    title: 'All projects',
   });
 
   const handleChange = (event, newValue) => {
     setValue(newValue);
     switch (newValue) {
       case 0:
-        tabStatus = 'active';
+        tabStatus = 'assigned to me';
         break;
       case 1:
-        tabStatus = 'withdrawn';
+        tabStatus = 'unassigned';
         break;
       case 2:
-        tabStatus = 'approved';
+        tabStatus = 'active';
         break;
       case 3:
+        tabStatus = 'approved';
+        break;
+      case 4:
         tabStatus = 'denied';
         break;
       default:
-        tabStatus = 'active';
+        tabStatus = 'assigned to me';
     }
   };
 
@@ -165,7 +168,6 @@ export default function DashboardPageAnalyst() {
 
   const mainRef = React.createRef();
   const aboutRef = React.createRef();
-
 
   return (
     <React.Fragment>
@@ -215,15 +217,16 @@ export default function DashboardPageAnalyst() {
               textColor="primary"
               className={classes.tabs}
             >
-              <Tab label="Active" {...a11yProps(0)} />
-              <Tab label="Withdrawn" {...a11yProps(1)} />
-              <Tab label="Approved" {...a11yProps(2)} />
-              <Tab label="Denied" {...a11yProps(3)} />
+              <Tab label="Assigned to me" {...a11yProps(0)} />
+              <Tab label="Unassigned" {...a11yProps(1)} />
+              <Tab label="Active" {...a11yProps(2)} />
+              <Tab label="Approved" {...a11yProps(3)} />
+              <Tab label="Denied" {...a11yProps(4)} />
             </Tabs>
           </AppBar>
           <TabPanel value={value} index={0} className={classes.tabPanel}>
             <TableContainerComponent
-              status="active"
+              status="assigned to me"
               filteredRows={filteredRows}
               headCells={headCells}
               contextSummaryClick={toggleSummaryDrawer}
@@ -233,7 +236,7 @@ export default function DashboardPageAnalyst() {
           </TabPanel>
           <TabPanel value={value} index={1} className={classes.tabPanel}>
             <TableContainerComponent
-              status="withdrawn"
+              status="unassigned"
               filteredRows={filteredRows}
               headCells={headCells}
               contextSummaryClick={toggleSummaryDrawer}
@@ -242,7 +245,7 @@ export default function DashboardPageAnalyst() {
           </TabPanel>
           <TabPanel value={value} index={2} className={classes.tabPanel}>
             <TableContainerComponent
-              status="approved"
+              status="active"
               filteredRows={filteredRows}
               headCells={headCells}
               contextSummaryClick={toggleSummaryDrawer}
@@ -250,6 +253,14 @@ export default function DashboardPageAnalyst() {
             />
           </TabPanel>
           <TabPanel value={value} index={3} className={classes.tabPanel}>
+            <TableContainerComponent
+              status="approved" filteredRows={filteredRows}
+              headCells={headCells}
+              contextSummaryClick={toggleSummaryDrawer}
+              contextStatusClick={contextStatusClick}
+            />
+          </TabPanel>
+          <TabPanel value={value} index={4} className={classes.tabPanel}>
             <TableContainerComponent
               status="denied" filteredRows={filteredRows}
               headCells={headCells}
