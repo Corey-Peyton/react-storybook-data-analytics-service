@@ -26,6 +26,7 @@ import Autocomplete from '@material-ui/lab/Autocomplete';
 import InfoIcon from '@material-ui/icons/Info';
 import CloseIcon from '@material-ui/icons/Close';
 import Snackbar from '@material-ui/core/Snackbar';
+import Alert from '@material-ui/lab/Alert';
 
 const useStyles = makeStyles((theme) => ({
   inputMargin: {
@@ -139,6 +140,10 @@ function ModifyFile(props) {
 
   const handleClick = () => {
     setOpenSnackbar(true);
+  };
+
+  const snackbarhandleClose = () => {
+    setOpenSnackbar(false);
   };
 
   const handleRadioChange = (event) => {
@@ -655,9 +660,11 @@ function ModifyFile(props) {
             <Button onClick={handleClose} color="primary" variant="outlined">
               Cancel
             </Button>
-            <Button onClick={handleClose} color="primary" variant="contained">
-              Add supporting file
-            </Button>
+            <Button color="primary" variant="contained"
+              onClick={() => {
+                handleClick();
+                handleClose();
+              }}>Add supporting file</Button>
           </DialogActions>
         </Dialog>
 
@@ -745,19 +752,23 @@ function ModifyFile(props) {
         fullWidth
         required
       />
-      <Button variant="contained" color="primary" onClick={handleClick}>
+      <Button variant="contained" className={classes.button} color="primary"
+        onClick={props.toggleDrawer(false)}>
         Save Changes
       </Button>
-      <Snackbar
-        anchorOrigin={{
-          vertical: 'bottom',
-          horizontal: 'center',
-          backgroundColor: 'green',
-        }}
-        open={openSnackbar}
-        autoHideDuration={17000}
-        message="The supporting file has been added"
-      />
+      <Snackbar open={openSnackbar} autoHideDuration={6000} onClose={snackbarhandleClose} anchorOrigin={{
+        vertical: 'bottom',
+        horizontal: 'left',
+      }}>
+        <Alert
+          severity="success"
+          className={classes.alert}
+          variant="filled"
+          onClose={snackbarhandleClose}
+        >
+          The supporting file has been added
+        </Alert>
+      </Snackbar>
     </React.Fragment>
   );
 }

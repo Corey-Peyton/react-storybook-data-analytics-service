@@ -10,7 +10,6 @@ import {
   StepButton,
   Typography,
   Divider,
-  Chip,
   AppBar,
   Dialog,
   DialogTitle,
@@ -32,6 +31,8 @@ import MoreVertIcon from '@material-ui/icons/MoreVert';
 import SearchBar from '../../SearchBar';
 import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
+import AppBarUnAssign from './AppBarUnAssign';
+import AppBarAssign from './AppBarAssign';
 
 const useStyles = makeStyles((theme) => ({
   main: {
@@ -186,9 +187,6 @@ function VettingRequestAnalyst(props) {
     setState({...state, completed: newCompleted});
     handleNext();
   };
-  const searchhandleClose = () => {
-    setOpen(false);
-  };
 
   const [anchorEl, setAnchorEl] = React.useState(null);
 
@@ -198,6 +196,10 @@ function VettingRequestAnalyst(props) {
 
   const handleClose = () => {
     setAnchorEl(null);
+  };
+
+  const handleDialogOpen = () => {
+    setState({...state, open: true});
   };
 
   const getStepContent = (step) => {
@@ -229,12 +231,6 @@ function VettingRequestAnalyst(props) {
     setState({...state, completed: {}});
   };
 
-  const [open, setOpen] = React.useState(false);
-
-  const handleClickOpen = () => {
-    setOpen(true);
-  };
-
   return (
     <main className={classes.main} tabIndex="-1">
       <Container maxWidth="xl" className="page-container">
@@ -249,15 +245,7 @@ function VettingRequestAnalyst(props) {
                 ID: 10_2020_232425255
               </Typography>
             </Grid>
-            <Grid item>
-              <Chip label="DISCLOSURE ANALYSIS" className="mr-2" />
-            </Grid>
-            <Grid item>
-              <Chip label="brian.bill@cloud.statcan.ca" className="mr-2" onClick={handleClickOpen}> /</Chip>
-            </Grid>
-            <Grid item>
-              <Chip label="+2" className="mr-2" />
-            </Grid>
+            {state.activeStep === 3 ? <AppBarUnAssign handleDialogOpen={handleDialogOpen}/> : <AppBarAssign />}
           </Grid>
           <Divider className={classes.divider} />
           <div className={classes.stepperContainer}>
@@ -355,7 +343,7 @@ function VettingRequestAnalyst(props) {
       </Container>
 
       <Dialog
-        open={open}
+        open={state.open}
         onClose={handleDialogClose}
         aria-labelledby="alert-dialog-title"
         aria-describedby="alert-dialog-description"
@@ -396,7 +384,7 @@ function VettingRequestAnalyst(props) {
         </DialogContent>
         <Divider className={classes.divider} />
         <DialogActions className={classes.dialogActions}>
-          <Button onClick={searchhandleClose} color="primary" variant="contained" className="ml-2">
+          <Button onClick={handleDialogClose} color="primary" variant="contained" className="ml-2">
           Go back
           </Button>
         </DialogActions>

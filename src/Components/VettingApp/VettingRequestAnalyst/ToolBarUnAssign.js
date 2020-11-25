@@ -16,7 +16,9 @@ import {
   DialogActions,
   Select,
   InputLabel,
+  Snackbar,
 } from '@material-ui/core';
+import Alert from '@material-ui/lab/Alert';
 
 const useStyles = makeStyles((theme) => ({
   main: {
@@ -45,6 +47,7 @@ function ToolBarUnassign() {
 
   const [open, setOpen] = React.useState(false);
   const [snackbaropen, setSnackbarOpen] = React.useState(false);
+  const [snackbardenyopen, setSnackbarDenyOpen] = React.useState(false);
 
   const handleClickOpen = () => {
     setOpen(true);
@@ -52,6 +55,14 @@ function ToolBarUnassign() {
 
   const handleSnackbarClickOpen = () => {
     setSnackbarOpen(true);
+  };
+
+  const handleClickDeny = () => {
+    setSnackbarDenyOpen(true);
+  };
+
+  const handleClickDenyClose = () => {
+    setSnackbarDenyOpen(false);
   };
 
   const handleDialogClose = () => {
@@ -153,7 +164,14 @@ function ToolBarUnassign() {
           <Button onClick={handleDialogSnackbarClose} color="primary" variant="outlined">
             Cancel
           </Button>
-          <Button onClick={handleDialogSnackbarClose} color="primary" variant="contained" className="ml-2">
+          <Button
+            color="primary"
+            variant="contained"
+            className="ml-2"
+            onClick={() => {
+              handleClickDeny();
+              handleDialogSnackbarClose();
+            }}>
           Submit
           </Button>
         </DialogActions>
@@ -188,6 +206,19 @@ function ToolBarUnassign() {
           </Button>
         </DialogActions>
       </Dialog>
+      <Snackbar open={snackbardenyopen} onClose={handleClickDenyClose} autoHideDuration={6000} anchorOrigin={{
+        vertical: 'bottom',
+        horizontal: 'left',
+      }}>
+        <Alert
+          onClose={handleClickDenyClose}
+          severity="success"
+          className={classes.alert}
+          variant="filled"
+        >
+                   The vetting request 10_2020_4564677 has been denied.
+        </Alert>
+      </Snackbar>
     </Toolbar>
   );
 }
