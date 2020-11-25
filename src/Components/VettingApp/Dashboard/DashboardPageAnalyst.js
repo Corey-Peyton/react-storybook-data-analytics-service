@@ -95,7 +95,7 @@ const headCells = [
   {id: 'id', narrow: false, disablePadding: true, label: 'ID'},
   {id: 'status', narrow: false, disablePadding: false, label: 'Status'},
   {id: 'researcher', narrow: false, disablePadding: false, label: 'Researcher'},
-  {id: 'lead', narrow: false, disablePadding: false, label: 'Analyst'},
+  {id: 'lead', narrow: false, disablePadding: false, label: 'Lead'},
   {id: 'created', narrow: false, disablePadding: false, label: 'Created on'},
   {id: 'updated', narrow: false, disablePadding: false, label: 'Updated on'},
   {id: 'actions', narrow: true, disablePadding: false, label: 'Actions'},
@@ -108,7 +108,7 @@ function a11yProps(index) {
   };
 }
 
-export default function DashboardPageResearcher() {
+export default function DashboardPageAnalyst() {
   const classes = useStyles();
   const [value, setValue] = React.useState(0);
   const [open, setOpen] = React.useState({
@@ -116,9 +116,9 @@ export default function DashboardPageResearcher() {
     summaryDrawer: false,
     summaryStatus: '',
   });
-  const [tabStatus, setTabStatus] = React.useState('active');
+  const [tabStatus, setTabStatus] = React.useState('assigned to me');
   const [project, setProject] = React.useState({
-    title: 'Project 1',
+    title: 'All projects',
   });
 
   const filteredRows = () => {
@@ -131,19 +131,22 @@ export default function DashboardPageResearcher() {
     setValue(newValue);
     switch (newValue) {
       case 0:
-        setTabStatus('active');
+        setTabStatus('assigned to me');
         break;
       case 1:
-        setTabStatus('withdrawn');
+        setTabStatus('unassigned');
         break;
       case 2:
-        setTabStatus('approved');
+        setTabStatus('active');
         break;
       case 3:
+        setTabStatus('approved');
+        break;
+      case 4:
         setTabStatus('denied');
         break;
       default:
-        setTabStatus('active');
+        setTabStatus('assigned to me');
     }
   };
 
@@ -166,19 +169,18 @@ export default function DashboardPageResearcher() {
   const mainRef = React.createRef();
   const aboutRef = React.createRef();
 
-
   return (
     <React.Fragment>
       <Header
         clickHandler={toggleProjectsDrawer}
-        role='researcher'
+        role='analyst'
       />
       <main className={classes.main}>
         <BypassBlocks ref={{main: mainRef, about: aboutRef}} />
         <ProjectsDrawer
           open={open.projectsDrawer}
           projectTitle={handleProjectTitle}
-          role={'researcher'}
+          role={'analyst'}
         />
         <Paper
           className={clsx(classes.content, classes.paper, {
@@ -225,49 +227,59 @@ export default function DashboardPageResearcher() {
               textColor="primary"
               className={classes.tabs}
             >
-              <Tab label="Active" {...a11yProps(0)} />
-              <Tab label="Withdrawn" {...a11yProps(1)} />
-              <Tab label="Approved" {...a11yProps(2)} />
-              <Tab label="Denied" {...a11yProps(3)} />
+              <Tab label="Assigned to me" {...a11yProps(0)} />
+              <Tab label="Unassigned" {...a11yProps(1)} />
+              <Tab label="Active" {...a11yProps(2)} />
+              <Tab label="Approved" {...a11yProps(3)} />
+              <Tab label="Denied" {...a11yProps(4)} />
             </Tabs>
           </AppBar>
           <TabPanel value={value} index={0} className={classes.tabPanel}>
+            <TableContainerComponent
+              status="assigned to me"
+              filteredRows={filteredRows}
+              headCells={headCells}
+              contextSummaryClick={toggleSummaryDrawer}
+              contextStatusClick={contextStatusClick}
+              role={'analyst'}
+            />
+          </TabPanel>
+          <TabPanel value={value} index={1} className={classes.tabPanel}>
+            <TableContainerComponent
+              status="unassigned"
+              filteredRows={filteredRows}
+              headCells={headCells}
+              contextSummaryClick={toggleSummaryDrawer}
+              contextStatusClick={contextStatusClick}
+              role={'analyst'}
+            />
+          </TabPanel>
+          <TabPanel value={value} index={2} className={classes.tabPanel}>
             <TableContainerComponent
               status="active"
               filteredRows={filteredRows}
               headCells={headCells}
               contextSummaryClick={toggleSummaryDrawer}
               contextStatusClick={contextStatusClick}
-              role={'researcher'}
-            />
-          </TabPanel>
-          <TabPanel value={value} index={1} className={classes.tabPanel}>
-            <TableContainerComponent
-              status="withdrawn"
-              filteredRows={filteredRows}
-              headCells={headCells}
-              contextSummaryClick={toggleSummaryDrawer}
-              contextStatusClick={contextStatusClick}
-              role={'researcher'}
-            />
-          </TabPanel>
-          <TabPanel value={value} index={2} className={classes.tabPanel}>
-            <TableContainerComponent
-              status="approved"
-              filteredRows={filteredRows}
-              headCells={headCells}
-              contextSummaryClick={toggleSummaryDrawer}
-              contextStatusClick={contextStatusClick}
-              role={'researcher'}
+              role={'analyst'}
             />
           </TabPanel>
           <TabPanel value={value} index={3} className={classes.tabPanel}>
+            <TableContainerComponent
+              status="approved" filteredRows={filteredRows}
+              headCells={headCells}
+              contextSummaryClick={toggleSummaryDrawer}
+              contextStatusClick={contextStatusClick}
+              role={'analyst'}
+            />
+          </TabPanel>
+          <TabPanel value={value} index={4} className={classes.tabPanel}>
             <TableContainerComponent
               status="denied" filteredRows={filteredRows}
               headCells={headCells}
               contextSummaryClick={toggleSummaryDrawer}
               contextStatusClick={contextStatusClick}
-              role={'researcher'}
+              role={'analyst'}
             />
           </TabPanel>
         </Paper>

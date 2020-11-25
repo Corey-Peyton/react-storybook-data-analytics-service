@@ -91,9 +91,8 @@ const defaultStyles = makeStyles((theme) => ({
 }));
 
 function ShowMenuButton(props) {
-  const hashVar = window.location.hash.substring(2);
   const classes = defaultStyles();
-  if (hashVar === 'vetting-app/dashboard-researcher'|| hashVar === 'vetting-app/dashboard-analyst') {
+  if (props.role === 'analyst' || props.role === 'researcher') {
     return (
       <IconButton onClick={props.clickHandler} className={classes.iconButton} edge="start">
         <MenuIcon />
@@ -140,7 +139,7 @@ export default function DefaultHeader(props) {
         className={`${classes.appBar} ${props.flat && classes.flatHeader}`}
       >
         <Toolbar className={classes.toolbar}>
-          <ShowMenuButton clickHandler={props.clickHandler}/>
+          <ShowMenuButton clickHandler={props.clickHandler} role={props.role}/>
           <div className={classes.branding}>
             <BrandingStatsCan />
           </div>
