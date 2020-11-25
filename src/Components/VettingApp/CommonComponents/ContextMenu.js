@@ -20,6 +20,7 @@ import {
 } from '@mdi/js';
 
 import CustomizedSnackbar from '../CommonComponents/CustomizedSnackbar';
+import {DialogWithdraw} from '../Dashboard/DialogBox';
 
 const useStyles = makeStyles((theme) => ({
   listItemIcon: {
@@ -57,6 +58,7 @@ export default function CustomizedMenus(props) {
   const [anchorEl, setAnchorEl] = React.useState(null);
   const [open, setOpen] = React.useState({
     snackbar: false,
+    dialog: false,
   });
   const [action, setAction] = React.useState({
     message: '',
@@ -80,6 +82,7 @@ export default function CustomizedMenus(props) {
 
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
+    props.contextStatusClick(props.status);
   };
 
   const handleClose = () => {
@@ -99,6 +102,11 @@ export default function CustomizedMenus(props) {
 
   const toggleSnackbar = (value) => {
     setOpen({...open, snackbar: !open.snackbar});
+    handleClose();
+  };
+
+  const toggleDialog = () => {
+    setOpen({...open, dialog: !open.dialog});
     handleClose();
   };
 
@@ -123,7 +131,7 @@ export default function CustomizedMenus(props) {
           </ListItemIcon>
           <ListItemText primary={<Typography variant="body2">Submit request</Typography>} />
         </MenuItem>
-        <MenuItem onClick={() => triggerAction(actionList.message.withdraw, actionList.severity.withdraw)}>
+        <MenuItem onClick={toggleDialog}>
           <ListItemIcon className={classes.listItemIcon}>
             <ExitToAppIcon fontSize="small" />
           </ListItemIcon>
@@ -152,7 +160,7 @@ export default function CustomizedMenus(props) {
           </ListItemIcon>
           <ListItemText primary={<Typography variant="body2">View request</Typography>} />
         </MenuItem>
-        <MenuItem onClick={() => triggerAction(actionList.message.withdraw, actionList.severity.withdraw)}>
+        <MenuItem onClick={toggleDialog}>
           <ListItemIcon className={classes.listItemIcon}>
             <ExitToAppIcon fontSize="small" />
           </ListItemIcon>
@@ -179,9 +187,9 @@ export default function CustomizedMenus(props) {
           <ListItemIcon className={classes.listItemIcon}>
             <Icon path={mdiEye} size={1} className="icon-grey" />
           </ListItemIcon>
-          <ListItemText primary={<Typography variant="body2">View</Typography>} />
+          <ListItemText primary={<Typography variant="body2">View request</Typography>} />
         </MenuItem>
-        <MenuItem onClick={() => triggerAction(actionList.message.withdraw, actionList.severity.withdraw)}>
+        <MenuItem onClick={toggleDialog}>
           <ListItemIcon className={classes.listItemIcon}>
             <ExitToAppIcon fontSize="small" />
           </ListItemIcon>
@@ -210,7 +218,7 @@ export default function CustomizedMenus(props) {
         open={Boolean(anchorEl)}
         onClose={handleClose}
       >
-        <MenuItem onClick={() => triggerAction(actionList.message.withdraw, actionList.severity.withdraw)}>
+        <MenuItem onClick={toggleDialog}>
           <ListItemIcon className={classes.listItemIcon}>
             <ExitToAppIcon fontSize="small" />
           </ListItemIcon>
@@ -301,6 +309,7 @@ export default function CustomizedMenus(props) {
         severity={action.severity}
         message={action.message}
         toggleSnackbar={toggleSnackbar}/>
+      <DialogWithdraw toggleDialog={toggleDialog} open={open.dialog}/>
     </div>
   );
 }
