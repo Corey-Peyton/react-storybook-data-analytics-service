@@ -82,8 +82,6 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-let tabStatus = 'active';
-
 function createData(id, statusHead, status, researcher, lead, created, updated) {
   return {id, statusHead, status, researcher, lead, created, updated};
 }
@@ -92,18 +90,12 @@ const rows = requestListResearchers.map((el, index) =>
   createData(el.id, el.statusHead, el.status, el.researcher, el.lead, el.created, el.updated),
 );
 
-const filteredRows = () => {
-  return (
-    rows.filter((val) => val.statusHead === tabStatus)
-  );
-};
-
 const headCells = [
   {id: 'id', narrow: false, disablePadding: true, label: 'ID'},
   {id: 'status', narrow: false, disablePadding: false, label: 'Status'},
-  {id: 'researcher', narrow: false, disablePadding: false, label: 'Researcher'}, // not sorting
+  {id: 'researcher', narrow: false, disablePadding: false, label: 'Researcher'},
   {id: 'lead', narrow: false, disablePadding: false, label: 'Analyst'},
-  {id: 'created', narrow: false, disablePadding: false, label: 'Created on'}, // not sorting
+  {id: 'created', narrow: false, disablePadding: false, label: 'Created on'},
   {id: 'updated', narrow: false, disablePadding: false, label: 'Updated on'},
   {id: 'actions', narrow: true, disablePadding: false, label: 'Actions'},
 ];
@@ -123,27 +115,34 @@ export default function DashboardPageResearcher() {
     summaryDrawer: false,
     summaryStatus: '',
   });
+  const [tabStatus, setTabStatus] = React.useState('active');
   const [project, setProject] = React.useState({
     title: 'Project 1',
   });
+
+  const filteredRows = () => {
+    return (
+      rows.filter((val) => val.statusHead === tabStatus)
+    );
+  };
 
   const handleChange = (event, newValue) => {
     setValue(newValue);
     switch (newValue) {
       case 0:
-        tabStatus = 'active';
+        setTabStatus('active');
         break;
       case 1:
-        tabStatus = 'withdrawn';
+        setTabStatus('withdrawn');
         break;
       case 2:
-        tabStatus = 'approved';
+        setTabStatus('approved');
         break;
       case 3:
-        tabStatus = 'denied';
+        setTabStatus('denied');
         break;
       default:
-        tabStatus = 'active';
+        setTabStatus('active');
     }
   };
 
@@ -169,12 +168,16 @@ export default function DashboardPageResearcher() {
 
   return (
     <React.Fragment>
-      <Header clickHandler={toggleProjectsDrawer}/>
+      <Header
+        clickHandler={toggleProjectsDrawer}
+        role='researcher'
+      />
       <main className={classes.main}>
         <BypassBlocks ref={{main: mainRef, about: aboutRef}} />
         <ProjectsDrawer
           open={open.projectsDrawer}
           projectTitle={handleProjectTitle}
+          role={'researcher'}
         />
         <Paper
           className={clsx(classes.content, classes.paper, {
@@ -228,7 +231,7 @@ export default function DashboardPageResearcher() {
               headCells={headCells}
               contextSummaryClick={toggleSummaryDrawer}
               contextStatusClick={contextStatusClick}
-
+              role={'researcher'}
             />
           </TabPanel>
           <TabPanel value={value} index={1} className={classes.tabPanel}>
@@ -238,6 +241,7 @@ export default function DashboardPageResearcher() {
               headCells={headCells}
               contextSummaryClick={toggleSummaryDrawer}
               contextStatusClick={contextStatusClick}
+              role={'researcher'}
             />
           </TabPanel>
           <TabPanel value={value} index={2} className={classes.tabPanel}>
@@ -247,6 +251,7 @@ export default function DashboardPageResearcher() {
               headCells={headCells}
               contextSummaryClick={toggleSummaryDrawer}
               contextStatusClick={contextStatusClick}
+              role={'researcher'}
             />
           </TabPanel>
           <TabPanel value={value} index={3} className={classes.tabPanel}>
@@ -255,6 +260,7 @@ export default function DashboardPageResearcher() {
               headCells={headCells}
               contextSummaryClick={toggleSummaryDrawer}
               contextStatusClick={contextStatusClick}
+              role={'researcher'}
             />
           </TabPanel>
         </Paper>

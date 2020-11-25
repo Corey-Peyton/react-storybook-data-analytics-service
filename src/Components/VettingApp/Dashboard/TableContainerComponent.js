@@ -9,14 +9,13 @@ import {
   TableContainer,
   TablePagination,
   TableRow,
-  Chip,
 } from '@material-ui/core';
 
-import {DialogAnalyst} from './DialogBox';
 import CustomizedMenus from '../CommonComponents/ContextMenu';
 import DashboardTableHead from './DashboardTableHead';
+import AnalystCell from './AnalystCell';
 
-const ROW_HEIGHT = 57;
+export const ROW_HEIGHT = 57;
 
 const useStyles = makeStyles((theme) => ({
   tableContainer: {
@@ -77,7 +76,6 @@ export default function TableContainerComponent(props) {
   const [rowsPerPage, setRowsPerPage] = React.useState(5);
   const {t} = useTranslation();
   const classes = useStyles();
-  const hashVar = window.location.hash.substring(2);
 
   const handleRequestSort = (event, property) => {
     const isAsc = orderBy === property && order === 'asc';
@@ -94,41 +92,6 @@ export default function TableContainerComponent(props) {
     setPage(0);
   };
 
-  const handleChipClick = (event) => {
-    console.log(event.target);
-  };
-
-  const handleAnalystCell = (value) => {
-    const extraAnalysts = `+${value.length - 1}`;
-
-    if (hashVar === 'vetting-app/dashboard-researcher') {
-      return (
-        <TableCell className={classes.tablesCellsFlex}>
-          <Typography variant="body2" noWrap={true}>{value[0]}</Typography>
-          <DialogAnalyst selectedValue='null'/>
-        </TableCell>
-      );
-    } else if (hashVar === 'vetting-app/dashboard-analyst') {
-      if (value.length > 1) {
-        return (
-          <TableCell className={classes.tablesCellsFlex}>
-            <Chip label={value[0]} onClick={handleChipClick}/>
-            <Chip label={extraAnalysts} onClick={handleChipClick} />
-          </TableCell>
-        );
-      } else if (value.length === 0) {
-        return (
-          <TableCell className={classes.tablesCellsFlex} />
-        );
-      } else {
-        return (
-          <TableCell className={classes.tablesCellsFlex}>
-            <Chip label={value[0]} onClick={handleChipClick}/>
-          </TableCell>
-        );
-      }
-    }
-  };
 
   const emptyRows = rowsPerPage - Math.min(rowsPerPage, props.filteredRows().length - page * rowsPerPage);
 
@@ -176,7 +139,7 @@ export default function TableContainerComponent(props) {
                       <TableCell>
                         <Typography variant="body2" noWrap={true}>{row.researcher}</Typography>
                       </TableCell>
-                      {handleAnalystCell(row.lead)}
+                      <AnalystCell analyst={row.lead} role={props.role}/>
                       <TableCell>
                         <Typography variant="body2" noWrap={true}>{row.created}</Typography>
                       </TableCell>

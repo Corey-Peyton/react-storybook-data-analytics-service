@@ -183,12 +183,12 @@ StyledTreeItem.propTypes = {
 };
 
 export default function ProjectsDrawer(props) {
+  const {role, open, projectTitle} = props;
   const classes = useStyles();
   const {t} = useTranslation();
-  const hashVar = window.location.hash.substring(2);
 
   const projectsArray = () => {
-    if (hashVar === 'vetting-app/dashboard-researcher') {
+    if (role === 'researcher') {
       return ['Project 1', 'Project 2', 'Project 3'];
     } else {
       return ['All projects', 'Project 1', 'Project 2', 'Project 3'];
@@ -214,7 +214,7 @@ export default function ProjectsDrawer(props) {
         title = 'All projects';
         break;
     }
-    props.projectTitle(title);
+    projectTitle(title);
   };
 
   return (
@@ -222,7 +222,7 @@ export default function ProjectsDrawer(props) {
       className={classes.drawer}
       variant="persistent"
       anchor="left"
-      open={props.open}
+      open={open}
       classes={{
         paper: classes.drawerPaper,
       }}
