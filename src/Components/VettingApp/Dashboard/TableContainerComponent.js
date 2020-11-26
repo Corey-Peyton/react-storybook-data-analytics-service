@@ -11,11 +11,11 @@ import {
   TableRow,
 } from '@material-ui/core';
 
-import {DialogAnalyst} from './DialogBox';
 import CustomizedMenus from '../CommonComponents/ContextMenu';
 import DashboardTableHead from './DashboardTableHead';
+import AnalystCell from './AnalystCell';
 
-const ROW_HEIGHT = 57;
+export const ROW_HEIGHT = 57;
 
 const useStyles = makeStyles((theme) => ({
   tableContainer: {
@@ -92,6 +92,7 @@ export default function TableContainerComponent(props) {
     setPage(0);
   };
 
+
   const emptyRows = rowsPerPage - Math.min(rowsPerPage, props.filteredRows().length - page * rowsPerPage);
 
   return (
@@ -119,7 +120,6 @@ export default function TableContainerComponent(props) {
                 .map((row, index) => {
                   // const isItemSelected = isSelected(row.id);
                   const labelId = `enhanced-table-checkbox-${index}`;
-
                   return (
                     <TableRow
                       hover
@@ -139,10 +139,7 @@ export default function TableContainerComponent(props) {
                       <TableCell>
                         <Typography variant="body2" noWrap={true}>{row.researcher}</Typography>
                       </TableCell>
-                      <TableCell className={classes.tablesCellsFlex}>
-                        <Typography variant="body2" noWrap={true}>{row.lead}</Typography>
-                        <DialogAnalyst selectedValue='null'/>
-                      </TableCell>
+                      <AnalystCell analyst={row.lead} role={props.role}/>
                       <TableCell>
                         <Typography variant="body2" noWrap={true}>{row.created}</Typography>
                       </TableCell>
@@ -160,11 +157,14 @@ export default function TableContainerComponent(props) {
                   );
                 })
           }
+
+
           {emptyRows > 0 && (
             <TableRow style={{height: (ROW_HEIGHT) * emptyRows}}>
               <TableCell colSpan={7} />
             </TableRow>
           )}
+
         </TableBody>
       </Table>
       <TablePagination
