@@ -53,7 +53,7 @@ function AnalystInfo(props) {
         users vetting requests for accessing to confidential microdata. These
         vetting requests are subject to a risk-based assessment of potential
         disclosure based on established rules and procedures. For more
-        information please visit the 
+        information please visit the
         <Link href="#">Vetting guidelines website</Link>.
       </Typography>
       <Divider className={classes.divider} />
