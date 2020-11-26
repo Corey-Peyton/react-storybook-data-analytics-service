@@ -17,6 +17,7 @@ import {
   DialogContentText,
   IconButton,
   DialogActions,
+  Snackbar,
 } from '@material-ui/core';
 import ArrowForwardIosIcon from '@material-ui/icons/ArrowForwardIos';
 import Avatar from '@material-ui/core/Avatar';
@@ -33,6 +34,7 @@ import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
 import AppBarUnAssign from './AppBarUnAssign';
 import AppBarAssign from './AppBarAssign';
+import Alert from '@material-ui/lab/Alert';
 
 const useStyles = makeStyles((theme) => ({
   main: {
@@ -202,6 +204,16 @@ function VettingRequestAnalyst(props) {
     setState({...state, open: true});
   };
 
+  const [openSnackbar, setOpenSnackbar] = React.useState(false);
+
+  const snackbarHandleClick = () => {
+    setOpenSnackbar(true);
+  };
+
+  const snackbarHandleClose = () => {
+    setOpenSnackbar(false);
+  };
+
   const getStepContent = (step) => {
     switch (step) {
       case 0:
@@ -322,9 +334,24 @@ function VettingRequestAnalyst(props) {
                   variant="contained"
                   color="primary"
                   className={classes.button}
+                  onClick={snackbarHandleClick}
                 >
                   Submit request
                 </Button>
+                <Snackbar open={openSnackbar} onClose={snackbarHandleClose} autoHideDuration={6000} anchorOrigin={{
+                  vertical: 'bottom',
+                  horizontal: 'left',
+                }}>
+                  <Alert
+                    onClose={snackbarHandleClose}
+                    severity="success"
+                    className={classes.alert}
+                    variant="filled"
+                  >
+                    This vetting request has been already submitted. You will be
+                    notified with any updates.
+                  </Alert>
+                </Snackbar>
               </Grid>
             ) : (
               <Grid item>
