@@ -9,17 +9,16 @@ import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
 import Paper from '@material-ui/core/Paper';
 import Button from '@material-ui/core/Button';
-import {Link} from 'react-router-dom';
 
-import TableContainerComponent from './TableContainerComponent';
-import TabPanel from './DashboardTabPanel';
+import TableContainerComponent from './Common/TableContainerComponent';
+import TabPanel from './Common/DashboardTabPanel';
 import Header from '../CommonComponents/Header';
 import Footer from '../CommonComponents/Footer';
-import SummaryDrawer from './SummaryDrawer';
-import ProjectsDrawer from './ProjectsDrawer';
+import SummaryDrawer from './Common/SummaryDrawer';
+import ProjectsDrawer from './Common/ProjectsDrawer';
 import BypassBlocks from '../../BypassBlocks';
 import {requestListResearchers} from '../../../Data/fakeData';
-import {DRAWER_WIDTH} from './ProjectsDrawer';
+import {DRAWER_WIDTH} from './Common/ProjectsDrawer';
 
 const useStyles = makeStyles((theme) => ({
   main: {
@@ -83,6 +82,8 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
+let tabStatus = 'active';
+
 function createData(id, statusHead, status, researcher, lead, created, updated) {
   return {id, statusHead, status, researcher, lead, created, updated};
 }
@@ -91,12 +92,18 @@ const rows = requestListResearchers.map((el, index) =>
   createData(el.id, el.statusHead, el.status, el.researcher, el.lead, el.created, el.updated),
 );
 
+const filteredRows = () => {
+  return (
+    rows.filter((val) => val.statusHead === tabStatus)
+  );
+};
+
 const headCells = [
   {id: 'id', narrow: false, disablePadding: true, label: 'ID'},
   {id: 'status', narrow: false, disablePadding: false, label: 'Status'},
-  {id: 'researcher', narrow: false, disablePadding: false, label: 'Researcher'},
+  {id: 'researcher', narrow: false, disablePadding: false, label: 'Researcher'}, // not sorting
   {id: 'lead', narrow: false, disablePadding: false, label: 'Analyst'},
-  {id: 'created', narrow: false, disablePadding: false, label: 'Created on'},
+  {id: 'created', narrow: false, disablePadding: false, label: 'Created on'}, // not sorting
   {id: 'updated', narrow: false, disablePadding: false, label: 'Updated on'},
   {id: 'actions', narrow: true, disablePadding: false, label: 'Actions'},
 ];
@@ -116,34 +123,27 @@ export default function DashboardPageResearcher() {
     summaryDrawer: false,
     summaryStatus: '',
   });
-  const [tabStatus, setTabStatus] = React.useState('active');
   const [project, setProject] = React.useState({
     title: 'Project 1',
   });
-
-  const filteredRows = () => {
-    return (
-      rows.filter((val) => val.statusHead === tabStatus)
-    );
-  };
 
   const handleChange = (event, newValue) => {
     setValue(newValue);
     switch (newValue) {
       case 0:
-        setTabStatus('active');
+        tabStatus = 'active';
         break;
       case 1:
-        setTabStatus('withdrawn');
+        tabStatus = 'withdrawn';
         break;
       case 2:
-        setTabStatus('approved');
+        tabStatus = 'approved';
         break;
       case 3:
-        setTabStatus('denied');
+        tabStatus = 'denied';
         break;
       default:
-        setTabStatus('active');
+        tabStatus = 'active';
     }
   };
 
@@ -169,16 +169,13 @@ export default function DashboardPageResearcher() {
 
   return (
     <React.Fragment>
-      <Header
-        clickHandler={toggleProjectsDrawer}
-        role='researcher'
-      />
+      <Header clickHandler={toggleProjectsDrawer}/>
       <main className={classes.main}>
         <BypassBlocks ref={{main: mainRef, about: aboutRef}} />
         <ProjectsDrawer
           open={open.projectsDrawer}
           projectTitle={handleProjectTitle}
-          role={'researcher'}
+          role='researcher'
         />
         <Paper
           className={clsx(classes.content, classes.paper, {
@@ -207,13 +204,7 @@ export default function DashboardPageResearcher() {
               >
                 {project.title}
               </Typography>
-              <Button
-                variant="contained"
-                color="primary"
-                className={classes.button}
-                component={Link}
-                to="/vetting-app/request-researcher"
-              >
+              <Button variant="contained" color="primary" className={classes.button}>
             New vetting request
               </Button>
             </AppBar>

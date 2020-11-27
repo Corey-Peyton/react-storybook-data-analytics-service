@@ -743,3 +743,48 @@ export const requestListResearchers = [
     summary: 'Some summary content goes here',
   },
 ];
+
+export const analystList = [
+  {
+    id: 1234,
+    name: 'Thanos Titan',
+    email: 'thanos.titan@canada.ca',
+    assigned: true,
+    role: 'lead',
+  },
+  {
+    id: 1235,
+    name: 'Peter Parker',
+    email: 'peter.parker@canada.ca',
+    assigned: true,
+    role: 'support',
+  },
+  {
+    id: 1236,
+    name: 'Tony Stark',
+    email: 'tony.stark@canada.ca',
+    assigned: true,
+    role: 'support',
+  },
+  {
+    id: 1237,
+    name: 'Bruce Banner',
+    email: 'bruce.banner@canada.ca',
+    assigned: true,
+    role: 'support',
+  },
+  {
+    id: 1238,
+    name: 'Natasha Romanov',
+    email: 'natasha.romanov@canada.ca',
+    assigned: false,
+    role: 'support',
+  },
+  {
+    id: 1239,
+    name: 'Thor Odinson',
+    email: 'thor.odinson@canada.ca',
+    assigned: false,
+    role: 'support',
+  },
+];
