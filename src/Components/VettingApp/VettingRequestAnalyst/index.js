@@ -95,34 +95,17 @@ const useStyles = makeStyles((theme) => ({
     borderTopWidth: '1px',
     borderTopColor: theme.palette.grey[600],
   },
-  deleteBtn: {
-    color: theme.palette.error.main,
-  },
   dialogActions: {
     padding: theme.spacing(0, 3, 3, 3),
   },
-  circle: {
-    width: 8,
-    height: 8,
-    borderRadius: '50%',
-    backgroundColor: 'currentColor',
-  },
-  completed: {
-    color: '#784af4',
-    zIndex: 1,
-    fontSize: 18,
-  },
-  active: {
-    color: '#784af4',
-  },
   negativeMargin: {
-    marginTop: '-17%',
-    marginLeft: '20%',
-    paddingBottom: '6%',
+    marginTop: '-37px',
+    marginLeft: '45px',
+    paddingBottom: '10px',
   },
   negativeMargin2: {
-    marginTop: '-10%',
-    marginLeft: '20%',
+    marginTop: '-20px',
+    marginLeft: '45px',
   },
   paddingBottom: {
     paddingBottom: '10px',
@@ -374,17 +357,18 @@ function VettingRequestAnalyst(props) {
         onClose={handleDialogClose}
         aria-labelledby="alert-dialog-title"
         aria-describedby="alert-dialog-description"
+        className={classes.MuiDialogPaper}
       >
-        <DialogTitle id="alert-dialog-title">Manage team</DialogTitle>
+        <DialogTitle id="alert-dialog-manage">Manage team</DialogTitle>
         <Divider className={classes.divider} />
-        <DialogContent className="pb-0">
-          <DialogContentText id="alert-dialog-description">
-            <Typography variant="subtitle2" className={classes.paddingBottom}><strong>Lead</strong></Typography>
+        <DialogContent className="pr-3 pl-3">
+          <DialogContentText id="alert-manage-team-lead">
+            <Typography variant="subtitle2" className="pb-1"><strong>Lead</strong></Typography>
             <Avatar src="/broken-image.jpg" /><Typography variant="body2" className={classes.negativeMargin}>Brian Bill</Typography>
             <Typography variant="body2" className={classes.negativeMargin2}>brian.bill@canada.ca<IconButton aria-haspopup="true" onClick={handleClick}>
               <MoreVertIcon />
             </IconButton><Menu
-              id="simple-menu"
+              id="menu-team-lead"
               anchorEl={anchorEl}
               keepMounted
               open={Boolean(anchorEl)}
@@ -394,13 +378,13 @@ function VettingRequestAnalyst(props) {
             <Divider className={classes.divider} />
             <SearchBar placeholder="Search support analysts"/>
           </DialogContentText>
-          <DialogContentText id="alert-dialog-description">
-            <Typography variant="subtitle2" className={classes.paddingBottom}><strong>Support Analysts</strong></Typography>
+          <DialogContentText id="alert-manage-team-analyst">
+            <Typography variant="subtitle2" className="pb-1"><strong>Support Analysts</strong></Typography>
             <Avatar src="/broken-image.jpg" /><Typography variant="body2" className={classes.negativeMargin}>Tony Stark </Typography>
             <Typography variant="body2" className={classes.negativeMargin2}>tony.stark@canada.ca<IconButton aria-haspopup="true" onClick={handleClick}>
               <MoreVertIcon />
             </IconButton><Menu
-              id="simple-menu"
+              id="menu-team-analyst"
               anchorEl={anchorEl}
               keepMounted
               open={Boolean(anchorEl)}

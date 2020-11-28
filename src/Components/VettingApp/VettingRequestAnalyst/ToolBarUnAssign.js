@@ -113,7 +113,7 @@ function ToolBarUnassign() {
   Resolve<ArrowDropDownIcon />
       </Button>
       <Menu
-        id="simple-menu"
+        id="toolbar-unassign-menu"
         anchorEl={anchorEl}
         keepMounted
         open={Boolean(anchorEl)}
@@ -130,7 +130,7 @@ function ToolBarUnassign() {
         aria-labelledby="alert-dialog-title"
         aria-describedby="alert-dialog-description"
       >
-        <DialogTitle id="alert-dialog-title">Denied request</DialogTitle>
+        <DialogTitle id="alert-dialog-denied-request">Denied request</DialogTitle>
         <DialogContent className="pb-0">
           <TextField
             className={classes.inputMargin}
@@ -184,7 +184,7 @@ function ToolBarUnassign() {
         aria-labelledby="alert-dialog-title"
         aria-describedby="alert-dialog-description"
       >
-        <DialogTitle id="alert-dialog-title">Request an update</DialogTitle>
+        <DialogTitle id="alert-dialog-update">Request an update</DialogTitle>
         <DialogContent className="pb-0">
           <TextField
             className={classes.inputMargin}

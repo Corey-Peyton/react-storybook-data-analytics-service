@@ -26,7 +26,7 @@ const useStyles = makeStyles((theme) => ({
     margin: theme.spacing(3, 0),
   },
   emphasisBox: {
-    background: '#ECEEF1',
+    background: theme.palette.grey[200],
     padding: theme.spacing(2),
     marginBottom: theme.spacing(2),
   },

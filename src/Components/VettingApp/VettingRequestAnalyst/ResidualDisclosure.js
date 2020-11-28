@@ -1,10 +1,9 @@
-import React, {useState} from 'react';
+import React from 'react';
 import {makeStyles} from '@material-ui/core/styles';
 import Dialog from '@material-ui/core/Dialog';
 import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogTitle from '@material-ui/core/DialogTitle';
-import Snackbar from '@material-ui/core/Snackbar';
 import {
   Typography,
   Divider,
@@ -20,7 +19,6 @@ import {
   MenuItem,
   TextField,
   IconButton,
-  TextareaAutosize,
 } from '@material-ui/core';
 import DeleteIcon from '@material-ui/icons/Delete';
 
@@ -32,7 +30,7 @@ const useStyles = makeStyles((theme) => ({
     margin: theme.spacing(3, 0),
   },
   emphasisBox: {
-    background: '#ECEEF1',
+    background: theme.palette.grey[200],
     padding: theme.spacing(2),
     marginBottom: theme.spacing(2),
     borderLeftStyle: 'solid',
@@ -54,8 +52,6 @@ function ResidualDisclosure(props) {
       setState({...state, weightVar: false});
     }
   };
-
-  const [isOpen, setIsOpen] = useState(false);
 
   const [open, setOpen] = React.useState(false);
 
