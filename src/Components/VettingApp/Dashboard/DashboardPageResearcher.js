@@ -82,8 +82,6 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-let tabStatus = 'active';
-
 function createData(id, statusHead, status, researcher, lead, created, updated) {
   return {id, statusHead, status, researcher, lead, created, updated};
 }
@@ -91,12 +89,6 @@ function createData(id, statusHead, status, researcher, lead, created, updated) 
 const rows = requestListResearchers.map((el, index) =>
   createData(el.id, el.statusHead, el.status, el.researcher, el.lead, el.created, el.updated),
 );
-
-const filteredRows = () => {
-  return (
-    rows.filter((val) => val.statusHead === tabStatus)
-  );
-};
 
 const headCells = [
   {id: 'id', narrow: false, disablePadding: true, label: 'ID'},
@@ -123,27 +115,34 @@ export default function DashboardPageResearcher() {
     summaryDrawer: false,
     summaryStatus: '',
   });
+  const [tabStatus, setTabStatus] = React.useState('assigned to me');
   const [project, setProject] = React.useState({
     title: 'Project 1',
   });
+
+  const filteredRows = () => {
+    return (
+      rows.filter((val) => val.statusHead === tabStatus)
+    );
+  };
 
   const handleChange = (event, newValue) => {
     setValue(newValue);
     switch (newValue) {
       case 0:
-        tabStatus = 'active';
+        setTabStatus('active');
         break;
       case 1:
-        tabStatus = 'withdrawn';
+        setTabStatus('withdrawn');
         break;
       case 2:
-        tabStatus = 'approved';
+        setTabStatus('approved');
         break;
       case 3:
-        tabStatus = 'denied';
+        setTabStatus('denied');
         break;
       default:
-        tabStatus = 'active';
+        setTabStatus('active');
     }
   };
 
