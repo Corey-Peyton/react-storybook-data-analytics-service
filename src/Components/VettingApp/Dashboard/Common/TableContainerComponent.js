@@ -11,7 +11,7 @@ import {
   TableRow,
 } from '@material-ui/core';
 
-import CustomizedMenus from '../CommonComponents/ContextMenu';
+import {ActionsMenu} from './ContextMenu';
 import DashboardTableHead from './DashboardTableHead';
 import AnalystCell from './AnalystCell';
 
@@ -69,6 +69,7 @@ function stableSort(array, comparator) {
 }
 
 export default function TableContainerComponent(props) {
+  const {role, filteredRows, headCells, contextSummaryClick, contextStatusClick} = props;
   const [order, setOrder] = React.useState('asc');
   const [orderBy, setOrderBy] = React.useState('calories');
   // const [selected, setSelected] = React.useState([]);
@@ -93,7 +94,7 @@ export default function TableContainerComponent(props) {
   };
 
 
-  const emptyRows = rowsPerPage - Math.min(rowsPerPage, props.filteredRows().length - page * rowsPerPage);
+  const emptyRows = rowsPerPage - Math.min(rowsPerPage, filteredRows().length - page * rowsPerPage);
 
   return (
     <TableContainer
@@ -110,12 +111,12 @@ export default function TableContainerComponent(props) {
           order={order}
           orderBy={orderBy}
           onRequestSort={handleRequestSort}
-          rowCount={props.filteredRows.length}
-          headCells={props.headCells}
+          rowCount={filteredRows.length}
+          headCells={headCells}
         />
         <TableBody>
           {
-            stableSort(props.filteredRows(), getComparator(order, orderBy))
+            stableSort(filteredRows(), getComparator(order, orderBy))
                 .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                 .map((row, index) => {
                   // const isItemSelected = isSelected(row.id);
@@ -139,7 +140,7 @@ export default function TableContainerComponent(props) {
                       <TableCell>
                         <Typography variant="body2" noWrap={true}>{row.researcher}</Typography>
                       </TableCell>
-                      <AnalystCell analyst={row.lead} role={props.role}/>
+                      <AnalystCell analyst={row.lead} role={role}/>
                       <TableCell>
                         <Typography variant="body2" noWrap={true}>{row.created}</Typography>
                       </TableCell>
@@ -147,10 +148,11 @@ export default function TableContainerComponent(props) {
                         <Typography variant="body2" noWrap={true}>{row.updated}</Typography>
                       </TableCell>
                       <TableCell align='center'>
-                        <CustomizedMenus
+                        <ActionsMenu
                           status={row.status}
-                          contextSummaryClick={props.contextSummaryClick}
-                          contextStatusClick={props.contextStatusClick}
+                          contextSummaryClick={contextSummaryClick}
+                          contextStatusClick={contextStatusClick}
+                          role={role}
                         />
                       </TableCell>
                     </TableRow>
@@ -171,7 +173,7 @@ export default function TableContainerComponent(props) {
         rowsPerPageOptions={[5, 10, 20]}
         className={classes.tablePagination}
         component="div"
-        count={props.filteredRows().length}
+        count={filteredRows().length}
         rowsPerPage={rowsPerPage}
         page={page}
         onChangePage={handleChangePage}

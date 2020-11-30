@@ -11,15 +11,15 @@ import Paper from '@material-ui/core/Paper';
 import Button from '@material-ui/core/Button';
 import {Link} from 'react-router-dom';
 
-import TableContainerComponent from './TableContainerComponent';
-import TabPanel from './DashboardTabPanel';
+import TableContainerComponent from './Common/TableContainerComponent';
+import TabPanel from './Common/DashboardTabPanel';
 import Header from '../CommonComponents/Header';
 import Footer from '../CommonComponents/Footer';
-import SummaryDrawer from './SummaryDrawer';
-import ProjectsDrawer from './ProjectsDrawer';
+import SummaryDrawer from './Common/SummaryDrawer';
+import ProjectsDrawer from './Common/ProjectsDrawer';
 import BypassBlocks from '../../BypassBlocks';
 import {requestListResearchers} from '../../../Data/fakeData';
-import {DRAWER_WIDTH} from './ProjectsDrawer';
+import {DRAWER_WIDTH} from './Common/ProjectsDrawer';
 
 const useStyles = makeStyles((theme) => ({
   main: {
@@ -87,7 +87,7 @@ function createData(id, statusHead, status, researcher, lead, created, updated) 
   return {id, statusHead, status, researcher, lead, created, updated};
 }
 
-const rows = requestListResearchers.map((el, index) =>
+const rows = requestListResearchers.filter((request) => request.status !== 'Draft' ).map((el, index) =>
   createData(el.id, el.statusHead, el.status, el.researcher, el.lead, el.created, el.updated),
 );
 

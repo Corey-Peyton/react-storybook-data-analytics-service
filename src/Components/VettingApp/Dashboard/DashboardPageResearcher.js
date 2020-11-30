@@ -9,17 +9,16 @@ import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
 import Paper from '@material-ui/core/Paper';
 import Button from '@material-ui/core/Button';
-import {Link} from 'react-router-dom';
 
-import TableContainerComponent from './TableContainerComponent';
-import TabPanel from './DashboardTabPanel';
+import TableContainerComponent from './Common/TableContainerComponent';
+import TabPanel from './Common/DashboardTabPanel';
 import Header from '../CommonComponents/Header';
 import Footer from '../CommonComponents/Footer';
-import SummaryDrawer from './SummaryDrawer';
-import ProjectsDrawer from './ProjectsDrawer';
+import SummaryDrawer from './Common/SummaryDrawer';
+import ProjectsDrawer from './Common/ProjectsDrawer';
 import BypassBlocks from '../../BypassBlocks';
 import {requestListResearchers} from '../../../Data/fakeData';
-import {DRAWER_WIDTH} from './ProjectsDrawer';
+import {DRAWER_WIDTH} from './Common/ProjectsDrawer';
 
 const useStyles = makeStyles((theme) => ({
   main: {
@@ -94,9 +93,9 @@ const rows = requestListResearchers.map((el, index) =>
 const headCells = [
   {id: 'id', narrow: false, disablePadding: true, label: 'ID'},
   {id: 'status', narrow: false, disablePadding: false, label: 'Status'},
-  {id: 'researcher', narrow: false, disablePadding: false, label: 'Researcher'},
+  {id: 'researcher', narrow: false, disablePadding: false, label: 'Researcher'}, // not sorting
   {id: 'lead', narrow: false, disablePadding: false, label: 'Analyst'},
-  {id: 'created', narrow: false, disablePadding: false, label: 'Created on'},
+  {id: 'created', narrow: false, disablePadding: false, label: 'Created on'}, // not sorting
   {id: 'updated', narrow: false, disablePadding: false, label: 'Updated on'},
   {id: 'actions', narrow: true, disablePadding: false, label: 'Actions'},
 ];
@@ -169,16 +168,13 @@ export default function DashboardPageResearcher() {
 
   return (
     <React.Fragment>
-      <Header
-        clickHandler={toggleProjectsDrawer}
-        role='researcher'
-      />
+      <Header clickHandler={toggleProjectsDrawer}/>
       <main className={classes.main}>
         <BypassBlocks ref={{main: mainRef, about: aboutRef}} />
         <ProjectsDrawer
           open={open.projectsDrawer}
           projectTitle={handleProjectTitle}
-          role={'researcher'}
+          role='researcher'
         />
         <Paper
           className={clsx(classes.content, classes.paper, {
@@ -207,13 +203,7 @@ export default function DashboardPageResearcher() {
               >
                 {project.title}
               </Typography>
-              <Button
-                variant="contained"
-                color="primary"
-                className={classes.button}
-                component={Link}
-                to="/vetting-app/request-researcher"
-              >
+              <Button variant="contained" color="primary" className={classes.button}>
             New vetting request
               </Button>
             </AppBar>
