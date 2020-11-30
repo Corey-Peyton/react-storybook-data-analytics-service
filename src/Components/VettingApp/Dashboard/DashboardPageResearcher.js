@@ -115,7 +115,7 @@ export default function DashboardPageResearcher() {
     summaryDrawer: false,
     summaryStatus: '',
   });
-  const [tabStatus, setTabStatus] = React.useState('assigned to me');
+  const [tabStatus, setTabStatus] = React.useState('active');
   const [project, setProject] = React.useState({
     title: 'Project 1',
   });
