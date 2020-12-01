@@ -3,14 +3,12 @@ import {makeStyles} from '@material-ui/core/styles';
 import {green} from '@material-ui/core/colors';
 import PhoneIcon from '@material-ui/icons/Phone';
 import CloseIcon from '@material-ui/icons/Close';
-import SearchIcon from '@material-ui/icons/Search';
 import Icon from '@mdi/react';
 import {mdiAccount} from '@mdi/js';
 import {
   Typography,
   TextField,
   FormControl,
-  InputAdornment,
   Avatar,
   Button,
   Divider,
@@ -132,6 +130,7 @@ export function DialogAnalystList(props) {
   const {open, clickHandler} = props;
   const classes = useStyles();
   const [analysts, setAnalysts] = React.useState(analystList);
+  const [selected, setSelected] = React.useState([]);
 
   const makeLead = (value) => (e) => {
     setAnalysts(
@@ -157,9 +156,24 @@ export function DialogAnalystList(props) {
     setAnalysts(
         analysts.map((item) =>
         item.id === value.id ?
-        {...item, assigned: false} :
+        {...item, assigned: false, role: 'support'} :
         item,
         ));
+  };
+
+  function selectSupports(value) {
+    const ids = value.map((item) => {
+      return item.id;
+    });
+
+    setAnalysts(
+        analysts.map((item) =>
+        ids.includes(item.id) ?
+        {...item, assigned: true, role: 'support'} :
+        item,
+        ));
+
+    setSelected([]);
   };
 
   return (
@@ -204,31 +218,43 @@ export function DialogAnalystList(props) {
         <div className={classes.dialogRow}>
           <FormControl variant="outlined" className={classes.textField}>
             <Autocomplete
-              id="combo-box-demo"
+              value={selected}
+              multiple
+              limitTags={2}
+              clearOnEscape={true}
+              disableCloseOnSelect={true}
+              id="analyst-multiselect"
               options={analysts.filter((analyst) => !analyst.assigned)}
               getOptionLabel={(option) => option.name}
+              onChange={(event, value) => {
+                setSelected(value);
+              }}
               renderInput={(params) => {
                 return (
                   <TextField
                     {...params}
-                    label=''
                     variant="outlined"
                     fullWidth
-                    placeholder='Search support analysts'
-                    InputProps={{
-                      ...params.InputProps,
-                      startAdornment: (
-                        <InputAdornment position="end">
-                          <SearchIcon />
-                        </InputAdornment>
-                      ),
-                    }}
+                    label='Search support analysts'
+                    // InputProps={{
+                    //   ...params.InputProps,
+                    //   startAdornment: (
+                    //     <InputAdornment position="end">
+                    //       <SearchIcon />
+                    //     </InputAdornment>
+                    //   ),
+                    // }}
                   />
                 );
               }
               }
             />
           </FormControl>
+        </div>
+        <div className={classes.dialogRow}>
+          <Button variant="outlined" color="primary" onClick={() => selectSupports(selected)} >
+            Add support analyst
+          </Button>
         </div>
         <div className={classes.dialogRow}>
           <Typography variant='subtitle2' className='mt-2'>Support Analysts</Typography>
