@@ -109,6 +109,34 @@ function ToolBarUnassign() {
       >
               Request an update
       </Button>
+      <Dialog
+        open={open}
+        onClose={handleDialogClose}
+        aria-labelledby="alert-dialog-title"
+        aria-describedby="alert-dialog-description"
+      >
+        <DialogTitle id="alert-dialog-update">Request an update</DialogTitle>
+        <DialogContent className="pb-0">
+          <TextField
+            className={classes.inputMargin}
+            margin="dense"
+            defaultValue="Please provide the supporting files requested."
+            label="Comments"
+            variant="outlined"
+            fullWidth
+            required
+            multiline
+          />
+        </DialogContent>
+        <DialogActions className={classes.dialogActions}>
+          <Button onClick={handleDialogClose} color="primary" variant="outlined">
+            Cancel
+          </Button>
+          <Button onClick={handleDialogClose} color="primary" variant="contained" className="ml-2">
+          Submit request
+          </Button>
+        </DialogActions>
+      </Dialog>
       <Button aria-controls="simple-menu" aria-haspopup="true" onClick={handleClick} variant="contained" color="primary" className={classes.headerBtn}>
   Resolve<ArrowDropDownIcon />
       </Button>
@@ -122,8 +150,6 @@ function ToolBarUnassign() {
         <MenuItem onClick={handleClose}>Approve</MenuItem>
         <MenuItem onClick={handleSnackbarClickOpen}>Deny</MenuItem>
       </Menu>
-
-
       <Dialog
         open={snackbaropen}
         onClose={handleDialogClose}
@@ -173,36 +199,6 @@ function ToolBarUnassign() {
               handleDialogSnackbarClose();
             }}>
           Submit
-          </Button>
-        </DialogActions>
-      </Dialog>
-
-
-      <Dialog
-        open={open}
-        onClose={handleDialogClose}
-        aria-labelledby="alert-dialog-title"
-        aria-describedby="alert-dialog-description"
-      >
-        <DialogTitle id="alert-dialog-update">Request an update</DialogTitle>
-        <DialogContent className="pb-0">
-          <TextField
-            className={classes.inputMargin}
-            margin="dense"
-            defaultValue="Please provide the supporting files requested."
-            label="Comments"
-            variant="outlined"
-            fullWidth
-            required
-            multiline
-          />
-        </DialogContent>
-        <DialogActions className={classes.dialogActions}>
-          <Button onClick={handleDialogClose} color="primary" variant="outlined">
-            Cancel
-          </Button>
-          <Button onClick={handleDialogClose} color="primary" variant="contained" className="ml-2">
-          Submit request
           </Button>
         </DialogActions>
       </Dialog>
