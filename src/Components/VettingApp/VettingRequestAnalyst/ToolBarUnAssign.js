@@ -45,33 +45,47 @@ function ToolBarUnassign() {
     setAnchorEl(null);
   };
 
-  const [open, setOpen] = React.useState(false);
-  const [snackbaropen, setSnackbarOpen] = React.useState(false);
-  const [snackbardenyopen, setSnackbarDenyOpen] = React.useState(false);
+  // const [open, setOpen] = React.useState(false);
+  // const [snackbaropen, setSnackbarOpen] = React.useState(false);
+  // const [snackbardenyopen, setSnackbarDenyOpen] = React.useState(false);
 
-  const handleClickOpen = () => {
-    setOpen(true);
+  const [open, setOpen] = React.useState({
+    dialog: false,
+    snackBar: false,
+    snackBarDeny: false,
+  });
+
+  const handleClickOpen = (state) => {
+    setOpen({...open, [state]: true});
   };
 
-  const handleSnackbarClickOpen = () => {
-    setSnackbarOpen(true);
+  const handleClickClose = (state) => {
+    setOpen({...open, [state]: false});
   };
 
-  const handleClickDeny = () => {
-    setSnackbarDenyOpen(true);
-  };
+  // const handleClickOpen = () => {
+  //   setOpen(true);
+  // };
 
-  const handleClickDenyClose = () => {
-    setSnackbarDenyOpen(false);
-  };
+  // const handleSnackbarClickOpen = () => {
+  //   setSnackbarOpen(true);
+  // };
 
-  const handleDialogClose = () => {
-    setOpen(false);
-  };
+  // const handleClickDeny = () => {
+  //   setSnackbarDenyOpen(true);
+  // };
 
-  const handleDialogSnackbarClose = () => {
-    setSnackbarOpen(false);
-  };
+  // const handleClickDenyClose = () => {
+  //   setSnackbarDenyOpen(false);
+  // };
+
+  // const handleDialogClose = () => {
+  //   setOpen(false);
+  // };
+
+  // const handleDialogSnackbarClose = () => {
+  //   setSnackbarOpen(false);
+  // };
 
   return (
     <Toolbar>
@@ -105,13 +119,13 @@ function ToolBarUnassign() {
         color="primary"
         className={classes.headerBtn}
         startIcon={<ReplayIcon />}
-        onClick={handleClickOpen}
+        onClick={() => handleClickOpen('dialog')}
       >
-              Request an update
+        Request an update
       </Button>
       <Dialog
-        open={open}
-        onClose={handleDialogClose}
+        open={open.dialog}
+        onClose={() => handleClickClose('dialog')}
         aria-labelledby="alert-dialog-title"
         aria-describedby="alert-dialog-description"
       >
@@ -129,10 +143,14 @@ function ToolBarUnassign() {
           />
         </DialogContent>
         <DialogActions className={classes.dialogActions}>
-          <Button onClick={handleDialogClose} color="primary" variant="outlined">
+          <Button
+            onClick={() => handleClickClose('dialog')}
+            color="primary" variant="outlined">
             Cancel
           </Button>
-          <Button onClick={handleDialogClose} color="primary" variant="contained" className="ml-2">
+          <Button
+            onClick={() => handleClickClose('dialog')}
+            color="primary" variant="contained" className="ml-2">
           Submit request
           </Button>
         </DialogActions>
@@ -148,11 +166,14 @@ function ToolBarUnassign() {
         onClose={handleClose}
       >
         <MenuItem onClick={handleClose}>Approve</MenuItem>
-        <MenuItem onClick={handleSnackbarClickOpen}>Deny</MenuItem>
+        <MenuItem
+          onClick={() => handleClickOpen('snackBar')}
+        >
+          Deny</MenuItem>
       </Menu>
       <Dialog
-        open={snackbaropen}
-        onClose={handleDialogClose}
+        open={open.snackBar}
+        // onClose={handleDialogClose}
         aria-labelledby="alert-dialog-title"
         aria-describedby="alert-dialog-description"
       >
@@ -187,7 +208,9 @@ function ToolBarUnassign() {
           </FormControl>
         </DialogContent>
         <DialogActions className={classes.dialogActions}>
-          <Button onClick={handleDialogSnackbarClose} color="primary" variant="outlined">
+          <Button
+            // onClick={handleDialogSnackbarClose}
+            color="primary" variant="outlined">
             Cancel
           </Button>
           <Button
@@ -195,24 +218,28 @@ function ToolBarUnassign() {
             variant="contained"
             className="ml-2"
             onClick={() => {
-              handleClickDeny();
-              handleDialogSnackbarClose();
-            }}>
+              handleClickClose('snackBar');
+              handleClickOpen('snackBarDeny');
+            }}
+          >
           Submit
           </Button>
         </DialogActions>
       </Dialog>
-      <Snackbar open={snackbardenyopen} onClose={handleClickDenyClose} autoHideDuration={6000} anchorOrigin={{
-        vertical: 'bottom',
-        horizontal: 'left',
-      }}>
+      <Snackbar
+        open={open.snackBarDeny}
+        // onClose={handleClickDenyClose}
+        autoHideDuration={6000} anchorOrigin={{
+          vertical: 'bottom',
+          horizontal: 'left',
+        }}>
         <Alert
-          onClose={handleClickDenyClose}
+          // onClose={handleClickDenyClose}
           severity="success"
           className={classes.alert}
           variant="filled"
         >
-                   The vetting request 10_2020_4564677 has been denied.
+          The vetting request 10_2020_4564677 has been denied.
         </Alert>
       </Snackbar>
     </Toolbar>
