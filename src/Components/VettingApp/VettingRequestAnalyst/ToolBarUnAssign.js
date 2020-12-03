@@ -61,6 +61,14 @@ function ToolBarUnassign() {
     setOpen({...open, [state]: false});
   };
 
+  const handleUnassign = () => {
+    setOpen({...open, dialogUnAssign: false, snackBarUnassign: true});
+  };
+
+  const handleDeny = () => {
+    setOpen({...open, dialogDeny: false, snackBarDeny: true});
+  };
+
   return (
     <Toolbar>
       <IconButton
@@ -94,11 +102,7 @@ function ToolBarUnassign() {
           <Button color="primary" variant="outlined" onClick={() => handleClickClose('dialogUnAssign')}>
             Cancel
           </Button>
-          <Button color="primary" variant="contained" className="ml-2" onClick={() => {
-            handleClickClose('dialogUnAssign');
-            handleClickOpen('snackBarUnassign');
-          }}
-          >
+          <Button color="primary" variant="contained" className="ml-2" onClick={handleUnassign}>
          Unassign
           </Button>
         </DialogActions>
@@ -230,10 +234,7 @@ function ToolBarUnassign() {
             color="primary"
             variant="contained"
             className="ml-2"
-            onClick={() => {
-              handleClickClose('snackBar');
-              handleClickOpen('snackBarDeny');
-            }}
+            onClick={handleDeny}
           >
           Submit
           </Button>
