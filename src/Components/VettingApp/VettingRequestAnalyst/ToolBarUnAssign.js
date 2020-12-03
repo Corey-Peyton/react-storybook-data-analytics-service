@@ -138,7 +138,7 @@ function ToolBarUnassign() {
       </Button>
       <Dialog
         open={open.dialogUpdate}
-        onClose={() => handleClickClose('dialog')}
+        onClose={() => handleClickClose('dialogUpdate')}
         aria-labelledby="alert-dialog-title"
         aria-describedby="alert-dialog-description"
       >
@@ -168,7 +168,7 @@ function ToolBarUnassign() {
           </Button>
         </DialogActions>
       </Dialog>
-      <Button aria-controls="simple-menu" aria-haspopup="true" onClick={handleClick} variant="contained" color="primary" className={classes.headerBtn}>
+      <Button aria-controls="toolbar-unassign-menu" aria-haspopup="true" onClick={handleClick} variant="contained" color="primary" className={classes.headerBtn}>
   Resolve<ArrowDropDownIcon />
       </Button>
       <Menu
