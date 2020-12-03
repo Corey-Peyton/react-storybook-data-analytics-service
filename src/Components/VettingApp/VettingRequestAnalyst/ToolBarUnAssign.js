@@ -45,13 +45,11 @@ function ToolBarUnassign() {
     setAnchorEl(null);
   };
 
-  // const [open, setOpen] = React.useState(false);
-  // const [snackbaropen, setSnackbarOpen] = React.useState(false);
-  // const [snackbardenyopen, setSnackbarDenyOpen] = React.useState(false);
-
   const [open, setOpen] = React.useState({
-    dialog: false,
-    snackBar: false,
+    dialogUpdate: false,
+    dialogUnAssign: false,
+    dialogDeny: false,
+    snackBarUnassign: false,
     snackBarDeny: false,
   });
 
@@ -62,30 +60,6 @@ function ToolBarUnassign() {
   const handleClickClose = (state) => {
     setOpen({...open, [state]: false});
   };
-
-  // const handleClickOpen = () => {
-  //   setOpen(true);
-  // };
-
-  // const handleSnackbarClickOpen = () => {
-  //   setSnackbarOpen(true);
-  // };
-
-  // const handleClickDeny = () => {
-  //   setSnackbarDenyOpen(true);
-  // };
-
-  // const handleClickDenyClose = () => {
-  //   setSnackbarDenyOpen(false);
-  // };
-
-  // const handleDialogClose = () => {
-  //   setOpen(false);
-  // };
-
-  // const handleDialogSnackbarClose = () => {
-  //   setSnackbarOpen(false);
-  // };
 
   return (
     <Toolbar>
@@ -101,11 +75,50 @@ function ToolBarUnassign() {
               Vetting requests dashboard
       </Typography>
       <Button
+        onClick={() => handleClickOpen('dialogUnAssign')}
         color="primary"
         className={classes.headerBtn}>
         <Icon path={mdiAccountPlus} className="icon-grey" size={1} />
-        <Typography variant="subtitle2" color="textSecondary">Unassign to me</Typography>
+        <Typography variant="subtitle2" color="textSecondary">Unassign from me</Typography>
       </Button>
+      <Dialog open={open.dialogUnAssign}
+        aria-labelledby="alert-dialog-title"
+        aria-describedby="alert-dialog-description"
+        onClose={() => handleClickClose('dialogUnAssign')}
+      >
+        <DialogTitle id="alert-dialog-update">Unassign from me</DialogTitle>
+        <DialogContent>
+          <Typography variant="body2" >If you choose to proceed the request will no longer have a lead analyst and an email will be sent to the researcher notifying them of the change.</Typography>
+        </DialogContent>
+        <DialogActions className={classes.dialogActions}>
+          <Button color="primary" variant="outlined" onClick={() => handleClickClose('dialogUnAssign')}>
+            Cancel
+          </Button>
+          <Button color="primary" variant="contained" className="ml-2" onClick={() => {
+            handleClickClose('dialogUnAssign');
+            handleClickOpen('snackBarUnassign');
+          }}
+          >
+         Unassign
+          </Button>
+        </DialogActions>
+      </Dialog>
+      <Snackbar
+        onClose={() => handleClickClose('snackBarUnassign')}
+        open={open.snackBarUnassign} autoHideDuration={6000} anchorOrigin={{
+          vertical: 'bottom',
+          horizontal: 'left',
+        }}>
+        <Alert
+          open={open.snackBarUnassign}
+          onClose={() => handleClickClose('snackBarUnassign')}
+          severity="success"
+          className={classes.alert}
+          variant="filled"
+        >
+                   You have been unassigned from request 10_2020_4564677
+        </Alert>
+      </Snackbar>
       <Button
         variant="outlined"
         color="primary"
@@ -119,12 +132,12 @@ function ToolBarUnassign() {
         color="primary"
         className={classes.headerBtn}
         startIcon={<ReplayIcon />}
-        onClick={() => handleClickOpen('dialog')}
+        onClick={() => handleClickOpen('dialogUpdate')}
       >
         Request an update
       </Button>
       <Dialog
-        open={open.dialog}
+        open={open.dialogUpdate}
         onClose={() => handleClickClose('dialog')}
         aria-labelledby="alert-dialog-title"
         aria-describedby="alert-dialog-description"
@@ -144,12 +157,12 @@ function ToolBarUnassign() {
         </DialogContent>
         <DialogActions className={classes.dialogActions}>
           <Button
-            onClick={() => handleClickClose('dialog')}
+            onClick={() => handleClickClose('dialogUpdate')}
             color="primary" variant="outlined">
             Cancel
           </Button>
           <Button
-            onClick={() => handleClickClose('dialog')}
+            onClick={() => handleClickClose('dialogUpdate')}
             color="primary" variant="contained" className="ml-2">
           Submit request
           </Button>
@@ -167,13 +180,13 @@ function ToolBarUnassign() {
       >
         <MenuItem onClick={handleClose}>Approve</MenuItem>
         <MenuItem
-          onClick={() => handleClickOpen('snackBar')}
+          onClick={() => handleClickOpen('dialogDeny')}
         >
           Deny</MenuItem>
       </Menu>
       <Dialog
-        open={open.snackBar}
-        // onClose={handleDialogClose}
+        open={open.dialogDeny}
+        onClose={() => handleClickClose('dialogDeny')}
         aria-labelledby="alert-dialog-title"
         aria-describedby="alert-dialog-description"
       >
@@ -209,7 +222,7 @@ function ToolBarUnassign() {
         </DialogContent>
         <DialogActions className={classes.dialogActions}>
           <Button
-            // onClick={handleDialogSnackbarClose}
+            onClick={() => handleClickClose('dialogDeny')}
             color="primary" variant="outlined">
             Cancel
           </Button>
@@ -228,13 +241,13 @@ function ToolBarUnassign() {
       </Dialog>
       <Snackbar
         open={open.snackBarDeny}
-        // onClose={handleClickDenyClose}
+        onClose={() => handleClickClose('snackBarDeny')}
         autoHideDuration={6000} anchorOrigin={{
           vertical: 'bottom',
           horizontal: 'left',
         }}>
         <Alert
-          // onClose={handleClickDenyClose}
+          onClose={() => handleClickClose('snackBarDeny')}
           severity="success"
           className={classes.alert}
           variant="filled"
