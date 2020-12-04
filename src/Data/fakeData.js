@@ -787,4 +787,25 @@ export const analystList = [
     assigned: false,
     role: 'support',
   },
+  {
+    id: 1240,
+    name: 'Loki Odinson',
+    email: 'loki.odinson@canada.ca',
+    assigned: false,
+    role: 'support',
+  },
+  {
+    id: 1241,
+    name: 'Clint Barton',
+    email: 'clint.barton@canada.ca',
+    assigned: false,
+    role: 'support',
+  },
+  {
+    id: 1242,
+    name: 'Wanda Vision',
+    email: 'wanda.vision@canada.ca',
+    assigned: false,
+    role: 'support',
+  },
 ];
