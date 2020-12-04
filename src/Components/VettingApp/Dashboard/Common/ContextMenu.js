@@ -20,7 +20,15 @@ import {
 } from '@mdi/js';
 
 import CustomizedSnackbar from './CustomizedSnackbar';
-import {DialogWithdraw} from './DialogBox';
+import {
+  DialogWithdraw,
+  DialogManageTeam,
+  DialogUnassign,
+  DialogSupport,
+  DialogAssign,
+  DialogUpdate,
+  DialogDenied,
+} from './DialogBox';
 
 const useStyles = makeStyles((theme) => ({
   listItemIcon: {
@@ -60,7 +68,13 @@ export function ActionsMenu(props) {
   const [anchorEl, setAnchorEl] = React.useState(null);
   const [open, setOpen] = React.useState({
     snackbar: false,
-    dialog: false,
+    dialogWithdraw: false,
+    dialogManageTeam: false,
+    dialogUnassign: false,
+    dialogSupport: false,
+    dialogAssign: false,
+    dialogUpdate: false,
+    dialogDenied: false,
   });
   const [action, setAction] = React.useState({
     message: '',
@@ -73,12 +87,14 @@ export function ActionsMenu(props) {
       reopen: 'Vetting request has been reopened',
       submit: 'Vetting request has been submitted',
       delete: 'Vetting request has been deleted',
+      approve: 'The vetting request 07-2020-34563463 has been approved.',
     },
     severity: {
       withdraw: 'success',
       reopen: 'success',
       submit: 'success',
       delete: 'error',
+      approve: 'success',
     },
   };
 
@@ -107,8 +123,8 @@ export function ActionsMenu(props) {
     handleClose();
   };
 
-  const toggleDialog = () => {
-    setOpen({...open, dialog: !open.dialog});
+  const toggleDialog = (state, value) => {
+    setOpen({...open, [state]: value});
     handleClose();
   };
 
@@ -133,7 +149,7 @@ export function ActionsMenu(props) {
           </ListItemIcon>
           <ListItemText primary={<Typography variant="body2">Submit request</Typography>} />
         </MenuItem>
-        <MenuItem onClick={toggleDialog}>
+        <MenuItem onClick={() => toggleDialog('dialogWithdraw', !open.dialogWithdraw)}>
           <ListItemIcon className={classes.listItemIcon}>
             <ExitToAppIcon fontSize="small" />
           </ListItemIcon>
@@ -157,7 +173,7 @@ export function ActionsMenu(props) {
           open={Boolean(anchorEl)}
           onClose={handleClose}
         >
-          <MenuItem onClick={handleClose}>
+          <MenuItem onClick={() => toggleDialog('dialogAssign', !open.dialogAssign)} open={open.dialogAssign}>
             <ListItemText primary={<Typography variant="body2">Assign to me</Typography>} />
           </MenuItem>
         </StyledMenu>
@@ -177,7 +193,7 @@ export function ActionsMenu(props) {
             </ListItemIcon>
             <ListItemText primary={<Typography variant="body2">View request</Typography>} />
           </MenuItem>
-          <MenuItem onClick={toggleDialog}>
+          <MenuItem onClick={() => toggleDialog('dialogWithdraw', !open.dialogWithdraw)}>
             <ListItemIcon className={classes.listItemIcon}>
               <ExitToAppIcon fontSize="small" />
             </ListItemIcon>
@@ -205,7 +221,7 @@ export function ActionsMenu(props) {
           <MenuItem onClick={handleClose}>
             <ListItemText primary={<Typography variant="body2">View request</Typography>} />
           </MenuItem>
-          <MenuItem onClick={handleClose}>
+          <MenuItem onClick={() => toggleDialog('dialogAssign', !open.dialogAssign)} open={open.dialogAssign}>
             <ListItemText primary={<Typography variant="body2">Assign to me</Typography>} />
           </MenuItem>
           <MenuItem onClick={toggleSummary}>
@@ -228,7 +244,7 @@ export function ActionsMenu(props) {
             </ListItemIcon>
             <ListItemText primary={<Typography variant="body2">View request</Typography>} />
           </MenuItem>
-          <MenuItem onClick={toggleDialog}>
+          <MenuItem onClick={() => toggleDialog('dialogWithdraw', !open.dialogWithdraw)}>
             <ListItemIcon className={classes.listItemIcon}>
               <ExitToAppIcon fontSize="small" />
             </ListItemIcon>
@@ -262,22 +278,22 @@ export function ActionsMenu(props) {
           <MenuItem onClick={handleClose}>
             <ListItemText primary={<Typography variant="body2">View request</Typography>} />
           </MenuItem>
-          <MenuItem onClick={handleClose} >
+          <MenuItem onClick={() => triggerAction(actionList.message.approve, actionList.severity.approve)}>
             <ListItemText primary={<Typography variant="body2">Approve</Typography>} />
           </MenuItem>
-          <MenuItem onClick={handleClose}>
+          <MenuItem onClick={() => toggleDialog('dialogDenied', !open.dialogDenied)} open={open.dialogDenied}>
             <ListItemText primary={<Typography variant="body2">Deny</Typography>} />
           </MenuItem>
-          <MenuItem onClick={handleClose} >
+          <MenuItem onClick={() => toggleDialog('dialogUpdate', !open.dialogUpdate)} open={open.dialogUpdate} >
             <ListItemText primary={<Typography variant="body2">Request an update</Typography>} />
           </MenuItem>
-          <MenuItem onClick={handleClose} >
+          <MenuItem onClick={() => toggleDialog('dialogUnassign', !open.dialogUnassign)} open={open.dialogUnassign} >
             <ListItemText primary={<Typography variant="body2">Unassign from me</Typography>} />
           </MenuItem>
-          <MenuItem onClick={handleClose} >
+          <MenuItem onClick={() => toggleDialog('dialogSupport', !open.dialogSupport)} open={open.dialogSupport}>
             <ListItemText primary={<Typography variant="body2">Make me support</Typography>} />
           </MenuItem>
-          <MenuItem onClick={handleClose} >
+          <MenuItem onClick={() => toggleDialog('dialogManageTeam', !open.dialogManageTeam)}>
             <ListItemText primary={<Typography variant="body2">Manage team</Typography>} />
           </MenuItem>
           <MenuItem onClick={toggleSummary}>
@@ -294,7 +310,7 @@ export function ActionsMenu(props) {
           open={Boolean(anchorEl)}
           onClose={handleClose}
         >
-          <MenuItem onClick={toggleDialog}>
+          <MenuItem onClick={() => toggleDialog('dialogWithdraw', !open.dialogWithdraw)}>
             <ListItemIcon className={classes.listItemIcon}>
               <ExitToAppIcon fontSize="small" />
             </ListItemIcon>
@@ -348,7 +364,7 @@ export function ActionsMenu(props) {
           open={Boolean(anchorEl)}
           onClose={handleClose}
         >
-          <MenuItem>
+          <MenuItem onClick={handleClose}>
             <ListItemText primary={<Typography variant="body2">View request</Typography>} />
           </MenuItem>
         </StyledMenu>
@@ -383,22 +399,22 @@ export function ActionsMenu(props) {
         <MenuItem onClick={handleClose} >
           <ListItemText primary={<Typography variant="body2">View request</Typography>} />
         </MenuItem>
-        <MenuItem onClick={handleClose} >
+        <MenuItem onClick={() => triggerAction(actionList.message.approve, actionList.severity.approve)}>
           <ListItemText primary={<Typography variant="body2">Approve</Typography>} />
         </MenuItem>
-        <MenuItem onClick={handleClose} >
+        <MenuItem onClick={() => toggleDialog('dialogDenied', !open.dialogDenied)} open={open.dialogDenied} >
           <ListItemText primary={<Typography variant="body2">Deny</Typography>} />
         </MenuItem>
-        <MenuItem onClick={handleClose} >
+        <MenuItem onClick={() => toggleDialog('dialogUpdate', !open.dialogUpdate)} open={open.dialogUpdate} >
           <ListItemText primary={<Typography variant="body2">Request an update</Typography>} />
         </MenuItem>
-        <MenuItem onClick={handleClose} >
+        <MenuItem onClick={() => toggleDialog('dialogUnassign', !open.dialogUnassign)} open={open.dialogUnassign} >
           <ListItemText primary={<Typography variant="body2">Unassign from me</Typography>} />
         </MenuItem>
-        <MenuItem onClick={handleClose} >
+        <MenuItem onClick={() => toggleDialog('dialogSupport', !open.dialogSupport)} open={open.dialogSupport}>
           <ListItemText primary={<Typography variant="body2">Make me support</Typography>} />
         </MenuItem>
-        <MenuItem onClick={handleClose} >
+        <MenuItem onClick={() => toggleDialog('dialogManageTeam', !open.dialogManageTeam)}>
           <ListItemText primary={<Typography variant="body2">Manage team</Typography>} />
         </MenuItem>
         <MenuItem onClick={toggleSummary}>
@@ -415,11 +431,20 @@ export function ActionsMenu(props) {
         open={Boolean(anchorEl)}
         onClose={handleClose}
       >
-        <MenuItem>
+        <MenuItem onClick={handleClose}>
           <ListItemText primary={<Typography variant="body2">View request</Typography>} />
         </MenuItem>
-        <MenuItem>
+        <MenuItem onClick={() => toggleDialog('dialogAssign', !open.dialogAssign)} open={open.dialogAssign}>
           <ListItemText primary={<Typography variant="body2">Assign to me</Typography>} />
+        </MenuItem>
+        <MenuItem onClick={() => toggleDialog('dialogSupport', !open.dialogSupport)} open={open.dialogSupport}>
+          <ListItemText primary={<Typography variant="body2">Make me support</Typography>} />
+        </MenuItem>
+        <MenuItem onClick={() => toggleDialog('dialogManageTeam', !open.dialogManageTeam)}>
+          <ListItemText primary={<Typography variant="body2">Manage team</Typography>} />
+        </MenuItem>
+        <MenuItem onClick={toggleSummary}>
+          <ListItemText primary={<Typography variant="body2">Summary</Typography>} />
         </MenuItem>
       </StyledMenu>
     );
@@ -433,7 +458,7 @@ export function ActionsMenu(props) {
           open={Boolean(anchorEl)}
           onClose={handleClose}
         >
-          <MenuItem>
+          <MenuItem onClick={handleClose}>
             <ListItemText primary={<Typography variant="body2">View request</Typography>} />
           </MenuItem>
         </StyledMenu>
@@ -470,7 +495,13 @@ export function ActionsMenu(props) {
         severity={action.severity}
         message={action.message}
         toggleSnackbar={toggleSnackbar}/>
-      <DialogWithdraw toggleDialog={toggleDialog} open={open.dialog}/>
+      <DialogWithdraw toggleDialog={() => toggleDialog('dialogWithdraw', !open.dialogWithdraw)} open={open.dialogWithdraw}/>
+      <DialogManageTeam toggleDialog={() => toggleDialog('dialogManageTeam', !open.dialogManageTeam)} open={open.dialogManageTeam} />
+      <DialogUnassign toggleDialog={() => toggleDialog('dialogUnassign', !open.dialogUnassign)} open={open.dialogUnassign} />
+      <DialogSupport toggleDialog={() => toggleDialog('dialogSupport', !open.dialogSupport)} open={open.dialogSupport} />
+      <DialogAssign toggleDialog={() => toggleDialog('dialogAssign', !open.dialogAssign)} open={open.dialogAssign} />
+      <DialogUpdate toggleDialog={() => toggleDialog('dialogUpdate', !open.dialogUpdate)} open={open.dialogUpdate} />
+      <DialogDenied toggleDialog={() => toggleDialog('dialogDenied', !open.dialogDenied)} open={open.dialogDenied} />
     </div>
   );
 }
