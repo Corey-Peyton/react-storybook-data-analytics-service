@@ -38,10 +38,15 @@ const useStyles = makeStyles((theme) => ({
       },
       '& .MuiFormLabel-root': {
         'line-height': 1,
+        'background-color': 'white',
+      },
+      '& .MuiOutlinedInput-multiline': {
+        'padding': 0,
       },
       '& .MuiOutlinedInput-inputMultiline': {
         'max-height': 130,
-        'overflow': 'hidden auto !important',
+        'overflow': 'auto !important',
+        'padding': theme.spacing(2),
       },
       '& .MuiAutocomplete-endAdornment': {
         'top': '5.5px',
@@ -94,6 +99,7 @@ const useStyles = makeStyles((theme) => ({
   },
   textField: {
     width: '100%',
+    padding: 0,
   },
 }));
 
@@ -523,6 +529,7 @@ export function DialogUpdate(props) {
               label="Comments *"
               variant="outlined"
               multiline
+              className={classes.textField}
             />
           </FormControl>
         </div>
