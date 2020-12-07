@@ -485,7 +485,11 @@ export function ActionsMenu(props) {
 
   return (
     <div>
-      <IconButton onClick={handleClick} aria-controls="context-menu" aria-haspopup="true">
+      <IconButton
+        onClick={handleClick}
+        aria-controls="context-menu"
+        aria-haspopup="true"
+        edge='end'>
         <MoreVertIcon />
       </IconButton>
       {StyledMenuVar}
@@ -558,7 +562,11 @@ export function AnalystMenu(props) {
   }
   return (
     <div>
-      <IconButton onClick={handleClick} aria-controls="context-menu" aria-haspopup="true">
+      <IconButton
+        onClick={handleClick}
+        aria-controls="context-menu"
+        aria-haspopup="true"
+        edge='end'>
         <MoreVertIcon />
       </IconButton>
       {StyledMenuVar}
