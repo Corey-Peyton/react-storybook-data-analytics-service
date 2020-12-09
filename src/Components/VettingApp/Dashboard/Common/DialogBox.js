@@ -7,6 +7,7 @@ import CloseIcon from '@material-ui/icons/Close';
 import Icon from '@mdi/react';
 import {mdiAccount} from '@mdi/js';
 import {
+  Box,
   Typography,
   TextField,
   FormControl,
@@ -73,6 +74,7 @@ const useStyles = makeStyles((theme) => ({
     display: 'flex',
     alignItems: 'center',
     padding: theme.spacing(1, 3),
+    height: '100%',
   },
   hiddenRow: {
     display: 'none',
@@ -96,6 +98,9 @@ const useStyles = makeStyles((theme) => ({
   },
   footerBtns: {
     marginLeft: theme.spacing(1),
+  },
+  box: {
+    padding: theme.spacing(1, 0),
   },
   textField: {
     width: '100%',
@@ -193,6 +198,34 @@ export function DialogManageTeam(props) {
     setSelected([]);
   };
 
+  const leadAnalysts = () => {
+    const content = analysts.filter((analyst) => analyst.assigned && analyst.role === 'lead').map((analyst) => {
+      return (
+        <div className={classes.dialogRow} key={analyst.id}>
+          <Avatar >
+            <Icon path={mdiAccount} size={1} />
+          </Avatar>
+          <div className={classes.analystListing}>
+            <Typography className={classes.dialogText} variant='body2'>{analyst.name}</Typography>
+            <Typography className={classes.dialogText} variant='body2'>{analyst.email}</Typography>
+          </div>
+          <AnalystMenu role={'lead'} makeSupport={makeSupport(analyst)} unassignRequest={unassignRequest(analyst)}/>
+        </div>
+      );
+    });
+    if (content.length > 0 ) {
+      return content;
+    } else {
+      return (
+        <div className={classes.dialogRow}>
+          <Box fontStyle="italic" className={classes.box}>
+            <Typography>No lead assigned</Typography>
+          </Box>
+        </div>
+      );
+    }
+  };
+
   return (
     <React.Fragment>
       <Dialog
@@ -205,8 +238,8 @@ export function DialogManageTeam(props) {
           <div className={classes.dialogTitle}>
             <Typography variant='h6'>Manage team</Typography>
             <IconButton
-              onClick={toggleDialog}
-              edge='end'>
+              edge='end'
+              onClick={toggleDialog}>
               <CloseIcon />
             </IconButton>
           </div>
@@ -215,22 +248,7 @@ export function DialogManageTeam(props) {
         <div className={classes.dialogRow}>
           <Typography variant='subtitle2'>Lead</Typography>
         </div>
-        {analysts.filter((analyst) => analyst.assigned && analyst.role === 'lead').map((analyst) => {
-          return (
-            <div className={classes.dialogRow} key={analyst.id}>
-              <Avatar>
-                <Icon path={mdiAccount} size={1}/>
-              </Avatar>
-              <div className={classes.analystListing}>
-                <Typography className={classes.dialogText} variant='body2'>{analyst.name}</Typography>
-                <Typography className={classes.dialogText} variant='body2'>{analyst.email}</Typography>
-              </div>
-              <AnalystMenu role={'lead'} makeSupport={makeSupport(analyst)} unassignRequest={unassignRequest(analyst)}/>
-            </div>
-
-          );
-        })
-        }
+        {leadAnalysts()}
         <Divider className='mt-3 mb-3'/>
         <div className={classes.dialogRow}>
           <FormControl variant="outlined" className={classes.textField}>

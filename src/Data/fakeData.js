@@ -452,11 +452,7 @@ export const requestListResearchers = [
     expiration: 'Sep. 20, 2020',
     project: '3',
     researcher: 'anotheremail@cloud.statcan.ca',
-    lead: [
-      'julie.trll@cloud.statcan.ca',
-      'name@email',
-      'name@email',
-    ],
+    lead: [],
     files: ['File one', 'File 4', 'File 5'],
     summary: 'Some summary content goes here',
   },
