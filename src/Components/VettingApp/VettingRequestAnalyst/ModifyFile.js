@@ -29,6 +29,11 @@ import Snackbar from '@material-ui/core/Snackbar';
 import Alert from '@material-ui/lab/Alert';
 
 const useStyles = makeStyles((theme) => ({
+  dialogTitle: {
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+  },
   inputMargin: {
     marginBottom: theme.spacing(2),
   },
@@ -127,16 +132,28 @@ function ModifyFile(props) {
     modifiedWeights: null,
   });
 
-  const handleClickOpen = () => {
+  /* const handleClickOpen = () => {
     setOpen(true);
+  };*/
+
+  const [open, setOpen] = React.useState({
+    dialogAddSupporting: false,
+    snackbarAddSupporting: false,
+    snackbarSave: false,
+  });
+
+  const handleClickOpen = (state) => {
+    setOpen({...open, [state]: true});
+  };
+
+  const handleClickClose = (state) => {
+    setOpen({...open, [state]: false});
   };
 
   const handleClose = () => {
     setOpen(false);
   };
-
-  const [open, setOpen] = React.useState(false);
-  const [openSnackbar, setOpenSnackbar] = React.useState(false);
+  /* const [openSnackbar, setOpenSnackbar] = React.useState(false);
 
   const handleClick = () => {
     setOpenSnackbar(true);
@@ -144,7 +161,15 @@ function ModifyFile(props) {
 
   const snackbarhandleClose = () => {
     setOpenSnackbar(false);
+  }; */
+
+  /* const addSupportingFile = () => {
+    setOpen({...open, dialogAddSupporting: false, snackbarAddSupporting: true});
   };
+ */
+  /* const saveChanges = () => {
+    setOpen({...open, toggleDrawer: false, snackbarSave: true});
+  }; */
 
   const handleRadioChange = (event) => {
     const name = event.target.name;
@@ -309,7 +334,7 @@ function ModifyFile(props) {
         </div>
       )}
       <TextField
-        className={classes.inputMargin}
+        className="marginHelperText"
         margin="dense"
         id="sampleUsed"
         label="Sample, sub-sample or inclusions/exclusions used"
@@ -319,7 +344,7 @@ function ModifyFile(props) {
         required
       />
       <TextField
-        className={classes.inputMargin}
+        className="marginHelperText"
         margin="dense"
         id="geographyLevel"
         label="Level of Geography"
@@ -610,15 +635,25 @@ function ModifyFile(props) {
         </Typography>
       </div>
       <div className={classes.buttonTooltip}>
-        <Button variant="contained" color="primary" onClick={handleClickOpen}>
+        <Button variant="contained" color="primary"
+          onClick={() => handleClickOpen('dialogAddSupporting')}>
           Add Supporting File
         </Button>
         <Dialog
-          open={open}
-          onClose={handleClose}
+          open={open.dialogAddSupporting}
+          onClose={() => handleClickClose('dialogAddSupporting')}
           aria-labelledby="form-dialog-title"
         >
-          <DialogTitle id="form-dialog-title">Add supporting file</DialogTitle>
+          <DialogTitle id="form-dialog-title">
+            <div className={classes.dialogTitle}>
+              <Typography variant='h6'>Add supporting file</Typography>
+              <IconButton
+                onClick={handleClose}
+                edge='end'>
+                <CloseIcon />
+              </IconButton>
+            </div>
+          </DialogTitle>
           <DialogContent>
             <FormControl
               required
@@ -657,14 +692,16 @@ function ModifyFile(props) {
             />
           </DialogContent>
           <DialogActions>
-            <Button onClick={handleClose} color="primary" variant="outlined">
+            <Button color="primary" variant="outlined" onClick={props.toggleDrawer(false)}
+            >
               Cancel
             </Button>
             <Button color="primary" variant="contained"
               onClick={() => {
-                handleClick();
-                handleClose();
-              }}>Add supporting file</Button>
+                props.toggleDrawer(false);
+                handleClickOpen('snackbarAddSupporting');
+              }}>
+                Add supporting file</Button>
           </DialogActions>
         </Dialog>
 
@@ -752,11 +789,14 @@ function ModifyFile(props) {
         fullWidth
         required
       />
-      <Button variant="contained" className={classes.button} color="primary"
-        onClick={props.toggleDrawer(false)}>
+      <Button variant="contained" className="button" color="primary"
+        onClick={() => {
+          props.toggleDrawer(false);
+          handleClickOpen('snackbarSave');
+        }}>
         Save Changes
       </Button>
-      <Snackbar open={openSnackbar} autoHideDuration={6000} onClose={snackbarhandleClose} anchorOrigin={{
+      <Snackbar open={open.snackbarSave} autoHideDuration={6000} onClose={() => handleClickClose('snackbarSave')}anchorOrigin={{
         vertical: 'bottom',
         horizontal: 'left',
       }}>
@@ -764,7 +804,20 @@ function ModifyFile(props) {
           severity="success"
           className={classes.alert}
           variant="filled"
-          onClose={snackbarhandleClose}
+          onClose={() => handleClickClose('snackbarSave')}
+        >
+          The output file has been saved
+        </Alert>
+      </Snackbar>
+      <Snackbar open={open.snackbarAddSupporting} autoHideDuration={6000} onClose={() => handleClickClose('snackbarAddSupporting')}anchorOrigin={{
+        vertical: 'bottom',
+        horizontal: 'left',
+      }}>
+        <Alert
+          severity="success"
+          // className={classes.button}
+          variant="filled"
+          onClose={() => handleClickClose('snackbarAddSupporting')}
         >
           The supporting file has been added
         </Alert>
