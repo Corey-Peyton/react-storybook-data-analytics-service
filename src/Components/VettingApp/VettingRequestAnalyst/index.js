@@ -239,7 +239,7 @@ function VettingRequestAnalyst(props) {
           <Paper className={classes.paper}>
             <Grid container alignItems="center">
               <Grid item className={classes.title}>
-                <Typography variant="h6">{state.title}</Typography>
+                <Typography variant="h6" component="h2">{state.title}</Typography>
                 <Typography variant="caption" color="textSecondary">
                 ID: 10_2020_232425255
                 </Typography>

@@ -59,7 +59,7 @@ function ResearcherInfo(props) {
         <Link href="#">Vetting guidelines website</Link>.
       </Typography>
       <Divider className={classes.divider} />
-      <Typography className="mb-2" variant="subtitle2">
+      <Typography className="mb-2" component="h3" variant="subtitle2">
         Items marked with asterisk (*) are required.
       </Typography>
       <Typography component="h2" variant="h6">
@@ -237,7 +237,7 @@ function ResearcherInfo(props) {
         Additional information
       </Typography>
       <div className={classes.emphasisBox}>
-        <Typography variant="subtitle2" gutterBottom={true}>
+        <Typography variant="subtitle2" component="h3" gutterBottom={true}>
           Please consider the following guidelines:
         </Typography>
         <ul>
@@ -252,7 +252,7 @@ function ResearcherInfo(props) {
             </Typography>
           </li>
         </ul>
-        <Typography variant="subtitle2">
+        <Typography variant="subtitle2" component="h3" >
           A completed request form will be stored as part of the request record.
         </Typography>
       </div>
