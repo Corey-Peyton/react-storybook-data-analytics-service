@@ -5,6 +5,7 @@ import {
   TableCell,
   Chip,
   IconButton,
+  Link,
 } from '@material-ui/core';
 import AddCircleOutlineIcon from '@material-ui/icons/AddCircleOutline';
 
@@ -61,7 +62,12 @@ export default function AnalystCell(props) {
       );
     } else if (analyst.length === 0) {
       return (
-        <TableCell className={classes.tablesCellsFlex} />
+        <TableCell className={classes.tablesCellsFlex}>
+          <Typography variant="body2">
+            <Link onClick={() => toggleDialog('list')}>Manage team</Link>
+          </Typography>
+          <DialogManageTeam open={open.manageTeam} toggleDialog={() => toggleDialog('list')} />
+        </TableCell>
       );
     } else {
       return (
