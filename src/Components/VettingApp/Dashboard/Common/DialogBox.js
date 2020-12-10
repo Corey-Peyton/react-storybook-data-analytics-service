@@ -92,7 +92,7 @@ const useStyles = makeStyles((theme) => ({
     overflow: 'auto',
   },
   dialogFooter: {
-    padding: theme.spacing(2, 3),
+    padding: theme.spacing(3, 3),
     display: 'flex',
     justifyContent: 'flex-end',
   },
@@ -106,20 +106,28 @@ const useStyles = makeStyles((theme) => ({
     width: '100%',
     padding: 0,
   },
+  formControl: {
+    'display': 'flex',
+    'flexFlow': 'row',
+    'justifyContent': 'space-between',
+    '& .MuiTextField-root': {
+      width: '49% !important',
+    },
+  },
 }));
 
 export function DialogAnalyst(props) {
-  const {open, clickHandler} = props;
+  const {open, toggleDialog} = props;
   const classes = useStyles();
 
   return (
     <React.Fragment>
-      <Dialog onClose={clickHandler} aria-labelledby="dashboard-dialog-title" open={open}>
+      <Dialog onClose={toggleDialog} aria-labelledby="dashboard-dialog-title" open={open} className={classes.root}>
         <DialogTitle id="dashboard-dialog-title">
           <div className={classes.dialogTitle}>
             <Typography variant='h6'>Analyst information</Typography>
             <IconButton
-              onClick={clickHandler}
+              onClick={toggleDialog}
               edge='end'>
               <CloseIcon />
             </IconButton>
@@ -139,7 +147,7 @@ export function DialogAnalyst(props) {
         </div>
         <Divider className="mt-2" />
         <div className={classes.dialogFooter}>
-          <Button variant="contained" color="primary" onClick={clickHandler}>
+          <Button variant="contained" color="primary" onClick={toggleDialog}>
             Go back
           </Button>
         </div>
@@ -249,7 +257,7 @@ export function DialogManageTeam(props) {
           <Typography variant='subtitle2'>Lead</Typography>
         </div>
         {leadAnalysts()}
-        <Divider className='mt-3 mb-3'/>
+        <Divider className='mt-2 mb-2'/>
         <div className={classes.dialogRow}>
           <FormControl variant="outlined" className={classes.textField}>
             <Autocomplete
@@ -303,7 +311,7 @@ export function DialogManageTeam(props) {
           })
           }
         </div>
-        <Divider className="mt-3" />
+        <Divider className="mt-2" />
         <div className={classes.dialogFooter}>
           <Button variant="outlined" color="primary" onClick={toggleDialog} className={classes.footerBtns}>
             Cancel
@@ -594,7 +602,7 @@ export function DialogDenied(props) {
       >
         <DialogTitle id="dashboard-dialog-title">
           <div className={classes.dialogTitle}>
-            <Typography variant='h6'>Denied request</Typography>
+            <Typography variant='h6'>Deny request</Typography>
             <IconButton
               onClick={toggleDialog}
               edge='end'>
@@ -604,14 +612,23 @@ export function DialogDenied(props) {
         </DialogTitle>
         <Divider className="mb-2" />
         <div className={classes.dialogRow}>
-          <FormControl variant="outlined">
+          <Typography variant='subtitle2'>Billable hours</Typography>
+        </div>
+        <div className={classes.dialogRow}>
+          <FormControl variant="outlined" className={classes.formControl}>
             <NumberFormat
               {...props}
-              label='Billable hours'
+              label='Hours'
               customInput={TextField}
               type="text"
               variant='outlined'
-              helperText="Numbers only"
+            />
+            <NumberFormat
+              {...props}
+              label='Minutes'
+              customInput={TextField}
+              type="text"
+              variant='outlined'
             />
           </FormControl>
         </div>
@@ -664,6 +681,79 @@ export function DialogDenied(props) {
         open={snackbar}
         severity="success"
         message="Vetting request 10-2020-2354326 has been denied"
+        toggleSnackbar={SnackbarClose}/>
+    </React.Fragment>
+  );
+}
+
+export function DialogApprove(props) {
+  const classes = useStyles();
+  const {toggleDialog, open} = props;
+  const [snackbar, setSnackbar] = React.useState(false);
+
+  const toggleSnackbar = () => {
+    toggleDialog();
+    setSnackbar(!snackbar);
+  };
+
+  const SnackbarClose =() =>{
+    setSnackbar(false);
+  };
+
+  return (
+    <React.Fragment>
+      <Dialog
+        onClose={toggleDialog}
+        aria-labelledby="dashboard-dialog-title"
+        open={open}
+        className={classes.root}
+      >
+        <DialogTitle id="dashboard-dialog-title">
+          <div className={classes.dialogTitle}>
+            <Typography variant='h6'>Approve request</Typography>
+            <IconButton
+              onClick={toggleDialog}
+              edge='end'>
+              <CloseIcon />
+            </IconButton>
+          </div>
+        </DialogTitle>
+        <Divider className="mb-2" />
+        <div className={classes.dialogRow}>
+          <Typography variant='subtitle2'>Billable hours</Typography>
+        </div>
+        <div className={classes.dialogRow}>
+          <FormControl variant="outlined" className={classes.formControl}>
+            <NumberFormat
+              {...props}
+              label='Hours'
+              customInput={TextField}
+              type="text"
+              variant='outlined'
+            />
+            <NumberFormat
+              {...props}
+              label='Minutes'
+              customInput={TextField}
+              type="text"
+              variant='outlined'
+            />
+          </FormControl>
+        </div>
+        <Divider className="mt-2" />
+        <div className={classes.dialogFooter}>
+          <Button variant="outlined" color="primary" onClick={toggleDialog} className={classes.footerBtns}>
+            Cancel
+          </Button>
+          <Button variant="contained" color="primary" onClick={toggleSnackbar} className={classes.footerBtns}>
+            Submit
+          </Button>
+        </div>
+      </Dialog>
+      <CustomizedSnackbar
+        open={snackbar}
+        severity="success"
+        message="Vetting request 10-2020-2354326 has been approved"
         toggleSnackbar={SnackbarClose}/>
     </React.Fragment>
   );

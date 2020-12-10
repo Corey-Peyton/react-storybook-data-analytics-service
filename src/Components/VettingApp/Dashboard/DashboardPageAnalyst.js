@@ -226,6 +226,8 @@ export default function DashboardPageAnalyst() {
               indicatorColor="primary"
               textColor="primary"
               className={classes.tabs}
+              variant="scrollable"
+              scrollButtons="auto"
             >
               <Tab label="Assigned to me" {...a11yProps(0)} />
               <Tab label="Unassigned" {...a11yProps(1)} />
