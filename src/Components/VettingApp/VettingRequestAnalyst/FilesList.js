@@ -126,7 +126,7 @@ function FilesList(props) {
     setState({...state, order: isAsc ? 'desc' : 'asc'});
   };
 
-  const toggleDrawer = (open) => (event) => {
+  const toggleDrawer = (event, open) => {
     if (
       event.type === 'keydown' &&
       (event.key === 'Tab' || event.key === 'Shift')
@@ -197,7 +197,7 @@ function FilesList(props) {
                     open={Boolean(state.anchorEl)}
                     onClose={handleMenuClose}
                   >
-                    <StyledMenuItem onClick={toggleDrawer(true)}>
+                    <StyledMenuItem onClick={(e) => toggleDrawer(e, true)}>
                       <ListItemIcon>
                         <EditIcon fontSize="small" />
                       </ListItemIcon>
@@ -216,13 +216,13 @@ function FilesList(props) {
           })}
         </TableBody>
       </Table>
-      <Button variant="contained" color="primary" onClick={toggleDrawer(true)}>
+      <Button variant="contained" color="primary" onClick={(e) => toggleDrawer(e, true)}>
         Add Output File
       </Button>
       <Drawer
         anchor="right"
         open={state.open}
-        onClose={toggleDrawer(false)}
+        onClose={(e) => toggleDrawer(e, false)}
         className={classes.drawer}
       >
         <ModifyFile toggleDrawer={toggleDrawer} />

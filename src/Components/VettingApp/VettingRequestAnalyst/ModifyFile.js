@@ -167,9 +167,11 @@ function ModifyFile(props) {
     setOpen({...open, dialogAddSupporting: false, snackbarAddSupporting: true});
   };
  */
-  /* const saveChanges = () => {
-    setOpen({...open, toggleDrawer: false, snackbarSave: true});
-  }; */
+  const saveChanges = (event) => {
+    setOpen({...open, snackbarSave: true});
+    props.toggleDrawer(event, false);
+    // props.handleClickOpen(false);
+  };
 
   const handleRadioChange = (event) => {
     const name = event.target.name;
@@ -190,7 +192,7 @@ function ModifyFile(props) {
             aria-label="delete"
             className={classes.margin}
             edge="end"
-            onClick={props.toggleDrawer(false)}
+            onClick={(e) => props.toggleDrawer(e, false)}
           >
             <CloseIcon />
           </IconButton>
@@ -692,15 +694,16 @@ function ModifyFile(props) {
             />
           </DialogContent>
           <DialogActions>
-            <Button color="primary" variant="outlined" onClick={props.toggleDrawer(false)}
+            <Button color="primary" variant="outlined" onClick={(e) => props.toggleDrawer(e, false)}
             >
               Cancel
             </Button>
             <Button color="primary" variant="contained"
-              onClick={() => {
-                props.toggleDrawer(false);
-                handleClickOpen('snackbarAddSupporting');
-              }}>
+              // onClick={() => {
+              //   props.toggleDrawer(false);
+              //   handleClickOpen('snackbarAddSupporting');
+              // }}
+            >
                 Add supporting file</Button>
           </DialogActions>
         </Dialog>
@@ -790,10 +793,7 @@ function ModifyFile(props) {
         required
       />
       <Button variant="contained" className="button" color="primary"
-        onClick={() => {
-          props.toggleDrawer(false);
-          handleClickOpen('snackbarSave');
-        }}>
+        onClick={saveChanges}>
         Save Changes
       </Button>
       <Snackbar open={open.snackbarSave} autoHideDuration={6000} onClose={() => handleClickClose('snackbarSave')}anchorOrigin={{
