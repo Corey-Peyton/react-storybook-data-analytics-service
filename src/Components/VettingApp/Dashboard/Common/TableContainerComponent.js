@@ -20,10 +20,9 @@ export const ROW_HEIGHT = 57;
 const useStyles = makeStyles((theme) => ({
   tableContainer: {
     backgroundColor: 'white',
-    width: '100%',
+    width: 'auto',
     padding: theme.spacing(2),
     paddingBottom: 0,
-    overflow: 'visible',
   },
   table: {
     padding: 0,

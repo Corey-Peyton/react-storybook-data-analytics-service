@@ -48,7 +48,7 @@ export default function AnalystCell(props) {
         <IconButton onClick={() => toggleDialog('info')}>
           <AddCircleOutlineIcon />
         </IconButton>
-        <DialogAnalyst selectedValue='null' open={open.analystInfo} toggleDialog={() => toggleDialog('info')}/>
+        <DialogAnalyst open={open.analystInfo} toggleDialog={() => toggleDialog('info')}/>
       </TableCell>
     );
   } else if (role === 'analyst') {

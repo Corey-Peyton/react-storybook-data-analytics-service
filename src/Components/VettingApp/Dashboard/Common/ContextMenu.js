@@ -28,6 +28,7 @@ import {
   DialogAssign,
   DialogUpdate,
   DialogDenied,
+  DialogApprove,
 } from './DialogBox';
 
 const useStyles = makeStyles((theme) => ({
@@ -75,6 +76,7 @@ export function ActionsMenu(props) {
     dialogAssign: false,
     dialogUpdate: false,
     dialogDenied: false,
+    dialogApprove: false,
   });
   const [action, setAction] = React.useState({
     message: '',
@@ -87,14 +89,12 @@ export function ActionsMenu(props) {
       reopen: 'Vetting request has been reopened',
       submit: 'Vetting request has been submitted',
       delete: 'Vetting request has been deleted',
-      approve: 'The vetting request 07-2020-34563463 has been approved.',
     },
     severity: {
       withdraw: 'success',
       reopen: 'success',
       submit: 'success',
       delete: 'error',
-      approve: 'success',
     },
   };
 
@@ -278,7 +278,7 @@ export function ActionsMenu(props) {
           <MenuItem onClick={handleClose}>
             <ListItemText primary={<Typography variant="body2">View request</Typography>} />
           </MenuItem>
-          <MenuItem onClick={() => triggerAction(actionList.message.approve, actionList.severity.approve)}>
+          <MenuItem onClick={() => toggleDialog('dialogApprove', !open.dialogApprove)} open={open.dialogApprove}>
             <ListItemText primary={<Typography variant="body2">Approve</Typography>} />
           </MenuItem>
           <MenuItem onClick={() => toggleDialog('dialogDenied', !open.dialogDenied)} open={open.dialogDenied}>
@@ -399,7 +399,7 @@ export function ActionsMenu(props) {
         <MenuItem onClick={handleClose} >
           <ListItemText primary={<Typography variant="body2">View request</Typography>} />
         </MenuItem>
-        <MenuItem onClick={() => triggerAction(actionList.message.approve, actionList.severity.approve)}>
+        <MenuItem onClick={() => toggleDialog('dialogApprove', !open.dialogApprove)} open={open.dialogApprove}>
           <ListItemText primary={<Typography variant="body2">Approve</Typography>} />
         </MenuItem>
         <MenuItem onClick={() => toggleDialog('dialogDenied', !open.dialogDenied)} open={open.dialogDenied} >
@@ -506,6 +506,7 @@ export function ActionsMenu(props) {
       <DialogAssign toggleDialog={() => toggleDialog('dialogAssign', !open.dialogAssign)} open={open.dialogAssign} />
       <DialogUpdate toggleDialog={() => toggleDialog('dialogUpdate', !open.dialogUpdate)} open={open.dialogUpdate} />
       <DialogDenied toggleDialog={() => toggleDialog('dialogDenied', !open.dialogDenied)} open={open.dialogDenied} />
+      <DialogApprove toggleDialog={() => toggleDialog('dialogApprove', !open.dialogApprove)} open={open.dialogApprove} />
     </div>
   );
 }
