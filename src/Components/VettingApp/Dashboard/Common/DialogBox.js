@@ -629,6 +629,10 @@ export function DialogDenied(props) {
               customInput={TextField}
               type="text"
               variant='outlined'
+              isAllowed={(values) => {
+                const {formattedValue, floatValue} = values;
+                return formattedValue === '' || floatValue <= 60;
+              }}
             />
           </FormControl>
         </div>
@@ -737,6 +741,10 @@ export function DialogApprove(props) {
               customInput={TextField}
               type="text"
               variant='outlined'
+              isAllowed={(values) => {
+                const {formattedValue, floatValue} = values;
+                return formattedValue === '' || floatValue <= 60;
+              }}
             />
           </FormControl>
         </div>
