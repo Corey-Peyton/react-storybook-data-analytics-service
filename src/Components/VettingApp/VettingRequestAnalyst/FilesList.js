@@ -1,5 +1,9 @@
 import React from 'react';
 import {makeStyles, withStyles} from '@material-ui/core/styles';
+import Dialog from '@material-ui/core/Dialog';
+import DialogActions from '@material-ui/core/DialogActions';
+import DialogContent from '@material-ui/core/DialogContent';
+import DialogTitle from '@material-ui/core/DialogTitle';
 import {
   Divider,
   Typography,
@@ -16,14 +20,25 @@ import {
   MenuItem,
   ListItemIcon,
   ListItemText,
+  FormControl,
+  InputLabel,
+  Select,
+  TextField,
 } from '@material-ui/core';
 import MoreVertIcon from '@material-ui/icons/MoreVert';
 import EditIcon from '@material-ui/icons/Edit';
 import DeleteIcon from '@material-ui/icons/Delete';
-
+import Snackbar from '@material-ui/core/Snackbar';
+import Alert from '@material-ui/lab/Alert';
 import ModifyFile from './ModifyFile';
+import CloseIcon from '@material-ui/icons/Close';
 
 const useStyles = makeStyles((theme) => ({
+  dialogTitle: {
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+  },
   divider: {
     margin: theme.spacing(3, 0),
   },
@@ -144,6 +159,20 @@ function FilesList(props) {
     setState({...state, anchorEl: null});
   };
 
+  const [open, setOpen] = React.useState({
+    dialogAddSupporting: false,
+    snackbarAddSupporting: false,
+    snackbarSave: false,
+  });
+
+  const handleClickOpen = (state) => {
+    setOpen({...open, [state]: true});
+  };
+
+  const handleClickClose = (state) => {
+    setOpen({...open, [state]: false});
+  };
+
   return (
     <React.Fragment>
       <Typography>
@@ -225,8 +254,100 @@ function FilesList(props) {
         onClose={(e) => toggleDrawer(e, false)}
         className={classes.drawer}
       >
-        <ModifyFile toggleDrawer={toggleDrawer} />
+        <ModifyFile toggleDrawer={toggleDrawer} handleClickOpen={handleClickOpen} />
       </Drawer>
+      <Dialog
+        open={open.dialogAddSupporting}
+        onClose={() => handleClickClose('dialogAddSupporting')}
+        aria-labelledby="form-dialog-title"
+      >
+        <DialogTitle id="form-dialog-title">
+          <div className={classes.dialogTitle}>
+            <Typography variant='h6'>Add supporting file</Typography>
+            <IconButton
+              onClick={handleClickClose}
+              edge='end'>
+              <CloseIcon />
+            </IconButton>
+          </div>
+        </DialogTitle>
+        <DialogContent>
+          <FormControl
+            required
+            variant="outlined"
+            fullWidth
+            margin="dense"
+            className={classes.inputMargin}
+          >
+            <InputLabel id="outputFolder-label">
+              Output folder name
+            </InputLabel>
+            <Select
+              id="supportingFilesFolder"
+              label="Supporting folder *"
+              labelId="supportingFilesFolder-label"
+            >
+              <MenuItem key={-1} value="">
+                None
+              </MenuItem>
+            </Select>
+          </FormControl>
+          <Typography variant="subtitle2">File #1 *</Typography>
+          <Typography variant="subtitle2">
+            Residual tables (see the vetting orientation)
+          </Typography>
+          <TextField
+            className={classes.inputMargin}
+            margin="dense"
+            id="notes2"
+            label="Notes"
+            multiline
+            rows={4}
+            variant="outlined"
+            fullWidth
+            required
+          />
+        </DialogContent>
+        <DialogActions>
+          <Button color="primary" variant="outlined" onClick={(e) => props.toggleDrawer(e, false)}
+          >
+            Cancel
+          </Button>
+          <Button color="primary" variant="contained"
+            onClick={() => {
+              // =props.toggleDrawer(false);
+              handleClickOpen('snackbarAddSupporting');
+            }}
+          >
+              Add supporting file</Button>
+        </DialogActions>
+      </Dialog>
+      <Snackbar open={open.snackbarAddSupporting} autoHideDuration={6000} onClose={() => handleClickClose('snackbarAddSupporting')} anchorOrigin={{
+        vertical: 'bottom',
+        horizontal: 'left',
+      }}>
+        <Alert
+          severity="success"
+          // className={classes.button}
+          variant="filled"
+          onClose={() => handleClickClose('snackbarAddSupporting')}
+        >
+          The supporting file has been added
+        </Alert>
+      </Snackbar>
+      <Snackbar open={open.snackbarSave} autoHideDuration={6000} onClose={() => handleClickClose('snackbarSave')} anchorOrigin={{
+        vertical: 'bottom',
+        horizontal: 'left',
+      }}>
+        <Alert
+          severity="success"
+          className={classes.alert}
+          variant="filled"
+          onClose={() => handleClickClose('snackbarSave')}
+        >
+          The output file has been saved
+        </Alert>
+      </Snackbar>
     </React.Fragment>
   );
 }
