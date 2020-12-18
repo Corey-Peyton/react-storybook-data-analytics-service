@@ -1,9 +1,5 @@
 import React from 'react';
 import {makeStyles} from '@material-ui/core/styles';
-import Dialog from '@material-ui/core/Dialog';
-import DialogActions from '@material-ui/core/DialogActions';
-import DialogContent from '@material-ui/core/DialogContent';
-import DialogTitle from '@material-ui/core/DialogTitle';
 import {
   FormControl,
   InputLabel,
@@ -25,15 +21,8 @@ import {
 import Autocomplete from '@material-ui/lab/Autocomplete';
 import InfoIcon from '@material-ui/icons/Info';
 import CloseIcon from '@material-ui/icons/Close';
-import Alert from '@material-ui/lab/Alert';
-import Snackbar from '@material-ui/core/Snackbar';
 
 const useStyles = makeStyles((theme) => ({
-  dialogTitle: {
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'space-between',
-  },
   inputMargin: {
     marginBottom: theme.spacing(2),
   },
@@ -48,14 +37,6 @@ const useStyles = makeStyles((theme) => ({
       justifyContent: 'space-between',
     },
   },
-  emphasisBox: {
-    background: theme.palette.grey[200],
-    padding: theme.spacing(2),
-    marginBottom: theme.spacing(2),
-    borderLeftStyle: 'solid',
-    borderLeftWidth: '5px',
-    borderLeftColor: theme.palette.primary.main,
-  },
   tooltipLabel: {
     '& svg': {
       verticalAlign: 'middle',
@@ -68,6 +49,15 @@ const useStyles = makeStyles((theme) => ({
     '& svg': {
       marginLeft: theme.spacing(1),
     },
+  },
+}));
+
+const useStylesBootstrap = makeStyles((theme) => ({
+  arrow: {
+    color: theme.palette.common.black,
+  },
+  tooltip: {
+    backgroundColor: theme.palette.common.black,
   },
 }));
 
@@ -132,17 +122,19 @@ function ModifyFile(props) {
     modifiedWeights: null,
   });
 
+  const [open, setOpen] = React.useState(false);
+
   /* const handleClickOpen = () => {
     setOpen(true);
   };*/
 
-  const [open, setOpen] = React.useState({
+  /* const [open, setOpen] = React.useState({
     dialogAddSupporting: false,
     snackbarAddSupporting: false,
     snackbarSave: false,
-  });
+  }); */
 
-  const handleClickOpen = (state) => {
+  /* const handleClickOpen = (state) => {
     setOpen({...open, [state]: true});
   };
 
@@ -152,7 +144,7 @@ function ModifyFile(props) {
 
   const handleClose = () => {
     setOpen(false);
-  };
+  }; */
   /* const [openSnackbar, setOpenSnackbar] = React.useState(false);
 
   const handleClick = () => {
@@ -180,6 +172,12 @@ function ModifyFile(props) {
       [name]: event.target.value,
     });
   };
+
+  function BootstrapTooltip(props) {
+    const classes = useStylesBootstrap();
+
+    return <Tooltip arrow classes={classes} {...props} />;
+  }
 
   return (
     <React.Fragment>
@@ -251,7 +249,7 @@ function ModifyFile(props) {
         </Select>
         <FormHelperText></FormHelperText>
       </FormControl>
-      <div className={classes.emphasisBox}>
+      <div className="emphasisBox minHeight">
         <Typography variant="subtitle2">
           If you are not sure about the Output Method above, you can search for
           the proper one below:
@@ -303,7 +301,7 @@ function ModifyFile(props) {
         <FormHelperText></FormHelperText>
       </FormControl>
       {state.includeWeightVariable === 'Yes' && (
-        <div className={classes.emphasisBox}>
+        <div className="emphasisBox minHeight2">
           <>
             <TextField
               className={classes.inputMargin}
@@ -407,13 +405,9 @@ function ModifyFile(props) {
         <FormLabel component="legend" className={classes.tooltipLabel}>
           Are variables related to income, earnings, tax and/or dollar values
           included?{' '}
-          <Tooltip
-            title="If no, future vetting release reuests under this contract may be restricted due to residual disclosure. You are strongly encouraged to consult with your analyst."
-            arrow
-            placement="right"
-          >
+          <BootstrapTooltip title="If no, future vetting release reuests under this contract may be restricted due to residual disclosure. You are strongly encouraged to consult with your analyst.">
             <InfoIcon />
-          </Tooltip>
+          </BootstrapTooltip>
         </FormLabel>
         <RadioGroup id="dollarIncluded">
           <FormControlLabel
@@ -463,17 +457,13 @@ function ModifyFile(props) {
           <FormHelperText></FormHelperText>
         </FormControl>
       )}
-      <FormControl className={classes.inputMargin} component="fieldset">
+      <FormControl className={classes.inputMargin} component="fieldset" required>
         <FormLabel component="legend" className={classes.tooltipLabel}>
           Does this request include model output or graphs that are equivalent
           to a descriptive statistics?{' '}
-          <Tooltip
-            title="Examples: a model with a single independant variable, a model with all possible interactions, histograms"
-            arrow
-            placement="right"
-          >
+          <BootstrapTooltip title="Examples: a model with a single independant variable, a model with all possible interactions, histograms.">
             <InfoIcon />
-          </Tooltip>
+          </BootstrapTooltip>
         </FormLabel>
         <RadioGroup id="equivalentDescriptiveStats">
           <FormControlLabel
@@ -494,16 +484,12 @@ function ModifyFile(props) {
         </RadioGroup>
         <FormHelperText></FormHelperText>
       </FormControl>
-      <FormControl className={classes.inputMargin} component="fieldset">
+      <FormControl className={classes.inputMargin} component="fieldset" required>
         <FormLabel component="legend" className={classes.tooltipLabel}>
           Did you apply modified (e.g. standardized) weights in the analysis?{' '}
-          <Tooltip
-            title="If yes, consult with your analyst about the vetting rules for modified weights."
-            arrow
-            placement="right"
-          >
+          <BootstrapTooltip title="If yes, consult with your analyst about the vetting rules for modified weights.">
             <InfoIcon />
-          </Tooltip>
+          </BootstrapTooltip>
         </FormLabel>
         <RadioGroup
           id="modifiedWeights"
@@ -563,16 +549,12 @@ function ModifyFile(props) {
         </RadioGroup>
         <FormHelperText></FormHelperText>
       </FormControl>
-      <FormControl className={classes.inputMargin} component="fieldset">
+      <FormControl className={classes.inputMargin} component="fieldset" required>
         <FormLabel component="legend" className={classes.tooltipLabel}>
           Is rounding of output required for this vetting request?{' '}
-          <Tooltip
-            title="If yes, ensure that any forced rounding to zero is shown."
-            arrow
-            placement="right"
-          >
+          <BootstrapTooltip title="If yes, ensure that any forced rounding to zero is shown.">
             <InfoIcon />
-          </Tooltip>
+          </BootstrapTooltip>
         </FormLabel>
         <RadioGroup
           id="roundingOutput"
@@ -609,7 +591,7 @@ function ModifyFile(props) {
           required
         />
       )}
-      <div className={classes.emphasisBox}>
+      <div className="emphasisBox minHeight3">
         <Typography variant="subtitle2" className="mb-2">
           Mandatory supporting files:
         </Typography>
@@ -641,13 +623,9 @@ function ModifyFile(props) {
           onClick={() => props.handleClickOpen('dialogAddSupporting')}>
           Add Supporting File
         </Button>
-        <Tooltip
-          title="In addition to the mandatory files listed, include other files as required by the Survey Specific Guidelines, syntax files or other files requested by the analyst."
-          arrow
-          placement="right"
-        >
+        <BootstrapTooltip title="In addition to the mandatory files listed, include other files as required by the Survey Specific Guidelines, syntax files or other files requested by the analyst.">
           <InfoIcon />
-        </Tooltip>
+        </BootstrapTooltip>
       </div>
       <Typography variant="subtitle2">Supporting file #1</Typography>
       <FormControl
@@ -726,7 +704,7 @@ function ModifyFile(props) {
         required
       />
       <Button variant="contained" className="button" color="primary"
-        onClick={saveChanges}>
+        onClick={() => props.handleClickOpen('snackbarSave')}>
         Save Changes
       </Button>
     </React.Fragment>

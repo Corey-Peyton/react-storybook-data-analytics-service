@@ -34,6 +34,32 @@ import ModifyFile from './ModifyFile';
 import CloseIcon from '@material-ui/icons/Close';
 
 const useStyles = makeStyles((theme) => ({
+  root: {
+    '& .MuiDialog-paperWidthSm': {
+      'width': 400,
+      '& .MuiTextField-root': {
+        'width': '100%',
+      },
+      '& .MuiFormLabel-root': {
+        'line-height': 1,
+      },
+      '& .MuiInputBase-input': {
+        'max-height': 130,
+        'overflow': 'hidden auto !important',
+      },
+      '& .MuiAutocomplete-endAdornment': {
+        'top': '5.5px',
+      },
+    },
+  },
+  dialogFooter: {
+    padding: theme.spacing(2, 3),
+    display: 'flex',
+    justifyContent: 'flex-end',
+  },
+  footerBtns: {
+    marginLeft: [theme.spacing(2), '!important'],
+  },
   dialogTitle: {
     display: 'flex',
     alignItems: 'center',
@@ -260,17 +286,19 @@ function FilesList(props) {
         open={open.dialogAddSupporting}
         onClose={() => handleClickClose('dialogAddSupporting')}
         aria-labelledby="form-dialog-title"
+        className={classes.root}
       >
         <DialogTitle id="form-dialog-title">
           <div className={classes.dialogTitle}>
             <Typography variant='h6'>Add supporting file</Typography>
             <IconButton
-              onClick={handleClickClose}
+              onClick={() => handleClickClose('dialogAddSupporting')}
               edge='end'>
               <CloseIcon />
             </IconButton>
           </div>
         </DialogTitle>
+        <Divider className="mb-2" />
         <DialogContent>
           <FormControl
             required
@@ -308,7 +336,8 @@ function FilesList(props) {
             required
           />
         </DialogContent>
-        <DialogActions>
+        <Divider className="mb-2 mt-2" />
+        <DialogActions className={classes.dialogFooter}>
           <Button color="primary" variant="outlined" onClick={(e) => props.toggleDrawer(e, false)}
           >
             Cancel
@@ -318,7 +347,7 @@ function FilesList(props) {
               // =props.toggleDrawer(false);
               handleClickOpen('snackbarAddSupporting');
             }}
-          >
+            className={classes.footerBtns}>
               Add supporting file</Button>
         </DialogActions>
       </Dialog>
