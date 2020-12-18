@@ -154,6 +154,7 @@ function VettingRequestAnalyst(props) {
     completed: {},
     title: 'New vetting request',
     open: false,
+    assign: false,
   });
   const steps = getSteps();
 
@@ -252,13 +253,18 @@ function VettingRequestAnalyst(props) {
     setState({...state, completed: {}});
   };
 
+  const assign = () => {
+    // setOpen(false);
+    setState({...state, assign: true});
+  };
+
   return (
     <>
       <Header />
       <main className={classes.main} tabIndex="-1">
         <Container maxWidth="xl" className="page-container">
           <AppBar position="static" className={classes.appBar} color="default">
-            {state.activeStep === 3 ? <ToolBarUnassign /> : <ToolBarAssign />}
+            {state.assign ? <ToolBarUnassign /> : <ToolBarAssign assign={assign}/>}
           </AppBar>
           <Paper className={classes.paper}>
             <Grid container alignItems="center">

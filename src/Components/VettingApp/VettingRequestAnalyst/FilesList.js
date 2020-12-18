@@ -199,6 +199,15 @@ function FilesList(props) {
     setOpen({...open, [state]: false});
   };
 
+  const saveChanges = (event) => {
+    setOpen({...open, snackbarSave: true});
+    toggleDrawer(event, false);
+  };
+
+  const addSupportingFile = () => {
+    setOpen({...open, dialogAddSupporting: false, snackbarAddSupporting: true});
+  };
+
   return (
     <React.Fragment>
       <Typography>
@@ -280,7 +289,7 @@ function FilesList(props) {
         onClose={(e) => toggleDrawer(e, false)}
         className={classes.drawer}
       >
-        <ModifyFile toggleDrawer={toggleDrawer} handleClickOpen={handleClickOpen} />
+        <ModifyFile toggleDrawer={toggleDrawer} saveChanges={saveChanges} handleClickOpen={handleClickOpen} />
       </Drawer>
       <Dialog
         open={open.dialogAddSupporting}
@@ -338,15 +347,12 @@ function FilesList(props) {
         </DialogContent>
         <Divider className="mb-2 mt-2" />
         <DialogActions className={classes.dialogFooter}>
-          <Button color="primary" variant="outlined" onClick={(e) => props.toggleDrawer(e, false)}
+          <Button color="primary" variant="outlined" onClick={() => handleClickClose('dialogAddSupporting')}
           >
             Cancel
           </Button>
           <Button color="primary" variant="contained"
-            onClick={() => {
-              // =props.toggleDrawer(false);
-              handleClickOpen('snackbarAddSupporting');
-            }}
+            onClick={addSupportingFile}
             className={classes.footerBtns}>
               Add supporting file</Button>
         </DialogActions>

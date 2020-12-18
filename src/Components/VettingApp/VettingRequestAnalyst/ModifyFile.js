@@ -155,10 +155,10 @@ function ModifyFile(props) {
     setOpenSnackbar(false);
   }; */
 
-  /* const addSupportingFile = () => {
+  const addSupportingFile = () => {
     setOpen({...open, dialogAddSupporting: false, snackbarAddSupporting: true});
   };
- */
+
   const saveChanges = (event) => {
     setOpen({...open, snackbarSave: true});
     props.toggleDrawer(event, false);
@@ -704,7 +704,7 @@ function ModifyFile(props) {
         required
       />
       <Button variant="contained" className="button" color="primary"
-        onClick={() => props.handleClickOpen('snackbarSave')}>
+        onClick={(e) => props.saveChanges(e)}>
         Save Changes
       </Button>
     </React.Fragment>

@@ -123,7 +123,7 @@ function ToolBarAssign(props) {
         <Divider className="mt-2" />
         <DialogActions className={classes.dialogFooter}>
           <Button onClick={handleClose} color="primary" variant="outlined" >Cancel</Button>
-          <Button onClick={handleClose} color="primary" variant="contained" className={classes.footerBtns}>Assign to me</Button>
+          <Button onClick={props.assign} color="primary" variant="contained" className={classes.footerBtns}>Assign to me</Button>
         </DialogActions>
       </Dialog>
     </Toolbar>
