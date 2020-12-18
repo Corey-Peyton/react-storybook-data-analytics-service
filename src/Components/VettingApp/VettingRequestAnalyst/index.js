@@ -37,8 +37,32 @@ import AppBarAssign from './AppBarAssign';
 import Alert from '@material-ui/lab/Alert';
 import Header from '../CommonComponents/Header';
 import Footer from '../CommonComponents/Footer';
+import CloseIcon from '@material-ui/icons/Close';
 
 const useStyles = makeStyles((theme) => ({
+  dialogTitle: {
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+  },
+  root: {
+    '& .MuiDialog-paperWidthSm': {
+      'width': 400,
+      '& .MuiTextField-root': {
+        'width': '100%',
+      },
+      '& .MuiFormLabel-root': {
+        'line-height': 1,
+      },
+      '& .MuiInputBase-input': {
+        'max-height': 130,
+        'overflow': 'hidden auto !important',
+      },
+      '& .MuiAutocomplete-endAdornment': {
+        'top': '5.5px',
+      },
+    },
+  },
   main: {
     background: theme.palette.grey[100],
     paddingBottom: theme.spacing(6),
@@ -361,10 +385,17 @@ function VettingRequestAnalyst(props) {
           onClose={handleDialogClose}
           aria-labelledby="alert-dialog-title"
           aria-describedby="alert-dialog-description"
-          className={classes.MuiDialogPaper}
+          className={classes.root}
         >
-          <DialogTitle id="alert-dialog-manage">Manage team</DialogTitle>
-          <Divider className={classes.divider} />
+          <DialogTitle id="alert-dialog-manage">
+            <div className={classes.dialogTitle}>Manage team <IconButton
+              onClick={handleDialogClose}
+              edge='end'>
+              <CloseIcon />
+            </IconButton>
+            </div>
+          </DialogTitle>
+          <Divider className="mt-1 mb-2"/>
           <DialogContent className="pr-3 pl-3">
             <DialogContentText id="alert-manage-team-lead">
               <Typography variant="subtitle2" className="pb-1"><strong>Lead</strong></Typography>

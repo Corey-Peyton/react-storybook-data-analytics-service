@@ -18,6 +18,15 @@ import {
 } from '@material-ui/core';
 import InfoIcon from '@material-ui/icons/Info';
 
+const useStylesBootstrap = makeStyles((theme) => ({
+  arrow: {
+    color: theme.palette.common.black,
+  },
+  tooltip: {
+    backgroundColor: theme.palette.common.black,
+  },
+}));
+
 const useStyles = makeStyles((theme) => ({
   inputMargin: {
     margin: theme.spacing(1, 0),
@@ -40,7 +49,19 @@ const useStyles = makeStyles((theme) => ({
   pt0: {
     paddingTop: [0, '!important'],
   },
+  arrow: {
+    color: theme.palette.common.black,
+  },
+  tooltip: {
+    backgroundColor: theme.palette.common.black,
+  },
 }));
+
+function BootstrapTooltip(props) {
+  const classes = useStylesBootstrap();
+
+  return <Tooltip arrow classes={classes} {...props} />;
+}
 
 function AnalystInfo(props) {
   const classes = useStyles();
@@ -267,13 +288,9 @@ function AnalystInfo(props) {
       >
         <FormLabel component="legend" className={classes.tooltipLabel}>
           Is the requested output your final output?
-          <Tooltip
-            title="If no, future vetting release requests under this contract may be restricted due to residual disclosure. You are strongly encouraged to consult with your analyst."
-            arrow
-            placement="right"
-          >
+          <BootstrapTooltip title="If no, future vetting release requests under this contract may be restricted due to residual disclosure. You are strongly encouraged to consult with your analyst.">
             <InfoIcon />
-          </Tooltip>
+          </BootstrapTooltip>
         </FormLabel>
         <RadioGroup
           id="finalOutput"

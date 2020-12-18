@@ -17,10 +17,35 @@ import {
   Select,
   InputLabel,
   Snackbar,
+  Divider,
 } from '@material-ui/core';
 import Alert from '@material-ui/lab/Alert';
+import CloseIcon from '@material-ui/icons/Close';
 
 const useStyles = makeStyles((theme) => ({
+  root: {
+    '& .MuiDialog-paperWidthSm': {
+      'width': 400,
+      '& .MuiTextField-root': {
+        'width': '100%',
+      },
+      '& .MuiFormLabel-root': {
+        'line-height': 1,
+      },
+      '& .MuiInputBase-input': {
+        'max-height': 130,
+        'overflow': 'hidden auto !important',
+      },
+      '& .MuiAutocomplete-endAdornment': {
+        'top': '5.5px',
+      },
+    },
+  },
+  dialogTitle: {
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+  },
   main: {
     background: theme.palette.grey[100],
     paddingBottom: theme.spacing(6),
@@ -30,6 +55,14 @@ const useStyles = makeStyles((theme) => ({
   },
   headerBtn: {
     marginLeft: theme.spacing(3),
+  },
+  dialogFooter: {
+    padding: theme.spacing(2, 3),
+    display: 'flex',
+    justifyContent: 'flex-end',
+  },
+  footerBtns: {
+    marginLeft: [theme.spacing(2), '!important'],
   },
 }));
 
@@ -87,22 +120,34 @@ function ToolBarUnassign() {
         color="primary"
         className={classes.headerBtn}>
         <Icon path={mdiAccountPlus} className="icon-grey" size={1} />
-        <Typography variant="subtitle2" color="textSecondary">Unassign from me</Typography>
+        <Typography variant="subtitle2" color="textSecondary">Unassign from me
+        </Typography>
       </Button>
       <Dialog open={open.dialogUnAssign}
         aria-labelledby="alert-dialog-title"
         aria-describedby="alert-dialog-description"
         onClose={() => handleClickClose('dialogUnAssign')}
+        className={classes.root}
       >
-        <DialogTitle id="alert-dialog-update">Unassign from me</DialogTitle>
-        <DialogContent>
+        <DialogTitle id="alert-dialog-update">
+          <div className={classes.dialogTitle}>Unassign from me
+            <IconButton
+              onClick={() => handleClickClose('dialogUnAssign')}
+              edge='end'>
+              <CloseIcon />
+            </IconButton>
+          </div>
+        </DialogTitle>
+        <Divider className="mb-2" />
+        <DialogContent className="mb-2">
           <Typography variant="body2" >If you choose to proceed the request will no longer have a lead analyst and an email will be sent to the researcher notifying them of the change.</Typography>
         </DialogContent>
-        <DialogActions className={classes.dialogActions}>
+        <Divider className="mb-2" />
+        <DialogActions className={classes.dialogFooter}>
           <Button color="primary" variant="outlined" onClick={() => handleClickClose('dialogUnAssign')}>
             Cancel
           </Button>
-          <Button color="primary" variant="contained" className="ml-2" onClick={handleUnassign}>
+          <Button color="primary" variant="contained" onClick={handleUnassign} className={classes.footerBtns}>
          Unassign
           </Button>
         </DialogActions>
@@ -145,8 +190,18 @@ function ToolBarUnassign() {
         onClose={() => handleClickClose('dialogUpdate')}
         aria-labelledby="alert-dialog-title"
         aria-describedby="alert-dialog-description"
+        className={classes.root}
       >
-        <DialogTitle id="alert-dialog-update">Request an update</DialogTitle>
+        <DialogTitle id="alert-dialog-update">
+          <div className={classes.dialogTitle}>Request an update
+            <IconButton
+              onClick={() => handleClickClose('dialogUpdate')}
+              edge='end'>
+              <CloseIcon />
+            </IconButton>
+          </div>
+        </DialogTitle>
+        <Divider className="mb-2" />
         <DialogContent className="pb-0">
           <TextField
             className={classes.inputMargin}
@@ -159,7 +214,8 @@ function ToolBarUnassign() {
             multiline
           />
         </DialogContent>
-        <DialogActions className={classes.dialogActions}>
+        <Divider className="mb-2 mt-3" />
+        <DialogActions className={classes.dialogFooter}>
           <Button
             onClick={() => handleClickClose('dialogUpdate')}
             color="primary" variant="outlined">
@@ -167,7 +223,7 @@ function ToolBarUnassign() {
           </Button>
           <Button
             onClick={() => handleClickClose('dialogUpdate')}
-            color="primary" variant="contained" className="ml-2">
+            color="primary" variant="contained" className={classes.footerBtns}>
           Submit request
           </Button>
         </DialogActions>
@@ -193,8 +249,18 @@ function ToolBarUnassign() {
         onClose={() => handleClickClose('dialogDeny')}
         aria-labelledby="alert-dialog-title"
         aria-describedby="alert-dialog-description"
+        className={classes.root}
       >
-        <DialogTitle id="alert-dialog-denied-request">Denied request</DialogTitle>
+        <DialogTitle id="alert-dialog-denied-request">
+          <div className={classes.dialogTitle}>Denied request
+            <IconButton
+              onClick={() => handleClickClose('dialogDeny')}
+              edge='end'>
+              <CloseIcon />
+            </IconButton>
+          </div>
+        </DialogTitle>
+        <Divider className="mb-2" />
         <DialogContent className="pb-0">
           <TextField
             className={classes.inputMargin}
@@ -224,7 +290,8 @@ function ToolBarUnassign() {
             </Select>
           </FormControl>
         </DialogContent>
-        <DialogActions className={classes.dialogActions}>
+        <Divider className="mb-1 mt-3" />
+        <DialogActions className={classes.dialogFooter}>
           <Button
             onClick={() => handleClickClose('dialogDeny')}
             color="primary" variant="outlined">
@@ -233,7 +300,7 @@ function ToolBarUnassign() {
           <Button
             color="primary"
             variant="contained"
-            className="ml-2"
+            className={classes.footerBtns}
             onClick={handleDeny}
           >
           Submit
