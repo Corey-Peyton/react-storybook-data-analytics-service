@@ -122,49 +122,6 @@ function ModifyFile(props) {
     modifiedWeights: null,
   });
 
-  const [open, setOpen] = React.useState(false);
-
-  /* const handleClickOpen = () => {
-    setOpen(true);
-  };*/
-
-  /* const [open, setOpen] = React.useState({
-    dialogAddSupporting: false,
-    snackbarAddSupporting: false,
-    snackbarSave: false,
-  }); */
-
-  /* const handleClickOpen = (state) => {
-    setOpen({...open, [state]: true});
-  };
-
-  const handleClickClose = (state) => {
-    setOpen({...open, [state]: false});
-  };
-
-  const handleClose = () => {
-    setOpen(false);
-  }; */
-  /* const [openSnackbar, setOpenSnackbar] = React.useState(false);
-
-  const handleClick = () => {
-    setOpenSnackbar(true);
-  };
-
-  const snackbarhandleClose = () => {
-    setOpenSnackbar(false);
-  }; */
-
-  const addSupportingFile = () => {
-    setOpen({...open, dialogAddSupporting: false, snackbarAddSupporting: true});
-  };
-
-  const saveChanges = (event) => {
-    setOpen({...open, snackbarSave: true});
-    props.toggleDrawer(event, false);
-    props.handleClickOpen(false);
-  };
-
   const handleRadioChange = (event) => {
     const name = event.target.name;
     setState({
