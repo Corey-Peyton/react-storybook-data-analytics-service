@@ -127,9 +127,6 @@ export default function TableContainerComponent(props) {
                       tabIndex={-1}
                       key={row.id}
                       className={classes.tableRow}
-                      // onClick={(event) => handleClick(event, row.id)}
-                      // aria-checked={isItemSelected}
-                      // selected={isItemSelected}
                     >
                       <TableCell id={labelId} className={classes.tablesCells}>
                         <Typography variant="body2" noWrap={true}>{row.id}</Typography>

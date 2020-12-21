@@ -56,9 +56,6 @@ const defaultStyles = makeStyles((theme) => ({
   toolbar: {
     display: 'flex',
     flexWrap: 'wrap',
-    [theme.breakpoints.down('sm')]: {
-      minHeight: theme.spacing(16),
-    },
   },
   branding: {
     [theme.breakpoints.down('sm')]: {

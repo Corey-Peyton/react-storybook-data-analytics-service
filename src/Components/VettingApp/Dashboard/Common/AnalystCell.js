@@ -5,10 +5,11 @@ import {
   TableCell,
   Chip,
   IconButton,
+  Link,
 } from '@material-ui/core';
 import AddCircleOutlineIcon from '@material-ui/icons/AddCircleOutline';
 
-import {DialogAnalyst, DialogAnalystList} from './DialogBox';
+import {DialogAnalyst, DialogManageTeam} from './DialogBox';
 import {ROW_HEIGHT} from './TableContainerComponent';
 
 const useStyles = makeStyles((theme) => ({
@@ -28,7 +29,7 @@ export default function AnalystCell(props) {
   const classes = useStyles();
   const [open, setOpen] = React.useState({
     analystInfo: false,
-    analystList: false,
+    manageTeam: false,
   });
 
   function toggleDialog(value) {
@@ -36,7 +37,7 @@ export default function AnalystCell(props) {
       setOpen({...open, analystInfo: !open.analystInfo});
     }
     if (value === 'list') {
-      setOpen({...open, analystList: !open.analystList});
+      setOpen({...open, manageTeam: !open.manageTeam});
     }
   }
 
@@ -47,7 +48,7 @@ export default function AnalystCell(props) {
         <IconButton onClick={() => toggleDialog('info')}>
           <AddCircleOutlineIcon />
         </IconButton>
-        <DialogAnalyst selectedValue='null' open={open.analystInfo} clickHandler={() => toggleDialog('info')}/>
+        <DialogAnalyst open={open.analystInfo} toggleDialog={() => toggleDialog('info')}/>
       </TableCell>
     );
   } else if (role === 'analyst') {
@@ -56,18 +57,23 @@ export default function AnalystCell(props) {
         <TableCell className={classes.tablesCellsFlex}>
           <Chip label={analyst[0]} onClick={() => toggleDialog('list')}/>
           <Chip label={extraAnalysts} onClick={() => toggleDialog('list')} />
-          <DialogAnalystList open={open.analystList} clickHandler={() => toggleDialog('list')} />
+          <DialogManageTeam open={open.manageTeam} toggleDialog={() => toggleDialog('list')} />
         </TableCell>
       );
     } else if (analyst.length === 0) {
       return (
-        <TableCell className={classes.tablesCellsFlex} />
+        <TableCell className={classes.tablesCellsFlex}>
+          <Typography variant="body2">
+            <Link onClick={() => toggleDialog('list')}>Manage team</Link>
+          </Typography>
+          <DialogManageTeam open={open.manageTeam} toggleDialog={() => toggleDialog('list')} />
+        </TableCell>
       );
     } else {
       return (
         <TableCell className={classes.tablesCellsFlex}>
           <Chip label={analyst[0]} onClick={() => toggleDialog('list')}/>
-          <DialogAnalystList open={open.analystList} clickHandler={() => toggleDialog('list')} />
+          <DialogManageTeam open={open.manageTeam} toggleDialog={() => toggleDialog('list')} />
         </TableCell>
       );
     }
