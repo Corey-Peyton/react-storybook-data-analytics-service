@@ -1,4 +1,5 @@
 import React from 'react';
+import {useTranslation} from 'react-i18next';
 import clsx from 'clsx';
 import {makeStyles} from '@material-ui/core/styles';
 import {green} from '@material-ui/core/colors';
@@ -474,7 +475,45 @@ export function DialogSupport(props) {
 
 export function DialogAssign(props) {
   const classes = useStyles();
+  const {t} = useTranslation();
   const {toggleDialog, open} = props;
+  const initial = {
+    phone: '',
+    phoneErr: '',
+  };
+  const [state, setState] = React.useState({
+    phone: '',
+    phoneErr: '',
+  });
+
+  const phoneExp = /^[+][1]\s\([0-9]{3}\)\s[0-9]{3}\s[0-9]{4}/;
+
+  const handleChange = (prop) => (event) => {
+    setState({...state, [prop]: event.target.value});
+  };
+
+  const validatePhone = () => {
+    let isError = false;
+    if (!state.phone.match(phoneExp)) {
+      isError = true;
+      state.phoneErr = t('Enter an phone number.');
+    }
+
+    if (isError) {
+      setState({
+        ...state,
+      });
+    }
+    return isError;
+  };
+
+  const submitPhone = () => {
+    const err = validatePhone();
+    if (!err) {
+      toggleDialog();
+      setState({...initial});
+    }
+  };
 
   return (
     <React.Fragment>
@@ -501,6 +540,7 @@ export function DialogAssign(props) {
         <div className={classes.dialogRow}>
           <FormControl variant="outlined" className={classes.textField}>
             <NumberFormat
+              id='phone'
               label='Phone number *'
               customInput={TextField}
               type="text"
@@ -508,15 +548,31 @@ export function DialogAssign(props) {
               format="+1 (###) ### ####"
               mask="_"
               allowEmptyFormatting
+              autoComplete='phone'
+              error={Boolean(state.phoneErr)}
+              helperText={state.phoneErr}
+              onChange={handleChange('phone')}
             />
           </FormControl>
         </div>
         <Divider className="mt-2" />
         <div className={classes.dialogFooter}>
-          <Button variant="outlined" color="primary" onClick={toggleDialog} className={classes.footerBtns}>
+          <Button
+            variant="outlined"
+            color="primary"
+            onClick={() => {
+              setState({...initial});
+              toggleDialog();
+            }}
+            className={classes.footerBtns}>
             Cancel
           </Button>
-          <Button variant="contained" color="primary" onClick={toggleDialog} className={classes.footerBtns}>
+          <Button
+            variant="contained"
+            color="primary"
+            onClick={() => submitPhone()}
+            className={classes.footerBtns}
+          >
             Continue
           </Button>
         </div>
