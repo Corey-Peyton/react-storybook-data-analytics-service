@@ -394,44 +394,72 @@ function VettingRequestAnalyst(props) {
           className={classes.root}
         >
           <DialogTitle id="alert-dialog-manage">
-            <div className={classes.dialogTitle}>Manage team <IconButton
-              onClick={handleDialogClose}
-              edge='end'>
-              <CloseIcon />
-            </IconButton>
+            <div className={classes.dialogTitle}>Manage team
+              <IconButton
+                onClick={handleDialogClose}
+                edge='end'>
+                <CloseIcon />
+              </IconButton>
             </div>
           </DialogTitle>
           <Divider className="mt-1 mb-2"/>
           <DialogContent className="pr-3 pl-3">
             <DialogContentText id="alert-manage-team-lead">
-              <Typography variant="subtitle2" className="pb-1"><strong>Lead</strong></Typography>
-              <Avatar src="/broken-image.jpg" /><Typography variant="body2" className={classes.negativeMargin}>Brian Bill</Typography>
-              <Typography variant="body2" className={classes.negativeMargin2}>brian.bill@canada.ca<IconButton aria-haspopup="true" onClick={handleClick}>
-                <MoreVertIcon />
-              </IconButton><Menu
-                id="menu-team-lead"
-                anchorEl={anchorEl}
-                keepMounted
-                open={Boolean(anchorEl)}
-                onClose={handleClose}
-              ><MenuItem onClick={handleClose}>Unassign from me</MenuItem>
-                <MenuItem onClick={handleClose}>Make me lead</MenuItem></Menu></Typography>
+              <Typography variant="subtitle2" className="pb-1">
+                <strong>Lead</strong>
+              </Typography>
+              <Avatar src="/broken-image.jpg" />
+              <Typography variant="body2" className={classes.negativeMargin}>
+                Brian Bill
+              </Typography>
+              <Typography variant="body2" className={classes.negativeMargin2}>brian.bill@canada.ca
+                <IconButton aria-haspopup="true" onClick={handleClick}>
+                  <MoreVertIcon />
+                </IconButton>
+                <Menu
+                  id="menu-team-lead"
+                  anchorEl={anchorEl}
+                  keepMounted
+                  open={Boolean(anchorEl)}
+                  onClose={handleClose}
+                >
+                  <MenuItem onClick={handleClose}>
+                    Unassign from me
+                  </MenuItem>
+                  <MenuItem onClick={handleClose}>
+                    Make me lead
+                  </MenuItem>
+                </Menu>
+              </Typography>
               <Divider className={classes.divider} />
               <SearchBar placeholder="Search support analysts"/>
             </DialogContentText>
             <DialogContentText id="alert-manage-team-analyst">
-              <Typography variant="subtitle2" className="pb-1"><strong>Support Analysts</strong></Typography>
-              <Avatar src="/broken-image.jpg" /><Typography variant="body2" className={classes.negativeMargin}>Tony Stark </Typography>
-              <Typography variant="body2" className={classes.negativeMargin2}>tony.stark@canada.ca<IconButton aria-haspopup="true" onClick={handleClick}>
-                <MoreVertIcon />
-              </IconButton><Menu
-                id="menu-team-analyst"
-                anchorEl={anchorEl}
-                keepMounted
-                open={Boolean(anchorEl)}
-                onClose={handleClose}
-              ><MenuItem onClick={handleClose}>Unassign from me</MenuItem>
-                <MenuItem onClick={handleClose}>Make me lead</MenuItem></Menu></Typography>
+              <Typography variant="subtitle2" className="pb-1">
+                <strong>Support Analysts</strong>
+              </Typography>
+              <Avatar src="/broken-image.jpg" />
+              <Typography variant="body2" className={classes.negativeMargin}>
+                Tony Stark
+              </Typography>
+              <Typography variant="body2" className={classes.negativeMargin2}>tony.stark@canada.ca
+                <IconButton aria-haspopup="true" onClick={handleClick}>
+                  <MoreVertIcon />
+                </IconButton><Menu
+                  id="menu-team-analyst"
+                  anchorEl={anchorEl}
+                  keepMounted
+                  open={Boolean(anchorEl)}
+                  onClose={handleClose}
+                >
+                  <MenuItem onClick={handleClose}>
+                  Unassign from me
+                  </MenuItem>
+                  <MenuItem onClick={handleClose}>
+                  Make me lead
+                  </MenuItem>
+                </Menu>
+              </Typography>
             </DialogContentText>
           </DialogContent>
           <Divider className={classes.divider} />

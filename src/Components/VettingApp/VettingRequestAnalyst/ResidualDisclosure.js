@@ -161,11 +161,15 @@ function ResidualDisclosure(props) {
             aria-labelledby="form-dialog-title"
             className={classes.root}
           >
-            <DialogTitle id="form-dialog-title"><div className={classes.dialogTitle}>Add supporting file<IconButton
-              onClick={() => handleClose('dialogUnAssign')}
-              edge='end'>
-              <CloseIcon />
-            </IconButton></div></DialogTitle>
+            <DialogTitle id="form-dialog-title">
+              <div className={classes.dialogTitle}>Add supporting file
+                <IconButton
+                  onClick={() => handleClose('dialogUnAssign')}
+                  edge='end'>
+                  <CloseIcon />
+                </IconButton>
+              </div>
+            </DialogTitle>
             <Divider className="mb-2" />
             <DialogContent>
               <FormControl
