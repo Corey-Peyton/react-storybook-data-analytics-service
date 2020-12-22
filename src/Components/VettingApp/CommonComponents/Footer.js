@@ -16,7 +16,7 @@ const useStyles = makeStyles((theme) => ({
     zIndex: 1200,
     padding: theme.spacing(3, 0, 3, 0),
     display: 'flex',
-    flexWrap: 'wrap',
+    justifyContent: 'space-between',
     alignItems: 'center',
     background: 'white',
     [theme.breakpoints.down('sm')]: {
@@ -42,7 +42,7 @@ const useStyles = makeStyles((theme) => ({
   },
   canadaLogo: {
     height: '24px',
-    flexGrow: 1,
+    display: 'flex',
     textAlign: 'right',
     paddingRight: theme.spacing(1),
     [theme.breakpoints.down('sm')]: {
@@ -64,6 +64,10 @@ const useStyles = makeStyles((theme) => ({
       duration: theme.transitions.duration.enteringScreen,
     }),
     marginLeft: DRAWER_WIDTH,
+  },
+  footerFIP: {
+    height: '100%',
+    width: '100%',
   },
 }));
 
@@ -102,6 +106,7 @@ const Footer = React.forwardRef((props, ref) => {
         <img
           src={process.env.PUBLIC_URL + '/images/wmms.svg'}
           alt={t('Symbol of the Government of Canada')}
+          className={classes.footerFIP}
         />
       </div>
     </footer>

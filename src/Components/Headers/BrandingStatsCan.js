@@ -4,6 +4,8 @@ import {SM_SCREEN} from '../../Theme/constants';
 const defaultStyles = makeStyles((theme) => ({
   brandImage: {
     margin: theme.spacing(1.5),
+    height: '100%',
+    width: '100%',
   },
 }));
 export default function BrandingStatsCan() {
