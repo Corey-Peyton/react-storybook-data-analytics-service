@@ -99,7 +99,7 @@ const Footer = React.forwardRef((props, ref) => {
           <Button className={classes.footerBtn}>{t('Privacy')}</Button>
         </li>
         <li>
-          <Typography variant="subtitle2" color="textSecondary"> Date modified: {date}</Typography>
+          <Typography variant="subtitle2" color="textSecondary" component="h3" > Date modified: {date}</Typography>
         </li>
       </ul>
       <div className={classes.canadaLogo}>
