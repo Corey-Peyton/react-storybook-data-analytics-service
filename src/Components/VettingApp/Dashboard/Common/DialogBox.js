@@ -119,6 +119,7 @@ const useStyles = makeStyles((theme) => ({
 
 export function DialogAnalyst(props) {
   const {open, toggleDialog} = props;
+  const {t} = useTranslation();
   const classes = useStyles();
 
   return (
@@ -126,7 +127,7 @@ export function DialogAnalyst(props) {
       <Dialog onClose={toggleDialog} aria-labelledby="dashboard-dialog-title" open={open} className={classes.root}>
         <DialogTitle id="dashboard-dialog-title">
           <div className={classes.dialogTitle}>
-            <Typography variant='h6'>Analyst information</Typography>
+            <Typography variant='h6'>{t('Analyst information')}</Typography>
             <IconButton
               onClick={toggleDialog}
               edge='end'>
@@ -138,7 +139,6 @@ export function DialogAnalyst(props) {
         <div className={classes.dialogRow}>
           <Avatar className={classes.avatar}>A</Avatar>
           <Typography className={classes.dialogText}>brian.bill@cloud.statcan.ca</Typography>
-
         </div>
         <div className={classes.dialogRow}>
           <Avatar className={classes.avatarTransparent}>
@@ -149,7 +149,7 @@ export function DialogAnalyst(props) {
         <Divider className="mt-2" />
         <div className={classes.dialogFooter}>
           <Button variant="contained" color="primary" onClick={toggleDialog}>
-            Go back
+            {t('Go back')}
           </Button>
         </div>
       </Dialog>
@@ -159,6 +159,7 @@ export function DialogAnalyst(props) {
 
 export function DialogManageTeam(props) {
   const {open, toggleDialog} = props;
+  const {t} = useTranslation();
   const classes = useStyles();
   const [analysts, setAnalysts] = React.useState(analystList);
   const [selected, setSelected] = React.useState([]);
@@ -228,7 +229,7 @@ export function DialogManageTeam(props) {
       return (
         <div className={classes.dialogRow}>
           <Box fontStyle="italic" className={classes.box}>
-            <Typography>No lead assigned</Typography>
+            <Typography>{t('No lead assigned')}</Typography>
           </Box>
         </div>
       );
@@ -245,7 +246,7 @@ export function DialogManageTeam(props) {
       >
         <DialogTitle id="dashboard-dialog-title">
           <div className={classes.dialogTitle}>
-            <Typography variant='h6'>Manage team</Typography>
+            <Typography variant='h6'>{t('Manage team')}</Typography>
             <IconButton
               edge='end'
               onClick={toggleDialog}>
@@ -255,7 +256,7 @@ export function DialogManageTeam(props) {
         </DialogTitle>
         <Divider className="mb-2" />
         <div className={classes.dialogRow}>
-          <Typography variant='subtitle2'>Lead</Typography>
+          <Typography variant='subtitle2'>{t('Lead')}</Typography>
         </div>
         {leadAnalysts()}
         <Divider className='mt-2 mb-2'/>
@@ -279,7 +280,7 @@ export function DialogManageTeam(props) {
                     {...params}
                     variant="outlined"
                     fullWidth
-                    label='Search support analysts'
+                    label={t('Search support analysts')}
                   />
                 );
               }
@@ -289,11 +290,11 @@ export function DialogManageTeam(props) {
         </div>
         <div className={classes.dialogRow}>
           <Button variant="outlined" color="primary" onClick={() => selectSupports(selected)} >
-            Add support analyst
+            {t('Add support analyst')}
           </Button>
         </div>
         <div className={classes.dialogRow}>
-          <Typography variant='subtitle2' className='mt-2'>Support Analysts</Typography>
+          <Typography variant='subtitle2' className='mt-2'>{t('Support Analysts')}</Typography>
         </div>
         <div className={classes.supportAnalysts}>
           {analysts.filter((analyst) => analyst.assigned && analyst.role === 'support').map((analyst) => {
@@ -315,10 +316,10 @@ export function DialogManageTeam(props) {
         <Divider className="mt-2" />
         <div className={classes.dialogFooter}>
           <Button variant="outlined" color="primary" onClick={toggleDialog} className={classes.footerBtns}>
-            Cancel
+            {t('Cancel')}
           </Button>
           <Button variant="contained" color="primary" onClick={toggleDialog} className={classes.footerBtns}>
-            Apply
+            {t('Apply')}
           </Button>
         </div>
       </Dialog>
@@ -328,6 +329,7 @@ export function DialogManageTeam(props) {
 
 export function DialogWithdraw(props) {
   const classes = useStyles();
+  const {t} = useTranslation();
   const {toggleDialog, open} = props;
   const [snackbar, setSnackbar] = React.useState(false);
 
@@ -350,7 +352,7 @@ export function DialogWithdraw(props) {
       >
         <DialogTitle id="dashboard-dialog-title">
           <div className={classes.dialogTitle}>
-            <Typography variant='h6'>Withdraw request</Typography>
+            <Typography variant='h6'>{t('Withdraw request')}</Typography>
             <IconButton
               onClick={toggleDialog}
               edge='end'>
@@ -363,9 +365,9 @@ export function DialogWithdraw(props) {
           <FormControl variant="outlined" className={classes.textField}>
             <TextField
               id="withdraw-input"
-              label="Comments *"
+              label={t('Comments *')}
               variant="outlined"
-              placeholder="Please provite us with a withdrawal reason"
+              placeholder={t('Please provite us with a withdrawal reason')}
               multiline
             />
           </FormControl>
@@ -373,17 +375,17 @@ export function DialogWithdraw(props) {
         <Divider className="mt-2" />
         <div className={classes.dialogFooter}>
           <Button variant="outlined" color="primary" onClick={toggleDialog} className={classes.footerBtns}>
-            Cancel
+            {t('Cancel')}
           </Button>
           <Button variant="contained" color="primary" onClick={toggleSnackbar} className={classes.footerBtns}>
-            Withdraw request
+            {t('Withdraw request')}
           </Button>
         </div>
       </Dialog>
       <CustomizedSnackbar
         open={snackbar}
         severity="success"
-        message="Vetting request has been withdrawn"
+        message={t('Vetting request has been withdrawn')}
         toggleSnackbar={SnackbarClose}/>
     </React.Fragment>
   );
@@ -391,6 +393,7 @@ export function DialogWithdraw(props) {
 
 export function DialogUnassign(props) {
   const classes = useStyles();
+  const {t} = useTranslation();
   const {toggleDialog, open} = props;
 
   return (
@@ -403,7 +406,7 @@ export function DialogUnassign(props) {
       >
         <DialogTitle id="dashboard-dialog-title">
           <div className={classes.dialogTitle}>
-            <Typography variant='h6'>Unassign from me</Typography>
+            <Typography variant='h6'>{t('Unassign from me')}</Typography>
             <IconButton
               onClick={toggleDialog}
               edge='end'>
@@ -414,16 +417,16 @@ export function DialogUnassign(props) {
         <Divider className="mb-2" />
         <div className={classes.dialogRow}>
           <Typography variant='body2'>
-            If you choose to proceed, the request will no longer have a lead analyst and an email will be sent to the researcher notifying them of the change.
+            {t('If you choose to proceed, the request will no longer have a lead analyst and an email will be sent to the researcher notifying them of the change.')}
           </Typography>
         </div>
         <Divider className="mt-2" />
         <div className={classes.dialogFooter}>
           <Button variant="outlined" color="primary" onClick={toggleDialog} className={classes.footerBtns}>
-            Cancel
+            {t('Cancel')}
           </Button>
           <Button variant="contained" color="primary" onClick={toggleDialog} className={classes.footerBtns}>
-            Unassign
+            {t('Unassign')}
           </Button>
         </div>
       </Dialog>
@@ -433,6 +436,7 @@ export function DialogUnassign(props) {
 
 export function DialogSupport(props) {
   const classes = useStyles();
+  const {t} = useTranslation();
   const {toggleDialog, open} = props;
 
   return (
@@ -445,7 +449,7 @@ export function DialogSupport(props) {
       >
         <DialogTitle id="dashboard-dialog-title">
           <div className={classes.dialogTitle}>
-            <Typography variant='h6'>Make me support</Typography>
+            <Typography variant='h6'>{t('Make me support')}</Typography>
             <IconButton
               onClick={toggleDialog}
               edge='end'>
@@ -456,16 +460,16 @@ export function DialogSupport(props) {
         <Divider className="mb-2" />
         <div className={classes.dialogRow}>
           <Typography variant='body2'>
-            If you choose to proceed, the request will no longer have a lead analyst and an email will be sent to the researcher notifying them of the change.
+            {t('If you choose to proceed, the request will no longer have a lead analyst and an email will be sent to the researcher notifying them of the change.')}
           </Typography>
         </div>
         <Divider className="mt-2" />
         <div className={classes.dialogFooter}>
           <Button variant="outlined" color="primary" onClick={toggleDialog} className={classes.footerBtns}>
-            Cancel
+            {t('Cancel')}
           </Button>
           <Button variant="contained" color="primary" onClick={toggleDialog} className={classes.footerBtns}>
-            Continue
+            {t('Continue')}
           </Button>
         </div>
       </Dialog>
@@ -525,7 +529,7 @@ export function DialogAssign(props) {
       >
         <DialogTitle id="dashboard-dialog-title">
           <div className={classes.dialogTitle}>
-            <Typography variant='h6'>Assign to me</Typography>
+            <Typography variant='h6'>{t('Assign to me')}</Typography>
             <IconButton
               onClick={toggleDialog}
               edge='end'>
@@ -535,13 +539,13 @@ export function DialogAssign(props) {
         </DialogTitle>
         <Divider className="mb-2" />
         <div className={classes.dialogRow}>
-          <Typography variant='subtitle2'>Provide a phone number</Typography>
+          <Typography variant='subtitle2'>{t('Provide a phone number')}</Typography>
         </div>
         <div className={classes.dialogRow}>
           <FormControl variant="outlined" className={classes.textField}>
             <NumberFormat
               id='phone'
-              label='Phone number *'
+              label={t('Phone number *')}
               customInput={TextField}
               type="text"
               variant='outlined'
@@ -565,7 +569,7 @@ export function DialogAssign(props) {
               toggleDialog();
             }}
             className={classes.footerBtns}>
-            Cancel
+            {t('Cancel')}
           </Button>
           <Button
             variant="contained"
@@ -573,7 +577,7 @@ export function DialogAssign(props) {
             onClick={() => submitPhone()}
             className={classes.footerBtns}
           >
-            Continue
+            {t('Continue')}
           </Button>
         </div>
       </Dialog>
@@ -583,6 +587,7 @@ export function DialogAssign(props) {
 
 export function DialogUpdate(props) {
   const classes = useStyles();
+  const {t} = useTranslation();
   const {toggleDialog, open} = props;
 
   return (
@@ -595,7 +600,7 @@ export function DialogUpdate(props) {
       >
         <DialogTitle id="dashboard-dialog-title">
           <div className={classes.dialogTitle}>
-            <Typography variant='h6'>Request an update</Typography>
+            <Typography variant='h6'>{t('Request an update')}</Typography>
             <IconButton
               onClick={toggleDialog}
               edge='end'>
@@ -608,7 +613,7 @@ export function DialogUpdate(props) {
           <FormControl variant="outlined" className={classes.textField}>
             <TextField
               id="update-input"
-              label="Comments *"
+              label={t('Comments *')}
               variant="outlined"
               multiline
               className={classes.textField}
@@ -618,10 +623,10 @@ export function DialogUpdate(props) {
         <Divider className="mt-2" />
         <div className={classes.dialogFooter}>
           <Button variant="outlined" color="primary" onClick={toggleDialog} className={classes.footerBtns}>
-            Cancel
+            {t('Cancel')}
           </Button>
           <Button variant="contained" color="primary" onClick={toggleDialog} className={classes.footerBtns}>
-            Submit request
+            {t('Submit request')}
           </Button>
         </div>
       </Dialog>
@@ -632,6 +637,7 @@ export function DialogUpdate(props) {
 export function DialogDenied(props) {
   const classes = useStyles();
   const {toggleDialog, open} = props;
+  const {t} = useTranslation();
   const [snackbar, setSnackbar] = React.useState(false);
   const [selected, setSelected] = React.useState('');
 
@@ -658,7 +664,7 @@ export function DialogDenied(props) {
       >
         <DialogTitle id="dashboard-dialog-title">
           <div className={classes.dialogTitle}>
-            <Typography variant='h6'>Deny request</Typography>
+            <Typography variant='h6'>{t('Deny request')}</Typography>
             <IconButton
               onClick={toggleDialog}
               edge='end'>
@@ -668,20 +674,20 @@ export function DialogDenied(props) {
         </DialogTitle>
         <Divider className="mb-2" />
         <div className={classes.dialogRow}>
-          <Typography variant='subtitle2'>Billable hours</Typography>
+          <Typography variant='subtitle2'>{t('Billable hours')}</Typography>
         </div>
         <div className={classes.dialogRow}>
           <FormControl variant="outlined" className={classes.formControl}>
             <NumberFormat
               {...props}
-              label='Hours'
+              label={t('Hours')}
               customInput={TextField}
               type="text"
               variant='outlined'
             />
             <NumberFormat
               {...props}
-              label='Minutes'
+              label={t('Minutes')}
               customInput={TextField}
               type="text"
               variant='outlined'
@@ -694,24 +700,24 @@ export function DialogDenied(props) {
         </div>
         <div className={classes.dialogRow}>
           <FormControl variant="outlined">
-            <InputLabel id="denied-select-label">Denied reason *</InputLabel>
+            <InputLabel id="denied-select-label">{t('Denied reason *')}</InputLabel>
             <Select
               labelId="denied-select-label"
               id="denied-select"
               onChange={handleChange}
               value={selected}
-              label="Denied reason *"
+              label={t('Denied reason *')}
               fullWidth
-              placeholder='Select an option'
+              placeholder={t('Select an option')}
             >
               <MenuItem value="">
-                <em>Select an option</em>
+                <em>{t('Select an option')}</em>
               </MenuItem>
-              <MenuItem value='Non-SSI project'>Non-SSI project</MenuItem>
-              <MenuItem value='Confidential requirements are not met'>Confidential requirements are not met</MenuItem>
-              <MenuItem value='Request is missing information'>Request is missing information</MenuItem>
-              <MenuItem value='Output file(s) are not in line with the project proposal'>Output file(s) are not in line with the project proposal</MenuItem>
-              <MenuItem value='Other'>Other</MenuItem>
+              <MenuItem value='Non-SSI project'>{t('Non-SSI project')}</MenuItem>
+              <MenuItem value='Confidential requirements are not met'>{t('Confidential requirements are not met')}</MenuItem>
+              <MenuItem value='Request is missing information'>{t('Request is missing information')}</MenuItem>
+              <MenuItem value='Output file(s) are not in line with the project proposal'>{t('Output file(s) are not in line with the project proposal')}</MenuItem>
+              <MenuItem value='Other'>{t('Other')}</MenuItem>
             </Select>
           </FormControl>
         </div>
@@ -721,7 +727,7 @@ export function DialogDenied(props) {
           <FormControl variant="outlined">
             <TextField
               id="withdraw-input"
-              label="Comments *"
+              label={t('Comments *')}
               variant="outlined"
               multiline
             />
@@ -730,17 +736,17 @@ export function DialogDenied(props) {
         <Divider className="mt-2" />
         <div className={classes.dialogFooter}>
           <Button variant="outlined" color="primary" onClick={toggleDialog} className={classes.footerBtns}>
-            Cancel
+            {t('Cancel')}
           </Button>
           <Button variant="contained" color="primary" onClick={toggleSnackbar} className={classes.footerBtns}>
-            Submit
+            {t('Submit')}
           </Button>
         </div>
       </Dialog>
       <CustomizedSnackbar
         open={snackbar}
         severity="success"
-        message="Vetting request 10-2020-2354326 has been denied"
+        message={t('Vetting request 10-2020-2354326 has been denied')}
         toggleSnackbar={SnackbarClose}/>
     </React.Fragment>
   );
@@ -748,6 +754,7 @@ export function DialogDenied(props) {
 
 export function DialogApprove(props) {
   const classes = useStyles();
+  const {t} = useTranslation();
   const {toggleDialog, open} = props;
   const [snackbar, setSnackbar] = React.useState(false);
 
@@ -770,7 +777,7 @@ export function DialogApprove(props) {
       >
         <DialogTitle id="dashboard-dialog-title">
           <div className={classes.dialogTitle}>
-            <Typography variant='h6'>Approve request</Typography>
+            <Typography variant='h6'>{t('Approve request')}</Typography>
             <IconButton
               onClick={toggleDialog}
               edge='end'>
@@ -780,20 +787,20 @@ export function DialogApprove(props) {
         </DialogTitle>
         <Divider className="mb-2" />
         <div className={classes.dialogRow}>
-          <Typography variant='subtitle2'>Billable hours</Typography>
+          <Typography variant='subtitle2'>{t('Billable hours')}</Typography>
         </div>
         <div className={classes.dialogRow}>
           <FormControl variant="outlined" className={classes.formControl}>
             <NumberFormat
               {...props}
-              label='Hours'
+              label={t('Hours')}
               customInput={TextField}
               type="text"
               variant='outlined'
             />
             <NumberFormat
               {...props}
-              label='Minutes'
+              label={t('Minutes')}
               customInput={TextField}
               type="text"
               variant='outlined'
@@ -807,17 +814,17 @@ export function DialogApprove(props) {
         <Divider className="mt-2" />
         <div className={classes.dialogFooter}>
           <Button variant="outlined" color="primary" onClick={toggleDialog} className={classes.footerBtns}>
-            Cancel
+            {t('Cancel')}
           </Button>
           <Button variant="contained" color="primary" onClick={toggleSnackbar} className={classes.footerBtns}>
-            Submit
+            {t('Submit')}
           </Button>
         </div>
       </Dialog>
       <CustomizedSnackbar
         open={snackbar}
         severity="success"
-        message="Vetting request 10-2020-2354326 has been approved"
+        message={t('Vetting request 10-2020-2354326 has been approved')}
         toggleSnackbar={SnackbarClose}/>
     </React.Fragment>
   );

@@ -1,4 +1,5 @@
 import React from 'react';
+import {useTranslation} from 'react-i18next';
 import Snackbar from '@material-ui/core/Snackbar';
 import MuiAlert from '@material-ui/lab/Alert';
 import {makeStyles} from '@material-ui/core/styles';
@@ -17,6 +18,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export default function CustomizedSnackbar(props) {
+  const {t} = useTranslation();
   const classes = useStyles();
 
   return (
@@ -31,7 +33,7 @@ export default function CustomizedSnackbar(props) {
         }}
       >
         <Alert onClose={props.toggleSnackbar} severity={props.severity}>
-          {props.message}
+          {t(props.message)}
         </Alert>
       </Snackbar>
     </div>

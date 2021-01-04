@@ -1,4 +1,5 @@
 import React from 'react';
+import {useTranslation} from 'react-i18next';
 import {makeStyles, withStyles} from '@material-ui/core/styles';
 import {Typography} from '@material-ui/core';
 import IconButton from '@material-ui/core/IconButton';
@@ -63,6 +64,7 @@ const StyledMenu = withStyles({
 // //////////////////////////// Dashboard actions menu
 export function ActionsMenu(props) {
   const {role, status, contextStatusClick, contextSummaryClick} = props;
+  const {t} = useTranslation();
   let StyledMenuVar;
 
   const classes = useStyles();
@@ -141,25 +143,25 @@ export function ActionsMenu(props) {
           <ListItemIcon className={classes.listItemIcon}>
             <Icon path={mdiPencil} size={1} className="icon-grey" />
           </ListItemIcon>
-          <ListItemText primary={<Typography variant="body2">Edit</Typography>} />
+          <ListItemText primary={<Typography variant="body2">{t('Edit')}</Typography>} />
         </MenuItem>
         <MenuItem onClick={() => triggerAction(actionList.message.submit, actionList.severity.submit)}>
           <ListItemIcon className={classes.listItemIcon}>
             <SendIcon fontSize="small" />
           </ListItemIcon>
-          <ListItemText primary={<Typography variant="body2">Submit request</Typography>} />
+          <ListItemText primary={<Typography variant="body2">{t('Submit request')}</Typography>} />
         </MenuItem>
         <MenuItem onClick={() => toggleDialog('dialogWithdraw', !open.dialogWithdraw)}>
           <ListItemIcon className={classes.listItemIcon}>
             <ExitToAppIcon fontSize="small" />
           </ListItemIcon>
-          <ListItemText primary={<Typography variant="body2">Withdraw</Typography>} />
+          <ListItemText primary={<Typography variant="body2">{t('Withdraw')}</Typography>} />
         </MenuItem>
         <MenuItem onClick={toggleSummary}>
           <ListItemIcon className={classes.listItemIcon}>
             <Icon path={mdiFileDocumentOutline} size={1} className="icon-grey" />
           </ListItemIcon>
-          <ListItemText primary={<Typography variant="body2">Summary</Typography>} />
+          <ListItemText primary={<Typography variant="body2">{t('Summary')}</Typography>} />
         </MenuItem>
       </StyledMenu>
     );
@@ -174,7 +176,7 @@ export function ActionsMenu(props) {
           onClose={handleClose}
         >
           <MenuItem onClick={() => toggleDialog('dialogAssign', !open.dialogAssign)} open={open.dialogAssign}>
-            <ListItemText primary={<Typography variant="body2">Assign to me</Typography>} />
+            <ListItemText primary={<Typography variant="body2">{t('Assign to me')}</Typography>} />
           </MenuItem>
         </StyledMenu>
       );
@@ -191,19 +193,19 @@ export function ActionsMenu(props) {
             <ListItemIcon className={classes.listItemIcon}>
               <Icon path={mdiEye} size={1} className="icon-grey" />
             </ListItemIcon>
-            <ListItemText primary={<Typography variant="body2">View request</Typography>} />
+            <ListItemText primary={<Typography variant="body2">{t('View request')}</Typography>} />
           </MenuItem>
           <MenuItem onClick={() => toggleDialog('dialogWithdraw', !open.dialogWithdraw)}>
             <ListItemIcon className={classes.listItemIcon}>
               <ExitToAppIcon fontSize="small" />
             </ListItemIcon>
-            <ListItemText primary={<Typography variant="body2">Withdraw</Typography>} />
+            <ListItemText primary={<Typography variant="body2">{t('Withdraw')}</Typography>} />
           </MenuItem>
           <MenuItem onClick={toggleSummary}>
             <ListItemIcon className={classes.listItemIcon}>
               <Icon path={mdiFileDocumentOutline} size={1} className="icon-grey" />
             </ListItemIcon>
-            <ListItemText primary={<Typography variant="body2">Summary</Typography>} />
+            <ListItemText primary={<Typography variant="body2">{t('Summary')}</Typography>} />
           </MenuItem>
         </StyledMenu>
       );
@@ -219,13 +221,13 @@ export function ActionsMenu(props) {
           onClose={handleClose}
         >
           <MenuItem onClick={handleClose}>
-            <ListItemText primary={<Typography variant="body2">View request</Typography>} />
+            <ListItemText primary={<Typography variant="body2">{t('View request')}</Typography>} />
           </MenuItem>
           <MenuItem onClick={() => toggleDialog('dialogAssign', !open.dialogAssign)} open={open.dialogAssign}>
-            <ListItemText primary={<Typography variant="body2">Assign to me</Typography>} />
+            <ListItemText primary={<Typography variant="body2">{t('Assign to me')}</Typography>} />
           </MenuItem>
           <MenuItem onClick={toggleSummary}>
-            <ListItemText primary={<Typography variant="body2">Summary</Typography>} />
+            <ListItemText primary={<Typography variant="body2">{t('Summary')}</Typography>} />
           </MenuItem>
         </StyledMenu>
       );
@@ -242,25 +244,25 @@ export function ActionsMenu(props) {
             <ListItemIcon className={classes.listItemIcon}>
               <Icon path={mdiEye} size={1} className="icon-grey" />
             </ListItemIcon>
-            <ListItemText primary={<Typography variant="body2">View request</Typography>} />
+            <ListItemText primary={<Typography variant="body2">{t('View request')}</Typography>} />
           </MenuItem>
           <MenuItem onClick={() => toggleDialog('dialogWithdraw', !open.dialogWithdraw)}>
             <ListItemIcon className={classes.listItemIcon}>
               <ExitToAppIcon fontSize="small" />
             </ListItemIcon>
-            <ListItemText primary={<Typography variant="body2">Withdraw</Typography>} />
+            <ListItemText primary={<Typography variant="body2">{t('Withdraw')}</Typography>} />
           </MenuItem>
           <MenuItem onClick={() => triggerAction(actionList.message.submit, actionList.severity.submit)}>
             <ListItemIcon className={classes.listItemIcon}>
               <Icon path={mdiShare} size={1} className="icon-grey" />
             </ListItemIcon>
-            <ListItemText primary={<Typography variant="body2">Resubmit request</Typography>} />
+            <ListItemText primary={<Typography variant="body2">Re{t('submit request')}</Typography>} />
           </MenuItem>
           <MenuItem onClick={toggleSummary}>
             <ListItemIcon className={classes.listItemIcon}>
               <Icon path={mdiFileDocumentOutline} size={1} className="icon-grey" />
             </ListItemIcon>
-            <ListItemText primary={<Typography variant="body2">Summary</Typography>} />
+            <ListItemText primary={<Typography variant="body2">{t('Summary')}</Typography>} />
           </MenuItem>
         </StyledMenu>
       );
@@ -276,28 +278,28 @@ export function ActionsMenu(props) {
           onClose={handleClose}
         >
           <MenuItem onClick={handleClose}>
-            <ListItemText primary={<Typography variant="body2">View request</Typography>} />
+            <ListItemText primary={<Typography variant="body2">{t('View request')}</Typography>} />
           </MenuItem>
           <MenuItem onClick={() => toggleDialog('dialogApprove', !open.dialogApprove)} open={open.dialogApprove}>
-            <ListItemText primary={<Typography variant="body2">Approve</Typography>} />
+            <ListItemText primary={<Typography variant="body2">{t('Approve')}</Typography>} />
           </MenuItem>
           <MenuItem onClick={() => toggleDialog('dialogDenied', !open.dialogDenied)} open={open.dialogDenied}>
-            <ListItemText primary={<Typography variant="body2">Deny</Typography>} />
+            <ListItemText primary={<Typography variant="body2">{t('Deny')}</Typography>} />
           </MenuItem>
           <MenuItem onClick={() => toggleDialog('dialogUpdate', !open.dialogUpdate)} open={open.dialogUpdate} >
-            <ListItemText primary={<Typography variant="body2">Request an update</Typography>} />
+            <ListItemText primary={<Typography variant="body2">{t('Request an update')}</Typography>} />
           </MenuItem>
           <MenuItem onClick={() => toggleDialog('dialogUnassign', !open.dialogUnassign)} open={open.dialogUnassign} >
-            <ListItemText primary={<Typography variant="body2">Unassign from me</Typography>} />
+            <ListItemText primary={<Typography variant="body2">{t('Unassign from me')}</Typography>} />
           </MenuItem>
           <MenuItem onClick={() => toggleDialog('dialogSupport', !open.dialogSupport)} open={open.dialogSupport}>
-            <ListItemText primary={<Typography variant="body2">Make me support</Typography>} />
+            <ListItemText primary={<Typography variant="body2">{t('Make me support')}</Typography>} />
           </MenuItem>
           <MenuItem onClick={() => toggleDialog('dialogManageTeam', !open.dialogManageTeam)}>
-            <ListItemText primary={<Typography variant="body2">Manage team</Typography>} />
+            <ListItemText primary={<Typography variant="body2">{t('Manage team')}</Typography>} />
           </MenuItem>
           <MenuItem onClick={toggleSummary}>
-            <ListItemText primary={<Typography variant="body2">Summary</Typography>} />
+            <ListItemText primary={<Typography variant="body2">{t('Summary')}</Typography>} />
           </MenuItem>
         </StyledMenu>
       );
@@ -314,13 +316,13 @@ export function ActionsMenu(props) {
             <ListItemIcon className={classes.listItemIcon}>
               <ExitToAppIcon fontSize="small" />
             </ListItemIcon>
-            <ListItemText primary={<Typography variant="body2">Withdraw</Typography>} />
+            <ListItemText primary={<Typography variant="body2">{t('Withdraw')}</Typography>} />
           </MenuItem>
           <MenuItem onClick={toggleSummary}>
             <ListItemIcon className={classes.listItemIcon}>
               <Icon path={mdiFileDocumentOutline} size={1} className="icon-grey" />
             </ListItemIcon>
-            <ListItemText primary={<Typography variant="body2">Summary</Typography>} />
+            <ListItemText primary={<Typography variant="body2">{t('Summary')}</Typography>} />
           </MenuItem>
         </StyledMenu>
       );
@@ -338,19 +340,19 @@ export function ActionsMenu(props) {
           <ListItemIcon className={classes.listItemIcon}>
             <PageReloadIcon width={20} height={20} />
           </ListItemIcon>
-          <ListItemText primary={<Typography variant="body2">Reopen</Typography>} />
+          <ListItemText primary={<Typography variant="body2">{t('Reopen')}</Typography>} />
         </MenuItem>
         <MenuItem onClick={() => triggerAction(actionList.message.delete, actionList.severity.delete)}>
           <ListItemIcon className={classes.listItemIcon}>
             <DeleteIcon fontSize="small" />
           </ListItemIcon>
-          <ListItemText primary={<Typography variant="body2">Delete</Typography>} />
+          <ListItemText primary={<Typography variant="body2">{t('Delete')}</Typography>} />
         </MenuItem>
         <MenuItem onClick={toggleSummary}>
           <ListItemIcon className={classes.listItemIcon}>
             <Icon path={mdiFileDocumentOutline} size={1} className="icon-grey" />
           </ListItemIcon>
-          <ListItemText primary={<Typography variant="body2">Summary</Typography>} />
+          <ListItemText primary={<Typography variant="body2">{t('Summary')}</Typography>} />
         </MenuItem>
       </StyledMenu>
     );
@@ -365,7 +367,7 @@ export function ActionsMenu(props) {
           onClose={handleClose}
         >
           <MenuItem onClick={handleClose}>
-            <ListItemText primary={<Typography variant="body2">View request</Typography>} />
+            <ListItemText primary={<Typography variant="body2">{t('View request')}</Typography>} />
           </MenuItem>
         </StyledMenu>
       );
@@ -382,7 +384,7 @@ export function ActionsMenu(props) {
             <ListItemIcon className={classes.listItemIcon}>
               <Icon path={mdiFileDocumentOutline} size={1} className="icon-grey" />
             </ListItemIcon>
-            <ListItemText primary={<Typography variant="body2">Summary</Typography>} />
+            <ListItemText primary={<Typography variant="body2">{t('Summary')}</Typography>} />
           </MenuItem>
         </StyledMenu>
       );
@@ -397,28 +399,28 @@ export function ActionsMenu(props) {
         onClose={handleClose}
       >
         <MenuItem onClick={handleClose} >
-          <ListItemText primary={<Typography variant="body2">View request</Typography>} />
+          <ListItemText primary={<Typography variant="body2">{t('View request')}</Typography>} />
         </MenuItem>
         <MenuItem onClick={() => toggleDialog('dialogApprove', !open.dialogApprove)} open={open.dialogApprove}>
-          <ListItemText primary={<Typography variant="body2">Approve</Typography>} />
+          <ListItemText primary={<Typography variant="body2">{t('Approve')}</Typography>} />
         </MenuItem>
         <MenuItem onClick={() => toggleDialog('dialogDenied', !open.dialogDenied)} open={open.dialogDenied} >
-          <ListItemText primary={<Typography variant="body2">Deny</Typography>} />
+          <ListItemText primary={<Typography variant="body2">{t('Deny')}</Typography>} />
         </MenuItem>
         <MenuItem onClick={() => toggleDialog('dialogUpdate', !open.dialogUpdate)} open={open.dialogUpdate} >
-          <ListItemText primary={<Typography variant="body2">Request an update</Typography>} />
+          <ListItemText primary={<Typography variant="body2">{t('Request an update')}</Typography>} />
         </MenuItem>
         <MenuItem onClick={() => toggleDialog('dialogUnassign', !open.dialogUnassign)} open={open.dialogUnassign} >
-          <ListItemText primary={<Typography variant="body2">Unassign from me</Typography>} />
+          <ListItemText primary={<Typography variant="body2">{t('Unassign from me')}</Typography>} />
         </MenuItem>
         <MenuItem onClick={() => toggleDialog('dialogSupport', !open.dialogSupport)} open={open.dialogSupport}>
-          <ListItemText primary={<Typography variant="body2">Make me support</Typography>} />
+          <ListItemText primary={<Typography variant="body2">{t('Make me support')}</Typography>} />
         </MenuItem>
         <MenuItem onClick={() => toggleDialog('dialogManageTeam', !open.dialogManageTeam)}>
-          <ListItemText primary={<Typography variant="body2">Manage team</Typography>} />
+          <ListItemText primary={<Typography variant="body2">{t('Manage team')}</Typography>} />
         </MenuItem>
         <MenuItem onClick={toggleSummary}>
-          <ListItemText primary={<Typography variant="body2">Summary</Typography>} />
+          <ListItemText primary={<Typography variant="body2">{t('Summary')}</Typography>} />
         </MenuItem>
       </StyledMenu>
     );
@@ -432,19 +434,19 @@ export function ActionsMenu(props) {
         onClose={handleClose}
       >
         <MenuItem onClick={handleClose}>
-          <ListItemText primary={<Typography variant="body2">View request</Typography>} />
+          <ListItemText primary={<Typography variant="body2">{t('View request')}</Typography>} />
         </MenuItem>
         <MenuItem onClick={() => toggleDialog('dialogAssign', !open.dialogAssign)} open={open.dialogAssign}>
-          <ListItemText primary={<Typography variant="body2">Assign to me</Typography>} />
+          <ListItemText primary={<Typography variant="body2">{t('Assign to me')}</Typography>} />
         </MenuItem>
         <MenuItem onClick={() => toggleDialog('dialogSupport', !open.dialogSupport)} open={open.dialogSupport}>
-          <ListItemText primary={<Typography variant="body2">Make me support</Typography>} />
+          <ListItemText primary={<Typography variant="body2">{t('Make me support')}</Typography>} />
         </MenuItem>
         <MenuItem onClick={() => toggleDialog('dialogManageTeam', !open.dialogManageTeam)}>
-          <ListItemText primary={<Typography variant="body2">Manage team</Typography>} />
+          <ListItemText primary={<Typography variant="body2">{t('Manage team')}</Typography>} />
         </MenuItem>
         <MenuItem onClick={toggleSummary}>
-          <ListItemText primary={<Typography variant="body2">Summary</Typography>} />
+          <ListItemText primary={<Typography variant="body2">{t('Summary')}</Typography>} />
         </MenuItem>
       </StyledMenu>
     );
@@ -459,7 +461,7 @@ export function ActionsMenu(props) {
           onClose={handleClose}
         >
           <MenuItem onClick={handleClose}>
-            <ListItemText primary={<Typography variant="body2">View request</Typography>} />
+            <ListItemText primary={<Typography variant="body2">{t('View request')}</Typography>} />
           </MenuItem>
         </StyledMenu>
       );
@@ -476,7 +478,7 @@ export function ActionsMenu(props) {
             <ListItemIcon className={classes.listItemIcon}>
               <Icon path={mdiFileDocumentOutline} size={1} className="icon-grey" />
             </ListItemIcon>
-            <ListItemText primary={<Typography variant="body2">Summary</Typography>} />
+            <ListItemText primary={<Typography variant="body2">{t('Summary')}</Typography>} />
           </MenuItem>
         </StyledMenu>
       );
@@ -514,6 +516,7 @@ export function ActionsMenu(props) {
 // //////////////////////////// Analyst role dialog box context menu
 export function AnalystMenu(props) {
   const {role, makeSupport, makeLead, unassignRequest} = props;
+  const {t} = useTranslation();
   let StyledMenuVar;
 
   const [anchorEl, setAnchorEl] = React.useState(null);
@@ -536,10 +539,10 @@ export function AnalystMenu(props) {
         onClose={handleClose}
       >
         <MenuItem>
-          <ListItemText primary={<Typography variant="body2" onClick={unassignRequest}>Unassign from me</Typography>} />
+          <ListItemText primary={<Typography variant="body2" onClick={unassignRequest}>{t('Unassign from me')}</Typography>} />
         </MenuItem>
         <MenuItem onClick={makeSupport}>
-          <ListItemText primary={<Typography variant="body2">Make me support</Typography>} />
+          <ListItemText primary={<Typography variant="body2">{t('Make me support')}</Typography>} />
         </MenuItem>
       </StyledMenu>
     );
@@ -553,10 +556,10 @@ export function AnalystMenu(props) {
         onClose={handleClose}
       >
         <MenuItem>
-          <ListItemText primary={<Typography variant="body2" onClick={unassignRequest}>Unassign from me</Typography>} />
+          <ListItemText primary={<Typography variant="body2" onClick={unassignRequest}>{t('Unassign from me')}</Typography>} />
         </MenuItem>
         <MenuItem onClick={makeLead}>
-          <ListItemText primary={<Typography variant="body2">Make me lead</Typography>} />
+          <ListItemText primary={<Typography variant="body2">{t('Make me lead')}</Typography>} />
         </MenuItem>
       </StyledMenu>
     );
