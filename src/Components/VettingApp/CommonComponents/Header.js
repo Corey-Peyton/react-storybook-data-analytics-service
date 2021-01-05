@@ -91,7 +91,7 @@ function ShowMenuButton(props) {
   const classes = defaultStyles();
   if (props.role === 'analyst' || props.role === 'researcher') {
     return (
-      <IconButton onClick={props.clickHandler} className={classes.iconButton} edge="start">
+      <IconButton onClick={props.clickHandler} className={classes.iconButton} edge="start" aria-label="Show menu button">
         <MenuIcon />
       </IconButton>
     );

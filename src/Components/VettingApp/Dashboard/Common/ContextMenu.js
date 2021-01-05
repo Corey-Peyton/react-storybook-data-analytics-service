@@ -63,7 +63,7 @@ const StyledMenu = withStyles({
 
 // //////////////////////////// Dashboard actions menu
 export function ActionsMenu(props) {
-  const {role, status, contextStatusClick, contextSummaryClick} = props;
+  const {role, status, contextStatusClick, contextSummaryClick, controls} = props;
   const {t} = useTranslation();
   let StyledMenuVar;
 
@@ -100,6 +100,8 @@ export function ActionsMenu(props) {
     },
   };
 
+  const ariaControls = `context-menu-${controls}`;
+
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
     contextStatusClick(status);
@@ -133,7 +135,7 @@ export function ActionsMenu(props) {
   if (status === 'Draft') {
     StyledMenuVar = (
       <StyledMenu
-        id="actions-menu"
+        id={ariaControls}
         anchorEl={anchorEl}
         keepMounted
         open={Boolean(anchorEl)}
@@ -489,8 +491,9 @@ export function ActionsMenu(props) {
     <div>
       <IconButton
         onClick={handleClick}
-        aria-controls="context-menu"
+        aria-controls={ariaControls}
         aria-haspopup="true"
+        aria-label="Actions menu"
         edge='end'>
         <MoreVertIcon />
       </IconButton>
@@ -515,11 +518,13 @@ export function ActionsMenu(props) {
 
 // //////////////////////////// Analyst role dialog box context menu
 export function AnalystMenu(props) {
-  const {role, makeSupport, makeLead, unassignRequest} = props;
+  const {role, makeSupport, makeLead, unassignRequest, controls} = props;
   const {t} = useTranslation();
   let StyledMenuVar;
 
   const [anchorEl, setAnchorEl] = React.useState(null);
+
+  const ariaControls = `context-menu-${controls}`;
 
   const handleClose = () => {
     setAnchorEl(null);
@@ -549,7 +554,7 @@ export function AnalystMenu(props) {
   } else if (role === 'support') {
     StyledMenuVar = (
       <StyledMenu
-        id="analyst-menu"
+        id={ariaControls}
         anchorEl={anchorEl}
         keepMounted
         open={Boolean(anchorEl)}
@@ -568,8 +573,9 @@ export function AnalystMenu(props) {
     <div>
       <IconButton
         onClick={handleClick}
-        aria-controls="context-menu"
+        aria-controls={ariaControls}
         aria-haspopup="true"
+        aria-label="Actions menu"
         edge='end'>
         <MoreVertIcon />
       </IconButton>

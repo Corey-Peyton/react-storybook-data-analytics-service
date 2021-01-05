@@ -227,7 +227,7 @@ export default function ProjectsDrawer(props) {
       }}
     >
       <div className={classes.drawerHeader}>
-        <Typography variant='subtitle2'>
+        <Typography variant='subtitle2' component='h2'>
           {t('Projects')}
         </Typography>
       </div>

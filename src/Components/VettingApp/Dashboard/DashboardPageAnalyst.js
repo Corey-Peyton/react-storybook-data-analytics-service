@@ -231,11 +231,11 @@ export default function DashboardPageAnalyst() {
               variant="scrollable"
               scrollButtons="auto"
             >
-              <Tab label={t('Assigned to me')} {...a11yProps(0)} />
-              <Tab label={t('Unassigned')} {...a11yProps(1)} />
-              <Tab label={t('Active')} {...a11yProps(2)} />
-              <Tab label={t('Approved')} {...a11yProps(3)} />
-              <Tab label={t('Denied')} {...a11yProps(4)} />
+              <Tab label={t('Assigned to me')} aria-label={t('Assigned to me')} {...a11yProps(0)} />
+              <Tab label={t('Unassigned')} aria-label={t('Unassigned')} {...a11yProps(1)} />
+              <Tab label={t('Active')} aria-label={t('Active')} {...a11yProps(2)} />
+              <Tab label={t('Approved')} aria-label={t('Approved')} {...a11yProps(3)} />
+              <Tab label={t('Denied')} aria-label={t('Denied')} {...a11yProps(4)} />
             </Tabs>
           </AppBar>
           <TabPanel value={value} index={0} className={classes.tabPanel}>

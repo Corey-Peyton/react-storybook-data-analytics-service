@@ -44,15 +44,21 @@ export default function AnalystCell(props) {
   }
 
   if (role === 'researcher') {
-    return (
-      <TableCell className={classes.tablesCellsFlex}>
-        <Typography variant="body2" noWrap={true}>{t(analyst[0])}</Typography>
-        <IconButton onClick={() => toggleDialog('info')}>
-          <AddCircleOutlineIcon />
-        </IconButton>
-        <DialogAnalyst open={open.analystInfo} toggleDialog={() => toggleDialog('info')}/>
-      </TableCell>
-    );
+    if (analyst.length > 0) {
+      return (
+        <TableCell className={classes.tablesCellsFlex}>
+          <Typography variant="body2" noWrap={true}>{t(analyst[0])}</Typography>
+          <IconButton onClick={() => toggleDialog('info')} aria-label="Show analyst information">
+            <AddCircleOutlineIcon />
+          </IconButton>
+          <DialogAnalyst open={open.analystInfo} toggleDialog={() => toggleDialog('info')}/>
+        </TableCell>
+      );
+    } else {
+      return (
+        <TableCell className={classes.tablesCellsFlex} />
+      );
+    }
   } else if (role === 'analyst') {
     if (analyst.length > 1) {
       return (

@@ -209,7 +209,7 @@ export function DialogManageTeam(props) {
   };
 
   const leadAnalysts = () => {
-    const content = analysts.filter((analyst) => analyst.assigned && analyst.role === 'lead').map((analyst) => {
+    const content = analysts.filter((analyst) => analyst.assigned && analyst.role === 'lead').map((analyst, index) => {
       return (
         <div className={classes.dialogRow} key={analyst.id}>
           <Avatar >
@@ -219,7 +219,12 @@ export function DialogManageTeam(props) {
             <Typography className={classes.dialogText} variant='body2'>{analyst.name}</Typography>
             <Typography className={classes.dialogText} variant='body2'>{analyst.email}</Typography>
           </div>
-          <AnalystMenu role={'lead'} makeSupport={makeSupport(analyst)} unassignRequest={unassignRequest(analyst)}/>
+          <AnalystMenu
+            role={'lead'}
+            makeSupport={makeSupport(analyst)}
+            unassignRequest={unassignRequest(analyst)}
+            controls={index}
+          />
         </div>
       );
     });
