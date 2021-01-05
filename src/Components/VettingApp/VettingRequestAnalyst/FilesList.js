@@ -345,7 +345,7 @@ function FilesList(props) {
             required
           />
         </DialogContent>
-        <Divider className="mb-2 mt-2" />
+        <Divider className="mb-1 mt-2" />
         <DialogActions className={classes.dialogFooter}>
           <Button color="primary" variant="outlined" onClick={() => handleClickClose('dialogAddSupporting')}
           >
