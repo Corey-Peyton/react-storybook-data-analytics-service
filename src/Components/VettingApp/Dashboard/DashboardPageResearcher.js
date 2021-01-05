@@ -95,7 +95,7 @@ const headCells = [
   {id: 'id', narrow: false, disablePadding: true, label: 'ID'},
   {id: 'status', narrow: false, disablePadding: false, label: 'Status'},
   {id: 'researcher', narrow: false, disablePadding: false, label: 'Researcher'}, // not sorting
-  {id: 'lead', narrow: false, disablePadding: false, label: 'Analyst'},
+  {id: 'lead', narrow: false, disablePadding: false, label: 'Lead'},
   {id: 'created', narrow: false, disablePadding: false, label: 'Created on'}, // not sorting
   {id: 'updated', narrow: false, disablePadding: false, label: 'Updated on'},
   {id: 'actions', narrow: true, disablePadding: false, label: 'Actions'},
@@ -170,7 +170,10 @@ export default function DashboardPageResearcher() {
 
   return (
     <React.Fragment>
-      <Header clickHandler={toggleProjectsDrawer}/>
+      <Header
+        clickHandler={toggleProjectsDrawer}
+        role='researcher'
+      />
       <main className={classes.main}>
         <BypassBlocks ref={{main: mainRef, about: aboutRef}} />
         <ProjectsDrawer

@@ -258,7 +258,7 @@ export function ActionsMenu(props) {
             <ListItemIcon className={classes.listItemIcon}>
               <Icon path={mdiShare} size={1} className="icon-grey" />
             </ListItemIcon>
-            <ListItemText primary={<Typography variant="body2">Re{t('submit request')}</Typography>} />
+            <ListItemText primary={<Typography variant="body2">{t('Resubmit request')}</Typography>} />
           </MenuItem>
           <MenuItem onClick={toggleSummary}>
             <ListItemIcon className={classes.listItemIcon}>

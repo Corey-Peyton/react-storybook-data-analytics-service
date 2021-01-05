@@ -370,10 +370,11 @@ export function DialogWithdraw(props) {
           <FormControl variant="outlined" className={classes.textField}>
             <TextField
               id="withdraw-input"
-              label={t('Comments *')}
+              label={t('Comments')}
               variant="outlined"
               placeholder={t('Please provite us with a withdrawal reason')}
               multiline
+              required='true'
             />
           </FormControl>
         </div>
@@ -550,7 +551,7 @@ export function DialogAssign(props) {
           <FormControl variant="outlined" className={classes.textField}>
             <NumberFormat
               id='phone'
-              label={t('Phone number *')}
+              label={t('Phone number')}
               customInput={TextField}
               type="text"
               variant='outlined'
@@ -561,6 +562,7 @@ export function DialogAssign(props) {
               error={Boolean(state.phoneErr)}
               helperText={state.phoneErr}
               onChange={handleChange('phone')}
+              required='true'
             />
           </FormControl>
         </div>
@@ -618,10 +620,11 @@ export function DialogUpdate(props) {
           <FormControl variant="outlined" className={classes.textField}>
             <TextField
               id="update-input"
-              label={t('Comments *')}
+              label={t('Comments')}
               variant="outlined"
               multiline
               className={classes.textField}
+              required='true'
             />
           </FormControl>
         </div>
@@ -704,16 +707,17 @@ export function DialogDenied(props) {
           </FormControl>
         </div>
         <div className={classes.dialogRow}>
-          <FormControl variant="outlined">
-            <InputLabel id="denied-select-label">{t('Denied reason *')}</InputLabel>
+          <FormControl variant="outlined" required>
+            <InputLabel id="denied-select-label">{t('Denied reason')}</InputLabel>
             <Select
               labelId="denied-select-label"
               id="denied-select"
               onChange={handleChange}
               value={selected}
-              label={t('Denied reason *')}
+              label={t('Denied reason')}
               fullWidth
               placeholder={t('Select an option')}
+              required='true'
             >
               <MenuItem value="">
                 <em>{t('Select an option')}</em>
@@ -732,9 +736,10 @@ export function DialogDenied(props) {
           <FormControl variant="outlined">
             <TextField
               id="withdraw-input"
-              label={t('Comments *')}
+              label={t('Comments')}
               variant="outlined"
               multiline
+              required='true'
             />
           </FormControl>
         </div>
