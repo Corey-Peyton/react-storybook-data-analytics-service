@@ -35,8 +35,34 @@ import MenuItem from '@material-ui/core/MenuItem';
 import AppBarUnAssign from './AppBarUnAssign';
 import AppBarAssign from './AppBarAssign';
 import Alert from '@material-ui/lab/Alert';
+import Header from '../CommonComponents/Header';
+import Footer from '../CommonComponents/Footer';
+import CloseIcon from '@material-ui/icons/Close';
 
 const useStyles = makeStyles((theme) => ({
+  dialogTitle: {
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+  },
+  root: {
+    '& .MuiDialog-paperWidthSm': {
+      'width': 400,
+      '& .MuiTextField-root': {
+        'width': '100%',
+      },
+      '& .MuiFormLabel-root': {
+        'line-height': 1,
+      },
+      '& .MuiInputBase-input': {
+        'max-height': 130,
+        'overflow': 'hidden auto !important',
+      },
+      '& .MuiAutocomplete-endAdornment': {
+        'top': '5.5px',
+      },
+    },
+  },
   main: {
     background: theme.palette.grey[100],
     paddingBottom: theme.spacing(6),
@@ -128,6 +154,7 @@ function VettingRequestAnalyst(props) {
     completed: {},
     title: 'New vetting request',
     open: false,
+    assign: false,
   });
   const steps = getSteps();
 
@@ -226,58 +253,65 @@ function VettingRequestAnalyst(props) {
     setState({...state, completed: {}});
   };
 
+  const assign = () => {
+    // setOpen(false);
+    setState({...state, assign: true});
+  };
+
   return (
-    <main className={classes.main} tabIndex="-1">
-      <Container maxWidth="xl" className="page-container">
-        <AppBar position="static" className={classes.appBar} color="default">
-          {state.activeStep === 3 ? <ToolBarUnassign /> : <ToolBarAssign />}
-        </AppBar>
-        <Paper className={classes.paper}>
-          <Grid container alignItems="center">
-            <Grid item className={classes.title}>
-              <Typography variant="h6">{state.title}</Typography>
-              <Typography variant="caption" color="textSecondary">
+    <>
+      <Header />
+      <main className={classes.main} tabIndex="-1">
+        <Container maxWidth="xl" className="page-container">
+          <AppBar position="static" className={classes.appBar} color="default">
+            {state.assign ? <ToolBarUnassign /> : <ToolBarAssign assign={assign}/>}
+          </AppBar>
+          <Paper className={classes.paper}>
+            <Grid container alignItems="center">
+              <Grid item className={classes.title}>
+                <Typography variant="h6" component="h2">{state.title}</Typography>
+                <Typography variant="caption" color="textSecondary">
                 ID: 10_2020_232425255
-              </Typography>
+                </Typography>
+              </Grid>
+              {state.activeStep === 3 ? <AppBarUnAssign handleDialogOpen={handleDialogOpen}/> : <AppBarAssign />}
             </Grid>
-            {state.activeStep === 3 ? <AppBarUnAssign handleDialogOpen={handleDialogOpen}/> : <AppBarAssign />}
-          </Grid>
-          <Divider className={classes.divider} />
-          <div className={classes.stepperContainer}>
-            {state.activeStep !== 0 && (
-              <Button
-                onClick={handleBack}
-                className={classes.stepperBackBtn}
-                startIcon={<ArrowBackIosIcon />}
-              >
+            <Divider className={classes.divider} />
+            <div className={classes.stepperContainer}>
+              {state.activeStep !== 0 && (
+                <Button
+                  onClick={handleBack}
+                  className={classes.stepperBackBtn}
+                  startIcon={<ArrowBackIosIcon />}
+                >
                 Back
-              </Button>
-            )}
-            <Stepper nonLinear activeStep={state.activeStep}>
-              {steps.map((label, index) => (
-                <Step key={label}>
-                  <StepButton
-                    onClick={handleStep(index)}
-                    completed={state.completed[index]}
-                  >
-                    {label}
-                  </StepButton>
-                </Step>
-              ))}
-            </Stepper>
-            {state.activeStep !== getSteps().length - 1 && (
-              <Button
-                onClick={handleNext}
-                className={classes.stepperNextBtn}
-                endIcon={<ArrowForwardIosIcon />}
-              >
+                </Button>
+              )}
+              <Stepper nonLinear activeStep={state.activeStep}>
+                {steps.map((label, index) => (
+                  <Step key={label}>
+                    <StepButton
+                      onClick={handleStep(index)}
+                      completed={state.completed[index]}
+                    >
+                      {label}
+                    </StepButton>
+                  </Step>
+                ))}
+              </Stepper>
+              {state.activeStep !== getSteps().length - 1 && (
+                <Button
+                  onClick={handleNext}
+                  className={classes.stepperNextBtn}
+                  endIcon={<ArrowForwardIosIcon />}
+                >
                 Next
-              </Button>
-            )}
-          </div>
-          <Divider className={classes.divider} />
-          <div>
-            {allStepsCompleted() ? (
+                </Button>
+              )}
+            </div>
+            <Divider className={classes.divider} />
+            <div>
+              {allStepsCompleted() ? (
               <div>
                 <Typography className={classes.instructions}>
                   All steps completed - you&apos;re finished
@@ -293,25 +327,25 @@ function VettingRequestAnalyst(props) {
                 </Grid>
               </div>
             )}
-          </div>
-          <Grid
-            container
-            justify={state.activeStep === 0 ? 'flex-end' : 'space-between'}
-            className={classes.navButtons}
-          >
-            {state.activeStep !== 0 && (
-              <Grid item>
-                <Button
-                  variant="contained"
-                  color="primary"
-                  className={classes.button}
-                  onClick={handleBack}
-                >
+            </div>
+            <Grid
+              container
+              justify={state.activeStep === 0 ? 'flex-end' : 'space-between'}
+              className={classes.navButtons}
+            >
+              {state.activeStep !== 0 && (
+                <Grid item>
+                  <Button
+                    variant="contained"
+                    color="primary"
+                    className={classes.button}
+                    onClick={handleBack}
+                  >
                   Back
-                </Button>
-              </Grid>
-            )}
-            {state.activeStep === getSteps().length - 1 ? (
+                  </Button>
+                </Grid>
+              )}
+              {state.activeStep === getSteps().length - 1 ? (
               <Grid item>
                 <Button
                   variant="contained"
@@ -348,59 +382,96 @@ function VettingRequestAnalyst(props) {
                 </Button>
               </Grid>
             )}
-          </Grid>
-        </Paper>
-      </Container>
+            </Grid>
+          </Paper>
+        </Container>
 
-      <Dialog
-        open={state.open}
-        onClose={handleDialogClose}
-        aria-labelledby="alert-dialog-title"
-        aria-describedby="alert-dialog-description"
-        className={classes.MuiDialogPaper}
-      >
-        <DialogTitle id="alert-dialog-manage">Manage team</DialogTitle>
-        <Divider className={classes.divider} />
-        <DialogContent className="pr-3 pl-3">
-          <DialogContentText id="alert-manage-team-lead">
-            <Typography variant="subtitle2" className="pb-1"><strong>Lead</strong></Typography>
-            <Avatar src="/broken-image.jpg" /><Typography variant="body2" className={classes.negativeMargin}>Brian Bill</Typography>
-            <Typography variant="body2" className={classes.negativeMargin2}>brian.bill@canada.ca<IconButton aria-haspopup="true" onClick={handleClick}>
-              <MoreVertIcon />
-            </IconButton><Menu
-              id="menu-team-lead"
-              anchorEl={anchorEl}
-              keepMounted
-              open={Boolean(anchorEl)}
-              onClose={handleClose}
-            ><MenuItem onClick={handleClose}>Unassign from me</MenuItem>
-              <MenuItem onClick={handleClose}>Make me lead</MenuItem></Menu></Typography>
-            <Divider className={classes.divider} />
-            <SearchBar placeholder="Search support analysts"/>
-          </DialogContentText>
-          <DialogContentText id="alert-manage-team-analyst">
-            <Typography variant="subtitle2" className="pb-1"><strong>Support Analysts</strong></Typography>
-            <Avatar src="/broken-image.jpg" /><Typography variant="body2" className={classes.negativeMargin}>Tony Stark </Typography>
-            <Typography variant="body2" className={classes.negativeMargin2}>tony.stark@canada.ca<IconButton aria-haspopup="true" onClick={handleClick}>
-              <MoreVertIcon />
-            </IconButton><Menu
-              id="menu-team-analyst"
-              anchorEl={anchorEl}
-              keepMounted
-              open={Boolean(anchorEl)}
-              onClose={handleClose}
-            ><MenuItem onClick={handleClose}>Unassign from me</MenuItem>
-              <MenuItem onClick={handleClose}>Make me lead</MenuItem></Menu></Typography>
-          </DialogContentText>
-        </DialogContent>
-        <Divider className={classes.divider} />
-        <DialogActions className={classes.dialogActions}>
-          <Button onClick={handleDialogClose} color="primary" variant="contained" className="ml-2">
+        <Dialog
+          open={state.open}
+          onClose={handleDialogClose}
+          aria-labelledby="alert-dialog-title"
+          aria-describedby="alert-dialog-description"
+          className={classes.root}
+        >
+          <DialogTitle id="alert-dialog-manage">
+            <div className={classes.dialogTitle}>Manage team
+              <IconButton
+                onClick={handleDialogClose}
+                edge='end'>
+                <CloseIcon />
+              </IconButton>
+            </div>
+          </DialogTitle>
+          <Divider className="mt-1 mb-2"/>
+          <DialogContent className="pr-3 pl-3">
+            <DialogContentText id="alert-manage-team-lead">
+              <Typography variant="subtitle2" className="pb-1">
+                <strong>Lead</strong>
+              </Typography>
+              <Avatar src="/broken-image.jpg" />
+              <Typography variant="body2" className={classes.negativeMargin}>
+                Brian Bill
+              </Typography>
+              <Typography variant="body2" className={classes.negativeMargin2}>brian.bill@canada.ca
+                <IconButton aria-haspopup="true" onClick={handleClick}>
+                  <MoreVertIcon />
+                </IconButton>
+                <Menu
+                  id="menu-team-lead"
+                  anchorEl={anchorEl}
+                  keepMounted
+                  open={Boolean(anchorEl)}
+                  onClose={handleClose}
+                >
+                  <MenuItem onClick={handleClose}>
+                    Unassign from me
+                  </MenuItem>
+                  <MenuItem onClick={handleClose}>
+                    Make me lead
+                  </MenuItem>
+                </Menu>
+              </Typography>
+              <Divider className={classes.divider} />
+              <SearchBar placeholder="Search support analysts"/>
+            </DialogContentText>
+            <DialogContentText id="alert-manage-team-analyst">
+              <Typography variant="subtitle2" className="pb-1">
+                <strong>Support Analysts</strong>
+              </Typography>
+              <Avatar src="/broken-image.jpg" />
+              <Typography variant="body2" className={classes.negativeMargin}>
+                Tony Stark
+              </Typography>
+              <Typography variant="body2" className={classes.negativeMargin2}>tony.stark@canada.ca
+                <IconButton aria-haspopup="true" onClick={handleClick}>
+                  <MoreVertIcon />
+                </IconButton><Menu
+                  id="menu-team-analyst"
+                  anchorEl={anchorEl}
+                  keepMounted
+                  open={Boolean(anchorEl)}
+                  onClose={handleClose}
+                >
+                  <MenuItem onClick={handleClose}>
+                  Unassign from me
+                  </MenuItem>
+                  <MenuItem onClick={handleClose}>
+                  Make me lead
+                  </MenuItem>
+                </Menu>
+              </Typography>
+            </DialogContentText>
+          </DialogContent>
+          <Divider className={classes.divider} />
+          <DialogActions className={classes.dialogActions}>
+            <Button onClick={handleDialogClose} color="primary" variant="contained" className="ml-2">
           Go back
-          </Button>
-        </DialogActions>
-      </Dialog>
-    </main>
+            </Button>
+          </DialogActions>
+        </Dialog>
+      </main>
+      <Footer />
+    </>
   );
 }
 export default VettingRequestAnalyst;

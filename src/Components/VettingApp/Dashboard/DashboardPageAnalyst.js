@@ -1,4 +1,5 @@
 import React from 'react';
+import {useTranslation} from 'react-i18next';
 import clsx from 'clsx';
 import {makeStyles} from '@material-ui/core/styles';
 import {
@@ -110,6 +111,7 @@ function a11yProps(index) {
 
 export default function DashboardPageAnalyst() {
   const classes = useStyles();
+  const {t} = useTranslation();
   const [value, setValue] = React.useState(0);
   const [open, setOpen] = React.useState({
     projectsDrawer: true,
@@ -229,11 +231,11 @@ export default function DashboardPageAnalyst() {
               variant="scrollable"
               scrollButtons="auto"
             >
-              <Tab label="Assigned to me" {...a11yProps(0)} />
-              <Tab label="Unassigned" {...a11yProps(1)} />
-              <Tab label="Active" {...a11yProps(2)} />
-              <Tab label="Approved" {...a11yProps(3)} />
-              <Tab label="Denied" {...a11yProps(4)} />
+              <Tab label={t('Assigned to me')} aria-label={t('Assigned to me')} {...a11yProps(0)} />
+              <Tab label={t('Unassigned')} aria-label={t('Unassigned')} {...a11yProps(1)} />
+              <Tab label={t('Active')} aria-label={t('Active')} {...a11yProps(2)} />
+              <Tab label={t('Approved')} aria-label={t('Approved')} {...a11yProps(3)} />
+              <Tab label={t('Denied')} aria-label={t('Denied')} {...a11yProps(4)} />
             </Tabs>
           </AppBar>
           <TabPanel value={value} index={0} className={classes.tabPanel}>

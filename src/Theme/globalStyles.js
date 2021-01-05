@@ -76,7 +76,6 @@ export const useStyles = makeStyles({
       fontSize: '0.875rem',
       marginTop: '1px',
       color: theme.palette.text.primary,
-      lineHeight: 1.5,
     },
     '.MuiInputBase-input': {
       'fontSize': '0.875rem',
@@ -90,6 +89,14 @@ export const useStyles = makeStyles({
     },
     '.MuiFormControlLabel-root': {
       marginLeft: theme.spacing(-1),
+    },
+    '.emphasisBox': {
+      background: theme.palette.grey[200],
+      padding: theme.spacing(2),
+      marginBottom: theme.spacing(2),
+      borderLeftStyle: 'solid',
+      borderLeftWidth: '5px',
+      borderLeftColor: theme.palette.primary.main,
     },
 
     // Links

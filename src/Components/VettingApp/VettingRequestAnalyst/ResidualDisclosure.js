@@ -21,8 +21,14 @@ import {
   IconButton,
 } from '@material-ui/core';
 import DeleteIcon from '@material-ui/icons/Delete';
+import CloseIcon from '@material-ui/icons/Close';
 
 const useStyles = makeStyles((theme) => ({
+  dialogTitle: {
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+  },
   inputMargin: {
     marginBottom: theme.spacing(2),
   },
@@ -36,6 +42,32 @@ const useStyles = makeStyles((theme) => ({
     borderLeftStyle: 'solid',
     borderLeftWidth: '5px',
     borderLeftColor: theme.palette.primary.main,
+  },
+  dialogFooter: {
+    padding: theme.spacing(3, 3),
+    display: 'flex',
+    justifyContent: 'flex-end',
+  },
+  footerBtns: {
+    marginLeft: [theme.spacing(2), '!important'],
+  },
+  root: {
+    '& .MuiDialog-paperWidthSm': {
+      'width': 400,
+      '& .MuiTextField-root': {
+        'width': '100%',
+      },
+      '& .MuiFormLabel-root': {
+        'line-height': 1,
+      },
+      '& .MuiInputBase-input': {
+        'max-height': 130,
+        'overflow': 'hidden auto !important',
+      },
+      '& .MuiAutocomplete-endAdornment': {
+        'top': '5.5px',
+      },
+    },
   },
 }));
 
@@ -78,17 +110,13 @@ function ResidualDisclosure(props) {
       <FormControl
         component="fieldset"
         className={classes.inputMargin}
-        // error={!!errors.consistentOutput}
       >
         <FormLabel component="legend">
           Does this output a weight variable?
         </FormLabel>
-        {/* <Controller
-                    render={({onBlur, onChange, value}) => ( */}
         <RadioGroup
           id="weightVariable"
           onChange={weightOnChange}
-          // value={value}
         >
           <FormControlLabel
             value="Yes"
@@ -101,12 +129,6 @@ function ResidualDisclosure(props) {
             label="No"
           />
         </RadioGroup>
-        {/* )} */}
-        {/* name="consistentOutput"
-              // control={control}
-              // rules={{ required: requiredErrorMessage }}
-            /> */}
-        {/* <FormHelperText>{errors.consistentOutput?.message}</FormHelperText> */}
       </FormControl>
       {state.weightVar && (
         <React.Fragment>
@@ -137,9 +159,18 @@ function ResidualDisclosure(props) {
             open={open}
             onClose={handleClose}
             aria-labelledby="form-dialog-title"
-
+            className={classes.root}
           >
-            <DialogTitle id="form-dialog-title">Add supporting file</DialogTitle>
+            <DialogTitle id="form-dialog-title">
+              <div className={classes.dialogTitle}>Add supporting file
+                <IconButton
+                  onClick={() => handleClose('dialogUnAssign')}
+                  edge='end'>
+                  <CloseIcon />
+                </IconButton>
+              </div>
+            </DialogTitle>
+            <Divider className="mb-2" />
             <DialogContent>
               <FormControl
                 required
@@ -175,9 +206,10 @@ function ResidualDisclosure(props) {
                 required
               />
             </DialogContent>
-            <DialogActions>
+            <Divider className="mt-1" />
+            <DialogActions className={classes.dialogFooter}>
               <Button onClick={handleClose} color="primary" variant="outlined">Cancel</Button>
-              <Button onClick={handleClose} color="primary" variant="contained">Add supporting file</Button>
+              <Button onClick={handleClose} color="primary" variant="contained" className={classes.footerBtns}>Add supporting file</Button>
             </DialogActions>
           </Dialog>
           <FormControl />
@@ -213,12 +245,10 @@ function ResidualDisclosure(props) {
                 className={classes.inputMargin}
                 margin="dense"
                 id="fileContents1"
-                // name={'outputFiles[' + index + '].sheetName'}
                 label="File contents"
                 multiline
                 rows={2}
                 variant="outlined"
-                // inputRef={register}
                 fullWidth
               />
               <TextField
@@ -261,12 +291,10 @@ function ResidualDisclosure(props) {
                 className={classes.inputMargin}
                 margin="dense"
                 id="fileContents2"
-                // name={'outputFiles[' + index + '].sheetName'}
                 label="File contents"
                 multiline
                 rows={2}
                 variant="outlined"
-                // inputRef={register}
                 fullWidth
               />
               <TextField

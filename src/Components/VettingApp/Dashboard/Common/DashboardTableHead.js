@@ -1,4 +1,5 @@
 import React from 'react';
+import {useTranslation} from 'react-i18next';
 import PropTypes from 'prop-types';
 import {makeStyles} from '@material-ui/core/styles';
 import {
@@ -30,13 +31,12 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export default function DashboardTableHead(props) {
-  const {order, orderBy, onRequestSort} = props;
+  const {order, orderBy, onRequestSort, headCells} = props;
+  const {t} = useTranslation();
   const classes = useStyles();
   const createSortHandler = (property) => (event) => {
     onRequestSort(event, property);
   };
-
-  const headCells = props.headCells;
 
   return (
     <TableHead>
@@ -54,7 +54,7 @@ export default function DashboardTableHead(props) {
               direction={orderBy === headCell.id ? order : 'asc'}
               onClick={createSortHandler(headCell.id)}
             >
-              <Typography noWrap={true}>{headCell.label}</Typography>
+              <Typography noWrap={true}>{t(headCell.label)}</Typography>
               {orderBy === headCell.id ? (
                 <span className={classes.visuallyHidden}>
                   {order === 'desc' ? 'sorted descending' : 'sorted ascending'}

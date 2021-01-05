@@ -150,6 +150,7 @@ export default function TableContainerComponent(props) {
                           contextSummaryClick={contextSummaryClick}
                           contextStatusClick={contextStatusClick}
                           role={role}
+                          controls={index}
                         />
                       </TableCell>
                     </TableRow>
