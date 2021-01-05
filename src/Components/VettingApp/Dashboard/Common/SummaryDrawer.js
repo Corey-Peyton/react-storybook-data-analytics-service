@@ -1,4 +1,5 @@
 import React from 'react';
+import {useTranslation} from 'react-i18next';
 import clsx from 'clsx';
 import {makeStyles} from '@material-ui/core/styles';
 import {
@@ -12,7 +13,6 @@ import {
   green,
   orange,
 } from '@material-ui/core/colors';
-import {useTranslation} from 'react-i18next';
 import CloseIcon from '@material-ui/icons/Close';
 
 const DRAWER_WIDTH = 400;
@@ -102,13 +102,13 @@ export default function SummaryDrawer(props) {
   const content = () => (
     <div className={classes.drawerContent}>
       <div className={classes.drawerHeader}>
-        <Typography component="h2" variant="h6">Vetting request summary</Typography>
+        <Typography component="h2" variant="h6">{t('Vetting request summary')}</Typography>
         <div className={classes.closeBtn}>
           <IconButton
             onClick={props.clickHandler}
             edge="end"
             id="details-close"
-            aria-label="Project information panel - close panel">
+            aria-label={t('Project information panel - close panel')}>
             <CloseIcon />
           </IconButton>
         </div>
@@ -154,7 +154,7 @@ export default function SummaryDrawer(props) {
         </div>
       </div>
       <Button variant="contained" color="primary" className={classes.drawerButton} >
-            View vetting request
+        {t('View vetting request')}
       </Button>
     </div>
   );

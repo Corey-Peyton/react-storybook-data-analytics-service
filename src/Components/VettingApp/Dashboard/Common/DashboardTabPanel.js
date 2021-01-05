@@ -18,8 +18,8 @@ export default function TabPanel(props) {
       component="div"
       role="tabpanel"
       hidden={value !== index}
-      id={`projects-tabpanel-${index}`}
-      aria-labelledby={`projects-tab-${index}`}
+      id={`dashboard-tabpanel-${index}`}
+      aria-labelledby={`dashboard-tab-${index}`}
       {...other}
     >
       {value === index && <Box p={3}>{children}</Box>}

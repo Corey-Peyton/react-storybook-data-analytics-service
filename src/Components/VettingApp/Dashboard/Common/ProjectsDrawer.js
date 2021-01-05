@@ -184,8 +184,8 @@ StyledTreeItem.propTypes = {
 
 export default function ProjectsDrawer(props) {
   const {role, open, projectTitle} = props;
-  const classes = useStyles();
   const {t} = useTranslation();
+  const classes = useStyles();
 
   const projectsArray = () => {
     if (role === 'researcher') {
@@ -195,23 +195,22 @@ export default function ProjectsDrawer(props) {
     }
   };
 
-  function handleProjectChange(el, value) {
+  function handleProjectChange(value) {
     let title = undefined;
     switch (value) {
-      case '0':
+      case 'All projects':
         title = 'All projects';
         break;
-      case '1':
+      case 'Project 1':
         title = 'Project 1';
         break;
-      case '2':
+      case 'Project 2':
         title = 'Project 2';
         break;
-      case '3':
+      case 'Project 3':
         title = 'Project 3';
         break;
       default:
-        title = 'All projects';
         break;
     }
     projectTitle(title);
@@ -228,14 +227,13 @@ export default function ProjectsDrawer(props) {
       }}
     >
       <div className={classes.drawerHeader}>
-        <Typography variant='subtitle2'>
+        <Typography variant='subtitle2' component='h2'>
           {t('Projects')}
         </Typography>
       </div>
       <TreeView
         className={classes.root}
         defaultSelected={['0']}
-        onNodeSelect={handleProjectChange}
       >
         {projectsArray().map((el, index) => (
           <StyledTreeItem
@@ -244,7 +242,8 @@ export default function ProjectsDrawer(props) {
             labelText={el}
             labelIcon={FolderOpenIcon}
             className={classes.treeItem}
-            tooltip={el}
+            tooltip={t(el)}
+            onLabelClick={() => handleProjectChange(el)}
           />
         ),
         )}

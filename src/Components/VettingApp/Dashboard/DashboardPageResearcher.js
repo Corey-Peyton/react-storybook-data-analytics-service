@@ -1,4 +1,5 @@
 import React from 'react';
+import {useTranslation} from 'react-i18next';
 import clsx from 'clsx';
 import {makeStyles} from '@material-ui/core/styles';
 import {
@@ -109,6 +110,7 @@ function a11yProps(index) {
 
 export default function DashboardPageResearcher() {
   const classes = useStyles();
+  const {t} = useTranslation();
   const [value, setValue] = React.useState(0);
   const [open, setOpen] = React.useState({
     projectsDrawer: true,
@@ -168,7 +170,10 @@ export default function DashboardPageResearcher() {
 
   return (
     <React.Fragment>
-      <Header clickHandler={toggleProjectsDrawer}/>
+      <Header
+        clickHandler={toggleProjectsDrawer}
+        role='researcher'
+      />
       <main className={classes.main}>
         <BypassBlocks ref={{main: mainRef, about: aboutRef}} />
         <ProjectsDrawer
@@ -214,11 +219,13 @@ export default function DashboardPageResearcher() {
               indicatorColor="primary"
               textColor="primary"
               className={classes.tabs}
+              variant="scrollable"
+              scrollButtons="auto"
             >
-              <Tab label="Active" {...a11yProps(0)} />
-              <Tab label="Withdrawn" {...a11yProps(1)} />
-              <Tab label="Approved" {...a11yProps(2)} />
-              <Tab label="Denied" {...a11yProps(3)} />
+              <Tab label={t('Active')} {...a11yProps(0)} />
+              <Tab label={t('Withdrawn')} {...a11yProps(1)} />
+              <Tab label={t('Approved')} {...a11yProps(2)} />
+              <Tab label={t('Denied')} {...a11yProps(3)} />
             </Tabs>
           </AppBar>
           <TabPanel value={value} index={0} className={classes.tabPanel}>
