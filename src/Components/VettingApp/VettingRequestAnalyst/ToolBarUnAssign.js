@@ -236,7 +236,6 @@ function ToolBarUnassign() {
           <TextField
             className={classes.inputMargin}
             margin="dense"
-            defaultValue="Please provide the supporting files requested."
             label="Comments"
             variant="outlined"
             fullWidth
@@ -244,7 +243,7 @@ function ToolBarUnassign() {
             multiline
           />
         </DialogContent>
-        <Divider className="mb-2 mt-3" />
+        <Divider className="mb-0 mt-3" />
         <DialogActions className={classes.dialogFooter}>
           <Button
             onClick={() => handleClickClose('dialogUpdate')}
