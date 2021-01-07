@@ -1,5 +1,7 @@
 import React from 'react';
 import {makeStyles} from '@material-ui/core/styles';
+import clsx from 'clsx';
+import NumberFormat from 'react-number-format';
 import {Button, Toolbar, IconButton, Typography, TextField, FormControl} from '@material-ui/core';
 import Icon from '@mdi/react';
 import ReplayIcon from '@material-ui/icons/Replay';
@@ -31,14 +33,19 @@ const useStyles = makeStyles((theme) => ({
       },
       '& .MuiFormLabel-root': {
         'line-height': 1,
+        'background-color': 'white',
       },
-      '& .MuiInputBase-input': {
+      '& .MuiOutlinedInput-multiline': {
+        'padding': 0,
+      },
+      '& .MuiOutlinedInput-inputMultiline': {
         'max-height': 130,
-        'overflow': 'hidden auto !important',
+        'overflow': 'auto !important',
+        'padding': theme.spacing(2),
       },
-      '& .MuiAutocomplete-endAdornment': {
-        'top': '5.5px',
-      },
+    },
+    '& .MuiFormControl-root': {
+      'width': '100%',
     },
   },
   dialogTitle: {
@@ -57,12 +64,29 @@ const useStyles = makeStyles((theme) => ({
     marginLeft: theme.spacing(3),
   },
   dialogFooter: {
-    padding: theme.spacing(2, 3),
+    padding: theme.spacing(3, 3),
     display: 'flex',
     justifyContent: 'flex-end',
   },
   footerBtns: {
     marginLeft: [theme.spacing(2), '!important'],
+  },
+  dialogRow: {
+    display: 'flex',
+    alignItems: 'center',
+    padding: theme.spacing(1, 3),
+    height: '100%',
+  },
+  hiddenRow: {
+    display: 'none',
+  },
+  formControl: {
+    'display': 'flex',
+    'flexFlow': 'row',
+    'justifyContent': 'space-between',
+    '& .MuiTextField-root': {
+      width: '49% !important',
+    },
   },
 }));
 
@@ -100,6 +124,12 @@ function ToolBarUnassign() {
 
   const handleDeny = () => {
     setOpen({...open, dialogDeny: false, snackBarDeny: true});
+  };
+
+  const [selected, setSelected] = React.useState('');
+
+  const handleChange = (event) => {
+    setSelected(event.target.value);
   };
 
   return (
@@ -261,36 +291,63 @@ function ToolBarUnassign() {
           </div>
         </DialogTitle>
         <Divider className="mb-2" />
-        <DialogContent className="pb-0">
-          <TextField
-            className={classes.inputMargin}
-            margin="dense"
-            id="Billable hours"
-            label="Billable hours"
-            variant="outlined"
-            required
-            placeholder="3.5"
-            helperText="Only numbers"
-          />
-          <FormControl
-            className={classes.inputMargin}
-            margin="dense"
-            required
-            variant="outlined"
-            fullWidth
-          >
-            <InputLabel id="outputMethod-label">Denied reason</InputLabel>
+        <div className={classes.dialogRow}>
+          <Typography variant='subtitle2'>Billable hours</Typography>
+        </div>
+        <div className={classes.dialogRow}>
+          <FormControl variant="outlined" className={classes.formControl}>
+            <NumberFormat
+              label='Hours'
+              customInput={TextField}
+              type="text"
+              variant='outlined'
+            />
+            <NumberFormat
+              label='Minutes'
+              customInput={TextField}
+              type="text"
+              variant='outlined'
+            />
+          </FormControl>
+        </div>
+        <div className={classes.dialogRow}>
+          <FormControl variant="outlined" required>
+            <InputLabel id="denied-select-label">Denied reason</InputLabel>
             <Select
+              labelId="denied-select-label"
+              id="denied-select"
+              onChange={handleChange}
+              value={selected}
+              label="Denied reason"
+              fullWidth
+              placeholder='Select an option'
+              // required='true'
             >
-              <MenuItem>Non-SSI project</MenuItem>
-              <MenuItem>Confidentiality requirements are not met</MenuItem>
-              <MenuItem>Request is missing information</MenuItem>
-              <MenuItem>Output file(s) are not in line with the project proposal</MenuItem>
-              <MenuItem>Other</MenuItem>
+              <MenuItem value="">
+                <em>Select an option</em>
+              </MenuItem>
+              <MenuItem value='Non-SSI project'>Non-SSI project</MenuItem>
+              <MenuItem value='Confidential requirements are not met'>Confidential requirements are not met</MenuItem>
+              <MenuItem value='Request is missing information'>Request is missing information</MenuItem>
+              <MenuItem value='Output file(s) are not in line with the project proposal'>Output file(s) are not in line with the project proposal</MenuItem>
+              <MenuItem value='Other'>Other</MenuItem>
             </Select>
           </FormControl>
-        </DialogContent>
-        <Divider className="mb-1 mt-3" />
+        </div>
+        <div className={clsx(classes.dialogRow, {
+          [classes.hiddenRow]: selected !== 'Other',
+        })}>
+          <FormControl variant="outlined">
+            <TextField
+              id="withdraw-input"
+              label='Comments'
+              variant="outlined"
+              multiline
+              required='true'
+            />
+          </FormControl>
+        </div>
+        <Divider className="mt-2" />
         <DialogActions className={classes.dialogFooter}>
           <Button
             onClick={() => handleClickClose('dialogDeny')}

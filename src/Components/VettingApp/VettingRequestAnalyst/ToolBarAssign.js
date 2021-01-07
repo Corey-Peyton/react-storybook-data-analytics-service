@@ -1,6 +1,6 @@
 import React from 'react';
 import {makeStyles} from '@material-ui/core/styles';
-import {Button, Toolbar, IconButton, Typography, TextField, Divider} from '@material-ui/core';
+import {Button, Toolbar, IconButton, Typography, TextField, Divider, FormControl} from '@material-ui/core';
 import Icon from '@mdi/react';
 import SaveIcon from '@material-ui/icons/Save';
 import ArrowBackIcon from '@material-ui/icons/ArrowBack';
@@ -10,6 +10,7 @@ import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import CloseIcon from '@material-ui/icons/Close';
+import NumberFormat from 'react-number-format';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -52,6 +53,10 @@ const useStyles = makeStyles((theme) => ({
   },
   footerBtns: {
     marginLeft: [theme.spacing(2), '!important'],
+  },
+  textField: {
+    width: '100%',
+    padding: 0,
   },
 }));
 
@@ -109,18 +114,22 @@ function ToolBarAssign(props) {
         </DialogTitle>
         <Divider />
         <DialogContent className="mt-3 pt-0">
-          <Typography variant="subtitle2">Provide a phone number *</Typography>
-          <TextField
-            className="mt-2"
-            margin="dense"
-            id="Phone number"
-            label="+1 343-455-6767"
-            variant="outlined"
-            fullWidth
-            // required
-          />
+          <Typography variant="subtitle2" className="mb-2">Provide a phone number</Typography>
+          <FormControl variant="outlined" className={classes.textField}>
+            <NumberFormat
+              id='phone'
+              label='Phone number *'
+              customInput={TextField}
+              type="text"
+              variant='outlined'
+              format="+1 (###) ### ####"
+              mask="_"
+              allowEmptyFormatting
+              autoComplete='phone'
+            />
+          </FormControl>
         </DialogContent>
-        <Divider className="mt-2" />
+        <Divider className="mt-3 mb-1" />
         <DialogActions className={classes.dialogFooter}>
           <Button onClick={handleClose} color="primary" variant="outlined" >Cancel</Button>
           <Button onClick={props.assign} color="primary" variant="contained" className={classes.footerBtns}>Assign to me</Button>
