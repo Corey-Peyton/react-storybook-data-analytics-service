@@ -100,7 +100,7 @@ export function ActionsMenu(props) {
     },
   };
 
-  const ariaControls = `context-menu-${controls}`;
+  const ariaControls = `actions-menu-${controls}`;
 
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
@@ -171,7 +171,7 @@ export function ActionsMenu(props) {
     if (role === 'analyst') {
       StyledMenuVar = (
         <StyledMenu
-          id="actions-menu"
+          id={ariaControls}
           anchorEl={anchorEl}
           keepMounted
           open={Boolean(anchorEl)}
@@ -185,7 +185,7 @@ export function ActionsMenu(props) {
     } else {
       StyledMenuVar = (
         <StyledMenu
-          id="actions-menu"
+          id={ariaControls}
           anchorEl={anchorEl}
           keepMounted
           open={Boolean(anchorEl)}
@@ -216,7 +216,7 @@ export function ActionsMenu(props) {
     if (role === 'analyst') {
       StyledMenuVar = (
         <StyledMenu
-          id="actions-menu"
+          id={ariaControls}
           anchorEl={anchorEl}
           keepMounted
           open={Boolean(anchorEl)}
@@ -236,7 +236,7 @@ export function ActionsMenu(props) {
     } else {
       StyledMenuVar = (
         <StyledMenu
-          id="actions-menu"
+          id={ariaControls}
           anchorEl={anchorEl}
           keepMounted
           open={Boolean(anchorEl)}
@@ -273,7 +273,7 @@ export function ActionsMenu(props) {
     if (role === 'analyst') {
       StyledMenuVar = (
         <StyledMenu
-          id="actions-menu"
+          id={ariaControls}
           anchorEl={anchorEl}
           keepMounted
           open={Boolean(anchorEl)}
@@ -308,7 +308,7 @@ export function ActionsMenu(props) {
     } else {
       StyledMenuVar = (
         <StyledMenu
-          id="actions-menu"
+          id={ariaControls}
           anchorEl={anchorEl}
           keepMounted
           open={Boolean(anchorEl)}
@@ -332,7 +332,7 @@ export function ActionsMenu(props) {
   } else if (status === 'Withdrawn') {
     StyledMenuVar = (
       <StyledMenu
-        id="actions-menu"
+        id={ariaControls}
         anchorEl={anchorEl}
         keepMounted
         open={Boolean(anchorEl)}
@@ -362,7 +362,7 @@ export function ActionsMenu(props) {
     if (role === 'analyst') {
       StyledMenuVar = (
         <StyledMenu
-          id="actions-menu"
+          id={ariaControls}
           anchorEl={anchorEl}
           keepMounted
           open={Boolean(anchorEl)}
@@ -376,7 +376,7 @@ export function ActionsMenu(props) {
     } else {
       StyledMenuVar = (
         <StyledMenu
-          id="actions-menu"
+          id={ariaControls}
           anchorEl={anchorEl}
           keepMounted
           open={Boolean(anchorEl)}
@@ -394,7 +394,7 @@ export function ActionsMenu(props) {
   } else if (status === 'assigned to me') {
     StyledMenuVar = (
       <StyledMenu
-        id="actions-menu"
+        id={ariaControls}
         anchorEl={anchorEl}
         keepMounted
         open={Boolean(anchorEl)}
@@ -429,7 +429,7 @@ export function ActionsMenu(props) {
   } else if (status === 'unassigned') {
     StyledMenuVar = (
       <StyledMenu
-        id="actions-menu"
+        id={ariaControls}
         anchorEl={anchorEl}
         keepMounted
         open={Boolean(anchorEl)}
@@ -456,7 +456,7 @@ export function ActionsMenu(props) {
     if (role === 'analyst') {
       StyledMenuVar = (
         <StyledMenu
-          id="actions-menu"
+          id={ariaControls}
           anchorEl={anchorEl}
           keepMounted
           open={Boolean(anchorEl)}
@@ -470,7 +470,7 @@ export function ActionsMenu(props) {
     } else {
       StyledMenuVar = (
         <StyledMenu
-          id="actions-menu"
+          id={ariaControls}
           anchorEl={anchorEl}
           keepMounted
           open={Boolean(anchorEl)}
@@ -503,7 +503,9 @@ export function ActionsMenu(props) {
         open={open.snackbar}
         severity={action.severity}
         message={action.message}
-        toggleSnackbar={toggleSnackbar}/>
+        toggleSnackbar={toggleSnackbar}
+        role='alert'
+      />
       <DialogWithdraw toggleDialog={() => toggleDialog('dialogWithdraw', !open.dialogWithdraw)} open={open.dialogWithdraw}/>
       <DialogManageTeam toggleDialog={() => toggleDialog('dialogManageTeam', !open.dialogManageTeam)} open={open.dialogManageTeam} />
       <DialogUnassign toggleDialog={() => toggleDialog('dialogUnassign', !open.dialogUnassign)} open={open.dialogUnassign} />
@@ -537,7 +539,7 @@ export function AnalystMenu(props) {
   if (role === 'lead') {
     StyledMenuVar = (
       <StyledMenu
-        id="analyst-menu"
+        id={ariaControls}
         anchorEl={anchorEl}
         keepMounted
         open={Boolean(anchorEl)}
