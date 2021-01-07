@@ -437,7 +437,7 @@ export function DialogUnassign(props) {
               id='dialog-close'
               onClick={toggleDialog}
               edge='end'
-              aria-label="Unassign request - close">
+              aria-label="Unassign from me - close">
               <CloseIcon />
             </IconButton>
           </div>
