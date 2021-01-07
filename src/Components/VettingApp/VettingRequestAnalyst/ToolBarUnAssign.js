@@ -232,17 +232,18 @@ function ToolBarUnassign() {
           </div>
         </DialogTitle>
         <Divider className="mb-2" />
-        <DialogContent className="pb-0">
-          <TextField
-            className={classes.inputMargin}
-            margin="dense"
-            label="Comments"
-            variant="outlined"
-            fullWidth
-            required
-            multiline
-          />
-        </DialogContent>
+        <div className={classes.dialogRow}>
+          <FormControl variant="outlined" className={classes.textField}>
+            <TextField
+              id="update-input"
+              label='Comments'
+              variant="outlined"
+              multiline
+              className={classes.textField}
+              required
+            />
+          </FormControl>
+        </div>
         <Divider className="mb-0 mt-3" />
         <DialogActions className={classes.dialogFooter}>
           <Button
@@ -320,7 +321,6 @@ function ToolBarUnassign() {
               label="Denied reason"
               fullWidth
               placeholder='Select an option'
-              // required='true'
             >
               <MenuItem value="">
                 <em>Select an option</em>
