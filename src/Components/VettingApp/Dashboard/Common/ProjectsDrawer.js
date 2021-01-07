@@ -25,7 +25,7 @@ const useStyles = makeStyles((theme) => ({
     boxSizing: 'border-box',
     width: DRAWER_WIDTH,
     height: `calc(100% - 70px)`,
-    marginTop: theme.spacing(8),
+    paddingTop: theme.spacing(8),
     paddingBottom: theme.spacing(10.5),
     paddingRight: theme.spacing(1.25),
     zIndex: '10 !important',
@@ -195,24 +195,10 @@ export default function ProjectsDrawer(props) {
     }
   };
 
-  function handleProjectChange(value) {
-    let title = undefined;
-    switch (value) {
-      case 'All projects':
-        title = 'All projects';
-        break;
-      case 'Project 1':
-        title = 'Project 1';
-        break;
-      case 'Project 2':
-        title = 'Project 2';
-        break;
-      case 'Project 3':
-        title = 'Project 3';
-        break;
-      default:
-        break;
-    }
+  function handleProjectChange(e, node) {
+    const num = parseInt(node) + 1;
+    const title = document.querySelector('#projects-list li:nth-child(' + num + ') p').innerHTML;
+
     projectTitle(title);
   };
 
@@ -232,8 +218,10 @@ export default function ProjectsDrawer(props) {
         </Typography>
       </div>
       <TreeView
+        id='projects-list'
         className={classes.root}
         defaultSelected={['0']}
+        onNodeSelect={handleProjectChange}
       >
         {projectsArray().map((el, index) => (
           <StyledTreeItem
@@ -243,7 +231,6 @@ export default function ProjectsDrawer(props) {
             labelIcon={FolderOpenIcon}
             className={classes.treeItem}
             tooltip={t(el)}
-            onLabelClick={() => handleProjectChange(el)}
           />
         ),
         )}

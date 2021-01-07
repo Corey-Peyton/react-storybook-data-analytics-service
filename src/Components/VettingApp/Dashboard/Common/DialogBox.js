@@ -20,7 +20,7 @@ import {
   IconButton,
   InputLabel,
   Select,
-  MenuItem,
+  FormControlLabel,
 } from '@material-ui/core';
 import Autocomplete from '@material-ui/lab/Autocomplete';
 import NumberFormat from 'react-number-format';
@@ -56,6 +56,15 @@ const useStyles = makeStyles((theme) => ({
     },
     '& .MuiFormControl-root': {
       'width': '100%',
+    },
+    '& .MuiFormControlLabel-root': {
+      'margin-left': '0px',
+      '&:last-child': {
+        'margin-right': '0px',
+      },
+      '& .MuiTextField-root': {
+        'width': '100% !important',
+      },
     },
   },
   avatar: {
@@ -129,8 +138,10 @@ export function DialogAnalyst(props) {
           <div className={classes.dialogTitle}>
             <Typography variant='h6'>{t('Analyst information')}</Typography>
             <IconButton
+              id='dialog-close'
               onClick={toggleDialog}
-              edge='end'>
+              edge='end'
+              aria-label="Analyst information - close">
               <CloseIcon />
             </IconButton>
           </div>
@@ -253,8 +264,10 @@ export function DialogManageTeam(props) {
           <div className={classes.dialogTitle}>
             <Typography variant='h6'>{t('Manage team')}</Typography>
             <IconButton
+              id='dialog-close'
               edge='end'
-              onClick={toggleDialog}>
+              onClick={toggleDialog}
+              aria-label="Manage team - close">
               <CloseIcon />
             </IconButton>
           </div>
@@ -302,7 +315,7 @@ export function DialogManageTeam(props) {
           <Typography variant='subtitle2' className='mt-2'>{t('Support Analysts')}</Typography>
         </div>
         <div className={classes.supportAnalysts}>
-          {analysts.filter((analyst) => analyst.assigned && analyst.role === 'support').map((analyst) => {
+          {analysts.filter((analyst) => analyst.assigned && analyst.role === 'support').map((analyst, index) => {
             return (
               <div className={classes.dialogRow} key={analyst.id}>
                 <Avatar >
@@ -312,7 +325,12 @@ export function DialogManageTeam(props) {
                   <Typography className={classes.dialogText} variant='body2'>{analyst.name}</Typography>
                   <Typography className={classes.dialogText} variant='body2'>{analyst.email}</Typography>
                 </div>
-                <AnalystMenu role={'support'} makeLead={makeLead(analyst)} unassignRequest={unassignRequest(analyst)}/>
+                <AnalystMenu
+                  role={'support'}
+                  makeLead={makeLead(analyst)}
+                  unassignRequest={unassignRequest(analyst)}
+                  controls={index}
+                />
               </div>
             );
           })
@@ -359,8 +377,10 @@ export function DialogWithdraw(props) {
           <div className={classes.dialogTitle}>
             <Typography variant='h6'>{t('Withdraw request')}</Typography>
             <IconButton
+              id='dialog-close'
               onClick={toggleDialog}
-              edge='end'>
+              edge='end'
+              aria-label="Withdraw request - close">
               <CloseIcon />
             </IconButton>
           </div>
@@ -414,8 +434,10 @@ export function DialogUnassign(props) {
           <div className={classes.dialogTitle}>
             <Typography variant='h6'>{t('Unassign from me')}</Typography>
             <IconButton
+              id='dialog-close'
               onClick={toggleDialog}
-              edge='end'>
+              edge='end'
+              aria-label="Unassign from me - close">
               <CloseIcon />
             </IconButton>
           </div>
@@ -457,8 +479,10 @@ export function DialogSupport(props) {
           <div className={classes.dialogTitle}>
             <Typography variant='h6'>{t('Make me support')}</Typography>
             <IconButton
+              id='dialog-close'
               onClick={toggleDialog}
-              edge='end'>
+              edge='end'
+              aria-label="Make me support - close">
               <CloseIcon />
             </IconButton>
           </div>
@@ -537,8 +561,10 @@ export function DialogAssign(props) {
           <div className={classes.dialogTitle}>
             <Typography variant='h6'>{t('Assign to me')}</Typography>
             <IconButton
+              id='dialog-close'
               onClick={toggleDialog}
-              edge='end'>
+              edge='end'
+              aria-label="Assign to me - close">
               <CloseIcon />
             </IconButton>
           </div>
@@ -562,7 +588,7 @@ export function DialogAssign(props) {
               error={Boolean(state.phoneErr)}
               helperText={state.phoneErr}
               onChange={handleChange('phone')}
-              required='true'
+              required
             />
           </FormControl>
         </div>
@@ -609,8 +635,10 @@ export function DialogUpdate(props) {
           <div className={classes.dialogTitle}>
             <Typography variant='h6'>{t('Request an update')}</Typography>
             <IconButton
+              id='dialog-close'
               onClick={toggleDialog}
-              edge='end'>
+              edge='end'
+              aria-label="Request an update - close">
               <CloseIcon />
             </IconButton>
           </div>
@@ -624,7 +652,7 @@ export function DialogUpdate(props) {
               variant="outlined"
               multiline
               className={classes.textField}
-              required='true'
+              required
             />
           </FormControl>
         </div>
@@ -674,8 +702,10 @@ export function DialogDenied(props) {
           <div className={classes.dialogTitle}>
             <Typography variant='h6'>{t('Deny request')}</Typography>
             <IconButton
+              id='dialog-close'
               onClick={toggleDialog}
-              edge='end'>
+              edge='end'
+              aria-label="Deny request - close">
               <CloseIcon />
             </IconButton>
           </div>
@@ -686,47 +716,54 @@ export function DialogDenied(props) {
         </div>
         <div className={classes.dialogRow}>
           <FormControl variant="outlined" className={classes.formControl}>
-            <NumberFormat
-              {...props}
-              label={t('Hours')}
-              customInput={TextField}
-              type="text"
-              variant='outlined'
+            <FormControlLabel
+              control={
+                <NumberFormat
+                  label={t('Hours')}
+                  aria-label={t('Hours')}
+                  customInput={TextField}
+                  type="text"
+                  variant='outlined'
+                />
+              }
             />
-            <NumberFormat
-              {...props}
-              label={t('Minutes')}
-              customInput={TextField}
-              type="text"
-              variant='outlined'
-              isAllowed={(values) => {
-                const {formattedValue, floatValue} = values;
-                return formattedValue === '' || floatValue <= 60;
-              }}
+            <FormControlLabel
+              control={
+                <NumberFormat
+                  label={t('Minutes')}
+                  aria-label={t('Minutes')}
+                  customInput={TextField}
+                  type="text"
+                  variant='outlined'
+                  isAllowed={(values) => {
+                    const {formattedValue, floatValue} = values;
+                    return formattedValue === '' || floatValue <= 60;
+                  }}
+                />
+              }
             />
           </FormControl>
         </div>
         <div className={classes.dialogRow}>
           <FormControl variant="outlined" required>
-            <InputLabel id="denied-select-label">{t('Denied reason')}</InputLabel>
+            <InputLabel htmlFor="denied-select-label">{t('Denied reason')}</InputLabel>
             <Select
-              labelId="denied-select-label"
-              id="denied-select"
+              native
+              inputProps={{
+                id: 'denied-select-label',
+              }}
               onChange={handleChange}
               value={selected}
               label={t('Denied reason')}
               fullWidth
               placeholder={t('Select an option')}
-              required='true'
             >
-              <MenuItem value="">
-                <em>{t('Select an option')}</em>
-              </MenuItem>
-              <MenuItem value='Non-SSI project'>{t('Non-SSI project')}</MenuItem>
-              <MenuItem value='Confidential requirements are not met'>{t('Confidential requirements are not met')}</MenuItem>
-              <MenuItem value='Request is missing information'>{t('Request is missing information')}</MenuItem>
-              <MenuItem value='Output file(s) are not in line with the project proposal'>{t('Output file(s) are not in line with the project proposal')}</MenuItem>
-              <MenuItem value='Other'>{t('Other')}</MenuItem>
+              <option value=""></option>
+              <option value='Non-SSI project'>{t('Non-SSI project')}</option>
+              <option value='Confidential requirements are not met'>{t('Confidential requirements are not met')}</option>
+              <option value='Request is missing information'>{t('Request is missing information')}</option>
+              <option value='Output file(s) are not in line with the project proposal'>{t('Output file(s) are not in line with the project proposal')}</option>
+              <option value='Other'>{t('Other')}</option>
             </Select>
           </FormControl>
         </div>
@@ -739,7 +776,7 @@ export function DialogDenied(props) {
               label={t('Comments')}
               variant="outlined"
               multiline
-              required='true'
+              required
             />
           </FormControl>
         </div>
@@ -757,7 +794,8 @@ export function DialogDenied(props) {
         open={snackbar}
         severity="success"
         message={t('Vetting request 10-2020-2354326 has been denied')}
-        toggleSnackbar={SnackbarClose}/>
+        toggleSnackbar={SnackbarClose}
+      />
     </React.Fragment>
   );
 }
@@ -789,8 +827,10 @@ export function DialogApprove(props) {
           <div className={classes.dialogTitle}>
             <Typography variant='h6'>{t('Approve request')}</Typography>
             <IconButton
+              id='dialog-close'
               onClick={toggleDialog}
-              edge='end'>
+              edge='end'
+              aria-label="Approve request - close">
               <CloseIcon />
             </IconButton>
           </div>
@@ -801,23 +841,29 @@ export function DialogApprove(props) {
         </div>
         <div className={classes.dialogRow}>
           <FormControl variant="outlined" className={classes.formControl}>
-            <NumberFormat
-              {...props}
-              label={t('Hours')}
-              customInput={TextField}
-              type="text"
-              variant='outlined'
+            <FormControlLabel
+              control={
+                <NumberFormat
+                  label={t('Hours')}
+                  customInput={TextField}
+                  type="text"
+                  variant='outlined'
+                />
+              }
             />
-            <NumberFormat
-              {...props}
-              label={t('Minutes')}
-              customInput={TextField}
-              type="text"
-              variant='outlined'
-              isAllowed={(values) => {
-                const {formattedValue, floatValue} = values;
-                return formattedValue === '' || floatValue <= 60;
-              }}
+            <FormControlLabel
+              control={
+                <NumberFormat
+                  label={t('Minutes')}
+                  customInput={TextField}
+                  type="text"
+                  variant='outlined'
+                  isAllowed={(values) => {
+                    const {formattedValue, floatValue} = values;
+                    return formattedValue === '' || floatValue <= 60;
+                  }}
+                />
+              }
             />
           </FormControl>
         </div>
