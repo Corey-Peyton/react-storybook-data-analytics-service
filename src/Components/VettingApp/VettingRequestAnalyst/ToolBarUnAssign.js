@@ -127,6 +127,10 @@ function ToolBarUnassign() {
     setOpen({...open, dialogDeny: false, snackBarDeny: true});
   };
 
+  const handleApprove = () => {
+    setOpen({...open, dialogApprove: false, snackBarApprove: true});
+  };
+
   const [selected, setSelected] = React.useState('');
 
   const handleChange = (event) => {
@@ -155,8 +159,8 @@ function ToolBarUnassign() {
         </Typography>
       </Button>
       <Dialog open={open.dialogUnAssign}
-        aria-labelledby="alert-dialog-title"
-        aria-describedby="alert-dialog-description"
+        aria-labelledby="alert-dialog-unassign"
+        aria-describedby="alert-dialog-unassign"
         onClose={() => handleClickClose('dialogUnAssign')}
         className={classes.root}
       >
@@ -219,8 +223,8 @@ function ToolBarUnassign() {
       <Dialog
         open={open.dialogUpdate}
         onClose={() => handleClickClose('dialogUpdate')}
-        aria-labelledby="alert-dialog-title"
-        aria-describedby="alert-dialog-description"
+        aria-labelledby="alert-dialog-update"
+        aria-describedby="alert-dialog-update"
         className={classes.root}
       >
         <DialogTitle id="alert-dialog-update">
@@ -270,7 +274,7 @@ function ToolBarUnassign() {
         onClose={handleClose}
       >
         <MenuItem
-          onClick={() => handleClickOpen('snackBarApprove')}
+          onClick={() => handleClickOpen('dialogApprove')}
         >
           Approve
         </MenuItem>
@@ -279,6 +283,59 @@ function ToolBarUnassign() {
         >
           Deny</MenuItem>
       </Menu>
+      <Dialog
+        open={open.dialogApprove}
+        onClose={() => handleClickClose('dialogApprove')}
+        aria-labelledby="alert-dialog-approve"
+        aria-describedby="alert-dialog-approve"
+        className={classes.root}
+      >
+        <DialogTitle id="alert-dialog-approved-request">
+          <div className={classes.dialogTitle}>Approve request
+            <IconButton
+              onClick={() => handleClickClose('dialogApprove')}
+              edge='end'>
+              <CloseIcon />
+            </IconButton>
+          </div>
+        </DialogTitle>
+        <Divider className="mb-2" />
+        <div className={classes.dialogRow}>
+          <Typography variant='subtitle2'>Billable hours</Typography>
+        </div>
+        <div className={classes.dialogRow}>
+          <FormControl variant="outlined" className={classes.formControl}>
+            <NumberFormat
+              label='Hours'
+              customInput={TextField}
+              type="text"
+              variant='outlined'
+            />
+            <NumberFormat
+              label='Minutes'
+              customInput={TextField}
+              type="text"
+              variant='outlined'
+            />
+          </FormControl>
+        </div>
+        <Divider className="mt-2" />
+        <DialogActions className={classes.dialogFooter}>
+          <Button
+            onClick={() => handleClickClose('dialogApprove')}
+            color="primary" variant="outlined">
+            Cancel
+          </Button>
+          <Button
+            color="primary"
+            variant="contained"
+            className={classes.footerBtns}
+            onClick={handleApprove}
+          >
+          Submit
+          </Button>
+        </DialogActions>
+      </Dialog>
       <Snackbar
         open={open.snackBarApprove}
         onClose={() => handleClickClose('snackBarApprove')}
@@ -298,8 +355,8 @@ function ToolBarUnassign() {
       <Dialog
         open={open.dialogDeny}
         onClose={() => handleClickClose('dialogDeny')}
-        aria-labelledby="alert-dialog-title"
-        aria-describedby="alert-dialog-description"
+        aria-labelledby="alert-dialog-deny"
+        aria-describedby="alert-dialog-deny"
         className={classes.root}
       >
         <DialogTitle id="alert-dialog-denied-request">
