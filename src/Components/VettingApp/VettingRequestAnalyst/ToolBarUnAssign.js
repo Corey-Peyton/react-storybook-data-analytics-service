@@ -108,6 +108,7 @@ function ToolBarUnassign() {
     dialogDeny: false,
     snackBarUnassign: false,
     snackBarDeny: false,
+    snackBarApprove: false,
   });
 
   const handleClickOpen = (state) => {
@@ -268,12 +269,32 @@ function ToolBarUnassign() {
         open={Boolean(anchorEl)}
         onClose={handleClose}
       >
-        <MenuItem onClick={handleClose}>Approve</MenuItem>
+        <MenuItem
+          onClick={() => handleClickOpen('snackBarApprove')}
+        >
+          Approve
+        </MenuItem>
         <MenuItem
           onClick={() => handleClickOpen('dialogDeny')}
         >
           Deny</MenuItem>
       </Menu>
+      <Snackbar
+        open={open.snackBarApprove}
+        onClose={() => handleClickClose('snackBarApprove')}
+        autoHideDuration={6000} anchorOrigin={{
+          vertical: 'bottom',
+          horizontal: 'left',
+        }}>
+        <Alert
+          onClose={() => handleClickClose('snackBarApprove')}
+          severity="success"
+          className={classes.alert}
+          variant="filled"
+        >
+          The vetting request 10_2020_4564677 has been approved.
+        </Alert>
+      </Snackbar>
       <Dialog
         open={open.dialogDeny}
         onClose={() => handleClickClose('dialogDeny')}
@@ -282,7 +303,7 @@ function ToolBarUnassign() {
         className={classes.root}
       >
         <DialogTitle id="alert-dialog-denied-request">
-          <div className={classes.dialogTitle}>Denied request
+          <div className={classes.dialogTitle}>Deny request
             <IconButton
               onClick={() => handleClickClose('dialogDeny')}
               edge='end'>
