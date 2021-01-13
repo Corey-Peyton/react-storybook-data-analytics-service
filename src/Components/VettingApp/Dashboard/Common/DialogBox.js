@@ -59,6 +59,8 @@ const useStyles = makeStyles((theme) => ({
     },
     '& .MuiFormControlLabel-root': {
       'margin-left': '0px',
+      'flex-basis': '50%',
+      'height': '100%',
       '&:last-child': {
         'margin-right': '0px',
       },
@@ -355,14 +357,39 @@ export function DialogWithdraw(props) {
   const {t} = useTranslation();
   const {toggleDialog, open} = props;
   const [snackbar, setSnackbar] = React.useState(false);
+  const initial = {
+    commentsErr: '',
+  };
+  const [state, setState] = React.useState({
+    commentsErr: '',
+  });
 
   const toggleSnackbar = () => {
     toggleDialog();
     setSnackbar(!snackbar);
+    setState({...initial});
   };
 
   const SnackbarClose =() =>{
     setSnackbar(false);
+  };
+
+  const disableCutCopyPaste = (e, value) => {
+    e.preventDefault();
+    switch (value) {
+      case 'cut':
+        setState({...state, commentsErr: t('Cut has been disabled for security purposes.')});
+        break;
+      case 'copy':
+        setState({...state, commentsErr: t('Copy has been disabled for security purposes.')});
+        break;
+      case 'paste':
+        setState({...state, commentsErr: t('Paste has been disabled for security purposes.')});
+        break;
+      default:
+        state.commentsErr('');
+        break;
+    }
   };
 
   return (
@@ -394,13 +421,26 @@ export function DialogWithdraw(props) {
               variant="outlined"
               placeholder={t('Please provite us with a withdrawal reason')}
               multiline
-              required='true'
+              error={Boolean(state.commentsErr)}
+              helperText={state.commentsErr}
+              onCut={(e) => disableCutCopyPaste(e, 'cut')}
+              onCopy={(e) => disableCutCopyPaste(e, 'copy')}
+              onPaste={(e) => disableCutCopyPaste(e, 'paste')}
+              required
             />
           </FormControl>
         </div>
         <Divider className="mt-2" />
         <div className={classes.dialogFooter}>
-          <Button variant="outlined" color="primary" onClick={toggleDialog} className={classes.footerBtns}>
+          <Button
+            variant="outlined"
+            color="primary"
+            onClick={() => {
+              setState({...initial});
+              toggleDialog();
+            }}
+            className={classes.footerBtns}
+          >
             {t('Cancel')}
           </Button>
           <Button variant="contained" color="primary" onClick={toggleSnackbar} className={classes.footerBtns}>
@@ -549,6 +589,24 @@ export function DialogAssign(props) {
     }
   };
 
+  const disableCutCopyPaste = (e, value) => {
+    e.preventDefault();
+    switch (value) {
+      case 'cut':
+        setState({...state, phoneErr: t('Cut has been disabled for security purposes.')});
+        break;
+      case 'copy':
+        setState({...state, phoneErr: t('Copy has been disabled for security purposes.')});
+        break;
+      case 'paste':
+        setState({...state, phoneErr: t('Paste has been disabled for security purposes.')});
+        break;
+      default:
+        state.phoneErr('');
+        break;
+    }
+  };
+
   return (
     <React.Fragment>
       <Dialog
@@ -588,6 +646,9 @@ export function DialogAssign(props) {
               error={Boolean(state.phoneErr)}
               helperText={state.phoneErr}
               onChange={handleChange('phone')}
+              onCut={(e) => disableCutCopyPaste(e, 'cut')}
+              onCopy={(e) => disableCutCopyPaste(e, 'copy')}
+              onPaste={(e) => disableCutCopyPaste(e, 'paste')}
               required
             />
           </FormControl>
@@ -622,6 +683,30 @@ export function DialogUpdate(props) {
   const classes = useStyles();
   const {t} = useTranslation();
   const {toggleDialog, open} = props;
+  const initial = {
+    commentsErr: '',
+  };
+  const [state, setState] = React.useState({
+    commentsErr: '',
+  });
+
+  const disableCutCopyPaste = (e, value) => {
+    e.preventDefault();
+    switch (value) {
+      case 'cut':
+        setState({...state, commentsErr: t('Cut has been disabled for security purposes.')});
+        break;
+      case 'copy':
+        setState({...state, commentsErr: t('Copy has been disabled for security purposes.')});
+        break;
+      case 'paste':
+        setState({...state, commentsErr: t('Paste has been disabled for security purposes.')});
+        break;
+      default:
+        state.commentsErr('');
+        break;
+    }
+  };
 
   return (
     <React.Fragment>
@@ -652,16 +737,34 @@ export function DialogUpdate(props) {
               variant="outlined"
               multiline
               className={classes.textField}
+              error={Boolean(state.commentsErr)}
+              helperText={state.commentsErr}
+              onCut={(e) => disableCutCopyPaste(e, 'cut')}
+              onCopy={(e) => disableCutCopyPaste(e, 'copy')}
+              onPaste={(e) => disableCutCopyPaste(e, 'paste')}
               required
             />
           </FormControl>
         </div>
         <Divider className="mt-2" />
         <div className={classes.dialogFooter}>
-          <Button variant="outlined" color="primary" onClick={toggleDialog} className={classes.footerBtns}>
+          <Button
+            variant="outlined"
+            color="primary"
+            onClick={() => {
+              setState({...initial});
+              toggleDialog();
+            }}
+            className={classes.footerBtns}
+          >
             {t('Cancel')}
           </Button>
-          <Button variant="contained" color="primary" onClick={toggleDialog} className={classes.footerBtns}>
+          <Button
+            variant="contained"
+            color="primary"
+            onClick={toggleDialog}
+            className={classes.footerBtns}
+          >
             {t('Submit request')}
           </Button>
         </div>
@@ -676,6 +779,34 @@ export function DialogDenied(props) {
   const {t} = useTranslation();
   const [snackbar, setSnackbar] = React.useState(false);
   const [selected, setSelected] = React.useState('');
+  const initial = {
+    hoursErr: '',
+    minutesErr: '',
+    commentsErr: '',
+  };
+  const [state, setState] = React.useState({
+    hoursErr: '',
+    minutesErr: '',
+    commentsErr: '',
+  });
+
+  const disableCutCopyPaste = (e, value, field) => {
+    e.preventDefault();
+    switch (value) {
+      case 'cut':
+        setState({...state, [field]: t('Cut has been disabled for security purposes.')});
+        break;
+      case 'copy':
+        setState({...state, [field]: t('Copy has been disabled for security purposes.')});
+        break;
+      case 'paste':
+        setState({...state, [field]: t('Paste has been disabled for security purposes.')});
+        break;
+      default:
+        state.commentsErr('');
+        break;
+    }
+  };
 
   const toggleSnackbar = () => {
     toggleDialog();
@@ -724,6 +855,11 @@ export function DialogDenied(props) {
                   customInput={TextField}
                   type="text"
                   variant='outlined'
+                  error={Boolean(state.hoursErr)}
+                  helperText={state.hoursErr}
+                  onCut={(e) => disableCutCopyPaste(e, 'cut', 'hoursErr')}
+                  onCopy={(e) => disableCutCopyPaste(e, 'copy', 'hoursErr')}
+                  onPaste={(e) => disableCutCopyPaste(e, 'paste', 'hoursErr')}
                 />
               }
             />
@@ -739,6 +875,11 @@ export function DialogDenied(props) {
                     const {formattedValue, floatValue} = values;
                     return formattedValue === '' || floatValue <= 60;
                   }}
+                  error={Boolean(state.minutesErr)}
+                  helperText={state.minutesErr}
+                  onCut={(e) => disableCutCopyPaste(e, 'cut', 'minutesErr')}
+                  onCopy={(e) => disableCutCopyPaste(e, 'copy', 'minutesErr')}
+                  onPaste={(e) => disableCutCopyPaste(e, 'paste', 'minutesErr')}
                 />
               }
             />
@@ -777,15 +918,31 @@ export function DialogDenied(props) {
               variant="outlined"
               multiline
               required
+              error={Boolean(state.commentsErr)}
+              helperText={state.commentsErr}
+              onCut={(e) => disableCutCopyPaste(e, 'cut', 'commentsErr')}
+              onCopy={(e) => disableCutCopyPaste(e, 'copy', 'commentsErr')}
+              onPaste={(e) => disableCutCopyPaste(e, 'paste', 'commentsErr')}
             />
           </FormControl>
         </div>
         <Divider className="mt-2" />
         <div className={classes.dialogFooter}>
-          <Button variant="outlined" color="primary" onClick={toggleDialog} className={classes.footerBtns}>
+          <Button
+            variant="outlined"
+            color="primary"
+            onClick={() => {
+              setState({...initial});
+              toggleDialog();
+            }}
+            className={classes.footerBtns}>
             {t('Cancel')}
           </Button>
-          <Button variant="contained" color="primary" onClick={toggleSnackbar} className={classes.footerBtns}>
+          <Button
+            variant="contained"
+            color="primary"
+            onClick={toggleSnackbar}
+            className={classes.footerBtns}>
             {t('Submit')}
           </Button>
         </div>
@@ -805,6 +962,32 @@ export function DialogApprove(props) {
   const {t} = useTranslation();
   const {toggleDialog, open} = props;
   const [snackbar, setSnackbar] = React.useState(false);
+  const initial = {
+    hoursErr: '',
+    minutesErr: '',
+  };
+  const [state, setState] = React.useState({
+    hoursErr: '',
+    minutesErr: '',
+  });
+
+  const disableCutCopyPaste = (e, value, field) => {
+    e.preventDefault();
+    switch (value) {
+      case 'cut':
+        setState({...state, [field]: t('Cut has been disabled for security purposes.')});
+        break;
+      case 'copy':
+        setState({...state, [field]: t('Copy has been disabled for security purposes.')});
+        break;
+      case 'paste':
+        setState({...state, [field]: t('Paste has been disabled for security purposes.')});
+        break;
+      default:
+        state.commentsErr('');
+        break;
+    }
+  };
 
   const toggleSnackbar = () => {
     toggleDialog();
@@ -848,6 +1031,11 @@ export function DialogApprove(props) {
                   customInput={TextField}
                   type="text"
                   variant='outlined'
+                  error={Boolean(state.hoursErr)}
+                  helperText={state.hoursErr}
+                  onCut={(e) => disableCutCopyPaste(e, 'cut', 'hoursErr')}
+                  onCopy={(e) => disableCutCopyPaste(e, 'copy', 'hoursErr')}
+                  onPaste={(e) => disableCutCopyPaste(e, 'paste', 'hoursErr')}
                 />
               }
             />
@@ -862,6 +1050,11 @@ export function DialogApprove(props) {
                     const {formattedValue, floatValue} = values;
                     return formattedValue === '' || floatValue <= 60;
                   }}
+                  error={Boolean(state.minutesErr)}
+                  helperText={state.minutesErr}
+                  onCut={(e) => disableCutCopyPaste(e, 'cut', 'minutesErr')}
+                  onCopy={(e) => disableCutCopyPaste(e, 'copy', 'minutesErr')}
+                  onPaste={(e) => disableCutCopyPaste(e, 'paste', 'minutesErr')}
                 />
               }
             />
@@ -869,10 +1062,21 @@ export function DialogApprove(props) {
         </div>
         <Divider className="mt-2" />
         <div className={classes.dialogFooter}>
-          <Button variant="outlined" color="primary" onClick={toggleDialog} className={classes.footerBtns}>
+          <Button
+            variant="outlined"
+            color="primary"
+            onClick={() => {
+              setState({...initial});
+              toggleDialog();
+            }}
+            className={classes.footerBtns}>
             {t('Cancel')}
           </Button>
-          <Button variant="contained" color="primary" onClick={toggleSnackbar} className={classes.footerBtns}>
+          <Button
+            variant="contained"
+            color="primary"
+            onClick={toggleSnackbar}
+            className={classes.footerBtns}>
             {t('Submit')}
           </Button>
         </div>
