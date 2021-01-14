@@ -38,6 +38,7 @@ import Alert from '@material-ui/lab/Alert';
 import Header from '../CommonComponents/Header';
 import Footer from '../CommonComponents/Footer';
 import CloseIcon from '@material-ui/icons/Close';
+import FloatingSupportButton from '../CommonComponents/Support';
 
 const useStyles = makeStyles((theme) => ({
   dialogTitle: {
@@ -384,6 +385,7 @@ function VettingRequestAnalyst(props) {
             )}
             </Grid>
           </Paper>
+          <FloatingSupportButton />
         </Container>
 
         <Dialog

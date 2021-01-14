@@ -282,7 +282,7 @@ function VettingRequestResearcher(props) {
                         variant="body2"
                         color="error"
                       >
-                      +{state.errors[index]} errors
+                        {state.errors[index]} error
                       </Typography>
                     );
                   }
