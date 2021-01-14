@@ -1,5 +1,7 @@
 import React from 'react';
 import {makeStyles} from '@material-ui/core/styles';
+import DeleteIcon from '@material-ui/icons/Delete';
+import clsx from 'clsx';
 import {
   FormControl,
   InputLabel,
@@ -17,6 +19,7 @@ import {
   AppBar,
   Toolbar,
   IconButton,
+  Grid,
 } from '@material-ui/core';
 import Autocomplete from '@material-ui/lab/Autocomplete';
 import InfoIcon from '@material-ui/icons/Info';
@@ -26,8 +29,14 @@ const useStyles = makeStyles((theme) => ({
   inputMargin: {
     marginBottom: theme.spacing(2),
   },
+  lineHeight: {
+    lineHeight: 'normal',
+  },
   divider: {
     margin: theme.spacing(3, 0),
+  },
+  hiddenRow: {
+    display: 'none',
   },
   appBar: {
     'backgroundColor': theme.palette.common.white,
@@ -120,6 +129,7 @@ function ModifyFile(props) {
     linkedData: null,
     descriptiveStats: null,
     modifiedWeights: null,
+    covariance: null,
   });
 
   const handleRadioChange = (event) => {
@@ -128,6 +138,11 @@ function ModifyFile(props) {
       ...state,
       [name]: event.target.value,
     });
+  };
+
+  const [selected, setSelected] = React.useState('');
+  const handleChange = (event) => {
+    setSelected(event.target.value);
   };
 
   function BootstrapTooltip(props) {
@@ -199,13 +214,35 @@ function ModifyFile(props) {
         <InputLabel id="outputMethod-label">Output method</InputLabel>
         <Select
           id="outputMethod"
-          label="Output Method *"
+          label="Output Method"
           labelId="outputMethod-label"
+          onChange={handleChange}
+          value={selected}
+          required
         >
-          <MenuItem>Descriptive</MenuItem>
+          <MenuItem value='Descriptive'>Descriptive</MenuItem>
+          <MenuItem value='Scaling'>Scaling</MenuItem>
+          <MenuItem value='Graphs'>Graphs</MenuItem>
+          <MenuItem value='Multivariable regression analysis'>Multivariable regression analysis</MenuItem>
+          <MenuItem value='Complex modeling'>Complex modeling</MenuItem>
+          <MenuItem value='Other'>Other</MenuItem>
         </Select>
         <FormHelperText></FormHelperText>
       </FormControl>
+      <div className={clsx(classes.inputMargin, {
+        [classes.hiddenRow]: selected !== 'Other',
+      })}>
+        <TextField
+          className={classes.inputMargin}
+          margin="dense"
+          id="DescriptionOfOutputMethod"
+          label="Description of output method"
+          variant="outlined"
+          fullWidth
+          required
+          multiline
+        />
+      </div>
       <div className="emphasisBox minHeight">
         <Typography variant="subtitle2">
           If you are not sure about the Output Method above, you can search for
@@ -403,11 +440,19 @@ function ModifyFile(props) {
       </FormControl>
       {state.descriptiveStats === 'Yes' && (
         <FormControl className={classes.inputMargin} component="fieldset">
-          <FormLabel component="legend">
+          <FormLabel component="legend" className={classes.lineHeight}>
             Is the output clearly labelled (tables have a title and every
             variable and category is labelled)?
           </FormLabel>
           <RadioGroup id="outpuLabelled">
+            <FormControlLabel value="Yes" control={<Radio />} label="Yes" />
+            <FormControlLabel value="No" control={<Radio />} label="No" />
+          </RadioGroup>
+          <FormHelperText></FormHelperText>
+          <FormLabel component="legend">
+          Are minimum cell sizes met as per the rules for the data?
+          </FormLabel>
+          <RadioGroup id="minimumCellSizes">
             <FormControlLabel value="Yes" control={<Radio />} label="Yes" />
             <FormControlLabel value="No" control={<Radio />} label="No" />
           </RadioGroup>
@@ -487,7 +532,12 @@ function ModifyFile(props) {
         <FormLabel component="legend">
           Does this output include a correlation or covariance matrix?
         </FormLabel>
-        <RadioGroup id="includeMatrix">
+        <RadioGroup
+          id="includeMatrix"
+          value={state.covariance}
+          name="covariance"
+          onChange={handleRadioChange}
+        >
           <FormControlLabel
             value="Yes"
             control={<Radio color="primary" />}
@@ -504,8 +554,32 @@ function ModifyFile(props) {
             label="N/A"
           />
         </RadioGroup>
-        <FormHelperText></FormHelperText>
       </FormControl>
+      {state.covariance === 'Yes' && (
+        <FormControl className={classes.inputMargin} component="fieldset">
+          <FormLabel component="legend">
+          Does the matrix include continuous variables?
+          </FormLabel>
+          <RadioGroup id="continuousVariables" className={classes.inputMargin} >
+            <FormControlLabel value="Yes" control={<Radio />} label="Yes" />
+            <FormControlLabel value="No" control={<Radio />} label="No" />
+          </RadioGroup>
+          <FormLabel component="legend">
+          Does the matrix inclue dichotomous variables?
+          </FormLabel>
+          <RadioGroup id="dichotomousVariables" className={classes.inputMargin} >
+            <FormControlLabel value="Yes" control={<Radio />} label="Yes" />
+            <FormControlLabel value="No" control={<Radio />} label="No" />
+          </RadioGroup>
+          <FormLabel component="legend" className={classes.lineHeight}>
+          Does the matrix include a dichotomous variable correlated with a continuous variable?
+          </FormLabel>
+          <RadioGroup id="dichotomousVariable">
+            <FormControlLabel value="Yes" control={<Radio />} label="Yes" />
+            <FormControlLabel value="No" control={<Radio />} label="No" />
+          </RadioGroup>
+        </FormControl>
+      )}
       <FormControl className={classes.inputMargin} component="fieldset" required>
         <FormLabel component="legend" className={classes.tooltipLabel}>
           Is rounding of output required for this vetting request?{' '}
@@ -584,7 +658,16 @@ function ModifyFile(props) {
           <InfoIcon />
         </BootstrapTooltip>
       </div>
-      <Typography variant="subtitle2">Supporting file #1</Typography>
+      <Grid container justify="space-between" alignItems="center">
+        <Grid item>
+          <Typography variant="subtitle2">Supporting file #1</Typography>
+        </Grid>
+        <Grid item>
+          <IconButton aria-label="delete" className={classes.margin}>
+            <DeleteIcon />
+          </IconButton>
+        </Grid>
+      </Grid>
       <FormControl
         className={classes.inputMargin}
         margin="dense"
@@ -622,7 +705,16 @@ function ModifyFile(props) {
         fullWidth
         required
       />
-      <Typography variant="subtitle2">Supporting file #2</Typography>
+      <Grid container justify="space-between" alignItems="center">
+        <Grid item>
+          <Typography variant="subtitle2">Supporting file #2</Typography>
+        </Grid>
+        <Grid item>
+          <IconButton aria-label="delete" className={classes.margin}>
+            <DeleteIcon />
+          </IconButton>
+        </Grid>
+      </Grid>
       <FormControl
         className={classes.inputMargin}
         margin="dense"

@@ -18,9 +18,9 @@ const useStyles = makeStyles((theme) => ({
   root: {
     '& > *': {
       margin: theme.spacing(1),
-      position: 'relative',
+      position: 'fixed',
       left: '88%',
-      top: '70%',
+      top: '50%',
     },
   },
   extendedIcon: {
