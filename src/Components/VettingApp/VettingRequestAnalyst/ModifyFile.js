@@ -26,6 +26,9 @@ import InfoIcon from '@material-ui/icons/Info';
 import CloseIcon from '@material-ui/icons/Close';
 
 const useStyles = makeStyles((theme) => ({
+  marginHelperText: {
+    marginBottom: theme.spacing(1),
+  },
   inputMargin: {
     marginBottom: theme.spacing(2),
   },
@@ -295,7 +298,7 @@ function ModifyFile(props) {
         <FormHelperText></FormHelperText>
       </FormControl>
       {state.includeWeightVariable === 'Yes' && (
-        <div className="emphasisBox minHeight2">
+        <div className="minHeight2">
           <>
             <TextField
               className={classes.inputMargin}
@@ -328,7 +331,7 @@ function ModifyFile(props) {
         </div>
       )}
       <TextField
-        className="marginHelperText"
+        className={classes.marginHelperText}
         margin="dense"
         id="sampleUsed"
         label="Sample, sub-sample or inclusions/exclusions used"
@@ -338,7 +341,7 @@ function ModifyFile(props) {
         required
       />
       <TextField
-        className="marginHelperText"
+        className={classes.marginHelperText}
         margin="dense"
         id="geographyLevel"
         label="Level of Geography"
@@ -346,7 +349,7 @@ function ModifyFile(props) {
         helperText="Examples: national, provincial"
         fullWidth
       />
-      <Typography variant="subtitle2" className="mb-2">
+      <Typography variant="subtitle2" className="mb-2 mt-1">
         Output supporting files
       </Typography>
       <FormControl
