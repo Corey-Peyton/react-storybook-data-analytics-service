@@ -21,6 +21,7 @@ import {
   InputLabel,
   Select,
   FormControlLabel,
+  FormHelperText,
 } from '@material-ui/core';
 import Autocomplete from '@material-ui/lab/Autocomplete';
 import NumberFormat from 'react-number-format';
@@ -67,6 +68,9 @@ const useStyles = makeStyles((theme) => ({
       '& .MuiTextField-root': {
         'width': '100% !important',
       },
+    },
+    '& .MuiFormHelperText-root': {
+      'color': '#E91B0C',
     },
   },
   avatar: {
@@ -128,6 +132,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
+// ////////////////////////////////////////// ANALYST INFORMATION
 export function DialogAnalyst(props) {
   const {open, toggleDialog} = props;
   const {t} = useTranslation();
@@ -170,6 +175,8 @@ export function DialogAnalyst(props) {
   );
 }
 
+
+// ////////////////////////////////////////// MANAGE TEAM
 export function DialogManageTeam(props) {
   const {open, toggleDialog} = props;
   const {t} = useTranslation();
@@ -352,17 +359,26 @@ export function DialogManageTeam(props) {
   );
 }
 
+
+// ////////////////////////////////////////// WITHDRAW REQUEST
 export function DialogWithdraw(props) {
   const classes = useStyles();
   const {t} = useTranslation();
   const {toggleDialog, open} = props;
   const [snackbar, setSnackbar] = React.useState(false);
   const initial = {
+    comments: '',
     commentsErr: '',
   };
   const [state, setState] = React.useState({
+    comments: '',
     commentsErr: '',
   });
+
+  const handleChange = (e) => {
+    const comment = e.target.value;
+    setState({...state, comments: comment});
+  };
 
   const toggleSnackbar = () => {
     toggleDialog();
@@ -372,6 +388,28 @@ export function DialogWithdraw(props) {
 
   const SnackbarClose =() =>{
     setSnackbar(false);
+  };
+
+  const validateForm = () => {
+    let isError = false;
+    if (state.comments.trim() === '') {
+      isError = true;
+      state.commentsErr = t('Enter some comments.');
+    }
+
+    if (isError) {
+      setState({
+        ...state,
+      });
+    }
+    return isError;
+  };
+
+  const submitForm = () => {
+    const err = validateForm();
+    if (!err) {
+      toggleSnackbar();
+    }
   };
 
   const disableCutCopyPaste = (e, value) => {
@@ -413,40 +451,49 @@ export function DialogWithdraw(props) {
           </div>
         </DialogTitle>
         <Divider className="mb-2" />
-        <div className={classes.dialogRow}>
-          <FormControl variant="outlined" className={classes.textField}>
-            <TextField
-              id="withdraw-input"
-              label={t('Comments')}
+        <form onSubmit={submitForm} noValidate>
+          <div className={classes.dialogRow}>
+            <FormControl variant="outlined" className={classes.textField}>
+              <TextField
+                id="withdraw-input"
+                label={t('Comments')}
+                value={state.comments}
+                onChange={handleChange}
+                variant="outlined"
+                placeholder={t('Please provite us with a withdrawal reason')}
+                multiline
+                error={Boolean(state.commentsErr)}
+                helperText={state.commentsErr}
+                onCut={(e) => disableCutCopyPaste(e, 'cut')}
+                onCopy={(e) => disableCutCopyPaste(e, 'copy')}
+                onPaste={(e) => disableCutCopyPaste(e, 'paste')}
+                required
+              />
+            </FormControl>
+          </div>
+          <Divider className="mt-2" />
+          <div className={classes.dialogFooter}>
+            <Button
               variant="outlined"
-              placeholder={t('Please provite us with a withdrawal reason')}
-              multiline
-              error={Boolean(state.commentsErr)}
-              helperText={state.commentsErr}
-              onCut={(e) => disableCutCopyPaste(e, 'cut')}
-              onCopy={(e) => disableCutCopyPaste(e, 'copy')}
-              onPaste={(e) => disableCutCopyPaste(e, 'paste')}
-              required
-            />
-          </FormControl>
-        </div>
-        <Divider className="mt-2" />
-        <div className={classes.dialogFooter}>
-          <Button
-            variant="outlined"
-            color="primary"
-            onClick={() => {
-              setState({...initial});
-              toggleDialog();
-            }}
-            className={classes.footerBtns}
-          >
-            {t('Cancel')}
-          </Button>
-          <Button variant="contained" color="primary" onClick={toggleSnackbar} className={classes.footerBtns}>
-            {t('Withdraw request')}
-          </Button>
-        </div>
+              color="primary"
+              onClick={() => {
+                setState({...initial});
+                toggleDialog();
+              }}
+              className={classes.footerBtns}
+            >
+              {t('Cancel')}
+            </Button>
+            <Button
+              variant="contained"
+              color="primary"
+              className={classes.footerBtns}
+              type="submit"
+            >
+              {t('Withdraw request')}
+            </Button>
+          </div>
+        </form>
       </Dialog>
       <CustomizedSnackbar
         open={snackbar}
@@ -457,6 +504,8 @@ export function DialogWithdraw(props) {
   );
 }
 
+
+// ////////////////////////////////////////// UNASSIGN REQUEST
 export function DialogUnassign(props) {
   const classes = useStyles();
   const {t} = useTranslation();
@@ -502,6 +551,8 @@ export function DialogUnassign(props) {
   );
 }
 
+
+// ////////////////////////////////////////// MAKE ME SUPPORT
 export function DialogSupport(props) {
   const classes = useStyles();
   const {t} = useTranslation();
@@ -547,6 +598,8 @@ export function DialogSupport(props) {
   );
 }
 
+
+// ////////////////////////////////////////// ASSIGN TO ME
 export function DialogAssign(props) {
   const classes = useStyles();
   const {t} = useTranslation();
@@ -628,67 +681,101 @@ export function DialogAssign(props) {
           </div>
         </DialogTitle>
         <Divider className="mb-2" />
-        <div className={classes.dialogRow}>
-          <Typography variant='subtitle2'>{t('Provide a phone number')}</Typography>
-        </div>
-        <div className={classes.dialogRow}>
-          <FormControl variant="outlined" className={classes.textField}>
-            <NumberFormat
-              id='phone'
-              label={t('Phone number')}
-              customInput={TextField}
-              type="text"
-              variant='outlined'
-              format="+1 (###) ### ####"
-              mask="_"
-              allowEmptyFormatting
-              autoComplete='phone'
-              error={Boolean(state.phoneErr)}
-              helperText={state.phoneErr}
-              onChange={handleChange('phone')}
-              onCut={(e) => disableCutCopyPaste(e, 'cut')}
-              onCopy={(e) => disableCutCopyPaste(e, 'copy')}
-              onPaste={(e) => disableCutCopyPaste(e, 'paste')}
-              required
-            />
-          </FormControl>
-        </div>
-        <Divider className="mt-2" />
-        <div className={classes.dialogFooter}>
-          <Button
-            variant="outlined"
-            color="primary"
-            onClick={() => {
-              setState({...initial});
-              toggleDialog();
-            }}
-            className={classes.footerBtns}>
-            {t('Cancel')}
-          </Button>
-          <Button
-            variant="contained"
-            color="primary"
-            onClick={() => submitPhone()}
-            className={classes.footerBtns}
-          >
-            {t('Continue')}
-          </Button>
-        </div>
+        <form onSubmit={() => submitPhone()}>
+          <div className={classes.dialogRow}>
+            <Typography variant='subtitle2'>{t('Provide a phone number')}</Typography>
+          </div>
+          <div className={classes.dialogRow}>
+            <FormControl variant="outlined" className={classes.textField}>
+              <NumberFormat
+                id='phone'
+                label={t('Phone number')}
+                customInput={TextField}
+                type="text"
+                variant='outlined'
+                format="+1 (###) ### ####"
+                mask="_"
+                allowEmptyFormatting
+                autoComplete='phone'
+                error={Boolean(state.phoneErr)}
+                helperText={state.phoneErr}
+                onChange={handleChange('phone')}
+                onCut={(e) => disableCutCopyPaste(e, 'cut')}
+                onCopy={(e) => disableCutCopyPaste(e, 'copy')}
+                onPaste={(e) => disableCutCopyPaste(e, 'paste')}
+                required
+              />
+            </FormControl>
+          </div>
+          <Divider className="mt-2" />
+          <div className={classes.dialogFooter}>
+            <Button
+              variant="outlined"
+              color="primary"
+              onClick={() => {
+                setState({...initial});
+                toggleDialog();
+              }}
+              className={classes.footerBtns}>
+              {t('Cancel')}
+            </Button>
+            <Button
+              type="submit"
+              variant="contained"
+              color="primary"
+              className={classes.footerBtns}
+            >
+              {t('Continue')}
+            </Button>
+          </div>
+        </form>
       </Dialog>
     </React.Fragment>
   );
 }
 
+
+// ////////////////////////////////////////// REQUEST AN UPDATE
 export function DialogUpdate(props) {
   const classes = useStyles();
   const {t} = useTranslation();
   const {toggleDialog, open} = props;
   const initial = {
+    comments: '',
     commentsErr: '',
   };
   const [state, setState] = React.useState({
+    comments: '',
     commentsErr: '',
   });
+
+  const handleChange = (e) => {
+    const comment = e.target.value;
+    setState({...state, comments: comment});
+  };
+
+  const validateForm = () => {
+    let isError = false;
+    if (state.comments.trim() === '') {
+      isError = true;
+      state.commentsErr = t('Enter some comments.');
+    }
+
+    if (isError) {
+      setState({
+        ...state,
+      });
+    }
+    return isError;
+  };
+
+  const submitForm = () => {
+    const err = validateForm();
+    if (!err) {
+      setState({...initial});
+      toggleDialog();
+    }
+  };
 
   const disableCutCopyPaste = (e, value) => {
     e.preventDefault();
@@ -729,66 +816,86 @@ export function DialogUpdate(props) {
           </div>
         </DialogTitle>
         <Divider className="mb-2" />
-        <div className={classes.dialogRow}>
-          <FormControl variant="outlined" className={classes.textField}>
-            <TextField
-              id="update-input"
-              label={t('Comments')}
+        <form onSubmit={submitForm} noValidate>
+          <div className={classes.dialogRow}>
+            <FormControl variant="outlined" className={classes.textField}>
+              <TextField
+                id="update-input"
+                label={t('Comments')}
+                variant="outlined"
+                multiline
+                value={state.comments}
+                onChange={handleChange}
+                className={classes.textField}
+                error={Boolean(state.commentsErr)}
+                helperText={state.commentsErr}
+                onCut={(e) => disableCutCopyPaste(e, 'cut')}
+                onCopy={(e) => disableCutCopyPaste(e, 'copy')}
+                onPaste={(e) => disableCutCopyPaste(e, 'paste')}
+                required
+              />
+            </FormControl>
+          </div>
+          <Divider className="mt-2" />
+          <div className={classes.dialogFooter}>
+            <Button
               variant="outlined"
-              multiline
-              className={classes.textField}
-              error={Boolean(state.commentsErr)}
-              helperText={state.commentsErr}
-              onCut={(e) => disableCutCopyPaste(e, 'cut')}
-              onCopy={(e) => disableCutCopyPaste(e, 'copy')}
-              onPaste={(e) => disableCutCopyPaste(e, 'paste')}
-              required
-            />
-          </FormControl>
-        </div>
-        <Divider className="mt-2" />
-        <div className={classes.dialogFooter}>
-          <Button
-            variant="outlined"
-            color="primary"
-            onClick={() => {
-              setState({...initial});
-              toggleDialog();
-            }}
-            className={classes.footerBtns}
-          >
-            {t('Cancel')}
-          </Button>
-          <Button
-            variant="contained"
-            color="primary"
-            onClick={toggleDialog}
-            className={classes.footerBtns}
-          >
-            {t('Submit request')}
-          </Button>
-        </div>
+              color="primary"
+              onClick={() => {
+                setState({...initial});
+                toggleDialog();
+              }}
+              className={classes.footerBtns}
+            >
+              {t('Cancel')}
+            </Button>
+            <Button
+              type="submit"
+              variant="contained"
+              color="primary"
+              className={classes.footerBtns}
+            >
+              {t('Submit request')}
+            </Button>
+          </div>
+        </form>
       </Dialog>
     </React.Fragment>
   );
 }
 
+
+// ////////////////////////////////////////// DENY REQUEST
 export function DialogDenied(props) {
   const classes = useStyles();
   const {toggleDialog, open} = props;
   const {t} = useTranslation();
   const [snackbar, setSnackbar] = React.useState(false);
-  const [selected, setSelected] = React.useState('');
   const initial = {
+    hours: '',
+    minutes: '',
+    reason: '',
+    comments: '',
     hoursErr: '',
     minutesErr: '',
+    reasonErr: '',
     commentsErr: '',
   };
   const [state, setState] = React.useState({
+    hours: '',
+    minutes: '',
+    reason: '',
+    comments: '',
     hoursErr: '',
     minutesErr: '',
+    reasonErr: '',
     commentsErr: '',
   });
+
+  const handleChange = (e, val) => {
+    const comment = e.target.value;
+    setState({...state, [val]: comment});
+  };
 
   const disableCutCopyPaste = (e, value, field) => {
     e.preventDefault();
@@ -808,17 +915,37 @@ export function DialogDenied(props) {
     }
   };
 
-  const toggleSnackbar = () => {
-    toggleDialog();
-    setSnackbar(!snackbar);
-  };
-
   const SnackbarClose =() =>{
     setSnackbar(false);
   };
 
-  const handleChange = (event) => {
-    setSelected(event.target.value);
+  const validateForm = () => {
+    let isError = false;
+    if (state.reason === '') {
+      isError = true;
+      state.reasonErr = t('Select a reason.');
+    } else {
+      if (state.comments.trim() === '') {
+        isError = true;
+        state.commentsErr = t('Enter some comments.');
+      }
+    }
+
+    if (isError) {
+      setState({
+        ...state,
+      });
+    }
+    return isError;
+  };
+
+  const submitForm = () => {
+    const err = validateForm();
+    if (!err) {
+      toggleDialog();
+      setSnackbar(!snackbar);
+      setState({...initial});
+    }
   };
 
   return (
@@ -842,110 +969,119 @@ export function DialogDenied(props) {
           </div>
         </DialogTitle>
         <Divider className="mb-2" />
-        <div className={classes.dialogRow}>
-          <Typography variant='subtitle2'>{t('Billable hours')}</Typography>
-        </div>
-        <div className={classes.dialogRow}>
-          <FormControl variant="outlined" className={classes.formControl}>
-            <FormControlLabel
-              control={
-                <NumberFormat
-                  label={t('Hours')}
-                  aria-label={t('Hours')}
-                  customInput={TextField}
-                  type="text"
-                  variant='outlined'
-                  error={Boolean(state.hoursErr)}
-                  helperText={state.hoursErr}
-                  onCut={(e) => disableCutCopyPaste(e, 'cut', 'hoursErr')}
-                  onCopy={(e) => disableCutCopyPaste(e, 'copy', 'hoursErr')}
-                  onPaste={(e) => disableCutCopyPaste(e, 'paste', 'hoursErr')}
-                />
-              }
-            />
-            <FormControlLabel
-              control={
-                <NumberFormat
-                  label={t('Minutes')}
-                  aria-label={t('Minutes')}
-                  customInput={TextField}
-                  type="text"
-                  variant='outlined'
-                  isAllowed={(values) => {
-                    const {formattedValue, floatValue} = values;
-                    return formattedValue === '' || floatValue <= 60;
-                  }}
-                  error={Boolean(state.minutesErr)}
-                  helperText={state.minutesErr}
-                  onCut={(e) => disableCutCopyPaste(e, 'cut', 'minutesErr')}
-                  onCopy={(e) => disableCutCopyPaste(e, 'copy', 'minutesErr')}
-                  onPaste={(e) => disableCutCopyPaste(e, 'paste', 'minutesErr')}
-                />
-              }
-            />
-          </FormControl>
-        </div>
-        <div className={classes.dialogRow}>
-          <FormControl variant="outlined" required>
-            <InputLabel htmlFor="denied-select-label">{t('Denied reason')}</InputLabel>
-            <Select
-              native
-              inputProps={{
-                id: 'denied-select-label',
-              }}
-              onChange={handleChange}
-              value={selected}
-              label={t('Denied reason')}
-              fullWidth
-              placeholder={t('Select an option')}
-            >
-              <option value=""></option>
-              <option value='Non-SSI project'>{t('Non-SSI project')}</option>
-              <option value='Confidential requirements are not met'>{t('Confidential requirements are not met')}</option>
-              <option value='Request is missing information'>{t('Request is missing information')}</option>
-              <option value='Output file(s) are not in line with the project proposal'>{t('Output file(s) are not in line with the project proposal')}</option>
-              <option value='Other'>{t('Other')}</option>
-            </Select>
-          </FormControl>
-        </div>
-        <div className={clsx(classes.dialogRow, {
-          [classes.hiddenRow]: selected !== 'Other',
-        })}>
-          <FormControl variant="outlined">
-            <TextField
-              id="withdraw-input"
-              label={t('Comments')}
+        <form onSubmit={submitForm} noValidate>
+          <div className={classes.dialogRow}>
+            <Typography variant='subtitle2'>{t('Billable hours')}</Typography>
+          </div>
+          <div className={classes.dialogRow}>
+            <FormControl variant="outlined" className={classes.formControl}>
+              <FormControlLabel
+                control={
+                  <NumberFormat
+                    label={t('Hours')}
+                    aria-label={t('Hours')}
+                    customInput={TextField}
+                    type="text"
+                    variant='outlined'
+                    error={Boolean(state.hoursErr)}
+                    helperText={state.hoursErr}
+                    onCut={(e) => disableCutCopyPaste(e, 'cut', 'hoursErr')}
+                    onCopy={(e) => disableCutCopyPaste(e, 'copy', 'hoursErr')}
+                    onPaste={(e) => disableCutCopyPaste(e, 'paste', 'hoursErr')}
+                    onChange={(e) => handleChange(e, 'hours')}
+                    value={state.hours}
+                  />
+                }
+              />
+              <FormControlLabel
+                control={
+                  <NumberFormat
+                    label={t('Minutes')}
+                    aria-label={t('Minutes')}
+                    customInput={TextField}
+                    type="text"
+                    variant='outlined'
+                    isAllowed={(values) => {
+                      const {formattedValue, floatValue} = values;
+                      return formattedValue === '' || floatValue <= 60;
+                    }}
+                    error={Boolean(state.minutesErr)}
+                    helperText={state.minutesErr}
+                    onCut={(e) => disableCutCopyPaste(e, 'cut', 'minutesErr')}
+                    onCopy={(e) => disableCutCopyPaste(e, 'copy', 'minutesErr')}
+                    onPaste={(e) => disableCutCopyPaste(e, 'paste', 'minutesErr')}
+                    onChange={(e) => handleChange(e, 'minutes')}
+                    value={state.minutes}
+                  />
+                }
+              />
+            </FormControl>
+          </div>
+          <div className={classes.dialogRow}>
+            <FormControl variant="outlined" required>
+              <InputLabel htmlFor="denied-select-label">{t('Denied reason')}</InputLabel>
+              <Select
+                native
+                inputProps={{
+                  id: 'denied-select-label',
+                }}
+                label={t('Denied reason')}
+                fullWidth
+                placeholder={t('Select an option')}
+                onChange={(e) => handleChange(e, 'reason')}
+                error={Boolean(state.reasonErr)}
+              >
+                <option value=""></option>
+                <option value='Non-SSI project'>{t('Non-SSI project')}</option>
+                <option value='Confidential requirements are not met'>{t('Confidential requirements are not met')}</option>
+                <option value='Request is missing information'>{t('Request is missing information')}</option>
+                <option value='Output file(s) are not in line with the project proposal'>{t('Output file(s) are not in line with the project proposal')}</option>
+                <option value='Other'>{t('Other')}</option>
+              </Select>
+              <FormHelperText>{state.reasonErr}</FormHelperText>
+            </FormControl>
+          </div>
+          <div className={clsx(classes.dialogRow, {
+            [classes.hiddenRow]: state.reason !== 'Other',
+          })}>
+            <FormControl variant="outlined">
+              <TextField
+                id="withdraw-input"
+                label={t('Comments')}
+                variant="outlined"
+                multiline
+                required
+                error={Boolean(state.commentsErr)}
+                helperText={state.commentsErr}
+                onCut={(e) => disableCutCopyPaste(e, 'cut', 'commentsErr')}
+                onCopy={(e) => disableCutCopyPaste(e, 'copy', 'commentsErr')}
+                onPaste={(e) => disableCutCopyPaste(e, 'paste', 'commentsErr')}
+                onChange={(e) => handleChange(e, 'comments')}
+                value={state.comments}
+              />
+            </FormControl>
+          </div>
+          <Divider className="mt-2" />
+          <div className={classes.dialogFooter}>
+            <Button
               variant="outlined"
-              multiline
-              required
-              error={Boolean(state.commentsErr)}
-              helperText={state.commentsErr}
-              onCut={(e) => disableCutCopyPaste(e, 'cut', 'commentsErr')}
-              onCopy={(e) => disableCutCopyPaste(e, 'copy', 'commentsErr')}
-              onPaste={(e) => disableCutCopyPaste(e, 'paste', 'commentsErr')}
-            />
-          </FormControl>
-        </div>
-        <Divider className="mt-2" />
-        <div className={classes.dialogFooter}>
-          <Button
-            variant="outlined"
-            color="primary"
-            onClick={() => {
-              setState({...initial});
-              toggleDialog();
-            }}
-            className={classes.footerBtns}>
-            {t('Cancel')}
-          </Button>
-          <Button
-            variant="contained"
-            color="primary"
-            onClick={toggleSnackbar}
-            className={classes.footerBtns}>
-            {t('Submit')}
-          </Button>
-        </div>
+              color="primary"
+              onClick={() => {
+                setState({...initial});
+                toggleDialog();
+              }}
+              className={classes.footerBtns}>
+              {t('Cancel')}
+            </Button>
+            <Button
+              type="submit"
+              variant="contained"
+              color="primary"
+              className={classes.footerBtns}>
+              {t('Submit')}
+            </Button>
+          </div>
+        </form>
       </Dialog>
       <CustomizedSnackbar
         open={snackbar}
@@ -957,6 +1093,8 @@ export function DialogDenied(props) {
   );
 }
 
+
+// ////////////////////////////////////////// APPROVE REQUEST
 export function DialogApprove(props) {
   const classes = useStyles();
   const {t} = useTranslation();
@@ -1019,67 +1157,69 @@ export function DialogApprove(props) {
           </div>
         </DialogTitle>
         <Divider className="mb-2" />
-        <div className={classes.dialogRow}>
-          <Typography variant='subtitle2'>{t('Billable hours')}</Typography>
-        </div>
-        <div className={classes.dialogRow}>
-          <FormControl variant="outlined" className={classes.formControl}>
-            <FormControlLabel
-              control={
-                <NumberFormat
-                  label={t('Hours')}
-                  customInput={TextField}
-                  type="text"
-                  variant='outlined'
-                  error={Boolean(state.hoursErr)}
-                  helperText={state.hoursErr}
-                  onCut={(e) => disableCutCopyPaste(e, 'cut', 'hoursErr')}
-                  onCopy={(e) => disableCutCopyPaste(e, 'copy', 'hoursErr')}
-                  onPaste={(e) => disableCutCopyPaste(e, 'paste', 'hoursErr')}
-                />
-              }
-            />
-            <FormControlLabel
-              control={
-                <NumberFormat
-                  label={t('Minutes')}
-                  customInput={TextField}
-                  type="text"
-                  variant='outlined'
-                  isAllowed={(values) => {
-                    const {formattedValue, floatValue} = values;
-                    return formattedValue === '' || floatValue <= 60;
-                  }}
-                  error={Boolean(state.minutesErr)}
-                  helperText={state.minutesErr}
-                  onCut={(e) => disableCutCopyPaste(e, 'cut', 'minutesErr')}
-                  onCopy={(e) => disableCutCopyPaste(e, 'copy', 'minutesErr')}
-                  onPaste={(e) => disableCutCopyPaste(e, 'paste', 'minutesErr')}
-                />
-              }
-            />
-          </FormControl>
-        </div>
-        <Divider className="mt-2" />
-        <div className={classes.dialogFooter}>
-          <Button
-            variant="outlined"
-            color="primary"
-            onClick={() => {
-              setState({...initial});
-              toggleDialog();
-            }}
-            className={classes.footerBtns}>
-            {t('Cancel')}
-          </Button>
-          <Button
-            variant="contained"
-            color="primary"
-            onClick={toggleSnackbar}
-            className={classes.footerBtns}>
-            {t('Submit')}
-          </Button>
-        </div>
+        <form onSubmit={toggleSnackbar} >
+          <div className={classes.dialogRow}>
+            <Typography variant='subtitle2'>{t('Billable hours')}</Typography>
+          </div>
+          <div className={classes.dialogRow}>
+            <FormControl variant="outlined" className={classes.formControl}>
+              <FormControlLabel
+                control={
+                  <NumberFormat
+                    label={t('Hours')}
+                    customInput={TextField}
+                    type="text"
+                    variant='outlined'
+                    error={Boolean(state.hoursErr)}
+                    helperText={state.hoursErr}
+                    onCut={(e) => disableCutCopyPaste(e, 'cut', 'hoursErr')}
+                    onCopy={(e) => disableCutCopyPaste(e, 'copy', 'hoursErr')}
+                    onPaste={(e) => disableCutCopyPaste(e, 'paste', 'hoursErr')}
+                  />
+                }
+              />
+              <FormControlLabel
+                control={
+                  <NumberFormat
+                    label={t('Minutes')}
+                    customInput={TextField}
+                    type="text"
+                    variant='outlined'
+                    isAllowed={(values) => {
+                      const {formattedValue, floatValue} = values;
+                      return formattedValue === '' || floatValue <= 60;
+                    }}
+                    error={Boolean(state.minutesErr)}
+                    helperText={state.minutesErr}
+                    onCut={(e) => disableCutCopyPaste(e, 'cut', 'minutesErr')}
+                    onCopy={(e) => disableCutCopyPaste(e, 'copy', 'minutesErr')}
+                    onPaste={(e) => disableCutCopyPaste(e, 'paste', 'minutesErr')}
+                  />
+                }
+              />
+            </FormControl>
+          </div>
+          <Divider className="mt-2" />
+          <div className={classes.dialogFooter}>
+            <Button
+              variant="outlined"
+              color="primary"
+              onClick={() => {
+                setState({...initial});
+                toggleDialog();
+              }}
+              className={classes.footerBtns}>
+              {t('Cancel')}
+            </Button>
+            <Button
+              type="submit"
+              variant="contained"
+              color="primary"
+              className={classes.footerBtns}>
+              {t('Submit')}
+            </Button>
+          </div>
+        </form>
       </Dialog>
       <CustomizedSnackbar
         open={snackbar}
