@@ -370,27 +370,29 @@ export function DialogWithdraw(props) {
   const {toggleDialog, open} = props;
   const [snackbar, setSnackbar] = React.useState(false);
   const initial = {
-    comments: '',
-    errorText: '',
-    commandsErr: '',
-    invalidErr: '',
+    comments: {
+      text: '',
+      errorText: '',
+      invalid: '',
+      commands: '',
+    },
   };
   const [state, setState] = React.useState({
-    comments: '',
-    errorText: '',
-    commandsErr: '',
-    invalidErr: '',
+    comments: {
+      text: '',
+      errorText: '',
+      invalid: '',
+      commands: '',
+    },
   });
 
-  const handleChange = (e) => {
-    const comment = e.target.value;
-    setState({...state, comments: comment});
-  };
-
-  const toggleSnackbar = () => {
-    toggleDialog();
-    setSnackbar(!snackbar);
-    setState({...initial});
+  const handleChange = (e, val) => {
+    const comment = e.target.value.trim();
+    setState({...state, [val]: {
+      ...state[val],
+      text: comment,
+    },
+    });
   };
 
   const SnackbarClose =() =>{
@@ -399,9 +401,10 @@ export function DialogWithdraw(props) {
 
   const validateForm = () => {
     let isError = false;
-    if (state.comments.trim() === '') {
+    if (state.comments.text === '') {
       isError = true;
-      state.invalidErr = t('Enter some comments.');
+      state.comments.invalid = t('Enter some comments.');
+      state.comments.errorText = t('Enter some comments.');
     }
 
     if (isError) {
@@ -410,46 +413,69 @@ export function DialogWithdraw(props) {
       });
     }
 
-    setState({...state, errorText: state.invalidErr});
     return isError;
   };
 
-  const submitForm = () => {
+  const submitForm = (e) => {
+    e.preventDefault();
     const err = validateForm();
     if (!err) {
+      toggleDialog();
+      setSnackbar(!snackbar);
       setState({...initial});
-      toggleSnackbar();
     }
   };
 
-  const disableCutCopyPaste = (e, value) => {
+  const disableCutCopyPaste = (e, command, value) => {
     let msg;
     e.preventDefault();
-    switch (value) {
+    switch (command) {
       case 'cut':
         msg = t('Cut has been disabled for security purposes.');
-        setState({...state, commandsErr: msg, errorText: msg});
+        setState({...state, [value]: {
+          ...state[value],
+          commands: msg,
+          errorText: msg,
+        },
+        });
         break;
       case 'copy':
         msg = t('Copy has been disabled for security purposes.');
-        setState({...state, commandsErr: msg, errorText: msg});
+        setState({...state, [value]: {
+          ...state[value],
+          commands: msg,
+          errorText: msg,
+        },
+        });
         break;
       case 'paste':
         msg = t('Paste has been disabled for security purposes.');
-        setState({...state, commandsErr: msg, errorText: msg});
+        setState({...state, [value]: {
+          ...state[value],
+          commands: msg,
+          errorText: msg,
+        },
+        });
         break;
       default:
-        state.commandsErr('');
         break;
     }
   };
 
-  const toggleHelperText = () => {
-    if (Boolean(state.commandsErr)) {
-      if (Boolean(state.invalidErr)) {
-        setState({...state, errorText: state.invalidErr});
+  const toggleHelperText = (value) => {
+    if (state[value].commands === state[value].errorText) {
+      if (Boolean(state[value].invalid)) {
+        setState({...state, [value]: {
+          ...state[value],
+          errorText: state[value].invalid,
+        },
+        });
       } else {
-        setState({...state, errorText: ''});
+        setState({...state, [value]: {
+          ...state[value],
+          errorText: '',
+        },
+        });
       }
     }
   };
@@ -484,20 +510,21 @@ export function DialogWithdraw(props) {
               <TextField
                 id="withdraw-input"
                 label={t('Comments')}
-                value={state.comments}
-                onChange={handleChange}
+                aria-label={t('Comments')}
+                value={state.comments.text}
                 variant="outlined"
                 placeholder={t('Please provite us with a withdrawal reason')}
                 multiline
-                error={Boolean(state.errorText)}
-                helperText={state.errorText}
-                onCut={(e) => disableCutCopyPaste(e, 'cut')}
-                onCopy={(e) => disableCutCopyPaste(e, 'copy')}
-                onPaste={(e) => disableCutCopyPaste(e, 'paste')}
-                onClick={toggleHelperText}
-                onBlur={toggleHelperText}
-                onFocus={toggleHelperText}
                 required
+                error={Boolean(state.comments.errorText)}
+                helperText={state.comments.errorText}
+                onCut={(e) => disableCutCopyPaste(e, 'cut', 'comments')}
+                onCopy={(e) => disableCutCopyPaste(e, 'copy', 'comments')}
+                onPaste={(e) => disableCutCopyPaste(e, 'paste', 'comments')}
+                onChange={(e) => handleChange(e, 'comments')}
+                onClick={() => toggleHelperText('comments')}
+                onBlur={() => toggleHelperText('comments')}
+                onFocus={() => toggleHelperText('comments')}
               />
             </FormControl>
           </div>
@@ -635,29 +662,39 @@ export function DialogAssign(props) {
   const {t} = useTranslation();
   const {toggleDialog, open} = props;
   const initial = {
-    phone: '',
-    errorText: '',
-    commandsErr: '',
-    invalidErr: '',
+    phone: {
+      text: '',
+      errorText: '',
+      invalid: '',
+      commands: '',
+    },
   };
   const [state, setState] = React.useState({
-    phone: '',
-    errorText: '',
-    commandsErr: '',
-    invalidErr: '',
+    phone: {
+      text: '',
+      errorText: '',
+      invalid: '',
+      commands: '',
+    },
   });
 
   const phoneExp = /^[+][1]\s\([0-9]{3}\)\s[0-9]{3}\s[0-9]{4}/;
 
-  const handleChange = (prop) => (event) => {
-    setState({...state, [prop]: event.target.value});
+  const handleChange = (e, val) => {
+    const comment = e.target.value.trim();
+    setState({...state, [val]: {
+      ...state[val],
+      text: comment,
+    },
+    });
   };
 
-  const validatePhone = () => {
+  const validateForm = () => {
     let isError = false;
-    if (!state.phone.match(phoneExp)) {
+    if (!state.phone.text.match(phoneExp)) {
       isError = true;
-      state.invalidErr = t('Enter an phone number.');
+      state.phone.invalid = t('Enter phone number.');
+      state.phone.errorText = t('Enter phone number.');
     }
 
     if (isError) {
@@ -666,46 +703,68 @@ export function DialogAssign(props) {
       });
     }
 
-    setState({...state, errorText: state.invalidErr});
     return isError;
   };
 
-  const submitPhone = () => {
-    const err = validatePhone();
+  const submitForm = (e) => {
+    e.preventDefault();
+    const err = validateForm();
     if (!err) {
       toggleDialog();
       setState({...initial});
     }
   };
 
-  const disableCutCopyPaste = (e, value) => {
+  const disableCutCopyPaste = (e, command, value) => {
     let msg;
     e.preventDefault();
-    switch (value) {
+    switch (command) {
       case 'cut':
         msg = t('Cut has been disabled for security purposes.');
-        setState({...state, commandsErr: msg, errorText: msg});
+        setState({...state, [value]: {
+          ...state[value],
+          commands: msg,
+          errorText: msg,
+        },
+        });
         break;
       case 'copy':
         msg = t('Copy has been disabled for security purposes.');
-        setState({...state, commandsErr: msg, errorText: msg});
+        setState({...state, [value]: {
+          ...state[value],
+          commands: msg,
+          errorText: msg,
+        },
+        });
         break;
       case 'paste':
         msg = t('Paste has been disabled for security purposes.');
-        setState({...state, commandsErr: msg, errorText: msg});
+        setState({...state, [value]: {
+          ...state[value],
+          commands: msg,
+          errorText: msg,
+        },
+        });
         break;
       default:
-        state.commandsErr('');
         break;
     }
   };
 
-  const toggleHelperText = () => {
-    if (Boolean(state.commandsErr)) {
-      if (Boolean(state.invalidErr)) {
-        setState({...state, errorText: state.invalidErr});
+  const toggleHelperText = (value) => {
+    if (state[value].commands === state[value].errorText) {
+      if (Boolean(state[value].invalid)) {
+        setState({...state, [value]: {
+          ...state[value],
+          errorText: state[value].invalid,
+        },
+        });
       } else {
-        setState({...state, errorText: ''});
+        setState({...state, [value]: {
+          ...state[value],
+          errorText: '',
+        },
+        });
       }
     }
   };
@@ -734,7 +793,7 @@ export function DialogAssign(props) {
           </div>
         </DialogTitle>
         <Divider className="mb-2" />
-        <form onSubmit={() => submitPhone()}>
+        <form onSubmit={submitForm}>
           <div className={classes.dialogRow}>
             <Typography variant='subtitle2'>{t('Provide a phone number')}</Typography>
           </div>
@@ -743,6 +802,8 @@ export function DialogAssign(props) {
               <NumberFormat
                 id='phone'
                 label={t('Phone number')}
+                aria-label={t('Phone number')}
+                value={state.phone.text}
                 customInput={TextField}
                 type="text"
                 variant='outlined'
@@ -750,16 +811,16 @@ export function DialogAssign(props) {
                 mask="_"
                 allowEmptyFormatting
                 autoComplete='phone'
-                error={Boolean(state.errorText)}
-                helperText={state.errorText}
-                onChange={handleChange('phone')}
-                onCut={(e) => disableCutCopyPaste(e, 'cut')}
-                onCopy={(e) => disableCutCopyPaste(e, 'copy')}
-                onPaste={(e) => disableCutCopyPaste(e, 'paste')}
-                onClick={toggleHelperText}
-                onFocus={toggleHelperText}
-                onBlur={toggleHelperText}
+                error={Boolean(state.phone.errorText)}
+                helperText={state.phone.errorText}
                 required
+                onCut={(e) => disableCutCopyPaste(e, 'cut', 'phone')}
+                onCopy={(e) => disableCutCopyPaste(e, 'copy', 'phone')}
+                onPaste={(e) => disableCutCopyPaste(e, 'paste', 'phone')}
+                onChange={(e) => handleChange(e, 'phone')}
+                onClick={() => toggleHelperText('phone')}
+                onBlur={() => toggleHelperText('phone')}
+                onFocus={() => toggleHelperText('phone')}
               />
             </FormControl>
           </div>
@@ -797,28 +858,37 @@ export function DialogUpdate(props) {
   const {t} = useTranslation();
   const {toggleDialog, open} = props;
   const initial = {
-    comments: '',
-    errorText: '',
-    commandsErr: '',
-    invalidErr: '',
+    comments: {
+      text: '',
+      errorText: '',
+      invalid: '',
+      commands: '',
+    },
   };
   const [state, setState] = React.useState({
-    comments: '',
-    errorText: '',
-    commandsErr: '',
-    invalidErr: '',
+    comments: {
+      text: '',
+      errorText: '',
+      invalid: '',
+      commands: '',
+    },
   });
 
-  const handleChange = (e) => {
-    const comment = e.target.value;
-    setState({...state, comments: comment});
+  const handleChange = (e, val) => {
+    const comment = e.target.value.trim();
+    setState({...state, [val]: {
+      ...state[val],
+      text: comment,
+    },
+    });
   };
 
   const validateForm = () => {
     let isError = false;
-    if (state.comments.trim() === '') {
+    if (state.comments.text === '') {
       isError = true;
-      state.invalidErr = t('Enter some comments.');
+      state.comments.invalid = t('Enter some comments.');
+      state.comments.errorText = t('Enter some comments.');
     }
 
     if (isError) {
@@ -827,46 +897,68 @@ export function DialogUpdate(props) {
       });
     }
 
-    setState({...state, errorText: state.invalidErr});
     return isError;
   };
 
-  const submitForm = () => {
+  const submitForm = (e) => {
+    e.preventDefault();
     const err = validateForm();
     if (!err) {
-      setState({...initial});
       toggleDialog();
+      setState({...initial});
     }
   };
 
-  const disableCutCopyPaste = (e, value) => {
+  const disableCutCopyPaste = (e, command, value) => {
     let msg;
     e.preventDefault();
-    switch (value) {
+    switch (command) {
       case 'cut':
         msg = t('Cut has been disabled for security purposes.');
-        setState({...state, commandsErr: msg, errorText: msg});
+        setState({...state, [value]: {
+          ...state[value],
+          commands: msg,
+          errorText: msg,
+        },
+        });
         break;
       case 'copy':
         msg = t('Copy has been disabled for security purposes.');
-        setState({...state, commandsErr: msg, errorText: msg});
+        setState({...state, [value]: {
+          ...state[value],
+          commands: msg,
+          errorText: msg,
+        },
+        });
         break;
       case 'paste':
         msg = t('Paste has been disabled for security purposes.');
-        setState({...state, commandsErr: msg, errorText: msg});
+        setState({...state, [value]: {
+          ...state[value],
+          commands: msg,
+          errorText: msg,
+        },
+        });
         break;
       default:
-        state.commandsErr('');
         break;
     }
   };
 
-  const toggleHelperText = () => {
-    if (Boolean(state.commandsErr)) {
-      if (Boolean(state.invalidErr)) {
-        setState({...state, errorText: state.invalidErr});
+  const toggleHelperText = (value) => {
+    if (state[value].commands === state[value].errorText) {
+      if (Boolean(state[value].invalid)) {
+        setState({...state, [value]: {
+          ...state[value],
+          errorText: state[value].invalid,
+        },
+        });
       } else {
-        setState({...state, errorText: ''});
+        setState({...state, [value]: {
+          ...state[value],
+          errorText: '',
+        },
+        });
       }
     }
   };
@@ -879,6 +971,7 @@ export function DialogUpdate(props) {
           toggleDialog();
         }}
         aria-labelledby="dashboard-dialog-title"
+
         open={open}
         className={classes.root}
       >
@@ -901,20 +994,20 @@ export function DialogUpdate(props) {
               <TextField
                 id="update-input"
                 label={t('Comments')}
+                aria-label={t('Comments')}
+                value={state.comments.text}
                 variant="outlined"
                 multiline
-                value={state.comments}
-                onChange={handleChange}
-                className={classes.textField}
-                error={Boolean(state.errorText)}
-                helperText={state.errorText}
-                onCut={(e) => disableCutCopyPaste(e, 'cut')}
-                onCopy={(e) => disableCutCopyPaste(e, 'copy')}
-                onPaste={(e) => disableCutCopyPaste(e, 'paste')}
-                onBlur={toggleHelperText}
-                onClick={toggleHelperText}
-                onFocus={toggleHelperText}
                 required
+                error={Boolean(state.comments.errorText)}
+                helperText={state.comments.errorText}
+                onCut={(e) => disableCutCopyPaste(e, 'cut', 'comments')}
+                onCopy={(e) => disableCutCopyPaste(e, 'copy', 'comments')}
+                onPaste={(e) => disableCutCopyPaste(e, 'paste', 'comments')}
+                onChange={(e) => handleChange(e, 'comments')}
+                onClick={() => toggleHelperText('comments')}
+                onBlur={() => toggleHelperText('comments')}
+                onFocus={() => toggleHelperText('comments')}
               />
             </FormControl>
           </div>
@@ -954,29 +1047,65 @@ export function DialogDenied(props) {
   const {t} = useTranslation();
   const [snackbar, setSnackbar] = React.useState(false);
   const initial = {
-    hours: '',
-    minutes: '',
-    reason: '',
-    comments: '',
-    reasonErr: '',
-    errorText: '',
-    commandsErr: '',
-    invalidErr: '',
+    minutes: {
+      text: '',
+      errorText: '',
+      invalid: '',
+      commands: '',
+    },
+    hours: {
+      text: '',
+      errorText: '',
+      invalid: '',
+      commands: '',
+    },
+    reason: {
+      text: '',
+      errorText: '',
+      invalid: '',
+      commands: '',
+    },
+    comments: {
+      text: '',
+      errorText: '',
+      invalid: '',
+      commands: '',
+    },
   };
   const [state, setState] = React.useState({
-    hours: '',
-    minutes: '',
-    reason: '',
-    comments: '',
-    reasonErr: '',
-    errorText: '',
-    commandsErr: '',
-    invalidErr: '',
+    minutes: {
+      text: '',
+      errorText: '',
+      invalid: '',
+      commands: '',
+    },
+    hours: {
+      text: '',
+      errorText: '',
+      invalid: '',
+      commands: '',
+    },
+    reason: {
+      text: '',
+      errorText: '',
+      invalid: '',
+      commands: '',
+    },
+    comments: {
+      text: '',
+      errorText: '',
+      invalid: '',
+      commands: '',
+    },
   });
 
   const handleChange = (e, val) => {
-    const comment = e.target.value;
-    setState({...state, [val]: comment});
+    const comment = e.target.value.trim();
+    setState({...state, [val]: {
+      ...state[val],
+      text: comment,
+    },
+    });
   };
 
   const SnackbarClose =() =>{
@@ -985,14 +1114,25 @@ export function DialogDenied(props) {
 
   const validateForm = () => {
     let isError = false;
-    if (state.reason === '') {
+    if (state.hours.text === '') {
       isError = true;
-      state.reasonErr = t('Select a reason.');
-    } else {
-      if (state.comments.trim() === '') {
-        isError = true;
-        state.invalidErr = t('Enter some comments.');
-      }
+      state.hours.invalid = t('Enter total hours.');
+      state.hours.errorText = t('Enter total hours.');
+    }
+    if (state.minutes.text === '' || state.minutes.text === '.') {
+      isError = true;
+      state.minutes.invalid = t('Enter total minutes.');
+      state.minutes.errorText = t('Enter total minutes.');
+    }
+    if (state.reason.text === '') {
+      isError = true;
+      state.reason.invalid = t('Select a reason.');
+      state.reason.errorText = t('Select a reason.');
+    }
+    if (state.comments.text === '') {
+      isError = true;
+      state.comments.invalid = t('Enter some comments.');
+      state.comments.errorText = t('Enter some comments.');
     }
 
     if (isError) {
@@ -1001,11 +1141,11 @@ export function DialogDenied(props) {
       });
     }
 
-    setState({...state, errorText: state.invalidErr});
     return isError;
   };
 
-  const submitForm = () => {
+  const submitForm = (e) => {
+    e.preventDefault();
     const err = validateForm();
     if (!err) {
       toggleDialog();
@@ -1014,34 +1154,56 @@ export function DialogDenied(props) {
     }
   };
 
-  const disableCutCopyPaste = (e, value) => {
+  const disableCutCopyPaste = (e, command, value) => {
     let msg;
     e.preventDefault();
-    switch (value) {
+    switch (command) {
       case 'cut':
         msg = t('Cut has been disabled for security purposes.');
-        setState({...state, commandsErr: msg, errorText: msg});
+        setState({...state, [value]: {
+          ...state[value],
+          commands: msg,
+          errorText: msg,
+        },
+        });
         break;
       case 'copy':
         msg = t('Copy has been disabled for security purposes.');
-        setState({...state, commandsErr: msg, errorText: msg});
+        setState({...state, [value]: {
+          ...state[value],
+          commands: msg,
+          errorText: msg,
+        },
+        });
         break;
       case 'paste':
         msg = t('Paste has been disabled for security purposes.');
-        setState({...state, commandsErr: msg, errorText: msg});
+        setState({...state, [value]: {
+          ...state[value],
+          commands: msg,
+          errorText: msg,
+        },
+        });
         break;
       default:
-        state.commandsErr('');
         break;
     }
   };
 
-  const toggleHelperText = () => {
-    if (Boolean(state.commandsErr)) {
-      if (Boolean(state.invalidErr)) {
-        setState({...state, errorText: state.invalidErr});
+  const toggleHelperText = (value) => {
+    if (state[value].commands === state[value].errorText) {
+      if (Boolean(state[value].invalid)) {
+        setState({...state, [value]: {
+          ...state[value],
+          errorText: state[value].invalid,
+        },
+        });
       } else {
-        setState({...state, errorText: ''});
+        setState({...state, [value]: {
+          ...state[value],
+          errorText: '',
+        },
+        });
       }
     }
   };
@@ -1081,16 +1243,20 @@ export function DialogDenied(props) {
                   <NumberFormat
                     label={t('Hours')}
                     aria-label={t('Hours')}
+                    value={state.hours.text}
                     customInput={TextField}
                     type="text"
                     variant='outlined'
-                    // error={Boolean(state.hoursErr)}
-                    // helperText={state.hoursErr}
-                    onCut={(e) => disableCutCopyPaste(e, 'cut', 'hoursErr')}
-                    onCopy={(e) => disableCutCopyPaste(e, 'copy', 'hoursErr')}
-                    onPaste={(e) => disableCutCopyPaste(e, 'paste', 'hoursErr')}
+                    error={Boolean(state.hours.errorText)}
+                    helperText={state.hours.errorText}
+                    required
+                    onCut={(e) => disableCutCopyPaste(e, 'cut', 'hours')}
+                    onCopy={(e) => disableCutCopyPaste(e, 'copy', 'hours')}
+                    onPaste={(e) => disableCutCopyPaste(e, 'paste', 'hours')}
                     onChange={(e) => handleChange(e, 'hours')}
-                    value={state.hours}
+                    onClick={() => toggleHelperText('hours')}
+                    onBlur={() => toggleHelperText('hours')}
+                    onFocus={() => toggleHelperText('hours')}
                   />
                 }
               />
@@ -1099,6 +1265,7 @@ export function DialogDenied(props) {
                   <NumberFormat
                     label={t('Minutes')}
                     aria-label={t('Minutes')}
+                    value={state.minutes.text}
                     customInput={TextField}
                     type="text"
                     variant='outlined'
@@ -1106,13 +1273,16 @@ export function DialogDenied(props) {
                       const {formattedValue, floatValue} = values;
                       return formattedValue === '' || floatValue <= 60;
                     }}
-                    // error={Boolean(state.minutesErr)}
-                    // helperText={state.minutesErr}
-                    onCut={(e) => disableCutCopyPaste(e, 'cut', 'minutesErr')}
-                    onCopy={(e) => disableCutCopyPaste(e, 'copy', 'minutesErr')}
-                    onPaste={(e) => disableCutCopyPaste(e, 'paste', 'minutesErr')}
+                    error={Boolean(state.minutes.errorText)}
+                    helperText={state.minutes.errorText}
+                    required
+                    onCut={(e) => disableCutCopyPaste(e, 'cut', 'minutes')}
+                    onCopy={(e) => disableCutCopyPaste(e, 'copy', 'minutes')}
+                    onPaste={(e) => disableCutCopyPaste(e, 'paste', 'minutes')}
                     onChange={(e) => handleChange(e, 'minutes')}
-                    value={state.minutes}
+                    onClick={() => toggleHelperText('minutes')}
+                    onBlur={() => toggleHelperText('minutes')}
+                    onFocus={() => toggleHelperText('minutes')}
                   />
                 }
               />
@@ -1127,10 +1297,11 @@ export function DialogDenied(props) {
                   id: 'denied-select-label',
                 }}
                 label={t('Denied reason')}
+                value={state.reason.text}
                 fullWidth
                 placeholder={t('Select an option')}
                 onChange={(e) => handleChange(e, 'reason')}
-                error={Boolean(state.reasonErr)}
+                error={Boolean(state.reason.errorText)}
               >
                 <option value=""></option>
                 <option value='Non-SSI project'>{t('Non-SSI project')}</option>
@@ -1139,29 +1310,30 @@ export function DialogDenied(props) {
                 <option value='Output file(s) are not in line with the project proposal'>{t('Output file(s) are not in line with the project proposal')}</option>
                 <option value='Other'>{t('Other')}</option>
               </Select>
-              <FormHelperText>{state.reasonErr}</FormHelperText>
+              <FormHelperText>{state.reason.errorText}</FormHelperText>
             </FormControl>
           </div>
           <div className={clsx(classes.dialogRow, {
-            [classes.hiddenRow]: state.reason !== 'Other',
+            [classes.hiddenRow]: state.reason.text !== 'Other',
           })}>
             <FormControl variant="outlined">
               <TextField
                 id="withdraw-input"
                 label={t('Comments')}
+                aria-label={t('Comments')}
+                value={state.comments.text}
                 variant="outlined"
                 multiline
                 required
-                error={Boolean(state.errorText)}
-                helperText={state.errorText}
-                onCut={(e) => disableCutCopyPaste(e, 'cut', 'commentsErr')}
-                onCopy={(e) => disableCutCopyPaste(e, 'copy', 'commentsErr')}
-                onPaste={(e) => disableCutCopyPaste(e, 'paste', 'commentsErr')}
+                error={Boolean(state.comments.errorText)}
+                helperText={state.comments.errorText}
+                onCut={(e) => disableCutCopyPaste(e, 'cut', 'comments')}
+                onCopy={(e) => disableCutCopyPaste(e, 'copy', 'comments')}
+                onPaste={(e) => disableCutCopyPaste(e, 'paste', 'comments')}
                 onChange={(e) => handleChange(e, 'comments')}
-                onClick={toggleHelperText}
-                onBlur={toggleHelperText}
-                onFocus={toggleHelperText}
-                value={state.comments}
+                onClick={() => toggleHelperText('comments')}
+                onBlur={() => toggleHelperText('comments')}
+                onFocus={() => toggleHelperText('comments')}
               />
             </FormControl>
           </div>
@@ -1205,39 +1377,131 @@ export function DialogApprove(props) {
   const {toggleDialog, open} = props;
   const [snackbar, setSnackbar] = React.useState(false);
   const initial = {
-    hoursErr: '',
-    minutesErr: '',
+    minutes: {
+      text: '',
+      errorText: '',
+      invalid: '',
+      commands: '',
+    },
+    hours: {
+      text: '',
+      errorText: '',
+      invalid: '',
+      commands: '',
+    },
   };
   const [state, setState] = React.useState({
-    hoursErr: '',
-    minutesErr: '',
+    minutes: {
+      text: '',
+      errorText: '',
+      invalid: '',
+      commands: '',
+    },
+    hours: {
+      text: '',
+      errorText: '',
+      invalid: '',
+      commands: '',
+    },
   });
 
-  const disableCutCopyPaste = (e, value, field) => {
-    e.preventDefault();
-    switch (value) {
-      case 'cut':
-        setState({...state, [field]: t('Cut has been disabled for security purposes.')});
-        break;
-      case 'copy':
-        setState({...state, [field]: t('Copy has been disabled for security purposes.')});
-        break;
-      case 'paste':
-        setState({...state, [field]: t('Paste has been disabled for security purposes.')});
-        break;
-      default:
-        state.commentsErr('');
-        break;
-    }
-  };
-
-  const toggleSnackbar = () => {
-    toggleDialog();
-    setSnackbar(!snackbar);
+  const handleChange = (e, val) => {
+    const comment = e.target.value.trim();
+    setState({...state, [val]: {
+      ...state[val],
+      text: comment,
+    },
+    });
   };
 
   const SnackbarClose =() =>{
     setSnackbar(false);
+  };
+
+  const validateForm = () => {
+    let isError = false;
+    if (state.hours.text === '') {
+      isError = true;
+      state.hours.invalid = t('Enter total hours.');
+      state.hours.errorText = t('Enter total hours.');
+    }
+    if (state.minutes.text === '' || state.minutes.text === '.') {
+      isError = true;
+      state.minutes.invalid = t('Enter total minutes.');
+      state.minutes.errorText = t('Enter total minutes.');
+    }
+
+    if (isError) {
+      setState({
+        ...state,
+      });
+    }
+
+    return isError;
+  };
+
+  const submitForm = (e) => {
+    e.preventDefault();
+    const err = validateForm();
+    if (!err) {
+      toggleDialog();
+      setSnackbar(!snackbar);
+      setState({...initial});
+    }
+  };
+
+  const disableCutCopyPaste = (e, command, value) => {
+    let msg;
+    e.preventDefault();
+    switch (command) {
+      case 'cut':
+        msg = t('Cut has been disabled for security purposes.');
+        setState({...state, [value]: {
+          ...state[value],
+          commands: msg,
+          errorText: msg,
+        },
+        });
+        break;
+      case 'copy':
+        msg = t('Copy has been disabled for security purposes.');
+        setState({...state, [value]: {
+          ...state[value],
+          commands: msg,
+          errorText: msg,
+        },
+        });
+        break;
+      case 'paste':
+        msg = t('Paste has been disabled for security purposes.');
+        setState({...state, [value]: {
+          ...state[value],
+          commands: msg,
+          errorText: msg,
+        },
+        });
+        break;
+      default:
+        break;
+    }
+  };
+
+  const toggleHelperText = (value) => {
+    if (state[value].commands === state[value].errorText) {
+      if (Boolean(state[value].invalid)) {
+        setState({...state, [value]: {
+          ...state[value],
+          errorText: state[value].invalid,
+        },
+        });
+      } else {
+        setState({...state, [value]: {
+          ...state[value],
+          errorText: '',
+        },
+        });
+      }
+    }
   };
 
   return (
@@ -1261,7 +1525,7 @@ export function DialogApprove(props) {
           </div>
         </DialogTitle>
         <Divider className="mb-2" />
-        <form onSubmit={toggleSnackbar} >
+        <form onSubmit={submitForm} noValidate>
           <div className={classes.dialogRow}>
             <Typography variant='subtitle2'>{t('Billable hours')}</Typography>
           </div>
@@ -1271,14 +1535,21 @@ export function DialogApprove(props) {
                 control={
                   <NumberFormat
                     label={t('Hours')}
+                    aria-label={t('Hours')}
+                    value={state.hours.text}
                     customInput={TextField}
                     type="text"
                     variant='outlined'
-                    error={Boolean(state.hoursErr)}
-                    helperText={state.hoursErr}
-                    onCut={(e) => disableCutCopyPaste(e, 'cut', 'hoursErr')}
-                    onCopy={(e) => disableCutCopyPaste(e, 'copy', 'hoursErr')}
-                    onPaste={(e) => disableCutCopyPaste(e, 'paste', 'hoursErr')}
+                    error={Boolean(state.hours.errorText)}
+                    helperText={state.hours.errorText}
+                    required
+                    onCut={(e) => disableCutCopyPaste(e, 'cut', 'hours')}
+                    onCopy={(e) => disableCutCopyPaste(e, 'copy', 'hours')}
+                    onPaste={(e) => disableCutCopyPaste(e, 'paste', 'hours')}
+                    onChange={(e) => handleChange(e, 'hours')}
+                    onClick={() => toggleHelperText('hours')}
+                    onBlur={() => toggleHelperText('hours')}
+                    onFocus={() => toggleHelperText('hours')}
                   />
                 }
               />
@@ -1286,6 +1557,8 @@ export function DialogApprove(props) {
                 control={
                   <NumberFormat
                     label={t('Minutes')}
+                    aria-label={t('Minutes')}
+                    value={state.minutes.text}
                     customInput={TextField}
                     type="text"
                     variant='outlined'
@@ -1293,11 +1566,16 @@ export function DialogApprove(props) {
                       const {formattedValue, floatValue} = values;
                       return formattedValue === '' || floatValue <= 60;
                     }}
-                    error={Boolean(state.minutesErr)}
-                    helperText={state.minutesErr}
-                    onCut={(e) => disableCutCopyPaste(e, 'cut', 'minutesErr')}
-                    onCopy={(e) => disableCutCopyPaste(e, 'copy', 'minutesErr')}
-                    onPaste={(e) => disableCutCopyPaste(e, 'paste', 'minutesErr')}
+                    error={Boolean(state.minutes.errorText)}
+                    helperText={state.minutes.errorText}
+                    required
+                    onCut={(e) => disableCutCopyPaste(e, 'cut', 'minutes')}
+                    onCopy={(e) => disableCutCopyPaste(e, 'copy', 'minutes')}
+                    onPaste={(e) => disableCutCopyPaste(e, 'paste', 'minutes')}
+                    onChange={(e) => handleChange(e, 'minutes')}
+                    onClick={() => toggleHelperText('minutes')}
+                    onBlur={() => toggleHelperText('minutes')}
+                    onFocus={() => toggleHelperText('minutes')}
                   />
                 }
               />
