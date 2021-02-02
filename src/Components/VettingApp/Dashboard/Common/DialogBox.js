@@ -69,8 +69,8 @@ const useStyles = makeStyles((theme) => ({
         'width': '100% !important',
       },
     },
-    '& .MuiFormHelperText-root': {
-      'color': '#E91B0C',
+    '& .Mui-error ~.MuiFormHelperText-root, & .Mui-error + label': {
+      'color': theme.palette.error.main,
     },
     '& .MuiInputBase-input:not(.MuiInputBase-inputMultiline)': {
       'height': '100%',
@@ -93,7 +93,6 @@ const useStyles = makeStyles((theme) => ({
     display: 'flex',
     alignItems: 'center',
     padding: theme.spacing(1, 3),
-    height: '100%',
   },
   hiddenRow: {
     display: 'none',
@@ -369,10 +368,11 @@ export function DialogWithdraw(props) {
   const {t} = useTranslation();
   const {toggleDialog, open} = props;
   const [snackbar, setSnackbar] = React.useState(false);
-  const initial = {
+  const initial = { // blank object used to reset state
     comments: {
       text: '',
       errorText: '',
+      helperText: 'Please fill out some comment.',
       invalid: '',
       commands: '',
     },
@@ -381,18 +381,31 @@ export function DialogWithdraw(props) {
     comments: {
       text: '',
       errorText: '',
+      helperText: 'Please fill out some comment.',
       invalid: '',
       commands: '',
     },
   });
 
   const handleChange = (e, val) => {
-    const comment = e.target.value.trim();
-    setState({...state, [val]: {
+    const comment = e.target.value;
+    setState({...state, [val]: { // updates state with text from input
       ...state[val],
       text: comment,
     },
     });
+
+    if (e.target.value && state[val].errorText) { // if input text is valid, clear error
+      setState({...state, [val]: {
+        ...state[val],
+        text: comment,
+        errorText: '',
+        helperText: initial[val].helperText,
+        invalid: '',
+        commands: '',
+      },
+      });
+    }
   };
 
   const SnackbarClose =() =>{
@@ -401,10 +414,11 @@ export function DialogWithdraw(props) {
 
   const validateForm = () => {
     let isError = false;
-    if (state.comments.text === '') {
+    if (state.comments.text.trim() === '') {
       isError = true;
       state.comments.invalid = t('Enter some comments.');
       state.comments.errorText = t('Enter some comments.');
+      state.comments.helperText = t('Enter some comments.');
     }
 
     if (isError) {
@@ -419,14 +433,27 @@ export function DialogWithdraw(props) {
   const submitForm = (e) => {
     e.preventDefault();
     const err = validateForm();
-    if (!err) {
+    if (!err) { // if no errors exist, submit the form and reset the inputs
       toggleDialog();
       setSnackbar(!snackbar);
       setState({...initial});
+    } else {
+      for (const property in state) { // focus on the first input that has an error on submit
+        if (state[property].invalid) {
+          switch (property) {
+            case 'comments':
+              document.getElementById('comments-input').focus();
+              break;
+            default:
+              break;
+          }
+          break;
+        }
+      }
     }
   };
 
-  const disableCutCopyPaste = (e, command, value) => {
+  const disableCutCopyPaste = (e, command, value) => { // display error if user tries to cut/copy/paste
     let msg;
     e.preventDefault();
     switch (command) {
@@ -436,6 +463,7 @@ export function DialogWithdraw(props) {
           ...state[value],
           commands: msg,
           errorText: msg,
+          helperText: msg,
         },
         });
         break;
@@ -445,6 +473,7 @@ export function DialogWithdraw(props) {
           ...state[value],
           commands: msg,
           errorText: msg,
+          helperText: msg,
         },
         });
         break;
@@ -454,6 +483,7 @@ export function DialogWithdraw(props) {
           ...state[value],
           commands: msg,
           errorText: msg,
+          helperText: msg,
         },
         });
         break;
@@ -464,16 +494,17 @@ export function DialogWithdraw(props) {
 
   const toggleHelperText = (value) => {
     if (state[value].commands === state[value].errorText) {
-      if (Boolean(state[value].invalid)) {
+      if (Boolean(state[value].invalid)) { // set error text back to invalid error
         setState({...state, [value]: {
           ...state[value],
-          errorText: state[value].invalid,
+          helperText: state[value].invalid,
         },
         });
-      } else {
+      } else { // clear error text if no invalid error exists
         setState({...state, [value]: {
           ...state[value],
-          errorText: '',
+          helperText: initial[value].helperText,
+          errorText: initial[value].errorText,
         },
         });
       }
@@ -508,7 +539,7 @@ export function DialogWithdraw(props) {
           <div className={classes.dialogRow}>
             <FormControl variant="outlined" className={classes.textField}>
               <TextField
-                id="withdraw-input"
+                id="comments-input"
                 label={t('Comments')}
                 aria-label={t('Comments')}
                 value={state.comments.text}
@@ -517,7 +548,7 @@ export function DialogWithdraw(props) {
                 multiline
                 required
                 error={Boolean(state.comments.errorText)}
-                helperText={state.comments.errorText}
+                helperText={state.comments.helperText}
                 onCut={(e) => disableCutCopyPaste(e, 'cut', 'comments')}
                 onCopy={(e) => disableCutCopyPaste(e, 'copy', 'comments')}
                 onPaste={(e) => disableCutCopyPaste(e, 'paste', 'comments')}
@@ -661,7 +692,7 @@ export function DialogAssign(props) {
   const classes = useStyles();
   const {t} = useTranslation();
   const {toggleDialog, open} = props;
-  const initial = {
+  const initial = { // blank object used to reset state
     phone: {
       text: '',
       errorText: '',
@@ -682,11 +713,22 @@ export function DialogAssign(props) {
 
   const handleChange = (e, val) => {
     const comment = e.target.value.trim();
-    setState({...state, [val]: {
+    setState({...state, [val]: { // updates state with text from input
       ...state[val],
       text: comment,
     },
     });
+
+    if (e.target.value.match(phoneExp) && state[val].errorText) { // if input text is valid, clear error
+      setState({...state, [val]: {
+        ...state[val],
+        text: comment,
+        errorText: '',
+        invalid: '',
+        commands: '',
+      },
+      });
+    }
   };
 
   const validateForm = () => {
@@ -709,13 +751,26 @@ export function DialogAssign(props) {
   const submitForm = (e) => {
     e.preventDefault();
     const err = validateForm();
-    if (!err) {
+    if (!err) { // if no errors exist, submit the form and reset the inputs
       toggleDialog();
       setState({...initial});
+    } else {
+      for (const property in state) { // focus on the first input that has an error on submit
+        if (state[property].invalid) {
+          switch (property) {
+            case 'phone':
+              document.getElementById('phone-input').focus();
+              break;
+            default:
+              break;
+          }
+          break;
+        }
+      }
     }
   };
 
-  const disableCutCopyPaste = (e, command, value) => {
+  const disableCutCopyPaste = (e, command, value) => { // display error if user tries to cut/copy/paste
     let msg;
     e.preventDefault();
     switch (command) {
@@ -753,13 +808,13 @@ export function DialogAssign(props) {
 
   const toggleHelperText = (value) => {
     if (state[value].commands === state[value].errorText) {
-      if (Boolean(state[value].invalid)) {
+      if (Boolean(state[value].invalid)) { // set error text back to invalid error
         setState({...state, [value]: {
           ...state[value],
           errorText: state[value].invalid,
         },
         });
-      } else {
+      } else { // clear error text if no invalid error exists
         setState({...state, [value]: {
           ...state[value],
           errorText: '',
@@ -793,14 +848,14 @@ export function DialogAssign(props) {
           </div>
         </DialogTitle>
         <Divider className="mb-2" />
-        <form onSubmit={submitForm}>
+        <form onSubmit={submitForm} noValidate>
           <div className={classes.dialogRow}>
             <Typography variant='subtitle2'>{t('Provide a phone number')}</Typography>
           </div>
           <div className={classes.dialogRow}>
             <FormControl variant="outlined" className={classes.textField}>
               <NumberFormat
-                id='phone'
+                id='phone-input'
                 label={t('Phone number')}
                 aria-label={t('Phone number')}
                 value={state.phone.text}
@@ -857,7 +912,7 @@ export function DialogUpdate(props) {
   const classes = useStyles();
   const {t} = useTranslation();
   const {toggleDialog, open} = props;
-  const initial = {
+  const initial = { // blank object used to reset state
     comments: {
       text: '',
       errorText: '',
@@ -875,17 +930,28 @@ export function DialogUpdate(props) {
   });
 
   const handleChange = (e, val) => {
-    const comment = e.target.value.trim();
-    setState({...state, [val]: {
+    const comment = e.target.value;
+    setState({...state, [val]: { // updates state with text from input
       ...state[val],
       text: comment,
     },
     });
+
+    if (e.target.value && state.comments.errorText) { // if input text is valid, clear error
+      setState({...state, [val]: {
+        ...state[val],
+        text: comment,
+        errorText: '',
+        invalid: '',
+        commands: '',
+      },
+      });
+    }
   };
 
   const validateForm = () => {
     let isError = false;
-    if (state.comments.text === '') {
+    if (state.comments.text.trim() === '') {
       isError = true;
       state.comments.invalid = t('Enter some comments.');
       state.comments.errorText = t('Enter some comments.');
@@ -903,13 +969,26 @@ export function DialogUpdate(props) {
   const submitForm = (e) => {
     e.preventDefault();
     const err = validateForm();
-    if (!err) {
+    if (!err) { // if no errors exist, submit the form and reset the inputs
       toggleDialog();
       setState({...initial});
+    } else {
+      for (const property in state) { // focus on the first input that has an error on submit
+        if (state[property].invalid) {
+          switch (property) {
+            case 'comments':
+              document.getElementById('comments-input').focus();
+              break;
+            default:
+              break;
+          }
+          break;
+        }
+      }
     }
   };
 
-  const disableCutCopyPaste = (e, command, value) => {
+  const disableCutCopyPaste = (e, command, value) => { // display error if user tries to cut/copy/paste
     let msg;
     e.preventDefault();
     switch (command) {
@@ -947,13 +1026,13 @@ export function DialogUpdate(props) {
 
   const toggleHelperText = (value) => {
     if (state[value].commands === state[value].errorText) {
-      if (Boolean(state[value].invalid)) {
+      if (Boolean(state[value].invalid)) { // set error text back to invalid error
         setState({...state, [value]: {
           ...state[value],
           errorText: state[value].invalid,
         },
         });
-      } else {
+      } else { // clear error text if no invalid error exists
         setState({...state, [value]: {
           ...state[value],
           errorText: '',
@@ -992,7 +1071,7 @@ export function DialogUpdate(props) {
           <div className={classes.dialogRow}>
             <FormControl variant="outlined" className={classes.textField}>
               <TextField
-                id="update-input"
+                id="comments-input"
                 label={t('Comments')}
                 aria-label={t('Comments')}
                 value={state.comments.text}
@@ -1046,14 +1125,14 @@ export function DialogDenied(props) {
   const {toggleDialog, open} = props;
   const {t} = useTranslation();
   const [snackbar, setSnackbar] = React.useState(false);
-  const initial = {
-    minutes: {
+  const initial = { // blank object used to reset state
+    hours: {
       text: '',
       errorText: '',
       invalid: '',
       commands: '',
     },
-    hours: {
+    minutes: {
       text: '',
       errorText: '',
       invalid: '',
@@ -1073,13 +1152,13 @@ export function DialogDenied(props) {
     },
   };
   const [state, setState] = React.useState({
-    minutes: {
+    hours: {
       text: '',
       errorText: '',
       invalid: '',
       commands: '',
     },
-    hours: {
+    minutes: {
       text: '',
       errorText: '',
       invalid: '',
@@ -1100,12 +1179,23 @@ export function DialogDenied(props) {
   });
 
   const handleChange = (e, val) => {
-    const comment = e.target.value.trim();
-    setState({...state, [val]: {
+    const comment = e.target.value;
+    setState({...state, [val]: { // updates state with text from input
       ...state[val],
       text: comment,
     },
     });
+
+    if (e.target.value && state[val].errorText) { // if input text is valid, clear errors
+      setState({...state, [val]: {
+        ...state[val],
+        text: comment,
+        errorText: '',
+        invalid: '',
+        commands: '',
+      },
+      });
+    }
   };
 
   const SnackbarClose =() =>{
@@ -1114,22 +1204,22 @@ export function DialogDenied(props) {
 
   const validateForm = () => {
     let isError = false;
-    if (state.hours.text === '') {
+    if (state.hours.text.trim() === '') {
       isError = true;
       state.hours.invalid = t('Enter total hours.');
       state.hours.errorText = t('Enter total hours.');
     }
-    if (state.minutes.text === '' || state.minutes.text === '.') {
+    if (state.minutes.text.trim() === '' || state.minutes.text.trim() === '.') {
       isError = true;
       state.minutes.invalid = t('Enter total minutes.');
       state.minutes.errorText = t('Enter total minutes.');
     }
-    if (state.reason.text === '') {
+    if (state.reason.text.trim() === '') {
       isError = true;
       state.reason.invalid = t('Select a reason.');
       state.reason.errorText = t('Select a reason.');
     }
-    if (state.comments.text === '') {
+    if (state.comments.text.trim() === '') {
       isError = true;
       state.comments.invalid = t('Enter some comments.');
       state.comments.errorText = t('Enter some comments.');
@@ -1147,14 +1237,36 @@ export function DialogDenied(props) {
   const submitForm = (e) => {
     e.preventDefault();
     const err = validateForm();
-    if (!err) {
+    if (!err) { // if no errors exist, submit the form, toggle snackbar, and reset the inputs
       toggleDialog();
       setSnackbar(!snackbar);
       setState({...initial});
+    } else {
+      for (const property in state) { // focus on the first input that has an error on submit
+        if (state[property].invalid) {
+          switch (property) {
+            case 'hours':
+              document.getElementById('hours-input').focus();
+              break;
+            case 'minutes':
+              document.getElementById('minutes-input').focus();
+              break;
+            case 'reason':
+              document.getElementById('denied-select-label').focus();
+              break;
+            case 'comments':
+              document.getElementById('comments-input').focus();
+              break;
+            default:
+              break;
+          }
+          break;
+        }
+      }
     }
   };
 
-  const disableCutCopyPaste = (e, command, value) => {
+  const disableCutCopyPaste = (e, command, value) => { // display error if user tries to cut/copy/paste
     let msg;
     e.preventDefault();
     switch (command) {
@@ -1192,13 +1304,13 @@ export function DialogDenied(props) {
 
   const toggleHelperText = (value) => {
     if (state[value].commands === state[value].errorText) {
-      if (Boolean(state[value].invalid)) {
+      if (Boolean(state[value].invalid)) { // set error text back to invalid error
         setState({...state, [value]: {
           ...state[value],
           errorText: state[value].invalid,
         },
         });
-      } else {
+      } else { // clear error text if no invalid error exists
         setState({...state, [value]: {
           ...state[value],
           errorText: '',
@@ -1241,6 +1353,7 @@ export function DialogDenied(props) {
               <FormControlLabel
                 control={
                   <NumberFormat
+                    id="hours-input"
                     label={t('Hours')}
                     aria-label={t('Hours')}
                     value={state.hours.text}
@@ -1263,6 +1376,7 @@ export function DialogDenied(props) {
               <FormControlLabel
                 control={
                   <NumberFormat
+                    id="minutes-input"
                     label={t('Minutes')}
                     aria-label={t('Minutes')}
                     value={state.minutes.text}
@@ -1290,7 +1404,6 @@ export function DialogDenied(props) {
           </div>
           <div className={classes.dialogRow}>
             <FormControl variant="outlined" required>
-              <InputLabel htmlFor="denied-select-label">{t('Denied reason')}</InputLabel>
               <Select
                 native
                 inputProps={{
@@ -1310,6 +1423,7 @@ export function DialogDenied(props) {
                 <option value='Output file(s) are not in line with the project proposal'>{t('Output file(s) are not in line with the project proposal')}</option>
                 <option value='Other'>{t('Other')}</option>
               </Select>
+              <InputLabel htmlFor="denied-select-label">{t('Denied reason')}</InputLabel>
               <FormHelperText>{state.reason.errorText}</FormHelperText>
             </FormControl>
           </div>
@@ -1318,7 +1432,7 @@ export function DialogDenied(props) {
           })}>
             <FormControl variant="outlined">
               <TextField
-                id="withdraw-input"
+                id="comments-input"
                 label={t('Comments')}
                 aria-label={t('Comments')}
                 value={state.comments.text}
@@ -1376,14 +1490,14 @@ export function DialogApprove(props) {
   const {t} = useTranslation();
   const {toggleDialog, open} = props;
   const [snackbar, setSnackbar] = React.useState(false);
-  const initial = {
-    minutes: {
+  const initial = { // blank object used to reset state
+    hours: {
       text: '',
       errorText: '',
       invalid: '',
       commands: '',
     },
-    hours: {
+    minutes: {
       text: '',
       errorText: '',
       invalid: '',
@@ -1391,13 +1505,13 @@ export function DialogApprove(props) {
     },
   };
   const [state, setState] = React.useState({
-    minutes: {
+    hours: {
       text: '',
       errorText: '',
       invalid: '',
       commands: '',
     },
-    hours: {
+    minutes: {
       text: '',
       errorText: '',
       invalid: '',
@@ -1406,12 +1520,23 @@ export function DialogApprove(props) {
   });
 
   const handleChange = (e, val) => {
-    const comment = e.target.value.trim();
-    setState({...state, [val]: {
+    const comment = e.target.value;
+    setState({...state, [val]: { // updates state with text from input
       ...state[val],
       text: comment,
     },
     });
+
+    if (e.target.value && state[val].errorText) { // if input text is valid, clear error
+      setState({...state, [val]: {
+        ...state[val],
+        text: comment,
+        errorText: '',
+        invalid: '',
+        commands: '',
+      },
+      });
+    }
   };
 
   const SnackbarClose =() =>{
@@ -1420,12 +1545,12 @@ export function DialogApprove(props) {
 
   const validateForm = () => {
     let isError = false;
-    if (state.hours.text === '') {
+    if (state.hours.text.trim() === '') {
       isError = true;
       state.hours.invalid = t('Enter total hours.');
       state.hours.errorText = t('Enter total hours.');
     }
-    if (state.minutes.text === '' || state.minutes.text === '.') {
+    if (state.minutes.text.trim() === '' || state.minutes.text.trim() === '.') {
       isError = true;
       state.minutes.invalid = t('Enter total minutes.');
       state.minutes.errorText = t('Enter total minutes.');
@@ -1443,14 +1568,30 @@ export function DialogApprove(props) {
   const submitForm = (e) => {
     e.preventDefault();
     const err = validateForm();
-    if (!err) {
+    if (!err) { // if no errors exist, submit the form, toggle snackbar, and reset the inputs
       toggleDialog();
       setSnackbar(!snackbar);
       setState({...initial});
+    } else {
+      for (const property in state) { // focus on the first input that has an error on submit
+        if (state[property].invalid) {
+          switch (property) {
+            case 'hours':
+              document.getElementById('hours-input').focus();
+              break;
+            case 'minutes':
+              document.getElementById('minutes-input').focus();
+              break;
+            default:
+              break;
+          }
+          break;
+        }
+      }
     }
   };
 
-  const disableCutCopyPaste = (e, command, value) => {
+  const disableCutCopyPaste = (e, command, value) => { // display error if user tries to cut/copy/paste
     let msg;
     e.preventDefault();
     switch (command) {
@@ -1488,13 +1629,13 @@ export function DialogApprove(props) {
 
   const toggleHelperText = (value) => {
     if (state[value].commands === state[value].errorText) {
-      if (Boolean(state[value].invalid)) {
+      if (Boolean(state[value].invalid)) { // set error text back to invalid error
         setState({...state, [value]: {
           ...state[value],
           errorText: state[value].invalid,
         },
         });
-      } else {
+      } else { // clear error text if no invalid error exists
         setState({...state, [value]: {
           ...state[value],
           errorText: '',
@@ -1534,6 +1675,7 @@ export function DialogApprove(props) {
               <FormControlLabel
                 control={
                   <NumberFormat
+                    id="hours-input"
                     label={t('Hours')}
                     aria-label={t('Hours')}
                     value={state.hours.text}
@@ -1556,6 +1698,7 @@ export function DialogApprove(props) {
               <FormControlLabel
                 control={
                   <NumberFormat
+                    id="minutes-input"
                     label={t('Minutes')}
                     aria-label={t('Minutes')}
                     value={state.minutes.text}
