@@ -69,8 +69,8 @@ const useStyles = makeStyles((theme) => ({
         'width': '100% !important',
       },
     },
-    '& .MuiFormHelperText-root': {
-      'color': '#E91B0C',
+    '& .Mui-error ~.MuiFormHelperText-root, & .Mui-error + label': {
+      'color': theme.palette.error.main,
     },
     '& .MuiInputBase-input:not(.MuiInputBase-inputMultiline)': {
       'height': '100%',
@@ -372,6 +372,7 @@ export function DialogWithdraw(props) {
     comments: {
       text: '',
       errorText: '',
+      helperText: 'Please fill out some comment.',
       invalid: '',
       commands: '',
     },
@@ -380,6 +381,7 @@ export function DialogWithdraw(props) {
     comments: {
       text: '',
       errorText: '',
+      helperText: 'Please fill out some comment.',
       invalid: '',
       commands: '',
     },
@@ -398,6 +400,7 @@ export function DialogWithdraw(props) {
         ...state[val],
         text: comment,
         errorText: '',
+        helperText: initial[val].helperText,
         invalid: '',
         commands: '',
       },
@@ -415,6 +418,7 @@ export function DialogWithdraw(props) {
       isError = true;
       state.comments.invalid = t('Enter some comments.');
       state.comments.errorText = t('Enter some comments.');
+      state.comments.helperText = t('Enter some comments.');
     }
 
     if (isError) {
@@ -459,6 +463,7 @@ export function DialogWithdraw(props) {
           ...state[value],
           commands: msg,
           errorText: msg,
+          helperText: msg,
         },
         });
         break;
@@ -468,6 +473,7 @@ export function DialogWithdraw(props) {
           ...state[value],
           commands: msg,
           errorText: msg,
+          helperText: msg,
         },
         });
         break;
@@ -477,6 +483,7 @@ export function DialogWithdraw(props) {
           ...state[value],
           commands: msg,
           errorText: msg,
+          helperText: msg,
         },
         });
         break;
@@ -490,13 +497,14 @@ export function DialogWithdraw(props) {
       if (Boolean(state[value].invalid)) { // set error text back to invalid error
         setState({...state, [value]: {
           ...state[value],
-          errorText: state[value].invalid,
+          helperText: state[value].invalid,
         },
         });
       } else { // clear error text if no invalid error exists
         setState({...state, [value]: {
           ...state[value],
-          errorText: '',
+          helperText: initial[value].helperText,
+          errorText: initial[value].errorText,
         },
         });
       }
@@ -540,7 +548,7 @@ export function DialogWithdraw(props) {
                 multiline
                 required
                 error={Boolean(state.comments.errorText)}
-                helperText={state.comments.errorText}
+                helperText={state.comments.helperText}
                 onCut={(e) => disableCutCopyPaste(e, 'cut', 'comments')}
                 onCopy={(e) => disableCutCopyPaste(e, 'copy', 'comments')}
                 onPaste={(e) => disableCutCopyPaste(e, 'paste', 'comments')}
@@ -1396,7 +1404,6 @@ export function DialogDenied(props) {
           </div>
           <div className={classes.dialogRow}>
             <FormControl variant="outlined" required>
-              <InputLabel htmlFor="denied-select-label">{t('Denied reason')}</InputLabel>
               <Select
                 native
                 inputProps={{
@@ -1416,6 +1423,7 @@ export function DialogDenied(props) {
                 <option value='Output file(s) are not in line with the project proposal'>{t('Output file(s) are not in line with the project proposal')}</option>
                 <option value='Other'>{t('Other')}</option>
               </Select>
+              <InputLabel htmlFor="denied-select-label">{t('Denied reason')}</InputLabel>
               <FormHelperText>{state.reason.errorText}</FormHelperText>
             </FormControl>
           </div>
