@@ -56,7 +56,9 @@ export default function AnalystCell(props) {
       );
     } else {
       return (
-        <TableCell className={classes.tablesCellsFlex} />
+        <TableCell className={classes.tablesCellsFlex}>
+          <Typography variant="body2" color="textSecondary">Unassigned</Typography>
+        </TableCell>
       );
     }
   } else if (role === 'analyst') {
