@@ -129,7 +129,8 @@ export default function TableContainerComponent(props) {
                       className={classes.tableRow}
                     >
                       <TableCell id={labelId} className={classes.tablesCells}>
-                        <Typography variant="body2" noWrap={true}>{row.id}</Typography>
+                        <Typography variant="body2" noWrap={true}>{row.title}</Typography>
+                        <Typography variant="body2" noWrap={true}>ID {row.id}</Typography>
                       </TableCell>
                       <TableCell>
                         <Typography variant="body2" noWrap={true} className={classes.status}>{row.status}</Typography>

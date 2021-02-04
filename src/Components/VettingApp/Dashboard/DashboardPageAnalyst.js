@@ -10,7 +10,6 @@ import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
 import Paper from '@material-ui/core/Paper';
 import Button from '@material-ui/core/Button';
-import {Link} from 'react-router-dom';
 
 import TableContainerComponent from './Common/TableContainerComponent';
 import TabPanel from './Common/DashboardTabPanel';
@@ -21,6 +20,7 @@ import ProjectsDrawer from './Common/ProjectsDrawer';
 import BypassBlocks from '../../BypassBlocks';
 import {requestListResearchers} from '../../../Data/fakeData';
 import {DRAWER_WIDTH} from './Common/ProjectsDrawer';
+import {DialognNewRequestTitle} from './Common/DialogBox';
 
 const useStyles = makeStyles((theme) => ({
   main: {
@@ -84,16 +84,16 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-function createData(id, statusHead, status, researcher, lead, created, updated) {
-  return {id, statusHead, status, researcher, lead, created, updated};
+function createData(id, title, statusHead, status, researcher, lead, created, updated) {
+  return {id, title, statusHead, status, researcher, lead, created, updated};
 }
 
 const rows = requestListResearchers.filter((request) => request.status !== 'Draft' ).map((el, index) =>
-  createData(el.id, el.statusHead, el.status, el.researcher, el.lead, el.created, el.updated),
+  createData(el.id, el.title, el.statusHead, el.status, el.researcher, el.lead, el.created, el.updated),
 );
 
 const headCells = [
-  {id: 'id', narrow: false, disablePadding: true, label: 'ID'},
+  {id: 'id', narrow: false, disablePadding: true, label: 'Request'},
   {id: 'status', narrow: false, disablePadding: false, label: 'Status'},
   {id: 'researcher', narrow: false, disablePadding: false, label: 'Researcher'},
   {id: 'lead', narrow: false, disablePadding: false, label: 'Lead'},
@@ -117,6 +117,7 @@ export default function DashboardPageAnalyst() {
     projectsDrawer: true,
     summaryDrawer: false,
     summaryStatus: '',
+    newRequest: false,
   });
   const [tabStatus, setTabStatus] = React.useState('assigned to me');
   const [project, setProject] = React.useState({
@@ -158,6 +159,10 @@ export default function DashboardPageAnalyst() {
 
   const toggleSummaryDrawer = () => {
     setOpen({...open, summaryDrawer: !open.summaryDrawer});
+  };
+
+  const toggleDialog = (state, value) => {
+    setOpen({...open, [state]: value});
   };
 
   const handleProjectTitle = (value) => {
@@ -215,8 +220,7 @@ export default function DashboardPageAnalyst() {
                 variant="contained"
                 color="primary"
                 className={classes.button}
-                component={Link}
-                to="/vetting-app/request-researcher"
+                onClick={() => toggleDialog('newRequest', !open.newRequest)}
               >
             New vetting request
               </Button>
@@ -270,7 +274,8 @@ export default function DashboardPageAnalyst() {
           </TabPanel>
           <TabPanel value={value} index={3} className={classes.tabPanel}>
             <TableContainerComponent
-              status="approved" filteredRows={filteredRows}
+              status="approved"
+              filteredRows={filteredRows}
               headCells={headCells}
               contextSummaryClick={toggleSummaryDrawer}
               contextStatusClick={contextStatusClick}
@@ -288,6 +293,11 @@ export default function DashboardPageAnalyst() {
           </TabPanel>
         </Paper>
         <Footer open={open.projectsDrawer} />
+        <DialognNewRequestTitle
+          open={open.newRequest}
+          role='analyst'
+          toggleDialog={() => toggleDialog('newRequest', !open.newRequest)}
+        />
       </main>
     </React.Fragment>
   );
