@@ -69,9 +69,6 @@ const useStyles = makeStyles((theme) => ({
     background: theme.palette.grey[100],
     paddingBottom: theme.spacing(6),
   },
-  cutcopypaste: {
-    zIndex: '1000',
-  },
   divider: {
     margin: theme.spacing(3, 0),
   },
