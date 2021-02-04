@@ -320,7 +320,7 @@ export const projects = [
 export const requestListResearchers = [
   {
     id: '1001-1234567',
-    name: 'DAaas-1234567',
+    title: 'Example title',
     statusHead: 'assigned to me',
     status: 'assigned to me',
     cancellationReason: '',
@@ -346,7 +346,7 @@ export const requestListResearchers = [
   },
   {
     id: '1001-1234569',
-    name: 'DAaas-0000001',
+    title: 'Example title',
     statusHead: 'assigned to me',
     status: 'assigned to me',
     cancellationReason: '',
@@ -370,7 +370,7 @@ export const requestListResearchers = [
   },
   {
     id: '1001-1234501',
-    name: 'DAaas-0000002',
+    title: 'Example title',
     statusHead: 'active',
     status: 'Draft',
     cancellationReason: '',
@@ -392,7 +392,7 @@ export const requestListResearchers = [
   },
   {
     id: '1001-1234502',
-    name: 'DAaas-0000003',
+    title: 'Example title',
     statusHead: 'withdrawn',
     status: 'Withdrawn',
     cancellationReason: '',
@@ -412,7 +412,7 @@ export const requestListResearchers = [
   },
   {
     id: '1001-1234503',
-    name: 'DAaas-0000004',
+    title: 'Example title',
     statusHead: 'withdrawn',
     status: 'Withdrawn',
     cancellationReason:
@@ -428,7 +428,7 @@ export const requestListResearchers = [
   },
   {
     id: '1001-1234504',
-    name: 'DAaas-0000005',
+    title: 'Example title',
     statusHead: 'unassigned',
     status: 'unassigned',
     cancellationReason: '',
@@ -443,7 +443,7 @@ export const requestListResearchers = [
   },
   {
     id: '1001-1234505',
-    name: 'DAaas-0000006',
+    title: 'Example title',
     statusHead: 'active',
     status: 'Submitted',
     cancellationReason: '',
@@ -458,7 +458,7 @@ export const requestListResearchers = [
   },
   {
     id: '1001-1234506',
-    name: 'DAaas-0000007',
+    title: 'Example title',
     statusHead: 'approved',
     status: 'Approved',
     cancellationReason: '',
@@ -473,7 +473,7 @@ export const requestListResearchers = [
   },
   {
     id: '1001-1234507',
-    name: 'DAaas-0000008',
+    title: 'Example title',
     statusHead: 'approved',
     status: 'Approved',
     cancellationReason: '',
@@ -488,7 +488,7 @@ export const requestListResearchers = [
   },
   {
     id: '1001-1234508',
-    name: 'DAaas-0000009',
+    title: 'Example title',
     statusHead: 'active',
     status: 'Draft',
     cancellationReason: '',
@@ -503,7 +503,7 @@ export const requestListResearchers = [
   },
   {
     id: '1001-1234509',
-    name: 'DAaas-0000010',
+    title: 'Example title',
     statusHead: 'active',
     status: 'Draft',
     cancellationReason: '',
@@ -518,7 +518,7 @@ export const requestListResearchers = [
   },
   {
     id: '1001-1234510',
-    name: 'DAaas-0000011',
+    title: 'Example title',
     statusHead: 'active',
     status: 'Draft',
     cancellationReason: '',
@@ -533,7 +533,7 @@ export const requestListResearchers = [
   },
   {
     id: '1001-1234511',
-    name: 'DAaas-0000012',
+    title: 'Example title',
     statusHead: 'unassigned',
     status: 'unassigned',
     cancellationReason: '',
@@ -555,7 +555,7 @@ export const requestListResearchers = [
   },
   {
     id: '1001-1234512',
-    name: 'DAaas-0000013',
+    title: 'Example title',
     statusHead: 'approved',
     status: 'Approved',
     cancellationReason: '',
@@ -577,7 +577,7 @@ export const requestListResearchers = [
   },
   {
     id: '1001-1234513',
-    name: 'DAaas-0000014',
+    title: 'Example title',
     statusHead: 'active',
     status: 'Draft',
     cancellationReason: '',
@@ -599,7 +599,7 @@ export const requestListResearchers = [
   },
   {
     id: '1001-1234514',
-    name: 'DAaas-0000015',
+    title: 'Example title',
     statusHead: 'denied',
     status: 'Denied',
     cancellationReason: '',
@@ -619,7 +619,7 @@ export const requestListResearchers = [
   },
   {
     id: '1001-1234515',
-    name: 'DAaas-0000016',
+    title: 'Example title',
     statusHead: 'denied',
     status: 'Denied',
     cancellationReason:
@@ -635,7 +635,7 @@ export const requestListResearchers = [
   },
   {
     id: '1001-1234516',
-    name: 'DAaas-0000017',
+    title: 'Example title',
     statusHead: 'active',
     status: 'Draft',
     cancellationReason: '',
@@ -650,7 +650,7 @@ export const requestListResearchers = [
   },
   {
     id: '1001-1234517',
-    name: 'DAaas-0000017',
+    title: 'Example title',
     statusHead: 'active',
     status: 'Update requested',
     cancellationReason: '',
@@ -665,7 +665,7 @@ export const requestListResearchers = [
   },
   {
     id: '1001-1234518',
-    name: 'DAaas-0000018',
+    title: 'Example title',
     statusHead: 'active',
     status: 'Disclosure analysis',
     cancellationReason: '',
@@ -680,7 +680,7 @@ export const requestListResearchers = [
   },
   {
     id: '1001-1234519',
-    name: 'DAaas-0000019',
+    title: 'Example title',
     statusHead: 'active',
     status: 'Disclosure analysis',
     cancellationReason: '',
@@ -695,7 +695,7 @@ export const requestListResearchers = [
   },
   {
     id: '1001-1234520',
-    name: 'DAaas-0000020',
+    title: 'Example title',
     statusHead: 'active',
     status: 'Update requested',
     cancellationReason: '',
@@ -710,7 +710,7 @@ export const requestListResearchers = [
   },
   {
     id: '1001-1234521',
-    name: 'DAaas-0000021',
+    title: 'Example title',
     statusHead: 'active',
     status: 'Update requested',
     cancellationReason: '',
@@ -725,7 +725,7 @@ export const requestListResearchers = [
   },
   {
     id: '1001-1234522',
-    name: 'DAaas-0000022',
+    title: 'Example title',
     statusHead: 'active',
     status: 'Draft',
     cancellationReason: '',
