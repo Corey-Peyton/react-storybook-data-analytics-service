@@ -3,9 +3,8 @@ import {Grid, Chip, Typography} from '@material-ui/core';
 import {makeStyles} from '@material-ui/core/styles';
 
 const useStyles = makeStyles((theme) => ({
-  main: {
-    background: theme.palette.grey[100],
-    paddingBottom: theme.spacing(6),
+  title: {
+    flexGrow: 1,
   },
   upperCase: {
     textTransform: 'uppercase',
@@ -15,17 +14,24 @@ const useStyles = makeStyles((theme) => ({
 
 function AppBarUnAssign() {
   const classes = useStyles();
+  const [state] = React.useState({
+    title: 'New vetting request',
+  });
   return (
-    <div>
-      <Grid container alignItems="center">
-        <Grid item>
-          <Chip label="Disclosure Analysis" className={classes.upperCase} />
-        </Grid>
-        <Grid item>
-          <Typography variant="body2">Unassigned</Typography>
-        </Grid>
+    <Grid container alignItems="center">
+      <Grid item className={classes.title}>
+        <Typography variant="h6" component="h2">{state.title}</Typography>
+        <Typography variant="caption" color="textSecondary">
+                ID: 10_2020_232425255
+        </Typography>
       </Grid>
-    </div>
+      <Grid item>
+        <Chip label="Disclosure Analysis" className={classes.upperCase} />
+      </Grid>
+      <Grid item>
+        <Typography variant="body2">Unassigned</Typography>
+      </Grid>
+    </Grid>
   );
 }
 

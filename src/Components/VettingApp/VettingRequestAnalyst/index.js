@@ -39,6 +39,7 @@ import Header from '../CommonComponents/Header';
 import Footer from '../CommonComponents/Footer';
 import CloseIcon from '@material-ui/icons/Close';
 import FloatingSupportButton from '../CommonComponents/Support';
+import CutCopyPasteAlert from '../CommonComponents/CutCopyPasteAlert';
 
 const useStyles = makeStyles((theme) => ({
   dialogTitle: {
@@ -67,6 +68,9 @@ const useStyles = makeStyles((theme) => ({
   main: {
     background: theme.palette.grey[100],
     paddingBottom: theme.spacing(6),
+  },
+  cutcopypaste: {
+    zIndex: '1000',
   },
   divider: {
     margin: theme.spacing(3, 0),
@@ -259,6 +263,16 @@ function VettingRequestAnalyst(props) {
     setState({...state, assign: true});
   };
 
+  function alertBar() {
+    if (state.activeStep === 0) {
+      return <CutCopyPasteAlert />;
+    } else if (state.activeStep === 1 || state.activeStep === 2) {
+      return <AppBarAssign />;
+    } else {
+      return <AppBarUnAssign handleDialogOpen={handleDialogOpen}/>;
+    }
+  }
+
   return (
     <>
       <Header />
@@ -269,13 +283,7 @@ function VettingRequestAnalyst(props) {
           </AppBar>
           <Paper className={classes.paper}>
             <Grid container alignItems="center">
-              <Grid item className={classes.title}>
-                <Typography variant="h6" component="h2">{state.title}</Typography>
-                <Typography variant="caption" color="textSecondary">
-                ID: 10_2020_232425255
-                </Typography>
-              </Grid>
-              {state.activeStep === 3 ? <AppBarUnAssign handleDialogOpen={handleDialogOpen}/> : <AppBarAssign />}
+              {alertBar()}
             </Grid>
             <Divider className={classes.divider} />
             <div className={classes.stepperContainer}>

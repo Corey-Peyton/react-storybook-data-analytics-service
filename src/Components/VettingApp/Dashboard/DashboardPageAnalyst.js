@@ -216,7 +216,7 @@ export default function DashboardPageAnalyst() {
                 color="primary"
                 className={classes.button}
                 component={Link}
-                to="/vetting-app/request-researcher"
+                to="/vetting-app/request-analyst"
               >
             New vetting request
               </Button>

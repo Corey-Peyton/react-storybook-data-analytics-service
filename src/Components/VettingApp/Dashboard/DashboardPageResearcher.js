@@ -10,6 +10,7 @@ import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
 import Paper from '@material-ui/core/Paper';
 import Button from '@material-ui/core/Button';
+import {Link} from 'react-router-dom';
 
 import TableContainerComponent from './Common/TableContainerComponent';
 import TabPanel from './Common/DashboardTabPanel';
@@ -208,7 +209,13 @@ export default function DashboardPageResearcher() {
               >
                 {project.title}
               </Typography>
-              <Button variant="contained" color="primary" className={classes.button}>
+              <Button
+                variant="contained"
+                color="primary"
+                className={classes.button}
+                component={Link}
+                to="/vetting-app/request-researcher"
+              >
             New vetting request
               </Button>
             </AppBar>
