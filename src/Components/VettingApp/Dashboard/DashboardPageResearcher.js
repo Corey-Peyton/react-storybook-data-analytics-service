@@ -20,6 +20,7 @@ import ProjectsDrawer from './Common/ProjectsDrawer';
 import BypassBlocks from '../../BypassBlocks';
 import {requestListResearchers} from '../../../Data/fakeData';
 import {DRAWER_WIDTH} from './Common/ProjectsDrawer';
+import {DialognNewRequestTitle} from './Common/DialogBox';
 
 const useStyles = makeStyles((theme) => ({
   main: {
@@ -83,16 +84,16 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-function createData(id, statusHead, status, researcher, lead, created, updated) {
-  return {id, statusHead, status, researcher, lead, created, updated};
+function createData(id, title, statusHead, status, researcher, lead, created, updated) {
+  return {id, title, statusHead, status, researcher, lead, created, updated};
 }
 
 const rows = requestListResearchers.map((el, index) =>
-  createData(el.id, el.statusHead, el.status, el.researcher, el.lead, el.created, el.updated),
+  createData(el.id, el.title, el.statusHead, el.status, el.researcher, el.lead, el.created, el.updated),
 );
 
 const headCells = [
-  {id: 'id', narrow: false, disablePadding: true, label: 'ID'},
+  {id: 'id', narrow: false, disablePadding: true, label: 'Request'},
   {id: 'status', narrow: false, disablePadding: false, label: 'Status'},
   {id: 'researcher', narrow: false, disablePadding: false, label: 'Researcher'},
   {id: 'lead', narrow: false, disablePadding: false, label: 'Analyst'},
@@ -116,6 +117,7 @@ export default function DashboardPageResearcher() {
     projectsDrawer: true,
     summaryDrawer: false,
     summaryStatus: '',
+    newRequest: false,
   });
   const [tabStatus, setTabStatus] = React.useState('active');
   const [project, setProject] = React.useState({
@@ -154,6 +156,10 @@ export default function DashboardPageResearcher() {
 
   const toggleSummaryDrawer = () => {
     setOpen({...open, summaryDrawer: !open.summaryDrawer});
+  };
+
+  const toggleDialog = (state, value) => {
+    setOpen({...open, [state]: value});
   };
 
   const handleProjectTitle = (value) => {
@@ -208,7 +214,12 @@ export default function DashboardPageResearcher() {
               >
                 {project.title}
               </Typography>
-              <Button variant="contained" color="primary" className={classes.button}>
+              <Button
+                variant="contained"
+                color="primary"
+                className={classes.button}
+                onClick={() => toggleDialog('newRequest', !open.newRequest)}
+              >
             New vetting request
               </Button>
             </AppBar>
@@ -269,6 +280,11 @@ export default function DashboardPageResearcher() {
           </TabPanel>
         </Paper>
         <Footer open={open.projectsDrawer} />
+        <DialognNewRequestTitle
+          open={open.newRequest}
+          role='researcher'
+          toggleDialog={() => toggleDialog('newRequest', !open.newRequest)}
+        />
       </main>
     </React.Fragment>
   );

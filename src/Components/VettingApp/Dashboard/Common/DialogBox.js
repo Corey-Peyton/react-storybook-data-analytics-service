@@ -1,5 +1,6 @@
 import React from 'react';
 import {useTranslation} from 'react-i18next';
+import {useHistory} from 'react-router-dom';
 import clsx from 'clsx';
 import {makeStyles} from '@material-ui/core/styles';
 import {green} from '@material-ui/core/colors';
@@ -1751,6 +1752,228 @@ export function DialogApprove(props) {
         severity="success"
         message={t('Vetting request 10-2020-2354326 has been approved')}
         toggleSnackbar={SnackbarClose}/>
+    </React.Fragment>
+  );
+}
+
+
+// ////////////////////////////////////////// NEW REQUEST TITLE
+export function DialognNewRequestTitle(props) {
+  const classes = useStyles();
+  const {t} = useTranslation();
+  const history = useHistory();
+  const {toggleDialog, open, role} = props;
+  const initial = { // blank object used to reset state
+    title: {
+      text: 'Untitled request',
+      errorText: '',
+      invalid: '',
+      commands: '',
+    },
+  };
+  const [state, setState] = React.useState({
+    title: {
+      text: 'Untitled request',
+      errorText: '',
+      invalid: '',
+      commands: '',
+    },
+  });
+
+  const handleChange = (e, val) => {
+    const comment = e.target.value;
+    setState({...state, [val]: { // updates state with text from input
+      ...state[val],
+      text: comment,
+    },
+    });
+
+    if (e.target.value && state.title.errorText) { // if input text is valid, clear error
+      setState({...state, [val]: {
+        ...state[val],
+        text: comment,
+        errorText: '',
+        invalid: '',
+        commands: '',
+      },
+      });
+    }
+  };
+
+  const validateForm = () => {
+    let isError = false;
+    if (state.title.text.trim() === '') {
+      isError = true;
+      state.title.invalid = t('Enter a title.');
+      state.title.errorText = t('Enter a title.');
+    }
+
+    if (isError) {
+      setState({
+        ...state,
+      });
+    }
+
+    return isError;
+  };
+
+  const submitForm = (e) => {
+    e.preventDefault();
+    const err = validateForm();
+    if (!err) { // if no errors exist, submit the form and reset the inputs
+      toggleDialog();
+      setState({...initial});
+
+      if (role === 'researcher') {
+        history.push('/vetting-app/request-researcher');
+      } else if (role === 'analyst') {
+        history.push('/vetting-app/request-analyst');
+      }
+    } else {
+      for (const property in state) { // focus on the first input that has an error on submit
+        if (state[property].invalid) {
+          switch (property) {
+            case 'title':
+              document.getElementById('title-input').focus();
+              break;
+            default:
+              break;
+          }
+          break;
+        }
+      }
+    }
+  };
+
+  const disableCutCopyPaste = (e, command, value) => { // display error if user tries to cut/copy/paste
+    let msg;
+    e.preventDefault();
+    switch (command) {
+      case 'cut':
+        msg = t('Cut has been disabled for security purposes.');
+        setState({...state, [value]: {
+          ...state[value],
+          commands: msg,
+          errorText: msg,
+        },
+        });
+        break;
+      case 'copy':
+        msg = t('Copy has been disabled for security purposes.');
+        setState({...state, [value]: {
+          ...state[value],
+          commands: msg,
+          errorText: msg,
+        },
+        });
+        break;
+      case 'paste':
+        msg = t('Paste has been disabled for security purposes.');
+        setState({...state, [value]: {
+          ...state[value],
+          commands: msg,
+          errorText: msg,
+        },
+        });
+        break;
+      default:
+        break;
+    }
+  };
+
+  const toggleHelperText = (value) => {
+    if (state[value].commands === state[value].errorText) {
+      if (Boolean(state[value].invalid)) { // set error text back to invalid error
+        setState({...state, [value]: {
+          ...state[value],
+          errorText: state[value].invalid,
+        },
+        });
+      } else { // clear error text if no invalid error exists
+        setState({...state, [value]: {
+          ...state[value],
+          errorText: '',
+        },
+        });
+      }
+    }
+  };
+
+  const inputSelect = () =>{
+    document.getElementById('title-input').select();
+  };
+
+  return (
+    <React.Fragment>
+      <Dialog
+        onClose={() => {
+          setState({...initial});
+          toggleDialog();
+        }}
+        aria-labelledby="dashboard-dialog-title"
+        onEntered={inputSelect}
+        open={open}
+        className={classes.root}
+      >
+        <DialogTitle id="dashboard-dialog-title">
+          <div className={classes.dialogTitle}>
+            <Typography variant='h6'>{t('New vetting request')}</Typography>
+            <IconButton
+              id='dialog-close'
+              onClick={toggleDialog}
+              edge='end'
+              aria-label="New vetting request - close">
+              <CloseIcon />
+            </IconButton>
+          </div>
+        </DialogTitle>
+        <Divider className="mb-2" />
+        <form onSubmit={submitForm} noValidate>
+          <div className={classes.dialogRow}>
+            <FormControl variant="outlined" className={classes.textField}>
+              <TextField
+                id="title-input"
+                label={t('Title')}
+                aria-label={t('Title')}
+                value={state.title.text}
+                variant="outlined"
+                required
+                error={Boolean(state.title.errorText)}
+                helperText={state.title.errorText}
+                onCut={(e) => disableCutCopyPaste(e, 'cut', 'title')}
+                onCopy={(e) => disableCutCopyPaste(e, 'copy', 'title')}
+                onPaste={(e) => disableCutCopyPaste(e, 'paste', 'title')}
+                onChange={(e) => handleChange(e, 'title')}
+                onClick={() => toggleHelperText('title')}
+                onBlur={() => toggleHelperText('title')}
+                onFocus={() => toggleHelperText('title')}
+              />
+            </FormControl>
+          </div>
+          <Divider className="mt-2" />
+          <div className={classes.dialogFooter}>
+            <Button
+              variant="outlined"
+              color="primary"
+              onClick={() => {
+                setState({...initial});
+                toggleDialog();
+              }}
+              className={classes.footerBtns}
+            >
+              {t('Cancel')}
+            </Button>
+            <Button
+              type="submit"
+              variant="contained"
+              color="primary"
+              className={classes.footerBtns}
+            >
+              {t('Submit request')}
+            </Button>
+          </div>
+        </form>
+      </Dialog>
     </React.Fragment>
   );
 }
