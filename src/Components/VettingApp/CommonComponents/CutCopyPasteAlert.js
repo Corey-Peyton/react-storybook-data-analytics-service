@@ -6,7 +6,7 @@ import Collapse from '@material-ui/core/Collapse';
 
 const useStyles = makeStyles((theme) => ({
   blackColor: {
-    color: theme.palette.common.black,
+    color: theme.palette.text.primary,
   },
   whiteBG: {
     backgroundColor: theme.palette.common.white,
