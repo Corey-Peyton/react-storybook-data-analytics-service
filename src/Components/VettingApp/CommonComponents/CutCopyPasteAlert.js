@@ -5,12 +5,8 @@ import Button from '@material-ui/core/Button';
 import Collapse from '@material-ui/core/Collapse';
 
 const useStyles = makeStyles((theme) => ({
-  warningColor: {
-    color: '#663C00',
-  },
   padding: {
-    padding: '6px 16px',
-    color: '#663C00',
+    padding: theme.spacing(0.75, 2),
   },
   root: {
     marginBottom: theme.spacing(1),
@@ -37,7 +33,7 @@ export default function CutCopyPasteAlert() {
             </Button>
           }
         >
-          <span className={classes.warningColor}>Cut, copy and paste functionality has been disabled on text fields for security purposes.</span>
+          Cut, copy and paste functionality has been disabled on text fields for security purposes.
         </Alert>
       </Collapse>
     </div>
