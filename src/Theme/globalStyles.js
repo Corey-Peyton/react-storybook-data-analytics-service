@@ -141,7 +141,7 @@ export const useStyles = makeStyles({
     },
 
     '.MuiAlert-filledError, .MuiAlert-message, .MuiAlert-icon, .MuiAlert-action': {
-      color: [theme.palette.common.white, '!important'],
+      color: [theme.palette.common.white],
     },
 
     // Pagination

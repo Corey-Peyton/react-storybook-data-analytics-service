@@ -5,20 +5,15 @@ import Button from '@material-ui/core/Button';
 import Collapse from '@material-ui/core/Collapse';
 
 const useStyles = makeStyles((theme) => ({
-  blackColor: {
-    color: theme.palette.text.primary,
-  },
-  whiteBG: {
-    backgroundColor: theme.palette.common.white,
+  warningColor: {
+    color: '#663C00',
   },
   padding: {
     padding: '6px 16px',
+    color: '#663C00',
   },
   root: {
-    margin: theme.spacing(0, -2),
-    width: 'auto',
-    backgroundColor: theme.palette.common.white,
-    borderBottom: '1px solid rgba(0, 0, 0, 0.12)',
+    marginBottom: theme.spacing(1),
   },
 }));
 
@@ -30,7 +25,7 @@ export default function CutCopyPasteAlert() {
     <div className={classes.root}>
       <Collapse in={open}>
         <Alert
-          className={classes.whiteBG}
+          severity="warning"
           action={
             <Button size="small"
               className={classes.padding}
@@ -42,7 +37,7 @@ export default function CutCopyPasteAlert() {
             </Button>
           }
         >
-          <span className={classes.blackColor}>Cut, copy and paste functionality has been disabled on text fields for security purposes.</span>
+          <span className={classes.warningColor}>Cut, copy and paste functionality has been disabled on text fields for security purposes.</span>
         </Alert>
       </Collapse>
     </div>

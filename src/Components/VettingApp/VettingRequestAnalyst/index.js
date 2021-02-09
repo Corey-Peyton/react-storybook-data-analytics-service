@@ -72,6 +72,10 @@ const useStyles = makeStyles((theme) => ({
   divider: {
     margin: theme.spacing(3, 0),
   },
+  dividercutcopypaste: {
+    marginBottom: theme.spacing(2),
+    marginTop: theme.spacing(3),
+  },
   appBar: {
     margin: theme.spacing(0, -2),
     width: 'auto',
@@ -270,11 +274,6 @@ function VettingRequestAnalyst(props) {
             {state.assign ? <ToolBarUnassign /> : <ToolBarAssign assign={assign}/>}
             <Divider />
           </AppBar>
-          <AppBar position="static" elevation={0}>
-            {state.activeStep === 0 && (
-              <CutCopyPasteAlert />
-            )}
-          </AppBar>
           <Paper className={classes.paper}>
             <Grid container alignItems="center">
               {state.activeStep === 3 ? <AppBarUnAssign handleDialogOpen={handleDialogOpen}/> : <AppBarAssign />}
@@ -312,7 +311,8 @@ function VettingRequestAnalyst(props) {
                 </Button>
               )}
             </div>
-            <Divider className={classes.divider} />
+            <Divider className={classes.dividercutcopypaste} />
+            <CutCopyPasteAlert />
             <div>
               {allStepsCompleted() ? (
               <div>
