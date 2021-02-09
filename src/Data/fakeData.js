@@ -329,11 +329,13 @@ export const requestListResearchers = [
     expiration: 'Sep. 20, 2020',
     project: '1',
     researcher: 'eltonjohn@cloud.statcan.ca',
-    lead: [
-      'julie.trll@cloud.statcan.ca',
-      'name@email',
-      'name@email',
-    ],
+    analysts: {
+      lead: 'julie.trll@cloud.statcan.ca',
+      support: [
+        'name@email',
+        'name@email',
+      ],
+    },
     files: [
       'This is file 1',
       'Another file',
@@ -355,9 +357,10 @@ export const requestListResearchers = [
     expiration: 'Sep. 20, 2020',
     project: '2',
     researcher: 'leonardcohen@cloud.statcan.ca',
-    lead: [
-      'julie.trll@cloud.statcan.ca',
-    ],
+    analysts: {
+      lead: 'julie.trll@cloud.statcan.ca',
+      support: [],
+    },
     files: [
       'This is file 1',
       'Another file',
@@ -379,7 +382,10 @@ export const requestListResearchers = [
     expiration: 'Sep. 20, 2020',
     project: '3',
     researcher: 'averylongemailgoeshere@cloud.statcan.ca',
-    lead: ['julie.trll@cloud.statcan.ca'],
+    analysts: {
+      lead: 'julie.trll@cloud.statcan.ca',
+      support: [],
+    },
     files: [
       'This is file 1',
       'Another file',
@@ -401,7 +407,10 @@ export const requestListResearchers = [
     expiration: 'Sep. 20, 2020',
     project: '4',
     researcher: 'someemail@cloud.statcan.ca',
-    lead: ['paul.colton@cloud.statcan.ca'],
+    analysts: {
+      lead: 'paul.colton@cloud.statcan.ca',
+      support: [],
+    },
     files: [
       'A large file name with lorem ipsum',
       'File about something',
@@ -422,7 +431,10 @@ export const requestListResearchers = [
     expiration: 'Sep. 20, 2020',
     project: '1',
     researcher: 'someemail@cloud.statcan.ca',
-    lead: ['philip.duran@cloud.statcan.ca'],
+    analysts: {
+      lead: 'philip.duran@cloud.statcan.ca',
+      support: [],
+    },
     files: ['File 4', 'File 5'],
     summary: 'Some summary content goes here',
   },
@@ -437,7 +449,10 @@ export const requestListResearchers = [
     expiration: 'Sep. 20, 2020',
     project: '2',
     researcher: 'anotheremail@cloud.statcan.ca',
-    lead: '',
+    analysts: {
+      lead: '',
+      support: ['name@name.ca', 'name@name.ca', 'name@name.ca'],
+    },
     files: ['File 4', 'File 5'],
     summary: 'Some summary content goes here',
   },
@@ -452,7 +467,10 @@ export const requestListResearchers = [
     expiration: 'Sep. 20, 2020',
     project: '3',
     researcher: 'anotheremail@cloud.statcan.ca',
-    lead: [],
+    analysts: {
+      lead: '',
+      support: [],
+    },
     files: ['File one', 'File 4', 'File 5'],
     summary: 'Some summary content goes here',
   },
@@ -467,7 +485,10 @@ export const requestListResearchers = [
     expiration: 'Sep. 20, 2020',
     project: '4',
     researcher: 'perfectworks@cloud.statcan.ca',
-    lead: ['eva.silver@cloud.statcan.ca'],
+    analysts: {
+      lead: 'eva.silver@cloud.statcan.ca',
+      support: [],
+    },
     files: ['File one', 'File 5'],
     summary: 'Some summary content goes here',
   },
@@ -482,7 +503,10 @@ export const requestListResearchers = [
     expiration: 'Sep. 20, 2020',
     project: '1',
     researcher: 'perfectworks@cloud.statcan.ca',
-    lead: ['eva.silver@cloud.statcan.ca'],
+    analysts: {
+      lead: 'eva.silver@cloud.statcan.ca',
+      support: [],
+    },
     files: ['File one', 'File 5', 'File 8'],
     summary: 'Some summary content goes here',
   },
@@ -497,7 +521,10 @@ export const requestListResearchers = [
     expiration: 'Sep. 20, 2020',
     project: '2',
     researcher: 'torontostuff@cloud.statcan.ca',
-    lead: ['eva.silver@cloud.statcan.ca'],
+    analysts: {
+      lead: 'eva.silver@cloud.statcan.ca',
+      support: [],
+    },
     files: ['File one', 'File 8'],
     summary: 'Some summary content goes here',
   },
@@ -512,7 +539,10 @@ export const requestListResearchers = [
     expiration: 'Sep. 20, 2020',
     project: '3',
     researcher: 'ottawarules@cloud.statcan.ca',
-    lead: ['eva.silver@cloud.statcan.ca'],
+    analysts: {
+      lead: 'eva.silver@cloud.statcan.ca',
+      support: [],
+    },
     files: ['File one', 'File 8'],
     summary: 'Some summary content goes here',
   },
@@ -527,7 +557,10 @@ export const requestListResearchers = [
     expiration: 'Sep. 20, 2020',
     project: '4',
     researcher: 'ottawarules@cloud.statcan.ca',
-    lead: ['eva.silver@cloud.statcan.ca'],
+    analysts: {
+      lead: 'eva.silver@cloud.statcan.ca',
+      support: [],
+    },
     files: ['File one', 'File 8'],
     summary: 'Some summary content goes here',
   },
@@ -542,7 +575,10 @@ export const requestListResearchers = [
     expiration: 'Sep. 20, 2020',
     project: '1',
     researcher: 'eltonjohn@cloud.statcan.ca',
-    lead: '',
+    analysts: {
+      lead: '',
+      support: [],
+    },
     files: [
       'This is file 1',
       'Another file',
@@ -564,7 +600,10 @@ export const requestListResearchers = [
     expiration: 'Sep. 20, 2020',
     project: '2',
     researcher: 'leonardcohen@cloud.statcan.ca',
-    lead: ['julie.trll@cloud.statcan.ca'],
+    analysts: {
+      lead: 'julie.trll@cloud.statcan.ca',
+      support: [],
+    },
     files: [
       'This is file 1',
       'Another file',
@@ -586,7 +625,10 @@ export const requestListResearchers = [
     expiration: 'Sep. 20, 2020',
     project: '3',
     researcher: 'averylongemailgoeshere@cloud.statcan.ca',
-    lead: ['julie.trll@cloud.statcan.ca'],
+    analysts: {
+      lead: 'julie.trll@cloud.statcan.ca',
+      support: [],
+    },
     files: [
       'This is file 1',
       'Another file',
@@ -608,7 +650,10 @@ export const requestListResearchers = [
     expiration: 'Sep. 20, 2020',
     project: '4',
     researcher: 'someemail@cloud.statcan.ca',
-    lead: ['paul.colton@cloud.statcan.ca'],
+    analysts: {
+      lead: 'paul.colton@cloud.statcan.ca',
+      support: [],
+    },
     files: [
       'A large file name with lorem ipsum',
       'File about something',
@@ -629,7 +674,10 @@ export const requestListResearchers = [
     expiration: 'Sep. 20, 2020',
     project: '1',
     researcher: 'someemail@cloud.statcan.ca',
-    lead: ['philip.duran@cloud.statcan.ca'],
+    analysts: {
+      lead: 'philip.duran@cloud.statcan.ca',
+      support: [],
+    },
     files: ['File 4', 'File 5'],
     summary: 'Some summary content goes here',
   },
@@ -644,7 +692,10 @@ export const requestListResearchers = [
     expiration: 'Sep. 20, 2020',
     project: '2',
     researcher: 'anotheremail@cloud.statcan.ca',
-    lead: ['eva.silver@cloud.statcan.ca'],
+    analysts: {
+      lead: 'eva.silver@cloud.statcan.ca',
+      support: [],
+    },
     files: ['File 4', 'File 5'],
     summary: 'Some summary content goes here',
   },
@@ -659,7 +710,10 @@ export const requestListResearchers = [
     expiration: 'Sep. 20, 2020',
     project: '3',
     researcher: 'anotheremail@cloud.statcan.ca',
-    lead: ['eva.silver@cloud.statcan.ca'],
+    analysts: {
+      lead: 'eva.silver@cloud.statcan.ca',
+      support: [],
+    },
     files: ['File 4', 'File 5'],
     summary: 'Some summary content goes here',
   },
@@ -674,7 +728,10 @@ export const requestListResearchers = [
     expiration: 'Sep. 20, 2020',
     project: '3',
     researcher: 'anotheremail@cloud.statcan.ca',
-    lead: ['eva.silver@cloud.statcan.ca'],
+    analysts: {
+      lead: 'eva.silver@cloud.statcan.ca',
+      support: [],
+    },
     files: ['File 4', 'File 5'],
     summary: 'Some summary content goes here',
   },
@@ -689,7 +746,10 @@ export const requestListResearchers = [
     expiration: 'Sep. 20, 2020',
     project: '3',
     researcher: 'anotheremail@cloud.statcan.ca',
-    lead: ['eva.silver@cloud.statcan.ca'],
+    analysts: {
+      lead: 'eva.silver@cloud.statcan.ca',
+      support: [],
+    },
     files: ['File 4', 'File 5'],
     summary: 'Some summary content goes here',
   },
@@ -704,7 +764,10 @@ export const requestListResearchers = [
     expiration: 'Sep. 20, 2020',
     project: '3',
     researcher: 'anotheremail@cloud.statcan.ca',
-    lead: ['eva.silver@cloud.statcan.ca'],
+    analysts: {
+      lead: 'eva.silver@cloud.statcan.ca',
+      support: [],
+    },
     files: ['File 4', 'File 5'],
     summary: 'Some summary content goes here',
   },
@@ -719,7 +782,10 @@ export const requestListResearchers = [
     expiration: 'Sep. 20, 2020',
     project: '3',
     researcher: 'anotheremail@cloud.statcan.ca',
-    lead: ['eva.silver@cloud.statcan.ca'],
+    analysts: {
+      lead: 'eva.silver@cloud.statcan.ca',
+      support: [],
+    },
     files: ['File 4', 'File 5'],
     summary: 'Some summary content goes here',
   },
@@ -734,7 +800,10 @@ export const requestListResearchers = [
     expiration: 'Sep. 20, 2020',
     project: '3',
     researcher: 'anotheremail@cloud.statcan.ca',
-    lead: ['eva.silver@cloud.statcan.ca'],
+    analysts: {
+      lead: 'eva.silver@cloud.statcan.ca',
+      support: [],
+    },
     files: ['File 4', 'File 5'],
     summary: 'Some summary content goes here',
   },
