@@ -16,7 +16,6 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 function Assignee(props) {
-  const classes = useStyles();
   // No analysts assigned
   if (props.lead === '' && props.support.length === 0) {
     return (
