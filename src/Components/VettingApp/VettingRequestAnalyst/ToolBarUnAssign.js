@@ -2,7 +2,14 @@ import React from 'react';
 import {makeStyles} from '@material-ui/core/styles';
 import clsx from 'clsx';
 import NumberFormat from 'react-number-format';
-import {Button, Toolbar, IconButton, Typography, TextField, FormControl} from '@material-ui/core';
+import {
+  Button,
+  Toolbar,
+  IconButton,
+  Typography,
+  TextField,
+  FormControl,
+} from '@material-ui/core';
 import Icon from '@mdi/react';
 import ReplayIcon from '@material-ui/icons/Replay';
 import SaveIcon from '@material-ui/icons/Save';
@@ -29,14 +36,14 @@ const useStyles = makeStyles((theme) => ({
     '& .MuiDialog-paperWidthSm': {
       'width': 400,
       '& .MuiTextField-root': {
-        'width': '100%',
+        width: '100%',
       },
       '& .MuiFormLabel-root': {
         'line-height': 1,
         'background-color': 'white',
       },
       '& .MuiOutlinedInput-multiline': {
-        'padding': 0,
+        padding: 0,
       },
       '& .MuiOutlinedInput-inputMultiline': {
         'max-height': 130,
@@ -45,7 +52,7 @@ const useStyles = makeStyles((theme) => ({
       },
     },
     '& .MuiFormControl-root': {
-      'width': '100%',
+      width: '100%',
     },
   },
   dialogTitle: {
@@ -90,7 +97,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-function ToolBarUnassign() {
+function ToolBarUnassign(props) {
   const classes = useStyles();
   const [anchorEl, setAnchorEl] = React.useState(null);
 
@@ -106,7 +113,6 @@ function ToolBarUnassign() {
     dialogUpdate: false,
     dialogUnAssign: false,
     dialogDeny: false,
-    snackBarUnassign: false,
     snackBarDeny: false,
     snackBarApprove: false,
   });
@@ -117,10 +123,6 @@ function ToolBarUnassign() {
 
   const handleClickClose = (state) => {
     setOpen({...open, [state]: false});
-  };
-
-  const handleUnassign = () => {
-    setOpen({...open, dialogUnAssign: false, snackBarUnassign: true});
   };
 
   const handleDeny = () => {
@@ -148,68 +150,75 @@ function ToolBarUnassign() {
         <ArrowBackIcon />
       </IconButton>
       <Typography variant="body2" className={classes.title}>
-              Vetting requests dashboard
+        Vetting requests dashboard
       </Typography>
       <Button
         onClick={() => handleClickOpen('dialogUnAssign')}
         color="primary"
-        className={classes.headerBtn}>
-        <Icon path={mdiAccountPlus} className="icon-grey" size={1} />
-        <Typography variant="subtitle2" color="textSecondary">Unassign from me
+        className={classes.headerBtn}
+        startIcon={
+          <Icon path={mdiAccountPlus} className="icon-grey" size={1} />
+        }
+      >
+        <Typography variant="subtitle2" color="textSecondary">
+          Unassign from me
         </Typography>
       </Button>
-      <Dialog open={open.dialogUnAssign}
+      <Dialog
+        open={open.dialogUnAssign}
         aria-labelledby="alert-dialog-unassign"
         aria-describedby="alert-dialog-unassign"
         onClose={() => handleClickClose('dialogUnAssign')}
         className={classes.root}
       >
         <DialogTitle id="alert-dialog-update">
-          <div className={classes.dialogTitle}>Unassign from me
+          <div className={classes.dialogTitle}>
+            Unassign from me
             <IconButton
               onClick={() => handleClickClose('dialogUnAssign')}
-              edge='end'>
+              edge="end"
+            >
               <CloseIcon />
             </IconButton>
           </div>
         </DialogTitle>
         <Divider className="mb-2" />
         <DialogContent className="mb-2">
-          <Typography variant="body2" >If you choose to proceed the request will no longer have a lead analyst and an email will be sent to the researcher notifying them of the change.</Typography>
+          <Typography variant="body2">
+            If you choose to proceed the request will no longer have a lead
+            analyst and an email will be sent to the researcher notifying them
+            of the change.
+          </Typography>
         </DialogContent>
         <Divider className="mb-2" />
         <DialogActions className={classes.dialogFooter}>
-          <Button color="primary" variant="outlined" onClick={() => handleClickClose('dialogUnAssign')}>
+          <Button
+            color="primary"
+            variant="outlined"
+            onClick={() => handleClickClose('dialogUnAssign')}
+          >
             Cancel
           </Button>
-          <Button color="primary" variant="contained" onClick={handleUnassign} className={classes.footerBtns}>
-         Unassign
+          <Button
+            color="primary"
+            variant="contained"
+            onClick={() => {
+              props.handleUnassignFromMe();
+              handleClickClose('dialogUnassign');
+            }}
+            className={classes.footerBtns}
+          >
+            Unassign
           </Button>
         </DialogActions>
       </Dialog>
-      <Snackbar
-        onClose={() => handleClickClose('snackBarUnassign')}
-        open={open.snackBarUnassign} autoHideDuration={6000} anchorOrigin={{
-          vertical: 'bottom',
-          horizontal: 'left',
-        }}>
-        <Alert
-          open={open.snackBarUnassign}
-          onClose={() => handleClickClose('snackBarUnassign')}
-          severity="success"
-          className={classes.alert}
-          variant="filled"
-        >
-                   You have been unassigned from request 10_2020_4564677
-        </Alert>
-      </Snackbar>
       <Button
         variant="outlined"
         color="primary"
         className={classes.headerBtn}
         startIcon={<SaveIcon />}
       >
-              Save
+        Save
       </Button>
       <Button
         variant="outlined"
@@ -228,10 +237,12 @@ function ToolBarUnassign() {
         className={classes.root}
       >
         <DialogTitle id="alert-dialog-update">
-          <div className={classes.dialogTitle}>Request an update
+          <div className={classes.dialogTitle}>
+            Request an update
             <IconButton
               onClick={() => handleClickClose('dialogUpdate')}
-              edge='end'>
+              edge="end"
+            >
               <CloseIcon />
             </IconButton>
           </div>
@@ -241,7 +252,7 @@ function ToolBarUnassign() {
           <FormControl variant="outlined" className={classes.textField}>
             <TextField
               id="update-input"
-              label='Comments'
+              label="Comments"
               variant="outlined"
               multiline
               className={classes.textField}
@@ -253,18 +264,31 @@ function ToolBarUnassign() {
         <DialogActions className={classes.dialogFooter}>
           <Button
             onClick={() => handleClickClose('dialogUpdate')}
-            color="primary" variant="outlined">
+            color="primary"
+            variant="outlined"
+          >
             Cancel
           </Button>
           <Button
             onClick={() => handleClickClose('dialogUpdate')}
-            color="primary" variant="contained" className={classes.footerBtns}>
-          Submit request
+            color="primary"
+            variant="contained"
+            className={classes.footerBtns}
+          >
+            Submit request
           </Button>
         </DialogActions>
       </Dialog>
-      <Button aria-controls="toolbar-unassign-menu" aria-haspopup="true" onClick={handleClick} variant="contained" color="primary" className={classes.headerBtn}>
-  Resolve<ArrowDropDownIcon />
+      <Button
+        aria-controls="toolbar-unassign-menu"
+        aria-haspopup="true"
+        onClick={handleClick}
+        variant="contained"
+        color="primary"
+        className={classes.headerBtn}
+      >
+        Resolve
+        <ArrowDropDownIcon />
       </Button>
       <Menu
         id="toolbar-unassign-menu"
@@ -273,15 +297,10 @@ function ToolBarUnassign() {
         open={Boolean(anchorEl)}
         onClose={handleClose}
       >
-        <MenuItem
-          onClick={() => handleClickOpen('dialogApprove')}
-        >
+        <MenuItem onClick={() => handleClickOpen('dialogApprove')}>
           Approve
         </MenuItem>
-        <MenuItem
-          onClick={() => handleClickOpen('dialogDeny')}
-        >
-          Deny</MenuItem>
+        <MenuItem onClick={() => handleClickOpen('dialogDeny')}>Deny</MenuItem>
       </Menu>
       <Dialog
         open={open.dialogApprove}
@@ -291,31 +310,33 @@ function ToolBarUnassign() {
         className={classes.root}
       >
         <DialogTitle id="alert-dialog-approved-request">
-          <div className={classes.dialogTitle}>Approve request
+          <div className={classes.dialogTitle}>
+            Approve request
             <IconButton
               onClick={() => handleClickClose('dialogApprove')}
-              edge='end'>
+              edge="end"
+            >
               <CloseIcon />
             </IconButton>
           </div>
         </DialogTitle>
         <Divider className="mb-2" />
         <div className={classes.dialogRow}>
-          <Typography variant='subtitle2'>Billable hours</Typography>
+          <Typography variant="subtitle2">Billable hours</Typography>
         </div>
         <div className={classes.dialogRow}>
           <FormControl variant="outlined" className={classes.formControl}>
             <NumberFormat
-              label='Hours'
+              label="Hours"
               customInput={TextField}
               type="text"
-              variant='outlined'
+              variant="outlined"
             />
             <NumberFormat
-              label='Minutes'
+              label="Minutes"
               customInput={TextField}
               type="text"
-              variant='outlined'
+              variant="outlined"
             />
           </FormControl>
         </div>
@@ -323,7 +344,9 @@ function ToolBarUnassign() {
         <DialogActions className={classes.dialogFooter}>
           <Button
             onClick={() => handleClickClose('dialogApprove')}
-            color="primary" variant="outlined">
+            color="primary"
+            variant="outlined"
+          >
             Cancel
           </Button>
           <Button
@@ -332,17 +355,19 @@ function ToolBarUnassign() {
             className={classes.footerBtns}
             onClick={handleApprove}
           >
-          Submit
+            Submit
           </Button>
         </DialogActions>
       </Dialog>
       <Snackbar
         open={open.snackBarApprove}
         onClose={() => handleClickClose('snackBarApprove')}
-        autoHideDuration={6000} anchorOrigin={{
+        autoHideDuration={6000}
+        anchorOrigin={{
           vertical: 'bottom',
           horizontal: 'left',
-        }}>
+        }}
+      >
         <Alert
           onClose={() => handleClickClose('snackBarApprove')}
           severity="success"
@@ -360,31 +385,33 @@ function ToolBarUnassign() {
         className={classes.root}
       >
         <DialogTitle id="alert-dialog-denied-request">
-          <div className={classes.dialogTitle}>Deny request
+          <div className={classes.dialogTitle}>
+            Deny request
             <IconButton
               onClick={() => handleClickClose('dialogDeny')}
-              edge='end'>
+              edge="end"
+            >
               <CloseIcon />
             </IconButton>
           </div>
         </DialogTitle>
         <Divider className="mb-2" />
         <div className={classes.dialogRow}>
-          <Typography variant='subtitle2'>Billable hours</Typography>
+          <Typography variant="subtitle2">Billable hours</Typography>
         </div>
         <div className={classes.dialogRow}>
           <FormControl variant="outlined" className={classes.formControl}>
             <NumberFormat
-              label='Hours'
+              label="Hours"
               customInput={TextField}
               type="text"
-              variant='outlined'
+              variant="outlined"
             />
             <NumberFormat
-              label='Minutes'
+              label="Minutes"
               customInput={TextField}
               type="text"
-              variant='outlined'
+              variant="outlined"
             />
           </FormControl>
         </div>
@@ -398,29 +425,37 @@ function ToolBarUnassign() {
               value={selected}
               label="Denied reason"
               fullWidth
-              placeholder='Select an option'
+              placeholder="Select an option"
             >
               <MenuItem value="">
                 <em>Select an option</em>
               </MenuItem>
-              <MenuItem value='Non-SSI project'>Non-SSI project</MenuItem>
-              <MenuItem value='Confidential requirements are not met'>Confidential requirements are not met</MenuItem>
-              <MenuItem value='Request is missing information'>Request is missing information</MenuItem>
-              <MenuItem value='Output file(s) are not in line with the project proposal'>Output file(s) are not in line with the project proposal</MenuItem>
-              <MenuItem value='Other'>Other</MenuItem>
+              <MenuItem value="Non-SSI project">Non-SSI project</MenuItem>
+              <MenuItem value="Confidential requirements are not met">
+                Confidential requirements are not met
+              </MenuItem>
+              <MenuItem value="Request is missing information">
+                Request is missing information
+              </MenuItem>
+              <MenuItem value="Output file(s) are not in line with the project proposal">
+                Output file(s) are not in line with the project proposal
+              </MenuItem>
+              <MenuItem value="Other">Other</MenuItem>
             </Select>
           </FormControl>
         </div>
-        <div className={clsx(classes.dialogRow, {
-          [classes.hiddenRow]: selected !== 'Other',
-        })}>
+        <div
+          className={clsx(classes.dialogRow, {
+            [classes.hiddenRow]: selected !== 'Other',
+          })}
+        >
           <FormControl variant="outlined">
             <TextField
               id="withdraw-input"
-              label='Comments'
+              label="Comments"
               variant="outlined"
               multiline
-              required='true'
+              required="true"
             />
           </FormControl>
         </div>
@@ -428,7 +463,9 @@ function ToolBarUnassign() {
         <DialogActions className={classes.dialogFooter}>
           <Button
             onClick={() => handleClickClose('dialogDeny')}
-            color="primary" variant="outlined">
+            color="primary"
+            variant="outlined"
+          >
             Cancel
           </Button>
           <Button
@@ -437,17 +474,19 @@ function ToolBarUnassign() {
             className={classes.footerBtns}
             onClick={handleDeny}
           >
-          Submit
+            Submit
           </Button>
         </DialogActions>
       </Dialog>
       <Snackbar
         open={open.snackBarDeny}
         onClose={() => handleClickClose('snackBarDeny')}
-        autoHideDuration={6000} anchorOrigin={{
+        autoHideDuration={6000}
+        anchorOrigin={{
           vertical: 'bottom',
           horizontal: 'left',
-        }}>
+        }}
+      >
         <Alert
           onClose={() => handleClickClose('snackBarDeny')}
           severity="success"
@@ -462,4 +501,3 @@ function ToolBarUnassign() {
 }
 
 export default ToolBarUnassign;
-

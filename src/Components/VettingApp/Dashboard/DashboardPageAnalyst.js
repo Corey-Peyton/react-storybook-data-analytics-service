@@ -96,7 +96,7 @@ const headCells = [
   {id: 'id', narrow: false, disablePadding: true, label: 'Request'},
   {id: 'status', narrow: false, disablePadding: false, label: 'Status'},
   {id: 'researcher', narrow: false, disablePadding: false, label: 'Researcher'},
-  {id: 'analysts', narrow: false, disablePadding: false, label: 'Lead'},
+  {id: 'analysts', narrow: false, disablePadding: false, label: 'Assignee'},
   {id: 'created', narrow: false, disablePadding: false, label: 'Created on'},
   {id: 'updated', narrow: false, disablePadding: false, label: 'Updated on'},
   {id: 'actions', narrow: true, disablePadding: false, label: 'Actions'},

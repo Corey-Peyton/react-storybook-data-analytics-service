@@ -64,9 +64,7 @@ export default function AnalystCell(props) {
     if (analysts.lead !== '' && analysts.support.length > 0) {
       return (
         <TableCell className={classes.tablesCellsFlex}>
-          <div className={classes.leadChip}>
-            <Chip label={analysts.lead} onClick={() => toggleDialog('list')}/>
-          </div>
+          <Chip label={analysts.lead} onClick={() => toggleDialog('list')} className="mr-1"/>
           <Chip label={`${extraAnalysts} ${t('support')}`} onClick={() => toggleDialog('list')} />
           <DialogManageTeam open={open.manageTeam} toggleDialog={() => toggleDialog('list')} />
         </TableCell>
@@ -81,10 +79,8 @@ export default function AnalystCell(props) {
     } else if (analysts.lead === '' && analysts.support.length > 0) {
       return (
         <TableCell className={classes.tablesCellsFlex}>
-          <div className={classes.leadChip}>
-            <Typography variant="body2" color="textSecondary">{t('No lead')}</Typography>
-          </div>
-          <Chip label={`${extraAnalysts} ${t('support')}`} onClick={() => toggleDialog('list')} />
+          <Typography variant="body2" color="textSecondary">{t('No lead')}</Typography>
+          <Chip label={`${extraAnalysts} ${t('support')}`} onClick={() => toggleDialog('list')} className="ml-1"/>
           <DialogManageTeam open={open.manageTeam} toggleDialog={() => toggleDialog('list')} />
         </TableCell>
       );
