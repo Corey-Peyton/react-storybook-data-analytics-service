@@ -8,32 +8,71 @@ const useStyles = makeStyles((theme) => ({
   },
   upperCase: {
     textTransform: 'uppercase',
-    marginRight: '16px',
+  },
+  assignee: {
+    display: 'flex',
+    alignItems: 'center',
   },
 }));
 
-function AppBarUnAssign() {
+function Assignee(props) {
+  // No analysts assigned
+  if (props.lead === '' && props.support.length === 0) {
+    return (
+      <Typography variant="body2" color="textSecondary">
+        Unassigned
+      </Typography>
+    );
+    // Only lead analyst assigned
+  } else if (props.lead !== '' && props.support.length === 0) {
+    return <Chip label={props.lead} onClick={props.handleDialogOpen} />;
+    // Only support analysts assigned
+  } else if (props.lead === '' && props.support.length !== 0) {
+    return (
+      <>
+        <Typography variant="body2" color="textSecondary">No lead</Typography>
+        <Chip
+          label={`${props.support.length} support`}
+          onClick={props.handleDialogOpen}
+          className="ml-1"
+        />
+      </>
+    );
+    // Both load and support analysts assigned
+  } else {
+    return (
+      <>
+        <Chip label={props.lead} onClick={props.handleDialogOpen} />
+        <Chip
+          label={`${props.support.length} support`}
+          onClick={props.handleDialogOpen}
+          className="ml-1"
+        />
+      </>
+    );
+  }
+}
+
+function AppBarUnAssign(props) {
   const classes = useStyles();
-  const [state] = React.useState({
-    title: 'New vetting request',
-  });
   return (
     <Grid container alignItems="center">
       <Grid item className={classes.title}>
-        <Typography variant="h6" component="h2">{state.title}</Typography>
+        <Typography variant="h6" component="h2">
+          {props.title}
+        </Typography>
         <Typography variant="caption" color="textSecondary">
-                ID: 10_2020_232425255
+          ID: 10_2020_232425255
         </Typography>
       </Grid>
       <Grid item>
-        <Chip label="Disclosure Analysis" className={classes.upperCase} />
+        <Chip label="Disclosure Analysis" className={`${classes.upperCase} mr-1`} />
       </Grid>
-      <Grid item>
-        <Typography variant="body2">Unassigned</Typography>
+      <Grid item className={classes.assignee}>
+        <Assignee {...props} />
       </Grid>
     </Grid>
   );
 }
 
 export default AppBarUnAssign;
-

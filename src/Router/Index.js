@@ -52,7 +52,10 @@ function Index() {
             <Link to="/vetting-app/request-researcher">Request - researcher</Link>
           </li>
           <li>
-            <Link to="/vetting-app/request-analyst">Request - analyst</Link>
+            <Link to="/vetting-app/request-analyst-assigned">Request - analyst (assigned)</Link>
+          </li>
+          <li>
+            <Link to="/vetting-app/request-analyst-unassigned">Request - analyst (unassigned)</Link>
           </li>
         </ul>
       </ul>

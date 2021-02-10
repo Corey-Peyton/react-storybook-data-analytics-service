@@ -1,6 +1,14 @@
 import React from 'react';
 import {makeStyles} from '@material-ui/core/styles';
-import {Button, Toolbar, IconButton, Typography, TextField, Divider, FormControl} from '@material-ui/core';
+import {
+  Button,
+  Toolbar,
+  IconButton,
+  Typography,
+  TextField,
+  Divider,
+  FormControl,
+} from '@material-ui/core';
 import Icon from '@mdi/react';
 import SaveIcon from '@material-ui/icons/Save';
 import ArrowBackIcon from '@material-ui/icons/ArrowBack';
@@ -17,7 +25,7 @@ const useStyles = makeStyles((theme) => ({
     '& .MuiDialog-paperWidthSm': {
       'width': 400,
       '& .MuiTextField-root': {
-        'width': '100%',
+        width: '100%',
       },
       '& .MuiFormLabel-root': {
         'line-height': 1,
@@ -27,7 +35,7 @@ const useStyles = makeStyles((theme) => ({
         'overflow': 'hidden auto !important',
       },
       '& .MuiAutocomplete-endAdornment': {
-        'top': '5.5px',
+        top: '5.5px',
       },
     },
   },
@@ -80,13 +88,19 @@ function ToolBarAssign(props) {
         <ArrowBackIcon />
       </IconButton>
       <Typography variant="subtitle1" component="h2" className={classes.title}>
-              Vetting requests dashboard
+        Vetting requests dashboard
       </Typography>
       <Button
         color="primary"
-        className={classes.headerBtn} onClick={handleClickOpen}>
-        <Icon path={mdiAccountPlus} className="icon-grey" size={1} />
-        <Typography variant="subtitle2" color="textSecondary" component="h3">Assign to me</Typography>
+        className={classes.headerBtn}
+        onClick={handleClickOpen}
+        startIcon={
+          <Icon path={mdiAccountPlus} className="icon-grey" size={1} />
+        }
+      >
+        <Typography variant="subtitle2" color="textSecondary">
+          Assign to me
+        </Typography>
       </Button>
       <Button
         variant="outlined"
@@ -94,7 +108,7 @@ function ToolBarAssign(props) {
         className={classes.headerBtn}
         startIcon={<SaveIcon />}
       >
-              Save
+        Save
       </Button>
       <Dialog
         open={open}
@@ -104,35 +118,47 @@ function ToolBarAssign(props) {
       >
         <DialogTitle id="dashboard-dialog-title">
           <div className={classes.dialogTitle}>
-            <Typography variant='h6'>Assign vetting request to me</Typography>
-            <IconButton
-              onClick={handleClose}
-              edge='end'>
+            <Typography variant="h6">Assign vetting request to me</Typography>
+            <IconButton onClick={handleClose} edge="end">
               <CloseIcon />
             </IconButton>
           </div>
         </DialogTitle>
         <Divider />
         <DialogContent className="mt-3 pt-0">
-          <Typography variant="subtitle2" className="mb-2">Provide a phone number</Typography>
+          <Typography variant="subtitle2" className="mb-2">
+            Provide a phone number
+          </Typography>
           <FormControl variant="outlined" className={classes.textField}>
             <NumberFormat
-              id='phone'
-              label='Phone number *'
+              id="phone"
+              label="Phone number *"
               customInput={TextField}
               type="text"
-              variant='outlined'
+              variant="outlined"
               format="+1 (###) ### ####"
               mask="_"
               allowEmptyFormatting
-              autoComplete='phone'
+              autoComplete="phone"
             />
           </FormControl>
         </DialogContent>
         <Divider className="mt-3 mb-1" />
         <DialogActions className={classes.dialogFooter}>
-          <Button onClick={handleClose} color="primary" variant="outlined" >Cancel</Button>
-          <Button onClick={props.assign} color="primary" variant="contained" className={classes.footerBtns}>Assign to me</Button>
+          <Button onClick={handleClose} color="primary" variant="outlined">
+            Cancel
+          </Button>
+          <Button
+            onClick={() => {
+              props.handleAssignToMe();
+              handleClose();
+            }}
+            color="primary"
+            variant="contained"
+            className={classes.footerBtns}
+          >
+            Assign to me
+          </Button>
         </DialogActions>
       </Dialog>
     </Toolbar>
@@ -140,4 +166,3 @@ function ToolBarAssign(props) {
 }
 
 export default ToolBarAssign;
-
