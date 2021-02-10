@@ -138,7 +138,7 @@ export default function TableContainerComponent(props) {
                       <TableCell>
                         <Typography variant="body2" noWrap={true}>{row.researcher}</Typography>
                       </TableCell>
-                      <AnalystCell analyst={row.lead} role={role}/>
+                      <AnalystCell analysts={row.analysts} role={role}/>
                       <TableCell>
                         <Typography variant="body2" noWrap={true}>{row.created}</Typography>
                       </TableCell>

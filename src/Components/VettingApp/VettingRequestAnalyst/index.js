@@ -72,6 +72,10 @@ const useStyles = makeStyles((theme) => ({
   divider: {
     margin: theme.spacing(3, 0),
   },
+  dividercutcopypaste: {
+    marginBottom: theme.spacing(2),
+    marginTop: theme.spacing(3),
+  },
   appBar: {
     margin: theme.spacing(0, -2),
     width: 'auto',
@@ -85,6 +89,7 @@ const useStyles = makeStyles((theme) => ({
     margin: 'auto',
     boxSizing: 'border-box',
     padding: theme.spacing(3),
+    marginTop: theme.spacing(3),
   },
   searchIcon: {
     padding: theme.spacing(0, 2),
@@ -268,16 +273,6 @@ function VettingRequestAnalyst(props) {
     setState({...state, assign: true});
   };
 
-  function alertBar() {
-    if (state.activeStep === 0) {
-      return <CutCopyPasteAlert />;
-    } else if (state.activeStep === 1 || state.activeStep === 2) {
-      return <AppBarAssign />;
-    } else {
-      return <AppBarUnAssign handleDialogOpen={handleDialogOpen}/>;
-    }
-  }
-
   return (
     <>
       <Header />
@@ -285,10 +280,11 @@ function VettingRequestAnalyst(props) {
         <Container maxWidth="xl" className="page-container">
           <AppBar position="static" className={classes.appBar} color="default">
             {state.assign ? <ToolBarUnassign /> : <ToolBarAssign assign={assign}/>}
+            <Divider />
           </AppBar>
           <Paper className={classes.paper}>
             <Grid container alignItems="center">
-              {alertBar()}
+              {state.activeStep === 3 ? <AppBarUnAssign handleDialogOpen={handleDialogOpen}/> : <AppBarAssign />}
             </Grid>
             <Divider className={classes.divider} />
             <div className={classes.stepperContainer}>
@@ -323,7 +319,8 @@ function VettingRequestAnalyst(props) {
                 </Button>
               )}
             </div>
-            <Divider className={classes.divider} />
+            <Divider className={classes.dividercutcopypaste} />
+            <CutCopyPasteAlert />
             <div>
               {allStepsCompleted() ? (
               <div>

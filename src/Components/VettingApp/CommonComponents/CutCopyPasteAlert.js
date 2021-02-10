@@ -1,23 +1,19 @@
-import React from 'react';
+import * as React from 'react';
 import {makeStyles} from '@material-ui/core/styles';
-import {Typography} from '@material-ui/core';
 import Alert from '@material-ui/lab/Alert';
-import IconButton from '@material-ui/core/IconButton';
+import Button from '@material-ui/core/Button';
 import Collapse from '@material-ui/core/Collapse';
 
 const useStyles = makeStyles((theme) => ({
-  root: {
-    'width': '100%',
-    '& .MuiButtonBase-root.MuiIconButton-root.MuiIconButton-colorPrimary.MuiIconButton-sizeSmall:hover': {
-      borderRadius: '0',
-    },
+  padding: {
+    padding: theme.spacing(0.75, 2),
   },
-  banner: {
-    backgroundColor: 'white',
+  root: {
+    marginBottom: theme.spacing(1),
   },
 }));
 
-export default function CopyAndPasteAlert() {
+export default function CutCopyPasteAlert() {
   const classes = useStyles();
   const [open, setOpen] = React.useState(true);
 
@@ -25,21 +21,19 @@ export default function CopyAndPasteAlert() {
     <div className={classes.root}>
       <Collapse in={open}>
         <Alert
-          className={classes.banner}
+          severity="warning"
           action={
-            <IconButton
-              aria-label="close"
-              color="primary"
-              size="small"
+            <Button size="small"
+              className={classes.padding}
               onClick={() => {
                 setOpen(false);
               }}
             >
-              <Typography variant='body1' color='primary'>Understood</Typography>
-            </IconButton>
+              Understood
+            </Button>
           }
         >
-          <Typography color='textPrimary'>Cut, copy and paste functionality has been disabled on text fields for security purposes.</Typography>
+          Cut, copy and paste functionality has been disabled on text fields for security purposes.
         </Alert>
       </Collapse>
     </div>
