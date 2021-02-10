@@ -151,12 +151,20 @@ function getSteps() {
 
 function VettingRequestAnalyst(props) {
   const classes = useStyles();
+  const {name, from} = (props.location && props.location.state) || {};
   const [state, setState] = React.useState({
     activeStep: 0,
     completed: {},
     title: 'New vetting request',
     open: false,
     assign: false,
+    requestTitle: function() {
+      if (from === '/vetting-app/dashboard-analyst') {
+        return name.text;
+      } else {
+        return '';
+      }
+    },
   });
   const steps = getSteps();
 
@@ -229,7 +237,7 @@ function VettingRequestAnalyst(props) {
   const getStepContent = (step) => {
     switch (step) {
       case 0:
-        return <AnalystInfo handleTitleChange={handleTitleChange} />;
+        return <AnalystInfo handleTitleChange={handleTitleChange} title={state.requestTitle()} />;
       case 1:
         return <FilesList />;
       case 2:

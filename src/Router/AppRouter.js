@@ -23,7 +23,7 @@ import DashboardPageAnalyst from '../Components/VettingApp/Dashboard/DashboardPa
 import {useStyles} from '../Theme/globalStyles';
 import {theme} from '../Theme/theme';
 import Index from './Index';
-import AnalystInfo from '../Components/VettingApp/VettingRequestAnalyst';
+import VettingRequestAnalyst from '../Components/VettingApp/VettingRequestAnalyst';
 
 export default function AppRouter() {
   useStyles();
@@ -43,7 +43,7 @@ export default function AppRouter() {
           <Route path="/vetting-app/dashboard-researcher" component={DashboardPageResearcher} />
           <Route path="/vetting-app/dashboard-analyst" component={DashboardPageAnalyst} />
           <Route path="/vetting-app/request-researcher" component={VettingRequestResearcher} />
-          <Route path="/vetting-app/request-analyst" component={AnalystInfo} />
+          <Route path="/vetting-app/request-analyst" component={VettingRequestAnalyst} />
 
           {/* Routes for archived pages */}
           <Route path="/archived/home" component={LandingPage} />

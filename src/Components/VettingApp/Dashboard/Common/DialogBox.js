@@ -1,6 +1,7 @@
+/* eslint-disable jsx-a11y/no-autofocus */
 import React from 'react';
 import {useTranslation} from 'react-i18next';
-import {useHistory} from 'react-router-dom';
+import {useHistory, useLocation} from 'react-router-dom';
 import clsx from 'clsx';
 import {makeStyles} from '@material-ui/core/styles';
 import {green} from '@material-ui/core/colors';
@@ -1762,9 +1763,10 @@ export function DialognNewRequestTitle(props) {
   const classes = useStyles();
   const {t} = useTranslation();
   const history = useHistory();
+  const location = useLocation();
   const {toggleDialog, open, role} = props;
   const initial = { // blank object used to reset state
-    title: {
+    name: {
       text: 'Untitled request',
       errorText: '',
       invalid: '',
@@ -1772,12 +1774,13 @@ export function DialognNewRequestTitle(props) {
     },
   };
   const [state, setState] = React.useState({
-    title: {
+    name: {
       text: 'Untitled request',
       errorText: '',
       invalid: '',
       commands: '',
     },
+    from: location.pathname,
   });
 
   const handleChange = (e, val) => {
@@ -1788,7 +1791,7 @@ export function DialognNewRequestTitle(props) {
     },
     });
 
-    if (e.target.value && state.title.errorText) { // if input text is valid, clear error
+    if (e.target.value && state.name.errorText) { // if input text is valid, clear error
       setState({...state, [val]: {
         ...state[val],
         text: comment,
@@ -1802,10 +1805,10 @@ export function DialognNewRequestTitle(props) {
 
   const validateForm = () => {
     let isError = false;
-    if (state.title.text.trim() === '') {
+    if (state.name.text.trim() === '') {
       isError = true;
-      state.title.invalid = t('Enter a title.');
-      state.title.errorText = t('Enter a title.');
+      state.name.invalid = t('Enter a title.');
+      state.name.errorText = t('Enter a title.');
     }
 
     if (isError) {
@@ -1825,9 +1828,12 @@ export function DialognNewRequestTitle(props) {
       setState({...initial});
 
       if (role === 'researcher') {
-        history.push('/vetting-app/request-researcher');
+        history.push('/vetting-app/request-researcher', state.name.text);
       } else if (role === 'analyst') {
-        history.push('/vetting-app/request-analyst');
+        history.push({
+          pathname: '/vetting-app/request-analyst',
+          state,
+        });
       }
     } else {
       for (const property in state) { // focus on the first input that has an error on submit
@@ -1899,10 +1905,6 @@ export function DialognNewRequestTitle(props) {
     }
   };
 
-  const inputSelect = () =>{
-    document.getElementById('title-input').select();
-  };
-
   return (
     <React.Fragment>
       <Dialog
@@ -1911,7 +1913,6 @@ export function DialognNewRequestTitle(props) {
           toggleDialog();
         }}
         aria-labelledby="dashboard-dialog-title"
-        onEntered={inputSelect}
         open={open}
         className={classes.root}
       >
@@ -1930,23 +1931,25 @@ export function DialognNewRequestTitle(props) {
         <Divider className="mb-2" />
         <form onSubmit={submitForm} noValidate>
           <div className={classes.dialogRow}>
+            <Typography variant='subtitle2'>{t('Please name your new request.')}</Typography>
+          </div>
+          <div className={classes.dialogRow}>
             <FormControl variant="outlined" className={classes.textField}>
               <TextField
-                id="title-input"
-                label={t('Title')}
-                aria-label={t('Title')}
-                value={state.title.text}
+                id="name-input"
+                label={t('Request name')}
+                aria-label={t('Request name')}
+                value={state.name.text}
                 variant="outlined"
                 required
-                error={Boolean(state.title.errorText)}
-                helperText={state.title.errorText}
-                onCut={(e) => disableCutCopyPaste(e, 'cut', 'title')}
-                onCopy={(e) => disableCutCopyPaste(e, 'copy', 'title')}
-                onPaste={(e) => disableCutCopyPaste(e, 'paste', 'title')}
-                onChange={(e) => handleChange(e, 'title')}
-                onClick={() => toggleHelperText('title')}
-                onBlur={() => toggleHelperText('title')}
-                onFocus={() => toggleHelperText('title')}
+                error={Boolean(state.name.errorText)}
+                helperText={state.name.errorText}
+                onCut={(e) => disableCutCopyPaste(e, 'cut', 'name')}
+                onCopy={(e) => disableCutCopyPaste(e, 'copy', 'name')}
+                onPaste={(e) => disableCutCopyPaste(e, 'paste', 'name')}
+                onChange={(e) => handleChange(e, 'name')}
+                onClick={() => toggleHelperText('name')}
+                onBlur={() => toggleHelperText('name')}
               />
             </FormControl>
           </div>
@@ -1969,7 +1972,7 @@ export function DialognNewRequestTitle(props) {
               color="primary"
               className={classes.footerBtns}
             >
-              {t('Submit request')}
+              {t('Create')}
             </Button>
           </div>
         </form>
