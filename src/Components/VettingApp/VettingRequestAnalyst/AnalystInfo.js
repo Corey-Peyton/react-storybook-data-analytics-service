@@ -95,6 +95,7 @@ function AnalystInfo(props) {
             fullWidth
             margin="dense"
             className={classes.inputMargin}
+            defaultValue={props.title}
           />
           <TextField
             id="contract"
