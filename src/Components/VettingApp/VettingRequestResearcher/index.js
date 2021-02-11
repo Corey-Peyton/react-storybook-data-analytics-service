@@ -35,6 +35,7 @@ import ToolBar from './ToolBar';
 import FloatingSupportButton from '../CommonComponents/Support';
 import Header from '../CommonComponents/Header';
 import Footer from '../CommonComponents/Footer';
+import CutCopyPasteAlert from '../CommonComponents/CutCopyPasteAlert';
 
 const useStyles = makeStyles((theme) => ({
   main: {
@@ -119,7 +120,7 @@ function VettingRequestResearcher(props) {
   const [state, setState] = React.useState({
     activeStep: 0,
     completed: {},
-    title: 'New vetting request',
+    title: 'Untitled request',
     open: false,
     errors: [1, 0, 0, 0],
   });
@@ -239,10 +240,10 @@ function VettingRequestResearcher(props) {
           <Paper className={classes.paper}>
             <Grid container alignItems="center">
               <Grid item className={classes.title}>
-                <Typography variant="h6" component="h2">{state.title}</Typography>
-                <Typography variant="caption" color="textSecondary">
-                ID: 10_2020_232425255
+                <Typography variant="h6" color="textSecondary">
+                Vetting request · ID 0101-000000
                 </Typography>
+                <Typography variant="h6" component="h2">{state.title}</Typography>
               </Grid>
               <Grid item>
                 <Chip label="Draft" className="mr-2" />
@@ -310,6 +311,7 @@ function VettingRequestResearcher(props) {
               )}
             </div>
             <Divider className={classes.divider} />
+            <CutCopyPasteAlert />
             <div>
               {allStepsCompleted() ? (
               <div>

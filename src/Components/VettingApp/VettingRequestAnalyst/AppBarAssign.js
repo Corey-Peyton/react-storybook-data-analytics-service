@@ -58,11 +58,11 @@ function AppBarUnAssign(props) {
   return (
     <Grid container alignItems="center">
       <Grid item className={classes.title}>
+        <Typography variant="h6" color="textSecondary">
+        Vetting request · ID 0101-000000
+        </Typography>
         <Typography variant="h6" component="h2">
           {props.title}
-        </Typography>
-        <Typography variant="caption" color="textSecondary">
-          ID: 10_2020_232425255
         </Typography>
       </Grid>
       <Grid item>

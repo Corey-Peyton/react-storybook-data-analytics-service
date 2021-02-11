@@ -5,11 +5,8 @@ import Button from '@material-ui/core/Button';
 import Collapse from '@material-ui/core/Collapse';
 
 const useStyles = makeStyles((theme) => ({
-  padding: {
-    padding: theme.spacing(0.75, 2),
-  },
   root: {
-    marginBottom: theme.spacing(1),
+    marginBottom: theme.spacing(2),
   },
 }));
 
@@ -24,6 +21,7 @@ export default function CutCopyPasteAlert() {
           severity="warning"
           action={
             <Button size="small"
+              color="inherit"
               className={classes.padding}
               onClick={() => {
                 setOpen(false);

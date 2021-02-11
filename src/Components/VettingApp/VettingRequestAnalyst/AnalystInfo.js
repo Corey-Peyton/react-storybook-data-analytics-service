@@ -82,29 +82,45 @@ function AnalystInfo(props) {
         Items marked with asterisk (*) are required.
       </Typography>
       <Typography component="h2" variant="h6">
-        Project information
+       Request details
       </Typography>
       <Grid container spacing={1}>
         <Grid item xs={6}>
           <TextField
-            id="project"
-            name="project"
-            label="Project Title"
+            id="RequestID"
+            name="RequestID"
+            label="Request ID"
             variant="outlined"
-            required
             fullWidth
             margin="dense"
+            disabled
+            value="0101-000000"
             className={classes.inputMargin}
-            defaultValue={props.title}
           />
           <TextField
-            id="contract"
-            name="contract"
-            label="Contract Number"
+            id="name"
+            name="name"
+            label="Request name"
             variant="outlined"
             required
             fullWidth
             margin="dense"
+            defaultValue="Untitled request"
+            className="mt-2"
+          />
+          <Typography component="h2" variant="h6" className="mt-1 mb-1">
+        Project details
+          </Typography>
+          <TextField
+            id="project"
+            name="project"
+            label="Contract ID"
+            variant="outlined"
+            required
+            fullWidth
+            margin="dense"
+            value="21-SSH-UTO-0000"
+            disabled
             className={classes.inputMargin}
           />
           <FormControl
