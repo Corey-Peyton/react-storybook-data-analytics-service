@@ -49,7 +49,7 @@ function ResearcherInfo(props) {
   const classes = useStyles();
   return (
     <React.Fragment>
-      <Typography variant="body2">
+      <Typography>
         Vetting disclosure requests are required by Statistics Canada’s to
         ensure data protection. Disclosure analysts will review all external
         users vetting requests for accessing to confidential microdata. These
@@ -63,35 +63,47 @@ function ResearcherInfo(props) {
         Items marked with asterisk (*) are required.
       </Typography>
       <Typography component="h2" variant="h6">
-        Project information
+       Request details
       </Typography>
       <Grid container spacing={1}>
         <Grid item xs={6}>
           <TextField
-            id="project"
-            name="project"
-            label="Project title"
+            id="RequestID"
+            name="RequestID"
+            label="Request ID"
             variant="outlined"
-            onChange={props.handleTitleChange}
-            // inputRef={register({required: requiredErrorMessage})}
+            fullWidth
+            margin="dense"
+            disabled
+            value="0101-000000"
+            className={classes.inputMargin}
+          />
+          <TextField
+            id="name"
+            name="name"
+            label="Request name"
+            variant="outlined"
             required
             fullWidth
             margin="dense"
             error
-            helperText="Project title is required"
-            className={classes.inputMargin}
+            defaultValue="Untitled request"
+            className="mt-2"
+            helperText="Request name is required"
           />
+          <Typography component="h2" variant="h6" className="mt-1 mb-1">
+        Project details
+          </Typography>
           <TextField
-            id="contract"
-            name="contract"
-            label="Contract number"
+            id="project"
+            name="project"
+            label="Contract  ID"
             variant="outlined"
-            // inputRef={register({required: requiredErrorMessage})}
             required
             fullWidth
             margin="dense"
-            // error={!!errors.contract}
-            // helperText={errors.contract?.message}
+            value="21-SSH-UTO-0000"
+            disabled
             className={classes.inputMargin}
           />
           <FormControl
@@ -99,69 +111,38 @@ function ResearcherInfo(props) {
             variant="outlined"
             fullWidth
             margin="dense"
-            // error={!!errors.outputFilesFolder}
             className={classes.inputMargin}
           >
             <InputLabel id="outputFilesFolder-label">Output folder</InputLabel>
-            {/* <Controller
-                    render={({onBlur, onChange, value}) => ( */}
             <Select
               id="outputFilesFolder"
               label="Output folder *"
               labelId="outputFilesFolder-label"
-              // onChange={(e) => handleFileChange(e, onChange)}
-              // value={value}
             >
               <MenuItem key={-1} value="">
                 None
               </MenuItem>
-              {/* {fileLocations.map((item, index) => (
-                    <MenuItem key={index} value={item}>{item}</MenuItem>
-                  ))
-                  } */}
             </Select>
-            {/* )}
-                    name="outputFilesFolder"
-                    // control={control}
-                    // rules={{ required: requiredErrorMessage }} */}
-            {/* /> */}
-            {/* <FormHelperText>{errors.outputFilesFolder?.message}</FormHelperText> */}
           </FormControl>
           <FormControl
             required
             variant="outlined"
             fullWidth
             margin="dense"
-            // error={!!errors.supportingFilesFolder}
-            // disabled={fileDisabled}
             className={classes.inputMargin}
           >
             <InputLabel id="supportingFilesFolder-label">
               Supporting folder
             </InputLabel>
-            {/* <Controller
-                    render={({onBlur, onChange, value}) => ( */}
             <Select
               id="supportingFilesFolder"
               label="Supporting folder *"
               labelId="supportingFilesFolder-label"
-              // onChange={onChange}
-              // value={value}
             >
               <MenuItem key={-1} value="">
                 None
               </MenuItem>
-              {/* {fileLocations.map((item, index) => (
-                    <MenuItem key={index} value={item}>{item}</MenuItem>
-                  ))
-                  } */}
             </Select>
-            {/* )}
-                      name="supportingFilesFolder"
-                      // control={control}
-                      // rules={{required: requiredErrorMessage}}
-                    /> */}
-            {/* <FormHelperText>{errors.supportingFilesFolder?.message}</FormHelperText> */}
           </FormControl>
         </Grid>
       </Grid>
@@ -175,14 +156,9 @@ function ResearcherInfo(props) {
             id="first-name"
             name="first-name"
             label="First name"
-            variant="outlined"
-            // inputRef={register({required: requiredErrorMessage})}
-            required
+            variant="outlined"required
             fullWidth
-            margin="dense"
-            // error={!!errors.name}
-            // helperText={errors.name?.message}
-            defaultValue="Rose"
+            margin="dense"defaultValue="Rose"
             className={classes.inputMargin}
             InputProps={{readOnly: true}}
           / >
@@ -190,13 +166,9 @@ function ResearcherInfo(props) {
             id="last-name"
             name="last-name"
             label="Last name"
-            variant="outlined"
-            // inputRef={register({required: requiredErrorMessage})}
-            required
+            variant="outlined"required
             fullWidth
             margin="dense"
-            // error={!!errors.name}
-            // helperText={errors.name?.message}
             defaultValue="Temple"
             className={classes.inputMargin}
             InputProps={{readOnly: true}}
@@ -206,12 +178,9 @@ function ResearcherInfo(props) {
             name="date"
             label="Date"
             variant="outlined"
-            // inputRef={register({required: requiredErrorMessage})}
             required
             fullWidth
             margin="dense"
-            // error={!!errors.date}
-            // helperText={errors.date?.message}
             defaultValue="Aug. 28, 2020"
             className={classes.inputMargin}
             InputProps={{readOnly: true}}
@@ -221,14 +190,11 @@ function ResearcherInfo(props) {
             name="username"
             label="Username"
             variant="outlined"
-            // inputRef={register({required: requiredErrorMessage})}
             required
             fullWidth
             margin="dense"
             defaultValue="rose_temple"
             InputProps={{readOnly: true}}
-            // error={!!errors.username}
-            // helperText={errors.username?.message}
           />
         </Grid>
       </Grid>
@@ -260,18 +226,13 @@ function ResearcherInfo(props) {
         component="fieldset"
         required
         className={classes.inputMargin}
-        // error={!!errors.consistentOutput}
       >
         <FormLabel component="legend">
           Is the requested output consistent with the approved proposal for this
           project?
         </FormLabel>
-        {/* <Controller
-                    render={({onBlur, onChange, value}) => ( */}
         <RadioGroup
           id="consistentOutput"
-          // onChange={onChange}
-          // value={value}
         >
           <FormControlLabel
             value="Yes"
@@ -289,30 +250,19 @@ function ResearcherInfo(props) {
             label="N/A"
           />
         </RadioGroup>
-        {/* )} */}
-        {/* name="consistentOutput"
-              // control={control}
-              // rules={{ required: requiredErrorMessage }}
-            /> */}
-        {/* <FormHelperText>{errors.consistentOutput?.message}</FormHelperText> */}
       </FormControl>
       <FormControl
         component="fieldset"
         required
         className={classes.inputMargin}
-        // error={!!errors.vettingRules}
       >
         <FormLabel component="legend">
           Have you checked the vetting rules to determine if there are
           geographical, institutional, household size and/or population
           requirements for your output?
         </FormLabel>
-        {/* <Controller
-              render={({onBlur, onChange, value}) => ( */}
         <RadioGroup
           id="vettingRules"
-          // onChange={onChange}
-          // value={value}
         >
           <FormControlLabel
             value="Yes"
@@ -330,18 +280,11 @@ function ResearcherInfo(props) {
             label="N/A"
           />
         </RadioGroup>
-        {/* )}
-              name="vettingRules"
-              // control={control}
-              // rules={{ required: requiredErrorMessage }}
-            /> */}
-        {/* <FormHelperText>{errors.vettingRules?.message}</FormHelperText> */}
       </FormControl>
       <FormControl
         component="fieldset"
         required
         className={classes.inputMargin}
-        // error={!!errors.finalOutput}
       >
         <FormLabel component="legend" className={classes.tooltipLabel}>
           Is the requested output your final output?
@@ -353,12 +296,8 @@ function ResearcherInfo(props) {
             <InfoIcon />
           </Tooltip>
         </FormLabel>
-        {/* <Controller
-                    render={({onBlur, onChange, value}) => ( */}
         <RadioGroup
           id="finalOutput"
-          // onChange={onChange}
-          // value={value}
         >
           <FormControlLabel
             value="Yes"
@@ -376,18 +315,7 @@ function ResearcherInfo(props) {
             label="N/A"
           />
         </RadioGroup>
-        {/* )}
-                      name="finalOutput"
-                      // control={control}
-                      // rules={{ required: requiredErrorMessage }}
-                    /> */}
-        {/* <FormHelperText>{errors.finalOutput?.message}</FormHelperText> */}
       </FormControl>
-      {/* <ActionBar
-                    navigationNextCaption={
-                      state.requestFormData.tabsDisabled ? "Next section" : "Submit"
-                    }
-                  /> */}
     </React.Fragment>
   );
 }
