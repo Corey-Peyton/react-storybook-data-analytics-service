@@ -6,7 +6,6 @@ import {AppBar, Typography} from '@material-ui/core';
 import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
 import Paper from '@material-ui/core/Paper';
-import Button from '@material-ui/core/Button';
 
 import TableContainerComponent from './Common/TableContainerComponent';
 import TabPanel from './Common/DashboardTabPanel';
@@ -189,10 +188,6 @@ export default function DashboardPageAnalyst() {
     setOpen({...open, summaryDrawer: !open.summaryDrawer});
   };
 
-  const toggleDialog = (state, value) => {
-    setOpen({...open, [state]: value});
-  };
-
   const handleProjectTitle = (value) => {
     setProject({...project, title: value});
   };
@@ -236,14 +231,6 @@ export default function DashboardPageAnalyst() {
               <Typography variant="h6" component="h1">
                 {project.title}
               </Typography>
-              <Button
-                variant="contained"
-                color="primary"
-                className={classes.button}
-                onClick={() => toggleDialog('newRequest', !open.newRequest)}
-              >
-                New vetting request
-              </Button>
             </AppBar>
             <Tabs
               value={value}
