@@ -39,14 +39,14 @@ const useStyles = makeStyles((theme) => ({
     '& .MuiDialog-paperWidthSm': {
       'width': 400,
       '& .MuiTextField-root': {
-        'width': '100%',
+        width: '100%',
       },
       '& .MuiFormLabel-root': {
         'line-height': 1,
         'background-color': 'white',
       },
       '& .MuiOutlinedInput-multiline': {
-        'padding': 0,
+        padding: 0,
       },
       '& .MuiOutlinedInput-inputMultiline': {
         'max-height': 130,
@@ -54,11 +54,11 @@ const useStyles = makeStyles((theme) => ({
         'padding': theme.spacing(2),
       },
       '& .MuiAutocomplete-endAdornment': {
-        'top': '5.5px',
+        top: '5.5px',
       },
     },
     '& .MuiFormControl-root': {
-      'width': '100%',
+      width: '100%',
     },
     '& .MuiFormControlLabel-root': {
       'margin-left': '0px',
@@ -68,14 +68,14 @@ const useStyles = makeStyles((theme) => ({
         'margin-right': '0px',
       },
       '& .MuiTextField-root': {
-        'width': '100% !important',
+        width: '100% !important',
       },
     },
     '& .Mui-error ~.MuiFormHelperText-root, & .Mui-error + label': {
-      'color': theme.palette.error.main,
+      color: theme.palette.error.main,
     },
     '& .MuiInputBase-input:not(.MuiInputBase-inputMultiline)': {
-      'height': '100%',
+      height: '100%',
     },
   },
   avatar: {
@@ -144,15 +144,21 @@ export function DialogAnalyst(props) {
 
   return (
     <React.Fragment>
-      <Dialog onClose={toggleDialog} aria-labelledby="dashboard-dialog-title" open={open} className={classes.root}>
+      <Dialog
+        onClose={toggleDialog}
+        aria-labelledby="dashboard-dialog-title"
+        open={open}
+        className={classes.root}
+      >
         <DialogTitle id="dashboard-dialog-title">
           <div className={classes.dialogTitle}>
-            <Typography variant='h6'>{t('Analyst information')}</Typography>
+            <Typography variant="h6">{t('Analyst information')}</Typography>
             <IconButton
-              id='dialog-close'
+              id="dialog-close"
               onClick={toggleDialog}
-              edge='end'
-              aria-label="Analyst information - close">
+              edge="end"
+              aria-label="Analyst information - close"
+            >
               <CloseIcon />
             </IconButton>
           </div>
@@ -160,13 +166,17 @@ export function DialogAnalyst(props) {
         <Divider className="mb-2" />
         <div className={classes.dialogRow}>
           <Avatar className={classes.avatar}>A</Avatar>
-          <Typography className={classes.dialogText}>brian.bill@cloud.statcan.ca</Typography>
+          <Typography className={classes.dialogText}>
+            brian.bill@cloud.statcan.ca
+          </Typography>
         </div>
         <div className={classes.dialogRow}>
           <Avatar className={classes.avatarTransparent}>
             <PhoneIcon />
           </Avatar>
-          <Typography className={classes.dialogText}>+1 343 567 7878</Typography>
+          <Typography className={classes.dialogText}>
+            +1 343 567 7878
+          </Typography>
         </div>
         <Divider className="mt-2" />
         <div className={classes.dialogFooter}>
@@ -179,7 +189,6 @@ export function DialogAnalyst(props) {
   );
 }
 
-
 // ////////////////////////////////////////// MANAGE TEAM
 export function DialogManageTeam(props) {
   const {open, toggleDialog} = props;
@@ -191,30 +200,31 @@ export function DialogManageTeam(props) {
   const makeLead = (value) => (e) => {
     setAnalysts(
         analysts.map((item) =>
-            item.role === 'lead' ?
-            {...item, role: 'support'}:
-            item.id === value.id ?
-            {...item, role: 'lead'} :
-            item,
-        ));
+        item.role === 'lead' ?
+          {...item, role: 'support'} :
+          item.id === value.id ?
+          {...item, role: 'lead'} :
+          item,
+        ),
+    );
   };
 
   const makeSupport = (value) => (e) => {
     setAnalysts(
         analysts.map((item) =>
-          item.id === value.id ?
-          {...item, role: 'support'} :
-          item,
-        ));
+        item.id === value.id ? {...item, role: 'support'} : item,
+        ),
+    );
   };
 
   const unassignRequest = (value) => (e) => {
     setAnalysts(
         analysts.map((item) =>
         item.id === value.id ?
-        {...item, assigned: false, role: 'support'} :
-        item,
-        ));
+          {...item, assigned: false, role: 'support'} :
+          item,
+        ),
+    );
   };
 
   function selectSupports(value) {
@@ -225,34 +235,41 @@ export function DialogManageTeam(props) {
     setAnalysts(
         analysts.map((item) =>
         ids.includes(item.id) ?
-        {...item, assigned: true, role: 'support'} :
-        item,
-        ));
+          {...item, assigned: true, role: 'support'} :
+          item,
+        ),
+    );
 
     setSelected([]);
-  };
+  }
 
   const leadAnalysts = () => {
-    const content = analysts.filter((analyst) => analyst.assigned && analyst.role === 'lead').map((analyst, index) => {
-      return (
-        <div className={classes.dialogRow} key={analyst.id}>
-          <Avatar >
-            <Icon path={mdiAccount} size={1} />
-          </Avatar>
-          <div className={classes.analystListing}>
-            <Typography className={classes.dialogText} variant='body2'>{analyst.name}</Typography>
-            <Typography className={classes.dialogText} variant='body2'>{analyst.email}</Typography>
-          </div>
-          <AnalystMenu
-            role={'lead'}
-            makeSupport={makeSupport(analyst)}
-            unassignRequest={unassignRequest(analyst)}
-            controls={index}
-          />
-        </div>
-      );
-    });
-    if (content.length > 0 ) {
+    const content = analysts
+        .filter((analyst) => analyst.assigned && analyst.role === 'lead')
+        .map((analyst, index) => {
+          return (
+            <div className={classes.dialogRow} key={analyst.id}>
+              <Avatar>
+                <Icon path={mdiAccount} size={1} />
+              </Avatar>
+              <div className={classes.analystListing}>
+                <Typography className={classes.dialogText} variant="body2">
+                  {analyst.name}
+                </Typography>
+                <Typography className={classes.dialogText} variant="body2">
+                  {analyst.email}
+                </Typography>
+              </div>
+              <AnalystMenu
+                role={'lead'}
+                makeSupport={makeSupport(analyst)}
+                unassignRequest={unassignRequest(analyst)}
+                controls={index}
+              />
+            </div>
+          );
+        });
+    if (content.length > 0) {
       return content;
     } else {
       return (
@@ -275,22 +292,23 @@ export function DialogManageTeam(props) {
       >
         <DialogTitle id="dashboard-dialog-title">
           <div className={classes.dialogTitle}>
-            <Typography variant='h6'>{t('Manage team')}</Typography>
+            <Typography variant="h6">{t('Manage team')}</Typography>
             <IconButton
-              id='dialog-close'
-              edge='end'
+              id="dialog-close"
+              edge="end"
               onClick={toggleDialog}
-              aria-label="Manage team - close">
+              aria-label="Manage team - close"
+            >
               <CloseIcon />
             </IconButton>
           </div>
         </DialogTitle>
         <Divider className="mb-2" />
         <div className={classes.dialogRow}>
-          <Typography variant='subtitle2'>{t('Lead')}</Typography>
+          <Typography variant="subtitle2">{t('Lead')}</Typography>
         </div>
         {leadAnalysts()}
-        <Divider className='mt-2 mb-2'/>
+        <Divider className="mt-2 mb-2" />
         <div className={classes.dialogRow}>
           <FormControl variant="outlined" className={classes.textField}>
             <Autocomplete
@@ -314,47 +332,67 @@ export function DialogManageTeam(props) {
                     label={t('Search support analysts')}
                   />
                 );
-              }
-              }
+              }}
             />
           </FormControl>
         </div>
         <div className={classes.dialogRow}>
-          <Button variant="outlined" color="primary" onClick={() => selectSupports(selected)} >
+          <Button
+            variant="outlined"
+            color="primary"
+            onClick={() => selectSupports(selected)}
+          >
             {t('Add support analyst')}
           </Button>
         </div>
         <div className={classes.dialogRow}>
-          <Typography variant='subtitle2' className='mt-2'>{t('Support Analysts')}</Typography>
+          <Typography variant="subtitle2" className="mt-2">
+            {t('Support Analysts')}
+          </Typography>
         </div>
         <div className={classes.supportAnalysts}>
-          {analysts.filter((analyst) => analyst.assigned && analyst.role === 'support').map((analyst, index) => {
-            return (
-              <div className={classes.dialogRow} key={analyst.id}>
-                <Avatar >
-                  <Icon path={mdiAccount} size={1} />
-                </Avatar>
-                <div className={classes.analystListing}>
-                  <Typography className={classes.dialogText} variant='body2'>{analyst.name}</Typography>
-                  <Typography className={classes.dialogText} variant='body2'>{analyst.email}</Typography>
-                </div>
-                <AnalystMenu
-                  role={'support'}
-                  makeLead={makeLead(analyst)}
-                  unassignRequest={unassignRequest(analyst)}
-                  controls={index}
-                />
-              </div>
-            );
-          })
-          }
+          {analysts
+              .filter((analyst) => analyst.assigned && analyst.role === 'support')
+              .map((analyst, index) => {
+                return (
+                  <div className={classes.dialogRow} key={analyst.id}>
+                    <Avatar>
+                      <Icon path={mdiAccount} size={1} />
+                    </Avatar>
+                    <div className={classes.analystListing}>
+                      <Typography className={classes.dialogText} variant="body2">
+                        {analyst.name}
+                      </Typography>
+                      <Typography className={classes.dialogText} variant="body2">
+                        {analyst.email}
+                      </Typography>
+                    </div>
+                    <AnalystMenu
+                      role={'support'}
+                      makeLead={makeLead(analyst)}
+                      unassignRequest={unassignRequest(analyst)}
+                      controls={index}
+                    />
+                  </div>
+                );
+              })}
         </div>
         <Divider className="mt-2" />
         <div className={classes.dialogFooter}>
-          <Button variant="outlined" color="primary" onClick={toggleDialog} className={classes.footerBtns}>
+          <Button
+            variant="outlined"
+            color="primary"
+            onClick={toggleDialog}
+            className={classes.footerBtns}
+          >
             {t('Cancel')}
           </Button>
-          <Button variant="contained" color="primary" onClick={toggleDialog} className={classes.footerBtns}>
+          <Button
+            variant="contained"
+            color="primary"
+            onClick={toggleDialog}
+            className={classes.footerBtns}
+          >
             {t('Apply')}
           </Button>
         </div>
@@ -363,14 +401,14 @@ export function DialogManageTeam(props) {
   );
 }
 
-
 // ////////////////////////////////////////// WITHDRAW REQUEST
 export function DialogWithdraw(props) {
   const classes = useStyles();
   const {t} = useTranslation();
   const {toggleDialog, open} = props;
   const [snackbar, setSnackbar] = React.useState(false);
-  const initial = { // blank object used to reset state
+  const initial = {
+    // blank object used to reset state
     comments: {
       text: '',
       errorText: '',
@@ -391,26 +429,32 @@ export function DialogWithdraw(props) {
 
   const handleChange = (e, val) => {
     const comment = e.target.value;
-    setState({...state, [val]: { // updates state with text from input
-      ...state[val],
-      text: comment,
-    },
-    });
-
-    if (e.target.value && state[val].errorText) { // if input text is valid, clear error
-      setState({...state, [val]: {
+    setState({
+      ...state,
+      [val]: {
+        // updates state with text from input
         ...state[val],
         text: comment,
-        errorText: '',
-        helperText: initial[val].helperText,
-        invalid: '',
-        commands: '',
       },
+    });
+
+    if (e.target.value && state[val].errorText) {
+      // if input text is valid, clear error
+      setState({
+        ...state,
+        [val]: {
+          ...state[val],
+          text: comment,
+          errorText: '',
+          helperText: initial[val].helperText,
+          invalid: '',
+          commands: '',
+        },
       });
     }
   };
 
-  const SnackbarClose =() =>{
+  const SnackbarClose = () => {
     setSnackbar(false);
   };
 
@@ -435,12 +479,14 @@ export function DialogWithdraw(props) {
   const submitForm = (e) => {
     e.preventDefault();
     const err = validateForm();
-    if (!err) { // if no errors exist, submit the form and reset the inputs
+    if (!err) {
+      // if no errors exist, submit the form and reset the inputs
       toggleDialog();
       setSnackbar(!snackbar);
       setState({...initial});
     } else {
-      for (const property in state) { // focus on the first input that has an error on submit
+      for (const property in state) {
+        // focus on the first input that has an error on submit
         if (state[property].invalid) {
           switch (property) {
             case 'comments':
@@ -455,38 +501,45 @@ export function DialogWithdraw(props) {
     }
   };
 
-  const disableCutCopyPaste = (e, command, value) => { // display error if user tries to cut/copy/paste
+  const disableCutCopyPaste = (e, command, value) => {
+    // display error if user tries to cut/copy/paste
     let msg;
     e.preventDefault();
     switch (command) {
       case 'cut':
         msg = t('Cut has been disabled for security purposes.');
-        setState({...state, [value]: {
-          ...state[value],
-          commands: msg,
-          errorText: msg,
-          helperText: msg,
-        },
+        setState({
+          ...state,
+          [value]: {
+            ...state[value],
+            commands: msg,
+            errorText: msg,
+            helperText: msg,
+          },
         });
         break;
       case 'copy':
         msg = t('Copy has been disabled for security purposes.');
-        setState({...state, [value]: {
-          ...state[value],
-          commands: msg,
-          errorText: msg,
-          helperText: msg,
-        },
+        setState({
+          ...state,
+          [value]: {
+            ...state[value],
+            commands: msg,
+            errorText: msg,
+            helperText: msg,
+          },
         });
         break;
       case 'paste':
         msg = t('Paste has been disabled for security purposes.');
-        setState({...state, [value]: {
-          ...state[value],
-          commands: msg,
-          errorText: msg,
-          helperText: msg,
-        },
+        setState({
+          ...state,
+          [value]: {
+            ...state[value],
+            commands: msg,
+            errorText: msg,
+            helperText: msg,
+          },
         });
         break;
       default:
@@ -496,18 +549,24 @@ export function DialogWithdraw(props) {
 
   const toggleHelperText = (value) => {
     if (state[value].commands === state[value].errorText) {
-      if (Boolean(state[value].invalid)) { // set error text back to invalid error
-        setState({...state, [value]: {
-          ...state[value],
-          helperText: state[value].invalid,
-        },
+      if (Boolean(state[value].invalid)) {
+        // set error text back to invalid error
+        setState({
+          ...state,
+          [value]: {
+            ...state[value],
+            helperText: state[value].invalid,
+          },
         });
-      } else { // clear error text if no invalid error exists
-        setState({...state, [value]: {
-          ...state[value],
-          helperText: initial[value].helperText,
-          errorText: initial[value].errorText,
-        },
+      } else {
+        // clear error text if no invalid error exists
+        setState({
+          ...state,
+          [value]: {
+            ...state[value],
+            helperText: initial[value].helperText,
+            errorText: initial[value].errorText,
+          },
         });
       }
     }
@@ -526,12 +585,13 @@ export function DialogWithdraw(props) {
       >
         <DialogTitle id="dashboard-dialog-title">
           <div className={classes.dialogTitle}>
-            <Typography variant='h6'>{t('Withdraw request')}</Typography>
+            <Typography variant="h6">{t('Withdraw request')}</Typography>
             <IconButton
-              id='dialog-close'
+              id="dialog-close"
               onClick={toggleDialog}
-              edge='end'
-              aria-label="Withdraw request - close">
+              edge="end"
+              aria-label="Withdraw request - close"
+            >
               <CloseIcon />
             </IconButton>
           </div>
@@ -589,11 +649,11 @@ export function DialogWithdraw(props) {
         open={snackbar}
         severity="success"
         message={t('Vetting request has been withdrawn')}
-        toggleSnackbar={SnackbarClose}/>
+        toggleSnackbar={SnackbarClose}
+      />
     </React.Fragment>
   );
 }
-
 
 // ////////////////////////////////////////// UNASSIGN REQUEST
 export function DialogUnassign(props) {
@@ -611,28 +671,41 @@ export function DialogUnassign(props) {
       >
         <DialogTitle id="dashboard-dialog-title">
           <div className={classes.dialogTitle}>
-            <Typography variant='h6'>{t('Unassign from me')}</Typography>
+            <Typography variant="h6">{t('Unassign from me')}</Typography>
             <IconButton
-              id='dialog-close'
+              id="dialog-close"
               onClick={toggleDialog}
-              edge='end'
-              aria-label="Unassign from me - close">
+              edge="end"
+              aria-label="Unassign from me - close"
+            >
               <CloseIcon />
             </IconButton>
           </div>
         </DialogTitle>
         <Divider className="mb-2" />
         <div className={classes.dialogRow}>
-          <Typography variant='body2'>
-            {t('If you choose to proceed, the request will no longer have a lead analyst and an email will be sent to the researcher notifying them of the change.')}
+          <Typography variant="body2">
+            {t(
+                'If you choose to proceed, the request will no longer have a lead analyst and an email will be sent to the researcher notifying them of the change.',
+            )}
           </Typography>
         </div>
         <Divider className="mt-2" />
         <div className={classes.dialogFooter}>
-          <Button variant="outlined" color="primary" onClick={toggleDialog} className={classes.footerBtns}>
+          <Button
+            variant="outlined"
+            color="primary"
+            onClick={toggleDialog}
+            className={classes.footerBtns}
+          >
             {t('Cancel')}
           </Button>
-          <Button variant="contained" color="primary" onClick={toggleDialog} className={classes.footerBtns}>
+          <Button
+            variant="contained"
+            color="primary"
+            onClick={toggleDialog}
+            className={classes.footerBtns}
+          >
             {t('Unassign')}
           </Button>
         </div>
@@ -640,7 +713,6 @@ export function DialogUnassign(props) {
     </React.Fragment>
   );
 }
-
 
 // ////////////////////////////////////////// MAKE ME SUPPORT
 export function DialogSupport(props) {
@@ -658,28 +730,41 @@ export function DialogSupport(props) {
       >
         <DialogTitle id="dashboard-dialog-title">
           <div className={classes.dialogTitle}>
-            <Typography variant='h6'>{t('Make me support')}</Typography>
+            <Typography variant="h6">{t('Make me support')}</Typography>
             <IconButton
-              id='dialog-close'
+              id="dialog-close"
               onClick={toggleDialog}
-              edge='end'
-              aria-label="Make me support - close">
+              edge="end"
+              aria-label="Make me support - close"
+            >
               <CloseIcon />
             </IconButton>
           </div>
         </DialogTitle>
         <Divider className="mb-2" />
         <div className={classes.dialogRow}>
-          <Typography variant='body2'>
-            {t('If you choose to proceed, the request will no longer have a lead analyst and an email will be sent to the researcher notifying them of the change.')}
+          <Typography variant="body2">
+            {t(
+                'If you choose to proceed, the request will no longer have a lead analyst and an email will be sent to the researcher notifying them of the change.',
+            )}
           </Typography>
         </div>
         <Divider className="mt-2" />
         <div className={classes.dialogFooter}>
-          <Button variant="outlined" color="primary" onClick={toggleDialog} className={classes.footerBtns}>
+          <Button
+            variant="outlined"
+            color="primary"
+            onClick={toggleDialog}
+            className={classes.footerBtns}
+          >
             {t('Cancel')}
           </Button>
-          <Button variant="contained" color="primary" onClick={toggleDialog} className={classes.footerBtns}>
+          <Button
+            variant="contained"
+            color="primary"
+            onClick={toggleDialog}
+            className={classes.footerBtns}
+          >
             {t('Continue')}
           </Button>
         </div>
@@ -688,13 +773,13 @@ export function DialogSupport(props) {
   );
 }
 
-
 // ////////////////////////////////////////// ASSIGN TO ME
 export function DialogAssign(props) {
   const classes = useStyles();
   const {t} = useTranslation();
   const {toggleDialog, open} = props;
-  const initial = { // blank object used to reset state
+  const initial = {
+    // blank object used to reset state
     phone: {
       text: '',
       errorText: '',
@@ -715,20 +800,26 @@ export function DialogAssign(props) {
 
   const handleChange = (e, val) => {
     const comment = e.target.value.trim();
-    setState({...state, [val]: { // updates state with text from input
-      ...state[val],
-      text: comment,
-    },
-    });
-
-    if (e.target.value.match(phoneExp) && state[val].errorText) { // if input text is valid, clear error
-      setState({...state, [val]: {
+    setState({
+      ...state,
+      [val]: {
+        // updates state with text from input
         ...state[val],
         text: comment,
-        errorText: '',
-        invalid: '',
-        commands: '',
       },
+    });
+
+    if (e.target.value.match(phoneExp) && state[val].errorText) {
+      // if input text is valid, clear error
+      setState({
+        ...state,
+        [val]: {
+          ...state[val],
+          text: comment,
+          errorText: '',
+          invalid: '',
+          commands: '',
+        },
       });
     }
   };
@@ -753,11 +844,13 @@ export function DialogAssign(props) {
   const submitForm = (e) => {
     e.preventDefault();
     const err = validateForm();
-    if (!err) { // if no errors exist, submit the form and reset the inputs
+    if (!err) {
+      // if no errors exist, submit the form and reset the inputs
       toggleDialog();
       setState({...initial});
     } else {
-      for (const property in state) { // focus on the first input that has an error on submit
+      for (const property in state) {
+        // focus on the first input that has an error on submit
         if (state[property].invalid) {
           switch (property) {
             case 'phone':
@@ -772,35 +865,42 @@ export function DialogAssign(props) {
     }
   };
 
-  const disableCutCopyPaste = (e, command, value) => { // display error if user tries to cut/copy/paste
+  const disableCutCopyPaste = (e, command, value) => {
+    // display error if user tries to cut/copy/paste
     let msg;
     e.preventDefault();
     switch (command) {
       case 'cut':
         msg = t('Cut has been disabled for security purposes.');
-        setState({...state, [value]: {
-          ...state[value],
-          commands: msg,
-          errorText: msg,
-        },
+        setState({
+          ...state,
+          [value]: {
+            ...state[value],
+            commands: msg,
+            errorText: msg,
+          },
         });
         break;
       case 'copy':
         msg = t('Copy has been disabled for security purposes.');
-        setState({...state, [value]: {
-          ...state[value],
-          commands: msg,
-          errorText: msg,
-        },
+        setState({
+          ...state,
+          [value]: {
+            ...state[value],
+            commands: msg,
+            errorText: msg,
+          },
         });
         break;
       case 'paste':
         msg = t('Paste has been disabled for security purposes.');
-        setState({...state, [value]: {
-          ...state[value],
-          commands: msg,
-          errorText: msg,
-        },
+        setState({
+          ...state,
+          [value]: {
+            ...state[value],
+            commands: msg,
+            errorText: msg,
+          },
         });
         break;
       default:
@@ -810,17 +910,23 @@ export function DialogAssign(props) {
 
   const toggleHelperText = (value) => {
     if (state[value].commands === state[value].errorText) {
-      if (Boolean(state[value].invalid)) { // set error text back to invalid error
-        setState({...state, [value]: {
-          ...state[value],
-          errorText: state[value].invalid,
-        },
+      if (Boolean(state[value].invalid)) {
+        // set error text back to invalid error
+        setState({
+          ...state,
+          [value]: {
+            ...state[value],
+            errorText: state[value].invalid,
+          },
         });
-      } else { // clear error text if no invalid error exists
-        setState({...state, [value]: {
-          ...state[value],
-          errorText: '',
-        },
+      } else {
+        // clear error text if no invalid error exists
+        setState({
+          ...state,
+          [value]: {
+            ...state[value],
+            errorText: '',
+          },
         });
       }
     }
@@ -839,12 +945,13 @@ export function DialogAssign(props) {
       >
         <DialogTitle id="dashboard-dialog-title">
           <div className={classes.dialogTitle}>
-            <Typography variant='h6'>{t('Assign to me')}</Typography>
+            <Typography variant="h6">{t('Assign to me')}</Typography>
             <IconButton
-              id='dialog-close'
+              id="dialog-close"
               onClick={toggleDialog}
-              edge='end'
-              aria-label="Assign to me - close">
+              edge="end"
+              aria-label="Assign to me - close"
+            >
               <CloseIcon />
             </IconButton>
           </div>
@@ -852,22 +959,24 @@ export function DialogAssign(props) {
         <Divider className="mb-2" />
         <form onSubmit={submitForm} noValidate>
           <div className={classes.dialogRow}>
-            <Typography variant='subtitle2'>{t('Provide a phone number')}</Typography>
+            <Typography variant="subtitle2">
+              {t('Provide a phone number')}
+            </Typography>
           </div>
           <div className={classes.dialogRow}>
             <FormControl variant="outlined" className={classes.textField}>
               <NumberFormat
-                id='phone-input'
+                id="phone-input"
                 label={t('Phone number')}
                 aria-label={t('Phone number')}
                 value={state.phone.text}
                 customInput={TextField}
                 type="text"
-                variant='outlined'
+                variant="outlined"
                 format="+1 (###) ### ####"
                 mask="_"
                 allowEmptyFormatting
-                autoComplete='phone'
+                autoComplete="phone"
                 error={Boolean(state.phone.errorText)}
                 helperText={state.phone.errorText}
                 required
@@ -890,7 +999,8 @@ export function DialogAssign(props) {
                 setState({...initial});
                 toggleDialog();
               }}
-              className={classes.footerBtns}>
+              className={classes.footerBtns}
+            >
               {t('Cancel')}
             </Button>
             <Button
@@ -908,13 +1018,13 @@ export function DialogAssign(props) {
   );
 }
 
-
 // ////////////////////////////////////////// REQUEST AN UPDATE
 export function DialogUpdate(props) {
   const classes = useStyles();
   const {t} = useTranslation();
   const {toggleDialog, open} = props;
-  const initial = { // blank object used to reset state
+  const initial = {
+    // blank object used to reset state
     comments: {
       text: '',
       errorText: '',
@@ -933,20 +1043,26 @@ export function DialogUpdate(props) {
 
   const handleChange = (e, val) => {
     const comment = e.target.value;
-    setState({...state, [val]: { // updates state with text from input
-      ...state[val],
-      text: comment,
-    },
-    });
-
-    if (e.target.value && state.comments.errorText) { // if input text is valid, clear error
-      setState({...state, [val]: {
+    setState({
+      ...state,
+      [val]: {
+        // updates state with text from input
         ...state[val],
         text: comment,
-        errorText: '',
-        invalid: '',
-        commands: '',
       },
+    });
+
+    if (e.target.value && state.comments.errorText) {
+      // if input text is valid, clear error
+      setState({
+        ...state,
+        [val]: {
+          ...state[val],
+          text: comment,
+          errorText: '',
+          invalid: '',
+          commands: '',
+        },
       });
     }
   };
@@ -971,11 +1087,13 @@ export function DialogUpdate(props) {
   const submitForm = (e) => {
     e.preventDefault();
     const err = validateForm();
-    if (!err) { // if no errors exist, submit the form and reset the inputs
+    if (!err) {
+      // if no errors exist, submit the form and reset the inputs
       toggleDialog();
       setState({...initial});
     } else {
-      for (const property in state) { // focus on the first input that has an error on submit
+      for (const property in state) {
+        // focus on the first input that has an error on submit
         if (state[property].invalid) {
           switch (property) {
             case 'comments':
@@ -990,35 +1108,42 @@ export function DialogUpdate(props) {
     }
   };
 
-  const disableCutCopyPaste = (e, command, value) => { // display error if user tries to cut/copy/paste
+  const disableCutCopyPaste = (e, command, value) => {
+    // display error if user tries to cut/copy/paste
     let msg;
     e.preventDefault();
     switch (command) {
       case 'cut':
         msg = t('Cut has been disabled for security purposes.');
-        setState({...state, [value]: {
-          ...state[value],
-          commands: msg,
-          errorText: msg,
-        },
+        setState({
+          ...state,
+          [value]: {
+            ...state[value],
+            commands: msg,
+            errorText: msg,
+          },
         });
         break;
       case 'copy':
         msg = t('Copy has been disabled for security purposes.');
-        setState({...state, [value]: {
-          ...state[value],
-          commands: msg,
-          errorText: msg,
-        },
+        setState({
+          ...state,
+          [value]: {
+            ...state[value],
+            commands: msg,
+            errorText: msg,
+          },
         });
         break;
       case 'paste':
         msg = t('Paste has been disabled for security purposes.');
-        setState({...state, [value]: {
-          ...state[value],
-          commands: msg,
-          errorText: msg,
-        },
+        setState({
+          ...state,
+          [value]: {
+            ...state[value],
+            commands: msg,
+            errorText: msg,
+          },
         });
         break;
       default:
@@ -1028,17 +1153,23 @@ export function DialogUpdate(props) {
 
   const toggleHelperText = (value) => {
     if (state[value].commands === state[value].errorText) {
-      if (Boolean(state[value].invalid)) { // set error text back to invalid error
-        setState({...state, [value]: {
-          ...state[value],
-          errorText: state[value].invalid,
-        },
+      if (Boolean(state[value].invalid)) {
+        // set error text back to invalid error
+        setState({
+          ...state,
+          [value]: {
+            ...state[value],
+            errorText: state[value].invalid,
+          },
         });
-      } else { // clear error text if no invalid error exists
-        setState({...state, [value]: {
-          ...state[value],
-          errorText: '',
-        },
+      } else {
+        // clear error text if no invalid error exists
+        setState({
+          ...state,
+          [value]: {
+            ...state[value],
+            errorText: '',
+          },
         });
       }
     }
@@ -1052,18 +1183,18 @@ export function DialogUpdate(props) {
           toggleDialog();
         }}
         aria-labelledby="dashboard-dialog-title"
-
         open={open}
         className={classes.root}
       >
         <DialogTitle id="dashboard-dialog-title">
           <div className={classes.dialogTitle}>
-            <Typography variant='h6'>{t('Request an update')}</Typography>
+            <Typography variant="h6">{t('Request an update')}</Typography>
             <IconButton
-              id='dialog-close'
+              id="dialog-close"
               onClick={toggleDialog}
-              edge='end'
-              aria-label="Request an update - close">
+              edge="end"
+              aria-label="Request an update - close"
+            >
               <CloseIcon />
             </IconButton>
           </div>
@@ -1120,14 +1251,14 @@ export function DialogUpdate(props) {
   );
 }
 
-
 // ////////////////////////////////////////// DENY REQUEST
 export function DialogDenied(props) {
   const classes = useStyles();
   const {toggleDialog, open} = props;
   const {t} = useTranslation();
   const [snackbar, setSnackbar] = React.useState(false);
-  const initial = { // blank object used to reset state
+  const initial = {
+    // blank object used to reset state
     hours: {
       text: '',
       errorText: '',
@@ -1182,25 +1313,31 @@ export function DialogDenied(props) {
 
   const handleChange = (e, val) => {
     const comment = e.target.value;
-    setState({...state, [val]: { // updates state with text from input
-      ...state[val],
-      text: comment,
-    },
-    });
-
-    if (e.target.value && state[val].errorText) { // if input text is valid, clear errors
-      setState({...state, [val]: {
+    setState({
+      ...state,
+      [val]: {
+        // updates state with text from input
         ...state[val],
         text: comment,
-        errorText: '',
-        invalid: '',
-        commands: '',
       },
+    });
+
+    if (e.target.value && state[val].errorText) {
+      // if input text is valid, clear errors
+      setState({
+        ...state,
+        [val]: {
+          ...state[val],
+          text: comment,
+          errorText: '',
+          invalid: '',
+          commands: '',
+        },
       });
     }
   };
 
-  const SnackbarClose =() =>{
+  const SnackbarClose = () => {
     setSnackbar(false);
   };
 
@@ -1239,12 +1376,14 @@ export function DialogDenied(props) {
   const submitForm = (e) => {
     e.preventDefault();
     const err = validateForm();
-    if (!err) { // if no errors exist, submit the form, toggle snackbar, and reset the inputs
+    if (!err) {
+      // if no errors exist, submit the form, toggle snackbar, and reset the inputs
       toggleDialog();
       setSnackbar(!snackbar);
       setState({...initial});
     } else {
-      for (const property in state) { // focus on the first input that has an error on submit
+      for (const property in state) {
+        // focus on the first input that has an error on submit
         if (state[property].invalid) {
           switch (property) {
             case 'hours':
@@ -1268,35 +1407,42 @@ export function DialogDenied(props) {
     }
   };
 
-  const disableCutCopyPaste = (e, command, value) => { // display error if user tries to cut/copy/paste
+  const disableCutCopyPaste = (e, command, value) => {
+    // display error if user tries to cut/copy/paste
     let msg;
     e.preventDefault();
     switch (command) {
       case 'cut':
         msg = t('Cut has been disabled for security purposes.');
-        setState({...state, [value]: {
-          ...state[value],
-          commands: msg,
-          errorText: msg,
-        },
+        setState({
+          ...state,
+          [value]: {
+            ...state[value],
+            commands: msg,
+            errorText: msg,
+          },
         });
         break;
       case 'copy':
         msg = t('Copy has been disabled for security purposes.');
-        setState({...state, [value]: {
-          ...state[value],
-          commands: msg,
-          errorText: msg,
-        },
+        setState({
+          ...state,
+          [value]: {
+            ...state[value],
+            commands: msg,
+            errorText: msg,
+          },
         });
         break;
       case 'paste':
         msg = t('Paste has been disabled for security purposes.');
-        setState({...state, [value]: {
-          ...state[value],
-          commands: msg,
-          errorText: msg,
-        },
+        setState({
+          ...state,
+          [value]: {
+            ...state[value],
+            commands: msg,
+            errorText: msg,
+          },
         });
         break;
       default:
@@ -1306,17 +1452,23 @@ export function DialogDenied(props) {
 
   const toggleHelperText = (value) => {
     if (state[value].commands === state[value].errorText) {
-      if (Boolean(state[value].invalid)) { // set error text back to invalid error
-        setState({...state, [value]: {
-          ...state[value],
-          errorText: state[value].invalid,
-        },
+      if (Boolean(state[value].invalid)) {
+        // set error text back to invalid error
+        setState({
+          ...state,
+          [value]: {
+            ...state[value],
+            errorText: state[value].invalid,
+          },
         });
-      } else { // clear error text if no invalid error exists
-        setState({...state, [value]: {
-          ...state[value],
-          errorText: '',
-        },
+      } else {
+        // clear error text if no invalid error exists
+        setState({
+          ...state,
+          [value]: {
+            ...state[value],
+            errorText: '',
+          },
         });
       }
     }
@@ -1335,12 +1487,13 @@ export function DialogDenied(props) {
       >
         <DialogTitle id="dashboard-dialog-title">
           <div className={classes.dialogTitle}>
-            <Typography variant='h6'>{t('Deny request')}</Typography>
+            <Typography variant="h6">{t('Deny request')}</Typography>
             <IconButton
-              id='dialog-close'
+              id="dialog-close"
               onClick={toggleDialog}
-              edge='end'
-              aria-label="Deny request - close">
+              edge="end"
+              aria-label="Deny request - close"
+            >
               <CloseIcon />
             </IconButton>
           </div>
@@ -1348,7 +1501,7 @@ export function DialogDenied(props) {
         <Divider className="mb-2" />
         <form onSubmit={submitForm} noValidate>
           <div className={classes.dialogRow}>
-            <Typography variant='subtitle2'>{t('Billable hours')}</Typography>
+            <Typography variant="subtitle2">{t('Billable hours')}</Typography>
           </div>
           <div className={classes.dialogRow}>
             <FormControl variant="outlined" className={classes.formControl}>
@@ -1361,7 +1514,7 @@ export function DialogDenied(props) {
                     value={state.hours.text}
                     customInput={TextField}
                     type="text"
-                    variant='outlined'
+                    variant="outlined"
                     error={Boolean(state.hours.errorText)}
                     helperText={state.hours.errorText}
                     required
@@ -1384,7 +1537,7 @@ export function DialogDenied(props) {
                     value={state.minutes.text}
                     customInput={TextField}
                     type="text"
-                    variant='outlined'
+                    variant="outlined"
                     isAllowed={(values) => {
                       const {formattedValue, floatValue} = values;
                       return formattedValue === '' || floatValue <= 60;
@@ -1419,19 +1572,31 @@ export function DialogDenied(props) {
                 error={Boolean(state.reason.errorText)}
               >
                 <option value=""></option>
-                <option value='Non-SSI project'>{t('Non-SSI project')}</option>
-                <option value='Confidential requirements are not met'>{t('Confidential requirements are not met')}</option>
-                <option value='Request is missing information'>{t('Request is missing information')}</option>
-                <option value='Output file(s) are not in line with the project proposal'>{t('Output file(s) are not in line with the project proposal')}</option>
-                <option value='Other'>{t('Other')}</option>
+                <option value="Non-SSI project">{t('Non-SSI project')}</option>
+                <option value="Confidential requirements are not met">
+                  {t('Confidential requirements are not met')}
+                </option>
+                <option value="Request is missing information">
+                  {t('Request is missing information')}
+                </option>
+                <option value="Output file(s) are not in line with the project proposal">
+                  {t(
+                      'Output file(s) are not in line with the project proposal',
+                  )}
+                </option>
+                <option value="Other">{t('Other')}</option>
               </Select>
-              <InputLabel htmlFor="denied-select-label">{t('Denied reason')}</InputLabel>
+              <InputLabel htmlFor="denied-select-label">
+                {t('Denied reason')}
+              </InputLabel>
               <FormHelperText>{state.reason.errorText}</FormHelperText>
             </FormControl>
           </div>
-          <div className={clsx(classes.dialogRow, {
-            [classes.hiddenRow]: state.reason.text !== 'Other',
-          })}>
+          <div
+            className={clsx(classes.dialogRow, {
+              [classes.hiddenRow]: state.reason.text !== 'Other',
+            })}
+          >
             <FormControl variant="outlined">
               <TextField
                 id="comments-input"
@@ -1462,14 +1627,16 @@ export function DialogDenied(props) {
                 setState({...initial});
                 toggleDialog();
               }}
-              className={classes.footerBtns}>
+              className={classes.footerBtns}
+            >
               {t('Cancel')}
             </Button>
             <Button
               type="submit"
               variant="contained"
               color="primary"
-              className={classes.footerBtns}>
+              className={classes.footerBtns}
+            >
               {t('Submit')}
             </Button>
           </div>
@@ -1485,14 +1652,14 @@ export function DialogDenied(props) {
   );
 }
 
-
 // ////////////////////////////////////////// APPROVE REQUEST
 export function DialogApprove(props) {
   const classes = useStyles();
   const {t} = useTranslation();
   const {toggleDialog, open} = props;
   const [snackbar, setSnackbar] = React.useState(false);
-  const initial = { // blank object used to reset state
+  const initial = {
+    // blank object used to reset state
     hours: {
       text: '',
       errorText: '',
@@ -1523,25 +1690,31 @@ export function DialogApprove(props) {
 
   const handleChange = (e, val) => {
     const comment = e.target.value;
-    setState({...state, [val]: { // updates state with text from input
-      ...state[val],
-      text: comment,
-    },
-    });
-
-    if (e.target.value && state[val].errorText) { // if input text is valid, clear error
-      setState({...state, [val]: {
+    setState({
+      ...state,
+      [val]: {
+        // updates state with text from input
         ...state[val],
         text: comment,
-        errorText: '',
-        invalid: '',
-        commands: '',
       },
+    });
+
+    if (e.target.value && state[val].errorText) {
+      // if input text is valid, clear error
+      setState({
+        ...state,
+        [val]: {
+          ...state[val],
+          text: comment,
+          errorText: '',
+          invalid: '',
+          commands: '',
+        },
       });
     }
   };
 
-  const SnackbarClose =() =>{
+  const SnackbarClose = () => {
     setSnackbar(false);
   };
 
@@ -1570,12 +1743,14 @@ export function DialogApprove(props) {
   const submitForm = (e) => {
     e.preventDefault();
     const err = validateForm();
-    if (!err) { // if no errors exist, submit the form, toggle snackbar, and reset the inputs
+    if (!err) {
+      // if no errors exist, submit the form, toggle snackbar, and reset the inputs
       toggleDialog();
       setSnackbar(!snackbar);
       setState({...initial});
     } else {
-      for (const property in state) { // focus on the first input that has an error on submit
+      for (const property in state) {
+        // focus on the first input that has an error on submit
         if (state[property].invalid) {
           switch (property) {
             case 'hours':
@@ -1593,35 +1768,42 @@ export function DialogApprove(props) {
     }
   };
 
-  const disableCutCopyPaste = (e, command, value) => { // display error if user tries to cut/copy/paste
+  const disableCutCopyPaste = (e, command, value) => {
+    // display error if user tries to cut/copy/paste
     let msg;
     e.preventDefault();
     switch (command) {
       case 'cut':
         msg = t('Cut has been disabled for security purposes.');
-        setState({...state, [value]: {
-          ...state[value],
-          commands: msg,
-          errorText: msg,
-        },
+        setState({
+          ...state,
+          [value]: {
+            ...state[value],
+            commands: msg,
+            errorText: msg,
+          },
         });
         break;
       case 'copy':
         msg = t('Copy has been disabled for security purposes.');
-        setState({...state, [value]: {
-          ...state[value],
-          commands: msg,
-          errorText: msg,
-        },
+        setState({
+          ...state,
+          [value]: {
+            ...state[value],
+            commands: msg,
+            errorText: msg,
+          },
         });
         break;
       case 'paste':
         msg = t('Paste has been disabled for security purposes.');
-        setState({...state, [value]: {
-          ...state[value],
-          commands: msg,
-          errorText: msg,
-        },
+        setState({
+          ...state,
+          [value]: {
+            ...state[value],
+            commands: msg,
+            errorText: msg,
+          },
         });
         break;
       default:
@@ -1631,17 +1813,23 @@ export function DialogApprove(props) {
 
   const toggleHelperText = (value) => {
     if (state[value].commands === state[value].errorText) {
-      if (Boolean(state[value].invalid)) { // set error text back to invalid error
-        setState({...state, [value]: {
-          ...state[value],
-          errorText: state[value].invalid,
-        },
+      if (Boolean(state[value].invalid)) {
+        // set error text back to invalid error
+        setState({
+          ...state,
+          [value]: {
+            ...state[value],
+            errorText: state[value].invalid,
+          },
         });
-      } else { // clear error text if no invalid error exists
-        setState({...state, [value]: {
-          ...state[value],
-          errorText: '',
-        },
+      } else {
+        // clear error text if no invalid error exists
+        setState({
+          ...state,
+          [value]: {
+            ...state[value],
+            errorText: '',
+          },
         });
       }
     }
@@ -1657,12 +1845,13 @@ export function DialogApprove(props) {
       >
         <DialogTitle id="dashboard-dialog-title">
           <div className={classes.dialogTitle}>
-            <Typography variant='h6'>{t('Approve request')}</Typography>
+            <Typography variant="h6">{t('Approve request')}</Typography>
             <IconButton
-              id='dialog-close'
+              id="dialog-close"
               onClick={toggleDialog}
-              edge='end'
-              aria-label="Approve request - close">
+              edge="end"
+              aria-label="Approve request - close"
+            >
               <CloseIcon />
             </IconButton>
           </div>
@@ -1670,7 +1859,7 @@ export function DialogApprove(props) {
         <Divider className="mb-2" />
         <form onSubmit={submitForm} noValidate>
           <div className={classes.dialogRow}>
-            <Typography variant='subtitle2'>{t('Billable hours')}</Typography>
+            <Typography variant="subtitle2">{t('Billable hours')}</Typography>
           </div>
           <div className={classes.dialogRow}>
             <FormControl variant="outlined" className={classes.formControl}>
@@ -1683,7 +1872,7 @@ export function DialogApprove(props) {
                     value={state.hours.text}
                     customInput={TextField}
                     type="text"
-                    variant='outlined'
+                    variant="outlined"
                     error={Boolean(state.hours.errorText)}
                     helperText={state.hours.errorText}
                     required
@@ -1706,7 +1895,7 @@ export function DialogApprove(props) {
                     value={state.minutes.text}
                     customInput={TextField}
                     type="text"
-                    variant='outlined'
+                    variant="outlined"
                     isAllowed={(values) => {
                       const {formattedValue, floatValue} = values;
                       return formattedValue === '' || floatValue <= 60;
@@ -1735,14 +1924,16 @@ export function DialogApprove(props) {
                 setState({...initial});
                 toggleDialog();
               }}
-              className={classes.footerBtns}>
+              className={classes.footerBtns}
+            >
               {t('Cancel')}
             </Button>
             <Button
               type="submit"
               variant="contained"
               color="primary"
-              className={classes.footerBtns}>
+              className={classes.footerBtns}
+            >
               {t('Submit')}
             </Button>
           </div>
@@ -1752,11 +1943,11 @@ export function DialogApprove(props) {
         open={snackbar}
         severity="success"
         message={t('Vetting request 10-2020-2354326 has been approved')}
-        toggleSnackbar={SnackbarClose}/>
+        toggleSnackbar={SnackbarClose}
+      />
     </React.Fragment>
   );
 }
-
 
 // ////////////////////////////////////////// NEW REQUEST TITLE
 export function DialognNewRequestTitle(props) {
@@ -1765,7 +1956,8 @@ export function DialognNewRequestTitle(props) {
   const history = useHistory();
   const location = useLocation();
   const {toggleDialog, open, role} = props;
-  const initial = { // blank object used to reset state
+  const initial = {
+    // blank object used to reset state
     name: {
       text: 'Untitled request',
       errorText: '',
@@ -1785,22 +1977,30 @@ export function DialognNewRequestTitle(props) {
 
   const handleChange = (e, val) => {
     const comment = e.target.value;
-    setState({...state, [val]: { // updates state with text from input
-      ...state[val],
-      text: comment,
-    },
-    });
-
-    if (e.target.value && state.name.errorText) { // if input text is valid, clear error
-      setState({...state, [val]: {
+    setState({
+      ...state,
+      [val]: {
+        // updates state with text from input
         ...state[val],
         text: comment,
-        errorText: '',
-        invalid: '',
-        commands: '',
       },
+    });
+
+    if (e.target.value && state.name.errorText) {
+      // if input text is valid, clear error
+      setState({
+        ...state,
+        [val]: {
+          ...state[val],
+          text: comment,
+          errorText: '',
+          invalid: '',
+          commands: '',
+        },
       });
     }
+
+    console.log('role');
   };
 
   const validateForm = () => {
@@ -1823,7 +2023,8 @@ export function DialognNewRequestTitle(props) {
   const submitForm = (e) => {
     e.preventDefault();
     const err = validateForm();
-    if (!err) { // if no errors exist, submit the form and reset the inputs
+    if (!err) {
+      // if no errors exist, submit the form and reset the inputs
       toggleDialog();
       setState({...initial});
 
@@ -1836,7 +2037,8 @@ export function DialognNewRequestTitle(props) {
         });
       }
     } else {
-      for (const property in state) { // focus on the first input that has an error on submit
+      for (const property in state) {
+        // focus on the first input that has an error on submit
         if (state[property].invalid) {
           switch (property) {
             case 'title':
@@ -1851,35 +2053,42 @@ export function DialognNewRequestTitle(props) {
     }
   };
 
-  const disableCutCopyPaste = (e, command, value) => { // display error if user tries to cut/copy/paste
+  const disableCutCopyPaste = (e, command, value) => {
+    // display error if user tries to cut/copy/paste
     let msg;
     e.preventDefault();
     switch (command) {
       case 'cut':
         msg = t('Cut has been disabled for security purposes.');
-        setState({...state, [value]: {
-          ...state[value],
-          commands: msg,
-          errorText: msg,
-        },
+        setState({
+          ...state,
+          [value]: {
+            ...state[value],
+            commands: msg,
+            errorText: msg,
+          },
         });
         break;
       case 'copy':
         msg = t('Copy has been disabled for security purposes.');
-        setState({...state, [value]: {
-          ...state[value],
-          commands: msg,
-          errorText: msg,
-        },
+        setState({
+          ...state,
+          [value]: {
+            ...state[value],
+            commands: msg,
+            errorText: msg,
+          },
         });
         break;
       case 'paste':
         msg = t('Paste has been disabled for security purposes.');
-        setState({...state, [value]: {
-          ...state[value],
-          commands: msg,
-          errorText: msg,
-        },
+        setState({
+          ...state,
+          [value]: {
+            ...state[value],
+            commands: msg,
+            errorText: msg,
+          },
         });
         break;
       default:
@@ -1889,17 +2098,23 @@ export function DialognNewRequestTitle(props) {
 
   const toggleHelperText = (value) => {
     if (state[value].commands === state[value].errorText) {
-      if (Boolean(state[value].invalid)) { // set error text back to invalid error
-        setState({...state, [value]: {
-          ...state[value],
-          errorText: state[value].invalid,
-        },
+      if (Boolean(state[value].invalid)) {
+        // set error text back to invalid error
+        setState({
+          ...state,
+          [value]: {
+            ...state[value],
+            errorText: state[value].invalid,
+          },
         });
-      } else { // clear error text if no invalid error exists
-        setState({...state, [value]: {
-          ...state[value],
-          errorText: '',
-        },
+      } else {
+        // clear error text if no invalid error exists
+        setState({
+          ...state,
+          [value]: {
+            ...state[value],
+            errorText: '',
+          },
         });
       }
     }
@@ -1918,12 +2133,13 @@ export function DialognNewRequestTitle(props) {
       >
         <DialogTitle id="dashboard-dialog-title">
           <div className={classes.dialogTitle}>
-            <Typography variant='h6'>{t('New vetting request')}</Typography>
+            <Typography variant="h6">{t('New vetting request')}</Typography>
             <IconButton
-              id='dialog-close'
+              id="dialog-close"
               onClick={toggleDialog}
-              edge='end'
-              aria-label="New vetting request - close">
+              edge="end"
+              aria-label="New vetting request - close"
+            >
               <CloseIcon />
             </IconButton>
           </div>
@@ -1931,7 +2147,9 @@ export function DialognNewRequestTitle(props) {
         <Divider className="mb-2" />
         <form onSubmit={submitForm} noValidate>
           <div className={classes.dialogRow}>
-            <Typography variant='subtitle2'>{t('Please name your new request.')}</Typography>
+            <Typography variant="subtitle2">
+              {t('Please name your new request.')}
+            </Typography>
           </div>
           <div className={classes.dialogRow}>
             <FormControl variant="outlined" className={classes.textField}>
