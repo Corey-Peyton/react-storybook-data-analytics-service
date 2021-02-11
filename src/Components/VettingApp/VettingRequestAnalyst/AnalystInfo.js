@@ -105,7 +105,7 @@ function AnalystInfo(props) {
             required
             fullWidth
             margin="dense"
-            defaultValue="Untitled request"
+            defaultValue={props.title}
             className="mt-2"
           />
           <Typography component="h2" variant="h6" className="mt-1 mb-1">
