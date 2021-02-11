@@ -117,12 +117,19 @@ function getSteps() {
 
 function VettingRequestResearcher(props) {
   const classes = useStyles();
+  const {name, from} = (props.location && props.location.state) || {};
   const [state, setState] = React.useState({
     activeStep: 0,
     completed: {},
-    title: 'Untitled request',
     open: false,
     errors: [1, 0, 0, 0],
+    title: function() {
+      if (from === '/vetting-app/dashboard-researcher') {
+        return name.text;
+      } else {
+        return '';
+      }
+    },
   });
   const steps = getSteps();
 
@@ -152,7 +159,9 @@ function VettingRequestResearcher(props) {
 
   const handleNext = () => {
     const newActiveStep =
-      isLastStep() && !allStepsCompleted() ? steps.findIndex((step, i) => !(i in state.completed)) : state.activeStep + 1;
+      isLastStep() && !allStepsCompleted() ?
+        steps.findIndex((step, i) => !(i in state.completed)) :
+        state.activeStep + 1;
     setState({...state, activeStep: newActiveStep});
   };
 
@@ -195,7 +204,12 @@ function VettingRequestResearcher(props) {
   const getStepContent = (step) => {
     switch (step) {
       case 0:
-        return <ResearcherInfo handleTitleChange={handleTitleChange} />;
+        return (
+          <ResearcherInfo
+            handleTitleChange={handleTitleChange}
+            title={state.title()}
+          />
+        );
       case 1:
         return <FilesList />;
       case 2:
@@ -209,11 +223,12 @@ function VettingRequestResearcher(props) {
 
   const handleTitleChange = (e) => {
     const title = e.target.value;
-    if (title !== '') {
-      setState({...state, title: e.target.value});
-    } else {
-      setState({...state, title: 'New vetting request'});
-    }
+    setState({
+      ...state,
+      title: function() {
+        return title;
+      },
+    });
   };
 
   const handleReset = () => {
@@ -232,18 +247,20 @@ function VettingRequestResearcher(props) {
         <Container maxWidth={false} className="page-container">
           <AppBar position="static" className={classes.appBar} color="default">
             {state.activeStep === 3 ? (
-            <ToolBarDelete handleDialogOpen={handleDialogOpen} />
-          ) : (
-            <ToolBar />
-          )}
+              <ToolBarDelete handleDialogOpen={handleDialogOpen} />
+            ) : (
+              <ToolBar />
+            )}
           </AppBar>
           <Paper className={classes.paper}>
             <Grid container alignItems="center">
               <Grid item className={classes.title}>
                 <Typography variant="h6" color="textSecondary">
-                Vetting request · ID 0101-000000
+                  Vetting request · ID 0101-000000
                 </Typography>
-                <Typography variant="h6" component="h2">{state.title}</Typography>
+                <Typography variant="h6" component="h2">
+                  {state.title()}
+                </Typography>
               </Grid>
               <Grid item>
                 <Chip label="Draft" className="mr-2" />
@@ -268,7 +285,7 @@ function VettingRequestResearcher(props) {
                   className={classes.stepperBackBtn}
                   startIcon={<ArrowBackIosIcon />}
                 >
-                Back
+                  Back
                 </Button>
               )}
               <Stepper nonLinear activeStep={state.activeStep}>
@@ -306,7 +323,7 @@ function VettingRequestResearcher(props) {
                   className={classes.stepperNextBtn}
                   endIcon={<ArrowForwardIosIcon />}
                 >
-                Next
+                  Next
                 </Button>
               )}
             </div>
@@ -314,21 +331,21 @@ function VettingRequestResearcher(props) {
             <CutCopyPasteAlert />
             <div>
               {allStepsCompleted() ? (
-              <div>
-                <Typography className={classes.instructions}>
-                  All steps completed - you&apos;re finished
-                </Typography>
-                <Button onClick={handleReset}>Reset</Button>
-              </div>
-            ) : (
-              <div>
-                <Grid container justify="center" className="mb-4">
-                  <Grid item xs={6}>
-                    {getStepContent(state.activeStep)}
+                <div>
+                  <Typography className={classes.instructions}>
+                    All steps completed - you&apos;re finished
+                  </Typography>
+                  <Button onClick={handleReset}>Reset</Button>
+                </div>
+              ) : (
+                <div>
+                  <Grid container justify="center" className="mb-4">
+                    <Grid item xs={6}>
+                      {getStepContent(state.activeStep)}
+                    </Grid>
                   </Grid>
-                </Grid>
-              </div>
-            )}
+                </div>
+              )}
             </div>
             <Grid
               container
@@ -343,47 +360,52 @@ function VettingRequestResearcher(props) {
                     className={classes.button}
                     onClick={handleBack}
                   >
-                  Back
+                    Back
                   </Button>
                 </Grid>
               )}
               {state.activeStep === getSteps().length - 1 ? (
-              <Grid item>
-                <Button
-                  variant="contained"
-                  color="primary"
-                  className={classes.button}
-                  onClick={handleClick}
-                >
-                  Submit request
-                </Button>
-                <Snackbar open={openSnackbar} onClose={snackbarhandleClose} autoHideDuration={6000} anchorOrigin={{
-                  vertical: 'bottom',
-                  horizontal: 'left',
-                }}>
-                  <Alert
-                    onClose={snackbarhandleClose}
-                    severity="success"
-                    className={classes.alert}
-                    variant="filled"
+                <Grid item>
+                  <Button
+                    variant="contained"
+                    color="primary"
+                    className={classes.button}
+                    onClick={handleClick}
                   >
-                    This vetting request has been already submitted. You will be
-                    notified with any updates.
-                  </Alert>
-                </Snackbar>
-              </Grid>
-            ) : (
-              <Grid item>
-                <Button
-                  variant="contained"
-                  color="primary"
-                  className={classes.button}
-                  onClick={handleComplete}
-                >
-                  Next
-                </Button>
-              </Grid>
-            )}
+                    Submit request
+                  </Button>
+                  <Snackbar
+                    open={openSnackbar}
+                    onClose={snackbarhandleClose}
+                    autoHideDuration={6000}
+                    anchorOrigin={{
+                      vertical: 'bottom',
+                      horizontal: 'left',
+                    }}
+                  >
+                    <Alert
+                      onClose={snackbarhandleClose}
+                      severity="success"
+                      className={classes.alert}
+                      variant="filled"
+                    >
+                      This vetting request has been already submitted. You will
+                      be notified with any updates.
+                    </Alert>
+                  </Snackbar>
+                </Grid>
+              ) : (
+                <Grid item>
+                  <Button
+                    variant="contained"
+                    color="primary"
+                    className={classes.button}
+                    onClick={handleComplete}
+                  >
+                    Next
+                  </Button>
+                </Grid>
+              )}
             </Grid>
           </Paper>
           <FloatingSupportButton />
@@ -396,11 +418,11 @@ function VettingRequestResearcher(props) {
           aria-describedby="alert-dialog-description"
         >
           <DialogTitle id="alert-dialog-title">
-          Delete vetting request
+            Delete vetting request
           </DialogTitle>
           <DialogContent className="pb-0">
             <DialogContentText id="alert-dialog-description">
-              <Typography variant="body2">{`Are you sure you want to delete the Vetting disclosure request "${state.title}"?`}</Typography>
+              <Typography variant="body2">{`Are you sure you want to delete the Vetting disclosure request "${state.title()}"?`}</Typography>
             </DialogContentText>
             <Divider className={classes.divider} />
           </DialogContent>
@@ -410,7 +432,7 @@ function VettingRequestResearcher(props) {
               color="primary"
               variant="outlined"
             >
-            Cancel
+              Cancel
             </Button>
             <Button
               color="primary"
@@ -419,22 +441,28 @@ function VettingRequestResearcher(props) {
               onClick={() => {
                 handleClickDelete();
                 handleDialogClose();
-              }}>
-            Delete request
+              }}
+            >
+              Delete request
             </Button>
           </DialogActions>
         </Dialog>
-        <Snackbar open={openSnackbarDelete} onClose={snackbardeletehandleClose} autoHideDuration={6000} anchorOrigin={{
-          vertical: 'bottom',
-          horizontal: 'left',
-        }}>
+        <Snackbar
+          open={openSnackbarDelete}
+          onClose={snackbardeletehandleClose}
+          autoHideDuration={6000}
+          anchorOrigin={{
+            vertical: 'bottom',
+            horizontal: 'left',
+          }}
+        >
           <Alert
             onClose={snackbardeletehandleClose}
             severity="success"
             className={classes.alert}
             variant="filled"
           >
-                    Your request has been deleted
+            Your request has been deleted
           </Alert>
         </Snackbar>
       </main>

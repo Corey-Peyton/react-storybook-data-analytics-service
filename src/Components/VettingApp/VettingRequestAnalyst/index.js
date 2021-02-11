@@ -133,7 +133,6 @@ function getSteps() {
 
 function VettingRequestAnalyst(props) {
   const classes = useStyles();
-  const {name, from} = (props.location && props.location.state) || {};
   const [state, setState] = React.useState({
     activeStep: 0,
     completed: {},
@@ -142,13 +141,6 @@ function VettingRequestAnalyst(props) {
     userName: props.userName,
     lead: props.lead,
     support: props.support,
-    requestTitle: function() {
-      if (from === '/vetting-app/dashboard-analyst') {
-        return name.text;
-      } else {
-        return '';
-      }
-    },
   });
   const steps = getSteps();
 
@@ -226,7 +218,7 @@ function VettingRequestAnalyst(props) {
   const getStepContent = (step) => {
     switch (step) {
       case 0:
-        return <AnalystInfo handleTitleChange={handleTitleChange} title={state.requestTitle()} />; ;
+        return <AnalystInfo handleTitleChange={handleTitleChange} />;
       case 1:
         return <FilesList />;
       case 2:
@@ -288,7 +280,7 @@ function VettingRequestAnalyst(props) {
                 className={classes.alert}
                 variant="filled"
               >
-          You have been unassigned from request 10_2020_4564677
+                You have been unassigned from request 10_2020_4564677
               </Alert>
             </Snackbar>
             <Divider />

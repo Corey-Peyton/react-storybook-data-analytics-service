@@ -16,7 +16,6 @@ import ProjectsDrawer from './Common/ProjectsDrawer';
 import BypassBlocks from '../../BypassBlocks';
 import {requestListResearchers} from '../../../Data/fakeData';
 import {DRAWER_WIDTH} from './Common/ProjectsDrawer';
-import {DialognNewRequestTitle} from './Common/DialogBox';
 
 const useStyles = makeStyles((theme) => ({
   main: {
@@ -189,10 +188,6 @@ export default function DashboardPageAnalyst() {
     setOpen({...open, summaryDrawer: !open.summaryDrawer});
   };
 
-  const toggleDialog = (state, value) => {
-    setOpen({...open, [state]: value});
-  };
-
   const handleProjectTitle = (value) => {
     setProject({...project, title: value});
   };
@@ -326,11 +321,6 @@ export default function DashboardPageAnalyst() {
           </TabPanel>
         </Paper>
         <Footer open={open.projectsDrawer} />
-        <DialognNewRequestTitle
-          open={open.newRequest}
-          role="analyst"
-          toggleDialog={() => toggleDialog('newRequest', !open.newRequest)}
-        />
       </main>
     </React.Fragment>
   );

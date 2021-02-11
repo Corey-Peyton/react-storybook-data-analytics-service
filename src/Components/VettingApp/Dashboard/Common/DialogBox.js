@@ -1999,8 +1999,6 @@ export function DialognNewRequestTitle(props) {
         },
       });
     }
-
-    console.log('role');
   };
 
   const validateForm = () => {
@@ -2029,10 +2027,8 @@ export function DialognNewRequestTitle(props) {
       setState({...initial});
 
       if (role === 'researcher') {
-        history.push('/vetting-app/request-researcher', state.name.text);
-      } else if (role === 'analyst') {
         history.push({
-          pathname: '/vetting-app/request-analyst',
+          pathname: '/vetting-app/request-researcher',
           state,
         });
       }
