@@ -47,6 +47,7 @@ const useStyles = makeStyles((theme) => ({
 
 function ResearcherInfo(props) {
   const classes = useStyles();
+
   return (
     <React.Fragment>
       <Typography>
@@ -63,7 +64,7 @@ function ResearcherInfo(props) {
         Items marked with asterisk (*) are required.
       </Typography>
       <Typography component="h2" variant="h6">
-       Request details
+        Request details
       </Typography>
       <Grid container spacing={1}>
         <Grid item xs={6}>
@@ -87,12 +88,13 @@ function ResearcherInfo(props) {
             fullWidth
             margin="dense"
             error
-            defaultValue="Untitled request"
+            defaultValue={props.title}
             className="mt-2"
             helperText="Request name is required"
+            onChange={props.handleTitleChange}
           />
           <Typography component="h2" variant="h6" className="mt-1 mb-1">
-        Project details
+            Project details
           </Typography>
           <TextField
             id="project"
@@ -156,17 +158,20 @@ function ResearcherInfo(props) {
             id="first-name"
             name="first-name"
             label="First name"
-            variant="outlined"required
+            variant="outlined"
+            required
             fullWidth
-            margin="dense"defaultValue="Rose"
+            margin="dense"
+            defaultValue="Rose"
             className={classes.inputMargin}
             InputProps={{readOnly: true}}
-          / >
+          />
           <TextField
             id="last-name"
             name="last-name"
             label="Last name"
-            variant="outlined"required
+            variant="outlined"
+            required
             fullWidth
             margin="dense"
             defaultValue="Temple"
@@ -218,7 +223,7 @@ function ResearcherInfo(props) {
             </Typography>
           </li>
         </ul>
-        <Typography variant="subtitle2" component="h3" >
+        <Typography variant="subtitle2" component="h3">
           A completed request form will be stored as part of the request record.
         </Typography>
       </div>
@@ -231,9 +236,7 @@ function ResearcherInfo(props) {
           Is the requested output consistent with the approved proposal for this
           project?
         </FormLabel>
-        <RadioGroup
-          id="consistentOutput"
-        >
+        <RadioGroup id="consistentOutput">
           <FormControlLabel
             value="Yes"
             control={<Radio color="primary" />}
@@ -261,9 +264,7 @@ function ResearcherInfo(props) {
           geographical, institutional, household size and/or population
           requirements for your output?
         </FormLabel>
-        <RadioGroup
-          id="vettingRules"
-        >
+        <RadioGroup id="vettingRules">
           <FormControlLabel
             value="Yes"
             control={<Radio color="primary" />}
@@ -296,9 +297,7 @@ function ResearcherInfo(props) {
             <InfoIcon />
           </Tooltip>
         </FormLabel>
-        <RadioGroup
-          id="finalOutput"
-        >
+        <RadioGroup id="finalOutput">
           <FormControlLabel
             value="Yes"
             control={<Radio color="primary" />}

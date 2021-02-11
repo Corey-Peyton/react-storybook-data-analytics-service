@@ -2,10 +2,7 @@ import React from 'react';
 import {useTranslation} from 'react-i18next';
 import clsx from 'clsx';
 import {makeStyles} from '@material-ui/core/styles';
-import {
-  AppBar,
-  Typography,
-} from '@material-ui/core';
+import {AppBar, Typography} from '@material-ui/core';
 import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
 import Paper from '@material-ui/core/Paper';
@@ -20,7 +17,6 @@ import ProjectsDrawer from './Common/ProjectsDrawer';
 import BypassBlocks from '../../BypassBlocks';
 import {requestListResearchers} from '../../../Data/fakeData';
 import {DRAWER_WIDTH} from './Common/ProjectsDrawer';
-import {DialognNewRequestTitle} from './Common/DialogBox';
 
 const useStyles = makeStyles((theme) => ({
   main: {
@@ -84,18 +80,52 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-function createData(id, title, statusHead, status, researcher, analysts, created, updated) {
-  return {id, title, statusHead, status, researcher, analysts, created, updated};
+function createData(
+    id,
+    title,
+    statusHead,
+    status,
+    researcher,
+    analysts,
+    created,
+    updated,
+) {
+  return {
+    id,
+    title,
+    statusHead,
+    status,
+    researcher,
+    analysts,
+    created,
+    updated,
+  };
 }
 
-const rows = requestListResearchers.filter((request) => request.status !== 'Draft' ).map((el, index) =>
-  createData(el.id, el.title, el.statusHead, el.status, el.researcher, el.analysts, el.created, el.updated),
-);
+const rows = requestListResearchers
+    .filter((request) => request.status !== 'Draft')
+    .map((el, index) =>
+      createData(
+          el.id,
+          el.title,
+          el.statusHead,
+          el.status,
+          el.researcher,
+          el.analysts,
+          el.created,
+          el.updated,
+      ),
+    );
 
 const headCells = [
   {id: 'id', narrow: false, disablePadding: true, label: 'Request'},
   {id: 'status', narrow: false, disablePadding: false, label: 'Status'},
-  {id: 'researcher', narrow: false, disablePadding: false, label: 'Researcher'},
+  {
+    id: 'researcher',
+    narrow: false,
+    disablePadding: false,
+    label: 'Researcher',
+  },
   {id: 'analysts', narrow: false, disablePadding: false, label: 'Assignee'},
   {id: 'created', narrow: false, disablePadding: false, label: 'Created on'},
   {id: 'updated', narrow: false, disablePadding: false, label: 'Updated on'},
@@ -125,9 +155,7 @@ export default function DashboardPageAnalyst() {
   });
 
   const filteredRows = () => {
-    return (
-      rows.filter((val) => val.statusHead === tabStatus)
-    );
+    return rows.filter((val) => val.statusHead === tabStatus);
   };
 
   const handleChange = (event, newValue) => {
@@ -178,10 +206,7 @@ export default function DashboardPageAnalyst() {
 
   return (
     <React.Fragment>
-      <Header
-        clickHandler={toggleProjectsDrawer}
-        role='analyst'
-      />
+      <Header clickHandler={toggleProjectsDrawer} role="analyst" />
       <main className={classes.main}>
         <BypassBlocks ref={{main: mainRef, about: aboutRef}} />
         <ProjectsDrawer
@@ -204,16 +229,11 @@ export default function DashboardPageAnalyst() {
             position="static"
             component="div"
             className={classes.appBar}
-            ref={mainRef} tabIndex="-1"
+            ref={mainRef}
+            tabIndex="-1"
           >
-            <AppBar
-              className={classes.appBarHeader}
-              elevation={0}
-            >
-              <Typography
-                variant="h6"
-                component="h1"
-              >
+            <AppBar className={classes.appBarHeader} elevation={0}>
+              <Typography variant="h6" component="h1">
                 {project.title}
               </Typography>
               <Button
@@ -222,7 +242,7 @@ export default function DashboardPageAnalyst() {
                 className={classes.button}
                 onClick={() => toggleDialog('newRequest', !open.newRequest)}
               >
-            New vetting request
+                New vetting request
               </Button>
             </AppBar>
             <Tabs
@@ -235,11 +255,31 @@ export default function DashboardPageAnalyst() {
               variant="scrollable"
               scrollButtons="auto"
             >
-              <Tab label={t('Assigned to me')} aria-label={t('Assigned to me')} {...a11yProps(0)} />
-              <Tab label={t('Unassigned')} aria-label={t('Unassigned')} {...a11yProps(1)} />
-              <Tab label={t('Active')} aria-label={t('Active')} {...a11yProps(2)} />
-              <Tab label={t('Approved')} aria-label={t('Approved')} {...a11yProps(3)} />
-              <Tab label={t('Denied')} aria-label={t('Denied')} {...a11yProps(4)} />
+              <Tab
+                label={t('Assigned to me')}
+                aria-label={t('Assigned to me')}
+                {...a11yProps(0)}
+              />
+              <Tab
+                label={t('Unassigned')}
+                aria-label={t('Unassigned')}
+                {...a11yProps(1)}
+              />
+              <Tab
+                label={t('Active')}
+                aria-label={t('Active')}
+                {...a11yProps(2)}
+              />
+              <Tab
+                label={t('Approved')}
+                aria-label={t('Approved')}
+                {...a11yProps(3)}
+              />
+              <Tab
+                label={t('Denied')}
+                aria-label={t('Denied')}
+                {...a11yProps(4)}
+              />
             </Tabs>
           </AppBar>
           <TabPanel value={value} index={0} className={classes.tabPanel}>
@@ -284,7 +324,8 @@ export default function DashboardPageAnalyst() {
           </TabPanel>
           <TabPanel value={value} index={4} className={classes.tabPanel}>
             <TableContainerComponent
-              status="denied" filteredRows={filteredRows}
+              status="denied"
+              filteredRows={filteredRows}
               headCells={headCells}
               contextSummaryClick={toggleSummaryDrawer}
               contextStatusClick={contextStatusClick}
@@ -293,11 +334,6 @@ export default function DashboardPageAnalyst() {
           </TabPanel>
         </Paper>
         <Footer open={open.projectsDrawer} />
-        <DialognNewRequestTitle
-          open={open.newRequest}
-          role='analyst'
-          toggleDialog={() => toggleDialog('newRequest', !open.newRequest)}
-        />
       </main>
     </React.Fragment>
   );
