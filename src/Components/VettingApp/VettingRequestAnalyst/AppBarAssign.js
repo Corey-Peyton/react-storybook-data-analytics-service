@@ -30,7 +30,9 @@ function Assignee(props) {
   } else if (props.lead === '' && props.support.length !== 0) {
     return (
       <>
-        <Typography variant="body2" color="textSecondary">No lead</Typography>
+        <Typography variant="body2" color="textSecondary">
+          No lead
+        </Typography>
         <Chip
           label={`${props.support.length} support`}
           onClick={props.handleDialogOpen}
@@ -58,15 +60,18 @@ function AppBarUnAssign(props) {
   return (
     <Grid container alignItems="center">
       <Grid item className={classes.title}>
-        <Typography variant="h6" color="textSecondary">
-        Vetting request · ID 0101-000000
+        <Typography variant="subtitle1" component="p">
+          Vetting request · ID 0101-000000
         </Typography>
-        <Typography variant="h6" component="h2">
+        <Typography variant="h6" component="h1">
           {props.title}
         </Typography>
       </Grid>
       <Grid item>
-        <Chip label="Disclosure Analysis" className={`${classes.upperCase} mr-1`} />
+        <Chip
+          label="Disclosure Analysis"
+          className={`${classes.upperCase} mr-1`}
+        />
       </Grid>
       <Grid item className={classes.assignee}>
         <Assignee {...props} />

@@ -5,7 +5,7 @@ import Button from '@material-ui/core/Button';
 import Collapse from '@material-ui/core/Collapse';
 
 const useStyles = makeStyles((theme) => ({
-  root: {
+  alert: {
     marginBottom: theme.spacing(2),
   },
 }));
@@ -15,12 +15,14 @@ export default function CutCopyPasteAlert() {
   const [open, setOpen] = React.useState(true);
 
   return (
-    <div className={classes.root}>
+    <div>
       <Collapse in={open}>
         <Alert
           severity="warning"
+          className={classes.alert}
           action={
-            <Button size="small"
+            <Button
+              size="small"
               color="inherit"
               className={classes.padding}
               onClick={() => {
@@ -31,7 +33,8 @@ export default function CutCopyPasteAlert() {
             </Button>
           }
         >
-          Cut, copy and paste functionality has been disabled on text fields for security purposes.
+          Cut, copy and paste functionality has been disabled on text fields for
+          security purposes.
         </Alert>
       </Collapse>
     </div>

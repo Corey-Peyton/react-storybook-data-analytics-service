@@ -161,7 +161,7 @@ function ModifyFile(props) {
     <React.Fragment>
       <AppBar position="static" className={classes.appBar} color="default">
         <Toolbar>
-          <Typography variant="h6" className={classes.title}>
+          <Typography variant="h6" component="h2" className={classes.title}>
             Modify file
           </Typography>
           <IconButton
@@ -189,8 +189,7 @@ function ModifyFile(props) {
         >
           <MenuItem>File number 2</MenuItem>
         </Select>
-        <FormHelperText>
-        </FormHelperText>
+        <FormHelperText></FormHelperText>
       </FormControl>
       <TextField
         className={classes.inputMargin}
@@ -226,11 +225,10 @@ function ModifyFile(props) {
         >
           <MenuItem>Descriptive</MenuItem>
         </Select>
-        <FormHelperText>
-        </FormHelperText>
+        <FormHelperText></FormHelperText>
       </FormControl>
       <div className={classes.emphasisBox}>
-        <Typography variant="subtitle2">
+        <Typography variant="subtitle2" component="p">
           If you are not sure about the Output Method above, you can search for
           the proper one below:
         </Typography>
@@ -257,10 +255,7 @@ function ModifyFile(props) {
           }}
         />
       </div>
-      <FormControl
-        component="fieldset"
-        required
-      >
+      <FormControl component="fieldset" required>
         <FormLabel component="legend">
           Does this output include a weight variable?
         </FormLabel>
@@ -281,8 +276,7 @@ function ModifyFile(props) {
             label="No"
           />
         </RadioGroup>
-        <FormHelperText>
-        </FormHelperText>
+        <FormHelperText></FormHelperText>
       </FormControl>
       {state.includeWeightVariable === 'Yes' && (
         <div className={classes.emphasisBox}>
@@ -295,16 +289,11 @@ function ModifyFile(props) {
             required
             fullWidth
           />
-          <FormControl
-            component="fieldset"
-            required
-          >
+          <FormControl component="fieldset" required>
             <FormLabel component="legend" className="screen-reader-text">
-             Is the weight variable scaled or normalized?
+              Is the weight variable scaled or normalized?
             </FormLabel>
-            <RadioGroup
-              id="weightVariableType"
-            >
+            <RadioGroup id="weightVariableType">
               <FormControlLabel
                 value="Scaled"
                 control={<Radio color="primary" />}
@@ -316,8 +305,7 @@ function ModifyFile(props) {
                 label="Normalized"
               />
             </RadioGroup>
-            <FormHelperText>
-            </FormHelperText>
+            <FormHelperText></FormHelperText>
           </FormControl>
         </div>
       )}
@@ -340,7 +328,7 @@ function ModifyFile(props) {
         helperText="Examples: national, provincial"
         fullWidth
       />
-      <Typography variant="subtitle2" className="mb-2">
+      <Typography variant="subtitle2" className="mb-2" component="h3">
         Output supporting files
       </Typography>
       <FormControl
@@ -371,8 +359,7 @@ function ModifyFile(props) {
             label="N/A"
           />
         </RadioGroup>
-        <FormHelperText>
-        </FormHelperText>
+        <FormHelperText></FormHelperText>
       </FormControl>
       {state.linkedData === 'Yes' && (
         <TextField
@@ -402,9 +389,7 @@ function ModifyFile(props) {
             <InfoIcon />
           </Tooltip>
         </FormLabel>
-        <RadioGroup
-          id="dollarIncluded"
-        >
+        <RadioGroup id="dollarIncluded">
           <FormControlLabel
             value="Yes"
             control={<Radio color="primary" />}
@@ -421,13 +406,9 @@ function ModifyFile(props) {
             label="N/A"
           />
         </RadioGroup>
-        <FormHelperText>
-        </FormHelperText>
+        <FormHelperText></FormHelperText>
       </FormControl>
-      <FormControl
-        className={classes.inputMargin}
-        component="fieldset"
-      >
+      <FormControl className={classes.inputMargin} component="fieldset">
         <FormLabel component="legend">
           Does the request include descriptive statistics?
         </FormLabel>
@@ -441,8 +422,7 @@ function ModifyFile(props) {
           <FormControlLabel value="No" control={<Radio />} label="No" />
           <FormControlLabel value="NA" control={<Radio />} label="N/A" />
         </RadioGroup>
-        <FormHelperText>
-        </FormHelperText>
+        <FormHelperText></FormHelperText>
       </FormControl>
       {state.descriptiveStats === 'Yes' && (
         <FormControl className={classes.inputMargin} component="fieldset">
@@ -457,10 +437,7 @@ function ModifyFile(props) {
           <FormHelperText></FormHelperText>
         </FormControl>
       )}
-      <FormControl
-        className={classes.inputMargin}
-        component="fieldset"
-      >
+      <FormControl className={classes.inputMargin} component="fieldset">
         <FormLabel component="legend" className={classes.tooltipLabel}>
           Does this request include model output or graphs that are equivalent
           to a descriptive statistics?{' '}
@@ -472,9 +449,7 @@ function ModifyFile(props) {
             <InfoIcon />
           </Tooltip>
         </FormLabel>
-        <RadioGroup
-          id="equivalentDescriptiveStats"
-        >
+        <RadioGroup id="equivalentDescriptiveStats">
           <FormControlLabel
             value="Yes"
             control={<Radio color="primary" />}
@@ -491,13 +466,9 @@ function ModifyFile(props) {
             label="N/A"
           />
         </RadioGroup>
-        <FormHelperText>
-        </FormHelperText>
+        <FormHelperText></FormHelperText>
       </FormControl>
-      <FormControl
-        className={classes.inputMargin}
-        component="fieldset"
-      >
+      <FormControl className={classes.inputMargin} component="fieldset">
         <FormLabel component="legend" className={classes.tooltipLabel}>
           Did you apply modified (e.g. standardized) weights in the analysis?{' '}
           <Tooltip
@@ -530,8 +501,7 @@ function ModifyFile(props) {
             label="N/A"
           />
         </RadioGroup>
-        <FormHelperText>
-        </FormHelperText>
+        <FormHelperText></FormHelperText>
       </FormControl>
       {state.modifiedWeights === 'Yes' && (
         <TextField
@@ -544,16 +514,11 @@ function ModifyFile(props) {
           required
         />
       )}
-      <FormControl
-        className={classes.inputMargin}
-        component="fieldset"
-      >
+      <FormControl className={classes.inputMargin} component="fieldset">
         <FormLabel component="legend">
           Does this output include a correlation or covariance matrix?
         </FormLabel>
-        <RadioGroup
-          id="includeMatrix"
-        >
+        <RadioGroup id="includeMatrix">
           <FormControlLabel
             value="Yes"
             control={<Radio color="primary" />}
@@ -570,13 +535,9 @@ function ModifyFile(props) {
             label="N/A"
           />
         </RadioGroup>
-        <FormHelperText>
-        </FormHelperText>
+        <FormHelperText></FormHelperText>
       </FormControl>
-      <FormControl
-        className={classes.inputMargin}
-        component="fieldset"
-      >
+      <FormControl className={classes.inputMargin} component="fieldset">
         <FormLabel component="legend" className={classes.tooltipLabel}>
           Is rounding of output required for this vetting request?{' '}
           <Tooltip
@@ -609,8 +570,7 @@ function ModifyFile(props) {
             label="N/A"
           />
         </RadioGroup>
-        <FormHelperText>
-        </FormHelperText>
+        <FormHelperText></FormHelperText>
       </FormControl>
       {state.roundingOutput === 'Yes' && (
         <TextField
@@ -624,7 +584,7 @@ function ModifyFile(props) {
         />
       )}
       <div className={classes.emphasisBox}>
-        <Typography variant="subtitle2" className="mb-2">
+        <Typography variant="subtitle2" className="mb-2" component="h3">
           Mandatory supporting files:
         </Typography>
         <ul className="mb-3">
@@ -645,7 +605,7 @@ function ModifyFile(props) {
             </Typography>
           </li>
         </ul>
-        <Typography variant="subtitle2">
+        <Typography variant="subtitle2" component="p">
           NOTE: supporting files will not be released. Please name your support
           files to allow easy pairing of the corresponding output file.
         </Typography>
@@ -658,7 +618,6 @@ function ModifyFile(props) {
           open={open}
           onClose={handleClose}
           aria-labelledby="form-dialog-title"
-
         >
           <DialogTitle id="form-dialog-title">Add supporting file</DialogTitle>
           <DialogContent>
@@ -670,7 +629,7 @@ function ModifyFile(props) {
               className={classes.inputMargin}
             >
               <InputLabel id="outputFolder-label">
-              Output folder name
+                Output folder name
               </InputLabel>
               <Select
                 id="supportingFilesFolder"
@@ -679,12 +638,14 @@ function ModifyFile(props) {
                 variant="standard"
               >
                 <MenuItem key={-1} value="">
-                None
+                  None
                 </MenuItem>
               </Select>
             </FormControl>
             <Typography variant="subtitle2">File #1 *</Typography>
-            <Typography variant="subtitle2">Residual tables (see the vetting orientation)</Typography>
+            <Typography variant="subtitle2">
+              Residual tables (see the vetting orientation)
+            </Typography>
             <TextField
               className={classes.inputMargin}
               margin="dense"
@@ -698,12 +659,19 @@ function ModifyFile(props) {
             />
           </DialogContent>
           <DialogActions>
-            <Button onClick={handleClose} color="primary" variant="outlined">Cancel</Button>
-            <Button color="primary" variant="contained"
+            <Button onClick={handleClose} color="primary" variant="outlined">
+              Cancel
+            </Button>
+            <Button
+              color="primary"
+              variant="contained"
               onClick={() => {
                 handleClick();
                 handleClose();
-              }}>Add supporting file</Button>
+              }}
+            >
+              Add supporting file
+            </Button>
           </DialogActions>
         </Dialog>
 
@@ -715,7 +683,9 @@ function ModifyFile(props) {
           <InfoIcon />
         </Tooltip>
       </div>
-      <Typography variant="subtitle2">Supporting file #1</Typography>
+      <Typography variant="subtitle2" component="h3">
+        Supporting file #1
+      </Typography>
       <FormControl
         className={classes.inputMargin}
         margin="dense"
@@ -753,7 +723,9 @@ function ModifyFile(props) {
         fullWidth
         required
       />
-      <Typography variant="subtitle2">Supporting file #2</Typography>
+      <Typography variant="subtitle2" component="h3">
+        Supporting file #2
+      </Typography>
       <FormControl
         className={classes.inputMargin}
         margin="dense"
@@ -791,14 +763,23 @@ function ModifyFile(props) {
         fullWidth
         required
       />
-      <Button variant="contained" className={classes.button} color="primary"
-        onClick={props.toggleDrawer(false)}>
+      <Button
+        variant="contained"
+        className={classes.button}
+        color="primary"
+        onClick={props.toggleDrawer(false)}
+      >
         Save Changes
       </Button>
-      <Snackbar open={openSnackbar} autoHideDuration={6000} onClose={snackbarhandleClose} anchorOrigin={{
-        vertical: 'bottom',
-        horizontal: 'left',
-      }}>
+      <Snackbar
+        open={openSnackbar}
+        autoHideDuration={6000}
+        onClose={snackbarhandleClose}
+        anchorOrigin={{
+          vertical: 'bottom',
+          horizontal: 'left',
+        }}
+      >
         <Alert
           severity="success"
           className={classes.alert}

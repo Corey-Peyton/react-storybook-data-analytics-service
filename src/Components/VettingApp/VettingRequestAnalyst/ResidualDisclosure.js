@@ -81,7 +81,7 @@ const useStyles = makeStyles((theme) => ({
     '& .MuiDialog-paperWidthSm': {
       'width': 400,
       '& .MuiTextField-root': {
-        'width': '100%',
+        width: '100%',
       },
       '& .MuiFormLabel-root': {
         'line-height': 1,
@@ -91,7 +91,7 @@ const useStyles = makeStyles((theme) => ({
         'overflow': 'hidden auto !important',
       },
       '& .MuiAutocomplete-endAdornment': {
-        'top': '5.5px',
+        top: '5.5px',
       },
     },
   },
@@ -141,12 +141,9 @@ function ResidualDisclosure(props) {
       <Typography component="h2" variant="h6" className="mb-2">
         Residual disclosure risk
       </Typography>
-      <FormControl
-        component="fieldset"
-        className={classes.inputMargin}
-      >
+      <FormControl component="fieldset" className={classes.inputMargin}>
         <FormLabel component="legend">
-        Have other outputs been previously released for this project?
+          Have other outputs been previously released for this project?
         </FormLabel>
         <RadioGroup
           id="previouslyReleased"
@@ -168,20 +165,14 @@ function ResidualDisclosure(props) {
       </FormControl>
       {state.previouslyReleased === 'Yes' && (
         <>
-          <FormControl
-            component="fieldset"
-            className={classes.inputMargin}
-          >
+          <FormControl component="fieldset" className={classes.inputMargin}>
             <FormLabel component="legend" className={classes.tooltipLabel}>
-            For this request, are any variables a subset of another variable?
+              For this request, are any variables a subset of another variable?
               <BootstrapTooltip title="Examples: Had depression in the past 5 years and had depression in the previous year, had a chronic condition and had a respiratory chronic condition.">
                 <InfoIcon />
               </BootstrapTooltip>
             </FormLabel>
-            <RadioGroup
-              id="subset"
-              name="subset"
-            >
+            <RadioGroup id="subset" name="subset">
               <FormControlLabel
                 value="Yes"
                 control={<Radio color="primary" />}
@@ -194,12 +185,10 @@ function ResidualDisclosure(props) {
               />
             </RadioGroup>
           </FormControl>
-          <FormControl
-            component="fieldset"
-            className={classes.inputMargin}
-          >
+          <FormControl component="fieldset" className={classes.inputMargin}>
             <FormLabel component="legend">
-            Has a version of this output, in part of in whole, been previously released for this project?
+              Has a version of this output, in part of in whole, been previously
+              released for this project?
             </FormLabel>
             <RadioGroup
               id="versionpreviouslyReleased"
@@ -221,19 +210,18 @@ function ResidualDisclosure(props) {
           </FormControl>
           {state.versionpreviouslyReleased === 'Yes' && (
             <>
-              <Typography component="h2" variant="subtitle2" className="mb-2">Compared to other output for this project, have you:</Typography>
+              <Typography component="h2" variant="subtitle2" className="mb-2">
+                Compared to other output for this project, have you:
+              </Typography>
               <FormControl
                 component="fieldset"
                 className={classes.inputMarginBlock}
                 required
               >
                 <FormLabel component="legend">
-                Changed the sub-sample of population of interest?
+                  Changed the sub-sample of population of interest?
                 </FormLabel>
-                <RadioGroup
-                  id="subSample"
-                  name="subSample"
-                >
+                <RadioGroup id="subSample" name="subSample">
                   <FormControlLabel
                     value="Yes"
                     control={<Radio color="primary" />}
@@ -252,11 +240,9 @@ function ResidualDisclosure(props) {
                 required
               >
                 <FormLabel component="legend">
-                Droppped individual cases or outliers?
+                  Droppped individual cases or outliers?
                 </FormLabel>
-                <RadioGroup
-                  id="Droppped"
-                >
+                <RadioGroup id="Droppped">
                   <FormControlLabel
                     value="Yes"
                     control={<Radio color="primary" />}
@@ -275,12 +261,9 @@ function ResidualDisclosure(props) {
                 required
               >
                 <FormLabel component="legend">
-                Imputed the missing data?
+                  Imputed the missing data?
                 </FormLabel>
-                <RadioGroup
-                  id="Imputed"
-                  name="Imputed"
-                >
+                <RadioGroup id="Imputed" name="Imputed">
                   <FormControlLabel
                     value="Yes"
                     control={<Radio color="primary" />}
@@ -299,12 +282,9 @@ function ResidualDisclosure(props) {
                 required
               >
                 <FormLabel component="legend">
-                Recoded or modified any variables even slightly?
+                  Recoded or modified any variables even slightly?
                 </FormLabel>
-                <RadioGroup
-                  id="Recoded"
-                  name="Recoded"
-                >
+                <RadioGroup id="Recoded" name="Recoded">
                   <FormControlLabel
                     value="Yes"
                     control={<Radio color="primary" />}
@@ -356,16 +336,22 @@ function ResidualDisclosure(props) {
       )}
       <React.Fragment>
         <Typography component="h2" variant="h6" className="mb-2">
-      Residual disclosure supporting files
+          Residual disclosure supporting files
         </Typography>
         <div className={classes.emphasisBox}>
-          <Typography variant="subtitle2" className="mb-3">Supporting files for residual disclosure risk</Typography>
+          <Typography variant="subtitle2" component="h3" className="mb-3">
+            Supporting files for residual disclosure risk
+          </Typography>
           <ul>
             <li>
-              <Typography variant="body2">Residual tables (see the vetting orientation)</Typography>
+              <Typography variant="body2">
+                Residual tables (see the vetting orientation)
+              </Typography>
             </li>
             <li>
-              <Typography variant="body2">Both sets of syntax and highlight or indicate the changes.</Typography>
+              <Typography variant="body2">
+                Both sets of syntax and highlight or indicate the changes.
+              </Typography>
             </li>
           </ul>
         </div>
@@ -374,8 +360,14 @@ function ResidualDisclosure(props) {
           margin="dense"
           required
           variant="outlined"
-          fullWidth />
-        <Button variant="contained" color="primary" className="mb-3" onClick={handleClickOpen}>
+          fullWidth
+        />
+        <Button
+          variant="contained"
+          color="primary"
+          className="mb-3"
+          onClick={handleClickOpen}
+        >
           Add output file
         </Button>
         <Dialog
@@ -385,10 +377,12 @@ function ResidualDisclosure(props) {
           className={classes.root}
         >
           <DialogTitle id="form-dialog-title">
-            <div className={classes.dialogTitle}>Add supporting file
+            <div className={classes.dialogTitle}>
+              Add supporting file
               <IconButton
                 onClick={() => handleClose('dialogUnAssign')}
-                edge='end'>
+                edge="end"
+              >
                 <CloseIcon />
               </IconButton>
             </div>
@@ -403,7 +397,7 @@ function ResidualDisclosure(props) {
               className={classes.inputMargin}
             >
               <InputLabel id="outputFolder-label">
-            Output folder name
+                Output folder name
               </InputLabel>
               <Select
                 id="supportingFilesFolder"
@@ -411,12 +405,16 @@ function ResidualDisclosure(props) {
                 labelId="supportingFilesFolder-label"
               >
                 <MenuItem key={-1} value="">
-              None
+                  None
                 </MenuItem>
               </Select>
             </FormControl>
-            <Typography variant="subtitle2">File #1 *</Typography>
-            <Typography variant="subtitle2">Residual tables (see the vetting orientation)</Typography>
+            <Typography variant="subtitle2" component="h3">
+              File #1 *
+            </Typography>
+            <Typography variant="subtitle2" component="h3">
+              Residual tables (see the vetting orientation)
+            </Typography>
             <TextField
               className={classes.inputMargin}
               margin="dense"
@@ -431,8 +429,17 @@ function ResidualDisclosure(props) {
           </DialogContent>
           <Divider className="mt-1" />
           <DialogActions className={classes.dialogFooter}>
-            <Button onClick={handleClose} color="primary" variant="outlined">Cancel</Button>
-            <Button onClick={handleClose} color="primary" variant="contained" className={classes.footerBtns}>Add supporting file</Button>
+            <Button onClick={handleClose} color="primary" variant="outlined">
+              Cancel
+            </Button>
+            <Button
+              onClick={handleClose}
+              color="primary"
+              variant="contained"
+              className={classes.footerBtns}
+            >
+              Add supporting file
+            </Button>
           </DialogActions>
         </Dialog>
         <FormControl />
@@ -440,7 +447,9 @@ function ResidualDisclosure(props) {
           <Grid item xs={6}>
             <Grid container justify="space-between" alignItems="center">
               <Grid item>
-                <Typography variant="subtitle2">File #1</Typography>
+                <Typography variant="subtitle2" component="h3">
+                  File #1
+                </Typography>
               </Grid>
               <Grid item>
                 <IconButton aria-label="delete" className={classes.margin}>
@@ -486,7 +495,9 @@ function ResidualDisclosure(props) {
             />
             <Grid container justify="space-between" alignItems="center">
               <Grid item>
-                <Typography variant="subtitle2">File #2</Typography>
+                <Typography variant="subtitle2" component="h3">
+                  File #2
+                </Typography>
               </Grid>
               <Grid item>
                 <IconButton aria-label="delete" className={classes.margin}>

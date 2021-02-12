@@ -71,7 +71,6 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-
 const Footer = React.forwardRef((props, ref) => {
   const {t} = useTranslation();
   const classes = useStyles();
@@ -82,7 +81,8 @@ const Footer = React.forwardRef((props, ref) => {
         [classes.contentShift]: props.open,
       })}
       ref={ref}
-      tabIndex="-1">
+      tabIndex="-1"
+    >
       <ul className="list-horizontal">
         <li>
           <div className={classes.langBtnContainer}>
@@ -93,13 +93,17 @@ const Footer = React.forwardRef((props, ref) => {
           </div>
         </li>
         <li>
-          <Button className={classes.footerBtn}>{t('Terms and conditions')}</Button>
+          <Button className={classes.footerBtn}>
+            {t('Terms and conditions')}
+          </Button>
         </li>
         <li>
           <Button className={classes.footerBtn}>{t('Privacy')}</Button>
         </li>
         <li>
-          <Typography variant="subtitle2" color="textSecondary" component="h3" > Date modified: {date}</Typography>
+          <Typography variant="subtitle2" color="textSecondary" component="p">
+            Date modified: {date}
+          </Typography>
         </li>
       </ul>
       <div className={classes.canadaLogo}>

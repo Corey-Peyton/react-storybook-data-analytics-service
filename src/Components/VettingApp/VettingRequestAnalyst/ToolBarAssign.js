@@ -83,11 +83,11 @@ function ToolBarAssign(props) {
         edge="start"
         className={classes.menuButton}
         color="inherit"
-        aria-label="menu"
+        aria-label="Back to vetting requests dashboard"
       >
         <ArrowBackIcon />
       </IconButton>
-      <Typography variant="subtitle1" component="h2" className={classes.title}>
+      <Typography variant="subtitle1" component="p" className={classes.title}>
         Vetting requests dashboard
       </Typography>
       <Button

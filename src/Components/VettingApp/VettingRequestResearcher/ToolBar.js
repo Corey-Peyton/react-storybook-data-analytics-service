@@ -7,10 +7,6 @@ import SendIcon from '@material-ui/icons/Send';
 import ArrowBackIcon from '@material-ui/icons/ArrowBack';
 
 const useStyles = makeStyles((theme) => ({
-  main: {
-    background: theme.palette.grey[100],
-    paddingBottom: theme.spacing(6),
-  },
   title: {
     flexGrow: 1,
   },
@@ -31,12 +27,12 @@ function ToolBar() {
         edge="start"
         className={classes.menuButton}
         color="inherit"
-        aria-label="menu"
+        aria-label="Back to vetting requests dashboard"
       >
         <ArrowBackIcon />
       </IconButton>
-      <Typography variant="body2" className={classes.title}>
-              Dashboard
+      <Typography variant="subtitle1" component="p" className={classes.title}>
+        Vetting requests dashboard
       </Typography>
       <Button
         color="default"
@@ -44,7 +40,7 @@ function ToolBar() {
         startIcon={<ExitToAppIcon />}
         // onClick={props.handleDialogOpen}
       >
-              Withdraw
+        Withdraw
       </Button>
       <Button
         variant="outlined"
@@ -52,7 +48,7 @@ function ToolBar() {
         className={classes.headerBtn}
         startIcon={<SaveIcon />}
       >
-              Save
+        Save
       </Button>
       <Button
         variant="contained"
@@ -60,12 +56,10 @@ function ToolBar() {
         className={classes.headerBtn}
         startIcon={<SendIcon />}
       >
-              Submit request
+        Submit request
       </Button>
     </Toolbar>
   );
 }
 
 export default ToolBar;
-
-

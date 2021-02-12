@@ -60,7 +60,7 @@ function ResearcherInfo(props) {
         <Link href="#">Vetting guidelines website</Link>.
       </Typography>
       <Divider className={classes.divider} />
-      <Typography className="mb-2" component="h3" variant="subtitle2">
+      <Typography className="mb-2" component="p" variant="subtitle2">
         Items marked with asterisk (*) are required.
       </Typography>
       <Typography component="h2" variant="h6">
@@ -75,7 +75,7 @@ function ResearcherInfo(props) {
             variant="outlined"
             fullWidth
             margin="dense"
-            disabled
+            readOnly
             value="0101-000000"
             className={classes.inputMargin}
           />
@@ -105,7 +105,7 @@ function ResearcherInfo(props) {
             fullWidth
             margin="dense"
             value="21-SSH-UTO-0000"
-            disabled
+            readOnly
             className={classes.inputMargin}
           />
           <FormControl

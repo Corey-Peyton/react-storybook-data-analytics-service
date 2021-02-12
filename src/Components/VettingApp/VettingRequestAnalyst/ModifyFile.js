@@ -158,7 +158,7 @@ function ModifyFile(props) {
     <React.Fragment>
       <AppBar position="static" className={classes.appBar} color="default">
         <Toolbar>
-          <Typography variant="h6" className={classes.title}>
+          <Typography variant="h6" component="h2" className={classes.title}>
             Modify file
           </Typography>
           <IconButton
@@ -223,18 +223,22 @@ function ModifyFile(props) {
           value={selected}
           required
         >
-          <MenuItem value='Descriptive'>Descriptive</MenuItem>
-          <MenuItem value='Scaling'>Scaling</MenuItem>
-          <MenuItem value='Graphs'>Graphs</MenuItem>
-          <MenuItem value='Multivariable regression analysis'>Multivariable regression analysis</MenuItem>
-          <MenuItem value='Complex modeling'>Complex modeling</MenuItem>
-          <MenuItem value='Other'>Other</MenuItem>
+          <MenuItem value="Descriptive">Descriptive</MenuItem>
+          <MenuItem value="Scaling">Scaling</MenuItem>
+          <MenuItem value="Graphs">Graphs</MenuItem>
+          <MenuItem value="Multivariable regression analysis">
+            Multivariable regression analysis
+          </MenuItem>
+          <MenuItem value="Complex modeling">Complex modeling</MenuItem>
+          <MenuItem value="Other">Other</MenuItem>
         </Select>
         <FormHelperText></FormHelperText>
       </FormControl>
-      <div className={clsx(classes.inputMargin, {
-        [classes.hiddenRow]: selected !== 'Other',
-      })}>
+      <div
+        className={clsx(classes.inputMargin, {
+          [classes.hiddenRow]: selected !== 'Other',
+        })}
+      >
         <TextField
           className={classes.inputMargin}
           margin="dense"
@@ -247,7 +251,7 @@ function ModifyFile(props) {
         />
       </div>
       <div className="emphasisBox minHeight">
-        <Typography variant="subtitle2">
+        <Typography variant="subtitle2" component="p">
           If you are not sure about the Output Method above, you can search for
           the proper one below:
         </Typography>
@@ -349,7 +353,7 @@ function ModifyFile(props) {
         helperText="Examples: national, provincial"
         fullWidth
       />
-      <Typography variant="subtitle2" className="mb-2 mt-1">
+      <Typography variant="subtitle2" className="mb-2 mt-1" component="h3">
         Output supporting files
       </Typography>
       <FormControl
@@ -453,7 +457,7 @@ function ModifyFile(props) {
           </RadioGroup>
           <FormHelperText></FormHelperText>
           <FormLabel component="legend">
-          Are minimum cell sizes met as per the rules for the data?
+            Are minimum cell sizes met as per the rules for the data?
           </FormLabel>
           <RadioGroup id="minimumCellSizes">
             <FormControlLabel value="Yes" control={<Radio />} label="Yes" />
@@ -462,7 +466,11 @@ function ModifyFile(props) {
           <FormHelperText></FormHelperText>
         </FormControl>
       )}
-      <FormControl className={classes.inputMargin} component="fieldset" required>
+      <FormControl
+        className={classes.inputMargin}
+        component="fieldset"
+        required
+      >
         <FormLabel component="legend" className={classes.tooltipLabel}>
           Does this request include model output or graphs that are equivalent
           to a descriptive statistics?{' '}
@@ -489,7 +497,11 @@ function ModifyFile(props) {
         </RadioGroup>
         <FormHelperText></FormHelperText>
       </FormControl>
-      <FormControl className={classes.inputMargin} component="fieldset" required>
+      <FormControl
+        className={classes.inputMargin}
+        component="fieldset"
+        required
+      >
         <FormLabel component="legend" className={classes.tooltipLabel}>
           Did you apply modified (e.g. standardized) weights in the analysis?{' '}
           <BootstrapTooltip title="If yes, consult with your analyst about the vetting rules for modified weights.">
@@ -561,21 +573,22 @@ function ModifyFile(props) {
       {state.covariance === 'Yes' && (
         <FormControl className={classes.inputMargin} component="fieldset">
           <FormLabel component="legend">
-          Does the matrix include continuous variables?
+            Does the matrix include continuous variables?
           </FormLabel>
-          <RadioGroup id="continuousVariables" className={classes.inputMargin} >
+          <RadioGroup id="continuousVariables" className={classes.inputMargin}>
             <FormControlLabel value="Yes" control={<Radio />} label="Yes" />
             <FormControlLabel value="No" control={<Radio />} label="No" />
           </RadioGroup>
           <FormLabel component="legend">
-          Does the matrix inclue dichotomous variables?
+            Does the matrix inclue dichotomous variables?
           </FormLabel>
-          <RadioGroup id="dichotomousVariables" className={classes.inputMargin} >
+          <RadioGroup id="dichotomousVariables" className={classes.inputMargin}>
             <FormControlLabel value="Yes" control={<Radio />} label="Yes" />
             <FormControlLabel value="No" control={<Radio />} label="No" />
           </RadioGroup>
           <FormLabel component="legend" className={classes.lineHeight}>
-          Does the matrix include a dichotomous variable correlated with a continuous variable?
+            Does the matrix include a dichotomous variable correlated with a
+            continuous variable?
           </FormLabel>
           <RadioGroup id="dichotomousVariable">
             <FormControlLabel value="Yes" control={<Radio />} label="Yes" />
@@ -583,7 +596,11 @@ function ModifyFile(props) {
           </RadioGroup>
         </FormControl>
       )}
-      <FormControl className={classes.inputMargin} component="fieldset" required>
+      <FormControl
+        className={classes.inputMargin}
+        component="fieldset"
+        required
+      >
         <FormLabel component="legend" className={classes.tooltipLabel}>
           Is rounding of output required for this vetting request?{' '}
           <BootstrapTooltip title="If yes, ensure that any forced rounding to zero is shown.">
@@ -626,7 +643,7 @@ function ModifyFile(props) {
         />
       )}
       <div className="emphasisBox minHeight3">
-        <Typography variant="subtitle2" className="mb-2">
+        <Typography variant="subtitle2" className="mb-2" component="h3">
           Mandatory supporting files:
         </Typography>
         <ul className="mb-3">
@@ -647,14 +664,17 @@ function ModifyFile(props) {
             </Typography>
           </li>
         </ul>
-        <Typography variant="subtitle2">
+        <Typography variant="subtitle2" component="p">
           NOTE: supporting files will not be released. Please name your support
           files to allow easy pairing of the corresponding output file.
         </Typography>
       </div>
       <div className={classes.buttonTooltip}>
-        <Button variant="contained" color="primary"
-          onClick={() => props.handleClickOpen('dialogAddSupporting')}>
+        <Button
+          variant="contained"
+          color="primary"
+          onClick={() => props.handleClickOpen('dialogAddSupporting')}
+        >
           Add Supporting File
         </Button>
         <BootstrapTooltip title="In addition to the mandatory files listed, include other files as required by the Survey Specific Guidelines, syntax files or other files requested by the analyst.">
@@ -663,7 +683,9 @@ function ModifyFile(props) {
       </div>
       <Grid container justify="space-between" alignItems="center">
         <Grid item>
-          <Typography variant="subtitle2">Supporting file #1</Typography>
+          <Typography variant="subtitle2" component="h3">
+            Supporting file #1
+          </Typography>
         </Grid>
         <Grid item>
           <IconButton aria-label="delete" className={classes.margin}>
@@ -710,7 +732,9 @@ function ModifyFile(props) {
       />
       <Grid container justify="space-between" alignItems="center">
         <Grid item>
-          <Typography variant="subtitle2">Supporting file #2</Typography>
+          <Typography variant="subtitle2" component="h3">
+            Supporting file #2
+          </Typography>
         </Grid>
         <Grid item>
           <IconButton aria-label="delete" className={classes.margin}>
@@ -755,8 +779,12 @@ function ModifyFile(props) {
         fullWidth
         required
       />
-      <Button variant="contained" className="button" color="primary"
-        onClick={(e) => props.saveChanges(e)}>
+      <Button
+        variant="contained"
+        className="button"
+        color="primary"
+        onClick={(e) => props.saveChanges(e)}
+      >
         Save Changes
       </Button>
     </React.Fragment>

@@ -79,6 +79,9 @@ const useStyles = makeStyles((theme) => ({
     margin: theme.spacing(0, -2),
     width: 'auto',
     backgroundColor: theme.palette.common.white,
+    boxShadow: 'none',
+    borderBottom: '1px solid',
+    borderBottomColor: theme.palette.divider,
   },
   paper: {
     maxWidth: '1280px',
@@ -86,6 +89,8 @@ const useStyles = makeStyles((theme) => ({
     boxSizing: 'border-box',
     padding: theme.spacing(3),
     marginTop: theme.spacing(3),
+    border: '1px solid',
+    borderColor: theme.palette.divider,
   },
   title: {
     flexGrow: 1,
@@ -106,7 +111,7 @@ const useStyles = makeStyles((theme) => ({
   navButtons: {
     paddingTop: theme.spacing(3),
     borderTop: 'solid 1px',
-    borderTopColor: theme.palette.grey[600],
+    borderTopColor: theme.palette.divider,
   },
   dialogActions: {
     padding: theme.spacing(0, 3, 3, 3),
@@ -283,7 +288,6 @@ function VettingRequestAnalyst(props) {
                 You have been unassigned from request 10_2020_4564677
               </Alert>
             </Snackbar>
-            <Divider />
           </AppBar>
           <Paper className={classes.paper}>
             <Grid container alignItems="center">
