@@ -78,11 +78,11 @@ function AnalystInfo(props) {
         <Link href="#">Vetting guidelines website</Link>.
       </Typography>
       <Divider className={classes.divider} />
-      <Typography className="mb-2" component="h3" variant="subtitle2">
+      <Typography className="mb-2" component="p" variant="subtitle2">
         Items marked with asterisk (*) are required.
       </Typography>
       <Typography component="h2" variant="h6">
-       Request details
+        Request details
       </Typography>
       <Grid container spacing={1}>
         <Grid item xs={6}>
@@ -93,7 +93,7 @@ function AnalystInfo(props) {
             variant="outlined"
             fullWidth
             margin="dense"
-            disabled
+            readOnly
             value="0101-000000"
             className={classes.inputMargin}
           />
@@ -109,7 +109,7 @@ function AnalystInfo(props) {
             className="mt-2"
           />
           <Typography component="h2" variant="h6" className="mt-1 mb-1">
-        Project details
+            Project details
           </Typography>
           <TextField
             id="project"
@@ -120,7 +120,7 @@ function AnalystInfo(props) {
             fullWidth
             margin="dense"
             value="21-SSH-UTO-0000"
-            disabled
+            readOnly
             className={classes.inputMargin}
           />
           <FormControl
@@ -235,7 +235,7 @@ function AnalystInfo(props) {
             </Typography>
           </li>
         </ul>
-        <Typography variant="subtitle2" component="h3" >
+        <Typography variant="subtitle2" component="h3">
           A completed request form will be stored as part of the request record.
         </Typography>
       </div>
@@ -248,9 +248,7 @@ function AnalystInfo(props) {
           Is the requested output consistent with the approved proposal for this
           project?
         </FormLabel>
-        <RadioGroup
-          id="consistentOutput"
-        >
+        <RadioGroup id="consistentOutput">
           <FormControlLabel
             value="Yes"
             control={<Radio color="primary" />}
@@ -278,9 +276,7 @@ function AnalystInfo(props) {
           geographical, institutional, household size and/or population
           requirements for your output?
         </FormLabel>
-        <RadioGroup
-          id="vettingRules"
-        >
+        <RadioGroup id="vettingRules">
           <FormControlLabel
             value="Yes"
             control={<Radio color="primary" />}
@@ -309,9 +305,7 @@ function AnalystInfo(props) {
             <InfoIcon />
           </BootstrapTooltip>
         </FormLabel>
-        <RadioGroup
-          id="finalOutput"
-        >
+        <RadioGroup id="finalOutput">
           <FormControlLabel
             value="Yes"
             control={<Radio color="primary" />}

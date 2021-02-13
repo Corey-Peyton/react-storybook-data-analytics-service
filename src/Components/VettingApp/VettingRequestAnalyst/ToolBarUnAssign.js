@@ -145,24 +145,21 @@ function ToolBarUnassign(props) {
         edge="start"
         className={classes.menuButton}
         color="inherit"
-        aria-label="menu"
+        aria-label="Back to vetting requests dashboard"
       >
         <ArrowBackIcon />
       </IconButton>
-      <Typography variant="body2" className={classes.title}>
+      <Typography variant="subtitle1" component="p" className={classes.title}>
         Vetting requests dashboard
       </Typography>
       <Button
         onClick={() => handleClickOpen('dialogUnAssign')}
-        color="primary"
         className={classes.headerBtn}
         startIcon={
           <Icon path={mdiAccountPlus} className="icon-grey" size={1} />
         }
       >
-        <Typography variant="subtitle2" color="textSecondary">
-          Unassign from me
-        </Typography>
+        Unassign from me
       </Button>
       <Dialog
         open={open.dialogUnAssign}

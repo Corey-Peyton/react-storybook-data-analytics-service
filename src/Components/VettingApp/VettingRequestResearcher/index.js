@@ -48,10 +48,17 @@ const useStyles = makeStyles((theme) => ({
   divider: {
     margin: theme.spacing(3, 0),
   },
+  dividercutcopypaste: {
+    marginBottom: theme.spacing(2),
+    marginTop: theme.spacing(3),
+  },
   appBar: {
     margin: theme.spacing(0, -2),
     width: 'auto',
     backgroundColor: theme.palette.common.white,
+    boxShadow: 'none',
+    borderBottom: '1px solid',
+    borderBottomColor: theme.palette.divider,
   },
   headerBtn: {
     marginLeft: theme.spacing(3),
@@ -61,10 +68,9 @@ const useStyles = makeStyles((theme) => ({
     margin: 'auto',
     boxSizing: 'border-box',
     padding: theme.spacing(3),
-    borderRadius: 0,
-    borderTopWidth: '1px',
-    borderTopStyle: 'solid',
-    borderTopColor: theme.palette.grey[300],
+    marginTop: theme.spacing(3),
+    border: '1px solid',
+    borderColor: theme.palette.divider,
   },
   title: {
     flexGrow: 1,
@@ -92,7 +98,7 @@ const useStyles = makeStyles((theme) => ({
     paddingTop: theme.spacing(3),
     borderTopStyle: 'solid',
     borderTopWidth: '1px',
-    borderTopColor: theme.palette.grey[600],
+    borderTopColor: theme.palette.divider,
   },
   deleteBtn: {
     color: theme.palette.error.main,
@@ -127,7 +133,7 @@ function VettingRequestResearcher(props) {
       if (from === '/vetting-app/dashboard-researcher') {
         return name.text;
       } else {
-        return '';
+        return 'Untitled request';
       }
     },
   });
@@ -255,10 +261,10 @@ function VettingRequestResearcher(props) {
           <Paper className={classes.paper}>
             <Grid container alignItems="center">
               <Grid item className={classes.title}>
-                <Typography variant="h6" color="textSecondary">
+                <Typography variant="subtitle1" component="p">
                   Vetting request · ID 0101-000000
                 </Typography>
-                <Typography variant="h6" component="h2">
+                <Typography variant="h6" component="h1">
                   {state.title()}
                 </Typography>
               </Grid>
@@ -327,7 +333,7 @@ function VettingRequestResearcher(props) {
                 </Button>
               )}
             </div>
-            <Divider className={classes.divider} />
+            <Divider className={classes.dividercutcopypaste} />
             <CutCopyPasteAlert />
             <div>
               {allStepsCompleted() ? (
