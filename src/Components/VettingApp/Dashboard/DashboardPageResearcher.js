@@ -2,10 +2,7 @@ import React from 'react';
 import {useTranslation} from 'react-i18next';
 import clsx from 'clsx';
 import {makeStyles} from '@material-ui/core/styles';
-import {
-  AppBar,
-  Typography,
-} from '@material-ui/core';
+import {AppBar, Typography} from '@material-ui/core';
 import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
 import Paper from '@material-ui/core/Paper';
@@ -84,18 +81,54 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-function createData(id, title, statusHead, status, researcher, analysts, created, updated) {
-  return {id, title, statusHead, status, researcher, analysts, created, updated};
+function createData(
+    id,
+    title,
+    project,
+    statusHead,
+    status,
+    researcher,
+    analysts,
+    created,
+    updated,
+) {
+  return {
+    id,
+    title,
+    project,
+    statusHead,
+    status,
+    researcher,
+    analysts,
+    created,
+    updated,
+  };
 }
 
 const rows = requestListResearchers.map((el, index) =>
-  createData(el.id, el.title, el.statusHead, el.status, el.researcher, el.analysts, el.created, el.updated),
+  createData(
+      el.id,
+      el.title,
+      el.project,
+      el.statusHead,
+      el.status,
+      el.researcher,
+      el.analysts,
+      el.created,
+      el.updated,
+  ),
 );
 
 const headCells = [
   {id: 'id', narrow: false, disablePadding: true, label: 'Request'},
+  {id: 'project', narrow: false, disablePadding: true, label: 'Project'},
   {id: 'status', narrow: false, disablePadding: false, label: 'Status'},
-  {id: 'researcher', narrow: false, disablePadding: false, label: 'Researcher'},
+  {
+    id: 'researcher',
+    narrow: false,
+    disablePadding: false,
+    label: 'Researcher',
+  },
   {id: 'analysts', narrow: false, disablePadding: false, label: 'Analyst'},
   {id: 'created', narrow: false, disablePadding: false, label: 'Created on'},
   {id: 'updated', narrow: false, disablePadding: false, label: 'Updated on'},
@@ -121,13 +154,11 @@ export default function DashboardPageResearcher() {
   });
   const [tabStatus, setTabStatus] = React.useState('active');
   const [project, setProject] = React.useState({
-    title: 'Project 1',
+    title: '20-SSH-UTO-1111',
   });
 
   const filteredRows = () => {
-    return (
-      rows.filter((val) => val.statusHead === tabStatus)
-    );
+    return rows.filter((val) => val.statusHead === tabStatus);
   };
 
   const handleChange = (event, newValue) => {
@@ -173,19 +204,15 @@ export default function DashboardPageResearcher() {
   const mainRef = React.createRef();
   const aboutRef = React.createRef();
 
-
   return (
     <React.Fragment>
-      <Header
-        clickHandler={toggleProjectsDrawer}
-        role='researcher'
-      />
+      <Header clickHandler={toggleProjectsDrawer} role="researcher" />
       <main className={classes.main}>
         <BypassBlocks ref={{main: mainRef, about: aboutRef}} />
         <ProjectsDrawer
           open={open.projectsDrawer}
           projectTitle={handleProjectTitle}
-          role='researcher'
+          role="researcher"
         />
         <Paper
           className={clsx(classes.content, classes.paper, {
@@ -202,16 +229,11 @@ export default function DashboardPageResearcher() {
             position="static"
             component="div"
             className={classes.appBar}
-            ref={mainRef} tabIndex="-1"
+            ref={mainRef}
+            tabIndex="-1"
           >
-            <AppBar
-              className={classes.appBarHeader}
-              elevation={0}
-            >
-              <Typography
-                variant="h6"
-                component="h1"
-              >
+            <AppBar className={classes.appBarHeader} elevation={0}>
+              <Typography variant="h6" component="h1">
                 {project.title}
               </Typography>
               <Button
@@ -220,7 +242,7 @@ export default function DashboardPageResearcher() {
                 className={classes.button}
                 onClick={() => toggleDialog('newRequest', !open.newRequest)}
               >
-            New vetting request
+                New vetting request
               </Button>
             </AppBar>
             <Tabs
@@ -271,7 +293,8 @@ export default function DashboardPageResearcher() {
           </TabPanel>
           <TabPanel value={value} index={3} className={classes.tabPanel}>
             <TableContainerComponent
-              status="denied" filteredRows={filteredRows}
+              status="denied"
+              filteredRows={filteredRows}
               headCells={headCells}
               contextSummaryClick={toggleSummaryDrawer}
               contextStatusClick={contextStatusClick}
@@ -282,7 +305,7 @@ export default function DashboardPageResearcher() {
         <Footer open={open.projectsDrawer} />
         <DialognNewRequestTitle
           open={open.newRequest}
-          role='researcher'
+          role="researcher"
           toggleDialog={() => toggleDialog('newRequest', !open.newRequest)}
         />
       </main>

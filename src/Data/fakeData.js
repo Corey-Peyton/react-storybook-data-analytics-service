@@ -321,20 +321,17 @@ export const requestListResearchers = [
   {
     id: '1001-1234567',
     title: 'Example title',
+    project: '20-SSH-UTO-1111',
     statusHead: 'assigned to me',
     status: 'assigned to me',
     cancellationReason: '',
     created: 'Aug. 28, 2020',
     updated: 'Aug. 29, 2020',
     expiration: 'Sep. 20, 2020',
-    project: '1',
     researcher: 'Elton John',
     analysts: {
       lead: 'Tony Stark',
-      support: [
-        'Peter Parker',
-        'Bruce Banner',
-      ],
+      support: ['Peter Parker', 'Bruce Banner'],
     },
     files: [
       'This is file 1',
@@ -349,13 +346,13 @@ export const requestListResearchers = [
   {
     id: '1001-1234569',
     title: 'Example title',
+    project: '20-SSH-UTO-1111',
     statusHead: 'assigned to me',
     status: 'assigned to me',
     cancellationReason: '',
     created: 'Aug. 21, 2020',
     updated: 'Aug. 24, 2020',
     expiration: 'Sep. 20, 2020',
-    project: '2',
     researcher: 'Leonard Cohen',
     analysts: {
       lead: 'Tony Stark',
@@ -374,13 +371,13 @@ export const requestListResearchers = [
   {
     id: '1001-1234501',
     title: 'Example title',
+    project: '20-SSH-UTO-1111',
     statusHead: 'active',
     status: 'Draft',
     cancellationReason: '',
     created: 'Aug. 20, 2020',
     updated: 'Aug. 24, 2020',
     expiration: 'Sep. 20, 2020',
-    project: '3',
     researcher: 'Averylongname Goeshere',
     analysts: {
       lead: 'Tony Stark',
@@ -399,13 +396,13 @@ export const requestListResearchers = [
   {
     id: '1001-1234502',
     title: 'Example title',
+    project: '20-SSH-UTO-1111',
     statusHead: 'withdrawn',
     status: 'Withdrawn',
     cancellationReason: '',
     created: 'Aug. 20, 2020',
     updated: 'Aug. 24, 2020',
     expiration: 'Sep. 20, 2020',
-    project: '4',
     researcher: 'Firstname Lastname',
     analysts: {
       lead: 'Paul Colton',
@@ -422,6 +419,7 @@ export const requestListResearchers = [
   {
     id: '1001-1234503',
     title: 'Example title',
+    project: '20-SSH-UTO-1111',
     statusHead: 'withdrawn',
     status: 'Withdrawn',
     cancellationReason:
@@ -429,7 +427,6 @@ export const requestListResearchers = [
     created: 'Aug. 20, 2020',
     updated: 'Aug. 24, 2020',
     expiration: 'Sep. 20, 2020',
-    project: '1',
     researcher: 'Firstname Lastname',
     analysts: {
       lead: 'Philip Duran',
@@ -441,13 +438,13 @@ export const requestListResearchers = [
   {
     id: '1001-1234504',
     title: 'Example title',
+    project: '20-SSH-UTO-1111',
     statusHead: 'unassigned',
     status: 'unassigned',
     cancellationReason: '',
     created: 'Aug. 20, 2020',
     updated: 'Aug. 23, 2020',
     expiration: 'Sep. 20, 2020',
-    project: '2',
     researcher: 'Firstname Lastname',
     analysts: {
       lead: '',
@@ -459,13 +456,13 @@ export const requestListResearchers = [
   {
     id: '1001-1234505',
     title: 'Example title',
+    project: '20-SSH-UTO-1111',
     statusHead: 'active',
     status: 'Submitted',
     cancellationReason: '',
     created: 'Aug. 20, 2020',
     updated: 'Aug. 22, 2020',
     expiration: 'Sep. 20, 2020',
-    project: '3',
     researcher: 'Firstname Lastname',
     analysts: {
       lead: '',
@@ -477,13 +474,13 @@ export const requestListResearchers = [
   {
     id: '1001-1234506',
     title: 'Example title',
+    project: '20-SSH-UTO-1111',
     statusHead: 'approved',
     status: 'Approved',
     cancellationReason: '',
     created: 'Aug. 20, 2020',
     updated: 'Aug. 22, 2020',
     expiration: 'Sep. 20, 2020',
-    project: '4',
     researcher: 'Firstname Lastname',
     analysts: {
       lead: 'Eva Silver',
@@ -495,13 +492,13 @@ export const requestListResearchers = [
   {
     id: '1001-1234507',
     title: 'Example title',
+    project: '20-SSH-UTO-1111',
     statusHead: 'approved',
     status: 'Approved',
     cancellationReason: '',
     created: 'Aug. 20, 2020',
     updated: 'Aug. 22, 2020',
     expiration: 'Sep. 20, 2020',
-    project: '1',
     researcher: 'Firstname Lastname',
     analysts: {
       lead: 'Eva Silver',
@@ -513,13 +510,13 @@ export const requestListResearchers = [
   {
     id: '1001-1234508',
     title: 'Example title',
+    project: '20-SSH-UTO-1111',
     statusHead: 'active',
     status: 'Draft',
     cancellationReason: '',
     created: 'Aug. 20, 2020',
     updated: 'Aug. 22, 2020',
     expiration: 'Sep. 20, 2020',
-    project: '2',
     researcher: 'Firstname Lastname',
     analysts: {
       lead: 'Eva Silver',
@@ -531,13 +528,13 @@ export const requestListResearchers = [
   {
     id: '1001-1234509',
     title: 'Example title',
+    project: '20-SSH-UTO-1111',
     statusHead: 'active',
     status: 'Draft',
     cancellationReason: '',
     created: 'Aug. 20, 2020',
     updated: 'Aug. 22, 2020',
     expiration: 'Sep. 20, 2020',
-    project: '3',
     researcher: 'Firstname Lastname',
     analysts: {
       lead: 'Eva Silver',
@@ -549,13 +546,13 @@ export const requestListResearchers = [
   {
     id: '1001-1234510',
     title: 'Example title',
+    project: '20-SSH-UTO-1111',
     statusHead: 'active',
     status: 'Draft',
     cancellationReason: '',
     created: 'Aug. 20, 2020',
     updated: 'Aug. 22, 2020',
     expiration: 'Sep. 20, 2020',
-    project: '4',
     researcher: 'Firstname Lastname',
     analysts: {
       lead: 'Eva Silver',
@@ -567,13 +564,13 @@ export const requestListResearchers = [
   {
     id: '1001-1234511',
     title: 'Example title',
+    project: '20-SSH-UTO-1111',
     statusHead: 'unassigned',
     status: 'unassigned',
     cancellationReason: '',
     created: 'Aug. 28, 2020',
     updated: 'Aug. 29, 2020',
     expiration: 'Sep. 20, 2020',
-    project: '1',
     researcher: 'Elton John',
     analysts: {
       lead: '',
@@ -592,13 +589,13 @@ export const requestListResearchers = [
   {
     id: '1001-1234512',
     title: 'Example title',
+    project: '20-SSH-UTO-1111',
     statusHead: 'approved',
     status: 'Approved',
     cancellationReason: '',
     created: 'Aug. 21, 2020',
     updated: 'Aug. 24, 2020',
     expiration: 'Sep. 20, 2020',
-    project: '2',
     researcher: 'Leonard Cohen',
     analysts: {
       lead: 'Tony Stark',
@@ -617,13 +614,13 @@ export const requestListResearchers = [
   {
     id: '1001-1234513',
     title: 'Example title',
+    project: '20-SSH-UTO-1111',
     statusHead: 'active',
     status: 'Draft',
     cancellationReason: '',
     created: 'Aug. 20, 2020',
     updated: 'Aug. 24, 2020',
     expiration: 'Sep. 20, 2020',
-    project: '3',
     researcher: 'Averylongname Goeshere',
     analysts: {
       lead: 'Tony Stark',
@@ -642,13 +639,13 @@ export const requestListResearchers = [
   {
     id: '1001-1234514',
     title: 'Example title',
+    project: '20-SSH-UTO-1111',
     statusHead: 'denied',
     status: 'Denied',
     cancellationReason: '',
     created: 'Aug. 20, 2020',
     updated: 'Aug. 24, 2020',
     expiration: 'Sep. 20, 2020',
-    project: '4',
     researcher: 'Firstname Lastname',
     analysts: {
       lead: 'Paul Colton',
@@ -665,6 +662,7 @@ export const requestListResearchers = [
   {
     id: '1001-1234515',
     title: 'Example title',
+    project: '20-SSH-UTO-1111',
     statusHead: 'denied',
     status: 'Denied',
     cancellationReason:
@@ -672,7 +670,6 @@ export const requestListResearchers = [
     created: 'Aug. 20, 2020',
     updated: 'Aug. 24, 2020',
     expiration: 'Sep. 20, 2020',
-    project: '1',
     researcher: 'Firstname Lastname',
     analysts: {
       lead: 'Philip Duran',
@@ -684,13 +681,13 @@ export const requestListResearchers = [
   {
     id: '1001-1234516',
     title: 'Example title',
+    project: '20-SSH-UTO-1111',
     statusHead: 'active',
     status: 'Draft',
     cancellationReason: '',
     created: 'Aug. 20, 2020',
     updated: 'Aug. 23, 2020',
     expiration: 'Sep. 20, 2020',
-    project: '2',
     researcher: 'Firstname Lastname',
     analysts: {
       lead: 'Eva Silver',
@@ -702,13 +699,13 @@ export const requestListResearchers = [
   {
     id: '1001-1234517',
     title: 'Example title',
+    project: '20-SSH-UTO-1111',
     statusHead: 'active',
     status: 'Update requested',
     cancellationReason: '',
     created: 'Aug. 20, 2020',
     updated: 'Aug. 23, 2020',
     expiration: 'Sep. 20, 2020',
-    project: '3',
     researcher: 'Firstname Lastname',
     analysts: {
       lead: 'Eva Silver',
@@ -720,13 +717,13 @@ export const requestListResearchers = [
   {
     id: '1001-1234518',
     title: 'Example title',
+    project: '20-SSH-UTO-1111',
     statusHead: 'active',
     status: 'Disclosure analysis',
     cancellationReason: '',
     created: 'Aug. 20, 2020',
     updated: 'Aug. 23, 2020',
     expiration: 'Sep. 20, 2020',
-    project: '3',
     researcher: 'Firstname Lastname',
     analysts: {
       lead: 'Eva Silver',
@@ -738,13 +735,13 @@ export const requestListResearchers = [
   {
     id: '1001-1234519',
     title: 'Example title',
+    project: '20-SSH-UTO-1111',
     statusHead: 'active',
     status: 'Disclosure analysis',
     cancellationReason: '',
     created: 'Aug. 20, 2020',
     updated: 'Aug. 23, 2020',
     expiration: 'Sep. 20, 2020',
-    project: '3',
     researcher: 'Firstname Lastname',
     analysts: {
       lead: 'Eva Silver',
@@ -756,13 +753,13 @@ export const requestListResearchers = [
   {
     id: '1001-1234520',
     title: 'Example title',
+    project: '20-SSH-UTO-1111',
     statusHead: 'active',
     status: 'Update requested',
     cancellationReason: '',
     created: 'Aug. 20, 2020',
     updated: 'Aug. 23, 2020',
     expiration: 'Sep. 20, 2020',
-    project: '3',
     researcher: 'Firstname Lastname',
     analysts: {
       lead: 'Eva Silver',
@@ -774,13 +771,13 @@ export const requestListResearchers = [
   {
     id: '1001-1234521',
     title: 'Example title',
+    project: '20-SSH-UTO-1111',
     statusHead: 'active',
     status: 'Update requested',
     cancellationReason: '',
     created: 'Aug. 20, 2020',
     updated: 'Aug. 23, 2020',
     expiration: 'Sep. 20, 2020',
-    project: '3',
     researcher: 'Firstname Lastname',
     analysts: {
       lead: 'Eva Silver',
@@ -792,13 +789,13 @@ export const requestListResearchers = [
   {
     id: '1001-1234522',
     title: 'Example title',
+    project: '20-SSH-UTO-1111',
     statusHead: 'active',
     status: 'Draft',
     cancellationReason: '',
     created: 'Aug. 20, 2020',
     updated: 'Aug. 23, 2020',
     expiration: 'Sep. 20, 2020',
-    project: '3',
     researcher: 'Firstname Lastname',
     analysts: {
       lead: 'Eva Silver',
