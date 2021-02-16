@@ -138,36 +138,6 @@ function ToolBarUnassign(props) {
     setSelected(event.target.value);
   };
 
-  function comments() {
-    if (selected === 'Other') {
-      return (
-        <div className={classes.dialogRow}>
-          {' '}
-          <FormControl variant="outlined">
-            <TextField
-              id="withdraw-input"
-              label="Comments"
-              variant="outlined"
-              multiline
-              required="true"
-            />
-          </FormControl>
-        </div>
-      );
-    } else {
-      return (
-        <div className={classes.dialogRow}>
-          <TextField
-            id="withdraw-input"
-            label="Comments"
-            variant="outlined"
-            multiline
-          />
-        </div>
-      );
-    }
-  }
-
   return (
     <Toolbar>
       <IconButton
@@ -470,7 +440,32 @@ function ToolBarUnassign(props) {
             </Select>
           </FormControl>
         </div>
-        {comments()}
+        <>
+          {selected === 'Other' ? (
+            <div className={classes.dialogRow}>
+              <FormControl variant="outlined">
+                <TextField
+                  id="withdraw-input"
+                  label="Comments"
+                  variant="outlined"
+                  multiline
+                  required="true"
+                />
+              </FormControl>
+            </div>
+          ) : (
+            <div className={classes.dialogRow}>
+              <FormControl variant="outlined">
+                <TextField
+                  id="withdraw-input"
+                  label="Comments"
+                  variant="outlined"
+                  multiline
+                />
+              </FormControl>
+            </div>
+          )}
+        </>
         <Divider className="mt-2" />
         <DialogActions className={classes.dialogFooter}>
           <Button
