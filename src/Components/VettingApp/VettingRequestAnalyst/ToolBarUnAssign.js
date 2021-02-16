@@ -1,6 +1,5 @@
 import React from 'react';
 import {makeStyles} from '@material-ui/core/styles';
-import clsx from 'clsx';
 import NumberFormat from 'react-number-format';
 import {
   Button,
@@ -441,21 +440,32 @@ function ToolBarUnassign(props) {
             </Select>
           </FormControl>
         </div>
-        <div
-          className={clsx(classes.dialogRow, {
-            [classes.hiddenRow]: selected !== 'Other',
-          })}
-        >
-          <FormControl variant="outlined">
-            <TextField
-              id="withdraw-input"
-              label="Comments"
-              variant="outlined"
-              multiline
-              required="true"
-            />
-          </FormControl>
-        </div>
+        <>
+          {selected === 'Other' ? (
+            <div className={classes.dialogRow}>
+              <FormControl variant="outlined">
+                <TextField
+                  id="withdraw-input"
+                  label="Comments"
+                  variant="outlined"
+                  multiline
+                  required="true"
+                />
+              </FormControl>
+            </div>
+          ) : (
+            <div className={classes.dialogRow}>
+              <FormControl variant="outlined">
+                <TextField
+                  id="withdraw-input"
+                  label="Comments"
+                  variant="outlined"
+                  multiline
+                />
+              </FormControl>
+            </div>
+          )}
+        </>
         <Divider className="mt-2" />
         <DialogActions className={classes.dialogFooter}>
           <Button
