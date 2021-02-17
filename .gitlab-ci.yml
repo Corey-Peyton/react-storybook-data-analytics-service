@@ -13,7 +13,6 @@ cache:
 # Name the stages involved in the pipeline
 stages:
 - lint
-- build
 - deploy review
 - deploy
 
@@ -25,15 +24,6 @@ lint:
   script:
     - npm run lint
 
-build:
-  stage: build
-  script:
-    - npm install # Install all dependencies
-    - npm run build --prod # Build for prod
-    - cp public/index.html public/404.html # Not necessary, but helps with https://medium.com/@pshrmn/demystifying-single-page-applications-3068d0555d46
-    - mv public _public # CRA and gitlab pages both use the public folder. Only do this in a build pipeline.
-    - mv build public # Move build files to public dir for Gitlab Pages
-
 deploy review:
   stage: deploy review
   image: node:alpine
@@ -42,6 +32,9 @@ deploy review:
   before_script:
     - npm install surge
   script:
+    - npm install
+    - npm run build --prod
+    - mv build public
     - node_modules/.bin/surge public https://uxdc-daaas-${CI_ENVIRONMENT_SLUG}.surge.sh
   environment:
     name: review/$CI_COMMIT_REF_NAME
@@ -51,6 +44,12 @@ deploy review:
 # https://docs.gitlab.com/ee/user/project/pages/introduction.html#gitlab-pages-requirements
 pages:
   stage: deploy
+  script:
+    - npm install # Install all dependencies
+    - npm run build --prod # Build for prod
+    - cp public/index.html public/404.html # Not necessary, but helps with https://medium.com/@pshrmn/demystifying-single-page-applications-3068d0555d46
+    - mv public _public # CRA and gitlab pages both use the public folder. Only do this in a build pipeline.
+    - mv build public # Move build files to public dir for Gitlab Pages
   artifacts:
     paths:
     - public # The built files for Gitlab Pages to serve
