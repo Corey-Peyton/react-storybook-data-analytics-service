@@ -32,6 +32,7 @@ deploy review:
     url: https://uxdc-daaas-$CI_ENVIRONMENT_SLUG.surge.sh
   script:
     - npm install surge
+    - npm run build --prod
     - node_modules/.bin/surge public https://uxdc-daaas-${CI_ENVIRONMENT_SLUG}.surge.sh
 
 # Job name for gitlab to recognise this results in assets for Gitlab Pages
