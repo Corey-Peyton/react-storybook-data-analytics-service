@@ -128,8 +128,8 @@ export default function FloatingSupportButton() {
             multiline
             fullWidth
           />
-          <Divider />
         </DialogContent>
+        <Divider />
         <DialogActions className={classes.dialogFooter}>
           <Button onClick={handleClose} color="primary" variant="outlined">
             Cancel
