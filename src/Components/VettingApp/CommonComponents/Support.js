@@ -46,9 +46,9 @@ const useStyles = makeStyles((theme) => ({
     margin: theme.spacing(1),
   },
   alert: {
-    marginTop: theme.spacing(1),
-    marginBottom: theme.spacing(2),
+    margin: theme.spacing(1, 0, 2, 0),
   },
+
   dialogTitle: {
     display: 'flex',
     alignItems: 'center',
