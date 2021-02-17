@@ -26,7 +26,6 @@ lint:
 
 deploy review:
   stage: deploy review
-  image: node:alpine
   except:
     - master
   before_script:
