@@ -46,8 +46,8 @@ const useStyles = makeStyles((theme) => ({
     margin: theme.spacing(1),
   },
   alert: {
-    marginTop: theme.spacing(2),
-    marginBottom: theme.spacing(1),
+    marginTop: theme.spacing(1),
+    marginBottom: theme.spacing(2),
   },
   dialogTitle: {
     display: 'flex',
