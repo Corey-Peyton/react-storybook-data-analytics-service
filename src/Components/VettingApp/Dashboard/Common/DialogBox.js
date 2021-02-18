@@ -26,6 +26,7 @@ import {
 } from '@material-ui/core';
 import Autocomplete from '@material-ui/lab/Autocomplete';
 import NumberFormat from 'react-number-format';
+import Alert from '@material-ui/lab/Alert';
 
 import CustomizedSnackbar from './CustomizedSnackbar';
 import {AnalystMenu} from './ContextMenu';
@@ -130,6 +131,9 @@ const useStyles = makeStyles((theme) => ({
   },
   box: {
     padding: theme.spacing(1, 0),
+  },
+  alert: {
+    margin: theme.spacing(1, 0, 2, 0),
   },
   textField: {
     width: '100%',
@@ -1215,6 +1219,9 @@ export function DialogUpdate(props) {
           </div>
         </DialogTitle>
         <Divider className="mb-2" />
+        <Alert severity="warning" className={classes.alert}>
+          {t('Do not include any confidential information.')}
+        </Alert>
         <form onSubmit={submitForm} noValidate>
           <div className={classes.dialogRow}>
             <FormControl variant="outlined" className={classes.textField}>
@@ -1514,6 +1521,9 @@ export function DialogDenied(props) {
           </div>
         </DialogTitle>
         <Divider className="mb-2" />
+        <Alert severity="warning" className={classes.alert}>
+          {t('Do not include any confidential information.')}
+        </Alert>
         <form onSubmit={submitForm} noValidate>
           <div className={classes.dialogRow}>
             <Typography variant="subtitle2">{t('Billable hours')}</Typography>
