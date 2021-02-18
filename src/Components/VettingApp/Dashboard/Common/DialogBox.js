@@ -96,8 +96,10 @@ const useStyles = makeStyles((theme) => ({
   },
   dialogRow: {
     display: 'flex',
-    alignItems: 'center',
     padding: theme.spacing(1, 0),
+    flexFlow: 'column',
+    height: '100%',
+    justifyContent: 'center',
   },
   dialogColumn: {
     display: 'flex',
@@ -171,22 +173,25 @@ export function DialogAnalyst(props) {
           </div>
         </DialogTitle>
         <Divider className="mb-2" />
+        {/* className={clsx(classes.dialogRow, {
+              [classes.hiddenRow]: state.reason.text !== 'Other',
+            })} */}
         <div className={classes.dialogContent}>
           <div className={classes.dialogColumn}>
-            <Avatar className={classes.avatar}>A</Avatar>
+            <div className={classes.dialogRow}>
+              <Avatar className={classes.avatar}>BB</Avatar>
+            </div>
           </div>
           <div className={classes.dialogColumn}>
             <div className={classes.dialogRow}>
-              <Typography className={classes.dialogText}>Bill Brian</Typography>
-            </div>
-            <div className={classes.dialogRow}>
-              <Typography className={classes.dialogText}>
+              <Typography className={classes.dialogText} variant="body2">
+                Bill Brian
+              </Typography>
+              <Typography className={classes.dialogText} variant="body2">
                 brian.bill@cloud.statcan.ca
               </Typography>
-            </div>
-            <div className={classes.dialogRow}>
-              <Typography className={classes.dialogText}>
-                +1 343 567 7878
+              <Typography className={classes.dialogText} variant="body2">
+                +1 (999) 999 9999
               </Typography>
             </div>
           </div>
