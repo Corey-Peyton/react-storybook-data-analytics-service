@@ -173,9 +173,6 @@ export function DialogAnalyst(props) {
           </div>
         </DialogTitle>
         <Divider className="mb-2" />
-        {/* className={clsx(classes.dialogRow, {
-              [classes.hiddenRow]: state.reason.text !== 'Other',
-            })} */}
         <div className={classes.dialogContent}>
           <div className={classes.dialogColumn}>
             <div className={classes.dialogRow}>
