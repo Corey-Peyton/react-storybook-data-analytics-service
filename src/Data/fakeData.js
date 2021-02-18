@@ -330,8 +330,8 @@ export const requestListResearchers = [
     expiration: 'Sep. 20, 2020',
     researcher: 'Elton John',
     analysts: {
-      lead: 'Tony Stark',
-      support: ['Peter Parker', 'Bruce Banner'],
+      lead: 'Vision',
+      support: ['Pietro', 'Wanda'],
     },
     files: [
       'This is file 1',
@@ -355,7 +355,7 @@ export const requestListResearchers = [
     expiration: 'Sep. 20, 2020',
     researcher: 'Leonard Cohen',
     analysts: {
-      lead: 'Tony Stark',
+      lead: 'Ultron',
       support: [],
     },
     files: [

@@ -9,8 +9,10 @@ import {
   TableContainer,
   TablePagination,
   TableRow,
+  Chip,
 } from '@material-ui/core';
 
+import {DialogAnalyst} from './DialogBox';
 import {ActionsMenu} from './ContextMenu';
 import DashboardTableHead from './DashboardTableHead';
 import AnalystCell from './AnalystCell';
@@ -81,6 +83,9 @@ export default function TableContainerComponent(props) {
   // const [selected, setSelected] = React.useState([]);
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(5);
+  const [open, setOpen] = React.useState({
+    requesterInfo: false,
+  });
   const {t} = useTranslation();
   const classes = useStyles();
 
@@ -98,6 +103,12 @@ export default function TableContainerComponent(props) {
     setRowsPerPage(parseInt(event.target.value, 10));
     setPage(0);
   };
+
+  function toggleDialog(value) {
+    if (value === 'info') {
+      setOpen({...open, requesterInfo: !open.requesterInfo});
+    }
+  }
 
   const emptyRows =
     rowsPerPage -
@@ -159,11 +170,16 @@ export default function TableContainerComponent(props) {
                       </Typography>
                     </TableCell>
                     <TableCell>
-                      <Typography variant="body2" noWrap={true}>
-                        {row.researcher}
-                      </Typography>
+                      <Chip
+                        label={row.researcher}
+                        onClick={() => toggleDialog('info')}
+                      />
                     </TableCell>
-                    <AnalystCell analysts={row.analysts} role={role} />
+                    <AnalystCell
+                      analysts={row.analysts}
+                      support={row.support}
+                      role={role}
+                    />
                     <TableCell>
                       <Typography variant="body2" noWrap={true}>
                         {row.created}
@@ -203,6 +219,11 @@ export default function TableContainerComponent(props) {
         page={page}
         onChangePage={handleChangePage}
         onChangeRowsPerPage={handleChangeRowsPerPage}
+      />
+      <DialogAnalyst
+        open={open.requesterInfo}
+        toggleDialog={() => toggleDialog('info')}
+        header="Requester details"
       />
     </TableContainer>
   );

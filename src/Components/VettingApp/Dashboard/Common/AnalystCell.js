@@ -1,12 +1,7 @@
 import React from 'react';
 import {useTranslation} from 'react-i18next';
 import {makeStyles} from '@material-ui/core/styles';
-import {
-  Typography,
-  TableCell,
-  Chip,
-  Link,
-} from '@material-ui/core';
+import {Typography, TableCell, Chip} from '@material-ui/core';
 
 import {DialogAnalyst, DialogManageTeam} from './DialogBox';
 import {ROW_HEIGHT} from './TableContainerComponent';
@@ -23,13 +18,12 @@ const useStyles = makeStyles((theme) => ({
     borderRight: '1px solid',
     borderRightColor: theme.palette.divider,
   },
-}),
-);
+}));
 
 export default function AnalystCell(props) {
   const {t} = useTranslation();
-  const {role, analysts} = props;
-  const extraAnalysts = analysts.support.length;
+  const {role, analysts, support} = props;
+  const extraAnalysts = support.length;
   const classes = useStyles();
   const [open, setOpen] = React.useState({
     analystInfo: false,
@@ -46,53 +40,84 @@ export default function AnalystCell(props) {
   }
 
   if (role === 'researcher') {
-    if (analysts.lead !== '') {
+    if (analysts !== '') {
       return (
         <TableCell className={classes.tablesCellsFlex}>
-          <Chip label={analysts.lead} onClick={() => toggleDialog('info')}/>
-          <DialogAnalyst open={open.analystInfo} toggleDialog={() => toggleDialog('info')}/>
+          <Chip label={analysts} onClick={() => toggleDialog('info')} />
+          <DialogAnalyst
+            open={open.analystInfo}
+            toggleDialog={() => toggleDialog('info')}
+            header="Assignee details"
+          />
         </TableCell>
       );
     } else {
       return (
         <TableCell className={classes.tablesCellsFlex}>
-          <Typography variant="body2" color="textSecondary">{t('Unassigned')}</Typography>
+          <Typography variant="body2" color="textSecondary">
+            {t('Unassigned')}
+          </Typography>
         </TableCell>
       );
     }
   } else if (role === 'analyst') {
-    if (analysts.lead !== '' && analysts.support.length > 0) {
+    if (analysts !== '' && support.length > 0) {
       return (
         <TableCell className={classes.tablesCellsFlex}>
-          <Chip label={analysts.lead} onClick={() => toggleDialog('list')} className="mr-1"/>
-          <Chip label={`${extraAnalysts} ${t('support')}`} onClick={() => toggleDialog('list')} />
-          <DialogManageTeam open={open.manageTeam} toggleDialog={() => toggleDialog('list')} />
+          <Chip
+            label={analysts}
+            onClick={() => toggleDialog('list')}
+            className="mr-1"
+          />
+          <Chip
+            label={`${extraAnalysts} ${t('support')}`}
+            onClick={() => toggleDialog('list')}
+          />
+          <DialogManageTeam
+            open={open.manageTeam}
+            toggleDialog={() => toggleDialog('list')}
+          />
         </TableCell>
       );
-    } else if (analysts.lead !== '' && analysts.support.length === 0) {
+    } else if (analysts !== '' && support.length === 0) {
       return (
         <TableCell className={classes.tablesCellsFlex}>
-          <Chip label={analysts.lead} onClick={() => toggleDialog('list')}/>
-          <DialogManageTeam open={open.manageTeam} toggleDialog={() => toggleDialog('list')} />
+          <Chip label={analysts} onClick={() => toggleDialog('list')} />
+          <DialogManageTeam
+            open={open.manageTeam}
+            toggleDialog={() => toggleDialog('list')}
+          />
         </TableCell>
       );
-    } else if (analysts.lead === '' && analysts.support.length > 0) {
+    } else if (analysts === '' && support.length > 0) {
       return (
         <TableCell className={classes.tablesCellsFlex}>
-          <Typography variant="body2" color="textSecondary">{t('No lead')}</Typography>
-          <Chip label={`${extraAnalysts} ${t('support')}`} onClick={() => toggleDialog('list')} className="ml-1"/>
-          <DialogManageTeam open={open.manageTeam} toggleDialog={() => toggleDialog('list')} />
+          <Typography variant="body2" color="textSecondary">
+            {t('No lead')}
+          </Typography>
+          <Chip
+            label={`${extraAnalysts} ${t('support')}`}
+            onClick={() => toggleDialog('list')}
+            className="ml-1"
+          />
+          <DialogManageTeam
+            open={open.manageTeam}
+            toggleDialog={() => toggleDialog('list')}
+          />
         </TableCell>
       );
     } else {
       return (
         <TableCell className={classes.tablesCellsFlex}>
-          <Typography variant="body2">
-            <Link onClick={() => toggleDialog('list')}>{t('Manage team')}</Link>
+          <Typography variant="body2" color="textSecondary">
+            {t('Unassigned')}
           </Typography>
-          <DialogManageTeam open={open.manageTeam} toggleDialog={() => toggleDialog('list')} />
+          <DialogManageTeam
+            open={open.manageTeam}
+            toggleDialog={() => toggleDialog('list')}
+          />
         </TableCell>
       );
     }
   }
-};
+}
