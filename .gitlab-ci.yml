@@ -12,11 +12,12 @@ cache:
 
 # Name the stages involved in the pipeline
 stages:
+- lint
 - deploy review
 - deploy
 
 lint:
-  stage: deploy
+  stage: lint
   image: node:alpine
   before_script:
     - npm install
@@ -25,14 +26,18 @@ lint:
 
 deploy review:
   stage: deploy review
-  only:
-    - branches
+  except:
+    - master
+  before_script:
+    - npm install surge
+  script:
+    - npm install
+    - npm run build --prod
+    - mv build public
+    - node_modules/.bin/surge public https://uxdc-daaas-${CI_ENVIRONMENT_SLUG}.surge.sh
   environment:
     name: review/$CI_COMMIT_REF_NAME
     url: https://uxdc-daaas-$CI_ENVIRONMENT_SLUG.surge.sh
-  script:
-    - npm install surge
-    - node_modules/.bin/surge public https://uxdc-daaas-${CI_ENVIRONMENT_SLUG}.surge.sh
 
 # Job name for gitlab to recognise this results in assets for Gitlab Pages
 # https://docs.gitlab.com/ee/user/project/pages/introduction.html#gitlab-pages-requirements
