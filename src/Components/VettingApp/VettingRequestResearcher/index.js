@@ -228,6 +228,7 @@ function VettingRequestResearcher(props) {
         return (
           <ResearcherInfo
             handleTitleChange={handleTitleChange}
+            handleFieldOnBlur={handleFieldOnBlur}
             title={state.title()}
           />
         );
@@ -243,13 +244,27 @@ function VettingRequestResearcher(props) {
   };
 
   const handleTitleChange = (e) => {
-    const title = e.target.value;
+    const val = e.target.value;
     setState({
       ...state,
       title: function() {
-        return title;
+        return val;
       },
     });
+  };
+
+  const handleFieldOnBlur = (e) => {
+    const defaultTitle = 'Untitled request';
+
+    if (e.target.value === '') {
+      // if field is empty, set field to "untitled request"
+      setState({
+        ...state,
+        title: function() {
+          return defaultTitle;
+        },
+      });
+    }
   };
 
   const handleReset = () => {
@@ -441,10 +456,7 @@ function VettingRequestResearcher(props) {
           <DialogTitle id="alert-dialog-title">
             <div className={classes.dialogTitle}>
               Delete vetting request
-              <IconButton
-                onClick={handleDialogClose}
-                edge="end"
-              >
+              <IconButton onClick={handleDialogClose} edge="end">
                 <CloseIcon />
               </IconButton>
             </div>
