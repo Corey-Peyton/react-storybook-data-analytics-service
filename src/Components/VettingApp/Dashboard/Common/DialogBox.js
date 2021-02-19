@@ -2139,6 +2139,16 @@ export function DialognNewRequestTitle(props) {
         });
       }
     }
+    if (!state[value].text) {
+      // if field is empty, set field to "untitled request"
+      setState({
+        ...state,
+        [value]: {
+          ...state[value],
+          text: initial[value].text,
+        },
+      });
+    }
   };
 
   return (
@@ -2180,7 +2190,6 @@ export function DialognNewRequestTitle(props) {
                 aria-label={t('Request name')}
                 value={state.name.text}
                 variant="outlined"
-                required
                 error={Boolean(state.name.errorText)}
                 helperText={state.name.errorText}
                 onCut={(e) => disableCutCopyPaste(e, 'cut', 'name')}

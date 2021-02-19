@@ -84,14 +84,14 @@ function ResearcherInfo(props) {
             name="name"
             label="Request name"
             variant="outlined"
-            required
             fullWidth
             margin="dense"
             error
-            defaultValue={props.title}
+            value={props.title}
             className="mt-2"
             helperText="Request name is required"
             onChange={props.handleTitleChange}
+            onBlur={props.handleFieldOnBlur}
           />
           <Typography component="h2" variant="h6" className="mt-1 mb-1">
             Project details
