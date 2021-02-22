@@ -5,7 +5,6 @@ import {useHistory, useLocation} from 'react-router-dom';
 import clsx from 'clsx';
 import {makeStyles} from '@material-ui/core/styles';
 import {green} from '@material-ui/core/colors';
-import PhoneIcon from '@material-ui/icons/Phone';
 import CloseIcon from '@material-ui/icons/Close';
 import Icon from '@mdi/react';
 import {mdiAccount} from '@mdi/js';
@@ -27,6 +26,7 @@ import {
 } from '@material-ui/core';
 import Autocomplete from '@material-ui/lab/Autocomplete';
 import NumberFormat from 'react-number-format';
+import Alert from '@material-ui/lab/Alert';
 
 import CustomizedSnackbar from './CustomizedSnackbar';
 import {AnalystMenu} from './ContextMenu';
@@ -77,6 +77,9 @@ const useStyles = makeStyles((theme) => ({
     '& .MuiInputBase-input:not(.MuiInputBase-inputMultiline)': {
       height: '100%',
     },
+    '& .MuiDialogTitle-root': {
+      padding: theme.spacing(1.5, 3),
+    },
   },
   avatar: {
     backgroundColor: green[500],
@@ -91,10 +94,20 @@ const useStyles = makeStyles((theme) => ({
     alignItems: 'center',
     justifyContent: 'space-between',
   },
+  dialogContent: {
+    display: 'flex',
+    padding: theme.spacing(3),
+  },
   dialogRow: {
     display: 'flex',
-    alignItems: 'center',
-    padding: theme.spacing(1, 3),
+    padding: theme.spacing(1, 0),
+    flexFlow: 'column',
+    height: '100%',
+    justifyContent: 'center',
+  },
+  dialogColumn: {
+    display: 'flex',
+    flexDirection: 'column',
   },
   hiddenRow: {
     display: 'none',
@@ -112,7 +125,7 @@ const useStyles = makeStyles((theme) => ({
     overflow: 'auto',
   },
   dialogFooter: {
-    padding: theme.spacing(3, 3),
+    padding: theme.spacing(1.75, 3),
     display: 'flex',
     justifyContent: 'flex-end',
   },
@@ -121,6 +134,9 @@ const useStyles = makeStyles((theme) => ({
   },
   box: {
     padding: theme.spacing(1, 0),
+  },
+  alert: {
+    margin: theme.spacing(1, 0, 2, 0),
   },
   textField: {
     width: '100%',
@@ -138,7 +154,7 @@ const useStyles = makeStyles((theme) => ({
 
 // ////////////////////////////////////////// ANALYST INFORMATION
 export function DialogAnalyst(props) {
-  const {open, toggleDialog} = props;
+  const {open, toggleDialog, header} = props;
   const {t} = useTranslation();
   const classes = useStyles();
 
@@ -152,7 +168,7 @@ export function DialogAnalyst(props) {
       >
         <DialogTitle id="dashboard-dialog-title">
           <div className={classes.dialogTitle}>
-            <Typography variant="h6">{t('Analyst information')}</Typography>
+            <Typography variant="h6">{t(header)}</Typography>
             <IconButton
               id="dialog-close"
               onClick={toggleDialog}
@@ -163,25 +179,31 @@ export function DialogAnalyst(props) {
             </IconButton>
           </div>
         </DialogTitle>
-        <Divider className="mb-2" />
-        <div className={classes.dialogRow}>
-          <Avatar className={classes.avatar}>A</Avatar>
-          <Typography className={classes.dialogText}>
-            brian.bill@cloud.statcan.ca
-          </Typography>
+        <Divider />
+        <div className={classes.dialogContent}>
+          <div className={classes.dialogColumn}>
+            <div className={classes.dialogRow}>
+              <Avatar className={classes.avatar}>BB</Avatar>
+            </div>
+          </div>
+          <div className={classes.dialogColumn}>
+            <div className={classes.dialogRow}>
+              <Typography className={classes.dialogText} variant="body2">
+                Bill Brian
+              </Typography>
+              <Typography className={classes.dialogText} variant="body2">
+                brian.bill@cloud.statcan.ca
+              </Typography>
+              <Typography className={classes.dialogText} variant="body2">
+                +1 (999) 999 9999
+              </Typography>
+            </div>
+          </div>
         </div>
-        <div className={classes.dialogRow}>
-          <Avatar className={classes.avatarTransparent}>
-            <PhoneIcon />
-          </Avatar>
-          <Typography className={classes.dialogText}>
-            +1 343 567 7878
-          </Typography>
-        </div>
-        <Divider className="mt-2" />
+        <Divider />
         <div className={classes.dialogFooter}>
           <Button variant="contained" color="primary" onClick={toggleDialog}>
-            {t('Go back')}
+            {t('Done')}
           </Button>
         </div>
       </Dialog>
@@ -1200,6 +1222,9 @@ export function DialogUpdate(props) {
           </div>
         </DialogTitle>
         <Divider className="mb-2" />
+        <Alert severity="warning" className={classes.alert}>
+          {t('Do not include any confidential information.')}
+        </Alert>
         <form onSubmit={submitForm} noValidate>
           <div className={classes.dialogRow}>
             <FormControl variant="outlined" className={classes.textField}>
@@ -1499,6 +1524,9 @@ export function DialogDenied(props) {
           </div>
         </DialogTitle>
         <Divider className="mb-2" />
+        <Alert severity="warning" className={classes.alert}>
+          {t('Do not include any confidential information.')}
+        </Alert>
         <form onSubmit={submitForm} noValidate>
           <div className={classes.dialogRow}>
             <Typography variant="subtitle2">{t('Billable hours')}</Typography>
@@ -2114,6 +2142,16 @@ export function DialognNewRequestTitle(props) {
         });
       }
     }
+    if (!state[value].text) {
+      // if field is empty, set field to "untitled request"
+      setState({
+        ...state,
+        [value]: {
+          ...state[value],
+          text: initial[value].text,
+        },
+      });
+    }
   };
 
   return (
@@ -2155,7 +2193,6 @@ export function DialognNewRequestTitle(props) {
                 aria-label={t('Request name')}
                 value={state.name.text}
                 variant="outlined"
-                required
                 error={Boolean(state.name.errorText)}
                 helperText={state.name.errorText}
                 onCut={(e) => disableCutCopyPaste(e, 'cut', 'name')}

@@ -43,19 +43,27 @@ function Index() {
         </li>
         <ul>
           <li>
-            <Link to="/vetting-app/dashboard-researcher">Dashboard - researcher</Link>
+            <Link to="/vetting-app/dashboard-researcher">
+              Dashboard - researcher
+            </Link>
           </li>
           <li>
             <Link to="/vetting-app/dashboard-analyst">Dashboard - analyst</Link>
           </li>
           <li>
-            <Link to="/vetting-app/request-researcher">Request - researcher</Link>
+            <Link to="/vetting-app/request-researcher">
+              Request - researcher
+            </Link>
           </li>
           <li>
-            <Link to="/vetting-app/request-analyst-assigned">Request - analyst (assigned)</Link>
+            <Link to="/vetting-app/request-analyst-assigned">
+              Request - analyst (assigned)
+            </Link>
           </li>
           <li>
-            <Link to="/vetting-app/request-analyst-unassigned">Request - analyst (unassigned)</Link>
+            <Link to="/vetting-app/request-analyst-unassigned">
+              Request - analyst (unassigned)
+            </Link>
           </li>
         </ul>
       </ul>

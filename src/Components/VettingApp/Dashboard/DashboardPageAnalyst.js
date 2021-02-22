@@ -82,20 +82,24 @@ const useStyles = makeStyles((theme) => ({
 function createData(
     id,
     title,
+    project,
     statusHead,
     status,
     researcher,
     analysts,
+    support,
     created,
     updated,
 ) {
   return {
     id,
     title,
+    project,
     statusHead,
     status,
     researcher,
     analysts,
+    support,
     created,
     updated,
   };
@@ -107,10 +111,12 @@ const rows = requestListResearchers
       createData(
           el.id,
           el.title,
+          el.project,
           el.statusHead,
           el.status,
           el.researcher,
-          el.analysts,
+          el.analysts.lead,
+          el.analysts.support,
           el.created,
           el.updated,
       ),
@@ -118,14 +124,20 @@ const rows = requestListResearchers
 
 const headCells = [
   {id: 'id', narrow: false, disablePadding: true, label: 'Request'},
+  {id: 'project', narrow: false, disablePadding: true, label: 'Project'},
   {id: 'status', narrow: false, disablePadding: false, label: 'Status'},
   {
     id: 'researcher',
     narrow: false,
     disablePadding: false,
-    label: 'Researcher',
+    label: 'Requester',
   },
-  {id: 'analysts', narrow: false, disablePadding: false, label: 'Assignee'},
+  {
+    id: 'analysts',
+    narrow: false,
+    disablePadding: false,
+    label: 'Assignee',
+  },
   {id: 'created', narrow: false, disablePadding: false, label: 'Created on'},
   {id: 'updated', narrow: false, disablePadding: false, label: 'Updated on'},
   {id: 'actions', narrow: true, disablePadding: false, label: 'Actions'},

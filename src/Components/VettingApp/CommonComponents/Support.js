@@ -12,8 +12,10 @@ import {
   Divider,
   Typography,
   TextField,
+  IconButton,
 } from '@material-ui/core';
-import SendIcon from '@material-ui/icons/Send';
+import Alert from '@material-ui/lab/Alert';
+import CloseIcon from '@material-ui/icons/Close';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -30,10 +32,27 @@ const useStyles = makeStyles((theme) => ({
       '& .MuiTextField-root': {
         width: '100%',
       },
+      '& .MuiOutlinedInput-multiline': {
+        padding: 0,
+      },
+      '& .MuiOutlinedInput-inputMultiline': {
+        'max-height': 130,
+        'overflow': 'auto !important',
+        'padding': theme.spacing(2),
+      },
     },
   },
   extendedIcon: {
     margin: theme.spacing(1),
+  },
+  alert: {
+    margin: theme.spacing(1, 0, 2, 0),
+  },
+
+  dialogTitle: {
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'space-between',
   },
   dialogFooter: {
     padding: theme.spacing(3, 3),
@@ -80,9 +99,21 @@ export default function FloatingSupportButton() {
         fullWidth="false"
         className={classes.dialog}
       >
-        <DialogTitle id="alert-dialog-title">Get support</DialogTitle>
+        <DialogTitle id="alert-dialog-title">
+          <div className={classes.dialogTitle}>
+            Get support
+            <IconButton onClick={handleClose} edge="end">
+              <CloseIcon />
+            </IconButton>
+          </div>
+        </DialogTitle>
         <Divider />
         <DialogContent className="pb-0 mt-1">
+          <div className={classes.alertRow}>
+            <Alert severity="warning" className={classes.alert}>
+              Do not include any confidential information.
+            </Alert>
+          </div>
           <DialogContentText id="alert-dialog-description">
             <Typography variant="body2" color="textPrimary">
               Click submit and one of our support staff will reach out to help
@@ -93,13 +124,12 @@ export default function FloatingSupportButton() {
             className="mt-1 mb-3"
             id="comment-text"
             label="Comments"
-            margin="dense"
             variant="outlined"
             multiline
             fullWidth
           />
-          <Divider />
         </DialogContent>
+        <Divider />
         <DialogActions className={classes.dialogFooter}>
           <Button onClick={handleClose} color="primary" variant="outlined">
             Cancel
@@ -110,7 +140,6 @@ export default function FloatingSupportButton() {
             variant="contained"
             className={classes.footerBtns}
           >
-            <SendIcon />
             Submit
           </Button>
         </DialogActions>

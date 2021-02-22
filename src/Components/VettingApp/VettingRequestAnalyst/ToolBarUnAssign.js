@@ -66,6 +66,9 @@ const useStyles = makeStyles((theme) => ({
   title: {
     flexGrow: 1,
   },
+  alert: {
+    margin: theme.spacing(2, 0, 1, 0),
+  },
   headerBtn: {
     marginLeft: theme.spacing(3),
   },
@@ -82,6 +85,10 @@ const useStyles = makeStyles((theme) => ({
     alignItems: 'center',
     padding: theme.spacing(1, 3),
     height: '100%',
+  },
+  alertRow: {
+    margin: theme.spacing(0, 2),
+    padding: theme.spacing(0.75, 1),
   },
   hiddenRow: {
     display: 'none',
@@ -178,15 +185,15 @@ function ToolBarUnassign(props) {
             </IconButton>
           </div>
         </DialogTitle>
-        <Divider className="mb-2" />
-        <DialogContent className="mb-2">
+        <Divider />
+        <DialogContent className="mb-2 mt-2">
           <Typography variant="body2">
             If you choose to proceed the request will no longer have a lead
             analyst and an email will be sent to the researcher notifying them
             of the change.
           </Typography>
         </DialogContent>
-        <Divider className="mb-2" />
+        <Divider className="mb-0" />
         <DialogActions className={classes.dialogFooter}>
           <Button
             color="primary"
@@ -243,18 +250,21 @@ function ToolBarUnassign(props) {
             </IconButton>
           </div>
         </DialogTitle>
-        <Divider className="mb-2" />
+        <Divider />
+        <div className={classes.alertRow}>
+          <Alert severity="warning" className={classes.alert}>
+            Do not include any confidential information.
+          </Alert>
+        </div>
         <div className={classes.dialogRow}>
-          <FormControl variant="outlined" className={classes.textField}>
-            <TextField
-              id="update-input"
-              label="Comments"
-              variant="outlined"
-              multiline
-              className={classes.textField}
-              required
-            />
-          </FormControl>
+          <TextField
+            id="update-input"
+            label="Comments"
+            variant="outlined"
+            multiline
+            className={classes.textField}
+            required
+          />
         </div>
         <Divider className="mb-0 mt-3" />
         <DialogActions className={classes.dialogFooter}>
@@ -391,7 +401,12 @@ function ToolBarUnassign(props) {
             </IconButton>
           </div>
         </DialogTitle>
-        <Divider className="mb-2" />
+        <Divider />
+        <div className={classes.alertRow}>
+          <Alert severity="warning" className={classes.alert}>
+            Do not include any confidential information.
+          </Alert>
+        </div>
         <div className={classes.dialogRow}>
           <Typography variant="subtitle2">Billable hours</Typography>
         </div>

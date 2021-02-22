@@ -20,6 +20,7 @@ import {
   DialogContentText,
   DialogActions,
   Snackbar,
+  IconButton,
 } from '@material-ui/core';
 import Alert from '@material-ui/lab/Alert';
 import ArrowForwardIosIcon from '@material-ui/icons/ArrowForwardIos';
@@ -36,6 +37,7 @@ import FloatingSupportButton from '../CommonComponents/Support';
 import Header from '../CommonComponents/Header';
 import Footer from '../CommonComponents/Footer';
 import CutCopyPasteAlert from '../CommonComponents/CutCopyPasteAlert';
+import CloseIcon from '@material-ui/icons/Close';
 
 const useStyles = makeStyles((theme) => ({
   main: {
@@ -47,6 +49,11 @@ const useStyles = makeStyles((theme) => ({
   },
   divider: {
     margin: theme.spacing(3, 0),
+  },
+  dialogTitle: {
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'space-between',
   },
   dividercutcopypaste: {
     marginBottom: theme.spacing(2),
@@ -99,6 +106,14 @@ const useStyles = makeStyles((theme) => ({
     borderTopStyle: 'solid',
     borderTopWidth: '1px',
     borderTopColor: theme.palette.divider,
+  },
+  dialogFooter: {
+    padding: theme.spacing(3, 3),
+    display: 'flex',
+    justifyContent: 'flex-end',
+  },
+  footerBtns: {
+    marginLeft: [theme.spacing(2), '!important'],
   },
   deleteBtn: {
     color: theme.palette.error.main,
@@ -213,6 +228,7 @@ function VettingRequestResearcher(props) {
         return (
           <ResearcherInfo
             handleTitleChange={handleTitleChange}
+            handleFieldOnBlur={handleFieldOnBlur}
             title={state.title()}
           />
         );
@@ -228,13 +244,27 @@ function VettingRequestResearcher(props) {
   };
 
   const handleTitleChange = (e) => {
-    const title = e.target.value;
+    const val = e.target.value;
     setState({
       ...state,
       title: function() {
-        return title;
+        return val;
       },
     });
+  };
+
+  const handleFieldOnBlur = (e) => {
+    const defaultTitle = 'Untitled request';
+
+    if (e.target.value === '') {
+      // if field is empty, set field to "untitled request"
+      setState({
+        ...state,
+        title: function() {
+          return defaultTitle;
+        },
+      });
+    }
   };
 
   const handleReset = () => {
@@ -424,15 +454,21 @@ function VettingRequestResearcher(props) {
           aria-describedby="alert-dialog-description"
         >
           <DialogTitle id="alert-dialog-title">
-            Delete vetting request
+            <div className={classes.dialogTitle}>
+              Delete vetting request
+              <IconButton onClick={handleDialogClose} edge="end">
+                <CloseIcon />
+              </IconButton>
+            </div>
           </DialogTitle>
-          <DialogContent className="pb-0">
+          <Divider />
+          <DialogContent className="pb-0 mt-2 mb-2">
             <DialogContentText id="alert-dialog-description">
               <Typography variant="body2">{`Are you sure you want to delete the Vetting disclosure request "${state.title()}"?`}</Typography>
             </DialogContentText>
-            <Divider className={classes.divider} />
           </DialogContent>
-          <DialogActions className={classes.dialogActions}>
+          <Divider />
+          <DialogActions className={classes.dialogFooter}>
             <Button
               onClick={handleDialogClose}
               color="primary"
@@ -443,7 +479,7 @@ function VettingRequestResearcher(props) {
             <Button
               color="primary"
               variant="contained"
-              className="ml-2"
+              className={classes.footerBtns}
               onClick={() => {
                 handleClickDelete();
                 handleDialogClose();

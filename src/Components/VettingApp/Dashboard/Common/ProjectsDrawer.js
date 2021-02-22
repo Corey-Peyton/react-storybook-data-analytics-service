@@ -1,16 +1,16 @@
 import React from 'react';
 import {useTranslation} from 'react-i18next';
 import PropTypes from 'prop-types';
-import {
-  Typography,
-  Drawer,
-  Tooltip,
-} from '@material-ui/core';
+import {Typography, Drawer, Tooltip} from '@material-ui/core';
 import TreeView from '@material-ui/lab/TreeView';
 import TreeItem from '@material-ui/lab/TreeItem';
 import FolderOpenIcon from '@material-ui/icons/FolderOpen';
 import {makeStyles} from '@material-ui/styles';
-import {createMuiTheme, MuiThemeProvider, fade} from '@material-ui/core/styles';
+import {
+  createMuiTheme,
+  MuiThemeProvider,
+  fade,
+} from '@material-ui/core/styles';
 
 export const DRAWER_WIDTH = 240;
 
@@ -61,7 +61,8 @@ const useStyles = makeStyles((theme) => ({
   },
   listIcon: {
     color: theme.palette.common.black,
-  }, root: {
+  },
+  root: {
     'color': theme.palette.text.secondary,
     '&:hover > $content': {
       backgroundColor: theme.palette.action.hover,
@@ -80,7 +81,7 @@ const useStyles = makeStyles((theme) => ({
     'borderBottomRightRadius': theme.spacing(2),
     'fontWeight': theme.typography.fontWeightMedium,
     '$expanded > &': {
-      'fontWeight': theme.typography.fontWeightRegular,
+      fontWeight: theme.typography.fontWeightRegular,
     },
     '&>.MuiTreeItem-iconContainer': {
       width: 0,
@@ -137,15 +138,22 @@ const theme = createMuiTheme((theme) => ({
 
 function StyledTreeItem(props) {
   const classes = useStyles();
-  const {labelText, labelIcon: LabelIcon, labelInfo, tooltip, color, bgColor, ...other} = props;
+  const {
+    labelText,
+    labelIcon: LabelIcon,
+    labelInfo,
+    tooltip,
+    color,
+    bgColor,
+    ...other
+  } = props;
 
   return (
     <TreeItem
       label={
         <MuiThemeProvider theme={theme}>
           <Tooltip title={labelText} placement="top" arrow>
-            <div className={classes.labelRoot}
-            >
+            <div className={classes.labelRoot}>
               <LabelIcon color="inherit" className={classes.labelIcon} />
               <Typography variant="body2" className={classes.labelText}>
                 {labelText}
@@ -189,18 +197,25 @@ export default function ProjectsDrawer(props) {
 
   const projectsArray = () => {
     if (role === 'researcher') {
-      return ['Project 1', 'Project 2', 'Project 3'];
+      return ['20-SSH-UTO-1111', '20-SSH-UTO-1112', '20-SSH-UTO-1113'];
     } else {
-      return ['All projects', 'Project 1', 'Project 2', 'Project 3'];
+      return [
+        'All projects',
+        '20-SSH-UTO-1111',
+        '20-SSH-UTO-1112',
+        '20-SSH-UTO-1113',
+      ];
     }
   };
 
   function handleProjectChange(e, node) {
     const num = parseInt(node) + 1;
-    const title = document.querySelector('#projects-list li:nth-child(' + num + ') p').innerHTML;
+    const title = document.querySelector(
+        '#projects-list li:nth-child(' + num + ') p',
+    ).innerHTML;
 
     projectTitle(title);
-  };
+  }
 
   return (
     <Drawer
@@ -213,12 +228,12 @@ export default function ProjectsDrawer(props) {
       }}
     >
       <div className={classes.drawerHeader}>
-        <Typography variant='subtitle2' component='h2'>
+        <Typography variant="subtitle2" component="h2">
           {t('Projects')}
         </Typography>
       </div>
       <TreeView
-        id='projects-list'
+        id="projects-list"
         className={classes.root}
         defaultSelected={['0']}
         onNodeSelect={handleProjectChange}
@@ -232,8 +247,7 @@ export default function ProjectsDrawer(props) {
             className={classes.treeItem}
             tooltip={t(el)}
           />
-        ),
-        )}
+        ))}
       </TreeView>
     </Drawer>
   );

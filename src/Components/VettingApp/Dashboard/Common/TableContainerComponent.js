@@ -9,8 +9,10 @@ import {
   TableContainer,
   TablePagination,
   TableRow,
+  Chip,
 } from '@material-ui/core';
 
+import {DialogAnalyst} from './DialogBox';
 import {ActionsMenu} from './ContextMenu';
 import DashboardTableHead from './DashboardTableHead';
 import AnalystCell from './AnalystCell';
@@ -69,12 +71,21 @@ function stableSort(array, comparator) {
 }
 
 export default function TableContainerComponent(props) {
-  const {role, filteredRows, headCells, contextSummaryClick, contextStatusClick} = props;
+  const {
+    role,
+    filteredRows,
+    headCells,
+    contextSummaryClick,
+    contextStatusClick,
+  } = props;
   const [order, setOrder] = React.useState('asc');
   const [orderBy, setOrderBy] = React.useState('calories');
   // const [selected, setSelected] = React.useState([]);
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(5);
+  const [open, setOpen] = React.useState({
+    requesterInfo: false,
+  });
   const {t} = useTranslation();
   const classes = useStyles();
 
@@ -93,17 +104,22 @@ export default function TableContainerComponent(props) {
     setPage(0);
   };
 
+  function toggleDialog(value) {
+    if (value === 'info') {
+      setOpen({...open, requesterInfo: !open.requesterInfo});
+    }
+  }
 
-  const emptyRows = rowsPerPage - Math.min(rowsPerPage, filteredRows().length - page * rowsPerPage);
+  const emptyRows =
+    rowsPerPage -
+    Math.min(rowsPerPage, filteredRows().length - page * rowsPerPage);
 
   return (
-    <TableContainer
-      className={classes.tableContainer}
-    >
+    <TableContainer className={classes.tableContainer}>
       <Table
         className={classes.table}
         aria-label={t('All')}
-        size='medium'
+        size="medium"
         stickyHeader
       >
         <DashboardTableHead
@@ -115,57 +131,87 @@ export default function TableContainerComponent(props) {
           headCells={headCells}
         />
         <TableBody>
-          {
-            stableSort(filteredRows(), getComparator(order, orderBy))
-                .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-                .map((row, index) => {
-                  // const isItemSelected = isSelected(row.id);
-                  const labelId = `enhanced-table-checkbox-${index}`;
-                  return (
-                    <TableRow
-                      hover
-                      tabIndex={-1}
-                      key={row.id}
-                      className={classes.tableRow}
-                    >
-                      <TableCell id={labelId} className={classes.tablesCells}>
-                        <Typography variant="body2" noWrap={true}>{row.title}</Typography>
-                        <Typography variant="body2" noWrap={true}>ID {row.id}</Typography>
-                      </TableCell>
-                      <TableCell>
-                        <Typography variant="body2" noWrap={true} className={classes.status}>{row.status}</Typography>
-                      </TableCell>
-                      <TableCell>
-                        <Typography variant="body2" noWrap={true}>{row.researcher}</Typography>
-                      </TableCell>
-                      <AnalystCell analysts={row.analysts} role={role}/>
-                      <TableCell>
-                        <Typography variant="body2" noWrap={true}>{row.created}</Typography>
-                      </TableCell>
-                      <TableCell>
-                        <Typography variant="body2" noWrap={true}>{row.updated}</Typography>
-                      </TableCell>
-                      <TableCell align='center'>
-                        <ActionsMenu
-                          status={row.status}
-                          contextSummaryClick={contextSummaryClick}
-                          contextStatusClick={contextStatusClick}
-                          role={role}
-                          controls={index}
-                        />
-                      </TableCell>
-                    </TableRow>
-                  );
-                })
-          }
-
+          {stableSort(filteredRows(), getComparator(order, orderBy))
+              .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+              .map((row, index) => {
+              // const isItemSelected = isSelected(row.id);
+                const labelId = `enhanced-table-checkbox-${index}`;
+                return (
+                  <TableRow
+                    hover
+                    tabIndex={-1}
+                    key={row.id}
+                    className={classes.tableRow}
+                  >
+                    <TableCell id={labelId} className={classes.tablesCells}>
+                      <Typography variant="body2" noWrap={true}>
+                        {row.title}
+                      </Typography>
+                      <Typography variant="body2" noWrap={true}>
+                      ID {row.id}
+                      </Typography>
+                    </TableCell>
+                    {role === 'analyst' ? (
+                    <TableCell>
+                      <Typography
+                        variant="body2"
+                        noWrap={true}
+                        className={classes.status}
+                      >
+                        {row.project}
+                      </Typography>
+                    </TableCell>
+                  ) : (
+                    false
+                  )}
+                    <TableCell>
+                      <Typography
+                        variant="body2"
+                        noWrap={true}
+                        className={classes.status}
+                      >
+                        {row.status}
+                      </Typography>
+                    </TableCell>
+                    <TableCell>
+                      <Chip
+                        label={row.researcher}
+                        onClick={() => toggleDialog('info')}
+                      />
+                    </TableCell>
+                    <AnalystCell
+                      analysts={row.analysts}
+                      support={row.support}
+                      role={role}
+                    />
+                    <TableCell>
+                      <Typography variant="body2" noWrap={true}>
+                        {row.created}
+                      </Typography>
+                    </TableCell>
+                    <TableCell>
+                      <Typography variant="body2" noWrap={true}>
+                        {row.updated}
+                      </Typography>
+                    </TableCell>
+                    <TableCell align="center">
+                      <ActionsMenu
+                        status={row.status}
+                        contextSummaryClick={contextSummaryClick}
+                        contextStatusClick={contextStatusClick}
+                        role={role}
+                        controls={index}
+                      />
+                    </TableCell>
+                  </TableRow>
+                );
+              })}
 
           {emptyRows > 0 && (
-            <TableRow style={{height: (ROW_HEIGHT) * emptyRows}}>
+            <TableRow style={{height: ROW_HEIGHT * emptyRows}}>
               <TableCell colSpan={7} />
             </TableRow>
           )}
-
         </TableBody>
       </Table>
       <TablePagination
@@ -177,6 +223,11 @@ export default function TableContainerComponent(props) {
         page={page}
         onChangePage={handleChangePage}
         onChangeRowsPerPage={handleChangeRowsPerPage}
+      />
+      <DialogAnalyst
+        open={open.requesterInfo}
+        toggleDialog={() => toggleDialog('info')}
+        header="Requester details"
       />
     </TableContainer>
   );
