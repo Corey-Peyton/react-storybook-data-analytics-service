@@ -77,11 +77,13 @@ const useStyles = makeStyles((theme) => ({
     '& .MuiInputBase-input:not(.MuiInputBase-inputMultiline)': {
       height: '100%',
     },
+    '& .MuiDialogTitle-root': {
+      padding: theme.spacing(1.5, 3),
+    },
   },
   avatar: {
     backgroundColor: green[500],
     color: theme.palette.grey[100],
-    marginLeft: theme.spacing(3),
   },
   avatarTransparent: {
     backgroundColor: 'transparent',
@@ -94,6 +96,7 @@ const useStyles = makeStyles((theme) => ({
   },
   dialogContent: {
     display: 'flex',
+    padding: theme.spacing(3),
   },
   dialogRow: {
     display: 'flex',
@@ -122,7 +125,7 @@ const useStyles = makeStyles((theme) => ({
     overflow: 'auto',
   },
   dialogFooter: {
-    padding: theme.spacing(3, 3),
+    padding: theme.spacing(1.75, 3),
     display: 'flex',
     justifyContent: 'flex-end',
   },
@@ -176,7 +179,7 @@ export function DialogAnalyst(props) {
             </IconButton>
           </div>
         </DialogTitle>
-        <Divider className="mb-2" />
+        <Divider />
         <div className={classes.dialogContent}>
           <div className={classes.dialogColumn}>
             <div className={classes.dialogRow}>
@@ -197,7 +200,7 @@ export function DialogAnalyst(props) {
             </div>
           </div>
         </div>
-        <Divider className="mt-2" />
+        <Divider />
         <div className={classes.dialogFooter}>
           <Button variant="contained" color="primary" onClick={toggleDialog}>
             {t('Done')}
