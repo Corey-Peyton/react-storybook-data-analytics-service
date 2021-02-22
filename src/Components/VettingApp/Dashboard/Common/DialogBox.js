@@ -2,7 +2,6 @@
 import React from 'react';
 import {useTranslation} from 'react-i18next';
 import {useHistory, useLocation} from 'react-router-dom';
-import clsx from 'clsx';
 import {makeStyles} from '@material-ui/core/styles';
 import {green} from '@material-ui/core/colors';
 import CloseIcon from '@material-ui/icons/Close';
@@ -1620,11 +1619,30 @@ export function DialogDenied(props) {
               <FormHelperText>{state.reason.errorText}</FormHelperText>
             </FormControl>
           </div>
-          <div
-            className={clsx(classes.dialogRow, {
-              [classes.hiddenRow]: state.reason.text !== 'Other',
-            })}
-          >
+          <>
+            {state.reason.text !== 'Other'? (
+          <div className={classes.dialogRow}>
+            <FormControl variant="outlined">
+              <TextField
+                id="comments-input"
+                label={t('Comments')}
+                aria-label={t('Comments')}
+                value={state.comments.text}
+                variant="outlined"
+                multiline
+                error={Boolean(state.comments.errorText)}
+                helperText={state.comments.errorText}
+                onCut={(e) => disableCutCopyPaste(e, 'cut', 'comments')}
+                onCopy={(e) => disableCutCopyPaste(e, 'copy', 'comments')}
+                onPaste={(e) => disableCutCopyPaste(e, 'paste', 'comments')}
+                onChange={(e) => handleChange(e, 'comments')}
+                onClick={() => toggleHelperText('comments')}
+                onBlur={() => toggleHelperText('comments')}
+                onFocus={() => toggleHelperText('comments')}
+              />
+            </FormControl>
+          </div>
+          ) : (
             <FormControl variant="outlined">
               <TextField
                 id="comments-input"
@@ -1645,7 +1663,8 @@ export function DialogDenied(props) {
                 onFocus={() => toggleHelperText('comments')}
               />
             </FormControl>
-          </div>
+            )}
+          </>
           <Divider className="mt-2" />
           <div className={classes.dialogFooter}>
             <Button
