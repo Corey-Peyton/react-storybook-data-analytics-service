@@ -2,7 +2,6 @@
 import React from 'react';
 import {useTranslation} from 'react-i18next';
 import {useHistory, useLocation} from 'react-router-dom';
-import clsx from 'clsx';
 import {makeStyles} from '@material-ui/core/styles';
 import {green} from '@material-ui/core/colors';
 import CloseIcon from '@material-ui/icons/Close';
