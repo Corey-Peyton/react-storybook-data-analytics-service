@@ -84,7 +84,6 @@ const useStyles = makeStyles((theme) => ({
 function createData(
     id,
     title,
-    project,
     statusHead,
     status,
     researcher,
@@ -96,7 +95,6 @@ function createData(
   return {
     id,
     title,
-    project,
     statusHead,
     status,
     researcher,
@@ -111,7 +109,6 @@ const rows = requestListResearchers.map((el, index) =>
   createData(
       el.id,
       el.title,
-      el.project,
       el.statusHead,
       el.status,
       el.researcher,
@@ -124,7 +121,6 @@ const rows = requestListResearchers.map((el, index) =>
 
 const headCells = [
   {id: 'id', narrow: false, disablePadding: true, label: 'Request'},
-  {id: 'project', narrow: false, disablePadding: true, label: 'Project'},
   {id: 'status', narrow: false, disablePadding: false, label: 'Status'},
   {
     id: 'researcher',

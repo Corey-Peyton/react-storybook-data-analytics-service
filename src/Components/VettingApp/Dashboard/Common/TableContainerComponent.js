@@ -151,6 +151,7 @@ export default function TableContainerComponent(props) {
                       ID {row.id}
                       </Typography>
                     </TableCell>
+                    {role === 'analyst' ? (
                     <TableCell>
                       <Typography
                         variant="body2"
@@ -160,6 +161,9 @@ export default function TableContainerComponent(props) {
                         {row.project}
                       </Typography>
                     </TableCell>
+                  ) : (
+                    false
+                  )}
                     <TableCell>
                       <Typography
                         variant="body2"
