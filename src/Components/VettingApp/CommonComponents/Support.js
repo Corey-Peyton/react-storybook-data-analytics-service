@@ -1,5 +1,6 @@
 import React from 'react';
 import {makeStyles} from '@material-ui/core/styles';
+import {useTranslation} from 'react-i18next';
 import Fab from '@material-ui/core/Fab';
 import Email from '@material-ui/icons/Email';
 import {
@@ -79,6 +80,84 @@ export default function FloatingSupportButton() {
     setOpen(false);
   };
 
+  const [state, setState] = React.useState({
+    comments: {
+      text: '',
+      errorText: '',
+      invalid: '',
+      commands: '',
+    },
+  });
+
+  const disableCutCopyPaste = (e, command, value) => {
+    // display error if user tries to cut/copy/paste
+    let msg;
+    e.preventDefault();
+    switch (command) {
+      case 'cut':
+        msg = t('Cut has been disabled for security purposes.');
+        setState({
+          ...state,
+          [value]: {
+            ...state[value],
+            commands: msg,
+            errorText: msg,
+          },
+        });
+        break;
+      case 'copy':
+        msg = t('Copy has been disabled for security purposes.');
+        setState({
+          ...state,
+          [value]: {
+            ...state[value],
+            commands: msg,
+            errorText: msg,
+          },
+        });
+        break;
+      case 'paste':
+        msg = t('Paste has been disabled for security purposes.');
+        setState({
+          ...state,
+          [value]: {
+            ...state[value],
+            commands: msg,
+            errorText: msg,
+          },
+        });
+        break;
+      default:
+        break;
+    }
+  };
+
+  const toggleHelperText = (value) => {
+    if (state[value].commands === state[value].errorText) {
+      if (Boolean(state[value].invalid)) {
+        // set error text back to invalid error
+        setState({
+          ...state,
+          [value]: {
+            ...state[value],
+            errorText: state[value].invalid,
+          },
+        });
+      } else {
+        // clear error text if no invalid error exists
+        setState({
+          ...state,
+          [value]: {
+            ...state[value],
+            errorText: '',
+          },
+        });
+      }
+    }
+  };
+
+  const {t} = useTranslation();
+
   return (
     <div className={classes.root}>
       <Fab
@@ -127,6 +206,15 @@ export default function FloatingSupportButton() {
             variant="outlined"
             multiline
             fullWidth
+            onCut={(e) => disableCutCopyPaste(e, 'cut', 'comments')}
+            onCopy={(e) => disableCutCopyPaste(e, 'copy', 'comments')}
+            onPaste={(e) => disableCutCopyPaste(e, 'paste', 'comments')}
+            onClick={() => toggleHelperText('comments')}
+            onBlur={() => toggleHelperText('comments')}
+            onFocus={() => toggleHelperText('comments')}
+            value={state.comments.text}
+            error={Boolean(state.comments.errorText)}
+            helperText={state.comments.errorText}
           />
         </DialogContent>
         <Divider />

@@ -1,5 +1,6 @@
 import React from 'react';
 import {makeStyles} from '@material-ui/core/styles';
+import {useTranslation} from 'react-i18next';
 import Dialog from '@material-ui/core/Dialog';
 import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
@@ -109,6 +110,14 @@ function ResidualDisclosure(props) {
     weightVar: false,
     previouslyReleased: false,
     versionpreviouslyReleased: false,
+    changes: '',
+    output: '',
+    date: '',
+    content: '',
+    notes: '',
+    content2: '',
+    notes2: '',
+    dialognotes: '',
   });
 
   const handleRadioChange = (event) => {
@@ -128,6 +137,75 @@ function ResidualDisclosure(props) {
   const handleClose = () => {
     setOpen(false);
   };
+
+  const disableCutCopyPaste = (e, command, value) => {
+    // display error if user tries to cut/copy/paste
+    let msg;
+    e.preventDefault();
+    switch (command) {
+      case 'cut':
+        msg = t('Cut has been disabled for security purposes.');
+        setState({
+          ...state,
+          [value]: {
+            ...state[value],
+            commands: msg,
+            errorText: msg,
+          },
+        });
+        break;
+      case 'copy':
+        msg = t('Copy has been disabled for security purposes.');
+        setState({
+          ...state,
+          [value]: {
+            ...state[value],
+            commands: msg,
+            errorText: msg,
+          },
+        });
+        break;
+      case 'paste':
+        msg = t('Paste has been disabled for security purposes.');
+        setState({
+          ...state,
+          [value]: {
+            ...state[value],
+            commands: msg,
+            errorText: msg,
+          },
+        });
+        break;
+      default:
+        break;
+    }
+  };
+
+  const toggleHelperText = (value) => {
+    if (state[value].commands === state[value].errorText) {
+      if (Boolean(state[value].invalid)) {
+        // set error text back to invalid error
+        setState({
+          ...state,
+          [value]: {
+            ...state[value],
+            errorText: state[value].invalid,
+          },
+        });
+      } else {
+        // clear error text if no invalid error exists
+        setState({
+          ...state,
+          [value]: {
+            ...state[value],
+            errorText: '',
+          },
+        });
+      }
+    }
+  };
+
+  const {t} = useTranslation();
 
   return (
     <React.Fragment>
@@ -307,6 +385,15 @@ function ResidualDisclosure(props) {
                 variant="outlined"
                 fullWidth
                 required
+                onCut={(e) => disableCutCopyPaste(e, 'cut', 'changes')}
+                onCopy={(e) => disableCutCopyPaste(e, 'copy', 'changes')}
+                onPaste={(e) => disableCutCopyPaste(e, 'paste', 'changes')}
+                onClick={() => toggleHelperText('changes')}
+                onBlur={() => toggleHelperText('changes')}
+                onFocus={() => toggleHelperText('changes')}
+                value={state.changes.text}
+                error={Boolean(state.changes.errorText)}
+                helperText={state.changes.errorText}
               />
             </>
           )}
@@ -321,6 +408,14 @@ function ResidualDisclosure(props) {
             fullWidth
             required
             helperText="Please describe how the output in this request relates to other output for this project."
+            onCut={(e) => disableCutCopyPaste(e, 'cut', 'output')}
+            onCopy={(e) => disableCutCopyPaste(e, 'copy', 'output')}
+            onPaste={(e) => disableCutCopyPaste(e, 'paste', 'output')}
+            onClick={() => toggleHelperText('output')}
+            onBlur={() => toggleHelperText('output')}
+            onFocus={() => toggleHelperText('output')}
+            value={state.output.text}
+            error={Boolean(state.output.errorText)}
           />
           <TextField
             style={style}
@@ -331,6 +426,14 @@ function ResidualDisclosure(props) {
             fullWidth
             required
             helperText="Indicate the date(s) of the previous vetting requests related to this request."
+            onCut={(e) => disableCutCopyPaste(e, 'cut', 'date')}
+            onCopy={(e) => disableCutCopyPaste(e, 'copy', 'date')}
+            onPaste={(e) => disableCutCopyPaste(e, 'paste', 'date')}
+            onClick={() => toggleHelperText('date')}
+            onBlur={() => toggleHelperText('date')}
+            onFocus={() => toggleHelperText('date')}
+            value={state.date.text}
+            error={Boolean(state.date.errorText)}
           />
         </>
       )}
@@ -425,6 +528,15 @@ function ResidualDisclosure(props) {
               variant="outlined"
               fullWidth
               required
+              onCut={(e) => disableCutCopyPaste(e, 'cut', 'dialognotes')}
+              onCopy={(e) => disableCutCopyPaste(e, 'copy', 'dialognotes')}
+              onPaste={(e) => disableCutCopyPaste(e, 'paste', 'dialognotes')}
+              onClick={() => toggleHelperText('dialognotes')}
+              onBlur={() => toggleHelperText('dialognotes')}
+              onFocus={() => toggleHelperText('dialognotes')}
+              value={state.dialognotes.text}
+              error={Boolean(state.dialognotes.errorText)}
+              helperText={state.dialognotes.errorText}
             />
           </DialogContent>
           <Divider className="mt-1" />
@@ -482,6 +594,15 @@ function ResidualDisclosure(props) {
               rows={2}
               variant="outlined"
               fullWidth
+              onCut={(e) => disableCutCopyPaste(e, 'cut', 'content')}
+              onCopy={(e) => disableCutCopyPaste(e, 'copy', 'content')}
+              onPaste={(e) => disableCutCopyPaste(e, 'paste', 'content')}
+              onClick={() => toggleHelperText('content')}
+              onBlur={() => toggleHelperText('content')}
+              onFocus={() => toggleHelperText('content')}
+              value={state.content.text}
+              error={Boolean(state.content.errorText)}
+              helperText={state.content.errorText}
             />
             <TextField
               className={classes.inputMargin}
@@ -492,6 +613,15 @@ function ResidualDisclosure(props) {
               rows={2}
               variant="outlined"
               fullWidth
+              onCut={(e) => disableCutCopyPaste(e, 'cut', 'notes')}
+              onCopy={(e) => disableCutCopyPaste(e, 'copy', 'notes')}
+              onPaste={(e) => disableCutCopyPaste(e, 'paste', 'notes')}
+              onClick={() => toggleHelperText('notes')}
+              onBlur={() => toggleHelperText('notes')}
+              onFocus={() => toggleHelperText('notes')}
+              value={state.notes.text}
+              error={Boolean(state.notes.errorText)}
+              helperText={state.notes.errorText}
             />
             <Grid container justify="space-between" alignItems="center">
               <Grid item>
@@ -530,6 +660,15 @@ function ResidualDisclosure(props) {
               rows={2}
               variant="outlined"
               fullWidth
+              onCut={(e) => disableCutCopyPaste(e, 'cut', 'content2')}
+              onCopy={(e) => disableCutCopyPaste(e, 'copy', 'content2')}
+              onPaste={(e) => disableCutCopyPaste(e, 'paste', 'content2')}
+              onClick={() => toggleHelperText('content2')}
+              onBlur={() => toggleHelperText('content2')}
+              onFocus={() => toggleHelperText('content2')}
+              value={state.content2.text}
+              error={Boolean(state.content2.errorText)}
+              helperText={state.content2.errorText}
             />
             <TextField
               className={classes.inputMargin}
@@ -540,6 +679,15 @@ function ResidualDisclosure(props) {
               rows={2}
               variant="outlined"
               fullWidth
+              onCut={(e) => disableCutCopyPaste(e, 'cut', 'notes2')}
+              onCopy={(e) => disableCutCopyPaste(e, 'copy', 'notes2')}
+              onPaste={(e) => disableCutCopyPaste(e, 'paste', 'notes2')}
+              onClick={() => toggleHelperText('notes2')}
+              onBlur={() => toggleHelperText('notes2')}
+              onFocus={() => toggleHelperText('notes2')}
+              value={state.notes2.text}
+              error={Boolean(state.notes2.errorText)}
+              helperText={state.notes2.errorText}
             />
           </Grid>
         </Grid>
