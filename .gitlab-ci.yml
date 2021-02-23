@@ -32,10 +32,10 @@ deploy review:
     - npm install
   script:
     - npm run build --prod
-    - node_modules/.bin/surge ./build --domain uxdc-daaas-${CI_ENVIRONMENT_SLUG}.surge.sh
+    - node_modules/.bin/surge --project ./build --domain uxdc-daaas-${CI_ENVIRONMENT_SLUG}.surge.sh
   environment:
     name: review/$CI_COMMIT_REF_NAME
-    url: https://uxdc-daaas-$CI_ENVIRONMENT_SLUG.surge.sh
+    url: http://uxdc-daaas-$CI_ENVIRONMENT_SLUG.surge.sh
 
 # Job name for gitlab to recognise this results in assets for Gitlab Pages
 # https://docs.gitlab.com/ee/user/project/pages/introduction.html#gitlab-pages-requirements
