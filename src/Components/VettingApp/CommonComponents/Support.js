@@ -96,7 +96,7 @@ export default function FloatingSupportButton() {
         onClose={handleDialogClose}
         aria-labelledby="alert-dialog-title"
         aria-describedby="alert-dialog-description"
-        fullWidth="false"
+        fullWidth={false}
         className={classes.dialog}
       >
         <DialogTitle id="alert-dialog-title">
@@ -115,7 +115,7 @@ export default function FloatingSupportButton() {
             </Alert>
           </div>
           <DialogContentText id="alert-dialog-description">
-            <Typography variant="body2" color="textPrimary">
+            <Typography variant="body2" component="span" color="textPrimary">
               Click submit and one of our support staff will reach out to help
               you with your enquiry.
             </Typography>

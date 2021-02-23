@@ -121,6 +121,7 @@ function ToolBarUnassign(props) {
     dialogDeny: false,
     snackBarDeny: false,
     snackBarApprove: false,
+    dialogApprove: false,
   });
 
   const handleClickOpen = (state) => {
