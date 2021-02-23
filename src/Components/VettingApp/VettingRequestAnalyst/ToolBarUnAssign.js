@@ -521,12 +521,30 @@ function ToolBarUnassign(props) {
               customInput={TextField}
               type="text"
               variant="outlined"
+              onCut={(e) => disableCutCopyPaste(e, 'cut', 'denyHours')}
+              onCopy={(e) => disableCutCopyPaste(e, 'copy', 'denyHours')}
+              onPaste={(e) => disableCutCopyPaste(e, 'paste', 'denyHours')}
+              onClick={() => toggleHelperText('denyHours')}
+              onBlur={() => toggleHelperText('denyHours')}
+              onFocus={() => toggleHelperText('denyHours')}
+              value={state.denyHours.text}
+              error={Boolean(state.denyHours.errorText)}
+              helperText={state.denyHours.errorText}
             />
             <NumberFormat
               label="Minutes"
               customInput={TextField}
               type="text"
               variant="outlined"
+              onCut={(e) => disableCutCopyPaste(e, 'cut', 'denyMinutes')}
+              onCopy={(e) => disableCutCopyPaste(e, 'copy', 'denyMinutes')}
+              onPaste={(e) => disableCutCopyPaste(e, 'paste', 'denyMinutes')}
+              onClick={() => toggleHelperText('denyMinutes')}
+              onBlur={() => toggleHelperText('denyMinutes')}
+              onFocus={() => toggleHelperText('denyMinutes')}
+              value={state.denyMinutes.text}
+              error={Boolean(state.denyMinutes.errorText)}
+              helperText={state.denyMinutes.errorText}
             />
           </FormControl>
         </div>
@@ -569,6 +587,15 @@ function ToolBarUnassign(props) {
                   variant="outlined"
                   multiline
                   required="true"
+                  onCut={(e) => disableCutCopyPaste(e, 'cut', 'comments')}
+                  onCopy={(e) => disableCutCopyPaste(e, 'copy', 'comments')}
+                  onPaste={(e) => disableCutCopyPaste(e, 'paste', 'comments')}
+                  onClick={() => toggleHelperText('comments')}
+                  onBlur={() => toggleHelperText('comments')}
+                  onFocus={() => toggleHelperText('comments')}
+                  value={state.comments.text}
+                  error={Boolean(state.comments.errorText)}
+                  helperText={state.comments.errorText}
                 />
               </FormControl>
             </div>
@@ -580,6 +607,15 @@ function ToolBarUnassign(props) {
                   label="Comments"
                   variant="outlined"
                   multiline
+                  onCut={(e) => disableCutCopyPaste(e, 'cut', 'comments')}
+                  onCopy={(e) => disableCutCopyPaste(e, 'copy', 'comments')}
+                  onPaste={(e) => disableCutCopyPaste(e, 'paste', 'comments')}
+                  onClick={() => toggleHelperText('comments')}
+                  onBlur={() => toggleHelperText('comments')}
+                  onFocus={() => toggleHelperText('comments')}
+                  value={state.comments.text}
+                  error={Boolean(state.comments.errorText)}
+                  helperText={state.comments.errorText}
                 />
               </FormControl>
             </div>

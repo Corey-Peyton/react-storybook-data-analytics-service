@@ -22,40 +22,22 @@ function AdditionalInfo(props) {
       errorText: '',
       invalid: '',
       commands: '',
-    },
-    comments: {
-      text: '',
-      errorText: '',
-      invalid: '',
-      commands: '',
+      helperText:
+        'Add additional information which may helpful to the disclosure analyst.',
     },
   });
 
-  /* const handleChange = (e, val) => {
-    const comment = e.target.value;
-    setState({
-      ...state,
-      [val]: {
-        // updates state with text from input
-        ...state[val],
-        text: comment,
-      },
-    });
-
-    if (e.target.value && state[val].errorText) {
-      // if input text is valid, clear errors
-      setState({
-        ...state,
-        [val]: {
-          ...state[val],
-          text: comment,
-          errorText: '',
-          invalid: '',
-          commands: '',
-        },
-      });
-    }
-  }; */
+  const initial = {
+    // blank object used to reset state
+    info: {
+      text: '',
+      errorText: '',
+      helperText:
+        'Add additional information which may helpful to the disclosure analyst.',
+      invalid: '',
+      commands: '',
+    },
+  };
 
   const disableCutCopyPaste = (e, command, value) => {
     // display error if user tries to cut/copy/paste
@@ -70,6 +52,7 @@ function AdditionalInfo(props) {
             ...state[value],
             commands: msg,
             errorText: msg,
+            helperText: msg,
           },
         });
         break;
@@ -81,6 +64,7 @@ function AdditionalInfo(props) {
             ...state[value],
             commands: msg,
             errorText: msg,
+            helperText: msg,
           },
         });
         break;
@@ -92,6 +76,7 @@ function AdditionalInfo(props) {
             ...state[value],
             commands: msg,
             errorText: msg,
+            helperText: msg,
           },
         });
         break;
@@ -108,7 +93,7 @@ function AdditionalInfo(props) {
           ...state,
           [value]: {
             ...state[value],
-            errorText: state[value].invalid,
+            helperText: state[value].invalid,
           },
         });
       } else {
@@ -117,7 +102,8 @@ function AdditionalInfo(props) {
           ...state,
           [value]: {
             ...state[value],
-            errorText: '',
+            helperText: initial[value].helperText,
+            errorText: initial[value].errorText,
           },
         });
       }
@@ -139,7 +125,6 @@ function AdditionalInfo(props) {
         multiline
         rows={2}
         variant="outlined"
-        // helperText="Add additional information which may helpful to the disclosure analyst."
         fullWidth
         onCut={(e) => disableCutCopyPaste(e, 'cut', 'info')}
         onCopy={(e) => disableCutCopyPaste(e, 'copy', 'info')}
@@ -150,7 +135,7 @@ function AdditionalInfo(props) {
         onFocus={() => toggleHelperText('info')}
         value={state.info.text}
         error={Boolean(state.info.errorText)}
-        helperText={state.info.errorText}
+        helperText={state.info.helperText}
       />
     </React.Fragment>
   );

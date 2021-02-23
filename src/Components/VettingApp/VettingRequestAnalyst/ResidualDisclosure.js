@@ -111,14 +111,90 @@ function ResidualDisclosure(props) {
     previouslyReleased: false,
     versionpreviouslyReleased: false,
     changes: '',
-    output: '',
-    date: '',
+    output: {
+      text: '',
+      errorText: '',
+      helperText:
+        'Please describe how the output in this request relates to other output for this project.',
+      invalid: '',
+      commands: '',
+    },
+    date: {
+      text: '',
+      errorText: '',
+      helperText:
+        'Indicate the date(s) of the previous vetting requests related to this request.',
+      invalid: '',
+      commands: '',
+    },
     content: '',
     notes: '',
     content2: '',
     notes2: '',
     dialognotes: '',
   });
+
+  const initial = {
+    // blank object used to reset state
+    changes: {
+      text: '',
+      errorText: '',
+      helperText: '',
+      invalid: '',
+      commands: '',
+    },
+    output: {
+      text: '',
+      errorText: '',
+      helperText:
+        'Please describe how the output in this request relates to other output for this project.',
+      invalid: '',
+      commands: '',
+    },
+    date: {
+      text: '',
+      errorText: '',
+      helperText:
+        'Indicate the date(s) of the previous vetting requests related to this request.',
+      invalid: '',
+      commands: '',
+    },
+    content: {
+      text: '',
+      errorText: '',
+      helperText: '',
+      invalid: '',
+      commands: '',
+    },
+    notes: {
+      text: '',
+      errorText: '',
+      helperText: '',
+      invalid: '',
+      commands: '',
+    },
+    content2: {
+      text: '',
+      errorText: '',
+      helperText: '',
+      invalid: '',
+      commands: '',
+    },
+    notes2: {
+      text: '',
+      errorText: '',
+      helperText: '',
+      invalid: '',
+      commands: '',
+    },
+    dialognotes: {
+      text: '',
+      errorText: '',
+      helperText: '',
+      invalid: '',
+      commands: '',
+    },
+  };
 
   const handleRadioChange = (event) => {
     const name = event.target.name;
@@ -151,6 +227,7 @@ function ResidualDisclosure(props) {
             ...state[value],
             commands: msg,
             errorText: msg,
+            helperText: msg,
           },
         });
         break;
@@ -162,6 +239,7 @@ function ResidualDisclosure(props) {
             ...state[value],
             commands: msg,
             errorText: msg,
+            helperText: msg,
           },
         });
         break;
@@ -173,6 +251,7 @@ function ResidualDisclosure(props) {
             ...state[value],
             commands: msg,
             errorText: msg,
+            helperText: msg,
           },
         });
         break;
@@ -189,7 +268,7 @@ function ResidualDisclosure(props) {
           ...state,
           [value]: {
             ...state[value],
-            errorText: state[value].invalid,
+            helperText: state[value].invalid,
           },
         });
       } else {
@@ -198,7 +277,8 @@ function ResidualDisclosure(props) {
           ...state,
           [value]: {
             ...state[value],
-            errorText: '',
+            helperText: initial[value].helperText,
+            errorText: initial[value].errorText,
           },
         });
       }
@@ -407,7 +487,6 @@ function ResidualDisclosure(props) {
             variant="outlined"
             fullWidth
             required
-            helperText="Please describe how the output in this request relates to other output for this project."
             onCut={(e) => disableCutCopyPaste(e, 'cut', 'output')}
             onCopy={(e) => disableCutCopyPaste(e, 'copy', 'output')}
             onPaste={(e) => disableCutCopyPaste(e, 'paste', 'output')}
@@ -416,6 +495,7 @@ function ResidualDisclosure(props) {
             onFocus={() => toggleHelperText('output')}
             value={state.output.text}
             error={Boolean(state.output.errorText)}
+            helperText={state.output.helperText}
           />
           <TextField
             style={style}
@@ -425,7 +505,6 @@ function ResidualDisclosure(props) {
             variant="outlined"
             fullWidth
             required
-            helperText="Indicate the date(s) of the previous vetting requests related to this request."
             onCut={(e) => disableCutCopyPaste(e, 'cut', 'date')}
             onCopy={(e) => disableCutCopyPaste(e, 'copy', 'date')}
             onPaste={(e) => disableCutCopyPaste(e, 'paste', 'date')}
@@ -434,6 +513,7 @@ function ResidualDisclosure(props) {
             onFocus={() => toggleHelperText('date')}
             value={state.date.text}
             error={Boolean(state.date.errorText)}
+            helperText={state.date.helperText}
           />
         </>
       )}
