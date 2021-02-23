@@ -32,8 +32,7 @@ deploy review:
     - npm install
   script:
     - npm run build --prod
-    - mv build public
-    - node_modules/.bin/surge ./public --domain uxdc-daaas-${CI_ENVIRONMENT_SLUG}.surge.sh
+    - node_modules/.bin/surge ./build --domain uxdc-daaas-${CI_ENVIRONMENT_SLUG}.surge.sh
   environment:
     name: review/$CI_COMMIT_REF_NAME
     url: https://uxdc-daaas-$CI_ENVIRONMENT_SLUG.surge.sh
