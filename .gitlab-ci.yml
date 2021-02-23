@@ -29,9 +29,8 @@ deploy review:
   except:
     - master
   before_script:
-    - npm install surge
-  script:
     - npm install
+  script:
     - npm run build --prod
     - mv build public
     - node_modules/.bin/surge public https://uxdc-daaas-${CI_ENVIRONMENT_SLUG}.surge.sh
