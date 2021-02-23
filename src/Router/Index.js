@@ -14,7 +14,7 @@ function Index() {
   return (
     <div style={styles}>
       <Typography variant="h5" gutterBottom>
-        Index
+        Index TEST
       </Typography>
       <Typography variant="h6" gutterBottom>
         Active
