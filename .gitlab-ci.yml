@@ -26,13 +26,16 @@ lint:
 
 deploy review:
   stage: deploy review
+  only:
+    - branches
   except:
     - master
   before_script:
     - npm install
   script:
     - npm run build
-    - node_modules/.bin/surge --project ./build --domain uxdc-daaas-$CI_ENVIRONMENT_SLUG.surge.sh
+    - npm install --global surge
+    - surge --project ./build --domain uxdc-daaas-$CI_ENVIRONMENT_SLUG.surge.sh
   environment:
     name: review/$CI_COMMIT_REF_NAME
     url: http://uxdc-daaas-$CI_ENVIRONMENT_SLUG.surge.sh
