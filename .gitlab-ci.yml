@@ -1,10 +1,6 @@
 # Using the node alpine image to build the React app
 image: node:alpine
 
-# Announce the URL as per CRA docs
-# https://github.com/facebook/create-react-app/blob/master/packages/react-scripts/template/README.md#advanced-configuration
-variables:
-  PUBLIC_URL: /daaas
 # Cache node modules - speeds up future builds
 cache:
   paths:
@@ -33,9 +29,9 @@ deploy review:
   before_script:
     - npm install
   script:
-    - npm run build
-    - npm install --global surge
-    - surge --project ./build --domain uxdc-daaas-$CI_ENVIRONMENT_SLUG.surge.sh
+    - npm run build --prod
+    - mv build public
+    - node_modules/.bin/surge public https://uxdc-daaas-$CI_ENVIRONMENT_SLUG.surge.sh
   environment:
     name: review/$CI_COMMIT_REF_NAME
     url: http://uxdc-daaas-$CI_ENVIRONMENT_SLUG.surge.sh
