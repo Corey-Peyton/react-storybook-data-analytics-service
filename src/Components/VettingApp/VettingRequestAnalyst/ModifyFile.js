@@ -22,6 +22,7 @@ import {
   Grid,
 } from '@material-ui/core';
 import Autocomplete from '@material-ui/lab/Autocomplete';
+import Alert from '@material-ui/lab/Alert';
 import InfoIcon from '@material-ui/icons/Info';
 import CloseIcon from '@material-ui/icons/Close';
 
@@ -45,6 +46,9 @@ const useStyles = makeStyles((theme) => ({
     'backgroundColor': theme.palette.common.white,
     'margin': theme.spacing(0, -3, 3, -3),
     'width': 'auto',
+    'boxShadow': theme.shadows[0],
+    'borderBottom': '1px solid',
+    'borderBottomColor': theme.palette.divider,
     '& .MuiToolbar-root': {
       justifyContent: 'space-between',
     },
@@ -64,6 +68,7 @@ const useStyles = makeStyles((theme) => ({
     bottom: 0,
     width: '400px',
     backgroundColor: theme.palette.common.white,
+    zIndex: 500,
   },
   tooltipLabel: {
     '& svg': {
@@ -183,6 +188,9 @@ export function AddFile(props) {
 
 export function ModifyFile(props) {
   const classes = useStyles();
+  const [state] = React.useState({
+    errors: 4,
+  });
 
   return (
     <React.Fragment>
@@ -202,6 +210,11 @@ export function ModifyFile(props) {
         </Toolbar>
       </AppBar>
       <div className={classes.body}>
+        {state.errors !== 0 && (
+          <Alert className="mb-2" severity="error">
+            {state.errors} {state.errors > 1 ? 'errors' : 'error'}
+          </Alert>
+        )}
         <OutputFileForm {...props} />
       </div>
       <div className={classes.footer}>

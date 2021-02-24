@@ -25,6 +25,8 @@ import Snackbar from '@material-ui/core/Snackbar';
 import Alert from '@material-ui/lab/Alert';
 import {AddFile, ModifyFile} from './ModifyFile';
 import CloseIcon from '@material-ui/icons/Close';
+import Icon from '@mdi/react';
+import {mdiFileDocumentOutline} from '@mdi/js';
 
 const useStyles = makeStyles((theme) => ({
   card: {
@@ -42,19 +44,27 @@ const useStyles = makeStyles((theme) => ({
     border: '1px solid',
     borderColor: theme.palette.error.light,
   },
-  dialog: {},
+  cardTitle: {
+    marginTop: theme.spacing(0.25),
+  },
+  dialogContent: {
+    padding: theme.spacing(3),
+  },
   dialogFooter: {
-    padding: theme.spacing(2, 3),
-    display: 'flex',
-    justifyContent: 'flex-end',
+    padding: theme.spacing(1.75, 3),
+    borderTop: '1px solid',
+    borderTopColor: theme.palette.divider,
   },
   footerBtns: {
     marginLeft: [theme.spacing(2), '!important'],
   },
   dialogTitle: {
     display: 'flex',
-    alignItems: 'center',
     justifyContent: 'space-between',
+    alignItems: 'center',
+    padding: theme.spacing(1.5, 3),
+    borderBottom: '1px solid',
+    borderBottomColor: theme.palette.divider,
   },
   divider: {
     margin: theme.spacing(3, 0),
@@ -67,6 +77,9 @@ const useStyles = makeStyles((theme) => ({
   },
   inputMargin: {
     marginBottom: theme.spacing(2),
+  },
+  icon: {
+    marginRight: theme.spacing(1.5),
   },
 }));
 
@@ -95,8 +108,10 @@ function FilesList(props) {
     dialogAddSupporting: false,
     snackbarAddSupporting: false,
     snackbarSave: false,
+    snackbarDelete: false,
     addFile: false,
     editFile: false,
+    deleteFile: false,
   });
 
   const toggleDrawer = (event, drawer, state) => {
@@ -121,8 +136,12 @@ function FilesList(props) {
     setOpen({...open, snackbarSave: true, addFile: false});
   };
 
-  const updateFile = (event) => {
+  const updateFile = () => {
     setOpen({...open, snackbarSave: true, editFile: false});
+  };
+
+  const deleteFile = () => {
+    setOpen({...open, snackbarDelete: true, deleteFile: false});
   };
 
   const addSupportingFile = () => {
@@ -177,7 +196,24 @@ function FilesList(props) {
             variant="outlined"
           >
             <CardContent>
-              <Typography>{file.name}</Typography>
+              <Grid container wrap="nowrap" alignItems="flex-start">
+                <Grid item>
+                  <Icon
+                    className={classes.icon}
+                    path={mdiFileDocumentOutline}
+                    size={1}
+                  />
+                </Grid>
+                <Grid item>
+                  <Typography
+                    variant="subtitle2"
+                    component="h3"
+                    className={classes.cardTitle}
+                  >
+                    {file.name}
+                  </Typography>
+                </Grid>
+              </Grid>
               <FileValidationAlert
                 emptyFields={file.emptyFields}
                 error={file.error}
@@ -195,7 +231,12 @@ function FilesList(props) {
               >
                 Edit
               </Button>
-              <Button color="primary">Delete</Button>
+              <Button
+                color="primary"
+                onClick={() => handleClickOpen('deleteFile')}
+              >
+                Delete
+              </Button>
             </CardActions>
           </Card>
         );
@@ -220,23 +261,25 @@ function FilesList(props) {
       <Dialog
         open={open.dialogAddSupporting}
         aria-labelledby="form-dialog-title"
-        className={classes.dialog}
         fullWidth
         maxWidth="xs"
       >
-        <DialogTitle id="form-dialog-title">
-          <div className={classes.dialogTitle}>
-            <Typography variant="h6">Add supporting file</Typography>
-            <IconButton
-              onClick={() => handleClickClose('dialogAddSupporting')}
-              edge="end"
-            >
-              <CloseIcon />
-            </IconButton>
-          </div>
+        <DialogTitle
+          id="form-dialog-title"
+          className={classes.dialogTitle}
+          disableTypography
+        >
+          <Typography variant="h6" component="h2">
+            Add supporting file
+          </Typography>
+          <IconButton
+            onClick={() => handleClickClose('dialogAddSupporting')}
+            edge="end"
+          >
+            <CloseIcon />
+          </IconButton>
         </DialogTitle>
-        <Divider className="mb-2" />
-        <DialogContent>
+        <DialogContent className={classes.dialogContent}>
           <FormControl
             required
             variant="outlined"
@@ -271,7 +314,6 @@ function FilesList(props) {
             required
           />
         </DialogContent>
-        <Divider className="mb-1 mt-2" />
         <DialogActions className={classes.dialogFooter}>
           <Button
             color="primary"
@@ -287,6 +329,49 @@ function FilesList(props) {
             className={classes.footerBtns}
           >
             Add supporting file
+          </Button>
+        </DialogActions>
+      </Dialog>
+      {/* Delete output file dialog */}
+      <Dialog
+        open={open.deleteFile}
+        aria-labelledby="delete-dialog-title"
+        fullWidth
+        maxWidth="xs"
+      >
+        <DialogTitle
+          id="delete-dialog-title"
+          className={classes.dialogTitle}
+          disableTypography
+        >
+          <Typography variant="h6" component="h2">
+            Delete this output file?
+          </Typography>
+          <IconButton onClick={() => handleClickClose('deleteFile')} edge="end">
+            <CloseIcon />
+          </IconButton>
+        </DialogTitle>
+        <DialogContent className={classes.dialogContent}>
+          <Alert severity="warning">
+            Deleting this output file will permanently remove it from your
+            request. You will not be able to recover it.
+          </Alert>
+        </DialogContent>
+        <DialogActions className={classes.dialogFooter}>
+          <Button
+            color="primary"
+            variant="outlined"
+            onClick={() => handleClickClose('deleteFile')}
+          >
+            Cancel
+          </Button>
+          <Button
+            color="primary"
+            variant="contained"
+            onClick={deleteFile}
+            className={classes.footerBtns}
+          >
+            Delete
           </Button>
         </DialogActions>
       </Dialog>
@@ -325,6 +410,26 @@ function FilesList(props) {
           onClose={() => handleClickClose('snackbarSave')}
         >
           The output file has been saved
+        </Alert>
+      </Snackbar>
+      {/* Delete output file snackbar */}
+      <Snackbar
+        open={open.snackbarDelete}
+        autoHideDuration={6000}
+        onClose={() => handleClickClose('snackbarDelete')}
+        anchorOrigin={{
+          vertical: 'bottom',
+          horizontal: 'left',
+        }}
+      >
+        <Alert
+          severity="success"
+          className={classes.alert}
+          variant="filled"
+          onClose={() => handleClickClose('snackbarDelete')}
+        >
+          The output file 'Example output file card name' has been successfully
+          deleted!
         </Alert>
       </Snackbar>
     </React.Fragment>
