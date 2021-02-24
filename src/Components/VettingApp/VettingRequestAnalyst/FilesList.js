@@ -1,4 +1,5 @@
 import React from 'react';
+import {useTranslation} from 'react-i18next';
 import {makeStyles, withStyles} from '@material-ui/core/styles';
 import Dialog from '@material-ui/core/Dialog';
 import DialogActions from '@material-ui/core/DialogActions';
@@ -160,6 +161,12 @@ function FilesList(props) {
     order: 'desc',
     open: false,
     anchorEl: null,
+    notes: {
+      text: '',
+      errorText: '',
+      invalid: '',
+      commands: '',
+    },
   });
 
   const handleRequestSort = (e) => {
@@ -206,6 +213,75 @@ function FilesList(props) {
 
   const addSupportingFile = () => {
     setOpen({...open, dialogAddSupporting: false, snackbarAddSupporting: true});
+  };
+
+  const {t} = useTranslation();
+
+  const disableCutCopyPaste = (e, command, value) => {
+    // display error if user tries to cut/copy/paste
+    let msg;
+    e.preventDefault();
+    switch (command) {
+      case 'cut':
+        msg = t('Cut has been disabled for security purposes.');
+        setState({
+          ...state,
+          [value]: {
+            ...state[value],
+            commands: msg,
+            errorText: msg,
+          },
+        });
+        break;
+      case 'copy':
+        msg = t('Copy has been disabled for security purposes.');
+        setState({
+          ...state,
+          [value]: {
+            ...state[value],
+            commands: msg,
+            errorText: msg,
+          },
+        });
+        break;
+      case 'paste':
+        msg = t('Paste has been disabled for security purposes.');
+        setState({
+          ...state,
+          [value]: {
+            ...state[value],
+            commands: msg,
+            errorText: msg,
+          },
+        });
+        break;
+      default:
+        break;
+    }
+  };
+
+  const toggleHelperText = (value) => {
+    if (state[value].commands === state[value].errorText) {
+      if (Boolean(state[value].invalid)) {
+        // set error text back to invalid error
+        setState({
+          ...state,
+          [value]: {
+            ...state[value],
+            errorText: state[value].invalid,
+          },
+        });
+      } else {
+        // clear error text if no invalid error exists
+        setState({
+          ...state,
+          [value]: {
+            ...state[value],
+            errorText: '',
+          },
+        });
+      }
+    }
   };
 
   return (
@@ -343,6 +419,15 @@ function FilesList(props) {
             variant="outlined"
             fullWidth
             required
+            onCut={(e) => disableCutCopyPaste(e, 'cut', 'notes')}
+            onCopy={(e) => disableCutCopyPaste(e, 'copy', 'notes')}
+            onPaste={(e) => disableCutCopyPaste(e, 'paste', 'notes')}
+            onClick={() => toggleHelperText('notes')}
+            onBlur={() => toggleHelperText('notes')}
+            onFocus={() => toggleHelperText('notes')}
+            value={state.notes.text}
+            error={Boolean(state.notes.errorText)}
+            helperText={state.notes.errorText}
           />
         </DialogContent>
         <Divider className="mb-1 mt-2" />

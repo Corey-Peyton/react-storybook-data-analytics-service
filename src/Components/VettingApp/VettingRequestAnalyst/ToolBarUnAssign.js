@@ -1,4 +1,5 @@
 import React from 'react';
+import {useTranslation} from 'react-i18next';
 import {makeStyles} from '@material-ui/core/styles';
 import NumberFormat from 'react-number-format';
 import {
@@ -123,6 +124,14 @@ function ToolBarUnassign(props) {
     snackBarApprove: false,
   });
 
+  const [state, setState] = React.useState({
+    comments: '',
+    approveMinutes: '',
+    approveHours: '',
+    denyMinutes: '',
+    denyHours: '',
+  });
+
   const handleClickOpen = (state) => {
     setOpen({...open, [state]: true});
   };
@@ -144,6 +153,74 @@ function ToolBarUnassign(props) {
   const handleChange = (event) => {
     setSelected(event.target.value);
   };
+  const disableCutCopyPaste = (e, command, value) => {
+    // display error if user tries to cut/copy/paste
+    let msg;
+    e.preventDefault();
+    switch (command) {
+      case 'cut':
+        msg = t('Cut has been disabled for security purposes.');
+        setState({
+          ...state,
+          [value]: {
+            ...state[value],
+            commands: msg,
+            errorText: msg,
+          },
+        });
+        break;
+      case 'copy':
+        msg = t('Copy has been disabled for security purposes.');
+        setState({
+          ...state,
+          [value]: {
+            ...state[value],
+            commands: msg,
+            errorText: msg,
+          },
+        });
+        break;
+      case 'paste':
+        msg = t('Paste has been disabled for security purposes.');
+        setState({
+          ...state,
+          [value]: {
+            ...state[value],
+            commands: msg,
+            errorText: msg,
+          },
+        });
+        break;
+      default:
+        break;
+    }
+  };
+
+  const toggleHelperText = (value) => {
+    if (state[value].commands === state[value].errorText) {
+      if (Boolean(state[value].invalid)) {
+        // set error text back to invalid error
+        setState({
+          ...state,
+          [value]: {
+            ...state[value],
+            errorText: state[value].invalid,
+          },
+        });
+      } else {
+        // clear error text if no invalid error exists
+        setState({
+          ...state,
+          [value]: {
+            ...state[value],
+            errorText: '',
+          },
+        });
+      }
+    }
+  };
+
+  const {t} = useTranslation();
 
   return (
     <Toolbar>
@@ -264,6 +341,15 @@ function ToolBarUnassign(props) {
             multiline
             className={classes.textField}
             required
+            onCut={(e) => disableCutCopyPaste(e, 'cut', 'comments')}
+            onCopy={(e) => disableCutCopyPaste(e, 'copy', 'comments')}
+            onPaste={(e) => disableCutCopyPaste(e, 'paste', 'comments')}
+            onClick={() => toggleHelperText('comments')}
+            onBlur={() => toggleHelperText('comments')}
+            onFocus={() => toggleHelperText('comments')}
+            value={state.comments.text}
+            error={Boolean(state.comments.errorText)}
+            helperText={state.comments.errorText}
           />
         </div>
         <Divider className="mb-0 mt-3" />
@@ -337,12 +423,30 @@ function ToolBarUnassign(props) {
               customInput={TextField}
               type="text"
               variant="outlined"
+              onCut={(e) => disableCutCopyPaste(e, 'cut', 'approveHours')}
+              onCopy={(e) => disableCutCopyPaste(e, 'copy', 'approveHours')}
+              onPaste={(e) => disableCutCopyPaste(e, 'paste', 'approveHours')}
+              onClick={() => toggleHelperText('approveHours')}
+              onBlur={() => toggleHelperText('approveHours')}
+              onFocus={() => toggleHelperText('approveHours')}
+              value={state.approveHours.text}
+              error={Boolean(state.approveHours.errorText)}
+              helperText={state.approveHours.errorText}
             />
             <NumberFormat
               label="Minutes"
               customInput={TextField}
               type="text"
               variant="outlined"
+              onCut={(e) => disableCutCopyPaste(e, 'cut', 'approveMinutes')}
+              onCopy={(e) => disableCutCopyPaste(e, 'copy', 'approveMinutes')}
+              onPaste={(e) => disableCutCopyPaste(e, 'paste', 'approveMinutes')}
+              onClick={() => toggleHelperText('approveMinutes')}
+              onBlur={() => toggleHelperText('approveMinutes')}
+              onFocus={() => toggleHelperText('approveMinutes')}
+              value={state.approveMinutes.text}
+              error={Boolean(state.approveMinutes.errorText)}
+              helperText={state.approveMinutes.errorText}
             />
           </FormControl>
         </div>
@@ -417,12 +521,30 @@ function ToolBarUnassign(props) {
               customInput={TextField}
               type="text"
               variant="outlined"
+              onCut={(e) => disableCutCopyPaste(e, 'cut', 'denyHours')}
+              onCopy={(e) => disableCutCopyPaste(e, 'copy', 'denyHours')}
+              onPaste={(e) => disableCutCopyPaste(e, 'paste', 'denyHours')}
+              onClick={() => toggleHelperText('denyHours')}
+              onBlur={() => toggleHelperText('denyHours')}
+              onFocus={() => toggleHelperText('denyHours')}
+              value={state.denyHours.text}
+              error={Boolean(state.denyHours.errorText)}
+              helperText={state.denyHours.errorText}
             />
             <NumberFormat
               label="Minutes"
               customInput={TextField}
               type="text"
               variant="outlined"
+              onCut={(e) => disableCutCopyPaste(e, 'cut', 'denyMinutes')}
+              onCopy={(e) => disableCutCopyPaste(e, 'copy', 'denyMinutes')}
+              onPaste={(e) => disableCutCopyPaste(e, 'paste', 'denyMinutes')}
+              onClick={() => toggleHelperText('denyMinutes')}
+              onBlur={() => toggleHelperText('denyMinutes')}
+              onFocus={() => toggleHelperText('denyMinutes')}
+              value={state.denyMinutes.text}
+              error={Boolean(state.denyMinutes.errorText)}
+              helperText={state.denyMinutes.errorText}
             />
           </FormControl>
         </div>
@@ -465,6 +587,15 @@ function ToolBarUnassign(props) {
                   variant="outlined"
                   multiline
                   required="true"
+                  onCut={(e) => disableCutCopyPaste(e, 'cut', 'comments')}
+                  onCopy={(e) => disableCutCopyPaste(e, 'copy', 'comments')}
+                  onPaste={(e) => disableCutCopyPaste(e, 'paste', 'comments')}
+                  onClick={() => toggleHelperText('comments')}
+                  onBlur={() => toggleHelperText('comments')}
+                  onFocus={() => toggleHelperText('comments')}
+                  value={state.comments.text}
+                  error={Boolean(state.comments.errorText)}
+                  helperText={state.comments.errorText}
                 />
               </FormControl>
             </div>
@@ -476,6 +607,15 @@ function ToolBarUnassign(props) {
                   label="Comments"
                   variant="outlined"
                   multiline
+                  onCut={(e) => disableCutCopyPaste(e, 'cut', 'comments')}
+                  onCopy={(e) => disableCutCopyPaste(e, 'copy', 'comments')}
+                  onPaste={(e) => disableCutCopyPaste(e, 'paste', 'comments')}
+                  onClick={() => toggleHelperText('comments')}
+                  onBlur={() => toggleHelperText('comments')}
+                  onFocus={() => toggleHelperText('comments')}
+                  value={state.comments.text}
+                  error={Boolean(state.comments.errorText)}
+                  helperText={state.comments.errorText}
                 />
               </FormControl>
             </div>

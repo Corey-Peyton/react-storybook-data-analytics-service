@@ -1,4 +1,5 @@
 import React from 'react';
+import {useTranslation} from 'react-i18next';
 import {makeStyles} from '@material-ui/core/styles';
 import {
   Button,
@@ -77,6 +78,79 @@ function ToolBarAssign(props) {
   const handleClickOpen = () => {
     setOpen(true);
   };
+  const [state, setState] = React.useState({
+    phone: '',
+  });
+
+  const disableCutCopyPaste = (e, command, value) => {
+    // display error if user tries to cut/copy/paste
+    let msg;
+    e.preventDefault();
+    switch (command) {
+      case 'cut':
+        msg = t('Cut has been disabled for security purposes.');
+        setState({
+          ...state,
+          [value]: {
+            ...state[value],
+            commands: msg,
+            errorText: msg,
+          },
+        });
+        break;
+      case 'copy':
+        msg = t('Copy has been disabled for security purposes.');
+        setState({
+          ...state,
+          [value]: {
+            ...state[value],
+            commands: msg,
+            errorText: msg,
+          },
+        });
+        break;
+      case 'paste':
+        msg = t('Paste has been disabled for security purposes.');
+        setState({
+          ...state,
+          [value]: {
+            ...state[value],
+            commands: msg,
+            errorText: msg,
+          },
+        });
+        break;
+      default:
+        break;
+    }
+  };
+
+  const toggleHelperText = (value) => {
+    if (state[value].commands === state[value].errorText) {
+      if (Boolean(state[value].invalid)) {
+        // set error text back to invalid error
+        setState({
+          ...state,
+          [value]: {
+            ...state[value],
+            errorText: state[value].invalid,
+          },
+        });
+      } else {
+        // clear error text if no invalid error exists
+        setState({
+          ...state,
+          [value]: {
+            ...state[value],
+            errorText: '',
+          },
+        });
+      }
+    }
+  };
+
+  const {t} = useTranslation();
+
   return (
     <Toolbar>
       <IconButton
@@ -140,6 +214,15 @@ function ToolBarAssign(props) {
               mask="_"
               allowEmptyFormatting
               autoComplete="phone"
+              onCut={(e) => disableCutCopyPaste(e, 'cut', 'phone')}
+              onCopy={(e) => disableCutCopyPaste(e, 'copy', 'phone')}
+              onPaste={(e) => disableCutCopyPaste(e, 'paste', 'phone')}
+              onClick={() => toggleHelperText('phone')}
+              onBlur={() => toggleHelperText('phone')}
+              onFocus={() => toggleHelperText('phone')}
+              value={state.phone.text}
+              error={Boolean(state.phone.errorText)}
+              helperText={state.phone.errorText}
             />
           </FormControl>
         </DialogContent>

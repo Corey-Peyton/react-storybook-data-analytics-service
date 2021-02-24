@@ -1,4 +1,5 @@
 import React from 'react';
+import {useTranslation} from 'react-i18next';
 import {makeStyles} from '@material-ui/core/styles';
 import {
   Grid,
@@ -65,6 +66,145 @@ function BootstrapTooltip(props) {
 
 function AnalystInfo(props) {
   const classes = useStyles();
+  const {t} = useTranslation();
+
+  const [state, setState] = React.useState({
+    RequestID: {
+      text: '',
+      errorText: '',
+      invalid: '',
+      commands: '',
+    },
+    name: {
+      text: '',
+      errorText: '',
+      invalid: '',
+      commands: '',
+    },
+    project: {
+      text: '',
+      errorText: '',
+      invalid: '',
+      commands: '',
+    },
+    firstname: {
+      text: '',
+      errorText: '',
+      invalid: '',
+      commands: '',
+    },
+    lastname: {
+      text: '',
+      errorText: '',
+      invalid: '',
+      commands: '',
+    },
+    date: {
+      text: '',
+      errorText: '',
+      invalid: '',
+      commands: '',
+    },
+    username: {
+      text: '',
+      errorText: '',
+      invalid: '',
+      commands: '',
+    },
+  });
+
+  const handleChange = (e, val) => {
+    const comment = e.target.value;
+    setState({
+      ...state,
+      [val]: {
+        // updates state with text from input
+        ...state[val],
+        text: comment,
+      },
+    });
+
+    if (e.target.value && state[val].errorText) {
+      // if input text is valid, clear errors
+      setState({
+        ...state,
+        [val]: {
+          ...state[val],
+          text: comment,
+          errorText: '',
+          invalid: '',
+          commands: '',
+        },
+      });
+    }
+  };
+
+  const disableCutCopyPaste = (e, command, value) => {
+    // display error if user tries to cut/copy/paste
+    let msg;
+    e.preventDefault();
+    switch (command) {
+      case 'cut':
+        msg = t('Cut has been disabled for security purposes.');
+        setState({
+          ...state,
+          [value]: {
+            ...state[value],
+            commands: msg,
+            errorText: msg,
+          },
+        });
+        break;
+      case 'copy':
+        msg = t('Copy has been disabled for security purposes.');
+        setState({
+          ...state,
+          [value]: {
+            ...state[value],
+            commands: msg,
+            errorText: msg,
+          },
+        });
+        break;
+      case 'paste':
+        msg = t('Paste has been disabled for security purposes.');
+        setState({
+          ...state,
+          [value]: {
+            ...state[value],
+            commands: msg,
+            errorText: msg,
+          },
+        });
+        break;
+      default:
+        break;
+    }
+  };
+
+  const toggleHelperText = (value) => {
+    if (state[value].commands === state[value].errorText) {
+      if (Boolean(state[value].invalid)) {
+        // set error text back to invalid error
+        setState({
+          ...state,
+          [value]: {
+            ...state[value],
+            errorText: state[value].invalid,
+          },
+        });
+      } else {
+        // clear error text if no invalid error exists
+        setState({
+          ...state,
+          [value]: {
+            ...state[value],
+            errorText: '',
+          },
+        });
+      }
+    }
+  };
 
   return (
     <React.Fragment>
@@ -96,6 +236,15 @@ function AnalystInfo(props) {
             readOnly
             value="0101-000000"
             className={classes.inputMargin}
+            onCut={(e) => disableCutCopyPaste(e, 'cut', 'RequestID')}
+            onCopy={(e) => disableCutCopyPaste(e, 'copy', 'RequestID')}
+            onPaste={(e) => disableCutCopyPaste(e, 'paste', 'RequestID')}
+            onChange={(e) => handleChange(e, 'RequestID')}
+            onClick={() => toggleHelperText('RequestID')}
+            onBlur={() => toggleHelperText('RequestID')}
+            onFocus={() => toggleHelperText('RequestID')}
+            error={Boolean(state.RequestID.errorText)}
+            helperText={state.RequestID.errorText}
           />
           <TextField
             id="name"
@@ -107,6 +256,16 @@ function AnalystInfo(props) {
             margin="dense"
             defaultValue={props.title}
             className="mt-2"
+            onCut={(e) => disableCutCopyPaste(e, 'cut', 'name')}
+            onCopy={(e) => disableCutCopyPaste(e, 'copy', 'name')}
+            onPaste={(e) => disableCutCopyPaste(e, 'paste', 'name')}
+            onChange={(e) => handleChange(e, 'name')}
+            onClick={() => toggleHelperText('name')}
+            onBlur={() => toggleHelperText('name')}
+            onFocus={() => toggleHelperText('name')}
+            value={state.name.text}
+            error={Boolean(state.name.errorText)}
+            helperText={state.name.errorText}
           />
           <Typography component="h2" variant="h6" className="mt-1 mb-1">
             Project details
@@ -122,6 +281,15 @@ function AnalystInfo(props) {
             value="21-SSH-UTO-0000"
             readOnly
             className={classes.inputMargin}
+            onCut={(e) => disableCutCopyPaste(e, 'cut', 'project')}
+            onCopy={(e) => disableCutCopyPaste(e, 'copy', 'project')}
+            onPaste={(e) => disableCutCopyPaste(e, 'paste', 'project')}
+            onChange={(e) => handleChange(e, 'project')}
+            onClick={() => toggleHelperText('project')}
+            onBlur={() => toggleHelperText('project')}
+            onFocus={() => toggleHelperText('project')}
+            error={Boolean(state.project.errorText)}
+            helperText={state.project.errorText}
           />
           <FormControl
             required
@@ -178,6 +346,15 @@ function AnalystInfo(props) {
             fullWidth
             margin="dense"
             className={classes.inputMargin}
+            onCut={(e) => disableCutCopyPaste(e, 'cut', 'firstname')}
+            onCopy={(e) => disableCutCopyPaste(e, 'copy', 'firstname')}
+            onPaste={(e) => disableCutCopyPaste(e, 'paste', 'firstname')}
+            onChange={(e) => handleChange(e, 'firstname')}
+            onClick={() => toggleHelperText('firstname')}
+            onBlur={() => toggleHelperText('firstname')}
+            onFocus={() => toggleHelperText('firstname')}
+            error={Boolean(state.firstname.errorText)}
+            helperText={state.firstname.errorText}
           />
           <TextField
             id="last-name"
@@ -188,6 +365,15 @@ function AnalystInfo(props) {
             fullWidth
             margin="dense"
             className={classes.inputMargin}
+            onCut={(e) => disableCutCopyPaste(e, 'cut', 'lastname')}
+            onCopy={(e) => disableCutCopyPaste(e, 'copy', 'lastname')}
+            onPaste={(e) => disableCutCopyPaste(e, 'paste', 'lastname')}
+            onChange={(e) => handleChange(e, 'lastname')}
+            onClick={() => toggleHelperText('lastname')}
+            onBlur={() => toggleHelperText('lastname')}
+            onFocus={() => toggleHelperText('lastname')}
+            error={Boolean(state.lastname.errorText)}
+            helperText={state.lastname.errorText}
           />
         </Grid>
       </Grid>
@@ -203,6 +389,15 @@ function AnalystInfo(props) {
             margin="dense"
             inputProps={{readOnly: true}}
             className={classes.inputMargin}
+            onCut={(e) => disableCutCopyPaste(e, 'cut', 'date')}
+            onCopy={(e) => disableCutCopyPaste(e, 'copy', 'date')}
+            onPaste={(e) => disableCutCopyPaste(e, 'paste', 'date')}
+            onChange={(e) => handleChange(e, 'date')}
+            onClick={() => toggleHelperText('date')}
+            onBlur={() => toggleHelperText('date')}
+            onFocus={() => toggleHelperText('date')}
+            error={Boolean(state.date.errorText)}
+            helperText={state.date.errorText}
           />
           <TextField
             id="username"
@@ -212,6 +407,15 @@ function AnalystInfo(props) {
             required
             fullWidth
             margin="dense"
+            onCut={(e) => disableCutCopyPaste(e, 'cut', 'username')}
+            onCopy={(e) => disableCutCopyPaste(e, 'copy', 'username')}
+            onPaste={(e) => disableCutCopyPaste(e, 'paste', 'username')}
+            onChange={(e) => handleChange(e, 'username')}
+            onClick={() => toggleHelperText('username')}
+            onBlur={() => toggleHelperText('username')}
+            onFocus={() => toggleHelperText('username')}
+            error={Boolean(state.username.errorText)}
+            helperText={state.username.errorText}
           />
         </Grid>
       </Grid>

@@ -1,4 +1,5 @@
 import React from 'react';
+import {useTranslation} from 'react-i18next';
 import {makeStyles} from '@material-ui/core/styles';
 import DeleteIcon from '@material-ui/icons/Delete';
 import clsx from 'clsx';
@@ -133,6 +134,99 @@ function ModifyFile(props) {
     descriptiveStats: null,
     modifiedWeights: null,
     covariance: null,
+    sheetname: {
+      text: '',
+      errorText: '',
+      invalid: '',
+      commands: '',
+      helperText:
+        'Each sheet for a spreadsheet file should be listed separately',
+    },
+    survey: {
+      text: '',
+      errorText: '',
+      invalid: '',
+      commands: '',
+      helperText: '',
+    },
+    outputmethod: {
+      text: '',
+      errorText: '',
+      invalid: '',
+      commands: '',
+      helperText: '',
+    },
+    weightvariable: {
+      text: '',
+      errorText: '',
+      invalid: '',
+      commands: '',
+      helperText: '',
+    },
+    sample: {
+      text: '',
+      errorText: '',
+      invalid: '',
+      commands: '',
+      helperText:
+        'Example: males 50 years of age or older. Required if you subsetted or selected only a certain set of respondents from the data for all or part of the analysis',
+    },
+    geography: {
+      text: '',
+      errorText: '',
+      invalid: '',
+      commands: '',
+      helperText: 'Examples: national, provincial',
+    },
+    linkage: {
+      text: '',
+      errorText: '',
+      invalid: '',
+      commands: '',
+      helperText: 'Examples: person-based, record-based, matching geographies',
+    },
+    modified: {
+      text: '',
+      errorText: '',
+      invalid: '',
+      commands: '',
+      helperText: '',
+    },
+    rounding: {
+      text: '',
+      errorText: '',
+      invalid: '',
+      commands: '',
+      helperText: '',
+    },
+    contents: {
+      text: '',
+      errorText: '',
+      invalid: '',
+      commands: '',
+      helperText: '',
+    },
+    notes: {
+      text: '',
+      errorText: '',
+      invalid: '',
+      commands: '',
+      helperText: '',
+    },
+    contents2: {
+      text: '',
+      errorText: '',
+      invalid: '',
+      commands: '',
+      helperText: '',
+    },
+    notes2: {
+      text: '',
+      errorText: '',
+      invalid: '',
+      commands: '',
+      helperText: '',
+    },
   });
 
   const handleRadioChange = (event) => {
@@ -153,6 +247,176 @@ function ModifyFile(props) {
 
     return <Tooltip arrow classes={classes} {...props} />;
   }
+
+  const {t} = useTranslation();
+
+  const initial = {
+    // blank object used to reset state
+    sheetname: {
+      text: '',
+      errorText: '',
+      invalid: '',
+      commands: '',
+      helperText:
+        'Each sheet for a spreadsheet file should be listed separately',
+    },
+    survey: {
+      text: '',
+      errorText: '',
+      invalid: '',
+      commands: '',
+      helperText: '',
+    },
+    outputmethod: {
+      text: '',
+      errorText: '',
+      invalid: '',
+      commands: '',
+      helperText: '',
+    },
+    weightvariable: {
+      text: '',
+      errorText: '',
+      invalid: '',
+      commands: '',
+      helperText: '',
+    },
+    sample: {
+      text: '',
+      errorText: '',
+      invalid: '',
+      commands: '',
+      helperText:
+        'Example: males 50 years of age or older. Required if you subsetted or selected only a certain set of respondents from the data for all or part of the analysis',
+    },
+    geography: {
+      text: '',
+      errorText: '',
+      invalid: '',
+      commands: '',
+      helperText: 'Examples: national, provincial',
+    },
+    linkage: {
+      text: '',
+      errorText: '',
+      invalid: '',
+      commands: '',
+      helperText: 'Examples: person-based, record-based, matching geographies',
+    },
+    modified: {
+      text: '',
+      errorText: '',
+      invalid: '',
+      commands: '',
+      helperText: '',
+    },
+    rounding: {
+      text: '',
+      errorText: '',
+      invalid: '',
+      commands: '',
+      helperText: '',
+    },
+    contents: {
+      text: '',
+      errorText: '',
+      invalid: '',
+      commands: '',
+      helperText: '',
+    },
+    notes: {
+      text: '',
+      errorText: '',
+      invalid: '',
+      commands: '',
+      helperText: '',
+    },
+    contents2: {
+      text: '',
+      errorText: '',
+      invalid: '',
+      commands: '',
+      helperText: '',
+    },
+    notes2: {
+      text: '',
+      errorText: '',
+      invalid: '',
+      commands: '',
+      helperText: '',
+    },
+  };
+
+  const disableCutCopyPaste = (e, command, value) => {
+    // display error if user tries to cut/copy/paste
+    let msg;
+    e.preventDefault();
+    switch (command) {
+      case 'cut':
+        msg = t('Cut has been disabled for security purposes.');
+        setState({
+          ...state,
+          [value]: {
+            ...state[value],
+            commands: msg,
+            errorText: msg,
+            helperText: msg,
+          },
+        });
+        break;
+      case 'copy':
+        msg = t('Copy has been disabled for security purposes.');
+        setState({
+          ...state,
+          [value]: {
+            ...state[value],
+            commands: msg,
+            errorText: msg,
+            helperText: msg,
+          },
+        });
+        break;
+      case 'paste':
+        msg = t('Paste has been disabled for security purposes.');
+        setState({
+          ...state,
+          [value]: {
+            ...state[value],
+            commands: msg,
+            errorText: msg,
+            helperText: msg,
+          },
+        });
+        break;
+      default:
+        break;
+    }
+  };
+
+  const toggleHelperText = (value) => {
+    if (state[value].commands === state[value].errorText) {
+      if (Boolean(state[value].invalid)) {
+        // set error text back to invalid error
+        setState({
+          ...state,
+          [value]: {
+            ...state[value],
+            helperText: state[value].invalid,
+          },
+        });
+      } else {
+        // clear error text if no invalid error exists
+        setState({
+          ...state,
+          [value]: {
+            ...state[value],
+            helperText: initial[value].helperText,
+            errorText: initial[value].errorText,
+          },
+        });
+      }
+    }
+  };
 
   return (
     <React.Fragment>
@@ -194,9 +458,18 @@ function ModifyFile(props) {
         id="sheetName"
         label="Sheet name"
         variant="outlined"
-        helperText="Each sheet for a spreadsheet file should be listed separately."
         fullWidth
         required
+        onCut={(e) => disableCutCopyPaste(e, 'cut', 'sheetname')}
+        onCopy={(e) => disableCutCopyPaste(e, 'copy', 'sheetname')}
+        onPaste={(e) => disableCutCopyPaste(e, 'paste', 'sheetname')}
+        onChange={(e) => handleChange(e, 'info')}
+        onClick={() => toggleHelperText('sheetname')}
+        onBlur={() => toggleHelperText('sheetname')}
+        onFocus={() => toggleHelperText('sheetname')}
+        value={state.sheetname.text}
+        error={Boolean(state.sheetname.errorText)}
+        helperText={state.sheetname.helperText}
       />
       <TextField
         className={classes.inputMargin}
@@ -206,6 +479,15 @@ function ModifyFile(props) {
         variant="outlined"
         fullWidth
         required
+        onCut={(e) => disableCutCopyPaste(e, 'cut', 'survey')}
+        onCopy={(e) => disableCutCopyPaste(e, 'copy', 'survey')}
+        onPaste={(e) => disableCutCopyPaste(e, 'paste', 'survey')}
+        onClick={() => toggleHelperText('survey')}
+        onBlur={() => toggleHelperText('survey')}
+        onFocus={() => toggleHelperText('survey')}
+        value={state.survey.text}
+        error={Boolean(state.survey.errorText)}
+        helperText={state.survey.errorText}
       />
       <FormControl
         className={classes.inputMargin}
@@ -248,6 +530,16 @@ function ModifyFile(props) {
           fullWidth
           required
           multiline
+          onCut={(e) => disableCutCopyPaste(e, 'cut', 'outputmethod')}
+          onCopy={(e) => disableCutCopyPaste(e, 'copy', 'outputmethod')}
+          onPaste={(e) => disableCutCopyPaste(e, 'paste', 'outputmethod')}
+          onChange={(e) => handleChange(e, 'info')}
+          onClick={() => toggleHelperText('outputmethod')}
+          onBlur={() => toggleHelperText('outputmethod')}
+          onFocus={() => toggleHelperText('outputmethod')}
+          value={state.outputmethod.text}
+          error={Boolean(state.outputmethod.errorText)}
+          helperText={state.outputmethod.errorText}
         />
       </div>
       <div className="emphasisBox minHeight">
@@ -312,6 +604,16 @@ function ModifyFile(props) {
               variant="outlined"
               required
               fullWidth
+              onCut={(e) => disableCutCopyPaste(e, 'cut', 'weightvariable')}
+              onCopy={(e) => disableCutCopyPaste(e, 'copy', 'weightvariable')}
+              onPaste={(e) => disableCutCopyPaste(e, 'paste', 'weightvariable')}
+              onChange={(e) => handleChange(e, 'info')}
+              onClick={() => toggleHelperText('weightvariable')}
+              onBlur={() => toggleHelperText('weightvariable')}
+              onFocus={() => toggleHelperText('weightvariable')}
+              value={state.weightvariable.text}
+              error={Boolean(state.weightvariable.errorText)}
+              helperText={state.weightvariable.errorText}
             />
             <FormControl component="fieldset" required>
               <FormLabel component="legend" className="screen-reader-text">
@@ -340,9 +642,17 @@ function ModifyFile(props) {
         id="sampleUsed"
         label="Sample, sub-sample or inclusions/exclusions used"
         variant="outlined"
-        helperText="Example: males 50 years of age or older. Required if you subsetted or selected only a certain set of respondents from the data for all or part of the analysis"
         fullWidth
         required
+        onCut={(e) => disableCutCopyPaste(e, 'cut', 'sample')}
+        onCopy={(e) => disableCutCopyPaste(e, 'copy', 'sample')}
+        onPaste={(e) => disableCutCopyPaste(e, 'paste', 'sample')}
+        onClick={() => toggleHelperText('sample')}
+        onBlur={() => toggleHelperText('sample')}
+        onFocus={() => toggleHelperText('sample')}
+        value={state.sample.text}
+        error={Boolean(state.sample.errorText)}
+        helperText={state.sample.helperText}
       />
       <TextField
         className={classes.marginHelperText}
@@ -350,8 +660,16 @@ function ModifyFile(props) {
         id="geographyLevel"
         label="Level of Geography"
         variant="outlined"
-        helperText="Examples: national, provincial"
         fullWidth
+        onCut={(e) => disableCutCopyPaste(e, 'cut', 'geography')}
+        onCopy={(e) => disableCutCopyPaste(e, 'copy', 'geography')}
+        onPaste={(e) => disableCutCopyPaste(e, 'paste', 'geography')}
+        onClick={() => toggleHelperText('geography')}
+        onBlur={() => toggleHelperText('geography')}
+        onFocus={() => toggleHelperText('geography')}
+        value={state.geography.text}
+        error={Boolean(state.geography.errorText)}
+        helperText={state.geography.helperText}
       />
       <Typography variant="subtitle2" className="mb-2 mt-1" component="h3">
         Output supporting files
@@ -393,9 +711,17 @@ function ModifyFile(props) {
           id="linkageDescription"
           label="Describe how linkage was done"
           variant="outlined"
-          helperText="Examples: person-based, record-based, matching geographies"
           fullWidth
           required
+          onCut={(e) => disableCutCopyPaste(e, 'cut', 'linkage')}
+          onCopy={(e) => disableCutCopyPaste(e, 'copy', 'linkage')}
+          onPaste={(e) => disableCutCopyPaste(e, 'paste', 'linkage')}
+          onClick={() => toggleHelperText('linkage')}
+          onBlur={() => toggleHelperText('linkage')}
+          onFocus={() => toggleHelperText('linkage')}
+          value={state.linkage.text}
+          error={Boolean(state.linkage.errorText)}
+          helperText={state.linkage.helperText}
         />
       )}
       <FormControl
@@ -541,6 +867,15 @@ function ModifyFile(props) {
           variant="outlined"
           fullWidth
           required
+          onCut={(e) => disableCutCopyPaste(e, 'cut', 'modified')}
+          onCopy={(e) => disableCutCopyPaste(e, 'copy', 'modified')}
+          onPaste={(e) => disableCutCopyPaste(e, 'paste', 'modified')}
+          onClick={() => toggleHelperText('modified')}
+          onBlur={() => toggleHelperText('modified')}
+          onFocus={() => toggleHelperText('modified')}
+          value={state.modified.text}
+          error={Boolean(state.modified.errorText)}
+          helperText={state.modified.errorText}
         />
       )}
       <FormControl className={classes.inputMargin} component="fieldset">
@@ -640,6 +975,15 @@ function ModifyFile(props) {
           variant="outlined"
           fullWidth
           required
+          onCut={(e) => disableCutCopyPaste(e, 'cut', 'rounding')}
+          onCopy={(e) => disableCutCopyPaste(e, 'copy', 'rounding')}
+          onPaste={(e) => disableCutCopyPaste(e, 'paste', 'rounding')}
+          onClick={() => toggleHelperText('rounding')}
+          onBlur={() => toggleHelperText('rounding')}
+          onFocus={() => toggleHelperText('rounding')}
+          value={state.rounding.text}
+          error={Boolean(state.rounding.errorText)}
+          helperText={state.rounding.errorText}
         />
       )}
       <div className="emphasisBox minHeight3">
@@ -718,6 +1062,15 @@ function ModifyFile(props) {
         variant="outlined"
         fullWidth
         required
+        onCut={(e) => disableCutCopyPaste(e, 'cut', 'contents')}
+        onCopy={(e) => disableCutCopyPaste(e, 'copy', 'contents')}
+        onPaste={(e) => disableCutCopyPaste(e, 'paste', 'contents')}
+        onClick={() => toggleHelperText('contents')}
+        onBlur={() => toggleHelperText('contents')}
+        onFocus={() => toggleHelperText('contents')}
+        value={state.contents.text}
+        error={Boolean(state.contents.errorText)}
+        helperText={state.contents.errorText}
       />
       <TextField
         className={classes.inputMargin}
@@ -729,6 +1082,15 @@ function ModifyFile(props) {
         variant="outlined"
         fullWidth
         required
+        onCut={(e) => disableCutCopyPaste(e, 'cut', 'notes')}
+        onCopy={(e) => disableCutCopyPaste(e, 'copy', 'notes')}
+        onPaste={(e) => disableCutCopyPaste(e, 'paste', 'notes')}
+        onClick={() => toggleHelperText('notes')}
+        onBlur={() => toggleHelperText('notes')}
+        onFocus={() => toggleHelperText('notes')}
+        value={state.notes.text}
+        error={Boolean(state.notes.errorText)}
+        helperText={state.notes.errorText}
       />
       <Grid container justify="space-between" alignItems="center">
         <Grid item>
@@ -767,6 +1129,15 @@ function ModifyFile(props) {
         variant="outlined"
         fullWidth
         required
+        onCut={(e) => disableCutCopyPaste(e, 'cut', 'contents2')}
+        onCopy={(e) => disableCutCopyPaste(e, 'copy', 'contents2')}
+        onPaste={(e) => disableCutCopyPaste(e, 'paste', 'contents2')}
+        onClick={() => toggleHelperText('contents2')}
+        onBlur={() => toggleHelperText('contents2')}
+        onFocus={() => toggleHelperText('contents2')}
+        value={state.contents2.text}
+        error={Boolean(state.contents2.errorText)}
+        helperText={state.contents2.errorText}
       />
       <TextField
         className={classes.inputMargin}
@@ -778,6 +1149,15 @@ function ModifyFile(props) {
         variant="outlined"
         fullWidth
         required
+        onCut={(e) => disableCutCopyPaste(e, 'cut', 'notes2')}
+        onCopy={(e) => disableCutCopyPaste(e, 'copy', 'notes2')}
+        onPaste={(e) => disableCutCopyPaste(e, 'paste', 'notes2')}
+        onClick={() => toggleHelperText('notes2')}
+        onBlur={() => toggleHelperText('notes2')}
+        onFocus={() => toggleHelperText('notes2')}
+        value={state.notes2.text}
+        error={Boolean(state.notes2.errorText)}
+        helperText={state.notes2.errorText}
       />
       <Button
         variant="contained"
