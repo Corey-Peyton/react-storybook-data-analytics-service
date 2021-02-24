@@ -463,7 +463,7 @@ function ModifyFile(props) {
         onCut={(e) => disableCutCopyPaste(e, 'cut', 'sheetname')}
         onCopy={(e) => disableCutCopyPaste(e, 'copy', 'sheetname')}
         onPaste={(e) => disableCutCopyPaste(e, 'paste', 'sheetname')}
-        // onChange={(e) => handleChange(e, 'info')}
+        onChange={(e) => handleChange(e, 'info')}
         onClick={() => toggleHelperText('sheetname')}
         onBlur={() => toggleHelperText('sheetname')}
         onFocus={() => toggleHelperText('sheetname')}
@@ -533,7 +533,7 @@ function ModifyFile(props) {
           onCut={(e) => disableCutCopyPaste(e, 'cut', 'outputmethod')}
           onCopy={(e) => disableCutCopyPaste(e, 'copy', 'outputmethod')}
           onPaste={(e) => disableCutCopyPaste(e, 'paste', 'outputmethod')}
-          // onChange={(e) => handleChange(e, 'info')}
+          onChange={(e) => handleChange(e, 'info')}
           onClick={() => toggleHelperText('outputmethod')}
           onBlur={() => toggleHelperText('outputmethod')}
           onFocus={() => toggleHelperText('outputmethod')}
@@ -607,7 +607,7 @@ function ModifyFile(props) {
               onCut={(e) => disableCutCopyPaste(e, 'cut', 'weightvariable')}
               onCopy={(e) => disableCutCopyPaste(e, 'copy', 'weightvariable')}
               onPaste={(e) => disableCutCopyPaste(e, 'paste', 'weightvariable')}
-              // onChange={(e) => handleChange(e, 'info')}
+              onChange={(e) => handleChange(e, 'info')}
               onClick={() => toggleHelperText('weightvariable')}
               onBlur={() => toggleHelperText('weightvariable')}
               onFocus={() => toggleHelperText('weightvariable')}

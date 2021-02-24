@@ -129,7 +129,6 @@ function AdditionalInfo(props) {
         onCut={(e) => disableCutCopyPaste(e, 'cut', 'info')}
         onCopy={(e) => disableCutCopyPaste(e, 'copy', 'info')}
         onPaste={(e) => disableCutCopyPaste(e, 'paste', 'info')}
-        // onChange={(e) => handleChange(e, 'info')}
         onClick={() => toggleHelperText('info')}
         onBlur={() => toggleHelperText('info')}
         onFocus={() => toggleHelperText('info')}
