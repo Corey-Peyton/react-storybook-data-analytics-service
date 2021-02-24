@@ -206,7 +206,6 @@ function AnalystInfo(props) {
     }
   };
 
-
   return (
     <React.Fragment>
       <Typography>
@@ -289,7 +288,6 @@ function AnalystInfo(props) {
             onClick={() => toggleHelperText('project')}
             onBlur={() => toggleHelperText('project')}
             onFocus={() => toggleHelperText('project')}
-            // value={state.name.text}
             error={Boolean(state.project.errorText)}
             helperText={state.project.errorText}
           />
@@ -355,7 +353,6 @@ function AnalystInfo(props) {
             onClick={() => toggleHelperText('firstname')}
             onBlur={() => toggleHelperText('firstname')}
             onFocus={() => toggleHelperText('firstname')}
-            // value={state.name.text}
             error={Boolean(state.firstname.errorText)}
             helperText={state.firstname.errorText}
           />
@@ -375,7 +372,6 @@ function AnalystInfo(props) {
             onClick={() => toggleHelperText('lastname')}
             onBlur={() => toggleHelperText('lastname')}
             onFocus={() => toggleHelperText('lastname')}
-            // value={state.name.text}
             error={Boolean(state.lastname.errorText)}
             helperText={state.lastname.errorText}
           />
@@ -400,7 +396,6 @@ function AnalystInfo(props) {
             onClick={() => toggleHelperText('date')}
             onBlur={() => toggleHelperText('date')}
             onFocus={() => toggleHelperText('date')}
-            // value={state.name.text}
             error={Boolean(state.date.errorText)}
             helperText={state.date.errorText}
           />
@@ -419,7 +414,6 @@ function AnalystInfo(props) {
             onClick={() => toggleHelperText('username')}
             onBlur={() => toggleHelperText('username')}
             onFocus={() => toggleHelperText('username')}
-            // value={state.name.text}
             error={Boolean(state.username.errorText)}
             helperText={state.username.errorText}
           />
