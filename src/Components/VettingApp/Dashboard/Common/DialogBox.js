@@ -18,6 +18,8 @@ import {
   Divider,
   Dialog,
   DialogTitle,
+  DialogContent,
+  DialogActions,
   IconButton,
   InputLabel,
   Select,
@@ -36,27 +38,36 @@ const ROW_HEIGHT = 56;
 
 const useStyles = makeStyles((theme) => ({
   root: {
-    '& .MuiDialog-paperWidthSm': {
-      'width': 'calc(100% - 64px)',
-      '& .MuiTextField-root': {
-        width: '100%',
-      },
-      '& .MuiFormLabel-root': {
-        'line-height': 1,
-        'background-color': 'white',
-      },
-      '& .MuiOutlinedInput-multiline': {
-        padding: 0,
-      },
-      '& .MuiOutlinedInput-inputMultiline': {
-        'max-height': 130,
-        'overflow': 'auto !important',
-        'padding': theme.spacing(2),
-      },
-      '& .MuiAutocomplete-endAdornment': {
-        top: '5.5px',
-      },
-    },
+    // '& .MuiDialog-paperWidthSm': {
+    //   'width': 'calc(100% - 64px)',
+    //   '& .MuiTextField-root': {
+    //     width: '100%',
+    //   },
+    //   '& .MuiDialogContent-root': {
+    //     padding: 0,
+    //   },
+    //   '& .MuiDialogActions-spacing': {
+    //     'padding': theme.spacing(1.75, 3),
+    //     '&> :not(:first-child)': {
+    //       marginLeft: theme.spacing(2),
+    //     },
+    //   },
+    //   '& .MuiFormLabel-root': {
+    //     'line-height': 1,
+    //     'background-color': 'white',
+    //   },
+    //   '& .MuiOutlinedInput-multiline': {
+    //     padding: 0,
+    //   },
+    //   '& .MuiOutlinedInput-inputMultiline': {
+    //     'max-height': 130,
+    //     'overflow': 'auto !important',
+    //     'padding': theme.spacing(2),
+    //   },
+    //   '& .MuiAutocomplete-endAdornment': {
+    //     top: '5.5px',
+    //   },
+    // },
     '& .MuiFormControl-root': {
       width: '100%',
     },
@@ -99,10 +110,11 @@ const useStyles = makeStyles((theme) => ({
     alignItems: 'center',
     justifyContent: 'space-between',
   },
-  vettingContent: {
+  vettingSection: {
     display: 'flex',
     flexFlow: 'column',
     padding: theme.spacing(3),
+    overflowY: 'auto',
   },
   vettingRow: {
     'display': 'flex',
@@ -111,6 +123,7 @@ const useStyles = makeStyles((theme) => ({
     'height': '100%',
     'justifyContent': 'center',
     'width': '100%',
+    'alignItems': 'center',
     '&:first-child': {
       marginTop: 0,
     },
@@ -124,6 +137,7 @@ const useStyles = makeStyles((theme) => ({
     'width': '100%',
     'justifyContent': 'center',
     'marginRight': theme.spacing(1),
+    'height': '100%',
     '&:last-child': {
       marginRight: 0,
     },
@@ -169,6 +183,9 @@ const useStyles = makeStyles((theme) => ({
   widthAuto: {
     width: 'auto !important',
   },
+  alignStart: {
+    alignItems: 'start',
+  },
 }));
 
 // ////////////////////////////////////////// ANALYST INFORMATION
@@ -184,6 +201,8 @@ export function DialogAnalyst(props) {
         aria-labelledby="dashboard-dialog-title"
         open={open}
         className={classes.root}
+        disableBackdropClick
+        scroll="paper"
       >
         <DialogTitle id="dashboard-dialog-title">
           <div className={classes.vettingContainerTitle}>
@@ -199,30 +218,32 @@ export function DialogAnalyst(props) {
           </div>
         </DialogTitle>
         <Divider />
-        <div className={classes.vettingContent}>
-          <div className={classes.vettingRow}>
-            <div className={clsx(classes.vettingColumn, classes.widthAuto)}>
-              <Avatar className={classes.avatar}>BB</Avatar>
-            </div>
-            <div className={classes.vettingColumn}>
-              <Typography className={classes.vettingText} variant="body2">
-                Bill Brian
-              </Typography>
-              <Typography className={classes.vettingText} variant="body2">
-                brian.bill@cloud.statcan.ca
-              </Typography>
-              <Typography className={classes.vettingText} variant="body2">
-                +1 (999) 999 9999
-              </Typography>
+        <DialogContent>
+          <div className={classes.vettingSection}>
+            <div className={classes.vettingRow}>
+              <div className={clsx(classes.vettingColumn, classes.widthAuto)}>
+                <Avatar className={classes.avatar}>BB</Avatar>
+              </div>
+              <div className={classes.vettingColumn}>
+                <Typography className={classes.vettingText} variant="body2">
+                  Bill Brian
+                </Typography>
+                <Typography className={classes.vettingText} variant="body2">
+                  brian.bill@cloud.statcan.ca
+                </Typography>
+                <Typography className={classes.vettingText} variant="body2">
+                  +1 (999) 999 9999
+                </Typography>
+              </div>
             </div>
           </div>
-        </div>
+        </DialogContent>
         <Divider />
-        <div className={classes.vettingContainerFooter}>
+        <DialogActions>
           <Button variant="contained" color="primary" onClick={toggleDialog}>
             {t('Done')}
           </Button>
-        </div>
+        </DialogActions>
       </Dialog>
     </React.Fragment>
   );
@@ -328,6 +349,7 @@ export function DialogManageTeam(props) {
         aria-labelledby="dashboard-dialog-title"
         open={open}
         className={classes.root}
+        disableBackdropClick
       >
         <DialogTitle id="dashboard-dialog-title">
           <div className={classes.vettingContainerTitle}>
@@ -343,112 +365,115 @@ export function DialogManageTeam(props) {
           </div>
         </DialogTitle>
         <Divider />
-        <div className={classes.vettingContent}>
-          <div className={classes.vettingRow}>
-            <div className={classes.vettingColumn}>
-              <Typography variant="subtitle2">{t('Lead')}</Typography>
+        <DialogContent>
+          <div className={classes.vettingSection}>
+            <div className={classes.vettingRow}>
+              <div className={classes.vettingColumn}>
+                <Typography variant="subtitle2">{t('Lead')}</Typography>
+              </div>
+            </div>
+            <div className={classes.vettingRow}>
+              <div className={classes.vettingColumn}>{leadAnalysts()}</div>
             </div>
           </div>
-          <div className={classes.vettingRow}>
-            <div className={classes.vettingColumn}>{leadAnalysts()}</div>
-          </div>
-        </div>
-        <Divider />
-        <div className={classes.vettingContent}>
-          <div className={classes.vettingRow}>
-            <div className={classes.vettingColumn}>
-              <FormControl variant="outlined" className={classes.textField}>
-                <Autocomplete
-                  value={selected}
-                  multiple
-                  limitTags={2}
-                  clearOnEscape={true}
-                  disableCloseOnSelect={true}
-                  id="analyst-multiselect"
-                  options={analysts.filter((analyst) => !analyst.assigned)}
-                  getOptionLabel={(option) => option.name}
-                  onChange={(event, value) => {
-                    setSelected(value);
-                  }}
-                  renderInput={(params) => {
-                    return (
-                      <TextField
-                        {...params}
-                        variant="outlined"
-                        fullWidth
-                        label={t('Search support analysts')}
-                      />
-                    );
-                  }}
-                />
-              </FormControl>
-            </div>
-          </div>
-          <div className={classes.vettingRow}>
-            <div className={classes.vettingColumn}>
-              <Button
-                variant="outlined"
-                color="primary"
-                onClick={() => selectSupports(selected)}
-              >
-                {t('Add support analyst')}
-              </Button>
-            </div>
-          </div>
-          <div className={classes.vettingRow}>
-            <div className={classes.vettingColumn}>
-              <Typography variant="subtitle2">
-                {t('Support Analysts')}
-              </Typography>
-            </div>
-          </div>
-
-          <div className={classes.vettingRow}>
-            <div className={classes.vettingColumn}>
-              <div className={classes.supportAnalysts}>
-                {analysts
-                    .filter(
-                        (analyst) => analyst.assigned && analyst.role === 'support',
-                    )
-                    .map((analyst, index) => {
+          <Divider />
+          <div className={classes.vettingSection}>
+            <div className={classes.vettingRow}>
+              <div className={classes.vettingColumn}>
+                <FormControl variant="outlined" className={classes.textField}>
+                  <Autocomplete
+                    value={selected}
+                    multiple
+                    limitTags={2}
+                    clearOnEscape={true}
+                    disableCloseOnSelect={true}
+                    id="analyst-multiselect"
+                    options={analysts.filter((analyst) => !analyst.assigned)}
+                    getOptionLabel={(option) => option.name}
+                    onChange={(event, value) => {
+                      setSelected(value);
+                    }}
+                    renderInput={(params) => {
                       return (
-                        <div
-                          className={classes.vettingRow}
-                          key={analyst.id}
-                          style={{height: 'auto'}}
-                        >
-                          <Avatar>
-                            <Icon path={mdiAccount} size={1} />
-                          </Avatar>
-                          <div className={classes.analystListing}>
-                            <Typography
-                              className={classes.vettingText}
-                              variant="body2"
-                            >
-                              {analyst.name}
-                            </Typography>
-                            <Typography
-                              className={classes.vettingText}
-                              variant="body2"
-                            >
-                              {analyst.email}
-                            </Typography>
-                          </div>
-                          <AnalystMenu
-                            role={'support'}
-                            makeLead={makeLead(analyst)}
-                            unassignRequest={unassignRequest(analyst)}
-                            controls={index}
-                          />
-                        </div>
+                        <TextField
+                          {...params}
+                          variant="outlined"
+                          fullWidth
+                          label={t('Search support analysts')}
+                        />
                       );
-                    })}
+                    }}
+                  />
+                </FormControl>
+              </div>
+            </div>
+            <div className={classes.vettingRow}>
+              <div className={classes.vettingColumn}>
+                <Button
+                  variant="outlined"
+                  color="primary"
+                  onClick={() => selectSupports(selected)}
+                >
+                  {t('Add support analyst')}
+                </Button>
+              </div>
+            </div>
+            <div className={classes.vettingRow}>
+              <div className={classes.vettingColumn}>
+                <Typography variant="subtitle2">
+                  {t('Support Analysts')}
+                </Typography>
+              </div>
+            </div>
+
+            <div className={classes.vettingRow}>
+              <div className={classes.vettingColumn}>
+                <div className={classes.supportAnalysts}>
+                  {analysts
+                      .filter(
+                          (analyst) =>
+                            analyst.assigned && analyst.role === 'support',
+                      )
+                      .map((analyst, index) => {
+                        return (
+                          <div
+                            className={classes.vettingRow}
+                            key={analyst.id}
+                            style={{height: 'auto'}}
+                          >
+                            <Avatar>
+                              <Icon path={mdiAccount} size={1} />
+                            </Avatar>
+                            <div className={classes.analystListing}>
+                              <Typography
+                                className={classes.vettingText}
+                                variant="body2"
+                              >
+                                {analyst.name}
+                              </Typography>
+                              <Typography
+                                className={classes.vettingText}
+                                variant="body2"
+                              >
+                                {analyst.email}
+                              </Typography>
+                            </div>
+                            <AnalystMenu
+                              role={'support'}
+                              makeLead={makeLead(analyst)}
+                              unassignRequest={unassignRequest(analyst)}
+                              controls={index}
+                            />
+                          </div>
+                        );
+                      })}
+                </div>
               </div>
             </div>
           </div>
-        </div>
+        </DialogContent>
         <Divider />
-        <div className={classes.vettingContainerFooter}>
+        <DialogActions>
           <Button
             variant="outlined"
             color="primary"
@@ -465,7 +490,7 @@ export function DialogManageTeam(props) {
           >
             {t('Apply')}
           </Button>
-        </div>
+        </DialogActions>
       </Dialog>
     </React.Fragment>
   );
@@ -652,6 +677,8 @@ export function DialogWithdraw(props) {
         aria-labelledby="dashboard-dialog-title"
         open={open}
         className={classes.root}
+        disableBackdropClick
+        scroll="paper"
       >
         <DialogTitle id="dashboard-dialog-title">
           <div className={classes.vettingContainerTitle}>
@@ -667,59 +694,64 @@ export function DialogWithdraw(props) {
           </div>
         </DialogTitle>
         <Divider />
-        <form onSubmit={submitForm} noValidate>
-          <div className={classes.vettingContent}>
-            <div className={classes.vettingRow}>
-              <div className={classes.vettingColumn}>
-                <FormControl variant="outlined" className={classes.textField}>
-                  <TextField
-                    id="comments-input"
-                    label={t('Comments')}
-                    aria-label={t('Comments')}
-                    value={state.comments.text}
-                    variant="outlined"
-                    placeholder={t(
-                        'Please provite us with a withdrawal reason',
-                    )}
-                    multiline
-                    required
-                    error={Boolean(state.comments.errorText)}
-                    helperText={state.comments.helperText}
-                    onCut={(e) => disableCutCopyPaste(e, 'cut', 'comments')}
-                    onCopy={(e) => disableCutCopyPaste(e, 'copy', 'comments')}
-                    onPaste={(e) => disableCutCopyPaste(e, 'paste', 'comments')}
-                    onChange={(e) => handleChange(e, 'comments')}
-                    onClick={() => toggleHelperText('comments')}
-                    onBlur={() => toggleHelperText('comments')}
-                    onFocus={() => toggleHelperText('comments')}
-                  />
-                </FormControl>
+        <DialogContent>
+          <form onSubmit={submitForm} noValidate id="withdraw-form">
+            <div className={classes.vettingSection}>
+              <div className={classes.vettingRow}>
+                <div className={classes.vettingColumn}>
+                  <FormControl variant="outlined" className={classes.textField}>
+                    <TextField
+                      id="comments-input"
+                      label={t('Comments')}
+                      aria-label={t('Comments')}
+                      value={state.comments.text}
+                      variant="outlined"
+                      placeholder={t(
+                          'Please provite us with a withdrawal reason',
+                      )}
+                      multiline
+                      required
+                      error={Boolean(state.comments.errorText)}
+                      helperText={state.comments.helperText}
+                      onCut={(e) => disableCutCopyPaste(e, 'cut', 'comments')}
+                      onCopy={(e) => disableCutCopyPaste(e, 'copy', 'comments')}
+                      onPaste={(e) =>
+                        disableCutCopyPaste(e, 'paste', 'comments')
+                      }
+                      onChange={(e) => handleChange(e, 'comments')}
+                      onClick={() => toggleHelperText('comments')}
+                      onBlur={() => toggleHelperText('comments')}
+                      onFocus={() => toggleHelperText('comments')}
+                    />
+                  </FormControl>
+                </div>
               </div>
             </div>
-          </div>
-          <Divider />
-          <div className={classes.vettingContainerFooter}>
-            <Button
-              variant="outlined"
-              color="primary"
-              onClick={() => {
-                setState({...initial});
-                toggleDialog();
-              }}
-              className={classes.footerBtns}
-            >
-              {t('Cancel')}
-            </Button>
-            <Button
-              variant="contained"
-              color="primary"
-              className={classes.footerBtns}
-              type="submit"
-            >
-              {t('Withdraw request')}
-            </Button>
-          </div>
-        </form>
+          </form>
+        </DialogContent>
+        <Divider />
+        <DialogActions>
+          <Button
+            variant="outlined"
+            color="primary"
+            onClick={() => {
+              setState({...initial});
+              toggleDialog();
+            }}
+            className={classes.footerBtns}
+          >
+            {t('Cancel')}
+          </Button>
+          <Button
+            variant="contained"
+            color="primary"
+            className={classes.footerBtns}
+            type="submit"
+            form="withdraw-form"
+          >
+            {t('Withdraw request')}
+          </Button>
+        </DialogActions>
       </Dialog>
       <CustomizedSnackbar
         open={snackbar}
@@ -744,6 +776,8 @@ export function DialogUnassign(props) {
         aria-labelledby="dashboard-dialog-title"
         open={open}
         className={classes.root}
+        disableBackdropClick
+        scroll="paper"
       >
         <DialogTitle id="dashboard-dialog-title">
           <div className={classes.vettingContainerTitle}>
@@ -759,19 +793,21 @@ export function DialogUnassign(props) {
           </div>
         </DialogTitle>
         <Divider />
-        <div className={classes.vettingContent}>
-          <div className={classes.vettingRow}>
-            <div className={classes.vettingColumn}>
-              <Typography variant="body2">
-                {t(
-                    'If you choose to proceed, the request will no longer have a lead analyst and an email will be sent to the researcher notifying them of the change.',
-                )}
-              </Typography>
+        <DialogContent>
+          <div className={classes.vettingSection}>
+            <div className={classes.vettingRow}>
+              <div className={classes.vettingColumn}>
+                <Typography variant="body2">
+                  {t(
+                      'If you choose to proceed, the request will no longer have a lead analyst and an email will be sent to the researcher notifying them of the change.',
+                  )}
+                </Typography>
+              </div>
             </div>
           </div>
-        </div>
+        </DialogContent>
         <Divider />
-        <div className={classes.vettingContainerFooter}>
+        <DialogActions>
           <Button
             variant="outlined"
             color="primary"
@@ -788,7 +824,7 @@ export function DialogUnassign(props) {
           >
             {t('Unassign')}
           </Button>
-        </div>
+        </DialogActions>
       </Dialog>
     </React.Fragment>
   );
@@ -807,6 +843,8 @@ export function DialogSupport(props) {
         aria-labelledby="dashboard-dialog-title"
         open={open}
         className={classes.root}
+        disableBackdropClick
+        scroll="paper"
       >
         <DialogTitle id="dashboard-dialog-title">
           <div className={classes.vettingContainerTitle}>
@@ -822,19 +860,21 @@ export function DialogSupport(props) {
           </div>
         </DialogTitle>
         <Divider />
-        <div className={classes.vettingContent}>
-          <div className={classes.vettingRow}>
-            <div className={classes.vettingColumn}>
-              <Typography variant="body2">
-                {t(
-                    'If you choose to proceed, the request will no longer have a lead analyst and an email will be sent to the researcher notifying them of the change.',
-                )}
-              </Typography>
+        <DialogContent>
+          <div className={classes.vettingSection}>
+            <div className={classes.vettingRow}>
+              <div className={classes.vettingColumn}>
+                <Typography variant="body2">
+                  {t(
+                      'If you choose to proceed, the request will no longer have a lead analyst and an email will be sent to the researcher notifying them of the change.',
+                  )}
+                </Typography>
+              </div>
             </div>
           </div>
-        </div>
+        </DialogContent>
         <Divider />
-        <div className={classes.vettingContainerFooter}>
+        <DialogActions>
           <Button
             variant="outlined"
             color="primary"
@@ -851,7 +891,7 @@ export function DialogSupport(props) {
           >
             {t('Continue')}
           </Button>
-        </div>
+        </DialogActions>
       </Dialog>
     </React.Fragment>
   );
@@ -1026,6 +1066,8 @@ export function DialogAssign(props) {
         aria-labelledby="dashboard-dialog-title"
         open={open}
         className={classes.root}
+        disableBackdropClick
+        scroll="paper"
       >
         <DialogTitle id="dashboard-dialog-title">
           <div className={classes.vettingContainerTitle}>
@@ -1041,68 +1083,71 @@ export function DialogAssign(props) {
           </div>
         </DialogTitle>
         <Divider />
-        <form onSubmit={submitForm} noValidate>
-          <div className={classes.vettingContent}>
-            <div className={classes.vettingRow}>
-              <div className={classes.vettingColumn}>
-                <Typography variant="subtitle2">
-                  {t('Provide a phone number')}
-                </Typography>
+        <DialogContent>
+          <form onSubmit={submitForm} noValidate id="assign-form">
+            <div className={classes.vettingSection}>
+              <div className={classes.vettingRow}>
+                <div className={classes.vettingColumn}>
+                  <Typography variant="subtitle2">
+                    {t('Provide a phone number')}
+                  </Typography>
+                </div>
+              </div>
+              <div className={classes.vettingRow}>
+                <div className={classes.vettingColumn}>
+                  <FormControl variant="outlined" className={classes.textField}>
+                    <NumberFormat
+                      id="phone-input"
+                      label={t('Phone number')}
+                      aria-label={t('Phone number')}
+                      value={state.phone.text}
+                      customInput={TextField}
+                      type="text"
+                      variant="outlined"
+                      format="+1 (###) ### ####"
+                      mask="_"
+                      allowEmptyFormatting
+                      autoComplete="phone"
+                      error={Boolean(state.phone.errorText)}
+                      helperText={state.phone.errorText}
+                      required
+                      onCut={(e) => disableCutCopyPaste(e, 'cut', 'phone')}
+                      onCopy={(e) => disableCutCopyPaste(e, 'copy', 'phone')}
+                      onPaste={(e) => disableCutCopyPaste(e, 'paste', 'phone')}
+                      onChange={(e) => handleChange(e, 'phone')}
+                      onClick={() => toggleHelperText('phone')}
+                      onBlur={() => toggleHelperText('phone')}
+                      onFocus={() => toggleHelperText('phone')}
+                    />
+                  </FormControl>
+                </div>
               </div>
             </div>
-            <div className={classes.vettingRow}>
-              <div className={classes.vettingColumn}>
-                <FormControl variant="outlined" className={classes.textField}>
-                  <NumberFormat
-                    id="phone-input"
-                    label={t('Phone number')}
-                    aria-label={t('Phone number')}
-                    value={state.phone.text}
-                    customInput={TextField}
-                    type="text"
-                    variant="outlined"
-                    format="+1 (###) ### ####"
-                    mask="_"
-                    allowEmptyFormatting
-                    autoComplete="phone"
-                    error={Boolean(state.phone.errorText)}
-                    helperText={state.phone.errorText}
-                    required
-                    onCut={(e) => disableCutCopyPaste(e, 'cut', 'phone')}
-                    onCopy={(e) => disableCutCopyPaste(e, 'copy', 'phone')}
-                    onPaste={(e) => disableCutCopyPaste(e, 'paste', 'phone')}
-                    onChange={(e) => handleChange(e, 'phone')}
-                    onClick={() => toggleHelperText('phone')}
-                    onBlur={() => toggleHelperText('phone')}
-                    onFocus={() => toggleHelperText('phone')}
-                  />
-                </FormControl>
-              </div>
-            </div>
-          </div>
-          <Divider />
-          <div className={classes.vettingContainerFooter}>
-            <Button
-              variant="outlined"
-              color="primary"
-              onClick={() => {
-                setState({...initial});
-                toggleDialog();
-              }}
-              className={classes.footerBtns}
-            >
-              {t('Cancel')}
-            </Button>
-            <Button
-              type="submit"
-              variant="contained"
-              color="primary"
-              className={classes.footerBtns}
-            >
-              {t('Continue')}
-            </Button>
-          </div>
-        </form>
+          </form>
+        </DialogContent>
+        <Divider />
+        <DialogActions>
+          <Button
+            variant="outlined"
+            color="primary"
+            onClick={() => {
+              setState({...initial});
+              toggleDialog();
+            }}
+            className={classes.footerBtns}
+          >
+            {t('Cancel')}
+          </Button>
+          <Button
+            type="submit"
+            variant="contained"
+            color="primary"
+            className={classes.footerBtns}
+            form="assign-form"
+          >
+            {t('Continue')}
+          </Button>
+        </DialogActions>
       </Dialog>
     </React.Fragment>
   );
@@ -1275,6 +1320,8 @@ export function DialogUpdate(props) {
         aria-labelledby="dashboard-dialog-title"
         open={open}
         className={classes.root}
+        scroll="paper"
+        disableBackdropClick
       >
         <DialogTitle id="dashboard-dialog-title">
           <div className={classes.vettingContainerTitle}>
@@ -1290,63 +1337,68 @@ export function DialogUpdate(props) {
           </div>
         </DialogTitle>
         <Divider />
-        <form onSubmit={submitForm} noValidate>
-          <div className={classes.vettingContent}>
-            <div className={classes.vettingRow}>
-              <div className={classes.vettingColumn}>
-                <Alert severity="warning" className={classes.alert}>
-                  {t('Do not include any confidential information.')}
-                </Alert>
+        <DialogContent>
+          <form onSubmit={submitForm} noValidate id="update-form">
+            <div className={classes.vettingSection}>
+              <div className={classes.vettingRow}>
+                <div className={classes.vettingColumn}>
+                  <Alert severity="warning" className={classes.alert}>
+                    {t('Do not include any confidential information.')}
+                  </Alert>
+                </div>
+              </div>
+              <div className={classes.vettingRow}>
+                <div className={classes.vettingColumn}>
+                  <FormControl variant="outlined" className={classes.textField}>
+                    <TextField
+                      id="comments-input"
+                      label={t('Comments')}
+                      aria-label={t('Comments')}
+                      value={state.comments.text}
+                      variant="outlined"
+                      multiline
+                      required
+                      error={Boolean(state.comments.errorText)}
+                      helperText={state.comments.errorText}
+                      onCut={(e) => disableCutCopyPaste(e, 'cut', 'comments')}
+                      onCopy={(e) => disableCutCopyPaste(e, 'copy', 'comments')}
+                      onPaste={(e) =>
+                        disableCutCopyPaste(e, 'paste', 'comments')
+                      }
+                      onChange={(e) => handleChange(e, 'comments')}
+                      onClick={() => toggleHelperText('comments')}
+                      onBlur={() => toggleHelperText('comments')}
+                      onFocus={() => toggleHelperText('comments')}
+                    />
+                  </FormControl>
+                </div>
               </div>
             </div>
-            <div className={classes.vettingRow}>
-              <div className={classes.vettingColumn}>
-                <FormControl variant="outlined" className={classes.textField}>
-                  <TextField
-                    id="comments-input"
-                    label={t('Comments')}
-                    aria-label={t('Comments')}
-                    value={state.comments.text}
-                    variant="outlined"
-                    multiline
-                    required
-                    error={Boolean(state.comments.errorText)}
-                    helperText={state.comments.errorText}
-                    onCut={(e) => disableCutCopyPaste(e, 'cut', 'comments')}
-                    onCopy={(e) => disableCutCopyPaste(e, 'copy', 'comments')}
-                    onPaste={(e) => disableCutCopyPaste(e, 'paste', 'comments')}
-                    onChange={(e) => handleChange(e, 'comments')}
-                    onClick={() => toggleHelperText('comments')}
-                    onBlur={() => toggleHelperText('comments')}
-                    onFocus={() => toggleHelperText('comments')}
-                  />
-                </FormControl>
-              </div>
-            </div>
-          </div>
-          <Divider />
-          <div className={classes.vettingContainerFooter}>
-            <Button
-              variant="outlined"
-              color="primary"
-              onClick={() => {
-                setState({...initial});
-                toggleDialog();
-              }}
-              className={classes.footerBtns}
-            >
-              {t('Cancel')}
-            </Button>
-            <Button
-              type="submit"
-              variant="contained"
-              color="primary"
-              className={classes.footerBtns}
-            >
-              {t('Submit request')}
-            </Button>
-          </div>
-        </form>
+          </form>
+        </DialogContent>
+        <Divider />
+        <DialogActions>
+          <Button
+            variant="outlined"
+            color="primary"
+            onClick={() => {
+              setState({...initial});
+              toggleDialog();
+            }}
+            className={classes.footerBtns}
+          >
+            {t('Cancel')}
+          </Button>
+          <Button
+            type="submit"
+            variant="contained"
+            color="primary"
+            className={classes.footerBtns}
+            form="update-form"
+          >
+            {t('Submit request')}
+          </Button>
+        </DialogActions>
       </Dialog>
     </React.Fragment>
   );
@@ -1459,10 +1511,12 @@ export function DialogDenied(props) {
       state.reason.invalid = t('Select a reason.');
       state.reason.errorText = t('Select a reason.');
     }
-    if (state.comments.text.trim() === '') {
-      isError = true;
-      state.comments.invalid = t('Enter some comments.');
-      state.comments.errorText = t('Enter some comments.');
+    if (state.reason.text === 'Other') {
+      if (state.comments.text.trim() === '') {
+        isError = true;
+        state.comments.invalid = t('Enter some comments.');
+        state.comments.errorText = t('Enter some comments.');
+      }
     }
 
     if (isError) {
@@ -1585,6 +1639,8 @@ export function DialogDenied(props) {
         aria-labelledby="dashboard-dialog-title"
         open={open}
         className={classes.root}
+        disableBackdropClick
+        scroll="paper"
       >
         <DialogTitle id="dashboard-dialog-title">
           <div className={classes.vettingContainerTitle}>
@@ -1600,181 +1656,218 @@ export function DialogDenied(props) {
           </div>
         </DialogTitle>
         <Divider />
-        <form onSubmit={submitForm} noValidate>
-          <div className={classes.vettingContent}>
-            <div className={classes.vettingRow}>
-              <div className={classes.vettingColumn}>
-                <Alert severity="warning" className={classes.alert}>
-                  {t('Do not include any confidential information.')}
-                </Alert>
-              </div>
-            </div>
-            <div className={classes.vettingRow}>
-              <div className={classes.vettingColumn}>
-                <Typography variant="subtitle2">
-                  {t('Billable hours')}
-                </Typography>
-              </div>
-            </div>
-            <div className={classes.vettingRow}>
-              <div className={classes.vettingColumn}>
-                <FormControl variant="outlined">
-                  <FormControlLabel
-                    control={
-                      <NumberFormat
-                        id="hours-input"
-                        label={t('Hours')}
-                        aria-label={t('Hours')}
-                        value={state.hours.text}
-                        customInput={TextField}
-                        type="text"
-                        variant="outlined"
-                        error={Boolean(state.hours.errorText)}
-                        helperText={state.hours.errorText}
-                        required
-                        onCut={(e) => disableCutCopyPaste(e, 'cut', 'hours')}
-                        onCopy={(e) => disableCutCopyPaste(e, 'copy', 'hours')}
-                        onPaste={(e) =>
-                          disableCutCopyPaste(e, 'paste', 'hours')
-                        }
-                        onChange={(e) => handleChange(e, 'hours')}
-                        onClick={() => toggleHelperText('hours')}
-                        onBlur={() => toggleHelperText('hours')}
-                        onFocus={() => toggleHelperText('hours')}
-                      />
-                    }
-                  />
-                </FormControl>
-              </div>
-              <div className={classes.vettingColumn}>
-                <FormControl variant="outlined">
-                  <FormControlLabel
-                    control={
-                      <NumberFormat
-                        id="minutes-input"
-                        label={t('Minutes')}
-                        aria-label={t('Minutes')}
-                        value={state.minutes.text}
-                        customInput={TextField}
-                        type="text"
-                        variant="outlined"
-                        isAllowed={(values) => {
-                          const {formattedValue, floatValue} = values;
-                          return formattedValue === '' || floatValue <= 60;
-                        }}
-                        error={Boolean(state.minutes.errorText)}
-                        helperText={state.minutes.errorText}
-                        required
-                        onCut={(e) => disableCutCopyPaste(e, 'cut', 'minutes')}
-                        onCopy={(e) =>
-                          disableCutCopyPaste(e, 'copy', 'minutes')
-                        }
-                        onPaste={(e) =>
-                          disableCutCopyPaste(e, 'paste', 'minutes')
-                        }
-                        onChange={(e) => handleChange(e, 'minutes')}
-                        onClick={() => toggleHelperText('minutes')}
-                        onBlur={() => toggleHelperText('minutes')}
-                        onFocus={() => toggleHelperText('minutes')}
-                      />
-                    }
-                  />
-                </FormControl>
-              </div>
-            </div>
-
-            <div className={classes.vettingRow}>
-              <div className={classes.vettingColumn}>
-                <FormControl variant="outlined" required>
-                  <Select
-                    native
-                    inputProps={{
-                      id: 'denied-select-label',
-                    }}
-                    label={t('Denied reason')}
-                    value={state.reason.text}
-                    fullWidth
-                    placeholder={t('Select an option')}
-                    onChange={(e) => handleChange(e, 'reason')}
-                    error={Boolean(state.reason.errorText)}
-                  >
-                    <option value=""></option>
-                    <option value="Non-SSI project">
-                      {t('Non-SSI project')}
-                    </option>
-                    <option value="Confidential requirements are not met">
-                      {t('Confidential requirements are not met')}
-                    </option>
-                    <option value="Request is missing information">
-                      {t('Request is missing information')}
-                    </option>
-                    <option value="Output file(s) are not in line with the project proposal">
-                      {t(
-                          'Output file(s) are not in line with the project proposal',
-                      )}
-                    </option>
-                    <option value="Other">{t('Other')}</option>
-                  </Select>
-                  <InputLabel htmlFor="denied-select-label">
-                    {t('Denied reason')}
-                  </InputLabel>
-                  <FormHelperText>{state.reason.errorText}</FormHelperText>
-                </FormControl>
-              </div>
-            </div>
-            {state.reason.text === 'Other' ? (
+        <DialogContent>
+          <form onSubmit={submitForm} noValidate id="deny-form">
+            <div className={classes.vettingSection}>
               <div className={classes.vettingRow}>
                 <div className={classes.vettingColumn}>
+                  <Alert severity="warning" className={classes.alert}>
+                    {t('Do not include any confidential information.')}
+                  </Alert>
+                </div>
+              </div>
+              <div className={classes.vettingRow}>
+                <div className={classes.vettingColumn}>
+                  <Typography variant="subtitle2">
+                    {t('Billable hours')}
+                  </Typography>
+                </div>
+              </div>
+              <div className={clsx(classes.vettingRow, classes.alignStart)}>
+                <div className={classes.vettingColumn}>
                   <FormControl variant="outlined">
-                    <TextField
-                      id="comments-input"
-                      label={t('Comments')}
-                      aria-label={t('Comments')}
-                      value={state.comments.text}
-                      variant="outlined"
-                      multiline
-                      error={Boolean(state.comments.errorText)}
-                      helperText={state.comments.errorText}
-                      onCut={(e) => disableCutCopyPaste(e, 'cut', 'comments')}
-                      onCopy={(e) => disableCutCopyPaste(e, 'copy', 'comments')}
-                      onPaste={(e) =>
-                        disableCutCopyPaste(e, 'paste', 'comments')
+                    <FormControlLabel
+                      control={
+                        <NumberFormat
+                          id="hours-input"
+                          label={t('Hours')}
+                          aria-label={t('Hours')}
+                          value={state.hours.text}
+                          customInput={TextField}
+                          type="text"
+                          variant="outlined"
+                          error={Boolean(state.hours.errorText)}
+                          helperText={state.hours.errorText}
+                          required
+                          onCut={(e) => disableCutCopyPaste(e, 'cut', 'hours')}
+                          onCopy={(e) =>
+                            disableCutCopyPaste(e, 'copy', 'hours')
+                          }
+                          onPaste={(e) =>
+                            disableCutCopyPaste(e, 'paste', 'hours')
+                          }
+                          onChange={(e) => handleChange(e, 'hours')}
+                          onClick={() => toggleHelperText('hours')}
+                          onBlur={() => toggleHelperText('hours')}
+                          onFocus={() => toggleHelperText('hours')}
+                        />
                       }
-                      onChange={(e) => handleChange(e, 'comments')}
-                      onClick={() => toggleHelperText('comments')}
-                      onBlur={() => toggleHelperText('comments')}
-                      onFocus={() => toggleHelperText('comments')}
+                    />
+                  </FormControl>
+                </div>
+                <div className={classes.vettingColumn}>
+                  <FormControl variant="outlined">
+                    <FormControlLabel
+                      control={
+                        <NumberFormat
+                          id="minutes-input"
+                          label={t('Minutes')}
+                          aria-label={t('Minutes')}
+                          value={state.minutes.text}
+                          customInput={TextField}
+                          type="text"
+                          variant="outlined"
+                          isAllowed={(values) => {
+                            const {formattedValue, floatValue} = values;
+                            return formattedValue === '' || floatValue <= 60;
+                          }}
+                          error={Boolean(state.minutes.errorText)}
+                          helperText={state.minutes.errorText}
+                          required
+                          onCut={(e) =>
+                            disableCutCopyPaste(e, 'cut', 'minutes')
+                          }
+                          onCopy={(e) =>
+                            disableCutCopyPaste(e, 'copy', 'minutes')
+                          }
+                          onPaste={(e) =>
+                            disableCutCopyPaste(e, 'paste', 'minutes')
+                          }
+                          onChange={(e) => handleChange(e, 'minutes')}
+                          onClick={() => toggleHelperText('minutes')}
+                          onBlur={() => toggleHelperText('minutes')}
+                          onFocus={() => toggleHelperText('minutes')}
+                        />
+                      }
                     />
                   </FormControl>
                 </div>
               </div>
-            ) : (
-              false
-            )}
-          </div>
-          <Divider />
-          <div className={classes.vettingContainerFooter}>
-            <Button
-              variant="outlined"
-              color="primary"
-              onClick={() => {
-                setState({...initial});
-                toggleDialog();
-              }}
-              className={classes.footerBtns}
-            >
-              {t('Cancel')}
-            </Button>
-            <Button
-              type="submit"
-              variant="contained"
-              color="primary"
-              className={classes.footerBtns}
-            >
-              {t('Submit')}
-            </Button>
-          </div>
-        </form>
+
+              <div className={classes.vettingRow}>
+                <div className={classes.vettingColumn}>
+                  <FormControl variant="outlined" required>
+                    <Select
+                      native
+                      inputProps={{
+                        id: 'denied-select-label',
+                      }}
+                      label={t('Denied reason')}
+                      value={state.reason.text}
+                      fullWidth
+                      placeholder={t('Select an option')}
+                      onChange={(e) => handleChange(e, 'reason')}
+                      error={Boolean(state.reason.errorText)}
+                    >
+                      <option value=""></option>
+                      <option value="Non-SSI project">
+                        {t('Non-SSI project')}
+                      </option>
+                      <option value="Confidential requirements are not met">
+                        {t('Confidential requirements are not met')}
+                      </option>
+                      <option value="Request is missing information">
+                        {t('Request is missing information')}
+                      </option>
+                      <option value="Output file(s) are not in line with the project proposal">
+                        {t(
+                            'Output file(s) are not in line with the project proposal',
+                        )}
+                      </option>
+                      <option value="Other">{t('Other')}</option>
+                    </Select>
+                    <InputLabel htmlFor="denied-select-label">
+                      {t('Denied reason')}
+                    </InputLabel>
+                    <FormHelperText>{state.reason.errorText}</FormHelperText>
+                  </FormControl>
+                </div>
+              </div>
+
+              <div className={classes.vettingRow}>
+                <div className={classes.vettingColumn}>
+                  {state.reason.text !== 'Other' ? (
+                    <div className={classes.dialogRow}>
+                      <FormControl variant="outlined">
+                        <TextField
+                          id="comments-input"
+                          label={t('Comments')}
+                          aria-label={t('Comments')}
+                          value={state.comments.text}
+                          variant="outlined"
+                          multiline
+                          error={Boolean(state.comments.errorText)}
+                          helperText={state.comments.errorText}
+                          onCut={(e) =>
+                            disableCutCopyPaste(e, 'cut', 'comments')
+                          }
+                          onCopy={(e) =>
+                            disableCutCopyPaste(e, 'copy', 'comments')
+                          }
+                          onPaste={(e) =>
+                            disableCutCopyPaste(e, 'paste', 'comments')
+                          }
+                          onChange={(e) => handleChange(e, 'comments')}
+                          onClick={() => toggleHelperText('comments')}
+                          onBlur={() => toggleHelperText('comments')}
+                          onFocus={() => toggleHelperText('comments')}
+                        />
+                      </FormControl>
+                    </div>
+                  ) : (
+                    <FormControl variant="outlined">
+                      <TextField
+                        id="comments-input"
+                        label={t('Comments')}
+                        aria-label={t('Comments')}
+                        value={state.comments.text}
+                        variant="outlined"
+                        multiline
+                        required
+                        error={Boolean(state.comments.errorText)}
+                        helperText={state.comments.errorText}
+                        onCut={(e) => disableCutCopyPaste(e, 'cut', 'comments')}
+                        onCopy={(e) =>
+                          disableCutCopyPaste(e, 'copy', 'comments')
+                        }
+                        onPaste={(e) =>
+                          disableCutCopyPaste(e, 'paste', 'comments')
+                        }
+                        onChange={(e) => handleChange(e, 'comments')}
+                        onClick={() => toggleHelperText('comments')}
+                        onBlur={() => toggleHelperText('comments')}
+                        onFocus={() => toggleHelperText('comments')}
+                      />
+                    </FormControl>
+                  )}
+                </div>
+              </div>
+            </div>
+          </form>
+        </DialogContent>
+        <Divider />
+        <DialogActions>
+          <Button
+            variant="outlined"
+            color="primary"
+            onClick={() => {
+              setState({...initial});
+              toggleDialog();
+            }}
+            className={classes.footerBtns}
+          >
+            {t('Cancel')}
+          </Button>
+          <Button
+            type="submit"
+            variant="contained"
+            color="primary"
+            className={classes.footerBtns}
+            form="deny-form"
+          >
+            {t('Submit')}
+          </Button>
+        </DialogActions>
       </Dialog>
       <CustomizedSnackbar
         open={snackbar}
@@ -1976,6 +2069,8 @@ export function DialogApprove(props) {
         aria-labelledby="dashboard-dialog-title"
         open={open}
         className={classes.root}
+        disableBackdropClick
+        scroll="paper"
       >
         <DialogTitle id="dashboard-dialog-title">
           <div className={classes.vettingContainerTitle}>
@@ -1991,105 +2086,112 @@ export function DialogApprove(props) {
           </div>
         </DialogTitle>
         <Divider />
-        <form onSubmit={submitForm} noValidate>
-          <div className={classes.vettingContent}>
-            <div className={classes.vettingRow}>
-              <div className={classes.vettingColumn}>
-                <Typography variant="subtitle2">
-                  {t('Billable hours')}
-                </Typography>
+        <DialogContent>
+          <form onSubmit={submitForm} noValidate id="approve-form">
+            <div className={classes.vettingSection}>
+              <div className={classes.vettingRow}>
+                <div className={classes.vettingColumn}>
+                  <Typography variant="subtitle2">
+                    {t('Billable hours')}
+                  </Typography>
+                </div>
+              </div>
+              <div className={clsx(classes.vettingRow, classes.alignStart)}>
+                <div className={classes.vettingColumn}>
+                  <FormControl variant="outlined">
+                    <FormControlLabel
+                      control={
+                        <NumberFormat
+                          id="hours-input"
+                          label={t('Hours')}
+                          aria-label={t('Hours')}
+                          value={state.hours.text}
+                          customInput={TextField}
+                          type="text"
+                          variant="outlined"
+                          error={Boolean(state.hours.errorText)}
+                          helperText={state.hours.errorText}
+                          required
+                          onCut={(e) => disableCutCopyPaste(e, 'cut', 'hours')}
+                          onCopy={(e) =>
+                            disableCutCopyPaste(e, 'copy', 'hours')
+                          }
+                          onPaste={(e) =>
+                            disableCutCopyPaste(e, 'paste', 'hours')
+                          }
+                          onChange={(e) => handleChange(e, 'hours')}
+                          onClick={() => toggleHelperText('hours')}
+                          onBlur={() => toggleHelperText('hours')}
+                          onFocus={() => toggleHelperText('hours')}
+                        />
+                      }
+                    />
+                  </FormControl>
+                </div>
+                <div className={classes.vettingColumn}>
+                  <FormControl variant="outlined">
+                    <FormControlLabel
+                      control={
+                        <NumberFormat
+                          id="minutes-input"
+                          label={t('Minutes')}
+                          aria-label={t('Minutes')}
+                          value={state.minutes.text}
+                          customInput={TextField}
+                          type="text"
+                          variant="outlined"
+                          isAllowed={(values) => {
+                            const {formattedValue, floatValue} = values;
+                            return formattedValue === '' || floatValue <= 60;
+                          }}
+                          error={Boolean(state.minutes.errorText)}
+                          helperText={state.minutes.errorText}
+                          required
+                          onCut={(e) =>
+                            disableCutCopyPaste(e, 'cut', 'minutes')
+                          }
+                          onCopy={(e) =>
+                            disableCutCopyPaste(e, 'copy', 'minutes')
+                          }
+                          onPaste={(e) =>
+                            disableCutCopyPaste(e, 'paste', 'minutes')
+                          }
+                          onChange={(e) => handleChange(e, 'minutes')}
+                          onClick={() => toggleHelperText('minutes')}
+                          onBlur={() => toggleHelperText('minutes')}
+                          onFocus={() => toggleHelperText('minutes')}
+                        />
+                      }
+                    />
+                  </FormControl>
+                </div>
               </div>
             </div>
-            <div className={classes.vettingRow}>
-              <div className={classes.vettingColumn}>
-                <FormControl variant="outlined">
-                  <FormControlLabel
-                    control={
-                      <NumberFormat
-                        id="hours-input"
-                        label={t('Hours')}
-                        aria-label={t('Hours')}
-                        value={state.hours.text}
-                        customInput={TextField}
-                        type="text"
-                        variant="outlined"
-                        error={Boolean(state.hours.errorText)}
-                        helperText={state.hours.errorText}
-                        required
-                        onCut={(e) => disableCutCopyPaste(e, 'cut', 'hours')}
-                        onCopy={(e) => disableCutCopyPaste(e, 'copy', 'hours')}
-                        onPaste={(e) =>
-                          disableCutCopyPaste(e, 'paste', 'hours')
-                        }
-                        onChange={(e) => handleChange(e, 'hours')}
-                        onClick={() => toggleHelperText('hours')}
-                        onBlur={() => toggleHelperText('hours')}
-                        onFocus={() => toggleHelperText('hours')}
-                      />
-                    }
-                  />
-                </FormControl>
-              </div>
-              <div className={classes.vettingColumn}>
-                <FormControl variant="outlined">
-                  <FormControlLabel
-                    control={
-                      <NumberFormat
-                        id="minutes-input"
-                        label={t('Minutes')}
-                        aria-label={t('Minutes')}
-                        value={state.minutes.text}
-                        customInput={TextField}
-                        type="text"
-                        variant="outlined"
-                        isAllowed={(values) => {
-                          const {formattedValue, floatValue} = values;
-                          return formattedValue === '' || floatValue <= 60;
-                        }}
-                        error={Boolean(state.minutes.errorText)}
-                        helperText={state.minutes.errorText}
-                        required
-                        onCut={(e) => disableCutCopyPaste(e, 'cut', 'minutes')}
-                        onCopy={(e) =>
-                          disableCutCopyPaste(e, 'copy', 'minutes')
-                        }
-                        onPaste={(e) =>
-                          disableCutCopyPaste(e, 'paste', 'minutes')
-                        }
-                        onChange={(e) => handleChange(e, 'minutes')}
-                        onClick={() => toggleHelperText('minutes')}
-                        onBlur={() => toggleHelperText('minutes')}
-                        onFocus={() => toggleHelperText('minutes')}
-                      />
-                    }
-                  />
-                </FormControl>
-              </div>
-            </div>
-          </div>
-          <Divider />
-          <div className={classes.vettingContainerFooter}>
-            <Button
-              variant="outlined"
-              color="primary"
-              onClick={() => {
-                setState({...initial});
-                toggleDialog();
-              }}
-              className={classes.footerBtns}
-            >
-              {t('Cancel')}
-            </Button>
-            <Button
-              type="submit"
-              variant="contained"
-              color="primary"
-              className={classes.footerBtns}
-            >
-              {t('Submit')}
-            </Button>
-          </div>
-        </form>
+          </form>
+        </DialogContent>
+        <Divider />
+        <DialogActions>
+          <Button
+            variant="outlined"
+            color="primary"
+            onClick={() => {
+              setState({...initial});
+              toggleDialog();
+            }}
+            className={classes.footerBtns}
+          >
+            {t('Cancel')}
+          </Button>
+          <Button
+            type="submit"
+            variant="contained"
+            color="primary"
+            className={classes.footerBtns}
+            form="approve-form"
+          >
+            {t('Submit')}
+          </Button>
+        </DialogActions>
       </Dialog>
       <CustomizedSnackbar
         open={snackbar}
@@ -2288,6 +2390,8 @@ export function DialognNewRequestTitle(props) {
         aria-labelledby="dashboard-dialog-title"
         open={open}
         className={classes.root}
+        disableBackdropClick
+        scroll="paper"
       >
         <DialogTitle id="dashboard-dialog-title">
           <div className={classes.vettingContainerTitle}>
@@ -2303,61 +2407,64 @@ export function DialognNewRequestTitle(props) {
           </div>
         </DialogTitle>
         <Divider />
-        <form onSubmit={submitForm} noValidate>
-          <div className={classes.vettingContent}>
-            <div className={classes.vettingRow}>
-              <div className={classes.vettingColumn}>
-                <Typography variant="subtitle2">
-                  {t('Please name your new request.')}
-                </Typography>
+        <DialogContent>
+          <form onSubmit={submitForm} noValidate id="new-form">
+            <div className={classes.vettingSection}>
+              <div className={classes.vettingRow}>
+                <div className={classes.vettingColumn}>
+                  <Typography variant="subtitle2">
+                    {t('Please name your new request.')}
+                  </Typography>
+                </div>
+              </div>
+              <div className={classes.vettingRow}>
+                <div className={classes.vettingColumn}>
+                  <FormControl variant="outlined" className={classes.textField}>
+                    <TextField
+                      id="name-input"
+                      label={t('Request name')}
+                      aria-label={t('Request name')}
+                      value={state.name.text}
+                      variant="outlined"
+                      error={Boolean(state.name.errorText)}
+                      helperText={state.name.errorText}
+                      onCut={(e) => disableCutCopyPaste(e, 'cut', 'name')}
+                      onCopy={(e) => disableCutCopyPaste(e, 'copy', 'name')}
+                      onPaste={(e) => disableCutCopyPaste(e, 'paste', 'name')}
+                      onChange={(e) => handleChange(e, 'name')}
+                      onClick={() => toggleHelperText('name')}
+                      onBlur={() => toggleHelperText('name')}
+                      multiline
+                    />
+                  </FormControl>
+                </div>
               </div>
             </div>
-            <div className={classes.vettingRow}>
-              <div className={classes.vettingColumn}>
-                <FormControl variant="outlined" className={classes.textField}>
-                  <TextField
-                    id="name-input"
-                    label={t('Request name')}
-                    aria-label={t('Request name')}
-                    value={state.name.text}
-                    variant="outlined"
-                    error={Boolean(state.name.errorText)}
-                    helperText={state.name.errorText}
-                    onCut={(e) => disableCutCopyPaste(e, 'cut', 'name')}
-                    onCopy={(e) => disableCutCopyPaste(e, 'copy', 'name')}
-                    onPaste={(e) => disableCutCopyPaste(e, 'paste', 'name')}
-                    onChange={(e) => handleChange(e, 'name')}
-                    onClick={() => toggleHelperText('name')}
-                    onBlur={() => toggleHelperText('name')}
-                    multiline
-                  />
-                </FormControl>
-              </div>
-            </div>
-          </div>
-          <Divider />
-          <div className={classes.vettingContainerFooter}>
-            <Button
-              variant="outlined"
-              color="primary"
-              onClick={() => {
-                setState({...initial});
-                toggleDialog();
-              }}
-              className={classes.footerBtns}
-            >
-              {t('Cancel')}
-            </Button>
-            <Button
-              type="submit"
-              variant="contained"
-              color="primary"
-              className={classes.footerBtns}
-            >
-              {t('Create')}
-            </Button>
-          </div>
-        </form>
+          </form>
+        </DialogContent>
+        <Divider />
+        <DialogActions>
+          <Button
+            variant="outlined"
+            color="primary"
+            onClick={() => {
+              setState({...initial});
+              toggleDialog();
+            }}
+            className={classes.footerBtns}
+          >
+            {t('Cancel')}
+          </Button>
+          <Button
+            type="submit"
+            variant="contained"
+            color="primary"
+            className={classes.footerBtns}
+            form="new-form"
+          >
+            {t('Create')}
+          </Button>
+        </DialogActions>
       </Dialog>
     </React.Fragment>
   );

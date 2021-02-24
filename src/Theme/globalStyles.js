@@ -26,7 +26,7 @@ export const useStyles = makeStyles({
       },
     },
     '.MuiIconButton-root': {
-      'padding': theme.spacing(1),
+      padding: theme.spacing(1),
     },
     '.MuiIconButton-edgeStart': {
       marginLeft: theme.spacing(-1),
@@ -146,6 +146,39 @@ export const useStyles = makeStyles({
       minWidth: '2.5rem',
       borderRadius: '24px',
     },
+
+    // Dialogs
+    '.MuiDialog-paperWidthSm': {
+      'width': 'calc(100% - 64px)',
+      '& .MuiTextField-root': {
+        width: '100%',
+      },
+      '& .MuiDialogContent-root': {
+        padding: 0,
+      },
+      '& .MuiDialogActions-spacing': {
+        'padding': theme.spacing(1.75, 3),
+        '&> :not(:first-child)': {
+          marginLeft: theme.spacing(2),
+        },
+      },
+      '& .MuiFormLabel-root': {
+        'line-height': 1,
+        'background-color': 'white',
+      },
+      '& .MuiOutlinedInput-multiline': {
+        padding: 0,
+      },
+      '& .MuiOutlinedInput-inputMultiline': {
+        'max-height': 130,
+        'overflow': 'auto !important',
+        'padding': theme.spacing(2),
+      },
+      '& .MuiAutocomplete-endAdornment': {
+        top: '5.5px',
+      },
+    },
+
     // *********** Custom styles **************
     '.avatar-orange': {
       color: theme.palette.getContrastText(deepOrange[500]),
