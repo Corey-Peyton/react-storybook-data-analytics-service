@@ -18,6 +18,7 @@ import {
   IconButton,
   DialogActions,
   Snackbar,
+  StepLabel,
 } from '@material-ui/core';
 import ArrowForwardIosIcon from '@material-ui/icons/ArrowForwardIos';
 import Avatar from '@material-ui/core/Avatar';
@@ -125,6 +126,10 @@ const useStyles = makeStyles((theme) => ({
     marginTop: '-20px',
     marginLeft: '45px',
   },
+  errorMsg: {
+    margin: 0,
+    textAlign: 'left',
+  },
 }));
 
 function getSteps() {
@@ -143,6 +148,7 @@ function VettingRequestAnalyst(props) {
     completed: {},
     title: 'Untitled request',
     open: false,
+    errors: [0, 4, 0, 0],
     userName: props.userName,
     lead: props.lead,
     support: props.support,
@@ -249,6 +255,10 @@ function VettingRequestAnalyst(props) {
     setState({...state, completed: {}});
   };
 
+  const isStepFailed = (step) => {
+    return state.errors[step] !== 0;
+  };
+
   const handleAssignToMe = () => {
     setState({...state, lead: state.userName});
   };
@@ -310,16 +320,34 @@ function VettingRequestAnalyst(props) {
                 </Button>
               )}
               <Stepper nonLinear activeStep={state.activeStep}>
-                {steps.map((label, index) => (
-                  <Step key={label}>
-                    <StepButton
-                      onClick={handleStep(index)}
-                      completed={state.completed[index]}
-                    >
-                      {label}
-                    </StepButton>
-                  </Step>
-                ))}
+                {steps.map((label, index) => {
+                  const labelProps = {};
+                  const buttonProps = {};
+                  if (isStepFailed(index)) {
+                    labelProps.error = true;
+                    buttonProps.optional = (
+                      <Typography
+                        className={classes.errorMsg}
+                        variant="body2"
+                        color="error"
+                      >
+                        {state.errors[index]}{' '}
+                        {state.errors[index] === 1 ? 'error' : 'errors'}
+                      </Typography>
+                    );
+                  }
+                  return (
+                    <Step key={label}>
+                      <StepButton
+                        {...buttonProps}
+                        onClick={handleStep(index)}
+                        completed={state.completed[index]}
+                      >
+                        <StepLabel {...labelProps}>{label}</StepLabel>
+                      </StepButton>
+                    </Step>
+                  );
+                })}
               </Stepper>
               {state.activeStep !== getSteps().length - 1 && (
                 <Button

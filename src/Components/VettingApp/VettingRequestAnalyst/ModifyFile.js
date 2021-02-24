@@ -23,6 +23,7 @@ import {
   Grid,
 } from '@material-ui/core';
 import Autocomplete from '@material-ui/lab/Autocomplete';
+import Alert from '@material-ui/lab/Alert';
 import InfoIcon from '@material-ui/icons/Info';
 import CloseIcon from '@material-ui/icons/Close';
 
@@ -46,9 +47,29 @@ const useStyles = makeStyles((theme) => ({
     'backgroundColor': theme.palette.common.white,
     'margin': theme.spacing(0, -3, 3, -3),
     'width': 'auto',
+    'boxShadow': theme.shadows[0],
+    'borderBottom': '1px solid',
+    'borderBottomColor': theme.palette.divider,
     '& .MuiToolbar-root': {
       justifyContent: 'space-between',
     },
+  },
+  body: {
+    marginBottom: theme.spacing(8),
+  },
+  footer: {
+    display: 'flex',
+    justifyContent: 'flex-end',
+    marginLeft: theme.spacing(-3),
+    marginRight: theme.spacing(-3),
+    padding: theme.spacing(1.75, 3),
+    borderTop: '1px solid',
+    borderTopColor: theme.palette.divider,
+    position: 'fixed',
+    bottom: 0,
+    width: '400px',
+    backgroundColor: theme.palette.common.white,
+    zIndex: 500,
   },
   tooltipLabel: {
     '& svg': {
@@ -126,8 +147,104 @@ for (const [key, value] of Object.entries(outputMethods)) {
   }
 }
 
-function ModifyFile(props) {
+export function AddFile(props) {
   const classes = useStyles();
+
+  return (
+    <React.Fragment>
+      <AppBar position="static" className={classes.appBar} color="default">
+        <Toolbar>
+          <Typography variant="h6" component="h2" className={classes.title}>
+            Add output file
+          </Typography>
+          <IconButton
+            aria-label="delete"
+            className={classes.margin}
+            edge="end"
+            onClick={(e) => props.toggleDrawer(e, 'addFile', false)}
+          >
+            <CloseIcon />
+          </IconButton>
+        </Toolbar>
+      </AppBar>
+      <div className={classes.body}>
+        <OutputFileForm {...props} />
+      </div>
+      <div className={classes.footer}>
+        <Button
+          className="mr-2"
+          variant="outlined"
+          color="primary"
+          onClick={(e) => props.toggleDrawer(e, 'addFile', false)}
+        >
+          Cancel
+        </Button>
+        <Button variant="contained" color="primary" onClick={props.createFile}>
+          Create
+        </Button>
+      </div>
+    </React.Fragment>
+  );
+}
+
+export function ModifyFile(props) {
+  const classes = useStyles();
+  const [state] = React.useState({
+    errors: 4,
+  });
+
+  return (
+    <React.Fragment>
+      <AppBar position="static" className={classes.appBar} color="default">
+        <Toolbar>
+          <Typography variant="h6" component="h2" className={classes.title}>
+            Edit output file
+          </Typography>
+          <IconButton
+            aria-label="delete"
+            className={classes.margin}
+            edge="end"
+            onClick={(e) => props.toggleDrawer(e, 'editFile', false)}
+          >
+            <CloseIcon />
+          </IconButton>
+        </Toolbar>
+      </AppBar>
+      <div className={classes.body}>
+        {state.errors !== 0 && (
+          <Alert className="mb-2" severity="error">
+            {state.errors} {state.errors > 1 ? 'errors' : 'error'}
+          </Alert>
+        )}
+        <OutputFileForm {...props} />
+      </div>
+      <div className={classes.footer}>
+        <Button
+          className="mr-2"
+          variant="outlined"
+          color="primary"
+          onClick={(e) => props.toggleDrawer(e, 'editFile', false)}
+        >
+          Cancel
+        </Button>
+        <Button variant="contained" color="primary" onClick={props.updateFile}>
+          Update
+        </Button>
+      </div>
+    </React.Fragment>
+  );
+}
+
+function BootstrapTooltip(props) {
+  const classes = useStylesBootstrap();
+
+  return <Tooltip arrow classes={classes} {...props} />;
+}
+
+function OutputFileForm(props) {
+  const classes = useStyles();
+  const {t} = useTranslation();
+
   const [state, setState] = React.useState({
     includeWeightVariable: null,
     linkedData: null,
@@ -228,27 +345,7 @@ function ModifyFile(props) {
       helperText: '',
     },
   });
-
-  const handleRadioChange = (event) => {
-    const name = event.target.name;
-    setState({
-      ...state,
-      [name]: event.target.value,
-    });
-  };
-
   const [selected, setSelected] = React.useState('');
-  const handleChange = (event) => {
-    setSelected(event.target.value);
-  };
-
-  function BootstrapTooltip(props) {
-    const classes = useStylesBootstrap();
-
-    return <Tooltip arrow classes={classes} {...props} />;
-  }
-
-  const {t} = useTranslation();
 
   const initial = {
     // blank object used to reset state
@@ -418,23 +515,20 @@ function ModifyFile(props) {
     }
   };
 
+  const handleChange = (event) => {
+    setSelected(event.target.value);
+  };
+
+  const handleRadioChange = (event) => {
+    const name = event.target.name;
+    setState({
+      ...state,
+      [name]: event.target.value,
+    });
+  };
+
   return (
-    <React.Fragment>
-      <AppBar position="static" className={classes.appBar} color="default">
-        <Toolbar>
-          <Typography variant="h6" component="h2" className={classes.title}>
-            Modify file
-          </Typography>
-          <IconButton
-            aria-label="delete"
-            className={classes.margin}
-            edge="end"
-            onClick={(e) => props.toggleDrawer(e, false)}
-          >
-            <CloseIcon />
-          </IconButton>
-        </Toolbar>
-      </AppBar>
+    <>
       <FormControl
         className={classes.inputMargin}
         margin="dense"
@@ -1159,16 +1253,6 @@ function ModifyFile(props) {
         error={Boolean(state.notes2.errorText)}
         helperText={state.notes2.errorText}
       />
-      <Button
-        variant="contained"
-        className="button"
-        color="primary"
-        onClick={(e) => props.saveChanges(e)}
-      >
-        Save Changes
-      </Button>
-    </React.Fragment>
+    </>
   );
 }
-
-export default ModifyFile;
