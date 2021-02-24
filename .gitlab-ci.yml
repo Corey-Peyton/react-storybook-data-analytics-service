@@ -1,10 +1,6 @@
 # Using the node alpine image to build the React app
 image: node:alpine
 
-# Announce the URL as per CRA docs
-# https://github.com/facebook/create-react-app/blob/master/packages/react-scripts/template/README.md#advanced-configuration
-variables:
-  PUBLIC_URL: /daaas
 # Cache node modules - speeds up future builds
 cache:
   paths:
@@ -26,18 +22,18 @@ lint:
 
 deploy review:
   stage: deploy review
+  only:
+    - branches
   except:
     - master
   before_script:
-    - npm install surge
-  script:
     - npm install
-    - npm run build --prod
-    - mv build public
-    - node_modules/.bin/surge public https://uxdc-daaas-${CI_ENVIRONMENT_SLUG}.surge.sh
+  script:
+    - npm run build
+    - node_modules/.bin/surge ./build https://uxdc-daaas-$CI_ENVIRONMENT_SLUG.surge.sh
   environment:
     name: review/$CI_COMMIT_REF_NAME
-    url: https://uxdc-daaas-$CI_ENVIRONMENT_SLUG.surge.sh
+    url: http://uxdc-daaas-$CI_ENVIRONMENT_SLUG.surge.sh
 
 # Job name for gitlab to recognise this results in assets for Gitlab Pages
 # https://docs.gitlab.com/ee/user/project/pages/introduction.html#gitlab-pages-requirements
