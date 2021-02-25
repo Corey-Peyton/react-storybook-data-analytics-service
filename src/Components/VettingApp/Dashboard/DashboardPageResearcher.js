@@ -17,7 +17,7 @@ import ProjectsDrawer from './Common/ProjectsDrawer';
 import BypassBlocks from '../../BypassBlocks';
 import {requestListResearchers} from '../../../Data/fakeData';
 import {DRAWER_WIDTH} from './Common/ProjectsDrawer';
-import {DialognNewRequestTitle} from './Common/DialogBox';
+import {DialognNewRequestTitle} from '../CommonComponents/DialogBox';
 
 const useStyles = makeStyles((theme) => ({
   main: {

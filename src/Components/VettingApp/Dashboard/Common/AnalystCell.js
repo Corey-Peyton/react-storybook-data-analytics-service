@@ -3,7 +3,10 @@ import {useTranslation} from 'react-i18next';
 import {makeStyles} from '@material-ui/core/styles';
 import {Typography, TableCell, Chip} from '@material-ui/core';
 
-import {DialogAnalyst, DialogManageTeam} from './DialogBox';
+import {
+  DialogAnalyst,
+  DialogManageTeam,
+} from '../../CommonComponents/DialogBox';
 import {ROW_HEIGHT} from './TableContainerComponent';
 
 const useStyles = makeStyles((theme) => ({
