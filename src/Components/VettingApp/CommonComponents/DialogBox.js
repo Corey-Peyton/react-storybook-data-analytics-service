@@ -38,36 +38,6 @@ const ROW_HEIGHT = 56;
 
 const useStyles = makeStyles((theme) => ({
   root: {
-    // '& .MuiDialog-paperWidthSm': {
-    //   'width': 'calc(100% - 64px)',
-    //   '& .MuiTextField-root': {
-    //     width: '100%',
-    //   },
-    //   '& .MuiDialogContent-root': {
-    //     padding: 0,
-    //   },
-    //   '& .MuiDialogActions-spacing': {
-    //     'padding': theme.spacing(1.75, 3),
-    //     '&> :not(:first-child)': {
-    //       marginLeft: theme.spacing(2),
-    //     },
-    //   },
-    //   '& .MuiFormLabel-root': {
-    //     'line-height': 1,
-    //     'background-color': 'white',
-    //   },
-    //   '& .MuiOutlinedInput-multiline': {
-    //     padding: 0,
-    //   },
-    //   '& .MuiOutlinedInput-inputMultiline': {
-    //     'max-height': 130,
-    //     'overflow': 'auto !important',
-    //     'padding': theme.spacing(2),
-    //   },
-    //   '& .MuiAutocomplete-endAdornment': {
-    //     top: '5.5px',
-    //   },
-    // },
     '& .MuiFormControl-root': {
       width: '100%',
     },
