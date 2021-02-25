@@ -73,7 +73,8 @@ const useStyles = makeStyles((theme) => ({
   drawer: {
     '& .MuiDrawer-paper': {
       maxWidth: '400px',
-      padding: theme.spacing(0, 3, 3, 3),
+      boxSizing: 'border-box',
+      paddingLeft: theme.spacing(3),
     },
   },
   inputMargin: {
@@ -116,7 +117,8 @@ function FilesList(props) {
   const [open, setOpen] = React.useState({
     dialogAddSupporting: false,
     snackbarAddSupporting: false,
-    snackbarSave: false,
+    snackbarCreate: false,
+    snackbarUpdate: false,
     snackbarDelete: false,
     addFile: false,
     editFile: false,
@@ -142,11 +144,11 @@ function FilesList(props) {
   };
 
   const createFile = () => {
-    setOpen({...open, snackbarSave: true, addFile: false});
+    setOpen({...open, snackbarCreate: true, addFile: false});
   };
 
   const updateFile = () => {
-    setOpen({...open, snackbarSave: true, editFile: false});
+    setOpen({...open, snackbarUpdate: true, editFile: false});
   };
 
   const deleteFile = () => {
@@ -353,6 +355,7 @@ function FilesList(props) {
           <IconButton
             onClick={() => handleClickClose('dialogAddSupporting')}
             edge="end"
+            aria-label="Close add supporting file"
           >
             <CloseIcon />
           </IconButton>
@@ -434,14 +437,17 @@ function FilesList(props) {
           <Typography variant="h6" component="h2">
             Delete this output file?
           </Typography>
-          <IconButton onClick={() => handleClickClose('deleteFile')} edge="end">
+          <IconButton
+            onClick={() => handleClickClose('deleteFile')}
+            edge="end"
+            aria-label="Close delete output file"
+          >
             <CloseIcon />
           </IconButton>
         </DialogTitle>
         <DialogContent className={classes.dialogContent}>
           <Alert severity="warning">
-            Deleting this output file will permanently remove it from your
-            request. You will not be able to recover it.
+            Deleting this output file cannot be undone.
           </Alert>
         </DialogContent>
         <DialogActions className={classes.dialogFooter}>
@@ -480,11 +486,11 @@ function FilesList(props) {
           The supporting file has been added
         </Alert>
       </Snackbar>
-      {/* Save output file snackbar */}
+      {/* Create output file snackbar */}
       <Snackbar
-        open={open.snackbarSave}
+        open={open.snackbarCreate}
         autoHideDuration={6000}
-        onClose={() => handleClickClose('snackbarSave')}
+        onClose={() => handleClickClose('snackbarCreate')}
         anchorOrigin={{
           vertical: 'bottom',
           horizontal: 'left',
@@ -494,9 +500,28 @@ function FilesList(props) {
           severity="success"
           className={classes.alert}
           variant="filled"
-          onClose={() => handleClickClose('snackbarSave')}
+          onClose={() => handleClickClose('snackbarCreate')}
         >
-          The output file has been saved
+          Output file created
+        </Alert>
+      </Snackbar>
+      {/* Update output file snackbar */}
+      <Snackbar
+        open={open.snackbarUpdate}
+        autoHideDuration={6000}
+        onClose={() => handleClickClose('snackbarUpdate')}
+        anchorOrigin={{
+          vertical: 'bottom',
+          horizontal: 'left',
+        }}
+      >
+        <Alert
+          severity="success"
+          className={classes.alert}
+          variant="filled"
+          onClose={() => handleClickClose('snackbarUpdate')}
+        >
+          Output file updated
         </Alert>
       </Snackbar>
       {/* Delete output file snackbar */}

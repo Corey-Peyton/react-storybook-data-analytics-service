@@ -1,10 +1,8 @@
 import React from 'react';
+import {useTranslation} from 'react-i18next';
 import {makeStyles} from '@material-ui/core/styles';
-import Dialog from '@material-ui/core/Dialog';
-import DialogActions from '@material-ui/core/DialogActions';
-import DialogContent from '@material-ui/core/DialogContent';
-import DialogTitle from '@material-ui/core/DialogTitle';
-import Alert from '@material-ui/lab/Alert';
+import DeleteIcon from '@material-ui/icons/Delete';
+import clsx from 'clsx';
 import {
   FormControl,
   InputLabel,
@@ -22,42 +20,70 @@ import {
   AppBar,
   Toolbar,
   IconButton,
+  Grid,
 } from '@material-ui/core';
 import Autocomplete from '@material-ui/lab/Autocomplete';
 import InfoIcon from '@material-ui/icons/Info';
 import CloseIcon from '@material-ui/icons/Close';
-import Snackbar from '@material-ui/core/Snackbar';
 
 const useStyles = makeStyles((theme) => ({
+  marginHelperText: {
+    marginBottom: theme.spacing(1),
+  },
   inputMargin: {
-    marginBottom: theme.spacing(2),
+    marginTop: theme.spacing(1),
+    marginBottom: theme.spacing(1),
+  },
+  lineHeight: {
+    lineHeight: 'normal',
   },
   divider: {
     margin: theme.spacing(3, 0),
   },
+  hiddenRow: {
+    display: 'none',
+  },
   appBar: {
     'backgroundColor': theme.palette.common.white,
     'margin': theme.spacing(0, -3, 3, -3),
-    'width': 'auto',
+    'boxShadow': theme.shadows[0],
+    'borderBottom': '1px solid',
+    'borderBottomColor': theme.palette.divider,
+    'position': 'fixed',
+    'top': 0,
+    'zIndex': 500,
+    'width': '400px',
     '& .MuiToolbar-root': {
       justifyContent: 'space-between',
+      padding: theme.spacing(0, 3),
     },
   },
-  emphasisBox: {
-    background: '#ECEEF1',
-    padding: theme.spacing(2),
-    marginBottom: theme.spacing(2),
-    borderLeftStyle: 'solid',
-    borderLeftWidth: '5px',
-    borderLeftColor: theme.palette.primary.main,
+  body: {
+    marginTop: theme.spacing(8),
+    marginBottom: theme.spacing(8),
+    padding: theme.spacing(2, 3, 2, 0),
+    overflowY: 'auto',
+    overflowX: 'hidden',
+  },
+  footer: {
+    display: 'flex',
+    justifyContent: 'flex-end',
+    marginLeft: theme.spacing(-3),
+    marginRight: theme.spacing(-3),
+    padding: theme.spacing(1.75, 3),
+    borderTop: '1px solid',
+    borderTopColor: theme.palette.divider,
+    position: 'fixed',
+    bottom: 0,
+    width: '400px',
+    boxSizing: 'border-box',
+    backgroundColor: theme.palette.common.white,
+    zIndex: 500,
   },
   tooltipLabel: {
     '& svg': {
       verticalAlign: 'middle',
     },
-  },
-  button: {
-    marginBottom: theme.spacing(2),
   },
   buttonTooltip: {
     'display': 'flex',
@@ -66,6 +92,15 @@ const useStyles = makeStyles((theme) => ({
     '& svg': {
       marginLeft: theme.spacing(1),
     },
+  },
+}));
+
+const useStylesBootstrap = makeStyles((theme) => ({
+  arrow: {
+    color: theme.palette.common.black,
+  },
+  tooltip: {
+    backgroundColor: theme.palette.common.black,
   },
 }));
 
@@ -121,32 +156,368 @@ for (const [key, value] of Object.entries(outputMethods)) {
   }
 }
 
-function ModifyFile(props) {
+export function AddFile(props) {
   const classes = useStyles();
+
+  return (
+    <React.Fragment>
+      <AppBar position="static" className={classes.appBar} color="default">
+        <Toolbar>
+          <Typography variant="h6" component="h2" className={classes.title}>
+            Add output file
+          </Typography>
+          <IconButton
+            aria-label="Close add output file"
+            className={classes.margin}
+            edge="end"
+            onClick={(e) => props.toggleDrawer(e, 'addFile', false)}
+          >
+            <CloseIcon />
+          </IconButton>
+        </Toolbar>
+      </AppBar>
+      <div className={classes.body}>
+        <OutputFileForm {...props} />
+      </div>
+      <div className={classes.footer}>
+        <Button
+          className="mr-2"
+          variant="outlined"
+          color="primary"
+          onClick={(e) => props.toggleDrawer(e, 'addFile', false)}
+        >
+          Cancel
+        </Button>
+        <Button variant="contained" color="primary" onClick={props.createFile}>
+          Create
+        </Button>
+      </div>
+    </React.Fragment>
+  );
+}
+
+export function ModifyFile(props) {
+  const classes = useStyles();
+
+  return (
+    <React.Fragment>
+      <AppBar position="static" className={classes.appBar} color="default">
+        <Toolbar>
+          <Typography variant="h6" component="h2" className={classes.title}>
+            Edit output file
+          </Typography>
+          <IconButton
+            aria-label="Close edit output file"
+            className={classes.margin}
+            edge="end"
+            onClick={(e) => props.toggleDrawer(e, 'editFile', false)}
+          >
+            <CloseIcon />
+          </IconButton>
+        </Toolbar>
+      </AppBar>
+      <div className={classes.body}>
+        <OutputFileForm {...props} />
+      </div>
+      <div className={classes.footer}>
+        <Button
+          className="mr-2"
+          variant="outlined"
+          color="primary"
+          onClick={(e) => props.toggleDrawer(e, 'editFile', false)}
+        >
+          Cancel
+        </Button>
+        <Button variant="contained" color="primary" onClick={props.updateFile}>
+          Update
+        </Button>
+      </div>
+    </React.Fragment>
+  );
+}
+
+function BootstrapTooltip(props) {
+  const classes = useStylesBootstrap();
+
+  return <Tooltip arrow classes={classes} {...props} />;
+}
+
+function OutputFileForm(props) {
+  const classes = useStyles();
+  const {t} = useTranslation();
+
   const [state, setState] = React.useState({
     includeWeightVariable: null,
     linkedData: null,
     descriptiveStats: null,
     modifiedWeights: null,
+    covariance: null,
+    sheetname: {
+      text: '',
+      errorText: '',
+      invalid: '',
+      commands: '',
+      helperText:
+        'Each sheet for a spreadsheet file should be listed separately',
+    },
+    survey: {
+      text: '',
+      errorText: '',
+      invalid: '',
+      commands: '',
+      helperText: '',
+    },
+    outputmethod: {
+      text: '',
+      errorText: '',
+      invalid: '',
+      commands: '',
+      helperText: '',
+    },
+    weightvariable: {
+      text: '',
+      errorText: '',
+      invalid: '',
+      commands: '',
+      helperText: '',
+    },
+    sample: {
+      text: '',
+      errorText: '',
+      invalid: '',
+      commands: '',
+      helperText:
+        'Example: males 50 years of age or older. Required if you subsetted or selected only a certain set of respondents from the data for all or part of the analysis',
+    },
+    geography: {
+      text: '',
+      errorText: '',
+      invalid: '',
+      commands: '',
+      helperText: 'Examples: national, provincial',
+    },
+    linkage: {
+      text: '',
+      errorText: '',
+      invalid: '',
+      commands: '',
+      helperText: 'Examples: person-based, record-based, matching geographies',
+    },
+    modified: {
+      text: '',
+      errorText: '',
+      invalid: '',
+      commands: '',
+      helperText: '',
+    },
+    rounding: {
+      text: '',
+      errorText: '',
+      invalid: '',
+      commands: '',
+      helperText: '',
+    },
+    contents: {
+      text: '',
+      errorText: '',
+      invalid: '',
+      commands: '',
+      helperText: '',
+    },
+    notes: {
+      text: '',
+      errorText: '',
+      invalid: '',
+      commands: '',
+      helperText: '',
+    },
+    contents2: {
+      text: '',
+      errorText: '',
+      invalid: '',
+      commands: '',
+      helperText: '',
+    },
+    notes2: {
+      text: '',
+      errorText: '',
+      invalid: '',
+      commands: '',
+      helperText: '',
+    },
   });
+  const [selected, setSelected] = React.useState('');
 
-  const handleClickOpen = () => {
-    setOpen(true);
+  const initial = {
+    // blank object used to reset state
+    sheetname: {
+      text: '',
+      errorText: '',
+      invalid: '',
+      commands: '',
+      helperText:
+        'Each sheet for a spreadsheet file should be listed separately',
+    },
+    survey: {
+      text: '',
+      errorText: '',
+      invalid: '',
+      commands: '',
+      helperText: '',
+    },
+    outputmethod: {
+      text: '',
+      errorText: '',
+      invalid: '',
+      commands: '',
+      helperText: '',
+    },
+    weightvariable: {
+      text: '',
+      errorText: '',
+      invalid: '',
+      commands: '',
+      helperText: '',
+    },
+    sample: {
+      text: '',
+      errorText: '',
+      invalid: '',
+      commands: '',
+      helperText:
+        'Example: males 50 years of age or older. Required if you subsetted or selected only a certain set of respondents from the data for all or part of the analysis',
+    },
+    geography: {
+      text: '',
+      errorText: '',
+      invalid: '',
+      commands: '',
+      helperText: 'Examples: national, provincial',
+    },
+    linkage: {
+      text: '',
+      errorText: '',
+      invalid: '',
+      commands: '',
+      helperText: 'Examples: person-based, record-based, matching geographies',
+    },
+    modified: {
+      text: '',
+      errorText: '',
+      invalid: '',
+      commands: '',
+      helperText: '',
+    },
+    rounding: {
+      text: '',
+      errorText: '',
+      invalid: '',
+      commands: '',
+      helperText: '',
+    },
+    contents: {
+      text: '',
+      errorText: '',
+      invalid: '',
+      commands: '',
+      helperText: '',
+    },
+    notes: {
+      text: '',
+      errorText: '',
+      invalid: '',
+      commands: '',
+      helperText: '',
+    },
+    contents2: {
+      text: '',
+      errorText: '',
+      invalid: '',
+      commands: '',
+      helperText: '',
+    },
+    notes2: {
+      text: '',
+      errorText: '',
+      invalid: '',
+      commands: '',
+      helperText: '',
+    },
   };
 
-  const handleClose = () => {
-    setOpen(false);
+  const disableCutCopyPaste = (e, command, value) => {
+    // display error if user tries to cut/copy/paste
+    let msg;
+    e.preventDefault();
+    switch (command) {
+      case 'cut':
+        msg = t('Cut has been disabled for security purposes.');
+        setState({
+          ...state,
+          [value]: {
+            ...state[value],
+            commands: msg,
+            errorText: msg,
+            helperText: msg,
+          },
+        });
+        break;
+      case 'copy':
+        msg = t('Copy has been disabled for security purposes.');
+        setState({
+          ...state,
+          [value]: {
+            ...state[value],
+            commands: msg,
+            errorText: msg,
+            helperText: msg,
+          },
+        });
+        break;
+      case 'paste':
+        msg = t('Paste has been disabled for security purposes.');
+        setState({
+          ...state,
+          [value]: {
+            ...state[value],
+            commands: msg,
+            errorText: msg,
+            helperText: msg,
+          },
+        });
+        break;
+      default:
+        break;
+    }
   };
 
-  const snackbarhandleClose = () => {
-    setOpenSnackbar(false);
+  const toggleHelperText = (value) => {
+    if (state[value].commands === state[value].errorText) {
+      if (Boolean(state[value].invalid)) {
+        // set error text back to invalid error
+        setState({
+          ...state,
+          [value]: {
+            ...state[value],
+            helperText: state[value].invalid,
+          },
+        });
+      } else {
+        // clear error text if no invalid error exists
+        setState({
+          ...state,
+          [value]: {
+            ...state[value],
+            helperText: initial[value].helperText,
+            errorText: initial[value].errorText,
+          },
+        });
+      }
+    }
   };
 
-  const [open, setOpen] = React.useState(false);
-  const [openSnackbar, setOpenSnackbar] = React.useState(false);
-
-  const handleClick = () => {
-    setOpenSnackbar(true);
+  const handleChange = (event) => {
+    setSelected(event.target.value);
   };
 
   const handleRadioChange = (event) => {
@@ -158,22 +529,7 @@ function ModifyFile(props) {
   };
 
   return (
-    <React.Fragment>
-      <AppBar position="static" className={classes.appBar} color="default">
-        <Toolbar>
-          <Typography variant="h6" component="h2" className={classes.title}>
-            Modify file
-          </Typography>
-          <IconButton
-            aria-label="delete"
-            className={classes.margin}
-            edge="end"
-            onClick={props.toggleDrawer(false)}
-          >
-            <CloseIcon />
-          </IconButton>
-        </Toolbar>
-      </AppBar>
+    <>
       <FormControl
         className={classes.inputMargin}
         margin="dense"
@@ -197,9 +553,18 @@ function ModifyFile(props) {
         id="sheetName"
         label="Sheet name"
         variant="outlined"
-        helperText="Each sheet for a spreadsheet file should be listed separately."
         fullWidth
         required
+        onCut={(e) => disableCutCopyPaste(e, 'cut', 'sheetname')}
+        onCopy={(e) => disableCutCopyPaste(e, 'copy', 'sheetname')}
+        onPaste={(e) => disableCutCopyPaste(e, 'paste', 'sheetname')}
+        onChange={(e) => handleChange(e, 'info')}
+        onClick={() => toggleHelperText('sheetname')}
+        onBlur={() => toggleHelperText('sheetname')}
+        onFocus={() => toggleHelperText('sheetname')}
+        value={state.sheetname.text}
+        error={Boolean(state.sheetname.errorText)}
+        helperText={state.sheetname.helperText}
       />
       <TextField
         className={classes.inputMargin}
@@ -209,6 +574,15 @@ function ModifyFile(props) {
         variant="outlined"
         fullWidth
         required
+        onCut={(e) => disableCutCopyPaste(e, 'cut', 'survey')}
+        onCopy={(e) => disableCutCopyPaste(e, 'copy', 'survey')}
+        onPaste={(e) => disableCutCopyPaste(e, 'paste', 'survey')}
+        onClick={() => toggleHelperText('survey')}
+        onBlur={() => toggleHelperText('survey')}
+        onFocus={() => toggleHelperText('survey')}
+        value={state.survey.text}
+        error={Boolean(state.survey.errorText)}
+        helperText={state.survey.errorText}
       />
       <FormControl
         className={classes.inputMargin}
@@ -220,14 +594,50 @@ function ModifyFile(props) {
         <InputLabel id="outputMethod-label">Output method</InputLabel>
         <Select
           id="outputMethod"
-          label="Output Method *"
+          label="Output Method"
           labelId="outputMethod-label"
+          onChange={handleChange}
+          value={selected}
+          required
         >
-          <MenuItem>Descriptive</MenuItem>
+          <MenuItem value="Descriptive">Descriptive</MenuItem>
+          <MenuItem value="Scaling">Scaling</MenuItem>
+          <MenuItem value="Graphs">Graphs</MenuItem>
+          <MenuItem value="Multivariable regression analysis">
+            Multivariable regression analysis
+          </MenuItem>
+          <MenuItem value="Complex modeling">Complex modeling</MenuItem>
+          <MenuItem value="Other">Other</MenuItem>
         </Select>
         <FormHelperText></FormHelperText>
       </FormControl>
-      <div className={classes.emphasisBox}>
+      <div
+        className={clsx(classes.inputMargin, {
+          [classes.hiddenRow]: selected !== 'Other',
+        })}
+      >
+        <TextField
+          className={classes.inputMargin}
+          margin="dense"
+          id="DescriptionOfOutputMethod"
+          label="Description of output method"
+          variant="outlined"
+          fullWidth
+          required
+          multiline
+          onCut={(e) => disableCutCopyPaste(e, 'cut', 'outputmethod')}
+          onCopy={(e) => disableCutCopyPaste(e, 'copy', 'outputmethod')}
+          onPaste={(e) => disableCutCopyPaste(e, 'paste', 'outputmethod')}
+          onChange={(e) => handleChange(e, 'info')}
+          onClick={() => toggleHelperText('outputmethod')}
+          onBlur={() => toggleHelperText('outputmethod')}
+          onFocus={() => toggleHelperText('outputmethod')}
+          value={state.outputmethod.text}
+          error={Boolean(state.outputmethod.errorText)}
+          helperText={state.outputmethod.errorText}
+        />
+      </div>
+      <div className="emphasisBox minHeight">
         <Typography variant="subtitle2" component="p">
           If you are not sure about the Output Method above, you can search for
           the proper one below:
@@ -279,56 +689,84 @@ function ModifyFile(props) {
         <FormHelperText></FormHelperText>
       </FormControl>
       {state.includeWeightVariable === 'Yes' && (
-        <div className={classes.emphasisBox}>
-          <TextField
-            className={classes.inputMargin}
-            margin="dense"
-            id="weightVariableName"
-            label="Name of weight variable"
-            variant="outlined"
-            required
-            fullWidth
-          />
-          <FormControl component="fieldset" required>
-            <FormLabel component="legend" className="screen-reader-text">
-              Is the weight variable scaled or normalized?
-            </FormLabel>
-            <RadioGroup id="weightVariableType">
-              <FormControlLabel
-                value="Scaled"
-                control={<Radio color="primary" />}
-                label="Scaled"
-              />
-              <FormControlLabel
-                value="Normalized"
-                control={<Radio color="primary" />}
-                label="Normalized"
-              />
-            </RadioGroup>
-            <FormHelperText></FormHelperText>
-          </FormControl>
+        <div className="minHeight2">
+          <>
+            <TextField
+              className={classes.inputMargin}
+              margin="dense"
+              id="weightVariableName"
+              label="Name of weight variable"
+              variant="outlined"
+              required
+              fullWidth
+              onCut={(e) => disableCutCopyPaste(e, 'cut', 'weightvariable')}
+              onCopy={(e) => disableCutCopyPaste(e, 'copy', 'weightvariable')}
+              onPaste={(e) => disableCutCopyPaste(e, 'paste', 'weightvariable')}
+              onChange={(e) => handleChange(e, 'info')}
+              onClick={() => toggleHelperText('weightvariable')}
+              onBlur={() => toggleHelperText('weightvariable')}
+              onFocus={() => toggleHelperText('weightvariable')}
+              value={state.weightvariable.text}
+              error={Boolean(state.weightvariable.errorText)}
+              helperText={state.weightvariable.errorText}
+            />
+            <FormControl component="fieldset" required>
+              <FormLabel component="legend" className="screen-reader-text">
+                Is the weight variable scaled or normalized?
+              </FormLabel>
+              <RadioGroup id="weightVariableType">
+                <FormControlLabel
+                  value="Scaled"
+                  control={<Radio color="primary" />}
+                  label="Scaled"
+                />
+                <FormControlLabel
+                  value="Normalized"
+                  control={<Radio color="primary" />}
+                  label="Normalized"
+                />
+              </RadioGroup>
+              <FormHelperText></FormHelperText>
+            </FormControl>
+          </>
         </div>
       )}
       <TextField
-        className={classes.inputMargin}
+        className={classes.marginHelperText}
         margin="dense"
         id="sampleUsed"
         label="Sample, sub-sample or inclusions/exclusions used"
         variant="outlined"
-        helperText="Example: males 50 years of age or older. Required if you subsetted or selected only a certain set of respondents from the data for all or part of the analysis"
         fullWidth
         required
+        onCut={(e) => disableCutCopyPaste(e, 'cut', 'sample')}
+        onCopy={(e) => disableCutCopyPaste(e, 'copy', 'sample')}
+        onPaste={(e) => disableCutCopyPaste(e, 'paste', 'sample')}
+        onClick={() => toggleHelperText('sample')}
+        onBlur={() => toggleHelperText('sample')}
+        onFocus={() => toggleHelperText('sample')}
+        value={state.sample.text}
+        error={Boolean(state.sample.errorText)}
+        helperText={state.sample.helperText}
       />
       <TextField
-        className={classes.inputMargin}
+        className={classes.marginHelperText}
         margin="dense"
         id="geographyLevel"
         label="Level of Geography"
         variant="outlined"
-        helperText="Examples: national, provincial"
         fullWidth
+        onCut={(e) => disableCutCopyPaste(e, 'cut', 'geography')}
+        onCopy={(e) => disableCutCopyPaste(e, 'copy', 'geography')}
+        onPaste={(e) => disableCutCopyPaste(e, 'paste', 'geography')}
+        onClick={() => toggleHelperText('geography')}
+        onBlur={() => toggleHelperText('geography')}
+        onFocus={() => toggleHelperText('geography')}
+        value={state.geography.text}
+        error={Boolean(state.geography.errorText)}
+        helperText={state.geography.helperText}
       />
-      <Typography variant="subtitle2" className="mb-2" component="h3">
+      <Typography variant="subtitle2" className="mb-2 mt-1" component="h3">
         Output supporting files
       </Typography>
       <FormControl
@@ -368,9 +806,17 @@ function ModifyFile(props) {
           id="linkageDescription"
           label="Describe how linkage was done"
           variant="outlined"
-          helperText="Examples: person-based, record-based, matching geographies"
           fullWidth
           required
+          onCut={(e) => disableCutCopyPaste(e, 'cut', 'linkage')}
+          onCopy={(e) => disableCutCopyPaste(e, 'copy', 'linkage')}
+          onPaste={(e) => disableCutCopyPaste(e, 'paste', 'linkage')}
+          onClick={() => toggleHelperText('linkage')}
+          onBlur={() => toggleHelperText('linkage')}
+          onFocus={() => toggleHelperText('linkage')}
+          value={state.linkage.text}
+          error={Boolean(state.linkage.errorText)}
+          helperText={state.linkage.helperText}
         />
       )}
       <FormControl
@@ -381,13 +827,9 @@ function ModifyFile(props) {
         <FormLabel component="legend" className={classes.tooltipLabel}>
           Are variables related to income, earnings, tax and/or dollar values
           included?{' '}
-          <Tooltip
-            title="If no, future vetting release reuests under this contract may be restricted due to residual disclosure. You are strongly encouraged to consult with your analyst."
-            arrow
-            placement="right"
-          >
+          <BootstrapTooltip title="If no, future vetting release reuests under this contract may be restricted due to residual disclosure. You are strongly encouraged to consult with your analyst.">
             <InfoIcon />
-          </Tooltip>
+          </BootstrapTooltip>
         </FormLabel>
         <RadioGroup id="dollarIncluded">
           <FormControlLabel
@@ -426,7 +868,7 @@ function ModifyFile(props) {
       </FormControl>
       {state.descriptiveStats === 'Yes' && (
         <FormControl className={classes.inputMargin} component="fieldset">
-          <FormLabel component="legend">
+          <FormLabel component="legend" className={classes.lineHeight}>
             Is the output clearly labelled (tables have a title and every
             variable and category is labelled)?
           </FormLabel>
@@ -435,19 +877,27 @@ function ModifyFile(props) {
             <FormControlLabel value="No" control={<Radio />} label="No" />
           </RadioGroup>
           <FormHelperText></FormHelperText>
+          <FormLabel component="legend">
+            Are minimum cell sizes met as per the rules for the data?
+          </FormLabel>
+          <RadioGroup id="minimumCellSizes">
+            <FormControlLabel value="Yes" control={<Radio />} label="Yes" />
+            <FormControlLabel value="No" control={<Radio />} label="No" />
+          </RadioGroup>
+          <FormHelperText></FormHelperText>
         </FormControl>
       )}
-      <FormControl className={classes.inputMargin} component="fieldset">
+      <FormControl
+        className={classes.inputMargin}
+        component="fieldset"
+        required
+      >
         <FormLabel component="legend" className={classes.tooltipLabel}>
           Does this request include model output or graphs that are equivalent
           to a descriptive statistics?{' '}
-          <Tooltip
-            title="Examples: a model with a single independant variable, a model with all possible interactions, histograms"
-            arrow
-            placement="right"
-          >
+          <BootstrapTooltip title="Examples: a model with a single independant variable, a model with all possible interactions, histograms.">
             <InfoIcon />
-          </Tooltip>
+          </BootstrapTooltip>
         </FormLabel>
         <RadioGroup id="equivalentDescriptiveStats">
           <FormControlLabel
@@ -468,16 +918,16 @@ function ModifyFile(props) {
         </RadioGroup>
         <FormHelperText></FormHelperText>
       </FormControl>
-      <FormControl className={classes.inputMargin} component="fieldset">
+      <FormControl
+        className={classes.inputMargin}
+        component="fieldset"
+        required
+      >
         <FormLabel component="legend" className={classes.tooltipLabel}>
           Did you apply modified (e.g. standardized) weights in the analysis?{' '}
-          <Tooltip
-            title="If yes, consult with your analyst about the vetting rules for modified weights."
-            arrow
-            placement="right"
-          >
+          <BootstrapTooltip title="If yes, consult with your analyst about the vetting rules for modified weights.">
             <InfoIcon />
-          </Tooltip>
+          </BootstrapTooltip>
         </FormLabel>
         <RadioGroup
           id="modifiedWeights"
@@ -512,13 +962,27 @@ function ModifyFile(props) {
           variant="outlined"
           fullWidth
           required
+          onCut={(e) => disableCutCopyPaste(e, 'cut', 'modified')}
+          onCopy={(e) => disableCutCopyPaste(e, 'copy', 'modified')}
+          onPaste={(e) => disableCutCopyPaste(e, 'paste', 'modified')}
+          onClick={() => toggleHelperText('modified')}
+          onBlur={() => toggleHelperText('modified')}
+          onFocus={() => toggleHelperText('modified')}
+          value={state.modified.text}
+          error={Boolean(state.modified.errorText)}
+          helperText={state.modified.errorText}
         />
       )}
       <FormControl className={classes.inputMargin} component="fieldset">
         <FormLabel component="legend">
           Does this output include a correlation or covariance matrix?
         </FormLabel>
-        <RadioGroup id="includeMatrix">
+        <RadioGroup
+          id="includeMatrix"
+          value={state.covariance}
+          name="covariance"
+          onChange={handleRadioChange}
+        >
           <FormControlLabel
             value="Yes"
             control={<Radio color="primary" />}
@@ -535,18 +999,43 @@ function ModifyFile(props) {
             label="N/A"
           />
         </RadioGroup>
-        <FormHelperText></FormHelperText>
       </FormControl>
-      <FormControl className={classes.inputMargin} component="fieldset">
+      {state.covariance === 'Yes' && (
+        <FormControl className={classes.inputMargin} component="fieldset">
+          <FormLabel component="legend">
+            Does the matrix include continuous variables?
+          </FormLabel>
+          <RadioGroup id="continuousVariables" className={classes.inputMargin}>
+            <FormControlLabel value="Yes" control={<Radio />} label="Yes" />
+            <FormControlLabel value="No" control={<Radio />} label="No" />
+          </RadioGroup>
+          <FormLabel component="legend">
+            Does the matrix inclue dichotomous variables?
+          </FormLabel>
+          <RadioGroup id="dichotomousVariables" className={classes.inputMargin}>
+            <FormControlLabel value="Yes" control={<Radio />} label="Yes" />
+            <FormControlLabel value="No" control={<Radio />} label="No" />
+          </RadioGroup>
+          <FormLabel component="legend" className={classes.lineHeight}>
+            Does the matrix include a dichotomous variable correlated with a
+            continuous variable?
+          </FormLabel>
+          <RadioGroup id="dichotomousVariable">
+            <FormControlLabel value="Yes" control={<Radio />} label="Yes" />
+            <FormControlLabel value="No" control={<Radio />} label="No" />
+          </RadioGroup>
+        </FormControl>
+      )}
+      <FormControl
+        className={classes.inputMargin}
+        component="fieldset"
+        required
+      >
         <FormLabel component="legend" className={classes.tooltipLabel}>
           Is rounding of output required for this vetting request?{' '}
-          <Tooltip
-            title="If yes, ensure that any forced rounding to zero is shown."
-            arrow
-            placement="right"
-          >
+          <BootstrapTooltip title="If yes, ensure that any forced rounding to zero is shown.">
             <InfoIcon />
-          </Tooltip>
+          </BootstrapTooltip>
         </FormLabel>
         <RadioGroup
           id="roundingOutput"
@@ -581,9 +1070,18 @@ function ModifyFile(props) {
           variant="outlined"
           fullWidth
           required
+          onCut={(e) => disableCutCopyPaste(e, 'cut', 'rounding')}
+          onCopy={(e) => disableCutCopyPaste(e, 'copy', 'rounding')}
+          onPaste={(e) => disableCutCopyPaste(e, 'paste', 'rounding')}
+          onClick={() => toggleHelperText('rounding')}
+          onBlur={() => toggleHelperText('rounding')}
+          onFocus={() => toggleHelperText('rounding')}
+          value={state.rounding.text}
+          error={Boolean(state.rounding.errorText)}
+          helperText={state.rounding.errorText}
         />
       )}
-      <div className={classes.emphasisBox}>
+      <div className="emphasisBox minHeight3">
         <Typography variant="subtitle2" className="mb-2" component="h3">
           Mandatory supporting files:
         </Typography>
@@ -611,81 +1109,29 @@ function ModifyFile(props) {
         </Typography>
       </div>
       <div className={classes.buttonTooltip}>
-        <Button variant="contained" color="primary" onClick={handleClickOpen}>
+        <Button
+          variant="contained"
+          color="primary"
+          onClick={() => props.handleClickOpen('dialogAddSupporting')}
+        >
           Add Supporting File
         </Button>
-        <Dialog
-          open={open}
-          onClose={handleClose}
-          aria-labelledby="form-dialog-title"
-        >
-          <DialogTitle id="form-dialog-title">Add supporting file</DialogTitle>
-          <DialogContent>
-            <FormControl
-              required
-              variant="outlined"
-              fullWidth
-              margin="dense"
-              className={classes.inputMargin}
-            >
-              <InputLabel id="outputFolder-label">
-                Output folder name
-              </InputLabel>
-              <Select
-                id="supportingFilesFolder"
-                label="Supporting folder *"
-                labelId="supportingFilesFolder-label"
-                variant="standard"
-              >
-                <MenuItem key={-1} value="">
-                  None
-                </MenuItem>
-              </Select>
-            </FormControl>
-            <Typography variant="subtitle2">File #1 *</Typography>
-            <Typography variant="subtitle2">
-              Residual tables (see the vetting orientation)
-            </Typography>
-            <TextField
-              className={classes.inputMargin}
-              margin="dense"
-              id="notes2"
-              label="Notes"
-              multiline
-              rows={4}
-              variant="outlined"
-              fullWidth
-              required
-            />
-          </DialogContent>
-          <DialogActions>
-            <Button onClick={handleClose} color="primary" variant="outlined">
-              Cancel
-            </Button>
-            <Button
-              color="primary"
-              variant="contained"
-              onClick={() => {
-                handleClick();
-                handleClose();
-              }}
-            >
-              Add supporting file
-            </Button>
-          </DialogActions>
-        </Dialog>
-
-        <Tooltip
-          title="In addition to the mandatory files listed, include other files as required by the Survey Specific Guidelines, syntax files or other files requested by the analyst."
-          arrow
-          placement="right"
-        >
+        <BootstrapTooltip title="In addition to the mandatory files listed, include other files as required by the Survey Specific Guidelines, syntax files or other files requested by the analyst.">
           <InfoIcon />
-        </Tooltip>
+        </BootstrapTooltip>
       </div>
-      <Typography variant="subtitle2" component="h3">
-        Supporting file #1
-      </Typography>
+      <Grid container justify="space-between" alignItems="center">
+        <Grid item>
+          <Typography variant="subtitle2" component="h3">
+            Supporting file #1
+          </Typography>
+        </Grid>
+        <Grid item>
+          <IconButton aria-label="delete" className={classes.margin}>
+            <DeleteIcon />
+          </IconButton>
+        </Grid>
+      </Grid>
       <FormControl
         className={classes.inputMargin}
         margin="dense"
@@ -711,6 +1157,15 @@ function ModifyFile(props) {
         variant="outlined"
         fullWidth
         required
+        onCut={(e) => disableCutCopyPaste(e, 'cut', 'contents')}
+        onCopy={(e) => disableCutCopyPaste(e, 'copy', 'contents')}
+        onPaste={(e) => disableCutCopyPaste(e, 'paste', 'contents')}
+        onClick={() => toggleHelperText('contents')}
+        onBlur={() => toggleHelperText('contents')}
+        onFocus={() => toggleHelperText('contents')}
+        value={state.contents.text}
+        error={Boolean(state.contents.errorText)}
+        helperText={state.contents.errorText}
       />
       <TextField
         className={classes.inputMargin}
@@ -722,10 +1177,28 @@ function ModifyFile(props) {
         variant="outlined"
         fullWidth
         required
+        onCut={(e) => disableCutCopyPaste(e, 'cut', 'notes')}
+        onCopy={(e) => disableCutCopyPaste(e, 'copy', 'notes')}
+        onPaste={(e) => disableCutCopyPaste(e, 'paste', 'notes')}
+        onClick={() => toggleHelperText('notes')}
+        onBlur={() => toggleHelperText('notes')}
+        onFocus={() => toggleHelperText('notes')}
+        value={state.notes.text}
+        error={Boolean(state.notes.errorText)}
+        helperText={state.notes.errorText}
       />
-      <Typography variant="subtitle2" component="h3">
-        Supporting file #2
-      </Typography>
+      <Grid container justify="space-between" alignItems="center">
+        <Grid item>
+          <Typography variant="subtitle2" component="h3">
+            Supporting file #2
+          </Typography>
+        </Grid>
+        <Grid item>
+          <IconButton aria-label="delete" className={classes.margin}>
+            <DeleteIcon />
+          </IconButton>
+        </Grid>
+      </Grid>
       <FormControl
         className={classes.inputMargin}
         margin="dense"
@@ -751,6 +1224,15 @@ function ModifyFile(props) {
         variant="outlined"
         fullWidth
         required
+        onCut={(e) => disableCutCopyPaste(e, 'cut', 'contents2')}
+        onCopy={(e) => disableCutCopyPaste(e, 'copy', 'contents2')}
+        onPaste={(e) => disableCutCopyPaste(e, 'paste', 'contents2')}
+        onClick={() => toggleHelperText('contents2')}
+        onBlur={() => toggleHelperText('contents2')}
+        onFocus={() => toggleHelperText('contents2')}
+        value={state.contents2.text}
+        error={Boolean(state.contents2.errorText)}
+        helperText={state.contents2.errorText}
       />
       <TextField
         className={classes.inputMargin}
@@ -762,35 +1244,16 @@ function ModifyFile(props) {
         variant="outlined"
         fullWidth
         required
+        onCut={(e) => disableCutCopyPaste(e, 'cut', 'notes2')}
+        onCopy={(e) => disableCutCopyPaste(e, 'copy', 'notes2')}
+        onPaste={(e) => disableCutCopyPaste(e, 'paste', 'notes2')}
+        onClick={() => toggleHelperText('notes2')}
+        onBlur={() => toggleHelperText('notes2')}
+        onFocus={() => toggleHelperText('notes2')}
+        value={state.notes2.text}
+        error={Boolean(state.notes2.errorText)}
+        helperText={state.notes2.errorText}
       />
-      <Button
-        variant="contained"
-        className={classes.button}
-        color="primary"
-        onClick={props.toggleDrawer(false)}
-      >
-        Save Changes
-      </Button>
-      <Snackbar
-        open={openSnackbar}
-        autoHideDuration={6000}
-        onClose={snackbarhandleClose}
-        anchorOrigin={{
-          vertical: 'bottom',
-          horizontal: 'left',
-        }}
-      >
-        <Alert
-          severity="success"
-          className={classes.alert}
-          variant="filled"
-          onClose={snackbarhandleClose}
-        >
-          The supporting file has been added
-        </Alert>
-      </Snackbar>
-    </React.Fragment>
+    </>
   );
 }
-
-export default ModifyFile;
