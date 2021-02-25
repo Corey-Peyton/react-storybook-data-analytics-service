@@ -12,7 +12,7 @@ import {
   Chip,
 } from '@material-ui/core';
 
-import {DialogAnalyst} from './DialogBox';
+import {DialogAnalyst} from '../../CommonComponents/DialogBox';
 import {ActionsMenu} from './ContextMenu';
 import DashboardTableHead from './DashboardTableHead';
 import AnalystCell from './AnalystCell';

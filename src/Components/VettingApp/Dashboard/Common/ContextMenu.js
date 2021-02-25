@@ -25,7 +25,7 @@ import {
   DialogUpdate,
   DialogDenied,
   DialogApprove,
-} from './DialogBox';
+} from '../../CommonComponents/DialogBox';
 
 const useStyles = makeStyles((theme) => ({
   listItemIcon: {

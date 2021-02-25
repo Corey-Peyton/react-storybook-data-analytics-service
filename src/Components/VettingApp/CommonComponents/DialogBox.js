@@ -30,9 +30,9 @@ import Autocomplete from '@material-ui/lab/Autocomplete';
 import NumberFormat from 'react-number-format';
 import Alert from '@material-ui/lab/Alert';
 
-import CustomizedSnackbar from './CustomizedSnackbar';
-import {AnalystMenu} from './ContextMenu';
-import {analystList} from '../../../../Data/fakeData';
+import CustomizedSnackbar from '../Dashboard/Common/CustomizedSnackbar';
+import {AnalystMenu} from '../Dashboard/Common/ContextMenu';
+import {analystList} from '../../../Data/fakeData';
 
 const ROW_HEIGHT = 56;
 
