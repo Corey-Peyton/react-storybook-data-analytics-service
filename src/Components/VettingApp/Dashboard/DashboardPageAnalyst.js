@@ -16,6 +16,7 @@ import ProjectsDrawer from './Common/ProjectsDrawer';
 import BypassBlocks from '../../BypassBlocks';
 import {requestListResearchers} from '../../../Data/fakeData';
 import {DRAWER_WIDTH} from './Common/ProjectsDrawer';
+import ManageTeamDrawer from './Common/ManageTeamDrawer';
 
 const useStyles = makeStyles((theme) => ({
   main: {
@@ -157,6 +158,7 @@ export default function DashboardPageAnalyst() {
   const [open, setOpen] = React.useState({
     projectsDrawer: true,
     summaryDrawer: false,
+    manageTeamDrawer: false,
     summaryStatus: '',
     newRequest: false,
   });
@@ -200,6 +202,10 @@ export default function DashboardPageAnalyst() {
     setOpen({...open, summaryDrawer: !open.summaryDrawer});
   };
 
+  const toggleManageTeamDrawer = () => {
+    setOpen({...open, manageTeamDrawer: !open.manageTeamDrawer});
+  };
+
   const handleProjectTitle = (value) => {
     setProject({...project, title: value});
   };
@@ -231,6 +237,10 @@ export default function DashboardPageAnalyst() {
             open={open.summaryDrawer}
             clickHandler={toggleSummaryDrawer}
             status={open.summaryStatus}
+          />
+          <ManageTeamDrawer
+            open={open.manageTeamDrawer}
+            clickHandler={toggleManageTeamDrawer}
           />
           <AppBar
             position="static"
@@ -288,6 +298,7 @@ export default function DashboardPageAnalyst() {
               headCells={headCells}
               contextSummaryClick={toggleSummaryDrawer}
               contextStatusClick={contextStatusClick}
+              toggleManageTeamDrawer={toggleManageTeamDrawer}
               role={'analyst'}
             />
           </TabPanel>
@@ -298,6 +309,7 @@ export default function DashboardPageAnalyst() {
               headCells={headCells}
               contextSummaryClick={toggleSummaryDrawer}
               contextStatusClick={contextStatusClick}
+              toggleManageTeamDrawer={toggleManageTeamDrawer}
               role={'analyst'}
             />
           </TabPanel>
@@ -308,6 +320,7 @@ export default function DashboardPageAnalyst() {
               headCells={headCells}
               contextSummaryClick={toggleSummaryDrawer}
               contextStatusClick={contextStatusClick}
+              toggleManageTeamDrawer={toggleManageTeamDrawer}
               role={'analyst'}
             />
           </TabPanel>
@@ -318,6 +331,7 @@ export default function DashboardPageAnalyst() {
               headCells={headCells}
               contextSummaryClick={toggleSummaryDrawer}
               contextStatusClick={contextStatusClick}
+              toggleManageTeamDrawer={toggleManageTeamDrawer}
               role={'analyst'}
             />
           </TabPanel>
@@ -328,6 +342,7 @@ export default function DashboardPageAnalyst() {
               headCells={headCells}
               contextSummaryClick={toggleSummaryDrawer}
               contextStatusClick={contextStatusClick}
+              toggleManageTeamDrawer={toggleManageTeamDrawer}
               role={'analyst'}
             />
           </TabPanel>

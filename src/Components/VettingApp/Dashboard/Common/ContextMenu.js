@@ -63,6 +63,7 @@ export function ActionsMenu(props) {
     status,
     contextStatusClick,
     contextSummaryClick,
+    toggleManageTeamDrawer,
     controls,
   } = props;
   const {t} = useTranslation();
@@ -121,6 +122,11 @@ export function ActionsMenu(props) {
   const toggleSummary = () => {
     handleClose();
     contextSummaryClick();
+  };
+
+  const contextManageTeam = () => {
+    handleClose();
+    toggleManageTeamDrawer();
   };
 
   const toggleSnackbar = (value) => {
@@ -414,11 +420,7 @@ export function ActionsMenu(props) {
               }
             />
           </MenuItem>
-          <MenuItem
-            onClick={() =>
-              toggleDialog('dialogManageTeam', !open.dialogManageTeam)
-            }
-          >
+          <MenuItem onClick={contextManageTeam}>
             <ListItemText
               primary={
                 <Typography variant="body2">{t('Manage team')}</Typography>
@@ -618,11 +620,7 @@ export function ActionsMenu(props) {
             }
           />
         </MenuItem>
-        <MenuItem
-          onClick={() =>
-            toggleDialog('dialogManageTeam', !open.dialogManageTeam)
-          }
-        >
+        <MenuItem onClick={contextManageTeam}>
           <ListItemText
             primary={
               <Typography variant="body2">{t('Manage team')}</Typography>
@@ -672,11 +670,7 @@ export function ActionsMenu(props) {
             }
           />
         </MenuItem>
-        <MenuItem
-          onClick={() =>
-            toggleDialog('dialogManageTeam', !open.dialogManageTeam)
-          }
-        >
+        <MenuItem onClick={contextManageTeam}>
           <ListItemText
             primary={
               <Typography variant="body2">{t('Manage team')}</Typography>

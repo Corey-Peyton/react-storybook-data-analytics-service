@@ -77,6 +77,7 @@ export default function TableContainerComponent(props) {
     headCells,
     contextSummaryClick,
     contextStatusClick,
+    toggleManageTeamDrawer,
   } = props;
   const [order, setOrder] = React.useState('asc');
   const [orderBy, setOrderBy] = React.useState('calories');
@@ -183,6 +184,7 @@ export default function TableContainerComponent(props) {
                       analysts={row.analysts}
                       support={row.support}
                       role={role}
+                      toggleManageTeamDrawer={toggleManageTeamDrawer}
                     />
                     <TableCell>
                       <Typography variant="body2" noWrap={true}>
@@ -199,6 +201,7 @@ export default function TableContainerComponent(props) {
                         status={row.status}
                         contextSummaryClick={contextSummaryClick}
                         contextStatusClick={contextStatusClick}
+                        toggleManageTeamDrawer={toggleManageTeamDrawer}
                         role={role}
                         controls={index}
                       />

@@ -25,7 +25,7 @@ const useStyles = makeStyles((theme) => ({
 
 export default function AnalystCell(props) {
   const {t} = useTranslation();
-  const {role, analysts, support} = props;
+  const {role, analysts, support, toggleManageTeamDrawer} = props;
   const extraAnalysts = support.length;
   const classes = useStyles();
   const [open, setOpen] = React.useState({
@@ -69,12 +69,12 @@ export default function AnalystCell(props) {
         <TableCell className={classes.tablesCellsFlex}>
           <Chip
             label={analysts}
-            onClick={() => toggleDialog('list')}
+            onClick={toggleManageTeamDrawer}
             className="mr-1"
           />
           <Chip
             label={`${extraAnalysts} ${t('support')}`}
-            onClick={() => toggleDialog('list')}
+            onClick={toggleManageTeamDrawer}
           />
           <DialogManageTeam
             open={open.manageTeam}
@@ -85,7 +85,7 @@ export default function AnalystCell(props) {
     } else if (analysts !== '' && support.length === 0) {
       return (
         <TableCell className={classes.tablesCellsFlex}>
-          <Chip label={analysts} onClick={() => toggleDialog('list')} />
+          <Chip label={analysts} onClick={toggleManageTeamDrawer} />
           <DialogManageTeam
             open={open.manageTeam}
             toggleDialog={() => toggleDialog('list')}
@@ -100,7 +100,7 @@ export default function AnalystCell(props) {
           </Typography>
           <Chip
             label={`${extraAnalysts} ${t('support')}`}
-            onClick={() => toggleDialog('list')}
+            onClick={toggleManageTeamDrawer}
             className="ml-1"
           />
           <DialogManageTeam
