@@ -167,7 +167,7 @@ export function AddFile(props) {
             Add output file
           </Typography>
           <IconButton
-            aria-label="delete"
+            aria-label="Close add output file"
             className={classes.margin}
             edge="end"
             onClick={(e) => props.toggleDrawer(e, 'addFile', false)}
@@ -207,7 +207,7 @@ export function ModifyFile(props) {
             Edit output file
           </Typography>
           <IconButton
-            aria-label="delete"
+            aria-label="Close edit output file"
             className={classes.margin}
             edge="end"
             onClick={(e) => props.toggleDrawer(e, 'editFile', false)}

@@ -355,6 +355,7 @@ function FilesList(props) {
           <IconButton
             onClick={() => handleClickClose('dialogAddSupporting')}
             edge="end"
+            aria-label="Close add supporting file"
           >
             <CloseIcon />
           </IconButton>
@@ -436,14 +437,17 @@ function FilesList(props) {
           <Typography variant="h6" component="h2">
             Delete this output file?
           </Typography>
-          <IconButton onClick={() => handleClickClose('deleteFile')} edge="end">
+          <IconButton
+            onClick={() => handleClickClose('deleteFile')}
+            edge="end"
+            aria-label="Close delete output file"
+          >
             <CloseIcon />
           </IconButton>
         </DialogTitle>
         <DialogContent className={classes.dialogContent}>
           <Alert severity="warning">
-            Deleting this output file will permanently remove it from your
-            request. You will not be able to recover it.
+            Deleting this output file cannot be undone.
           </Alert>
         </DialogContent>
         <DialogActions className={classes.dialogFooter}>
