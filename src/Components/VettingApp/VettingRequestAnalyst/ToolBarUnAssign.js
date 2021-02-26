@@ -1,5 +1,6 @@
 import React from 'react';
 import {useTranslation} from 'react-i18next';
+import clsx from 'clsx';
 import {makeStyles} from '@material-ui/core/styles';
 import NumberFormat from 'react-number-format';
 import {
@@ -33,32 +34,51 @@ import CloseIcon from '@material-ui/icons/Close';
 
 const useStyles = makeStyles((theme) => ({
   root: {
-    '& .MuiDialog-paperWidthSm': {
-      'width': 400,
-      '& .MuiTextField-root': {
-        width: '100%',
-      },
-      '& .MuiFormLabel-root': {
-        'line-height': 1,
-        'background-color': 'white',
-      },
-      '& .MuiOutlinedInput-multiline': {
-        padding: 0,
-      },
-      '& .MuiOutlinedInput-inputMultiline': {
-        'max-height': 130,
-        'overflow': 'auto !important',
-        'padding': theme.spacing(2),
-      },
+    '& .MuiDialogTitle-root': {
+      padding: theme.spacing(1.5, 3),
     },
-    '& .MuiFormControl-root': {
-      width: '100%',
+    '& .MuiSelect-select': {
+      height: [theme.spacing(7), '!important'],
+      paddingTop: 0,
+      paddingBottom: 0,
     },
   },
-  dialogTitle: {
+  vettingContainerTitle: {
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'space-between',
+  },
+  vettingSection: {
+    display: 'flex',
+    flexFlow: 'column',
+    padding: theme.spacing(3),
+    overflowY: 'auto',
+  },
+  vettingRow: {
+    'display': 'flex',
+    'margin': theme.spacing(1.5, 0),
+    'flexFlow': 'row',
+    'height': '100%',
+    'justifyContent': 'center',
+    'width': '100%',
+    'alignItems': 'center',
+    '&:first-child': {
+      marginTop: 0,
+    },
+    '&:last-child': {
+      marginBottom: 0,
+    },
+  },
+  vettingColumn: {
+    'display': 'flex',
+    'flexDirection': 'column',
+    'width': '100%',
+    'justifyContent': 'center',
+    'marginRight': theme.spacing(1),
+    'height': '100%',
+    '&:last-child': {
+      marginRight: 0,
+    },
   },
   main: {
     background: theme.palette.grey[100],
@@ -66,9 +86,6 @@ const useStyles = makeStyles((theme) => ({
   },
   title: {
     flexGrow: 1,
-  },
-  alert: {
-    margin: theme.spacing(2, 0, 1, 0),
   },
   headerBtn: {
     marginLeft: theme.spacing(3),
@@ -80,27 +97,6 @@ const useStyles = makeStyles((theme) => ({
   },
   footerBtns: {
     marginLeft: [theme.spacing(2), '!important'],
-  },
-  dialogRow: {
-    display: 'flex',
-    alignItems: 'center',
-    padding: theme.spacing(1, 3),
-    height: '100%',
-  },
-  alertRow: {
-    margin: theme.spacing(0, 2),
-    padding: theme.spacing(0.75, 1),
-  },
-  hiddenRow: {
-    display: 'none',
-  },
-  formControl: {
-    'display': 'flex',
-    'flexFlow': 'row',
-    'justifyContent': 'space-between',
-    '& .MuiTextField-root': {
-      width: '49% !important',
-    },
   },
 }));
 
@@ -250,10 +246,12 @@ function ToolBarUnassign(props) {
         aria-labelledby="alert-dialog-unassign"
         aria-describedby="alert-dialog-unassign"
         onClose={() => handleClickClose('dialogUnAssign')}
+        scroll="paper"
+        disableBackdropClick
         className={classes.root}
       >
         <DialogTitle id="alert-dialog-update">
-          <div className={classes.dialogTitle}>
+          <div className={classes.vettingContainerTitle}>
             Unassign from me
             <IconButton
               onClick={() => handleClickClose('dialogUnAssign')}
@@ -264,14 +262,20 @@ function ToolBarUnassign(props) {
           </div>
         </DialogTitle>
         <Divider />
-        <DialogContent className="mb-2 mt-2">
-          <Typography variant="body2">
-            If you choose to proceed the request will no longer have a lead
-            analyst and an email will be sent to the researcher notifying them
-            of the change.
-          </Typography>
+        <DialogContent>
+          <div className={classes.vettingSection}>
+            <div className={classes.vettingRow}>
+              <div className={classes.vettingColumn}>
+                <Typography variant="body2">
+                  {t(
+                      'If you choose to proceed, the request will no longer have a lead analyst and an email will be sent to the researcher notifying them of the change.',
+                  )}
+                </Typography>
+              </div>
+            </div>
+          </div>
         </DialogContent>
-        <Divider className="mb-0" />
+        <Divider />
         <DialogActions className={classes.dialogFooter}>
           <Button
             color="primary"
@@ -315,10 +319,12 @@ function ToolBarUnassign(props) {
         onClose={() => handleClickClose('dialogUpdate')}
         aria-labelledby="alert-dialog-update"
         aria-describedby="alert-dialog-update"
+        scroll="paper"
+        disableBackdropClick
         className={classes.root}
       >
         <DialogTitle id="alert-dialog-update">
-          <div className={classes.dialogTitle}>
+          <div className={classes.vettingContainerTitle}>
             Request an update
             <IconButton
               onClick={() => handleClickClose('dialogUpdate')}
@@ -329,31 +335,36 @@ function ToolBarUnassign(props) {
           </div>
         </DialogTitle>
         <Divider />
-        <div className={classes.alertRow}>
-          <Alert severity="warning" className={classes.alert}>
-            Do not include any confidential information.
-          </Alert>
-        </div>
-        <div className={classes.dialogRow}>
-          <TextField
-            id="update-input"
-            label="Comments"
-            variant="outlined"
-            multiline
-            className={classes.textField}
-            required
-            onCut={(e) => disableCutCopyPaste(e, 'cut', 'comments')}
-            onCopy={(e) => disableCutCopyPaste(e, 'copy', 'comments')}
-            onPaste={(e) => disableCutCopyPaste(e, 'paste', 'comments')}
-            onClick={() => toggleHelperText('comments')}
-            onBlur={() => toggleHelperText('comments')}
-            onFocus={() => toggleHelperText('comments')}
-            value={state.comments.text}
-            error={Boolean(state.comments.errorText)}
-            helperText={state.comments.errorText}
-          />
-        </div>
-        <Divider className="mb-0 mt-3" />
+        <DialogContent>
+          <div className={classes.vettingSection}>
+            <div className={classes.vettingRow}>
+              <div className={classes.vettingColumn}>
+                <Alert severity="warning" className={classes.alert}>
+                  {t('Do not include any confidential information.')}
+                </Alert>
+              </div>
+            </div>
+            <div className={classes.vettingRow}>
+              <TextField
+                id="update-input"
+                label="Comments"
+                variant="outlined"
+                multiline
+                required
+                onCut={(e) => disableCutCopyPaste(e, 'cut', 'comments')}
+                onCopy={(e) => disableCutCopyPaste(e, 'copy', 'comments')}
+                onPaste={(e) => disableCutCopyPaste(e, 'paste', 'comments')}
+                onClick={() => toggleHelperText('comments')}
+                onBlur={() => toggleHelperText('comments')}
+                onFocus={() => toggleHelperText('comments')}
+                value={state.comments.text}
+                error={Boolean(state.comments.errorText)}
+                helperText={state.comments.errorText}
+              />
+            </div>
+          </div>
+        </DialogContent>
+        <Divider />
         <DialogActions className={classes.dialogFooter}>
           <Button
             onClick={() => handleClickClose('dialogUpdate')}
@@ -400,10 +411,12 @@ function ToolBarUnassign(props) {
         onClose={() => handleClickClose('dialogApprove')}
         aria-labelledby="alert-dialog-approve"
         aria-describedby="alert-dialog-approve"
+        scroll="paper"
+        disableBackdropClick
         className={classes.root}
       >
         <DialogTitle id="alert-dialog-approved-request">
-          <div className={classes.dialogTitle}>
+          <div className={classes.vettingContainerTitle}>
             Approve request
             <IconButton
               onClick={() => handleClickClose('dialogApprove')}
@@ -413,45 +426,67 @@ function ToolBarUnassign(props) {
             </IconButton>
           </div>
         </DialogTitle>
-        <Divider className="mb-2" />
-        <div className={classes.dialogRow}>
-          <Typography variant="subtitle2">Billable hours</Typography>
-        </div>
-        <div className={classes.dialogRow}>
-          <FormControl variant="outlined" className={classes.formControl}>
-            <NumberFormat
-              label="Hours"
-              customInput={TextField}
-              type="text"
-              variant="outlined"
-              onCut={(e) => disableCutCopyPaste(e, 'cut', 'approveHours')}
-              onCopy={(e) => disableCutCopyPaste(e, 'copy', 'approveHours')}
-              onPaste={(e) => disableCutCopyPaste(e, 'paste', 'approveHours')}
-              onClick={() => toggleHelperText('approveHours')}
-              onBlur={() => toggleHelperText('approveHours')}
-              onFocus={() => toggleHelperText('approveHours')}
-              value={state.approveHours.text}
-              error={Boolean(state.approveHours.errorText)}
-              helperText={state.approveHours.errorText}
-            />
-            <NumberFormat
-              label="Minutes"
-              customInput={TextField}
-              type="text"
-              variant="outlined"
-              onCut={(e) => disableCutCopyPaste(e, 'cut', 'approveMinutes')}
-              onCopy={(e) => disableCutCopyPaste(e, 'copy', 'approveMinutes')}
-              onPaste={(e) => disableCutCopyPaste(e, 'paste', 'approveMinutes')}
-              onClick={() => toggleHelperText('approveMinutes')}
-              onBlur={() => toggleHelperText('approveMinutes')}
-              onFocus={() => toggleHelperText('approveMinutes')}
-              value={state.approveMinutes.text}
-              error={Boolean(state.approveMinutes.errorText)}
-              helperText={state.approveMinutes.errorText}
-            />
-          </FormControl>
-        </div>
-        <Divider className="mt-2" />
+        <Divider />
+        <DialogContent>
+          <div className={classes.vettingSection}>
+            <div className={classes.vettingRow}>
+              <div className={classes.vettingColumn}>
+                <Typography variant="subtitle2">Billable hours</Typography>
+              </div>
+            </div>
+            <div className={clsx(classes.vettingRow, classes.alignStart)}>
+              <div className={classes.vettingColumn}>
+                <FormControl variant="outlined">
+                  <NumberFormat
+                    label="Hours"
+                    customInput={TextField}
+                    type="text"
+                    variant="outlined"
+                    onCut={(e) => disableCutCopyPaste(e, 'cut', 'approveHours')}
+                    onCopy={(e) =>
+                      disableCutCopyPaste(e, 'copy', 'approveHours')
+                    }
+                    onPaste={(e) =>
+                      disableCutCopyPaste(e, 'paste', 'approveHours')
+                    }
+                    onClick={() => toggleHelperText('approveHours')}
+                    onBlur={() => toggleHelperText('approveHours')}
+                    onFocus={() => toggleHelperText('approveHours')}
+                    value={state.approveHours.text}
+                    error={Boolean(state.approveHours.errorText)}
+                    helperText={state.approveHours.errorText}
+                  />
+                </FormControl>
+              </div>
+              <div className={classes.vettingColumn}>
+                <FormControl variant="outlined">
+                  <NumberFormat
+                    label="Minutes"
+                    customInput={TextField}
+                    type="text"
+                    variant="outlined"
+                    onCut={(e) =>
+                      disableCutCopyPaste(e, 'cut', 'approveMinutes')
+                    }
+                    onCopy={(e) =>
+                      disableCutCopyPaste(e, 'copy', 'approveMinutes')
+                    }
+                    onPaste={(e) =>
+                      disableCutCopyPaste(e, 'paste', 'approveMinutes')
+                    }
+                    onClick={() => toggleHelperText('approveMinutes')}
+                    onBlur={() => toggleHelperText('approveMinutes')}
+                    onFocus={() => toggleHelperText('approveMinutes')}
+                    value={state.approveMinutes.text}
+                    error={Boolean(state.approveMinutes.errorText)}
+                    helperText={state.approveMinutes.errorText}
+                  />
+                </FormControl>
+              </div>
+            </div>
+          </div>
+        </DialogContent>
+        <Divider />
         <DialogActions className={classes.dialogFooter}>
           <Button
             onClick={() => handleClickClose('dialogApprove')}
@@ -493,10 +528,12 @@ function ToolBarUnassign(props) {
         onClose={() => handleClickClose('dialogDeny')}
         aria-labelledby="alert-dialog-deny"
         aria-describedby="alert-dialog-deny"
+        scroll="paper"
+        disableBackdropClick
         className={classes.root}
       >
         <DialogTitle id="alert-dialog-denied-request">
-          <div className={classes.dialogTitle}>
+          <div className={classes.vettingContainerTitle}>
             Deny request
             <IconButton
               onClick={() => handleClickClose('dialogDeny')}
@@ -507,122 +544,149 @@ function ToolBarUnassign(props) {
           </div>
         </DialogTitle>
         <Divider />
-        <div className={classes.alertRow}>
-          <Alert severity="warning" className={classes.alert}>
-            Do not include any confidential information.
-          </Alert>
-        </div>
-        <div className={classes.dialogRow}>
-          <Typography variant="subtitle2">Billable hours</Typography>
-        </div>
-        <div className={classes.dialogRow}>
-          <FormControl variant="outlined" className={classes.formControl}>
-            <NumberFormat
-              label="Hours"
-              customInput={TextField}
-              type="text"
-              variant="outlined"
-              onCut={(e) => disableCutCopyPaste(e, 'cut', 'denyHours')}
-              onCopy={(e) => disableCutCopyPaste(e, 'copy', 'denyHours')}
-              onPaste={(e) => disableCutCopyPaste(e, 'paste', 'denyHours')}
-              onClick={() => toggleHelperText('denyHours')}
-              onBlur={() => toggleHelperText('denyHours')}
-              onFocus={() => toggleHelperText('denyHours')}
-              value={state.denyHours.text}
-              error={Boolean(state.denyHours.errorText)}
-              helperText={state.denyHours.errorText}
-            />
-            <NumberFormat
-              label="Minutes"
-              customInput={TextField}
-              type="text"
-              variant="outlined"
-              onCut={(e) => disableCutCopyPaste(e, 'cut', 'denyMinutes')}
-              onCopy={(e) => disableCutCopyPaste(e, 'copy', 'denyMinutes')}
-              onPaste={(e) => disableCutCopyPaste(e, 'paste', 'denyMinutes')}
-              onClick={() => toggleHelperText('denyMinutes')}
-              onBlur={() => toggleHelperText('denyMinutes')}
-              onFocus={() => toggleHelperText('denyMinutes')}
-              value={state.denyMinutes.text}
-              error={Boolean(state.denyMinutes.errorText)}
-              helperText={state.denyMinutes.errorText}
-            />
-          </FormControl>
-        </div>
-        <div className={classes.dialogRow}>
-          <FormControl variant="outlined" required>
-            <InputLabel id="denied-select-label">Denied reason</InputLabel>
-            <Select
-              labelId="denied-select-label"
-              id="denied-select"
-              onChange={handleChange}
-              value={selected}
-              label="Denied reason"
-              fullWidth
-              placeholder="Select an option"
-            >
-              <MenuItem value="">
-                <em>Select an option</em>
-              </MenuItem>
-              <MenuItem value="Non-SSI project">Non-SSI project</MenuItem>
-              <MenuItem value="Confidential requirements are not met">
-                Confidential requirements are not met
-              </MenuItem>
-              <MenuItem value="Request is missing information">
-                Request is missing information
-              </MenuItem>
-              <MenuItem value="Output file(s) are not in line with the project proposal">
-                Output file(s) are not in line with the project proposal
-              </MenuItem>
-              <MenuItem value="Other">Other</MenuItem>
-            </Select>
-          </FormControl>
-        </div>
-        <>
-          {selected === 'Other' ? (
-            <div className={classes.dialogRow}>
-              <FormControl variant="outlined">
-                <TextField
-                  id="withdraw-input"
-                  label="Comments"
-                  variant="outlined"
-                  multiline
-                  required="true"
-                  onCut={(e) => disableCutCopyPaste(e, 'cut', 'comments')}
-                  onCopy={(e) => disableCutCopyPaste(e, 'copy', 'comments')}
-                  onPaste={(e) => disableCutCopyPaste(e, 'paste', 'comments')}
-                  onClick={() => toggleHelperText('comments')}
-                  onBlur={() => toggleHelperText('comments')}
-                  onFocus={() => toggleHelperText('comments')}
-                  value={state.comments.text}
-                  error={Boolean(state.comments.errorText)}
-                  helperText={state.comments.errorText}
-                />
-              </FormControl>
+        <DialogContent>
+          <div className={classes.vettingSection}>
+            <div className={classes.vettingRow}>
+              <div className={classes.vettingColumn}>
+                <Alert severity="warning" className={classes.alert}>
+                  {t('Do not include any confidential information.')}
+                </Alert>
+              </div>
             </div>
-          ) : (
-            <div className={classes.dialogRow}>
-              <FormControl variant="outlined">
-                <TextField
-                  id="withdraw-input"
-                  label="Comments"
-                  variant="outlined"
-                  multiline
-                  onCut={(e) => disableCutCopyPaste(e, 'cut', 'comments')}
-                  onCopy={(e) => disableCutCopyPaste(e, 'copy', 'comments')}
-                  onPaste={(e) => disableCutCopyPaste(e, 'paste', 'comments')}
-                  onClick={() => toggleHelperText('comments')}
-                  onBlur={() => toggleHelperText('comments')}
-                  onFocus={() => toggleHelperText('comments')}
-                  value={state.comments.text}
-                  error={Boolean(state.comments.errorText)}
-                  helperText={state.comments.errorText}
-                />
-              </FormControl>
+            <div className={classes.vettingRow}>
+              <div className={classes.vettingColumn}>
+                <Typography variant="subtitle2">
+                  {t('Billable hours')}
+                </Typography>
+              </div>
             </div>
-          )}
-        </>
-        <Divider className="mt-2" />
+            <div className={clsx(classes.vettingRow, classes.alignStart)}>
+              <div className={classes.vettingColumn}>
+                <FormControl variant="outlined">
+                  <NumberFormat
+                    label="Hours"
+                    customInput={TextField}
+                    type="text"
+                    variant="outlined"
+                    onCut={(e) => disableCutCopyPaste(e, 'cut', 'denyHours')}
+                    onCopy={(e) => disableCutCopyPaste(e, 'copy', 'denyHours')}
+                    onPaste={(e) =>
+                      disableCutCopyPaste(e, 'paste', 'denyHours')
+                    }
+                    onClick={() => toggleHelperText('denyHours')}
+                    onBlur={() => toggleHelperText('denyHours')}
+                    onFocus={() => toggleHelperText('denyHours')}
+                    value={state.denyHours.text}
+                    error={Boolean(state.denyHours.errorText)}
+                    helperText={state.denyHours.errorText}
+                  />
+                </FormControl>
+              </div>
+              <div className={classes.vettingColumn}>
+                <FormControl>
+                  <NumberFormat
+                    label="Minutes"
+                    customInput={TextField}
+                    type="text"
+                    variant="outlined"
+                    onCut={(e) => disableCutCopyPaste(e, 'cut', 'denyMinutes')}
+                    onCopy={(e) =>
+                      disableCutCopyPaste(e, 'copy', 'denyMinutes')
+                    }
+                    onPaste={(e) =>
+                      disableCutCopyPaste(e, 'paste', 'denyMinutes')
+                    }
+                    onClick={() => toggleHelperText('denyMinutes')}
+                    onBlur={() => toggleHelperText('denyMinutes')}
+                    onFocus={() => toggleHelperText('denyMinutes')}
+                    value={state.denyMinutes.text}
+                    error={Boolean(state.denyMinutes.errorText)}
+                    helperText={state.denyMinutes.errorText}
+                  />
+                </FormControl>
+              </div>
+            </div>
+            <div className={classes.vettingRow}>
+              <div className={classes.vettingColumn}>
+                <FormControl variant="outlined" required>
+                  <InputLabel id="denied-select-label">
+                    Denied reason
+                  </InputLabel>
+                  <Select
+                    labelId="denied-select-label"
+                    id="denied-select"
+                    onChange={handleChange}
+                    value={selected}
+                    label="Denied reason"
+                    placeholder="Select an option"
+                  >
+                    <MenuItem value="">
+                      <em>Select an option</em>
+                    </MenuItem>
+                    <MenuItem value="Non-SSI project">Non-SSI project</MenuItem>
+                    <MenuItem value="Confidential requirements are not met">
+                      Confidential requirements are not met
+                    </MenuItem>
+                    <MenuItem value="Request is missing information">
+                      Request is missing information
+                    </MenuItem>
+                    <MenuItem value="Output file(s) are not in line with the project proposal">
+                      Output file(s) are not in line with the project proposal
+                    </MenuItem>
+                    <MenuItem value="Other">Other</MenuItem>
+                  </Select>
+                </FormControl>
+              </div>
+            </div>
+            <div className={classes.vettingRow}>
+              <div className={classes.vettingColumn}>
+                {selected === 'Other' ? (
+                  <FormControl variant="outlined">
+                    <TextField
+                      id="withdraw-input"
+                      label="Comments"
+                      variant="outlined"
+                      multiline
+                      required
+                      onCut={(e) => disableCutCopyPaste(e, 'cut', 'comments')}
+                      onCopy={(e) => disableCutCopyPaste(e, 'copy', 'comments')}
+                      onPaste={(e) =>
+                        disableCutCopyPaste(e, 'paste', 'comments')
+                      }
+                      onClick={() => toggleHelperText('comments')}
+                      onBlur={() => toggleHelperText('comments')}
+                      onFocus={() => toggleHelperText('comments')}
+                      value={state.comments.text}
+                      error={Boolean(state.comments.errorText)}
+                      helperText={state.comments.errorText}
+                    />
+                  </FormControl>
+                ) : (
+                  <FormControl variant="outlined">
+                    <TextField
+                      id="withdraw-input"
+                      label="Comments"
+                      variant="outlined"
+                      multiline
+                      onCut={(e) => disableCutCopyPaste(e, 'cut', 'comments')}
+                      onCopy={(e) => disableCutCopyPaste(e, 'copy', 'comments')}
+                      onPaste={(e) =>
+                        disableCutCopyPaste(e, 'paste', 'comments')
+                      }
+                      onClick={() => toggleHelperText('comments')}
+                      onBlur={() => toggleHelperText('comments')}
+                      onFocus={() => toggleHelperText('comments')}
+                      value={state.comments.text}
+                      error={Boolean(state.comments.errorText)}
+                      helperText={state.comments.errorText}
+                    />
+                  </FormControl>
+                )}
+              </div>
+            </div>
+          </div>
+        </DialogContent>
+        <Divider />
         <DialogActions className={classes.dialogFooter}>
           <Button
             onClick={() => handleClickClose('dialogDeny')}
