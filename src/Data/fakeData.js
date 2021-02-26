@@ -1,3 +1,16 @@
+import {green, blue, red} from '@material-ui/core/colors';
+
+const randomColors = () => {
+  const colors = [green[500], blue[500], red[500]];
+  const colorList = [];
+
+  for (let i = 0; i < 10; i++) {
+    const random = colors[Math.floor(Math.random() * colors.length)];
+    colorList.push(random);
+  }
+  return colorList;
+};
+
 export const subjects = [
   'Agriculture',
   'Business and consumer services and culture',
@@ -813,6 +826,7 @@ export const analystList = [
     email: 'thanos.titan@canada.ca',
     assigned: true,
     role: 'lead',
+    avatar: '',
   },
   {
     id: 1235,
@@ -820,6 +834,7 @@ export const analystList = [
     email: 'peter.parker@canada.ca',
     assigned: true,
     role: 'support',
+    avatar: '',
   },
   {
     id: 1236,
@@ -827,6 +842,7 @@ export const analystList = [
     email: 'tony.stark@canada.ca',
     assigned: true,
     role: 'support',
+    avatar: '',
   },
   {
     id: 1237,
@@ -834,6 +850,7 @@ export const analystList = [
     email: 'bruce.banner@canada.ca',
     assigned: true,
     role: 'support',
+    avatar: '',
   },
   {
     id: 1238,
@@ -841,6 +858,7 @@ export const analystList = [
     email: 'natasha.romanov@canada.ca',
     assigned: false,
     role: 'support',
+    avatar: '',
   },
   {
     id: 1239,
@@ -848,6 +866,7 @@ export const analystList = [
     email: 'thor.odinson@canada.ca',
     assigned: false,
     role: 'support',
+    avatar: '',
   },
   {
     id: 1240,
@@ -855,6 +874,7 @@ export const analystList = [
     email: 'loki.odinson@canada.ca',
     assigned: false,
     role: 'support',
+    avatar: '',
   },
   {
     id: 1241,
@@ -862,6 +882,7 @@ export const analystList = [
     email: 'clint.barton@canada.ca',
     assigned: false,
     role: 'support',
+    avatar: '',
   },
   {
     id: 1242,
@@ -869,5 +890,10 @@ export const analystList = [
     email: 'wanda.vision@canada.ca',
     assigned: false,
     role: 'support',
+    avatar: '',
   },
 ];
+
+analystList.forEach(
+    (val, index) => (analystList[index].avatar = randomColors()[index]),
+);
