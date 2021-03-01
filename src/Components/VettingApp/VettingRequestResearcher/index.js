@@ -489,6 +489,7 @@ function VettingRequestResearcher(props) {
           aria-labelledby="alert-dialog-title"
           aria-describedby="alert-dialog-description"
           className={classes.root}
+          disableBackdropClick
         >
           <DialogTitle id="alert-dialog-title">
             <div className={classes.vettingContainerTitle}>

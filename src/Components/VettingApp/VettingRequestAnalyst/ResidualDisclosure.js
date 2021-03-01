@@ -579,6 +579,7 @@ function ResidualDisclosure(props) {
           onClose={handleClose}
           aria-labelledby="form-dialog-title"
           className={classes.root}
+          disableBackdropClick
         >
           <DialogTitle id="form-dialog-title">
             <div className={classes.vettingContainerTitle}>
@@ -621,24 +622,35 @@ function ResidualDisclosure(props) {
                   <Typography variant="subtitle2" component="h3">
                     Residual tables (see the vetting orientation)
                   </Typography>
-                  <TextField
-                    id="notes2"
-                    label="Notes"
-                    multiline
-                    rows={4}
-                    variant="outlined"
-                    fullWidth
-                    required
-                    onCut={(e) => disableCutCopyPaste(e, 'cut', 'dialognotes')}
-                    onCopy={(e) => disableCutCopyPaste(e, 'copy', 'dialognotes')}
-                    onPaste={(e) => disableCutCopyPaste(e, 'paste', 'dialognotes')}
-                    onClick={() => toggleHelperText('dialognotes')}
-                    onBlur={() => toggleHelperText('dialognotes')}
-                    onFocus={() => toggleHelperText('dialognotes')}
-                    value={state.dialognotes.text}
-                    error={Boolean(state.dialognotes.errorText)}
-                    helperText={state.dialognotes.errorText}
-                  />
+                  <div className={classes.vettingRow}>
+                    <div className={classes.vettingColumn}>
+                      {' '}
+                      <TextField
+                        id="notes2"
+                        label="Notes"
+                        multiline
+                        rows={4}
+                        variant="outlined"
+                        fullWidth
+                        required
+                        onCut={(e) =>
+                          disableCutCopyPaste(e, 'cut', 'dialognotes')
+                        }
+                        onCopy={(e) =>
+                          disableCutCopyPaste(e, 'copy', 'dialognotes')
+                        }
+                        onPaste={(e) =>
+                          disableCutCopyPaste(e, 'paste', 'dialognotes')
+                        }
+                        onClick={() => toggleHelperText('dialognotes')}
+                        onBlur={() => toggleHelperText('dialognotes')}
+                        onFocus={() => toggleHelperText('dialognotes')}
+                        value={state.dialognotes.text}
+                        error={Boolean(state.dialognotes.errorText)}
+                        helperText={state.dialognotes.errorText}
+                      />
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>
@@ -648,11 +660,7 @@ function ResidualDisclosure(props) {
             <Button onClick={handleClose} color="primary" variant="outlined">
               Cancel
             </Button>
-            <Button
-              onClick={handleClose}
-              color="primary"
-              variant="contained"
-            >
+            <Button onClick={handleClose} color="primary" variant="contained">
               Add supporting file
             </Button>
           </DialogActions>

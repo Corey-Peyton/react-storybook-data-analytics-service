@@ -21,8 +21,56 @@ import {
   IconButton,
 } from '@material-ui/core';
 import DeleteIcon from '@material-ui/icons/Delete';
+import CloseIcon from '@material-ui/icons/Close';
 
 const useStyles = makeStyles((theme) => ({
+  root: {
+    '& .MuiDialogTitle-root': {
+      padding: theme.spacing(1.5, 3),
+    },
+    '& .MuiSelect-select': {
+      height: [theme.spacing(7), '!important'],
+      paddingTop: 0,
+      paddingBottom: 0,
+    },
+  },
+  vettingContainerTitle: {
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+  },
+  vettingSection: {
+    display: 'flex',
+    flexFlow: 'column',
+    padding: theme.spacing(3),
+    overflowY: 'auto',
+  },
+  vettingRow: {
+    'display': 'flex',
+    'margin': theme.spacing(1.5, 0),
+    'flexFlow': 'row',
+    'height': '100%',
+    'justifyContent': 'center',
+    'width': '100%',
+    'alignItems': 'center',
+    '&:first-child': {
+      marginTop: 0,
+    },
+    '&:last-child': {
+      marginBottom: 0,
+    },
+  },
+  vettingColumn: {
+    'display': 'flex',
+    'flexDirection': 'column',
+    'width': '100%',
+    'justifyContent': 'center',
+    'marginRight': theme.spacing(1),
+    'height': '100%',
+    '&:last-child': {
+      marginRight: 0,
+    },
+  },
   inputMargin: {
     marginBottom: theme.spacing(2),
   },
@@ -75,21 +123,11 @@ function ResidualDisclosure(props) {
       <Typography component="h2" variant="h6" className="mb-2">
         Residual disclosure risk
       </Typography>
-      <FormControl
-        component="fieldset"
-        className={classes.inputMargin}
-        // error={!!errors.consistentOutput}
-      >
+      <FormControl component="fieldset" className={classes.inputMargin}>
         <FormLabel component="legend">
           Does this output a weight variable?
         </FormLabel>
-        {/* <Controller
-                    render={({onBlur, onChange, value}) => ( */}
-        <RadioGroup
-          id="weightVariable"
-          onChange={weightOnChange}
-          // value={value}
-        >
+        <RadioGroup id="weightVariable" onChange={weightOnChange}>
           <FormControlLabel
             value="Yes"
             control={<Radio color="primary" />}
@@ -101,26 +139,26 @@ function ResidualDisclosure(props) {
             label="No"
           />
         </RadioGroup>
-        {/* )} */}
-        {/* name="consistentOutput"
-              // control={control}
-              // rules={{ required: requiredErrorMessage }}
-            /> */}
-        {/* <FormHelperText>{errors.consistentOutput?.message}</FormHelperText> */}
       </FormControl>
       {state.weightVar && (
         <React.Fragment>
           <Typography component="h2" variant="h6" className="mb-2">
-        Residual disclosure supporting files
+            Residual disclosure supporting files
           </Typography>
           <div className={classes.emphasisBox}>
-            <Typography variant="subtitle2" className="mb-3">Supporting files for residual disclosure risk</Typography>
+            <Typography variant="subtitle2" className="mb-3">
+              Supporting files for residual disclosure risk
+            </Typography>
             <ul>
               <li>
-                <Typography variant="body2">Residual tables (see the vetting orientation)</Typography>
+                <Typography variant="body2">
+                  Residual tables (see the vetting orientation)
+                </Typography>
               </li>
               <li>
-                <Typography variant="body2">Both sets of syntax and highlight or indicate the changes.</Typography>
+                <Typography variant="body2">
+                  Both sets of syntax and highlight or indicate the changes.
+                </Typography>
               </li>
             </ul>
           </div>
@@ -129,55 +167,89 @@ function ResidualDisclosure(props) {
             margin="dense"
             required
             variant="outlined"
-            fullWidth />
-          <Button variant="contained" color="primary" className="mb-3" onClick={handleClickOpen}>
+            fullWidth
+          />
+          <Button
+            variant="contained"
+            color="primary"
+            className="mb-3"
+            onClick={handleClickOpen}
+          >
             Add output file
           </Button>
           <Dialog
             open={open}
             onClose={handleClose}
             aria-labelledby="form-dialog-title"
-
+            className={classes.root}
+            disableBackdropClick
           >
-            <DialogTitle id="form-dialog-title">Add supporting file</DialogTitle>
-            <DialogContent>
-              <FormControl
-                required
-                variant="outlined"
-                fullWidth
-                margin="dense"
-                className={classes.inputMargin}
-              >
-                <InputLabel id="outputFolder-label">
-              Output folder name
-                </InputLabel>
-                <Select
-                  id="supportingFilesFolder"
-                  label="Supporting folder *"
-                  labelId="supportingFilesFolder-label"
+            <DialogTitle id="form-dialog-title">
+              <div className={classes.vettingContainerTitle}>
+                Add supporting file
+                <IconButton
+                  onClick={() => handleClose('dialogUnAssign')}
+                  edge="end"
                 >
-                  <MenuItem key={-1} value="">
-                None
-                  </MenuItem>
-                </Select>
-              </FormControl>
-              <Typography variant="subtitle2">File #1 *</Typography>
-              <Typography variant="subtitle2">Residual tables (see the vetting orientation)</Typography>
-              <TextField
-                className={classes.inputMargin}
-                margin="dense"
-                id="notes2"
-                label="Notes"
-                multiline
-                rows={4}
-                variant="outlined"
-                fullWidth
-                required
-              />
+                  <CloseIcon />
+                </IconButton>
+              </div>
+            </DialogTitle>
+            <Divider />
+            <DialogContent>
+              <div className={classes.vettingSection}>
+                <div className={classes.vettingRow}>
+                  <div className={classes.vettingColumn}>
+                    <FormControl
+                      required
+                      variant="outlined"
+                      fullWidth
+                      className={classes.inputMargin}
+                    >
+                      <InputLabel id="outputFolder-label">
+                        Output folder name
+                      </InputLabel>
+                      <Select
+                        id="supportingFilesFolder"
+                        label="Supporting folder *"
+                        labelId="supportingFilesFolder-label"
+                      >
+                        <MenuItem key={-1} value="">
+                          None
+                        </MenuItem>
+                      </Select>
+                    </FormControl>
+                  </div>
+                </div>
+                <Typography variant="subtitle2" component="h3">
+                  File #1 *
+                </Typography>
+                <Typography variant="subtitle2" component="h3">
+                  Residual tables (see the vetting orientation)
+                </Typography>
+                <div className={classes.vettingRow}>
+                  <div className={classes.vettingColumn}>
+                    <TextField
+                      id="notes2"
+                      label="Notes"
+                      multiline
+                      rows={4}
+                      variant="outlined"
+                      fullWidth
+                      required
+                    />
+                  </div>
+                </div>
+              </div>
             </DialogContent>
+            <Divider />
             <DialogActions>
-              <Button onClick={handleClose} color="primary" variant="outlined">Cancel</Button>
-              <Button onClick={handleClose} color="primary" variant="contained">Add supporting file</Button>
+              <Button onClick={handleClose} color="primary" variant="outlined">
+                Cancel
+              </Button>
+              <Button onClick={handleClose} color="primary" variant="contained">
+                Add supporting file
+              </Button>
             </DialogActions>
           </Dialog>
           <FormControl />
@@ -213,12 +285,10 @@ function ResidualDisclosure(props) {
                 className={classes.inputMargin}
                 margin="dense"
                 id="fileContents1"
-                // name={'outputFiles[' + index + '].sheetName'}
                 label="File contents"
                 multiline
                 rows={2}
                 variant="outlined"
-                // inputRef={register}
                 fullWidth
               />
               <TextField
@@ -261,12 +331,10 @@ function ResidualDisclosure(props) {
                 className={classes.inputMargin}
                 margin="dense"
                 id="fileContents2"
-                // name={'outputFiles[' + index + '].sheetName'}
                 label="File contents"
                 multiline
                 rows={2}
                 variant="outlined"
-                // inputRef={register}
                 fullWidth
               />
               <TextField
