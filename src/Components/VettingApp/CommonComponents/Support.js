@@ -204,10 +204,12 @@ export default function FloatingSupportButton() {
               </div>
             </div>
             <div className={classes.vettingRow}>
-              <Typography variant="body2" component="span" color="textPrimary">
+              <div className={classes.vettingColumn}>
+                <Typography variant="body2" component="span" color="textPrimary">
                 Click submit and one of our support staff will reach out to help
                 you with your enquiry.
-              </Typography>
+                </Typography>
+              </div>
             </div>
             <div className={classes.vettingRow}>
               <TextField
