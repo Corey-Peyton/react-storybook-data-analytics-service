@@ -331,7 +331,7 @@ function ToolBarUnassign(props) {
           <div className={classes.vettingSection}>
             <div className={classes.vettingRow}>
               <div className={classes.vettingColumn}>
-                <Alert severity="warning" className={classes.alert}>
+                <Alert severity="warning">
                   {t('Do not include any confidential information.')}
                 </Alert>
               </div>
@@ -540,7 +540,7 @@ function ToolBarUnassign(props) {
           <div className={classes.vettingSection}>
             <div className={classes.vettingRow}>
               <div className={classes.vettingColumn}>
-                <Alert severity="warning" className={classes.alert}>
+                <Alert severity="warning">
                   {t('Do not include any confidential information.')}
                 </Alert>
               </div>

@@ -42,10 +42,42 @@ const style = {
 };
 
 const useStyles = makeStyles((theme) => ({
-  dialogTitle: {
+  vettingContainerTitle: {
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'space-between',
+  },
+  vettingSection: {
+    display: 'flex',
+    flexFlow: 'column',
+    padding: theme.spacing(3),
+    overflowY: 'auto',
+  },
+  vettingRow: {
+    'display': 'flex',
+    'margin': theme.spacing(1.5, 0),
+    'flexFlow': 'row',
+    'height': '100%',
+    'justifyContent': 'center',
+    'width': '100%',
+    'alignItems': 'center',
+    '&:first-child': {
+      marginTop: 0,
+    },
+    '&:last-child': {
+      marginBottom: 0,
+    },
+  },
+  vettingColumn: {
+    'display': 'flex',
+    'flexDirection': 'column',
+    'width': '100%',
+    'justifyContent': 'center',
+    'marginRight': theme.spacing(1),
+    'height': '100%',
+    '&:last-child': {
+      marginRight: 0,
+    },
   },
   inputMarginBlock: {
     marginBottom: theme.spacing(2),
@@ -70,30 +102,19 @@ const useStyles = makeStyles((theme) => ({
     display: 'flex',
     justifyContent: 'flex-end',
   },
-  footerBtns: {
-    marginLeft: [theme.spacing(2), '!important'],
-  },
   tooltipLabel: {
     '& svg': {
       verticalAlign: 'middle',
     },
   },
   root: {
-    '& .MuiDialog-paperWidthSm': {
-      'width': 400,
-      '& .MuiTextField-root': {
-        width: '100%',
-      },
-      '& .MuiFormLabel-root': {
-        'line-height': 1,
-      },
-      '& .MuiInputBase-input': {
-        'max-height': 130,
-        'overflow': 'hidden auto !important',
-      },
-      '& .MuiAutocomplete-endAdornment': {
-        top: '5.5px',
-      },
+    '& .MuiDialogTitle-root': {
+      padding: theme.spacing(1.5, 3),
+    },
+    '& .MuiSelect-select': {
+      height: [theme.spacing(7), '!important'],
+      paddingTop: 0,
+      paddingBottom: 0,
     },
   },
 }));
@@ -560,7 +581,7 @@ function ResidualDisclosure(props) {
           className={classes.root}
         >
           <DialogTitle id="form-dialog-title">
-            <div className={classes.dialogTitle}>
+            <div className={classes.vettingContainerTitle}>
               Add supporting file
               <IconButton
                 onClick={() => handleClose('dialogUnAssign')}
@@ -570,56 +591,59 @@ function ResidualDisclosure(props) {
               </IconButton>
             </div>
           </DialogTitle>
-          <Divider className="mb-2" />
+          <Divider />
           <DialogContent>
-            <FormControl
-              required
-              variant="outlined"
-              fullWidth
-              margin="dense"
-              className={classes.inputMargin}
-            >
-              <InputLabel id="outputFolder-label">
-                Output folder name
-              </InputLabel>
-              <Select
-                id="supportingFilesFolder"
-                label="Supporting folder *"
-                labelId="supportingFilesFolder-label"
-              >
-                <MenuItem key={-1} value="">
-                  None
-                </MenuItem>
-              </Select>
-            </FormControl>
-            <Typography variant="subtitle2" component="h3">
-              File #1 *
-            </Typography>
-            <Typography variant="subtitle2" component="h3">
-              Residual tables (see the vetting orientation)
-            </Typography>
-            <TextField
-              className={classes.inputMargin}
-              margin="dense"
-              id="notes2"
-              label="Notes"
-              multiline
-              rows={4}
-              variant="outlined"
-              fullWidth
-              required
-              onCut={(e) => disableCutCopyPaste(e, 'cut', 'dialognotes')}
-              onCopy={(e) => disableCutCopyPaste(e, 'copy', 'dialognotes')}
-              onPaste={(e) => disableCutCopyPaste(e, 'paste', 'dialognotes')}
-              onClick={() => toggleHelperText('dialognotes')}
-              onBlur={() => toggleHelperText('dialognotes')}
-              onFocus={() => toggleHelperText('dialognotes')}
-              value={state.dialognotes.text}
-              error={Boolean(state.dialognotes.errorText)}
-              helperText={state.dialognotes.errorText}
-            />
+            <div className={classes.vettingSection}>
+              <div className={classes.vettingRow}>
+                <div className={classes.vettingColumn}>
+                  <FormControl
+                    required
+                    variant="outlined"
+                    fullWidth
+                    className={classes.inputMargin}
+                  >
+                    <InputLabel id="outputFolder-label">
+                      Output folder name
+                    </InputLabel>
+                    <Select
+                      id="supportingFilesFolder"
+                      label="Supporting folder *"
+                      labelId="supportingFilesFolder-label"
+                    >
+                      <MenuItem key={-1} value="">
+                        None
+                      </MenuItem>
+                    </Select>
+                  </FormControl>
+                  <Typography variant="subtitle2" component="h3">
+                    File #1 *
+                  </Typography>
+                  <Typography variant="subtitle2" component="h3">
+                    Residual tables (see the vetting orientation)
+                  </Typography>
+                  <TextField
+                    id="notes2"
+                    label="Notes"
+                    multiline
+                    rows={4}
+                    variant="outlined"
+                    fullWidth
+                    required
+                    onCut={(e) => disableCutCopyPaste(e, 'cut', 'dialognotes')}
+                    onCopy={(e) => disableCutCopyPaste(e, 'copy', 'dialognotes')}
+                    onPaste={(e) => disableCutCopyPaste(e, 'paste', 'dialognotes')}
+                    onClick={() => toggleHelperText('dialognotes')}
+                    onBlur={() => toggleHelperText('dialognotes')}
+                    onFocus={() => toggleHelperText('dialognotes')}
+                    value={state.dialognotes.text}
+                    error={Boolean(state.dialognotes.errorText)}
+                    helperText={state.dialognotes.errorText}
+                  />
+                </div>
+              </div>
+            </div>
           </DialogContent>
-          <Divider className="mt-1" />
+          <Divider />
           <DialogActions className={classes.dialogFooter}>
             <Button onClick={handleClose} color="primary" variant="outlined">
               Cancel
@@ -628,7 +652,6 @@ function ResidualDisclosure(props) {
               onClick={handleClose}
               color="primary"
               variant="contained"
-              className={classes.footerBtns}
             >
               Add supporting file
             </Button>

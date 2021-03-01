@@ -30,6 +30,43 @@ import Icon from '@mdi/react';
 import {mdiFileDocumentOutline} from '@mdi/js';
 
 const useStyles = makeStyles((theme) => ({
+  vettingContainerTitle: {
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+  },
+  vettingSection: {
+    display: 'flex',
+    flexFlow: 'column',
+    padding: theme.spacing(3),
+    overflowY: 'auto',
+  },
+  vettingRow: {
+    'display': 'flex',
+    'margin': theme.spacing(1.5, 0),
+    'flexFlow': 'row',
+    'height': '100%',
+    'justifyContent': 'center',
+    'width': '100%',
+    'alignItems': 'center',
+    '&:first-child': {
+      marginTop: 0,
+    },
+    '&:last-child': {
+      marginBottom: 0,
+    },
+  },
+  vettingColumn: {
+    'display': 'flex',
+    'flexDirection': 'column',
+    'width': '100%',
+    'justifyContent': 'center',
+    'marginRight': theme.spacing(1),
+    'height': '100%',
+    '&:last-child': {
+      marginRight: 0,
+    },
+  },
   card: {
     marginTop: theme.spacing(2),
   },
@@ -48,9 +85,6 @@ const useStyles = makeStyles((theme) => ({
   cardTitle: {
     marginTop: theme.spacing(0.25),
   },
-  dialogContent: {
-    padding: theme.spacing(3),
-  },
   dialogFooter: {
     padding: theme.spacing(1.75, 3),
     borderTop: '1px solid',
@@ -58,14 +92,6 @@ const useStyles = makeStyles((theme) => ({
   },
   footerBtns: {
     marginLeft: [theme.spacing(2), '!important'],
-  },
-  dialogTitle: {
-    display: 'flex',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-    padding: theme.spacing(1.5, 3),
-    borderBottom: '1px solid',
-    borderBottomColor: theme.palette.divider,
   },
   divider: {
     margin: theme.spacing(3, 0),
@@ -77,11 +103,18 @@ const useStyles = makeStyles((theme) => ({
       paddingLeft: theme.spacing(3),
     },
   },
-  inputMargin: {
-    marginBottom: theme.spacing(2),
-  },
   icon: {
     marginRight: theme.spacing(1.5),
+  },
+  root: {
+    '& .MuiDialogTitle-root': {
+      padding: theme.spacing(1.5, 3),
+    },
+    '& .MuiSelect-select': {
+      height: [theme.spacing(7), '!important'],
+      paddingTop: 0,
+      paddingBottom: 0,
+    },
   },
 }));
 
@@ -342,11 +375,11 @@ function FilesList(props) {
         open={open.dialogAddSupporting}
         aria-labelledby="form-dialog-title"
         fullWidth
-        maxWidth="xs"
+        className={classes.root}
       >
         <DialogTitle
           id="form-dialog-title"
-          className={classes.dialogTitle}
+          className={classes.vettingContainerTitle}
           disableTypography
         >
           <Typography variant="h6" component="h2">
@@ -360,49 +393,54 @@ function FilesList(props) {
             <CloseIcon />
           </IconButton>
         </DialogTitle>
-        <DialogContent className={classes.dialogContent}>
-          <FormControl
-            required
-            variant="outlined"
-            fullWidth
-            margin="dense"
-            className={classes.inputMargin}
-          >
-            <InputLabel id="outputFolder-label">Output folder name</InputLabel>
-            <Select
-              id="supportingFilesFolder"
-              label="Supporting folder *"
-              labelId="supportingFilesFolder-label"
-            >
-              <MenuItem key={-1} value="">
-                None
-              </MenuItem>
-            </Select>
-          </FormControl>
-          <Typography variant="subtitle2">File #1 *</Typography>
-          <Typography variant="subtitle2">
-            Residual tables (see the vetting orientation)
-          </Typography>
-          <TextField
-            className={classes.inputMargin}
-            margin="dense"
-            id="notes2"
-            label="Notes"
-            multiline
-            rows={4}
-            variant="outlined"
-            fullWidth
-            required
-            onCut={(e) => disableCutCopyPaste(e, 'cut', 'notes')}
-            onCopy={(e) => disableCutCopyPaste(e, 'copy', 'notes')}
-            onPaste={(e) => disableCutCopyPaste(e, 'paste', 'notes')}
-            onClick={() => toggleHelperText('notes')}
-            onBlur={() => toggleHelperText('notes')}
-            onFocus={() => toggleHelperText('notes')}
-            value={state.notes.text}
-            error={Boolean(state.notes.errorText)}
-            helperText={state.notes.errorText}
-          />
+        <Divider />
+        <DialogContent>
+          <div className={classes.vettingSection}>
+            <div className={classes.vettingRow}>
+              <div className={classes.vettingColumn}>
+                <FormControl required variant="outlined" fullWidth>
+                  <InputLabel id="outputFolder-label">
+                    Output folder name
+                  </InputLabel>
+                  <Select
+                    id="supportingFilesFolder"
+                    label="Supporting folder *"
+                    labelId="supportingFilesFolder-label"
+                  >
+                    <MenuItem key={-1} value="">
+                      None
+                    </MenuItem>
+                  </Select>
+                </FormControl>
+              </div>
+            </div>
+            <Typography variant="subtitle2">File #1 *</Typography>
+            <Typography variant="subtitle2">
+              Residual tables (see the vetting orientation)
+            </Typography>
+            <div className={classes.vettingRow}>
+              <div className={classes.vettingColumn}>
+                <TextField
+                  id="notes2"
+                  label="Notes"
+                  multiline
+                  rows={4}
+                  variant="outlined"
+                  fullWidth
+                  required
+                  onCut={(e) => disableCutCopyPaste(e, 'cut', 'notes')}
+                  onCopy={(e) => disableCutCopyPaste(e, 'copy', 'notes')}
+                  onPaste={(e) => disableCutCopyPaste(e, 'paste', 'notes')}
+                  onClick={() => toggleHelperText('notes')}
+                  onBlur={() => toggleHelperText('notes')}
+                  onFocus={() => toggleHelperText('notes')}
+                  value={state.notes.text}
+                  error={Boolean(state.notes.errorText)}
+                  helperText={state.notes.errorText}
+                />
+              </div>
+            </div>
+          </div>
         </DialogContent>
         <DialogActions className={classes.dialogFooter}>
           <Button
@@ -427,11 +465,11 @@ function FilesList(props) {
         open={open.deleteFile}
         aria-labelledby="delete-dialog-title"
         fullWidth
-        maxWidth="xs"
+        className={classes.root}
       >
         <DialogTitle
           id="delete-dialog-title"
-          className={classes.dialogTitle}
+          className={classes.vettingContainerTitle}
           disableTypography
         >
           <Typography variant="h6" component="h2">
@@ -445,11 +483,16 @@ function FilesList(props) {
             <CloseIcon />
           </IconButton>
         </DialogTitle>
-        <DialogContent className={classes.dialogContent}>
-          <Alert severity="warning">
-            Deleting this output file cannot be undone.
-          </Alert>
-        </DialogContent>
+        <Divider />
+        <div className={classes.vettingSection}>
+          <div className={classes.vettingRow}>
+            <div className={classes.vettingColumn}>
+              <Alert severity="warning">
+                Deleting this output file cannot be undone.
+              </Alert>
+            </div>
+          </div>
+        </div>
         <DialogActions className={classes.dialogFooter}>
           <Button
             color="primary"
