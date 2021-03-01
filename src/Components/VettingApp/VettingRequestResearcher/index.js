@@ -17,7 +17,6 @@ import {
   Dialog,
   DialogTitle,
   DialogContent,
-  DialogContentText,
   DialogActions,
   Snackbar,
   IconButton,
@@ -40,6 +39,11 @@ import CutCopyPasteAlert from '../CommonComponents/CutCopyPasteAlert';
 import CloseIcon from '@material-ui/icons/Close';
 
 const useStyles = makeStyles((theme) => ({
+  root: {
+    '& .MuiDialogTitle-root': {
+      padding: theme.spacing(1.5, 3),
+    },
+  },
   main: {
     background: theme.palette.grey[100],
     paddingBottom: theme.spacing(6),
@@ -49,11 +53,6 @@ const useStyles = makeStyles((theme) => ({
   },
   divider: {
     margin: theme.spacing(3, 0),
-  },
-  dialogTitle: {
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'space-between',
   },
   dividercutcopypaste: {
     marginBottom: theme.spacing(2),
@@ -124,6 +123,43 @@ const useStyles = makeStyles((theme) => ({
   errorMsg: {
     margin: 0,
     textAlign: 'left',
+  },
+  vettingContainerTitle: {
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+  },
+  vettingSection: {
+    display: 'flex',
+    flexFlow: 'column',
+    padding: theme.spacing(3),
+    overflowY: 'auto',
+  },
+  vettingRow: {
+    'display': 'flex',
+    'margin': theme.spacing(1.5, 0),
+    'flexFlow': 'row',
+    'height': '100%',
+    'justifyContent': 'center',
+    'width': '100%',
+    'alignItems': 'center',
+    '&:first-child': {
+      marginTop: 0,
+    },
+    '&:last-child': {
+      marginBottom: 0,
+    },
+  },
+  vettingColumn: {
+    'display': 'flex',
+    'flexDirection': 'column',
+    'width': '100%',
+    'justifyContent': 'center',
+    'marginRight': theme.spacing(1),
+    'height': '100%',
+    '&:last-child': {
+      marginRight: 0,
+    },
   },
 }));
 
@@ -452,9 +488,10 @@ function VettingRequestResearcher(props) {
           onClose={handleDialogClose}
           aria-labelledby="alert-dialog-title"
           aria-describedby="alert-dialog-description"
+          className={classes.root}
         >
           <DialogTitle id="alert-dialog-title">
-            <div className={classes.dialogTitle}>
+            <div className={classes.vettingContainerTitle}>
               Delete vetting request
               <IconButton onClick={handleDialogClose} edge="end">
                 <CloseIcon />
@@ -462,10 +499,14 @@ function VettingRequestResearcher(props) {
             </div>
           </DialogTitle>
           <Divider />
-          <DialogContent className="pb-0 mt-2 mb-2">
-            <DialogContentText id="alert-dialog-description">
-              <Typography variant="body2">{`Are you sure you want to delete the Vetting disclosure request "${state.title()}"?`}</Typography>
-            </DialogContentText>
+          <DialogContent>
+            <div className={classes.vettingSection}>
+              <div className={classes.vettingRow}>
+                <div className={classes.vettingColumn}>
+                  <Typography variant="body2">{`Are you sure you want to delete the Vetting disclosure request "${state.title()}"?`}</Typography>
+                </div>
+              </div>
+            </div>
           </DialogContent>
           <Divider />
           <DialogActions className={classes.dialogFooter}>
