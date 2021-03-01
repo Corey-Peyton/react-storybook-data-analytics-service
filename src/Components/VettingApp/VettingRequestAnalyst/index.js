@@ -449,6 +449,7 @@ function VettingRequestAnalyst(props) {
           aria-labelledby="alert-dialog-title"
           aria-describedby="alert-dialog-description"
           className={classes.root}
+          scroll='paper'
         >
           <DialogTitle id="alert-dialog-manage">
             <div className={classes.dialogTitle}>

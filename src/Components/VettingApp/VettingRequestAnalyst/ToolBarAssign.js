@@ -23,21 +23,45 @@ import NumberFormat from 'react-number-format';
 
 const useStyles = makeStyles((theme) => ({
   root: {
-    '& .MuiDialog-paperWidthSm': {
-      'width': 400,
-      '& .MuiTextField-root': {
-        width: '100%',
-      },
-      '& .MuiFormLabel-root': {
-        'line-height': 1,
-      },
-      '& .MuiInputBase-input': {
-        'max-height': 130,
-        'overflow': 'hidden auto !important',
-      },
-      '& .MuiAutocomplete-endAdornment': {
-        top: '5.5px',
-      },
+    '& .MuiDialogTitle-root': {
+      padding: theme.spacing(1.5, 3),
+    },
+  },
+  vettingContainerTitle: {
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+  },
+  vettingSection: {
+    display: 'flex',
+    flexFlow: 'column',
+    padding: theme.spacing(3),
+    overflowY: 'auto',
+  },
+  vettingRow: {
+    'display': 'flex',
+    'margin': theme.spacing(1.5, 0),
+    'flexFlow': 'row',
+    'height': '100%',
+    'justifyContent': 'center',
+    'width': '100%',
+    'alignItems': 'center',
+    '&:first-child': {
+      marginTop: 0,
+    },
+    '&:last-child': {
+      marginBottom: 0,
+    },
+  },
+  vettingColumn: {
+    'display': 'flex',
+    'flexDirection': 'column',
+    'width': '100%',
+    'justifyContent': 'center',
+    'marginRight': theme.spacing(1),
+    'height': '100%',
+    '&:last-child': {
+      marginRight: 0,
     },
   },
   main: {
@@ -49,23 +73,6 @@ const useStyles = makeStyles((theme) => ({
   },
   headerBtn: {
     marginLeft: theme.spacing(3),
-  },
-  dialogTitle: {
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'space-between',
-  },
-  dialogFooter: {
-    padding: theme.spacing(2, 3),
-    display: 'flex',
-    justifyContent: 'flex-end',
-  },
-  footerBtns: {
-    marginLeft: [theme.spacing(2), '!important'],
-  },
-  textField: {
-    width: '100%',
-    padding: 0,
   },
 }));
 
@@ -188,10 +195,12 @@ function ToolBarAssign(props) {
         open={open}
         onClose={handleClose}
         aria-labelledby="form-dialog-title"
+        scroll='paper'
+        disableBackdropClick
         className={classes.root}
       >
         <DialogTitle id="dashboard-dialog-title">
-          <div className={classes.dialogTitle}>
+          <div className={classes.vettingContainerTitle}>
             <Typography variant="h6">Assign vetting request to me</Typography>
             <IconButton onClick={handleClose} edge="end">
               <CloseIcon />
@@ -199,34 +208,44 @@ function ToolBarAssign(props) {
           </div>
         </DialogTitle>
         <Divider />
-        <DialogContent className="mt-3 pt-0">
-          <Typography variant="subtitle2" className="mb-2">
-            Provide a phone number
-          </Typography>
-          <FormControl variant="outlined" className={classes.textField}>
-            <NumberFormat
-              id="phone"
-              label="Phone number *"
-              customInput={TextField}
-              type="text"
-              variant="outlined"
-              format="+1 (###) ### ####"
-              mask="_"
-              allowEmptyFormatting
-              autoComplete="phone"
-              onCut={(e) => disableCutCopyPaste(e, 'cut', 'phone')}
-              onCopy={(e) => disableCutCopyPaste(e, 'copy', 'phone')}
-              onPaste={(e) => disableCutCopyPaste(e, 'paste', 'phone')}
-              onClick={() => toggleHelperText('phone')}
-              onBlur={() => toggleHelperText('phone')}
-              onFocus={() => toggleHelperText('phone')}
-              value={state.phone.text}
-              error={Boolean(state.phone.errorText)}
-              helperText={state.phone.errorText}
-            />
-          </FormControl>
+        <DialogContent>
+          <div className={classes.vettingSection}>
+            <div className={classes.vettingRow}>
+              <div className={classes.vettingColumn}>
+                <Typography variant="subtitle2">
+                  Provide a phone number
+                </Typography>
+              </div>
+            </div>
+            <div className={classes.vettingRow}>
+              <div className={classes.vettingColumn}>
+                <FormControl variant="outlined">
+                  <NumberFormat
+                    id="phone"
+                    label="Phone number *"
+                    customInput={TextField}
+                    type="text"
+                    variant="outlined"
+                    format="+1 (###) ### ####"
+                    mask="_"
+                    allowEmptyFormatting
+                    autoComplete="phone"
+                    onCut={(e) => disableCutCopyPaste(e, 'cut', 'phone')}
+                    onCopy={(e) => disableCutCopyPaste(e, 'copy', 'phone')}
+                    onPaste={(e) => disableCutCopyPaste(e, 'paste', 'phone')}
+                    onClick={() => toggleHelperText('phone')}
+                    onBlur={() => toggleHelperText('phone')}
+                    onFocus={() => toggleHelperText('phone')}
+                    value={state.phone.text}
+                    error={Boolean(state.phone.errorText)}
+                    helperText={state.phone.errorText}
+                  />
+                </FormControl>
+              </div>
+            </div>
+          </div>
         </DialogContent>
-        <Divider className="mt-3 mb-1" />
+        <Divider />
         <DialogActions className={classes.dialogFooter}>
           <Button onClick={handleClose} color="primary" variant="outlined">
             Cancel
