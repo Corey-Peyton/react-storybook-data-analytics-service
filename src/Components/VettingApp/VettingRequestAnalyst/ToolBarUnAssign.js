@@ -90,14 +90,6 @@ const useStyles = makeStyles((theme) => ({
   headerBtn: {
     marginLeft: theme.spacing(3),
   },
-  dialogFooter: {
-    padding: theme.spacing(3, 3),
-    display: 'flex',
-    justifyContent: 'flex-end',
-  },
-  footerBtns: {
-    marginLeft: [theme.spacing(2), '!important'],
-  },
 }));
 
 function ToolBarUnassign(props) {

@@ -69,14 +69,6 @@ const useStyles = makeStyles((theme) => ({
       marginRight: 0,
     },
   },
-  dialogFooter: {
-    padding: theme.spacing(3, 3),
-    display: 'flex',
-    justifyContent: 'flex-end',
-  },
-  footerBtns: {
-    marginLeft: [theme.spacing(2), '!important'],
-  },
 }));
 
 export default function FloatingSupportButton() {

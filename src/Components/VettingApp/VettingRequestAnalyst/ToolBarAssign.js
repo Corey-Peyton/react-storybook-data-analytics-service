@@ -22,6 +22,11 @@ import CloseIcon from '@material-ui/icons/Close';
 import NumberFormat from 'react-number-format';
 
 const useStyles = makeStyles((theme) => ({
+  root: {
+    '& .MuiDialogTitle-root': {
+      padding: theme.spacing(1.5, 3),
+    },
+  },
   vettingContainerTitle: {
     display: 'flex',
     alignItems: 'center',
@@ -68,14 +73,6 @@ const useStyles = makeStyles((theme) => ({
   },
   headerBtn: {
     marginLeft: theme.spacing(3),
-  },
-  dialogFooter: {
-    padding: theme.spacing(2, 3),
-    display: 'flex',
-    justifyContent: 'flex-end',
-  },
-  footerBtns: {
-    marginLeft: [theme.spacing(2), '!important'],
   },
 }));
 
@@ -200,6 +197,7 @@ function ToolBarAssign(props) {
         aria-labelledby="form-dialog-title"
         scroll='paper'
         disableBackdropClick
+        className={classes.root}
       >
         <DialogTitle id="dashboard-dialog-title">
           <div className={classes.vettingContainerTitle}>
