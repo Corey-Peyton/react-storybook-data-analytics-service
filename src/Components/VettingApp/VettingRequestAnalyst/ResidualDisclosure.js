@@ -580,6 +580,7 @@ function ResidualDisclosure(props) {
           aria-labelledby="form-dialog-title"
           className={classes.root}
           disableBackdropClick
+          scroll='paper'
         >
           <DialogTitle id="form-dialog-title">
             <div className={classes.vettingContainerTitle}>

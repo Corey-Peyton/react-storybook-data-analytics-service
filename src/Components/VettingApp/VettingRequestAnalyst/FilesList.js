@@ -373,6 +373,7 @@ function FilesList(props) {
         aria-labelledby="form-dialog-title"
         fullWidth
         className={classes.root}
+        scroll='paper'
       >
         <DialogTitle
           id="form-dialog-title"
@@ -463,6 +464,7 @@ function FilesList(props) {
         aria-labelledby="delete-dialog-title"
         fullWidth
         className={classes.root}
+        scroll='paper'
       >
         <DialogTitle
           id="delete-dialog-title"
