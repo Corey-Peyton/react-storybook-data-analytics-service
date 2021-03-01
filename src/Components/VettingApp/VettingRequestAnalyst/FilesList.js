@@ -90,9 +90,6 @@ const useStyles = makeStyles((theme) => ({
     borderTop: '1px solid',
     borderTopColor: theme.palette.divider,
   },
-  footerBtns: {
-    marginLeft: [theme.spacing(2), '!important'],
-  },
   divider: {
     margin: theme.spacing(3, 0),
   },
