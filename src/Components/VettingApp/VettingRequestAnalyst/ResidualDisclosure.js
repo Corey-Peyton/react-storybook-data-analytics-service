@@ -18,9 +18,13 @@ import {
   IconButton,
   Tooltip,
   Snackbar,
+  DialogTitle,
+  Dialog,
+  DialogActions,
 } from '@material-ui/core';
 import Alert from '@material-ui/lab/Alert';
 import DeleteIcon from '@material-ui/icons/Delete';
+import CloseIcon from '@material-ui/icons/Close';
 import InfoIcon from '@material-ui/icons/Info';
 
 const useStylesBootstrap = makeStyles((theme) => ({
@@ -33,11 +37,6 @@ const useStylesBootstrap = makeStyles((theme) => ({
 }));
 
 const useStyles = makeStyles((theme) => ({
-  dialogTitle: {
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'space-between',
-  },
   inputMarginBlock: {
     marginTop: theme.spacing(0),
     marginBottom: theme.spacing(3),
@@ -68,6 +67,54 @@ const useStyles = makeStyles((theme) => ({
     paddingLeft: theme.spacing(1),
     marginTop: theme.spacing(1),
   },
+  indentedSection: {
+    paddingLeft: theme.spacing(3),
+    marginBottom: theme.spacing(3),
+    borderLeft: '1px solid',
+    borderLeftColor: theme.palette.divider,
+  },
+  vettingContainerTitle: {
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+  },
+  vettingSection: {
+    display: 'flex',
+    flexFlow: 'column',
+    padding: theme.spacing(3),
+    overflowY: 'auto',
+  },
+  vettingRow: {
+    'display': 'flex',
+    'margin': theme.spacing(1.5, 0),
+    'flexFlow': 'row',
+    'height': '100%',
+    'justifyContent': 'center',
+    'width': '100%',
+    'alignItems': 'center',
+    '&:first-child': {
+      marginTop: 0,
+    },
+    '&:last-child': {
+      marginBottom: 0,
+    },
+  },
+  vettingColumn: {
+    'display': 'flex',
+    'flexDirection': 'column',
+    'width': '100%',
+    'justifyContent': 'center',
+    'marginRight': theme.spacing(1),
+    'height': '100%',
+    '&:last-child': {
+      marginRight: 0,
+    },
+  },
+  dialogFooter: {
+    padding: theme.spacing(1.75, 3),
+    borderTop: '1px solid',
+    borderTopColor: theme.palette.divider,
+  },
 }));
 
 function BootstrapTooltip(props) {
@@ -93,6 +140,8 @@ function ResidualDisclosure(props) {
     notes2: '',
     notes3: '',
     snackbarAddFile: false,
+    snackbarDelete: false,
+    dialogDeleteFile: false,
   });
 
   const initial = {
@@ -249,6 +298,14 @@ function ResidualDisclosure(props) {
     setState({...state, addFile: true, snackbarAddFile: true});
   };
 
+  const handleDeleteFile = () => {
+    setState({...state, dialogDeleteFile: false, snackbarDelete: true});
+  };
+
+  const handleClickOpen = (element) => {
+    setState({...state, [element]: true});
+  };
+
   const handleClickClose = (element) => {
     setState({...state, [element]: false});
   };
@@ -267,35 +324,10 @@ function ResidualDisclosure(props) {
       <Typography component="h2" variant="h6" className="mb-2">
         Residual disclosure
       </Typography>
-      {/* <FormControl component="fieldset" className={classes.inputMargin}>
-        <FormLabel component="legend">
-          Have other outputs been previously released for this project?
-        </FormLabel>
-        <RadioGroup
-          id="previouslyReleased"
-          onChange={handleRadioChange}
-          value={state.previouslyReleased}
-          name="previouslyReleased"
-        >
-          <FormControlLabel
-            value="Yes"
-            control={<Radio color="primary" />}
-            label="Yes"
-          />
-          <FormControlLabel
-            value="No"
-            control={<Radio color="primary" />}
-            label="No"
-          />
-        </RadioGroup>
-      </FormControl> */}
       <FormControl component="fieldset" className={classes.inputMargin}>
         <FormLabel component="legend" className={classes.tooltipLabel} required>
           For this request, have you subsetted any variables, where one or more
           variables is a subset of another?
-          {/* <BootstrapTooltip title="Examples: Had depression in the past 5 years and had depression in the previous year, had a chronic condition and had a respiratory chronic condition.">
-            <InfoIcon />
-          </BootstrapTooltip> */}
         </FormLabel>
         <RadioGroup
           id="subset"
@@ -316,7 +348,7 @@ function ResidualDisclosure(props) {
         </RadioGroup>
       </FormControl>
       {state.subset === 'Yes' && (
-        <>
+        <div className={classes.indentedSection}>
           <FormControl
             component="fieldset"
             className={classes.inputMarginBlock}
@@ -462,11 +494,6 @@ function ResidualDisclosure(props) {
                     File 1
                   </Typography>
                 </Grid>
-                {/* <Grid item>
-                  <IconButton aria-label="delete" className={classes.margin}>
-                    <DeleteIcon />
-                  </IconButton>
-                </Grid> */}
               </Grid>
               <FormControl
                 className={classes.inputMargin}
@@ -533,11 +560,6 @@ function ResidualDisclosure(props) {
                     File 2
                   </Typography>
                 </Grid>
-                {/* <Grid item>
-                  <IconButton aria-label="delete" className={classes.margin}>
-                    <DeleteIcon />
-                  </IconButton>
-                </Grid> */}
               </Grid>
               <FormControl
                 className={classes.inputMargin}
@@ -614,6 +636,7 @@ function ResidualDisclosure(props) {
                         aria-label="delete file 3"
                         className={classes.margin}
                         edge="end"
+                        onClick={() => handleClickOpen('dialogDeleteFile')}
                       >
                         <DeleteIcon />
                       </IconButton>
@@ -688,12 +711,11 @@ function ResidualDisclosure(props) {
           <Button
             variant="contained"
             color="primary"
-            className="mb-3"
             onClick={handleAddFileSubset}
           >
             Add file
           </Button>
-        </>
+        </div>
       )}
       <FormControl component="fieldset" className={classes.inputMargin}>
         <FormLabel component="legend" required>
@@ -719,7 +741,7 @@ function ResidualDisclosure(props) {
         </RadioGroup>
       </FormControl>
       {state.versionpreviouslyReleased === 'Yes' && (
-        <>
+        <div className={classes.indentedSection}>
           <FormControl
             component="fieldset"
             className={classes.inputMarginBlock}
@@ -893,11 +915,6 @@ function ResidualDisclosure(props) {
                     File 1
                   </Typography>
                 </Grid>
-                {/* <Grid item>
-                  <IconButton aria-label="delete" className={classes.margin}>
-                    <DeleteIcon />
-                  </IconButton>
-                </Grid> */}
               </Grid>
               <FormControl
                 className={classes.inputMargin}
@@ -962,11 +979,6 @@ function ResidualDisclosure(props) {
                     File 2
                   </Typography>
                 </Grid>
-                {/* <Grid item>
-                  <IconButton aria-label="delete" className={classes.margin}>
-                    <DeleteIcon />
-                  </IconButton>
-                </Grid> */}
               </Grid>
               <FormControl
                 className={classes.inputMargin}
@@ -1041,6 +1053,7 @@ function ResidualDisclosure(props) {
                         aria-label="delete file 3"
                         className={classes.margin}
                         edge="end"
+                        onClick={() => handleClickOpen('dialogDeleteFile')}
                       >
                         <DeleteIcon />
                       </IconButton>
@@ -1106,15 +1119,10 @@ function ResidualDisclosure(props) {
               )}
             </Grid>
           </Grid>
-          <Button
-            variant="contained"
-            color="primary"
-            className="mb-3"
-            onClick={handleAddFile}
-          >
+          <Button variant="contained" color="primary" onClick={handleAddFile}>
             Add file
           </Button>
-        </>
+        </div>
       )}
       {/* Add file snackbar */}
       <Snackbar
@@ -1134,6 +1142,77 @@ function ResidualDisclosure(props) {
           File added
         </Alert>
       </Snackbar>
+      {/* Delete file snackbar */}
+      <Snackbar
+        open={state.snackbarDelete}
+        autoHideDuration={6000}
+        onClose={() => handleClickClose('snackbarDelete')}
+        anchorOrigin={{
+          vertical: 'bottom',
+          horizontal: 'left',
+        }}
+      >
+        <Alert
+          severity="success"
+          className={classes.alert}
+          variant="filled"
+          onClose={() => handleClickClose('snackbarDelete')}
+        >
+          The file 'File 3' has been successfully deleted!
+        </Alert>
+      </Snackbar>
+      {/* Delete file dialog */}
+      <Dialog
+        open={state.dialogDeleteFile}
+        aria-labelledby="delete-dialog-title"
+        fullWidth
+        className={classes.root}
+        scroll="paper"
+      >
+        <DialogTitle
+          id="delete-dialog-title"
+          className={classes.vettingContainerTitle}
+          disableTypography
+        >
+          <Typography variant="h6" component="h2">
+            Delete this file?
+          </Typography>
+          <IconButton
+            onClick={() => handleClickClose('dialogDeleteFile')}
+            edge="end"
+            aria-label="Close delete output file"
+          >
+            <CloseIcon />
+          </IconButton>
+        </DialogTitle>
+        <Divider />
+        <div className={classes.vettingSection}>
+          <div className={classes.vettingRow}>
+            <div className={classes.vettingColumn}>
+              <Alert severity="warning">
+                Deleting this file cannot be undone.
+              </Alert>
+            </div>
+          </div>
+        </div>
+        <DialogActions className={classes.dialogFooter}>
+          <Button
+            color="primary"
+            variant="outlined"
+            onClick={() => handleClickClose('dialogDeleteFile')}
+          >
+            Cancel
+          </Button>
+          <Button
+            color="primary"
+            variant="contained"
+            onClick={handleDeleteFile}
+            className={classes.footerBtns}
+          >
+            Delete
+          </Button>
+        </DialogActions>
+      </Dialog>
     </React.Fragment>
   );
 }
