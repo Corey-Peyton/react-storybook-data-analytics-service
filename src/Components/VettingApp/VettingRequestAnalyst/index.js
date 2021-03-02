@@ -135,7 +135,7 @@ const useStyles = makeStyles((theme) => ({
 function getSteps() {
   return [
     'Researcher information',
-    'Files list request',
+    'Output details',
     'Residual disclosure',
     'Additional information',
   ];
@@ -144,7 +144,7 @@ function getSteps() {
 function VettingRequestAnalyst(props) {
   const classes = useStyles();
   const [state, setState] = React.useState({
-    activeStep: 0,
+    activeStep: 1,
     completed: {},
     title: 'Untitled request',
     open: false,
@@ -449,7 +449,7 @@ function VettingRequestAnalyst(props) {
           aria-labelledby="alert-dialog-title"
           aria-describedby="alert-dialog-description"
           className={classes.root}
-          scroll='paper'
+          scroll="paper"
         >
           <DialogTitle id="alert-dialog-manage">
             <div className={classes.dialogTitle}>

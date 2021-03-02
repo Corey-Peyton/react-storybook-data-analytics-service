@@ -21,6 +21,10 @@ import {
   Card,
   CardContent,
   CardActions,
+  FormLabel,
+  FormControlLabel,
+  RadioGroup,
+  Radio,
 } from '@material-ui/core';
 import Snackbar from '@material-ui/core/Snackbar';
 import Alert from '@material-ui/lab/Alert';
@@ -112,6 +116,14 @@ const useStyles = makeStyles((theme) => ({
       paddingTop: 0,
       paddingBottom: 0,
     },
+  },
+  emphasisBox: {
+    background: theme.palette.grey[200],
+    padding: theme.spacing(2),
+    marginBottom: theme.spacing(2),
+    borderLeftStyle: 'solid',
+    borderLeftWidth: '5px',
+    borderLeftColor: theme.palette.primary.main,
   },
 }));
 
@@ -265,10 +277,55 @@ function FilesList(props) {
   return (
     <React.Fragment>
       <Typography>
-        A brief explanation is needed to explain to external users what and why
-        they need to complete this section.
+        Please provide some information about this requests as well as your
+        output and supporting files.
       </Typography>
       <Divider className={classes.divider} />
+      <Typography component="h2" variant="h6" className="mb-2">
+        Screening questions
+      </Typography>
+      <div className={classes.emphasisBox}>
+        <Typography variant="subtitle2" component="h3" className="mb-3">
+          Please consider the following guidelines:
+        </Typography>
+        <ul>
+          <li>
+            <Typography variant="body2">
+              Check your output against the vetting guidelines.
+            </Typography>
+          </li>
+          <li>
+            <Typography variant="body2">
+              Delete values you do not need released at this time.
+            </Typography>
+          </li>
+        </ul>
+        <Typography variant="body2" className="mt-3">
+          This request will be stored as part of the request record.
+        </Typography>
+      </div>
+      <FormControl
+        component="fieldset"
+        className={classes.inputMargin}
+        required
+      >
+        <FormLabel component="legend">
+          Is the requested output consistent with the approved proposal for this
+          project?
+        </FormLabel>
+        <RadioGroup id="approvedProposal" name="approvedProposal">
+          <FormControlLabel
+            value="Yes"
+            control={<Radio color="primary" />}
+            label="Yes"
+          />
+          <FormControlLabel
+            value="No"
+            control={<Radio color="primary" />}
+            label="No"
+          />
+        </RadioGroup>
+      </FormControl>
       <Grid
         container
         alignItems="center"
@@ -373,7 +430,7 @@ function FilesList(props) {
         aria-labelledby="form-dialog-title"
         fullWidth
         className={classes.root}
-        scroll='paper'
+        scroll="paper"
       >
         <DialogTitle
           id="form-dialog-title"
@@ -464,7 +521,7 @@ function FilesList(props) {
         aria-labelledby="delete-dialog-title"
         fullWidth
         className={classes.root}
-        scroll='paper'
+        scroll="paper"
       >
         <DialogTitle
           id="delete-dialog-title"
