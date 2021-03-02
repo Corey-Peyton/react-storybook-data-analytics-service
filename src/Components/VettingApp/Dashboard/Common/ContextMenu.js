@@ -818,19 +818,21 @@ export function AnalystMenu(props) {
         open={Boolean(anchorEl)}
         onClose={handleClose}
       >
-        <MenuItem>
+        <MenuItem onClick={makeSupport}>
           <ListItemText
             primary={
-              <Typography variant="body2" onClick={unassignRequest}>
-                {t('Unassign from me')}
+              <Typography variant="body2">
+                {t('Assign user as support')}
               </Typography>
             }
           />
         </MenuItem>
-        <MenuItem onClick={makeSupport}>
+        <MenuItem>
           <ListItemText
             primary={
-              <Typography variant="body2">{t('Make me support')}</Typography>
+              <Typography variant="body2" onClick={unassignRequest}>
+                {t('Unassign user')}
+              </Typography>
             }
           />
         </MenuItem>
@@ -845,19 +847,21 @@ export function AnalystMenu(props) {
         open={Boolean(anchorEl)}
         onClose={handleClose}
       >
-        <MenuItem>
+        <MenuItem onClick={makeLead}>
           <ListItemText
             primary={
-              <Typography variant="body2" onClick={unassignRequest}>
-                {t('Unassign from me')}
+              <Typography variant="body2">
+                {t('Assign user as lead')}
               </Typography>
             }
           />
         </MenuItem>
-        <MenuItem onClick={makeLead}>
+        <MenuItem>
           <ListItemText
             primary={
-              <Typography variant="body2">{t('Make me lead')}</Typography>
+              <Typography variant="body2" onClick={unassignRequest}>
+                {t('Unassign user')}
+              </Typography>
             }
           />
         </MenuItem>

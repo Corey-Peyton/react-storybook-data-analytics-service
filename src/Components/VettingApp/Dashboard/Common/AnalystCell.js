@@ -3,10 +3,7 @@ import {useTranslation} from 'react-i18next';
 import {makeStyles} from '@material-ui/core/styles';
 import {Typography, TableCell, Chip} from '@material-ui/core';
 
-import {
-  DialogAnalyst,
-  DialogManageTeam,
-} from '../../CommonComponents/DialogBox';
+import {DialogAnalyst} from '../../CommonComponents/DialogBox';
 import {ROW_HEIGHT} from './TableContainerComponent';
 
 const useStyles = makeStyles((theme) => ({
@@ -76,20 +73,12 @@ export default function AnalystCell(props) {
             label={`${extraAnalysts} ${t('support')}`}
             onClick={toggleManageTeamDrawer}
           />
-          <DialogManageTeam
-            open={open.manageTeam}
-            toggleDialog={() => toggleDialog('list')}
-          />
         </TableCell>
       );
     } else if (analysts !== '' && support.length === 0) {
       return (
         <TableCell className={classes.tablesCellsFlex}>
           <Chip label={analysts} onClick={toggleManageTeamDrawer} />
-          <DialogManageTeam
-            open={open.manageTeam}
-            toggleDialog={() => toggleDialog('list')}
-          />
         </TableCell>
       );
     } else if (analysts === '' && support.length > 0) {
@@ -103,10 +92,6 @@ export default function AnalystCell(props) {
             onClick={toggleManageTeamDrawer}
             className="ml-1"
           />
-          <DialogManageTeam
-            open={open.manageTeam}
-            toggleDialog={() => toggleDialog('list')}
-          />
         </TableCell>
       );
     } else {
@@ -115,10 +100,6 @@ export default function AnalystCell(props) {
           <Typography variant="body2" color="textSecondary">
             {t('Unassigned')}
           </Typography>
-          <DialogManageTeam
-            open={open.manageTeam}
-            toggleDialog={() => toggleDialog('list')}
-          />
         </TableCell>
       );
     }

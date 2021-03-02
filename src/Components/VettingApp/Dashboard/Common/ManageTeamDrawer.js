@@ -2,7 +2,7 @@ import React from 'react';
 import {useTranslation} from 'react-i18next';
 import clsx from 'clsx';
 import {makeStyles} from '@material-ui/core/styles';
-import {green, blue, red} from '@material-ui/core/colors';
+import ArrowDropDownIcon from '@material-ui/icons/ArrowDropDown';
 import {
   Typography,
   IconButton,
@@ -10,12 +10,19 @@ import {
   Button,
   Box,
   Avatar,
-  Link,
+  Menu,
+  MenuItem,
 } from '@material-ui/core';
 import CloseIcon from '@material-ui/icons/Close';
+import PersonIcon from '@material-ui/icons/Person';
 
 import {AnalystMenu} from '../../Dashboard/Common/ContextMenu';
 import {analystList} from '../../../../Data/fakeData';
+import {
+  DialogNoLead,
+  DialogAssignAsLead,
+  DialogAssignAsSupport,
+} from '../../CommonComponents/DialogBox';
 
 const DRAWER_WIDTH = 400;
 
@@ -29,6 +36,7 @@ const useStyles = makeStyles((theme) => ({
     '& .MuiDrawer-paper': {
       width: DRAWER_WIDTH,
       boxSizing: 'border-box',
+      overflow: 'hidden',
     },
   },
   drawerHeader: {
@@ -39,8 +47,6 @@ const useStyles = makeStyles((theme) => ({
     boxShadow: theme.shadows[0],
     borderBottom: '1px solid',
     borderBottomColor: theme.palette.divider,
-    position: 'fixed',
-    top: 0,
     zIndex: 500,
     width: DRAWER_WIDTH,
     boxSizing: 'border-box',
@@ -50,11 +56,9 @@ const useStyles = makeStyles((theme) => ({
     textTransform: 'uppercase',
   },
   drawerContent: {
-    marginTop: theme.spacing(8),
-    marginBottom: theme.spacing(8),
     overflowY: 'auto',
     overflowX: 'hidden',
-    height: '100%',
+    height: `calc(100vh - ${theme.spacing(16)}px)`,
   },
   drawerSection: {
     'paddingTop': theme.spacing(3),
@@ -72,12 +76,13 @@ const useStyles = makeStyles((theme) => ({
     padding: theme.spacing(1.75, 3),
     borderTop: '1px solid',
     borderTopColor: theme.palette.divider,
-    position: 'fixed',
-    bottom: 0,
     width: '400px',
     boxSizing: 'border-box',
     backgroundColor: theme.palette.common.white,
     zIndex: 500,
+  },
+  footerBtns: {
+    marginLeft: theme.spacing(2),
   },
   vettingSection: {
     display: 'flex',
@@ -89,7 +94,7 @@ const useStyles = makeStyles((theme) => ({
     'display': 'flex',
     'padding': theme.spacing(1.5, 0),
     'flexFlow': 'row',
-    'height': '100%',
+    'height': 'auto',
     'justifyContent': 'center',
     'width': '100%',
     'alignItems': 'center',
@@ -128,14 +133,21 @@ const useStyles = makeStyles((theme) => ({
   textNowrap: {
     whiteSpace: 'nowrap',
   },
+  justifyStart: {
+    justifyContent: 'flex-start',
+  },
 }));
 
 export default function ManageTeamDrawer(props) {
   const classes = useStyles();
-  const {clickHandler, open, colorList} = props;
+  const {clickHandler, open, toggleManageTeamDrawer} = props;
   const {t} = useTranslation();
   const [analysts, setAnalysts] = React.useState(analystList);
-  const [selected, setSelected] = React.useState([]);
+  const [anchorEl, setAnchorEl] = React.useState(null);
+  const [dialog, setOpen] = React.useState({
+    noLead: false,
+    assignAsLead: false,
+  });
 
   const makeLead = (value) => (e) => {
     setAnalysts(
@@ -167,21 +179,13 @@ export default function ManageTeamDrawer(props) {
     );
   };
 
-  function selectSupports(value) {
-    const ids = value.map((item) => {
-      return item.id;
-    });
+  const handleClick = (event) => {
+    setAnchorEl(event.currentTarget);
+  };
 
-    setAnalysts(
-        analysts.map((item) =>
-        ids.includes(item.id) ?
-          {...item, assigned: true, role: 'support'} :
-          item,
-        ),
-    );
-
-    setSelected([]);
-  }
+  const handleClose = () => {
+    setAnchorEl(null);
+  };
 
   const handleAvatarStyle = (value) => {
     return {
@@ -189,11 +193,15 @@ export default function ManageTeamDrawer(props) {
     };
   };
 
+  const toggleDialog = (state, value) => {
+    setOpen({...dialog, [state]: value});
+    handleClose();
+  };
+
   const leadAnalysts = () => {
     const content = analysts
         .filter((analyst) => analyst.assigned && analyst.role === 'lead')
         .map((analyst, index) => {
-          console.log(analyst.avatar);
           return (
             <div className={classes.vettingRow} key={analyst.id}>
               <Avatar
@@ -209,6 +217,9 @@ export default function ManageTeamDrawer(props) {
                 <Typography className={classes.vettingText} variant="body2">
                   {analyst.email}
                 </Typography>
+                <Typography className={classes.vettingText} variant="body2">
+                  {analyst.phone}
+                </Typography>
               </div>
               <AnalystMenu
                 role={'lead'}
@@ -223,9 +234,64 @@ export default function ManageTeamDrawer(props) {
       return content;
     } else {
       return (
-        <div className={classes.vettingRow}>
+        <div className={clsx(classes.vettingRow, classes.justifyStart)}>
+          <Avatar className={classes.pink}>
+            <PersonIcon />
+          </Avatar>
           <Box fontStyle="italic" className={classes.box}>
-            <Typography>{t('No lead assigned')}</Typography>
+            <Typography variant="body2" color="textSecondary" className="ml-1">
+              {t('No lead assigned')}
+            </Typography>
+          </Box>
+        </div>
+      );
+    }
+  };
+
+  const supportAnalysts = () => {
+    const content = analysts
+        .filter((analyst) => analyst.assigned && analyst.role === 'support')
+        .map((analyst, index) => {
+          return (
+            <div className={classes.vettingRow} key={analyst.id}>
+              <Avatar
+                style={handleAvatarStyle(analyst.avatar)}
+                className={classes.avatar}
+              >
+                {handleInitials(analyst.name)}
+              </Avatar>
+              <div className={classes.analystListing}>
+                <Typography className={classes.vettingText} variant="body2">
+                  {analyst.name}
+                </Typography>
+                <Typography className={classes.vettingText} variant="body2">
+                  {analyst.email}
+                </Typography>
+                <Typography className={classes.vettingText} variant="body2">
+                  {analyst.phone}
+                </Typography>
+              </div>
+              <AnalystMenu
+                role={'support'}
+                makeLead={makeLead(analyst)}
+                unassignRequest={unassignRequest(analyst)}
+                controls={index}
+              />
+            </div>
+          );
+        });
+    if (content.length > 0) {
+      return content;
+    } else {
+      return (
+        <div className={clsx(classes.vettingRow, classes.justifyStart)}>
+          <Avatar className={classes.pink}>
+            <PersonIcon />
+          </Avatar>
+          <Box fontStyle="italic" className={classes.box}>
+            <Typography variant="body2" color="textSecondary" className="ml-1">
+              {t('No support assigned')}
+            </Typography>
           </Box>
         </div>
       );
@@ -259,16 +325,46 @@ export default function ManageTeamDrawer(props) {
         <div className={classes.vettingSection}>
           <div className={classes.vettingRow}>
             <div className={classes.vettingColumn}>
-              <Typography variant="subtitle2">{t('Lead')}</Typography>
+              <Typography variant="subtitle1">{t('Assignees')}</Typography>
             </div>
             <div className={clsx(classes.vettingColumn, classes.widthAuto)}>
-              <Link
-                variant="body2"
-                component="button"
+              <Button
+                aria-controls="simple-menu"
+                aria-haspopup="true"
+                onClick={handleClick}
                 className={classes.textNowrap}
+                color="primary"
               >
-                Assign to me
-              </Link>
+                Assign me as
+                <ArrowDropDownIcon />
+              </Button>
+              <Menu
+                id="simple-menu"
+                anchorEl={anchorEl}
+                keepMounted
+                open={Boolean(anchorEl)}
+                onClose={handleClose}
+              >
+                <MenuItem
+                  onClick={() => {
+                    toggleDialog('assignAsLead', !dialog.assignAsLead);
+                  }}
+                >
+                  Assign me as lead
+                </MenuItem>
+                <MenuItem
+                  onClick={() => {
+                    toggleDialog('assignAsSupport', !dialog.assignAsSupport);
+                  }}
+                >
+                  Assign me as support
+                </MenuItem>
+              </Menu>
+            </div>
+          </div>
+          <div className={classes.vettingRow}>
+            <div className={classes.vettingColumn}>
+              <Typography variant="subtitle2">{t('Lead')}</Typography>
             </div>
           </div>
           <div className={classes.vettingRow}>
@@ -276,63 +372,33 @@ export default function ManageTeamDrawer(props) {
           </div>
           <div className={classes.vettingRow}>
             <div className={classes.vettingColumn}>
-              <Typography variant="subtitle2">
-                {t('Support Analysts')}
-              </Typography>
+              <Typography variant="subtitle2">{t('Support')}</Typography>
             </div>
           </div>
-
           <div className={classes.vettingRow}>
-            <div className={classes.vettingColumn}>
-              <div className={classes.supportAnalysts}>
-                {analysts
-                    .filter(
-                        (analyst) => analyst.assigned && analyst.role === 'support',
-                    )
-                    .map((analyst, index) => {
-                      return (
-                        <div
-                          className={classes.vettingRow}
-                          key={analyst.id}
-                          style={{height: 'auto'}}
-                        >
-                          <Avatar
-                            style={handleAvatarStyle(analyst.avatar)}
-                            className={classes.avatar}
-                          >
-                            {handleInitials(analyst.name)}
-                          </Avatar>
-                          <div className={classes.analystListing}>
-                            <Typography
-                              className={classes.vettingText}
-                              variant="body2"
-                            >
-                              {analyst.name}
-                            </Typography>
-                            <Typography
-                              className={classes.vettingText}
-                              variant="body2"
-                            >
-                              {analyst.email}
-                            </Typography>
-                          </div>
-                          <AnalystMenu
-                            role={'support'}
-                            makeLead={makeLead(analyst)}
-                            unassignRequest={unassignRequest(analyst)}
-                            controls={index}
-                          />
-                        </div>
-                      );
-                    })}
-              </div>
-            </div>
+            <div className={classes.vettingColumn}>{supportAnalysts()}</div>
           </div>
         </div>
       </div>
       <div className={classes.footer}>
-        <Button variant="contained" color="primary">
-          {t('View vetting request')}
+        <Button
+          variant="contained"
+          color="default"
+          className={classes.footerBtns}
+          onClick={clickHandler}
+        >
+          {t('Cancel')}
+        </Button>
+        <Button
+          variant="contained"
+          color="primary"
+          className={classes.footerBtns}
+          onClick={() => {
+            toggleDialog('noLead', !dialog.noLead);
+            clickHandler();
+          }}
+        >
+          {t('Apply')}
         </Button>
       </div>
     </div>
@@ -350,6 +416,21 @@ export default function ManageTeamDrawer(props) {
       >
         {content()}
       </Drawer>
+      <DialogNoLead
+        open={dialog.noLead}
+        toggleDialog={() => toggleDialog('noLead', !dialog.noLead)}
+        toggleManageTeamDrawer={toggleManageTeamDrawer}
+      />
+      <DialogAssignAsLead
+        open={dialog.assignAsLead}
+        toggleDialog={() => toggleDialog('assignAsLead', !dialog.assignAsLead)}
+      />
+      <DialogAssignAsSupport
+        open={dialog.assignAsSupport}
+        toggleDialog={() =>
+          toggleDialog('assignAsSupport', !dialog.assignAsSupport)
+        }
+      />
     </div>
   );
 }

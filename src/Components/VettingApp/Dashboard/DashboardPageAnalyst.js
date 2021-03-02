@@ -241,6 +241,7 @@ export default function DashboardPageAnalyst() {
           <ManageTeamDrawer
             open={open.manageTeamDrawer}
             clickHandler={toggleManageTeamDrawer}
+            toggleManageTeamDrawer={toggleManageTeamDrawer}
           />
           <AppBar
             position="static"

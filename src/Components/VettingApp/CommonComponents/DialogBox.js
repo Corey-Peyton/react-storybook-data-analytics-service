@@ -2439,3 +2439,603 @@ export function DialognNewRequestTitle(props) {
     </React.Fragment>
   );
 }
+
+// ////////////////////////////////////////// NO LEAD ASSIGNED
+export function DialogNoLead(props) {
+  const classes = useStyles();
+  const {t} = useTranslation();
+  const {toggleDialog, open, toggleManageTeamDrawer} = props;
+  const [snackbar, setSnackbar] = React.useState(false);
+
+  const SnackbarClose = () => {
+    setSnackbar(false);
+  };
+
+  return (
+    <React.Fragment>
+      <Dialog
+        onClose={toggleDialog}
+        aria-labelledby="dashboard-dialog-title"
+        open={open}
+        className={classes.root}
+        disableBackdropClick
+        scroll="paper"
+      >
+        <DialogTitle id="dashboard-dialog-title">
+          <div className={classes.vettingContainerTitle}>
+            <Typography variant="h6">{t('No lead assigned')}</Typography>
+            <IconButton
+              id="dialog-close"
+              onClick={toggleDialog}
+              edge="end"
+              aria-label="No lead assigned - close"
+            >
+              <CloseIcon />
+            </IconButton>
+          </div>
+        </DialogTitle>
+        <Divider />
+        <DialogContent>
+          <div className={classes.vettingSection}>
+            <div className={classes.vettingRow}>
+              <div className={classes.vettingColumn}>
+                <Alert severity="warning" className={classes.alert}>
+                  {t(
+                      'The lead was removed and no one was assigned in their place. If you choose to continue, an email will be sent to the requester notifying them that no one is assigned to their request.',
+                  )}
+                </Alert>
+              </div>
+            </div>
+          </div>
+        </DialogContent>
+        <Divider />
+        <DialogActions>
+          <Button
+            variant="outlined"
+            color="primary"
+            onClick={() => {
+              toggleDialog();
+              toggleManageTeamDrawer();
+            }}
+            className={classes.footerBtns}
+          >
+            {t('Cancel')}
+          </Button>
+          <Button
+            variant="contained"
+            color="primary"
+            onClick={() => {
+              toggleDialog();
+              setSnackbar(!snackbar);
+            }}
+            className={classes.footerBtns}
+          >
+            {t('Continue')}
+          </Button>
+        </DialogActions>
+      </Dialog>
+      <CustomizedSnackbar
+        open={snackbar}
+        severity="success"
+        message={t('Assignee changes applied to request 0000-00001')}
+        toggleSnackbar={SnackbarClose}
+      />
+    </React.Fragment>
+  );
+}
+
+// ////////////////////////////////////////// ASSIGN AS LEAD
+export function DialogAssignAsLead(props) {
+  const classes = useStyles();
+  const {t} = useTranslation();
+  const {toggleDialog, open} = props;
+  const initial = {
+    // blank object used to reset state
+    phone: {
+      text: '',
+      errorText: '',
+      invalid: '',
+      commands: '',
+    },
+  };
+  const [state, setState] = React.useState({
+    phone: {
+      text: '',
+      errorText: '',
+      invalid: '',
+      commands: '',
+    },
+  });
+
+  const phoneExp = /^[+][1]\s\([0-9]{3}\)\s[0-9]{3}\s[0-9]{4}/;
+
+  const handleChange = (e, val) => {
+    const comment = e.target.value.trim();
+    setState({
+      ...state,
+      [val]: {
+        // updates state with text from input
+        ...state[val],
+        text: comment,
+      },
+    });
+
+    if (e.target.value.match(phoneExp) && state[val].errorText) {
+      // if input text is valid, clear error
+      setState({
+        ...state,
+        [val]: {
+          ...state[val],
+          text: comment,
+          errorText: '',
+          invalid: '',
+          commands: '',
+        },
+      });
+    }
+  };
+
+  const validateForm = () => {
+    let isError = false;
+    if (!state.phone.text.match(phoneExp)) {
+      isError = true;
+      state.phone.invalid = t('Enter phone number.');
+      state.phone.errorText = t('Enter phone number.');
+    }
+
+    if (isError) {
+      setState({
+        ...state,
+      });
+    }
+
+    return isError;
+  };
+
+  const submitForm = (e) => {
+    e.preventDefault();
+    const err = validateForm();
+    if (!err) {
+      // if no errors exist, submit the form and reset the inputs
+      toggleDialog();
+      setState({...initial});
+    } else {
+      for (const property in state) {
+        // focus on the first input that has an error on submit
+        if (state[property].invalid) {
+          switch (property) {
+            case 'phone':
+              document.getElementById('phone-input').focus();
+              break;
+            default:
+              break;
+          }
+          break;
+        }
+      }
+    }
+  };
+
+  const disableCutCopyPaste = (e, command, value) => {
+    // display error if user tries to cut/copy/paste
+    let msg;
+    e.preventDefault();
+    switch (command) {
+      case 'cut':
+        msg = t('Cut has been disabled for security purposes.');
+        setState({
+          ...state,
+          [value]: {
+            ...state[value],
+            commands: msg,
+            errorText: msg,
+          },
+        });
+        break;
+      case 'copy':
+        msg = t('Copy has been disabled for security purposes.');
+        setState({
+          ...state,
+          [value]: {
+            ...state[value],
+            commands: msg,
+            errorText: msg,
+          },
+        });
+        break;
+      case 'paste':
+        msg = t('Paste has been disabled for security purposes.');
+        setState({
+          ...state,
+          [value]: {
+            ...state[value],
+            commands: msg,
+            errorText: msg,
+          },
+        });
+        break;
+      default:
+        break;
+    }
+  };
+
+  const toggleHelperText = (value) => {
+    if (state[value].commands === state[value].errorText) {
+      if (Boolean(state[value].invalid)) {
+        // set error text back to invalid error
+        setState({
+          ...state,
+          [value]: {
+            ...state[value],
+            errorText: state[value].invalid,
+          },
+        });
+      } else {
+        // clear error text if no invalid error exists
+        setState({
+          ...state,
+          [value]: {
+            ...state[value],
+            errorText: '',
+          },
+        });
+      }
+    }
+  };
+
+  return (
+    <React.Fragment>
+      <Dialog
+        onClose={() => {
+          setState({...initial});
+          toggleDialog();
+        }}
+        aria-labelledby="dashboard-dialog-title"
+        open={open}
+        className={classes.root}
+        disableBackdropClick
+        scroll="paper"
+      >
+        <DialogTitle id="dashboard-dialog-title">
+          <div className={classes.vettingContainerTitle}>
+            <Typography variant="h6">{t('Assign me as lead')}</Typography>
+            <IconButton
+              id="dialog-close"
+              onClick={toggleDialog}
+              edge="end"
+              aria-label="Assign me as lead - close"
+            >
+              <CloseIcon />
+            </IconButton>
+          </div>
+        </DialogTitle>
+        <Divider />
+        <DialogContent>
+          <form onSubmit={submitForm} noValidate id="assign-form">
+            <div className={classes.vettingSection}>
+              <div className={classes.vettingRow}>
+                <div className={classes.vettingColumn}>
+                  <Typography variant="subtitle2">
+                    {t(
+                        'To assign yourself to the request you must first enter a secure phone number',
+                    )}
+                  </Typography>
+                </div>
+              </div>
+              <div className={classes.vettingRow}>
+                <div className={classes.vettingColumn}>
+                  <FormControl variant="outlined" className={classes.textField}>
+                    <NumberFormat
+                      id="phone-input"
+                      label={t('Phone number')}
+                      aria-label={t('Phone number')}
+                      value={state.phone.text}
+                      customInput={TextField}
+                      type="text"
+                      variant="outlined"
+                      format="+1 (###) ### ####"
+                      mask="_"
+                      allowEmptyFormatting
+                      autoComplete="phone"
+                      error={Boolean(state.phone.errorText)}
+                      helperText={state.phone.errorText}
+                      required
+                      onCut={(e) => disableCutCopyPaste(e, 'cut', 'phone')}
+                      onCopy={(e) => disableCutCopyPaste(e, 'copy', 'phone')}
+                      onPaste={(e) => disableCutCopyPaste(e, 'paste', 'phone')}
+                      onChange={(e) => handleChange(e, 'phone')}
+                      onClick={() => toggleHelperText('phone')}
+                      onBlur={() => toggleHelperText('phone')}
+                      onFocus={() => toggleHelperText('phone')}
+                    />
+                  </FormControl>
+                </div>
+              </div>
+            </div>
+          </form>
+        </DialogContent>
+        <Divider />
+        <DialogActions>
+          <Button
+            variant="outlined"
+            color="primary"
+            onClick={() => {
+              setState({...initial});
+              toggleDialog();
+            }}
+            className={classes.footerBtns}
+          >
+            {t('Cancel')}
+          </Button>
+          <Button
+            type="submit"
+            variant="contained"
+            color="primary"
+            className={classes.footerBtns}
+            form="assign-form"
+          >
+            {t('Assign')}
+          </Button>
+        </DialogActions>
+      </Dialog>
+    </React.Fragment>
+  );
+}
+
+// ////////////////////////////////////////// ASSIGN AS LEAD
+export function DialogAssignAsSupport(props) {
+  const classes = useStyles();
+  const {t} = useTranslation();
+  const {toggleDialog, open} = props;
+  const initial = {
+    // blank object used to reset state
+    phone: {
+      text: '',
+      errorText: '',
+      invalid: '',
+      commands: '',
+    },
+  };
+  const [state, setState] = React.useState({
+    phone: {
+      text: '',
+      errorText: '',
+      invalid: '',
+      commands: '',
+    },
+  });
+
+  const phoneExp = /^[+][1]\s\([0-9]{3}\)\s[0-9]{3}\s[0-9]{4}/;
+
+  const handleChange = (e, val) => {
+    const comment = e.target.value.trim();
+    setState({
+      ...state,
+      [val]: {
+        // updates state with text from input
+        ...state[val],
+        text: comment,
+      },
+    });
+
+    if (e.target.value.match(phoneExp) && state[val].errorText) {
+      // if input text is valid, clear error
+      setState({
+        ...state,
+        [val]: {
+          ...state[val],
+          text: comment,
+          errorText: '',
+          invalid: '',
+          commands: '',
+        },
+      });
+    }
+  };
+
+  const validateForm = () => {
+    let isError = false;
+    if (!state.phone.text.match(phoneExp)) {
+      isError = true;
+      state.phone.invalid = t('Enter phone number.');
+      state.phone.errorText = t('Enter phone number.');
+    }
+
+    if (isError) {
+      setState({
+        ...state,
+      });
+    }
+
+    return isError;
+  };
+
+  const submitForm = (e) => {
+    e.preventDefault();
+    const err = validateForm();
+    if (!err) {
+      // if no errors exist, submit the form and reset the inputs
+      toggleDialog();
+      setState({...initial});
+    } else {
+      for (const property in state) {
+        // focus on the first input that has an error on submit
+        if (state[property].invalid) {
+          switch (property) {
+            case 'phone':
+              document.getElementById('phone-input').focus();
+              break;
+            default:
+              break;
+          }
+          break;
+        }
+      }
+    }
+  };
+
+  const disableCutCopyPaste = (e, command, value) => {
+    // display error if user tries to cut/copy/paste
+    let msg;
+    e.preventDefault();
+    switch (command) {
+      case 'cut':
+        msg = t('Cut has been disabled for security purposes.');
+        setState({
+          ...state,
+          [value]: {
+            ...state[value],
+            commands: msg,
+            errorText: msg,
+          },
+        });
+        break;
+      case 'copy':
+        msg = t('Copy has been disabled for security purposes.');
+        setState({
+          ...state,
+          [value]: {
+            ...state[value],
+            commands: msg,
+            errorText: msg,
+          },
+        });
+        break;
+      case 'paste':
+        msg = t('Paste has been disabled for security purposes.');
+        setState({
+          ...state,
+          [value]: {
+            ...state[value],
+            commands: msg,
+            errorText: msg,
+          },
+        });
+        break;
+      default:
+        break;
+    }
+  };
+
+  const toggleHelperText = (value) => {
+    if (state[value].commands === state[value].errorText) {
+      if (Boolean(state[value].invalid)) {
+        // set error text back to invalid error
+        setState({
+          ...state,
+          [value]: {
+            ...state[value],
+            errorText: state[value].invalid,
+          },
+        });
+      } else {
+        // clear error text if no invalid error exists
+        setState({
+          ...state,
+          [value]: {
+            ...state[value],
+            errorText: '',
+          },
+        });
+      }
+    }
+  };
+
+  return (
+    <React.Fragment>
+      <Dialog
+        onClose={() => {
+          setState({...initial});
+          toggleDialog();
+        }}
+        aria-labelledby="dashboard-dialog-title"
+        open={open}
+        className={classes.root}
+        disableBackdropClick
+        scroll="paper"
+      >
+        <DialogTitle id="dashboard-dialog-title">
+          <div className={classes.vettingContainerTitle}>
+            <Typography variant="h6">{t('Assign me as support')}</Typography>
+            <IconButton
+              id="dialog-close"
+              onClick={toggleDialog}
+              edge="end"
+              aria-label="Assign me as support - close"
+            >
+              <CloseIcon />
+            </IconButton>
+          </div>
+        </DialogTitle>
+        <Divider />
+        <DialogContent>
+          <form onSubmit={submitForm} noValidate id="assign-form">
+            <div className={classes.vettingSection}>
+              <div className={classes.vettingRow}>
+                <div className={classes.vettingColumn}>
+                  <Typography variant="subtitle2">
+                    {t(
+                        'To assign yourself to the request you must first enter a secure phone number',
+                    )}
+                  </Typography>
+                </div>
+              </div>
+              <div className={classes.vettingRow}>
+                <div className={classes.vettingColumn}>
+                  <FormControl variant="outlined" className={classes.textField}>
+                    <NumberFormat
+                      id="phone-input"
+                      label={t('Phone number')}
+                      aria-label={t('Phone number')}
+                      value={state.phone.text}
+                      customInput={TextField}
+                      type="text"
+                      variant="outlined"
+                      format="+1 (###) ### ####"
+                      mask="_"
+                      allowEmptyFormatting
+                      autoComplete="phone"
+                      error={Boolean(state.phone.errorText)}
+                      helperText={state.phone.errorText}
+                      required
+                      onCut={(e) => disableCutCopyPaste(e, 'cut', 'phone')}
+                      onCopy={(e) => disableCutCopyPaste(e, 'copy', 'phone')}
+                      onPaste={(e) => disableCutCopyPaste(e, 'paste', 'phone')}
+                      onChange={(e) => handleChange(e, 'phone')}
+                      onClick={() => toggleHelperText('phone')}
+                      onBlur={() => toggleHelperText('phone')}
+                      onFocus={() => toggleHelperText('phone')}
+                    />
+                  </FormControl>
+                </div>
+              </div>
+            </div>
+          </form>
+        </DialogContent>
+        <Divider />
+        <DialogActions>
+          <Button
+            variant="outlined"
+            color="primary"
+            onClick={() => {
+              setState({...initial});
+              toggleDialog();
+            }}
+            className={classes.footerBtns}
+          >
+            {t('Cancel')}
+          </Button>
+          <Button
+            type="submit"
+            variant="contained"
+            color="primary"
+            className={classes.footerBtns}
+            form="assign-form"
+          >
+            {t('Assign')}
+          </Button>
+        </DialogActions>
+      </Dialog>
+    </React.Fragment>
+  );
+}

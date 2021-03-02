@@ -1,15 +1,4 @@
-import {green, blue, red} from '@material-ui/core/colors';
-
-const randomColors = () => {
-  const colors = [green[500], blue[500], red[500]];
-  const colorList = [];
-
-  for (let i = 0; i < 10; i++) {
-    const random = colors[Math.floor(Math.random() * colors.length)];
-    colorList.push(random);
-  }
-  return colorList;
-};
+import {green, blue, red, purple} from '@material-ui/core/colors';
 
 export const subjects = [
   'Agriculture',
@@ -824,6 +813,7 @@ export const analystList = [
     id: 1234,
     name: 'Thanos Titan',
     email: 'thanos.titan@canada.ca',
+    phone: '+1 (999) 999 9999',
     assigned: true,
     role: 'lead',
     avatar: '',
@@ -832,6 +822,7 @@ export const analystList = [
     id: 1235,
     name: 'Peter Parker',
     email: 'peter.parker@canada.ca',
+    phone: '+1 (999) 999 9999',
     assigned: true,
     role: 'support',
     avatar: '',
@@ -840,6 +831,7 @@ export const analystList = [
     id: 1236,
     name: 'Tony Stark',
     email: 'tony.stark@canada.ca',
+    phone: '+1 (999) 999 9999',
     assigned: true,
     role: 'support',
     avatar: '',
@@ -848,6 +840,7 @@ export const analystList = [
     id: 1237,
     name: 'Bruce Banner',
     email: 'bruce.banner@canada.ca',
+    phone: '+1 (999) 999 9999',
     assigned: true,
     role: 'support',
     avatar: '',
@@ -856,7 +849,8 @@ export const analystList = [
     id: 1238,
     name: 'Natasha Romanov',
     email: 'natasha.romanov@canada.ca',
-    assigned: false,
+    phone: '+1 (999) 999 9999',
+    assigned: true,
     role: 'support',
     avatar: '',
   },
@@ -864,7 +858,8 @@ export const analystList = [
     id: 1239,
     name: 'Thor Odinson',
     email: 'thor.odinson@canada.ca',
-    assigned: false,
+    phone: '+1 (999) 999 9999',
+    assigned: true,
     role: 'support',
     avatar: '',
   },
@@ -872,7 +867,8 @@ export const analystList = [
     id: 1240,
     name: 'Loki Odinson',
     email: 'loki.odinson@canada.ca',
-    assigned: false,
+    phone: '+1 (999) 999 9999',
+    assigned: true,
     role: 'support',
     avatar: '',
   },
@@ -880,7 +876,8 @@ export const analystList = [
     id: 1241,
     name: 'Clint Barton',
     email: 'clint.barton@canada.ca',
-    assigned: false,
+    phone: '+1 (999) 999 9999',
+    assigned: true,
     role: 'support',
     avatar: '',
   },
@@ -888,12 +885,51 @@ export const analystList = [
     id: 1242,
     name: 'Wanda Vision',
     email: 'wanda.vision@canada.ca',
-    assigned: false,
+    phone: '+1 (999) 999 9999',
+    assigned: true,
+    role: 'support',
+    avatar: '',
+  },
+  {
+    id: 1243,
+    name: 'Wanda Vision',
+    email: 'wanda.vision@canada.ca',
+    phone: '+1 (999) 999 9999',
+    assigned: true,
+    role: 'support',
+    avatar: '',
+  },
+  {
+    id: 1244,
+    name: 'Wanda Vision',
+    email: 'wanda.vision@canada.ca',
+    phone: '+1 (999) 999 9999',
+    assigned: true,
+    role: 'support',
+    avatar: '',
+  },
+  {
+    id: 1245,
+    name: 'Wanda Vision',
+    email: 'wanda.vision@canada.ca',
+    phone: '+1 (999) 999 9999',
+    assigned: true,
+    role: 'support',
+    avatar: '',
+  },
+  {
+    id: 1246,
+    name: 'Wanda Vision',
+    email: 'wanda.vision@canada.ca',
+    phone: '+1 (999) 999 9999',
+    assigned: true,
     role: 'support',
     avatar: '',
   },
 ];
 
-analystList.forEach(
-    (val, index) => (analystList[index].avatar = randomColors()[index]),
-);
+const colors = [green[500], blue[500], red[500], purple[500]];
+
+analystList.forEach((val, index) => {
+  analystList[index].avatar = colors[index % colors.length];
+});
