@@ -817,6 +817,7 @@ export const analystList = [
     assigned: true,
     role: 'lead',
     avatar: '',
+    current: false,
   },
   {
     id: 1235,
@@ -826,6 +827,7 @@ export const analystList = [
     assigned: true,
     role: 'support',
     avatar: '',
+    current: false,
   },
   {
     id: 1236,
@@ -835,6 +837,7 @@ export const analystList = [
     assigned: true,
     role: 'support',
     avatar: '',
+    current: true,
   },
   {
     id: 1237,
@@ -844,6 +847,7 @@ export const analystList = [
     assigned: true,
     role: 'support',
     avatar: '',
+    current: false,
   },
   {
     id: 1238,
@@ -853,6 +857,7 @@ export const analystList = [
     assigned: true,
     role: 'support',
     avatar: '',
+    current: false,
   },
   {
     id: 1239,
@@ -862,6 +867,7 @@ export const analystList = [
     assigned: true,
     role: 'support',
     avatar: '',
+    current: false,
   },
   {
     id: 1240,
@@ -871,6 +877,7 @@ export const analystList = [
     assigned: true,
     role: 'support',
     avatar: '',
+    current: false,
   },
   {
     id: 1241,
@@ -880,6 +887,7 @@ export const analystList = [
     assigned: true,
     role: 'support',
     avatar: '',
+    current: false,
   },
   {
     id: 1242,
@@ -889,6 +897,7 @@ export const analystList = [
     assigned: true,
     role: 'support',
     avatar: '',
+    current: false,
   },
   {
     id: 1243,
@@ -898,6 +907,7 @@ export const analystList = [
     assigned: true,
     role: 'support',
     avatar: '',
+    current: false,
   },
   {
     id: 1244,
@@ -907,6 +917,7 @@ export const analystList = [
     assigned: true,
     role: 'support',
     avatar: '',
+    current: false,
   },
   {
     id: 1245,
@@ -916,6 +927,7 @@ export const analystList = [
     assigned: true,
     role: 'support',
     avatar: '',
+    current: false,
   },
   {
     id: 1246,
@@ -925,6 +937,7 @@ export const analystList = [
     assigned: true,
     role: 'support',
     avatar: '',
+    current: false,
   },
 ];
 

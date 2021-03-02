@@ -2495,7 +2495,6 @@ export function DialogNoLead(props) {
             color="primary"
             onClick={() => {
               toggleDialog();
-              toggleManageTeamDrawer();
             }}
             className={classes.footerBtns}
           >
@@ -2506,6 +2505,7 @@ export function DialogNoLead(props) {
             color="primary"
             onClick={() => {
               toggleDialog();
+              toggleManageTeamDrawer();
               setSnackbar(!snackbar);
             }}
             className={classes.footerBtns}

@@ -793,7 +793,14 @@ export function ActionsMenu(props) {
 
 // //////////////////////////// Analyst role dialog box context menu
 export function AnalystMenu(props) {
-  const {role, makeSupport, makeLead, unassignRequest, controls} = props;
+  const {
+    role,
+    makeSupport,
+    makeLead,
+    unassignRequest,
+    controls,
+    current,
+  } = props;
   const {t} = useTranslation();
   let StyledMenuVar;
 
@@ -822,7 +829,9 @@ export function AnalystMenu(props) {
           <ListItemText
             primary={
               <Typography variant="body2">
-                {t('Assign user as support')}
+                {current ?
+                  t('Assign me as support') :
+                  t('Assign user as support')}
               </Typography>
             }
           />
@@ -831,7 +840,7 @@ export function AnalystMenu(props) {
           <ListItemText
             primary={
               <Typography variant="body2" onClick={unassignRequest}>
-                {t('Unassign user')}
+                {current ? t('Assign myself') : t('Unassign user')}
               </Typography>
             }
           />
@@ -851,7 +860,7 @@ export function AnalystMenu(props) {
           <ListItemText
             primary={
               <Typography variant="body2">
-                {t('Assign user as lead')}
+                {current ? t('Assign me as lead') : t('Assign user as lead')}
               </Typography>
             }
           />
@@ -860,7 +869,7 @@ export function AnalystMenu(props) {
           <ListItemText
             primary={
               <Typography variant="body2" onClick={unassignRequest}>
-                {t('Unassign user')}
+                {current ? t('Assign myself') : t('Unassign user')}
               </Typography>
             }
           />

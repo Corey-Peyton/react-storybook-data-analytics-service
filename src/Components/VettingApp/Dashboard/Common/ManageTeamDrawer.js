@@ -214,7 +214,6 @@ export default function ManageTeamDrawer(props) {
     });
     if (!isLead) {
       toggleDialog('noLead', !dialog.noLead);
-      clickHandler();
     } else {
       setSnackbar(!snackbar);
       clickHandler();
@@ -249,6 +248,7 @@ export default function ManageTeamDrawer(props) {
                 makeSupport={makeSupport(analyst)}
                 unassignRequest={unassignRequest(analyst)}
                 controls={index}
+                current={analyst.current}
               />
             </div>
           );
@@ -299,6 +299,7 @@ export default function ManageTeamDrawer(props) {
                 makeLead={makeLead(analyst)}
                 unassignRequest={unassignRequest(analyst)}
                 controls={index}
+                current={analyst.current}
               />
             </div>
           );
