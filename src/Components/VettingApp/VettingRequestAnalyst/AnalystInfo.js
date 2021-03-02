@@ -15,7 +15,6 @@ import {
   Radio,
   Tooltip,
   Divider,
-  Link,
 } from '@material-ui/core';
 import InfoIcon from '@material-ui/icons/Info';
 
@@ -69,13 +68,37 @@ function AnalystInfo(props) {
   const {t} = useTranslation();
 
   const [state, setState] = React.useState({
-    RequestID: {
+    Firstname: {
       text: '',
       errorText: '',
       invalid: '',
       commands: '',
     },
-    name: {
+    Lastname: {
+      text: '',
+      errorText: '',
+      invalid: '',
+      commands: '',
+    },
+    Username: {
+      text: '',
+      errorText: '',
+      invalid: '',
+      commands: '',
+    },
+    Role: {
+      text: '',
+      errorText: '',
+      invalid: '',
+      commands: '',
+    },
+    Email: {
+      text: '',
+      errorText: '',
+      invalid: '',
+      commands: '',
+    },
+    Phonenumber: {
       text: '',
       errorText: '',
       invalid: '',
@@ -87,25 +110,25 @@ function AnalystInfo(props) {
       invalid: '',
       commands: '',
     },
-    firstname: {
+    RequestID: {
       text: '',
       errorText: '',
       invalid: '',
       commands: '',
     },
-    lastname: {
+    Requestname: {
       text: '',
       errorText: '',
       invalid: '',
       commands: '',
     },
-    date: {
+    Createdon: {
       text: '',
       errorText: '',
       invalid: '',
       commands: '',
     },
-    username: {
+    Updatedon: {
       text: '',
       errorText: '',
       invalid: '',
@@ -209,77 +232,163 @@ function AnalystInfo(props) {
   return (
     <React.Fragment>
       <Typography>
-        Vetting disclosure requests are required by Statistics Canada’s to
-        ensure data protection. Disclosure analysts will review all external
-        users vetting requests for accessing to confidential microdata. These
-        vetting requests are subject to a risk-based assessment of potential
-        disclosure based on established rules and procedures. For more
-        information please visit the
-        <Link href="#">Vetting guidelines website</Link>.
+        Vetting of statistical output is required by Statistics Canada to ensure
+        data protection. Statistics Canada Analysts will review all external
+        users' vetting requests. These requests are subject to a risk-based
+        assessment of potential disclosure based on established rules and
+        procedures.
       </Typography>
       <Divider className={classes.divider} />
       <Typography className="mb-2" component="p" variant="subtitle2">
         Items marked with asterisk (*) are required.
       </Typography>
       <Typography component="h2" variant="h6">
-        Request details
+      Requester details
       </Typography>
       <Grid container spacing={1}>
         <Grid item xs={6}>
           <TextField
-            id="RequestID"
-            name="RequestID"
-            label="Request ID"
+            id="Firstname"
+            name="Firstname"
             variant="outlined"
             fullWidth
             margin="dense"
-            readOnly
-            value="0101-000000"
             className={classes.inputMargin}
-            onCut={(e) => disableCutCopyPaste(e, 'cut', 'RequestID')}
-            onCopy={(e) => disableCutCopyPaste(e, 'copy', 'RequestID')}
-            onPaste={(e) => disableCutCopyPaste(e, 'paste', 'RequestID')}
-            onChange={(e) => handleChange(e, 'RequestID')}
-            onClick={() => toggleHelperText('RequestID')}
-            onBlur={() => toggleHelperText('RequestID')}
-            onFocus={() => toggleHelperText('RequestID')}
-            error={Boolean(state.RequestID.errorText)}
-            helperText={state.RequestID.errorText}
+            label="First name"
+            required
+            onCut={(e) => disableCutCopyPaste(e, 'cut', 'Firstname')}
+            onCopy={(e) => disableCutCopyPaste(e, 'copy', 'Firstname')}
+            onPaste={(e) => disableCutCopyPaste(e, 'paste', 'Firstname')}
+            onChange={(e) => handleChange(e, 'Firstname')}
+            onClick={() => toggleHelperText('Firstname')}
+            onBlur={() => toggleHelperText('Firstname')}
+            onFocus={() => toggleHelperText('Firstname')}
+            error={Boolean(state.Firstname.errorText)}
+            helperText={state.Firstname.errorText}
+            inputProps={{readOnly: true}}
           />
           <TextField
-            id="name"
-            name="name"
-            label="Request name"
+            id="Lastname"
+            name="Lastname"
+            label="Last name"
             variant="outlined"
             required
             fullWidth
             margin="dense"
             defaultValue={props.title}
-            className="mt-2"
-            onCut={(e) => disableCutCopyPaste(e, 'cut', 'name')}
-            onCopy={(e) => disableCutCopyPaste(e, 'copy', 'name')}
-            onPaste={(e) => disableCutCopyPaste(e, 'paste', 'name')}
-            onChange={(e) => handleChange(e, 'name')}
-            onClick={() => toggleHelperText('name')}
-            onBlur={() => toggleHelperText('name')}
-            onFocus={() => toggleHelperText('name')}
-            value={state.name.text}
-            error={Boolean(state.name.errorText)}
-            helperText={state.name.errorText}
+            className={classes.inputMargin}
+            onCut={(e) => disableCutCopyPaste(e, 'cut', 'Lastname')}
+            onCopy={(e) => disableCutCopyPaste(e, 'copy', 'Lastname')}
+            onPaste={(e) => disableCutCopyPaste(e, 'paste', 'Lastname')}
+            onChange={(e) => handleChange(e, 'Lastname')}
+            onClick={() => toggleHelperText('Lastname')}
+            onBlur={() => toggleHelperText('Lastname')}
+            onFocus={() => toggleHelperText('Lastname')}
+            inputProps={{readOnly: true}}
+            error={Boolean(state.Lastname.errorText)}
+            helperText={state.Lastname.errorText}
           />
-          <Typography component="h2" variant="h6" className="mt-1 mb-1">
-            Project details
-          </Typography>
           <TextField
-            id="project"
-            name="project"
-            label="Contract ID"
+            id="Username"
+            name="Username"
+            label="Username"
             variant="outlined"
             required
             fullWidth
             margin="dense"
-            value="21-SSH-UTO-0000"
-            readOnly
+            defaultValue={props.title}
+            className={classes.inputMargin}
+            onCut={(e) => disableCutCopyPaste(e, 'cut', 'Username')}
+            onCopy={(e) => disableCutCopyPaste(e, 'copy', 'Username')}
+            onPaste={(e) => disableCutCopyPaste(e, 'paste', 'Username')}
+            onChange={(e) => handleChange(e, 'Username')}
+            onClick={() => toggleHelperText('Username')}
+            onBlur={() => toggleHelperText('Username')}
+            onFocus={() => toggleHelperText('Username')}
+            value={state.Username.text}
+            error={Boolean(state.Username.errorText)}
+            helperText={state.Username.errorText}
+            inputProps={{readOnly: true}}
+          />
+          <TextField
+            id="Role"
+            name="Role"
+            label="Role"
+            variant="outlined"
+            required
+            fullWidth
+            margin="dense"
+            defaultValue={props.title}
+            className={classes.inputMargin}
+            onCut={(e) => disableCutCopyPaste(e, 'cut', 'Role')}
+            onCopy={(e) => disableCutCopyPaste(e, 'copy', 'Role')}
+            onPaste={(e) => disableCutCopyPaste(e, 'paste', 'Role')}
+            onChange={(e) => handleChange(e, 'Role')}
+            onClick={() => toggleHelperText('Role')}
+            onBlur={() => toggleHelperText('Role')}
+            onFocus={() => toggleHelperText('Role')}
+            value={state.Role.text}
+            error={Boolean(state.Role.errorText)}
+            helperText={state.Role.errorText}
+            inputProps={{readOnly: true}}
+          />
+          <TextField
+            id="Email"
+            name="Email"
+            label="Email"
+            variant="outlined"
+            required
+            fullWidth
+            margin="dense"
+            defaultValue={props.title}
+            className={classes.inputMargin}
+            onCut={(e) => disableCutCopyPaste(e, 'cut', 'Email')}
+            onCopy={(e) => disableCutCopyPaste(e, 'copy', 'Email')}
+            onPaste={(e) => disableCutCopyPaste(e, 'paste', 'Email')}
+            onChange={(e) => handleChange(e, 'Email')}
+            onClick={() => toggleHelperText('Email')}
+            onBlur={() => toggleHelperText('Email')}
+            onFocus={() => toggleHelperText('Email')}
+            value={state.Email.text}
+            error={Boolean(state.Email.errorText)}
+            helperText={state.Email.errorText}
+            inputProps={{readOnly: true}}
+          />
+          <TextField
+            id="Phonenumber"
+            name="Phone number"
+            label="Phone number"
+            variant="outlined"
+            required
+            fullWidth
+            margin="dense"
+            defaultValue={props.title}
+            className={classes.inputMargin}
+            onCut={(e) => disableCutCopyPaste(e, 'cut', 'Phonenumber')}
+            onCopy={(e) => disableCutCopyPaste(e, 'copy', 'Phonenumber')}
+            onPaste={(e) => disableCutCopyPaste(e, 'paste', 'Phonenumber')}
+            onChange={(e) => handleChange(e, 'Phonenumber')}
+            onClick={() => toggleHelperText('Phonenumber')}
+            onBlur={() => toggleHelperText('Phonenumber')}
+            onFocus={() => toggleHelperText('Phonenumber')}
+            value={state.Phonenumber.text}
+            error={Boolean(state.Phonenumber.errorText)}
+            helperText={state.Phonenumber.errorText}
+            inputProps={{readOnly: true}}
+          />
+          <Typography component="h2" variant="h6" className="mt-1 mb-1">
+            Request details
+          </Typography>
+          <TextField
+            id="project"
+            name="project"
+            label="Project"
+            variant="outlined"
+            required
+            fullWidth
+            margin="dense"
+            value={state.project.text}
+            inputProps={{readOnly: true}}
             className={classes.inputMargin}
             onCut={(e) => disableCutCopyPaste(e, 'cut', 'project')}
             onCopy={(e) => disableCutCopyPaste(e, 'copy', 'project')}
@@ -291,7 +400,7 @@ function AnalystInfo(props) {
             error={Boolean(state.project.errorText)}
             helperText={state.project.errorText}
           />
-          <FormControl
+          {/*  <FormControl
             required
             variant="outlined"
             fullWidth
@@ -336,90 +445,93 @@ function AnalystInfo(props) {
         Basic information
       </Typography>
       <Grid container spacing={1}>
-        <Grid item xs={6}>
+        <Grid item xs={6}>*/}
           <TextField
-            id="first-name"
-            name="first-name"
-            label="First Name"
+            id="RequestID"
+            name="RequestID"
+            label="Request ID"
             variant="outlined"
             required
             fullWidth
             margin="dense"
             className={classes.inputMargin}
-            onCut={(e) => disableCutCopyPaste(e, 'cut', 'firstname')}
-            onCopy={(e) => disableCutCopyPaste(e, 'copy', 'firstname')}
-            onPaste={(e) => disableCutCopyPaste(e, 'paste', 'firstname')}
-            onChange={(e) => handleChange(e, 'firstname')}
-            onClick={() => toggleHelperText('firstname')}
-            onBlur={() => toggleHelperText('firstname')}
-            onFocus={() => toggleHelperText('firstname')}
-            error={Boolean(state.firstname.errorText)}
-            helperText={state.firstname.errorText}
+            onCut={(e) => disableCutCopyPaste(e, 'cut', 'RequestID')}
+            onCopy={(e) => disableCutCopyPaste(e, 'copy', 'RequestID')}
+            onPaste={(e) => disableCutCopyPaste(e, 'paste', 'RequestID')}
+            onChange={(e) => handleChange(e, 'RequestID')}
+            onClick={() => toggleHelperText('RequestID')}
+            onBlur={() => toggleHelperText('RequestID')}
+            onFocus={() => toggleHelperText('RequestID')}
+            error={Boolean(state.RequestID.errorText)}
+            helperText={state.RequestID.errorText}
+            inputProps={{readOnly: true}}
           />
           <TextField
-            id="last-name"
-            name="last-name"
-            label="Last Name"
+            id="Requestname"
+            name="Requestname"
+            label="Request name"
             variant="outlined"
-            required
+            // required
             fullWidth
             margin="dense"
             className={classes.inputMargin}
-            onCut={(e) => disableCutCopyPaste(e, 'cut', 'lastname')}
-            onCopy={(e) => disableCutCopyPaste(e, 'copy', 'lastname')}
-            onPaste={(e) => disableCutCopyPaste(e, 'paste', 'lastname')}
-            onChange={(e) => handleChange(e, 'lastname')}
-            onClick={() => toggleHelperText('lastname')}
-            onBlur={() => toggleHelperText('lastname')}
-            onFocus={() => toggleHelperText('lastname')}
-            error={Boolean(state.lastname.errorText)}
-            helperText={state.lastname.errorText}
+            onCut={(e) => disableCutCopyPaste(e, 'cut', 'Requestname')}
+            onCopy={(e) => disableCutCopyPaste(e, 'copy', 'Requestname')}
+            onPaste={(e) => disableCutCopyPaste(e, 'paste', 'Requestname')}
+            onChange={(e) => handleChange(e, 'Requestname')}
+            onClick={() => toggleHelperText('Requestname')}
+            onBlur={() => toggleHelperText('Requestname')}
+            onFocus={() => toggleHelperText('Requestname')}
+            error={Boolean(state.Requestname.errorText)}
+            helperText={state.Requestname.errorText}
+            // inputProps={{readOnly: true}}
           />
         </Grid>
       </Grid>
       <Grid container spacing={1}>
         <Grid item xs={6} className={classes.pt0}>
           <TextField
-            id="date"
-            name="date"
-            label="Date"
+            id="Createdon"
+            name="Createdon"
+            label="Created on"
             variant="outlined"
             required
             fullWidth
             margin="dense"
             inputProps={{readOnly: true}}
             className={classes.inputMargin}
-            onCut={(e) => disableCutCopyPaste(e, 'cut', 'date')}
-            onCopy={(e) => disableCutCopyPaste(e, 'copy', 'date')}
-            onPaste={(e) => disableCutCopyPaste(e, 'paste', 'date')}
-            onChange={(e) => handleChange(e, 'date')}
-            onClick={() => toggleHelperText('date')}
-            onBlur={() => toggleHelperText('date')}
-            onFocus={() => toggleHelperText('date')}
-            error={Boolean(state.date.errorText)}
-            helperText={state.date.errorText}
+            onCut={(e) => disableCutCopyPaste(e, 'cut', 'Createdon')}
+            onCopy={(e) => disableCutCopyPaste(e, 'copy', 'Createdon')}
+            onPaste={(e) => disableCutCopyPaste(e, 'paste', 'Createdon')}
+            onChange={(e) => handleChange(e, 'Createdon')}
+            onClick={() => toggleHelperText('Createdon')}
+            onBlur={() => toggleHelperText('Createdon')}
+            onFocus={() => toggleHelperText('Createdon')}
+            error={Boolean(state.Createdon.errorText)}
+            helperText={state.Createdon.errorText}
           />
           <TextField
-            id="username"
-            name="username"
-            label="Username"
+            id="Updatedon"
+            name="Updatedon"
+            label="Updated on"
             variant="outlined"
             required
             fullWidth
             margin="dense"
-            onCut={(e) => disableCutCopyPaste(e, 'cut', 'username')}
-            onCopy={(e) => disableCutCopyPaste(e, 'copy', 'username')}
-            onPaste={(e) => disableCutCopyPaste(e, 'paste', 'username')}
-            onChange={(e) => handleChange(e, 'username')}
-            onClick={() => toggleHelperText('username')}
-            onBlur={() => toggleHelperText('username')}
-            onFocus={() => toggleHelperText('username')}
-            error={Boolean(state.username.errorText)}
-            helperText={state.username.errorText}
+            onCut={(e) => disableCutCopyPaste(e, 'cut', 'Updatedon')}
+            onCopy={(e) => disableCutCopyPaste(e, 'copy', 'Updatedon')}
+            onPaste={(e) => disableCutCopyPaste(e, 'paste', 'Updatedon')}
+            onChange={(e) => handleChange(e, 'Updatedon')}
+            onClick={() => toggleHelperText('Updatedon')}
+            onBlur={() => toggleHelperText('Updatedon')}
+            onFocus={() => toggleHelperText('Updatedon')}
+            error={Boolean(state.Updatedon.errorText)}
+            helperText={state.Updatedon.errorText}
+            inputProps={{readOnly: true}}
           />
         </Grid>
       </Grid>
-      <Divider className={classes.divider} />
+      {/* <Divider className={classes.divider} />
       <Typography component="h2" variant="h6" gutterBottom={true}>
         Additional information
       </Typography>
@@ -526,7 +638,7 @@ function AnalystInfo(props) {
             label="N/A"
           />
         </RadioGroup>
-      </FormControl>
+      </FormControl> */}
     </React.Fragment>
   );
 }

@@ -14,13 +14,12 @@ import {
   Radio,
   Tooltip,
   Divider,
-  Link,
 } from '@material-ui/core';
 import InfoIcon from '@material-ui/icons/Info';
 
 const useStyles = makeStyles((theme) => ({
   inputMargin: {
-    marginBottom: theme.spacing(2),
+    margin: theme.spacing(1, 0),
   },
   divider: {
     margin: theme.spacing(3, 0),
@@ -51,64 +50,117 @@ function ResearcherInfo(props) {
   return (
     <React.Fragment>
       <Typography>
-        Vetting disclosure requests are required by Statistics Canada’s to
-        ensure data protection. Disclosure analysts will review all external
-        users vetting requests for accessing to confidential microdata. These
-        vetting requests are subject to a risk-based assessment of potential
-        disclosure based on established rules and procedures. For more
-        information please visit the
-        <Link href="#">Vetting guidelines website</Link>.
+        Vetting of statistical output is required by Statistics Canada to ensure
+        data protection. Statistics Canada Analysts will review all external
+        users' vetting requests. These requests are subject to a risk-based
+        assessment of potential disclosure based on established rules and
+        procedures.
       </Typography>
       <Divider className={classes.divider} />
       <Typography className="mb-2" component="p" variant="subtitle2">
         Items marked with asterisk (*) are required.
       </Typography>
       <Typography component="h2" variant="h6">
-        Request details
+        Requester details
       </Typography>
       <Grid container spacing={1}>
         <Grid item xs={6}>
           <TextField
-            id="RequestID"
-            name="RequestID"
-            label="Request ID"
+            id="Firstname"
+            name="Firstname"
             variant="outlined"
             fullWidth
             margin="dense"
-            readOnly
-            value="0101-000000"
             className={classes.inputMargin}
+            label="First name"
+            required
+            // helperText="yrdy"
+            inputProps={{readOnly: true}}
           />
           <TextField
-            id="name"
-            name="name"
-            label="Request name"
-            variant="outlined"
-            fullWidth
-            margin="dense"
-            error
-            value={props.title}
-            className="mt-2"
-            helperText="Request name is required"
-            onChange={props.handleTitleChange}
-            onBlur={props.handleFieldOnBlur}
-          />
-          <Typography component="h2" variant="h6" className="mt-1 mb-1">
-            Project details
-          </Typography>
-          <TextField
-            id="project"
-            name="project"
-            label="Contract  ID"
+            id="Lastname"
+            name="Lastname"
+            label="Last name"
             variant="outlined"
             required
             fullWidth
             margin="dense"
-            value="21-SSH-UTO-0000"
-            readOnly
+            // defaultValue={props.title}
+            className={classes.inputMargin}
+            inputProps={{readOnly: true}}
+            // helperText="yrdy"
+          />
+          <TextField
+            id="Username"
+            name="Username"
+            label="Username"
+            variant="outlined"
+            required
+            fullWidth
+            margin="dense"
+            // defaultValue={props.title}
+            className={classes.inputMargin}
+            // helperText="yrdy"
+            // value
+            inputProps={{readOnly: true}}
+          />
+          <TextField
+            id="Role"
+            name="Role"
+            label="Role"
+            variant="outlined"
+            required
+            fullWidth
+            margin="dense"
+            defaultValue={props.title}
+            className={classes.inputMargin}
+            value=""
+            // helperText="yrdy"
+            inputProps={{readOnly: true}}
+          />
+          <TextField
+            id="Email"
+            name="Email"
+            label="Email"
+            variant="outlined"
+            required
+            fullWidth
+            margin="dense"
+            defaultValue={props.title}
+            className={classes.inputMargin}
+            value=""
+            // helperText="yrdy"
+            inputProps={{readOnly: true}}
+          />
+          <TextField
+            id="Phonenumber"
+            name="Phone number"
+            label="Phone number"
+            variant="outlined"
+            required
+            fullWidth
+            margin="dense"
+            defaultValue={props.title}
+            className={classes.inputMargin}
+            value=""
+            // helperText="yrdy"
+            inputProps={{readOnly: true}}
+          />
+          <Typography component="h2" variant="h6" className="mt-1 mb-1">
+            Request details
+          </Typography>
+          <TextField
+            id="project"
+            name="project"
+            label="Project"
+            variant="outlined"
+            required
+            fullWidth
+            margin="dense"
+            inputProps={{readOnly: true}}
             className={classes.inputMargin}
           />
-          <FormControl
+          {/* <FormControl
             required
             variant="outlined"
             fullWidth
@@ -150,60 +202,64 @@ function ResearcherInfo(props) {
       </Grid>
       <Divider className={classes.divider} />
       <Typography component="h2" variant="h6">
-        Basic information
+        Request details
       </Typography>
-      <Grid container spacing={1}>
-        <Grid item xs={6}>
+      {/* <Grid container spacing={1}>
+        <Grid item xs={6}> */}
           <TextField
-            id="first-name"
-            name="first-name"
-            label="First name"
+            id="RequestID"
+            name="RequestID"
+            label="Request ID"
             variant="outlined"
             required
             fullWidth
             margin="dense"
-            defaultValue="Rose"
             className={classes.inputMargin}
-            InputProps={{readOnly: true}}
+            inputProps={{readOnly: true}}
           />
           <TextField
-            id="last-name"
-            name="last-name"
-            label="Last name"
+            id="Requestname"
+            name="Requestname"
+            label="Request name"
             variant="outlined"
-            required
+            value={props.title}
             fullWidth
+            onChange={props.handleTitleChange}
+            error
+            onBlur={props.handleFieldOnBlur}
             margin="dense"
-            defaultValue="Temple"
             className={classes.inputMargin}
-            InputProps={{readOnly: true}}
-          />
-          <TextField
-            id="date"
-            name="date"
-            label="Date"
-            variant="outlined"
-            required
-            fullWidth
-            margin="dense"
-            defaultValue="Aug. 28, 2020"
-            className={classes.inputMargin}
-            InputProps={{readOnly: true}}
-          />
-          <TextField
-            id="username"
-            name="username"
-            label="Username"
-            variant="outlined"
-            required
-            fullWidth
-            margin="dense"
-            defaultValue="rose_temple"
-            InputProps={{readOnly: true}}
+            helperText="Request name is required"
+            // inputProps={{readOnly: true}}
           />
         </Grid>
       </Grid>
-      <Divider className={classes.divider} />
+      <Grid container spacing={1}>
+        <Grid item xs={6} className={classes.pt0}>
+          <TextField
+            id="Createdon"
+            name="Createdon"
+            label="Created on"
+            variant="outlined"
+            required
+            fullWidth
+            margin="dense"
+            inputProps={{readOnly: true}}
+            className={classes.inputMargin}
+          />
+          <TextField
+            id="Updatedon"
+            name="Updatedon"
+            label="Updated on"
+            variant="outlined"
+            required
+            fullWidth
+            margin="dense"
+            inputProps={{readOnly: true}}
+          />
+        </Grid>
+      </Grid>
+      {/*  <Divider className={classes.divider} />
       <Typography component="h2" variant="h6" gutterBottom={true}>
         Additional information
       </Typography>
@@ -314,7 +370,7 @@ function ResearcherInfo(props) {
             label="N/A"
           />
         </RadioGroup>
-      </FormControl>
+      </FormControl> */}
     </React.Fragment>
   );
 }
