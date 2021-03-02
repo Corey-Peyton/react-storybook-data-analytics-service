@@ -452,7 +452,7 @@ function FilesList(props) {
                   onClick={() => toggleHelperText('notes')}
                   onBlur={() => toggleHelperText('notes')}
                   onFocus={() => toggleHelperText('notes')}
-                  value={state.notes.text}
+                  defaultvalue={state.notes.text}
                   error={Boolean(state.notes.errorText)}
                   helperText={state.notes.errorText}
                 />
