@@ -434,7 +434,7 @@ function ResidualDisclosure(props) {
             Supporting files
           </Typography>
           <div className={classes.emphasisBox}>
-            <Typography variant="subtitle2" component="h3" className="mb-3">
+            <Typography variant="subtitle2" component="h4" className="mb-3">
               Required supporting files for residual disclosure:
             </Typography>
             <ul>
@@ -456,7 +456,7 @@ function ResidualDisclosure(props) {
                 <Grid item>
                   <Typography
                     variant="subtitle2"
-                    component="h3"
+                    component="h4"
                     className="mb-2"
                   >
                     File 1
@@ -527,7 +527,7 @@ function ResidualDisclosure(props) {
                 <Grid item>
                   <Typography
                     variant="subtitle2"
-                    component="h3"
+                    component="h4"
                     className="mb-2"
                   >
                     File 2
@@ -605,7 +605,7 @@ function ResidualDisclosure(props) {
                     className="mb-1"
                   >
                     <Grid item>
-                      <Typography variant="subtitle2" component="h3">
+                      <Typography variant="subtitle2" component="h4">
                         File 3
                       </Typography>
                     </Grid>
@@ -865,7 +865,7 @@ function ResidualDisclosure(props) {
             Supporting files
           </Typography>
           <div className={classes.emphasisBox}>
-            <Typography variant="subtitle2" component="h3" className="mb-3">
+            <Typography variant="subtitle2" component="h4" className="mb-3">
               Required supporting files for residual disclosure:
             </Typography>
             <ul>
@@ -887,7 +887,7 @@ function ResidualDisclosure(props) {
                 <Grid item>
                   <Typography
                     variant="subtitle2"
-                    component="h3"
+                    component="h4"
                     className="mb-2"
                   >
                     File 1
@@ -956,7 +956,7 @@ function ResidualDisclosure(props) {
                 <Grid item>
                   <Typography
                     variant="subtitle2"
-                    component="h3"
+                    component="h4"
                     className="mb-2"
                   >
                     File 2
@@ -1032,7 +1032,7 @@ function ResidualDisclosure(props) {
                     className="mb-1"
                   >
                     <Grid item>
-                      <Typography variant="subtitle2" component="h3">
+                      <Typography variant="subtitle2" component="h4">
                         File 3
                       </Typography>
                     </Grid>
