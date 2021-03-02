@@ -1,12 +1,13 @@
 import React from 'react';
 import {useTranslation} from 'react-i18next';
 import {makeStyles} from '@material-ui/core/styles';
+import NumberFormat from 'react-number-format';
 import {
   Grid,
   Typography,
   TextField,
-  /* FormControl,
-  InputLabel,
+  FormControl,
+  /* InputLabel,
   Select,
   MenuItem,
   FormLabel,
@@ -28,6 +29,15 @@ import {
 })); */
 
 const useStyles = makeStyles((theme) => ({
+  root: {
+    '& .MuiFormControl-root': {
+      width: '100%',
+    },
+  },
+  textField: {
+    width: '100%',
+    margin: theme.spacing(1, 0),
+  },
   inputMargin: {
     margin: theme.spacing(1, 0),
   },
@@ -243,7 +253,7 @@ function AnalystInfo(props) {
         Items marked with asterisk (*) are required.
       </Typography>
       <Typography component="h2" variant="h6">
-      Requester details
+        Requester details
       </Typography>
       <Grid container spacing={1}>
         <Grid item xs={6}>
@@ -266,6 +276,7 @@ function AnalystInfo(props) {
             error={Boolean(state.Firstname.errorText)}
             helperText={state.Firstname.errorText}
             inputProps={{readOnly: true}}
+            value="Steve"
           />
           <TextField
             id="Lastname"
@@ -287,6 +298,7 @@ function AnalystInfo(props) {
             inputProps={{readOnly: true}}
             error={Boolean(state.Lastname.errorText)}
             helperText={state.Lastname.errorText}
+            value="Rogers"
           />
           <TextField
             id="Username"
@@ -296,7 +308,7 @@ function AnalystInfo(props) {
             required
             fullWidth
             margin="dense"
-            defaultValue={props.title}
+            // defaultValue={props.title}
             className={classes.inputMargin}
             onCut={(e) => disableCutCopyPaste(e, 'cut', 'Username')}
             onCopy={(e) => disableCutCopyPaste(e, 'copy', 'Username')}
@@ -305,10 +317,11 @@ function AnalystInfo(props) {
             onClick={() => toggleHelperText('Username')}
             onBlur={() => toggleHelperText('Username')}
             onFocus={() => toggleHelperText('Username')}
-            value={state.Username.text}
+            // value={state.Username.text}
             error={Boolean(state.Username.errorText)}
             helperText={state.Username.errorText}
             inputProps={{readOnly: true}}
+            value="steve.rogers@cloud.statcan.ca"
           />
           <TextField
             id="Role"
@@ -327,7 +340,7 @@ function AnalystInfo(props) {
             onClick={() => toggleHelperText('Role')}
             onBlur={() => toggleHelperText('Role')}
             onFocus={() => toggleHelperText('Role')}
-            value={state.Role.text}
+            value="?"
             error={Boolean(state.Role.errorText)}
             helperText={state.Role.errorText}
             inputProps={{readOnly: true}}
@@ -349,12 +362,40 @@ function AnalystInfo(props) {
             onClick={() => toggleHelperText('Email')}
             onBlur={() => toggleHelperText('Email')}
             onFocus={() => toggleHelperText('Email')}
-            value={state.Email.text}
+            // value={state.Email.text}
             error={Boolean(state.Email.errorText)}
             helperText={state.Email.errorText}
             inputProps={{readOnly: true}}
+            value="steve.rogers@cloud.statcan.ca"
           />
-          <TextField
+
+          <FormControl variant="outlined" className={classes.textField}>
+            <NumberFormat
+              id="phone-input"
+              label={t('Phone number')}
+              aria-label={t('Phone number')}
+              value="+1 (999) 999 9999"
+              customInput={TextField}
+              type="text"
+              fullWidth
+              variant="outlined"
+              format="+1 (###) ### ####"
+              mask="_"
+              allowEmptyFormatting
+              autoComplete="phone"
+              error={Boolean(state.Phonenumber.errorText)}
+              helperText={state.Phonenumber.errorText}
+              required
+              onCut={(e) => disableCutCopyPaste(e, 'cut', 'Phonenumber')}
+              onCopy={(e) => disableCutCopyPaste(e, 'copy', 'Phonenumber')}
+              onPaste={(e) => disableCutCopyPaste(e, 'paste', 'Phonenumber')}
+              onChange={(e) => handleChange(e, 'Phonenumber')}
+              onClick={() => toggleHelperText('Phonenumber')}
+              onBlur={() => toggleHelperText('Phonenumber')}
+              onFocus={() => toggleHelperText('Phonenumber')}
+            />
+          </FormControl>
+          {/* <TextField
             id="Phonenumber"
             name="Phone number"
             label="Phone number"
@@ -375,7 +416,7 @@ function AnalystInfo(props) {
             error={Boolean(state.Phonenumber.errorText)}
             helperText={state.Phonenumber.errorText}
             inputProps={{readOnly: true}}
-          />
+          /> */}
           <Typography component="h2" variant="h6" className="mt-1 mb-1">
             Request details
           </Typography>
@@ -387,7 +428,7 @@ function AnalystInfo(props) {
             required
             fullWidth
             margin="dense"
-            value={state.project.text}
+            // value={state.project.text}
             inputProps={{readOnly: true}}
             className={classes.inputMargin}
             onCut={(e) => disableCutCopyPaste(e, 'cut', 'project')}
@@ -399,6 +440,7 @@ function AnalystInfo(props) {
             onFocus={() => toggleHelperText('project')}
             error={Boolean(state.project.errorText)}
             helperText={state.project.errorText}
+            value="20-SSH-UTO-1111"
           />
           {/*  <FormControl
             required
@@ -465,6 +507,7 @@ function AnalystInfo(props) {
             error={Boolean(state.RequestID.errorText)}
             helperText={state.RequestID.errorText}
             inputProps={{readOnly: true}}
+            value="0101-000000"
           />
           <TextField
             id="Requestname"
@@ -509,6 +552,7 @@ function AnalystInfo(props) {
             onFocus={() => toggleHelperText('Createdon')}
             error={Boolean(state.Createdon.errorText)}
             helperText={state.Createdon.errorText}
+            value="Jan 1, 2021"
           />
           <TextField
             id="Updatedon"
@@ -528,6 +572,7 @@ function AnalystInfo(props) {
             error={Boolean(state.Updatedon.errorText)}
             helperText={state.Updatedon.errorText}
             inputProps={{readOnly: true}}
+            value="Dec 31, 2021"
           />
         </Grid>
       </Grid>

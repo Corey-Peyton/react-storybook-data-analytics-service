@@ -1,10 +1,12 @@
 import React from 'react';
 import {makeStyles} from '@material-ui/core/styles';
+import {useTranslation} from 'react-i18next';
+import NumberFormat from 'react-number-format';
 import {
   Grid,
   Typography,
   TextField,
-  /* FormControl,
+  FormControl /*
   InputLabel,
   Select,
   MenuItem,
@@ -12,13 +14,17 @@ import {
   RadioGroup,
   FormControlLabel,
   Radio,
-  Tooltip, */
+  Tooltip, */,
   Divider,
 } from '@material-ui/core';
 /* import InfoIcon from '@material-ui/icons/Info'; */
 
 const useStyles = makeStyles((theme) => ({
   inputMargin: {
+    margin: theme.spacing(1, 0),
+  },
+  textField: {
+    width: '100%',
     margin: theme.spacing(1, 0),
   },
   divider: {
@@ -46,6 +52,7 @@ const useStyles = makeStyles((theme) => ({
 
 function ResearcherInfo(props) {
   const classes = useStyles();
+  const {t} = useTranslation();
 
   return (
     <React.Fragment>
@@ -76,6 +83,7 @@ function ResearcherInfo(props) {
             required
             // helperText="yrdy"
             inputProps={{readOnly: true}}
+            value="Steve"
           />
           <TextField
             id="Lastname"
@@ -89,6 +97,7 @@ function ResearcherInfo(props) {
             className={classes.inputMargin}
             inputProps={{readOnly: true}}
             // helperText="yrdy"
+            value="Rogers"
           />
           <TextField
             id="Username"
@@ -103,6 +112,7 @@ function ResearcherInfo(props) {
             // helperText="yrdy"
             // value
             inputProps={{readOnly: true}}
+            value="steve.rogers@cloud.statcan.ca"
           />
           <TextField
             id="Role"
@@ -114,7 +124,7 @@ function ResearcherInfo(props) {
             margin="dense"
             defaultValue={props.title}
             className={classes.inputMargin}
-            value=""
+            value="?"
             // helperText="yrdy"
             inputProps={{readOnly: true}}
           />
@@ -128,24 +138,27 @@ function ResearcherInfo(props) {
             margin="dense"
             defaultValue={props.title}
             className={classes.inputMargin}
-            value=""
+            value="steve.rogers@cloud.statcan.ca"
             // helperText="yrdy"
             inputProps={{readOnly: true}}
           />
-          <TextField
-            id="Phonenumber"
-            name="Phone number"
-            label="Phone number"
-            variant="outlined"
-            required
-            fullWidth
-            margin="dense"
-            defaultValue={props.title}
-            className={classes.inputMargin}
-            value=""
-            // helperText="yrdy"
-            inputProps={{readOnly: true}}
-          />
+          <FormControl variant="outlined" className={classes.textField}>
+            <NumberFormat
+              id="phone-input"
+              label={t('Phone number')}
+              aria-label={t('Phone number')}
+              value="+1 (999) 999 9999"
+              customInput={TextField}
+              type="text"
+              fullWidth
+              variant="outlined"
+              format="+1 (###) ### ####"
+              mask="_"
+              allowEmptyFormatting
+              autoComplete="phone"
+              required
+            />
+          </FormControl>
           <Typography component="h2" variant="h6" className="mt-1 mb-1">
             Request details
           </Typography>
@@ -159,6 +172,7 @@ function ResearcherInfo(props) {
             margin="dense"
             inputProps={{readOnly: true}}
             className={classes.inputMargin}
+            value="20-SSH-UTO-1111"
           />
           {/* <FormControl
             required
@@ -216,6 +230,7 @@ function ResearcherInfo(props) {
             margin="dense"
             className={classes.inputMargin}
             inputProps={{readOnly: true}}
+            value="0101-000000"
           />
           <TextField
             id="Requestname"
@@ -246,6 +261,7 @@ function ResearcherInfo(props) {
             margin="dense"
             inputProps={{readOnly: true}}
             className={classes.inputMargin}
+            value="Jan 1, 2021"
           />
           <TextField
             id="Updatedon"
@@ -256,6 +272,7 @@ function ResearcherInfo(props) {
             fullWidth
             margin="dense"
             inputProps={{readOnly: true}}
+            value="Dec 31, 2021"
           />
         </Grid>
       </Grid>

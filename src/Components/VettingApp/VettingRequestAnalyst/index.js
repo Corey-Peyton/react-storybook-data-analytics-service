@@ -134,7 +134,7 @@ const useStyles = makeStyles((theme) => ({
 
 function getSteps() {
   return [
-    'Researcher information',
+    'Step 1 · Request details',
     'Files list request',
     'Residual disclosure',
     'Additional information',
