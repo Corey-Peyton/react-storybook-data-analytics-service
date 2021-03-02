@@ -144,7 +144,7 @@ function getSteps() {
 function VettingRequestAnalyst(props) {
   const classes = useStyles();
   const [state, setState] = React.useState({
-    activeStep: 2,
+    activeStep: 0,
     completed: {},
     title: 'Untitled request',
     open: false,
