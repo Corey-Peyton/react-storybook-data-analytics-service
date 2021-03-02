@@ -5,7 +5,7 @@ import {
   Grid,
   Typography,
   TextField,
-  FormControl,
+  /* FormControl,
   InputLabel,
   Select,
   MenuItem,
@@ -13,19 +13,19 @@ import {
   RadioGroup,
   FormControlLabel,
   Radio,
-  Tooltip,
+  Tooltip,*/
   Divider,
 } from '@material-ui/core';
-import InfoIcon from '@material-ui/icons/Info';
+/* import InfoIcon from '@material-ui/icons/Info'; */
 
-const useStylesBootstrap = makeStyles((theme) => ({
+/* const useStylesBootstrap = makeStyles((theme) => ({
   arrow: {
     color: theme.palette.common.black,
   },
   tooltip: {
     backgroundColor: theme.palette.common.black,
   },
-}));
+})); */
 
 const useStyles = makeStyles((theme) => ({
   inputMargin: {
@@ -57,11 +57,11 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-function BootstrapTooltip(props) {
+/* function BootstrapTooltip(props) {
   const classes = useStylesBootstrap();
 
   return <Tooltip arrow classes={classes} {...props} />;
-}
+} */
 
 function AnalystInfo(props) {
   const classes = useStyles();

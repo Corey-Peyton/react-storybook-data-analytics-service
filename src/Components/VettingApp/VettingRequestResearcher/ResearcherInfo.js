@@ -4,7 +4,7 @@ import {
   Grid,
   Typography,
   TextField,
-  FormControl,
+  /* FormControl,
   InputLabel,
   Select,
   MenuItem,
@@ -12,10 +12,10 @@ import {
   RadioGroup,
   FormControlLabel,
   Radio,
-  Tooltip,
+  Tooltip, */
   Divider,
 } from '@material-ui/core';
-import InfoIcon from '@material-ui/icons/Info';
+/* import InfoIcon from '@material-ui/icons/Info'; */
 
 const useStyles = makeStyles((theme) => ({
   inputMargin: {
