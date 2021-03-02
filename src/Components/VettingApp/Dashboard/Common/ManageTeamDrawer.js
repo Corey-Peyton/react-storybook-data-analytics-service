@@ -23,6 +23,7 @@ import {
   DialogAssignAsLead,
   DialogAssignAsSupport,
 } from '../../CommonComponents/DialogBox';
+import CustomizedSnackbar from './CustomizedSnackbar';
 
 const DRAWER_WIDTH = 400;
 
@@ -144,10 +145,16 @@ export default function ManageTeamDrawer(props) {
   const {t} = useTranslation();
   const [analysts, setAnalysts] = React.useState(analystList);
   const [anchorEl, setAnchorEl] = React.useState(null);
+  const [snackbar, setSnackbar] = React.useState(false);
   const [dialog, setOpen] = React.useState({
     noLead: false,
     assignAsLead: false,
+    assignAsSupport: false,
   });
+
+  const SnackbarClose = () => {
+    setSnackbar(false);
+  };
 
   const makeLead = (value) => (e) => {
     setAnalysts(
@@ -196,6 +203,22 @@ export default function ManageTeamDrawer(props) {
   const toggleDialog = (state, value) => {
     setOpen({...dialog, [state]: value});
     handleClose();
+  };
+
+  const applyChanges = () => {
+    let isLead = false;
+    analysts.forEach((analyst) => {
+      if (analyst.role === 'lead') {
+        isLead = true;
+      }
+    });
+    if (!isLead) {
+      toggleDialog('noLead', !dialog.noLead);
+      clickHandler();
+    } else {
+      setSnackbar(!snackbar);
+      clickHandler();
+    }
   };
 
   const leadAnalysts = () => {
@@ -339,12 +362,13 @@ export default function ManageTeamDrawer(props) {
                 <ArrowDropDownIcon />
               </Button>
               <Menu
-                id="simple-menu"
+                id="assign-as-menu"
                 anchorEl={anchorEl}
                 keepMounted
                 open={Boolean(anchorEl)}
                 onClose={handleClose}
               >
+                {/* This menu is only visible if the current user is NOT already assigned to the request */}
                 <MenuItem
                   onClick={() => {
                     toggleDialog('assignAsLead', !dialog.assignAsLead);
@@ -394,8 +418,7 @@ export default function ManageTeamDrawer(props) {
           color="primary"
           className={classes.footerBtns}
           onClick={() => {
-            toggleDialog('noLead', !dialog.noLead);
-            clickHandler();
+            applyChanges();
           }}
         >
           {t('Apply')}
@@ -430,6 +453,12 @@ export default function ManageTeamDrawer(props) {
         toggleDialog={() =>
           toggleDialog('assignAsSupport', !dialog.assignAsSupport)
         }
+      />
+      <CustomizedSnackbar
+        open={snackbar}
+        severity="success"
+        message={t('Assignee changes applied to request 0000-00001')}
+        toggleSnackbar={SnackbarClose}
       />
     </div>
   );

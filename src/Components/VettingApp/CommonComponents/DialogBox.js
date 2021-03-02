@@ -2782,7 +2782,7 @@ export function DialogAssignAsLead(props) {
   );
 }
 
-// ////////////////////////////////////////// ASSIGN AS LEAD
+// ////////////////////////////////////////// ASSIGN AS SUPPORT
 export function DialogAssignAsSupport(props) {
   const classes = useStyles();
   const {t} = useTranslation();
