@@ -165,8 +165,8 @@ const useStyles = makeStyles((theme) => ({
 
 function getSteps() {
   return [
-    'Request details',
-    'Files list request',
+    'Researcher information',
+    'Output details',
     'Residual disclosure',
     'Additional information',
   ];
@@ -490,7 +490,7 @@ function VettingRequestResearcher(props) {
           aria-describedby="alert-dialog-description"
           className={classes.root}
           disableBackdropClick
-          scroll='paper'
+          scroll="paper"
         >
           <DialogTitle id="alert-dialog-title">
             <div className={classes.vettingContainerTitle}>
