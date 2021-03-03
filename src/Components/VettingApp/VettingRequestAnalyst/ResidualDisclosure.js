@@ -69,6 +69,8 @@ const useStyles = makeStyles((theme) => ({
   },
   indentedSection: {
     paddingLeft: theme.spacing(3),
+    paddingTop: theme.spacing(3),
+    paddingBottom: theme.spacing(3),
     marginBottom: theme.spacing(3),
     borderLeft: '1px solid',
     borderLeftColor: theme.palette.divider,
