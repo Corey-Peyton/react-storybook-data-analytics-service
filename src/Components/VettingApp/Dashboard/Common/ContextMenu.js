@@ -104,6 +104,7 @@ export function ActionsMenu(props) {
   const ariaControls = `actions-menu-${controls}`;
 
   const handleClick = (event) => {
+    event.stopPropagation();
     setAnchorEl(event.currentTarget);
     contextStatusClick(status);
   };

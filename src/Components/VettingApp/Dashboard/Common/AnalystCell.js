@@ -25,33 +25,34 @@ const useStyles = makeStyles((theme) => ({
 
 export default function AnalystCell(props) {
   const {t} = useTranslation();
-  const {role, analysts, support} = props;
+  const {role, analysts, support, toggleDialog} = props;
   const extraAnalysts = support.length;
   const classes = useStyles();
   const [open, setOpen] = React.useState({
-    analystInfo: false,
+    // analystInfo: false,
     manageTeam: false,
   });
 
-  function toggleDialog(value) {
-    if (value === 'info') {
-      setOpen({...open, analystInfo: !open.analystInfo});
-    }
-    if (value === 'list') {
-      setOpen({...open, manageTeam: !open.manageTeam});
-    }
-  }
+  // function toggleDialog(value, e) {
+  //   e.stopPropagation();
+  //   if (value === 'info') {
+  //     setOpen({...open, analystInfo: !open.analystInfo});
+  //   }
+  //   if (value === 'list') {
+  //     setOpen({...open, manageTeam: !open.manageTeam});
+  //   }
+  // }
 
   if (role === 'researcher') {
     if (analysts !== '') {
       return (
         <TableCell className={classes.tablesCellsFlex}>
-          <Chip label={analysts} onClick={() => toggleDialog('info')} />
-          <DialogAnalyst
+          <Chip label={analysts} onClick={toggleDialog} />
+          {/* <DialogAnalyst
             open={open.analystInfo}
-            toggleDialog={() => toggleDialog('info')}
+            toggleDialog={(e) => toggleDialog('info', e)}
             header="Assignee details"
-          />
+          /> */}
         </TableCell>
       );
     } else {
@@ -69,26 +70,38 @@ export default function AnalystCell(props) {
         <TableCell className={classes.tablesCellsFlex}>
           <Chip
             label={analysts}
-            onClick={() => toggleDialog('list')}
+            onClick={(e) => {
+              e.stopPropagation();
+              toggleDialog('list', e);
+            }}
             className="mr-1"
           />
           <Chip
             label={`${extraAnalysts} ${t('support')}`}
-            onClick={() => toggleDialog('list')}
+            onClick={(e) => {
+              e.stopPropagation();
+              toggleDialog('list');
+            }}
           />
           <DialogManageTeam
             open={open.manageTeam}
-            toggleDialog={() => toggleDialog('list')}
+            toggleDialog={(e) => toggleDialog('list', e)}
           />
         </TableCell>
       );
     } else if (analysts !== '' && support.length === 0) {
       return (
         <TableCell className={classes.tablesCellsFlex}>
-          <Chip label={analysts} onClick={() => toggleDialog('list')} />
+          <Chip
+            label={analysts}
+            onClick={(e) => {
+              e.stopPropagation();
+              toggleDialog('list', e);
+            }}
+          />
           <DialogManageTeam
             open={open.manageTeam}
-            toggleDialog={() => toggleDialog('list')}
+            toggleDialog={(e) => toggleDialog('list', e)}
           />
         </TableCell>
       );
@@ -100,12 +113,15 @@ export default function AnalystCell(props) {
           </Typography>
           <Chip
             label={`${extraAnalysts} ${t('support')}`}
-            onClick={() => toggleDialog('list')}
+            onClick={(e) => {
+              e.stopPropagation();
+              toggleDialog('list', e);
+            }}
             className="ml-1"
           />
           <DialogManageTeam
             open={open.manageTeam}
-            toggleDialog={() => toggleDialog('list')}
+            toggleDialog={(e) => toggleDialog('list', e)}
           />
         </TableCell>
       );
@@ -117,7 +133,7 @@ export default function AnalystCell(props) {
           </Typography>
           <DialogManageTeam
             open={open.manageTeam}
-            toggleDialog={() => toggleDialog('list')}
+            toggleDialog={(e) => toggleDialog('list', e)}
           />
         </TableCell>
       );

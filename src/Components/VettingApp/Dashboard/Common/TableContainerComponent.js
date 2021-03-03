@@ -1,6 +1,7 @@
 import React from 'react';
 import {useTranslation} from 'react-i18next';
 import {makeStyles} from '@material-ui/core/styles';
+import {useHistory} from 'react-router-dom';
 import {
   Typography,
   Table,
@@ -88,6 +89,7 @@ export default function TableContainerComponent(props) {
   });
   const {t} = useTranslation();
   const classes = useStyles();
+  const history = useHistory();
 
   const handleRequestSort = (event, property) => {
     const isAsc = orderBy === property && order === 'asc';
@@ -104,7 +106,8 @@ export default function TableContainerComponent(props) {
     setPage(0);
   };
 
-  function toggleDialog(value) {
+  function toggleDialog(value, e) {
+    e.stopPropagation();
     if (value === 'info') {
       setOpen({...open, requesterInfo: !open.requesterInfo});
     }
@@ -142,6 +145,14 @@ export default function TableContainerComponent(props) {
                     tabIndex={-1}
                     key={row.id}
                     className={classes.tableRow}
+                    onClick={() => {
+                      history.push({
+                        pathname:
+                        role === 'researcher' ?
+                          '/vetting-app/request-researcher' :
+                          '/vetting-app/request-analyst-assigned',
+                      });
+                    }}
                   >
                     <TableCell id={labelId} className={classes.tablesCells}>
                       <Typography variant="body2" noWrap={true}>
@@ -176,13 +187,20 @@ export default function TableContainerComponent(props) {
                     <TableCell>
                       <Chip
                         label={row.researcher}
-                        onClick={() => toggleDialog('info')}
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          toggleDialog('info', e);
+                        }}
                       />
                     </TableCell>
                     <AnalystCell
                       analysts={row.analysts}
                       support={row.support}
                       role={role}
+                      toggleDialog={(e) => {
+                        e.stopPropagation();
+                        toggleDialog('info', e);
+                      }}
                     />
                     <TableCell>
                       <Typography variant="body2" noWrap={true}>
@@ -226,7 +244,7 @@ export default function TableContainerComponent(props) {
       />
       <DialogAnalyst
         open={open.requesterInfo}
-        toggleDialog={() => toggleDialog('info')}
+        toggleDialog={(e) => toggleDialog('info', e)}
         header="Requester details"
       />
     </TableContainer>
