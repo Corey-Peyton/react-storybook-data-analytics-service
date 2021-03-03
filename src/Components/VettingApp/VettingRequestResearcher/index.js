@@ -121,7 +121,7 @@ const useStyles = makeStyles((theme) => ({
     padding: theme.spacing(0, 3, 3, 3),
   },
   errorMsg: {
-    margin: 0,
+    margin: [0, '!important'],
     textAlign: 'left',
   },
   vettingContainerTitle: {
@@ -372,7 +372,7 @@ function VettingRequestResearcher(props) {
                         variant="body2"
                         color="error"
                       >
-                        {state.errors[index]} error
+                        {state.errors[index]} errors
                       </Typography>
                     );
                   }
