@@ -562,7 +562,7 @@ function OutputFileForm(props) {
         onClick={() => toggleHelperText('sheetname')}
         onBlur={() => toggleHelperText('sheetname')}
         onFocus={() => toggleHelperText('sheetname')}
-        defaultvalue={state.sheetname.text}
+        defaultValue={state.sheetname.text}
         error={Boolean(state.sheetname.errorText)}
         helperText={state.sheetname.helperText}
       />
@@ -580,7 +580,7 @@ function OutputFileForm(props) {
         onClick={() => toggleHelperText('survey')}
         onBlur={() => toggleHelperText('survey')}
         onFocus={() => toggleHelperText('survey')}
-        defaultvalue={state.survey.text}
+        defaultValue={state.survey.text}
         error={Boolean(state.survey.errorText)}
         helperText={state.survey.errorText}
       />
@@ -632,7 +632,7 @@ function OutputFileForm(props) {
           onClick={() => toggleHelperText('outputmethod')}
           onBlur={() => toggleHelperText('outputmethod')}
           onFocus={() => toggleHelperText('outputmethod')}
-          defaultvalue={state.outputmethod.text}
+          defaultValue={state.outputmethod.text}
           error={Boolean(state.outputmethod.errorText)}
           helperText={state.outputmethod.errorText}
         />
@@ -706,7 +706,7 @@ function OutputFileForm(props) {
               onClick={() => toggleHelperText('weightvariable')}
               onBlur={() => toggleHelperText('weightvariable')}
               onFocus={() => toggleHelperText('weightvariable')}
-              defaultvalue={state.weightvariable.text}
+              defaultValue={state.weightvariable.text}
               error={Boolean(state.weightvariable.errorText)}
               helperText={state.weightvariable.errorText}
             />
@@ -745,7 +745,7 @@ function OutputFileForm(props) {
         onClick={() => toggleHelperText('sample')}
         onBlur={() => toggleHelperText('sample')}
         onFocus={() => toggleHelperText('sample')}
-        defaultvalue={state.sample.text}
+        defaultValue={state.sample.text}
         error={Boolean(state.sample.errorText)}
         helperText={state.sample.helperText}
       />
@@ -762,7 +762,7 @@ function OutputFileForm(props) {
         onClick={() => toggleHelperText('geography')}
         onBlur={() => toggleHelperText('geography')}
         onFocus={() => toggleHelperText('geography')}
-        defaultvalue={state.geography.text}
+        defaultValue={state.geography.text}
         error={Boolean(state.geography.errorText)}
         helperText={state.geography.helperText}
       />
@@ -814,7 +814,7 @@ function OutputFileForm(props) {
           onClick={() => toggleHelperText('linkage')}
           onBlur={() => toggleHelperText('linkage')}
           onFocus={() => toggleHelperText('linkage')}
-          defaultvalue={state.linkage.text}
+          defaultValue={state.linkage.text}
           error={Boolean(state.linkage.errorText)}
           helperText={state.linkage.helperText}
         />
@@ -968,7 +968,7 @@ function OutputFileForm(props) {
           onClick={() => toggleHelperText('modified')}
           onBlur={() => toggleHelperText('modified')}
           onFocus={() => toggleHelperText('modified')}
-          defaultvalue={state.modified.text}
+          defaultValue={state.modified.text}
           error={Boolean(state.modified.errorText)}
           helperText={state.modified.errorText}
         />
@@ -1076,7 +1076,7 @@ function OutputFileForm(props) {
           onClick={() => toggleHelperText('rounding')}
           onBlur={() => toggleHelperText('rounding')}
           onFocus={() => toggleHelperText('rounding')}
-          defaultvalue={state.rounding.text}
+          defaultValue={state.rounding.text}
           error={Boolean(state.rounding.errorText)}
           helperText={state.rounding.errorText}
         />
@@ -1163,7 +1163,7 @@ function OutputFileForm(props) {
         onClick={() => toggleHelperText('contents')}
         onBlur={() => toggleHelperText('contents')}
         onFocus={() => toggleHelperText('contents')}
-        defaultvalue={state.contents.text}
+        defaultValue={state.contents.text}
         error={Boolean(state.contents.errorText)}
         helperText={state.contents.errorText}
       />
@@ -1183,7 +1183,7 @@ function OutputFileForm(props) {
         onClick={() => toggleHelperText('notes')}
         onBlur={() => toggleHelperText('notes')}
         onFocus={() => toggleHelperText('notes')}
-        defaultvalue={state.notes.text}
+        defaultValue={state.notes.text}
         error={Boolean(state.notes.errorText)}
         helperText={state.notes.errorText}
       />
@@ -1230,7 +1230,7 @@ function OutputFileForm(props) {
         onClick={() => toggleHelperText('contents2')}
         onBlur={() => toggleHelperText('contents2')}
         onFocus={() => toggleHelperText('contents2')}
-        defaultvalue={state.contents2.text}
+        defaultValue={state.contents2.text}
         error={Boolean(state.contents2.errorText)}
         helperText={state.contents2.errorText}
       />
@@ -1250,7 +1250,7 @@ function OutputFileForm(props) {
         onClick={() => toggleHelperText('notes2')}
         onBlur={() => toggleHelperText('notes2')}
         onFocus={() => toggleHelperText('notes2')}
-        defaultvalue={state.notes2.text}
+        defaultValue={state.notes2.text}
         error={Boolean(state.notes2.errorText)}
         helperText={state.notes2.errorText}
       />
