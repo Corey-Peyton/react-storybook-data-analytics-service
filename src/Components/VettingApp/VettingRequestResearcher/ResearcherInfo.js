@@ -138,7 +138,7 @@ function ResearcherInfo(props) {
             margin="dense"
             defaultValue={props.title}
             className={classes.inputMargin}
-            value="steve.rogers@cloud.statcan.ca"
+            value="steve.rogers@canada.ca"
             // helperText="yrdy"
             inputProps={{readOnly: true}}
           />
@@ -156,6 +156,7 @@ function ResearcherInfo(props) {
               mask="_"
               allowEmptyFormatting
               autoComplete="phone"
+              inputProps={{readOnly: true}}
               required
             />
           </FormControl>
@@ -240,11 +241,10 @@ function ResearcherInfo(props) {
             value={props.title}
             fullWidth
             onChange={props.handleTitleChange}
-            error
             onBlur={props.handleFieldOnBlur}
             margin="dense"
             className={classes.inputMargin}
-            helperText="Request name is required"
+            // helperText="Request name is required"
             // inputProps={{readOnly: true}}
           />
         </Grid>

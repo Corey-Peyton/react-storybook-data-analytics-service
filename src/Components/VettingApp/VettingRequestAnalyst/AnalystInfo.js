@@ -366,7 +366,7 @@ function AnalystInfo(props) {
             error={Boolean(state.Email.errorText)}
             helperText={state.Email.errorText}
             inputProps={{readOnly: true}}
-            value="steve.rogers@cloud.statcan.ca"
+            value="steve.rogers@canada.ca"
           />
 
           <FormControl variant="outlined" className={classes.textField}>
@@ -391,6 +391,7 @@ function AnalystInfo(props) {
               onPaste={(e) => disableCutCopyPaste(e, 'paste', 'Phonenumber')}
               onChange={(e) => handleChange(e, 'Phonenumber')}
               onClick={() => toggleHelperText('Phonenumber')}
+              inputProps={{readOnly: true}}
               onBlur={() => toggleHelperText('Phonenumber')}
               onFocus={() => toggleHelperText('Phonenumber')}
             />
