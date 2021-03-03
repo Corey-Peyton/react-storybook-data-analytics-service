@@ -14,10 +14,6 @@ const useStyles = makeStyles((theme) => ({
   inputMargin: {
     margin: theme.spacing(1, 0),
   },
-  textField: {
-    width: '100%',
-    margin: theme.spacing(1, 0),
-  },
   divider: {
     margin: theme.spacing(3, 0),
   },
@@ -122,7 +118,7 @@ function ResearcherInfo(props) {
             value="steve.rogers@canada.ca"
             inputProps={{readOnly: true}}
           />
-          <FormControl variant="outlined" className={classes.textField}>
+          <FormControl variant="outlined" fullWidth>
             <NumberFormat
               id="phone-input"
               label={t('Phone number')}
@@ -131,6 +127,7 @@ function ResearcherInfo(props) {
               customInput={TextField}
               type="text"
               fullWidth
+              className="mt-1"
               variant="outlined"
               format="+1 (###) ### ####"
               mask="_"

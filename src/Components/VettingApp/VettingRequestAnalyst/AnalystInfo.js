@@ -16,10 +16,6 @@ const useStyles = makeStyles((theme) => ({
       width: '100%',
     },
   },
-  textField: {
-    width: '100%',
-    margin: theme.spacing(1, 0),
-  },
   inputMargin: {
     margin: theme.spacing(1, 0),
   },
@@ -339,7 +335,7 @@ function AnalystInfo(props) {
             value="steve.rogers@canada.ca"
           />
 
-          <FormControl variant="outlined" className={classes.textField}>
+          <FormControl variant="outlined" fullWidth>
             <NumberFormat
               id="phone-input"
               label={t('Phone number')}
@@ -347,12 +343,12 @@ function AnalystInfo(props) {
               value="+1 (999) 999 9999"
               customInput={TextField}
               type="text"
-              fullWidth
               variant="outlined"
               format="+1 (###) ### ####"
               mask="_"
               allowEmptyFormatting
               autoComplete="phone"
+              className="mt-1"
               error={Boolean(state.Phonenumber.errorText)}
               helperText={state.Phonenumber.errorText}
               required
