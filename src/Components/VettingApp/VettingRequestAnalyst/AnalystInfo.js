@@ -7,26 +7,8 @@ import {
   Typography,
   TextField,
   FormControl,
-  /* InputLabel,
-  Select,
-  MenuItem,
-  FormLabel,
-  RadioGroup,
-  FormControlLabel,
-  Radio,
-  Tooltip,*/
   Divider,
 } from '@material-ui/core';
-/* import InfoIcon from '@material-ui/icons/Info'; */
-
-/* const useStylesBootstrap = makeStyles((theme) => ({
-  arrow: {
-    color: theme.palette.common.black,
-  },
-  tooltip: {
-    backgroundColor: theme.palette.common.black,
-  },
-})); */
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -66,12 +48,6 @@ const useStyles = makeStyles((theme) => ({
     backgroundColor: theme.palette.common.black,
   },
 }));
-
-/* function BootstrapTooltip(props) {
-  const classes = useStylesBootstrap();
-
-  return <Tooltip arrow classes={classes} {...props} />;
-} */
 
 function AnalystInfo(props) {
   const classes = useStyles();
@@ -249,10 +225,7 @@ function AnalystInfo(props) {
         procedures.
       </Typography>
       <Divider className={classes.divider} />
-      <Typography className="mb-2" component="p" variant="subtitle2">
-        Items marked with asterisk (*) are required.
-      </Typography>
-      <Typography component="h2" variant="h6">
+      <Typography component="h2" variant="h6" className="mt-1 mb-1">
         Requester details
       </Typography>
       <Grid container spacing={1}>
@@ -308,7 +281,6 @@ function AnalystInfo(props) {
             required
             fullWidth
             margin="dense"
-            // defaultValue={props.title}
             className={classes.inputMargin}
             onCut={(e) => disableCutCopyPaste(e, 'cut', 'Username')}
             onCopy={(e) => disableCutCopyPaste(e, 'copy', 'Username')}
@@ -317,7 +289,6 @@ function AnalystInfo(props) {
             onClick={() => toggleHelperText('Username')}
             onBlur={() => toggleHelperText('Username')}
             onFocus={() => toggleHelperText('Username')}
-            // value={state.Username.text}
             error={Boolean(state.Username.errorText)}
             helperText={state.Username.errorText}
             inputProps={{readOnly: true}}
@@ -362,7 +333,6 @@ function AnalystInfo(props) {
             onClick={() => toggleHelperText('Email')}
             onBlur={() => toggleHelperText('Email')}
             onFocus={() => toggleHelperText('Email')}
-            // value={state.Email.text}
             error={Boolean(state.Email.errorText)}
             helperText={state.Email.errorText}
             inputProps={{readOnly: true}}
@@ -396,28 +366,6 @@ function AnalystInfo(props) {
               onFocus={() => toggleHelperText('Phonenumber')}
             />
           </FormControl>
-          {/* <TextField
-            id="Phonenumber"
-            name="Phone number"
-            label="Phone number"
-            variant="outlined"
-            required
-            fullWidth
-            margin="dense"
-            defaultValue={props.title}
-            className={classes.inputMargin}
-            onCut={(e) => disableCutCopyPaste(e, 'cut', 'Phonenumber')}
-            onCopy={(e) => disableCutCopyPaste(e, 'copy', 'Phonenumber')}
-            onPaste={(e) => disableCutCopyPaste(e, 'paste', 'Phonenumber')}
-            onChange={(e) => handleChange(e, 'Phonenumber')}
-            onClick={() => toggleHelperText('Phonenumber')}
-            onBlur={() => toggleHelperText('Phonenumber')}
-            onFocus={() => toggleHelperText('Phonenumber')}
-            value={state.Phonenumber.text}
-            error={Boolean(state.Phonenumber.errorText)}
-            helperText={state.Phonenumber.errorText}
-            inputProps={{readOnly: true}}
-          /> */}
           <Typography component="h2" variant="h6" className="mt-1 mb-1">
             Request details
           </Typography>
@@ -429,7 +377,6 @@ function AnalystInfo(props) {
             required
             fullWidth
             margin="dense"
-            // value={state.project.text}
             inputProps={{readOnly: true}}
             className={classes.inputMargin}
             onCut={(e) => disableCutCopyPaste(e, 'cut', 'project')}
@@ -443,52 +390,6 @@ function AnalystInfo(props) {
             helperText={state.project.errorText}
             value="20-SSH-UTO-1111"
           />
-          {/*  <FormControl
-            required
-            variant="outlined"
-            fullWidth
-            margin="dense"
-            className={classes.inputMargin}
-          >
-            <InputLabel id="outputFilesFolder-label">Output Folder</InputLabel>
-            <Select
-              id="outputFilesFolder"
-              label="Output Folder *"
-              labelId="outputFilesFolder-label"
-            >
-              <MenuItem key={-1} value="">
-                None
-              </MenuItem>
-            </Select>
-          </FormControl>
-          <FormControl
-            required
-            variant="outlined"
-            fullWidth
-            margin="dense"
-            className={classes.inputMargin}
-          >
-            <InputLabel id="supportingFilesFolder-label">
-              Supporting Folder
-            </InputLabel>
-            <Select
-              id="supportingFilesFolder"
-              label="Supporting Folder *"
-              labelId="supportingFilesFolder-label"
-            >
-              <MenuItem key={-1} value="">
-                None
-              </MenuItem>
-            </Select>
-          </FormControl>
-        </Grid>
-      </Grid>
-      <Divider className={classes.divider} />
-      <Typography component="h2" variant="h6">
-        Basic information
-      </Typography>
-      <Grid container spacing={1}>
-        <Grid item xs={6}>*/}
           <TextField
             id="RequestID"
             name="RequestID"
@@ -515,7 +416,7 @@ function AnalystInfo(props) {
             name="Requestname"
             label="Request name"
             variant="outlined"
-            // required
+            defaultValue="Untitled request"
             fullWidth
             margin="dense"
             className={classes.inputMargin}
@@ -528,7 +429,6 @@ function AnalystInfo(props) {
             onFocus={() => toggleHelperText('Requestname')}
             error={Boolean(state.Requestname.errorText)}
             helperText={state.Requestname.errorText}
-            // inputProps={{readOnly: true}}
           />
         </Grid>
       </Grid>
@@ -577,114 +477,6 @@ function AnalystInfo(props) {
           />
         </Grid>
       </Grid>
-      {/* <Divider className={classes.divider} />
-      <Typography component="h2" variant="h6" gutterBottom={true}>
-        Additional information
-      </Typography>
-      <div className={classes.emphasisBox}>
-        <Typography variant="subtitle2" component="h3" gutterBottom={true}>
-          Please consider the following guidelines:
-        </Typography>
-        <ul>
-          <li>
-            <Typography variant="body2" gutterBottom={true}>
-              Check your output against the vetting guidelines.
-            </Typography>
-          </li>
-          <li>
-            <Typography variant="body2" gutterBottom={true}>
-              Delete values you do not need released at this time.
-            </Typography>
-          </li>
-        </ul>
-        <Typography variant="subtitle2" component="h3">
-          A completed request form will be stored as part of the request record.
-        </Typography>
-      </div>
-      <FormControl
-        component="fieldset"
-        required
-        className={classes.inputMargin}
-      >
-        <FormLabel component="legend">
-          Is the requested output consistent with the approved proposal for this
-          project?
-        </FormLabel>
-        <RadioGroup id="consistentOutput">
-          <FormControlLabel
-            value="Yes"
-            control={<Radio color="primary" />}
-            label="Yes"
-          />
-          <FormControlLabel
-            value="No"
-            control={<Radio color="primary" />}
-            label="No"
-          />
-          <FormControlLabel
-            value="NA"
-            control={<Radio color="primary" />}
-            label="N/A"
-          />
-        </RadioGroup>
-      </FormControl>
-      <FormControl
-        component="fieldset"
-        required
-        className={classes.inputMargin}
-      >
-        <FormLabel component="legend">
-          Have you checked the vetting rules to determine if there are
-          geographical, institutional, household size and/or population
-          requirements for your output?
-        </FormLabel>
-        <RadioGroup id="vettingRules">
-          <FormControlLabel
-            value="Yes"
-            control={<Radio color="primary" />}
-            label="Yes"
-          />
-          <FormControlLabel
-            value="No"
-            control={<Radio color="primary" />}
-            label="No"
-          />
-          <FormControlLabel
-            value="NA"
-            control={<Radio color="primary" />}
-            label="N/A"
-          />
-        </RadioGroup>
-      </FormControl>
-      <FormControl
-        component="fieldset"
-        required
-        className={classes.inputMargin}
-      >
-        <FormLabel component="legend" className={classes.tooltipLabel}>
-          Is the requested output your final output?
-          <BootstrapTooltip title="If no, future vetting release requests under this contract may be restricted due to residual disclosure. You are strongly encouraged to consult with your analyst.">
-            <InfoIcon />
-          </BootstrapTooltip>
-        </FormLabel>
-        <RadioGroup id="finalOutput">
-          <FormControlLabel
-            value="Yes"
-            control={<Radio color="primary" />}
-            label="Yes"
-          />
-          <FormControlLabel
-            value="No"
-            control={<Radio color="primary" />}
-            label="No"
-          />
-          <FormControlLabel
-            value="NA"
-            control={<Radio color="primary" />}
-            label="N/A"
-          />
-        </RadioGroup>
-      </FormControl> */}
     </React.Fragment>
   );
 }

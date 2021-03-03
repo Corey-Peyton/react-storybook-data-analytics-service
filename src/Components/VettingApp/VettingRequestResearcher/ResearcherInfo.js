@@ -6,18 +6,9 @@ import {
   Grid,
   Typography,
   TextField,
-  FormControl /*
-  InputLabel,
-  Select,
-  MenuItem,
-  FormLabel,
-  RadioGroup,
-  FormControlLabel,
-  Radio,
-  Tooltip, */,
+  FormControl,
   Divider,
 } from '@material-ui/core';
-/* import InfoIcon from '@material-ui/icons/Info'; */
 
 const useStyles = makeStyles((theme) => ({
   inputMargin: {
@@ -64,10 +55,7 @@ function ResearcherInfo(props) {
         procedures.
       </Typography>
       <Divider className={classes.divider} />
-      <Typography className="mb-2" component="p" variant="subtitle2">
-        Items marked with asterisk (*) are required.
-      </Typography>
-      <Typography component="h2" variant="h6">
+      <Typography component="h2" variant="h6" className="mt-1 mb-1">
         Requester details
       </Typography>
       <Grid container spacing={1}>
@@ -81,7 +69,6 @@ function ResearcherInfo(props) {
             className={classes.inputMargin}
             label="First name"
             required
-            // helperText="yrdy"
             inputProps={{readOnly: true}}
             value="Steve"
           />
@@ -93,10 +80,8 @@ function ResearcherInfo(props) {
             required
             fullWidth
             margin="dense"
-            // defaultValue={props.title}
             className={classes.inputMargin}
             inputProps={{readOnly: true}}
-            // helperText="yrdy"
             value="Rogers"
           />
           <TextField
@@ -107,10 +92,7 @@ function ResearcherInfo(props) {
             required
             fullWidth
             margin="dense"
-            // defaultValue={props.title}
             className={classes.inputMargin}
-            // helperText="yrdy"
-            // value
             inputProps={{readOnly: true}}
             value="steve.rogers@cloud.statcan.ca"
           />
@@ -125,7 +107,6 @@ function ResearcherInfo(props) {
             defaultValue={props.title}
             className={classes.inputMargin}
             value="?"
-            // helperText="yrdy"
             inputProps={{readOnly: true}}
           />
           <TextField
@@ -139,7 +120,6 @@ function ResearcherInfo(props) {
             defaultValue={props.title}
             className={classes.inputMargin}
             value="steve.rogers@canada.ca"
-            // helperText="yrdy"
             inputProps={{readOnly: true}}
           />
           <FormControl variant="outlined" className={classes.textField}>
@@ -175,52 +155,6 @@ function ResearcherInfo(props) {
             className={classes.inputMargin}
             value="20-SSH-UTO-1111"
           />
-          {/* <FormControl
-            required
-            variant="outlined"
-            fullWidth
-            margin="dense"
-            className={classes.inputMargin}
-          >
-            <InputLabel id="outputFilesFolder-label">Output folder</InputLabel>
-            <Select
-              id="outputFilesFolder"
-              label="Output folder *"
-              labelId="outputFilesFolder-label"
-            >
-              <MenuItem key={-1} value="">
-                None
-              </MenuItem>
-            </Select>
-          </FormControl>
-          <FormControl
-            required
-            variant="outlined"
-            fullWidth
-            margin="dense"
-            className={classes.inputMargin}
-          >
-            <InputLabel id="supportingFilesFolder-label">
-              Supporting folder
-            </InputLabel>
-            <Select
-              id="supportingFilesFolder"
-              label="Supporting folder *"
-              labelId="supportingFilesFolder-label"
-            >
-              <MenuItem key={-1} value="">
-                None
-              </MenuItem>
-            </Select>
-          </FormControl>
-        </Grid>
-      </Grid>
-      <Divider className={classes.divider} />
-      <Typography component="h2" variant="h6">
-        Request details
-      </Typography>
-      {/* <Grid container spacing={1}>
-        <Grid item xs={6}> */}
           <TextField
             id="RequestID"
             name="RequestID"
@@ -244,8 +178,6 @@ function ResearcherInfo(props) {
             onBlur={props.handleFieldOnBlur}
             margin="dense"
             className={classes.inputMargin}
-            // helperText="Request name is required"
-            // inputProps={{readOnly: true}}
           />
         </Grid>
       </Grid>
@@ -276,118 +208,6 @@ function ResearcherInfo(props) {
           />
         </Grid>
       </Grid>
-      {/*  <Divider className={classes.divider} />
-      <Typography component="h2" variant="h6" gutterBottom={true}>
-        Additional information
-      </Typography>
-      <div className={classes.emphasisBox}>
-        <Typography variant="subtitle2" component="h3" gutterBottom={true}>
-          Please consider the following guidelines:
-        </Typography>
-        <ul>
-          <li>
-            <Typography variant="body2" gutterBottom={true}>
-              Check your output against the vetting guidelines.
-            </Typography>
-          </li>
-          <li>
-            <Typography variant="body2" gutterBottom={true}>
-              Delete values you do not need released at this time.
-            </Typography>
-          </li>
-        </ul>
-        <Typography variant="subtitle2" component="h3">
-          A completed request form will be stored as part of the request record.
-        </Typography>
-      </div>
-      <FormControl
-        component="fieldset"
-        required
-        className={classes.inputMargin}
-      >
-        <FormLabel component="legend">
-          Is the requested output consistent with the approved proposal for this
-          project?
-        </FormLabel>
-        <RadioGroup id="consistentOutput">
-          <FormControlLabel
-            value="Yes"
-            control={<Radio color="primary" />}
-            label="Yes"
-          />
-          <FormControlLabel
-            value="No"
-            control={<Radio color="primary" />}
-            label="No"
-          />
-          <FormControlLabel
-            value="NA"
-            control={<Radio color="primary" />}
-            label="N/A"
-          />
-        </RadioGroup>
-      </FormControl>
-      <FormControl
-        component="fieldset"
-        required
-        className={classes.inputMargin}
-      >
-        <FormLabel component="legend">
-          Have you checked the vetting rules to determine if there are
-          geographical, institutional, household size and/or population
-          requirements for your output?
-        </FormLabel>
-        <RadioGroup id="vettingRules">
-          <FormControlLabel
-            value="Yes"
-            control={<Radio color="primary" />}
-            label="Yes"
-          />
-          <FormControlLabel
-            value="No"
-            control={<Radio color="primary" />}
-            label="No"
-          />
-          <FormControlLabel
-            value="NA"
-            control={<Radio color="primary" />}
-            label="N/A"
-          />
-        </RadioGroup>
-      </FormControl>
-      <FormControl
-        component="fieldset"
-        required
-        className={classes.inputMargin}
-      >
-        <FormLabel component="legend" className={classes.tooltipLabel}>
-          Is the requested output your final output?
-          <Tooltip
-            title="If no, future vetting release requests under this contract may be restricted due to residual disclosure. You are strongly encouraged to consult with your analyst."
-            arrow
-            placement="right"
-          >
-            <InfoIcon />
-          </Tooltip>
-        </FormLabel>
-        <RadioGroup id="finalOutput">
-          <FormControlLabel
-            value="Yes"
-            control={<Radio color="primary" />}
-            label="Yes"
-          />
-          <FormControlLabel
-            value="No"
-            control={<Radio color="primary" />}
-            label="No"
-          />
-          <FormControlLabel
-            value="NA"
-            control={<Radio color="primary" />}
-            label="N/A"
-          />
-        </RadioGroup>
-      </FormControl> */}
     </React.Fragment>
   );
 }
