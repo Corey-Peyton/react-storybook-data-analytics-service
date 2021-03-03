@@ -22,8 +22,7 @@ function AdditionalInfo(props) {
       errorText: '',
       invalid: '',
       commands: '',
-      helperText:
-        'Add additional information which may helpful to the disclosure analyst.',
+      helperText: '',
     },
   });
 
@@ -32,8 +31,7 @@ function AdditionalInfo(props) {
     info: {
       text: '',
       errorText: '',
-      helperText:
-        'Add additional information which may helpful to the disclosure analyst.',
+      helperText: '',
       invalid: '',
       commands: '',
     },
@@ -113,10 +111,13 @@ function AdditionalInfo(props) {
   return (
     <React.Fragment>
       <Typography>
-        A brief introduction is needed to explain to external users why on this
-        section it is important to provide as much details as possible.
+        Use this section to add any information that you think might be helpful
+        for the Analyst(s) while reviewing your vetting request.
       </Typography>
       <Divider className={classes.divider} />
+      <Typography component="h2" variant="h6" className="mb-2">
+        Additional information
+      </Typography>
       <TextField
         className={classes.inputMargin}
         margin="dense"
