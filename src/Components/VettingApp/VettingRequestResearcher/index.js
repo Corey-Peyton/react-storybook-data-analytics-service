@@ -179,7 +179,7 @@ function VettingRequestResearcher(props) {
     activeStep: 0,
     completed: {},
     open: false,
-    errors: [1, 0, 0, 0],
+    errors: [0, 4, 0, 0],
     title: function() {
       if (from === '/vetting-app/dashboard-researcher') {
         return name.text;
