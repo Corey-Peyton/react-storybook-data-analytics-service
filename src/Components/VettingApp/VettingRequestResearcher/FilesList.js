@@ -112,7 +112,6 @@ const useStyles = makeStyles((theme) => ({
     '& .MuiDrawer-paper': {
       maxWidth: '400px',
       boxSizing: 'border-box',
-      paddingLeft: theme.spacing(3),
     },
   },
   icon: {

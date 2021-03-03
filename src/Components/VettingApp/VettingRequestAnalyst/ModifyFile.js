@@ -46,7 +46,7 @@ const useStyles = makeStyles((theme) => ({
   },
   appBar: {
     'backgroundColor': theme.palette.common.white,
-    'margin': theme.spacing(0, -3, 3, -3),
+    'margin': theme.spacing(0, -3, 3, 0),
     'boxShadow': theme.shadows[0],
     'borderBottom': '1px solid',
     'borderBottomColor': theme.palette.divider,
@@ -62,14 +62,13 @@ const useStyles = makeStyles((theme) => ({
   body: {
     marginTop: theme.spacing(8),
     marginBottom: theme.spacing(8),
-    padding: theme.spacing(2, 3, 2, 0),
+    padding: theme.spacing(2, 3, 2, 3),
     overflowY: 'auto',
     overflowX: 'hidden',
   },
   footer: {
     display: 'flex',
     justifyContent: 'flex-end',
-    marginLeft: theme.spacing(-3),
     marginRight: theme.spacing(-3),
     padding: theme.spacing(1.75, 3),
     borderTop: '1px solid',
@@ -583,7 +582,7 @@ function OutputFileForm(props) {
         onFocus={() => toggleHelperText('survey')}
         defaultValue={state.survey.text}
         error={Boolean(state.survey.errorText)}
-        helperText={state.survey.helperTextF}
+        helperText={state.survey.helperText}
       />
       <FormControl
         className={classes.inputMargin}
@@ -730,7 +729,26 @@ function OutputFileForm(props) {
         <FormHelperText></FormHelperText>
       </FormControl>
       {state.includeWeightVariable === 'Yes' && (
-        <div className="emphasisBox mb-3">
+        <>
+          <TextField
+            className={classes.inputMargin}
+            margin="dense"
+            id="weightVariableName"
+            label="Name of weight variable"
+            variant="outlined"
+            required
+            fullWidth
+            onCut={(e) => disableCutCopyPaste(e, 'cut', 'weightvariable')}
+            onCopy={(e) => disableCutCopyPaste(e, 'copy', 'weightvariable')}
+            onPaste={(e) => disableCutCopyPaste(e, 'paste', 'weightvariable')}
+            onChange={(e) => handleChange(e, 'info')}
+            onClick={() => toggleHelperText('weightvariable')}
+            onBlur={() => toggleHelperText('weightvariable')}
+            onFocus={() => toggleHelperText('weightvariable')}
+            defaultValue={state.weightvariable.text}
+            error={Boolean(state.weightvariable.errorText)}
+            helperText={state.weightvariable.errorText}
+          />
           <FormControl
             component="fieldset"
             className={classes.radioMargin}
@@ -753,25 +771,7 @@ function OutputFileForm(props) {
             </RadioGroup>
             <FormHelperText></FormHelperText>
           </FormControl>
-          <TextField
-            margin="dense"
-            id="weightVariableName"
-            label="Name of weight variable"
-            variant="outlined"
-            required
-            fullWidth
-            onCut={(e) => disableCutCopyPaste(e, 'cut', 'weightvariable')}
-            onCopy={(e) => disableCutCopyPaste(e, 'copy', 'weightvariable')}
-            onPaste={(e) => disableCutCopyPaste(e, 'paste', 'weightvariable')}
-            onChange={(e) => handleChange(e, 'info')}
-            onClick={() => toggleHelperText('weightvariable')}
-            onBlur={() => toggleHelperText('weightvariable')}
-            onFocus={() => toggleHelperText('weightvariable')}
-            defaultValue={state.weightvariable.text}
-            error={Boolean(state.weightvariable.errorText)}
-            helperText={state.weightvariable.errorText}
-          />
-        </div>
+        </>
       )}
       <Typography variant="subtitle2" className="mb-2 mt-1" component="h3">
         Output supporting files
