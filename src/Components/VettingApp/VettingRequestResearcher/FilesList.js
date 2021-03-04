@@ -21,15 +21,67 @@ import {
   Card,
   CardContent,
   CardActions,
+  FormLabel,
+  FormControlLabel,
+  RadioGroup,
+  Radio,
+  Tooltip,
 } from '@material-ui/core';
 import Snackbar from '@material-ui/core/Snackbar';
 import Alert from '@material-ui/lab/Alert';
 import {AddFile, ModifyFile} from './ModifyFile';
 import CloseIcon from '@material-ui/icons/Close';
+import InfoIcon from '@material-ui/icons/Info';
 import Icon from '@mdi/react';
 import {mdiFileDocumentOutline} from '@mdi/js';
 
+const useStylesBootstrap = makeStyles((theme) => ({
+  arrow: {
+    color: theme.palette.common.black,
+  },
+  tooltip: {
+    backgroundColor: theme.palette.common.black,
+  },
+}));
+
 const useStyles = makeStyles((theme) => ({
+  vettingContainerTitle: {
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+  },
+  vettingSection: {
+    display: 'flex',
+    flexFlow: 'column',
+    padding: theme.spacing(3),
+    overflowY: 'auto',
+  },
+  vettingRow: {
+    'display': 'flex',
+    'margin': theme.spacing(1.5, 0),
+    'flexFlow': 'row',
+    'height': '100%',
+    'justifyContent': 'center',
+    'width': '100%',
+    'alignItems': 'center',
+    '&:first-child': {
+      marginTop: 0,
+    },
+    '&:last-child': {
+      marginBottom: 0,
+    },
+  },
+  vettingColumn: {
+    'display': 'flex',
+    'flexDirection': 'column',
+    'width': '100%',
+    'justifyContent': 'center',
+    'marginRight': theme.spacing(1),
+    'height': '100%',
+    '&:last-child': {
+      marginRight: 0,
+    },
+  },
   card: {
     marginTop: theme.spacing(2),
   },
@@ -48,24 +100,10 @@ const useStyles = makeStyles((theme) => ({
   cardTitle: {
     marginTop: theme.spacing(0.25),
   },
-  dialogContent: {
-    padding: theme.spacing(3),
-  },
   dialogFooter: {
     padding: theme.spacing(1.75, 3),
     borderTop: '1px solid',
     borderTopColor: theme.palette.divider,
-  },
-  footerBtns: {
-    marginLeft: [theme.spacing(2), '!important'],
-  },
-  dialogTitle: {
-    display: 'flex',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-    padding: theme.spacing(1.5, 3),
-    borderBottom: '1px solid',
-    borderBottomColor: theme.palette.divider,
   },
   divider: {
     margin: theme.spacing(3, 0),
@@ -74,14 +112,42 @@ const useStyles = makeStyles((theme) => ({
     '& .MuiDrawer-paper': {
       maxWidth: '400px',
       boxSizing: 'border-box',
-      paddingLeft: theme.spacing(3),
     },
-  },
-  inputMargin: {
-    marginBottom: theme.spacing(2),
   },
   icon: {
     marginRight: theme.spacing(1.5),
+  },
+  root: {
+    '& .MuiDialogTitle-root': {
+      padding: theme.spacing(1.5, 3),
+    },
+    '& .MuiSelect-select': {
+      height: [theme.spacing(7), '!important'],
+      paddingTop: 0,
+      paddingBottom: 0,
+    },
+  },
+  emphasisBox: {
+    background: theme.palette.grey[200],
+    padding: theme.spacing(2),
+    marginBottom: theme.spacing(3),
+    borderLeftStyle: 'solid',
+    borderLeftWidth: '5px',
+    borderLeftColor: theme.palette.primary.main,
+  },
+  tooltipLabel: {
+    '& svg': {
+      verticalAlign: 'middle',
+      paddingLeft: theme.spacing(1),
+    },
+  },
+  tooltip: {
+    paddingLeft: theme.spacing(1),
+    marginTop: theme.spacing(1),
+  },
+  inputMargin: {
+    marginTop: theme.spacing(0),
+    marginBottom: theme.spacing(3),
   },
 }));
 
@@ -103,6 +169,12 @@ const files = [
     error: true,
   },
 ];
+
+function BootstrapTooltip(props) {
+  const classes = useStylesBootstrap();
+
+  return <Tooltip arrow classes={classes} {...props} />;
+}
 
 function FilesList(props) {
   const classes = useStyles();
@@ -235,10 +307,163 @@ function FilesList(props) {
   return (
     <React.Fragment>
       <Typography>
-        A brief explanation is needed to explain to external users what and why
-        they need to complete this section.
+        Please provide some information about this request as well as your
+        output and supporting files.
       </Typography>
       <Divider className={classes.divider} />
+      <Typography component="h2" variant="h6" className="mb-2">
+        Screening questions
+      </Typography>
+      <div className={classes.emphasisBox}>
+        <Typography variant="subtitle2" component="h3" className="mb-3">
+          Please consider the following guidelines:
+        </Typography>
+        <ul>
+          <li>
+            <Typography variant="body2">
+              Check your output against the vetting guidelines.
+            </Typography>
+          </li>
+          <li>
+            <Typography variant="body2">
+              Delete values you do not need released at this time.
+            </Typography>
+          </li>
+        </ul>
+        <Typography variant="body2" className="mt-3">
+          This request will be stored as part of the request record.
+        </Typography>
+      </div>
+      <FormControl
+        component="fieldset"
+        className={classes.inputMargin}
+        required
+      >
+        <FormLabel component="legend">
+          Is the requested output consistent with the approved proposal for this
+          project?
+        </FormLabel>
+        <RadioGroup id="approvedProposal" name="approvedProposal">
+          <FormControlLabel
+            value="Yes"
+            control={<Radio color="primary" />}
+            label="Yes"
+          />
+          <FormControlLabel
+            value="No"
+            control={<Radio color="primary" />}
+            label="No"
+          />
+        </RadioGroup>
+      </FormControl>
+      <FormControl
+        component="fieldset"
+        className={classes.inputMargin}
+        required
+      >
+        <FormLabel component="legend">
+          Have you checked the vetting rules to determine if there are
+          geographical, institutional, household size and/or population
+          requirements for your output?
+        </FormLabel>
+        <RadioGroup id="vettingRules" name="vettingRules">
+          <FormControlLabel
+            value="Yes"
+            control={<Radio color="primary" />}
+            label="Yes"
+          />
+          <FormControlLabel
+            value="No"
+            control={<Radio color="primary" />}
+            label="No"
+          />
+        </RadioGroup>
+      </FormControl>
+      <FormControl
+        component="fieldset"
+        className={classes.inputMargin}
+        required
+      >
+        <FormLabel component="legend" className={classes.tooltipLabel}>
+          Is the requested output your final output?
+          <BootstrapTooltip title="If no, future vetting release requests under this contract may be restricted due to residual disclosure. You are strongly encouraged to consult with your analyst.">
+            <InfoIcon />
+          </BootstrapTooltip>
+        </FormLabel>
+        <RadioGroup id="finalOutput" name="finalOutput">
+          <FormControlLabel
+            value="Yes"
+            control={<Radio color="primary" />}
+            label="Yes"
+          />
+          <FormControlLabel
+            value="No"
+            control={<Radio color="primary" />}
+            label="No"
+          />
+        </RadioGroup>
+      </FormControl>
+      <Typography component="h2" variant="h6" className="mb-2">
+        File location
+      </Typography>
+      <Grid container>
+        <Grid item xs={6}>
+          <FormControl
+            className={classes.inputMargin}
+            margin="dense"
+            variant="outlined"
+            fullWidth
+            required
+          >
+            <InputLabel id="outputFolder-label">Output folder</InputLabel>
+            <Select
+              id="outputFolder"
+              label="Output folder"
+              labelId="outputFolder-label"
+            >
+              <MenuItem>Folder 1</MenuItem>
+              <MenuItem>Folder 2</MenuItem>
+            </Select>
+          </FormControl>
+        </Grid>
+        <Grid item>
+          <BootstrapTooltip
+            className={classes.tooltip}
+            title="Please indicate the folder that contains your files for release for this request."
+          >
+            <InfoIcon />
+          </BootstrapTooltip>
+        </Grid>
+      </Grid>
+      <Grid container>
+        <Grid item xs={6}>
+          <FormControl
+            className={classes.inputMargin}
+            margin="dense"
+            variant="outlined"
+            fullWidth
+            required
+          >
+            <InputLabel id="supportFolder-label">Supporting folder</InputLabel>
+            <Select
+              id="supportFolder"
+              label="Supporting folder"
+              labelId="supportFolder-label"
+            >
+              <MenuItem>Folder 1</MenuItem>
+              <MenuItem>Folder 2</MenuItem>
+            </Select>
+          </FormControl>
+        </Grid>
+        <Grid item>
+          <BootstrapTooltip
+            className={classes.tooltip}
+            title=" Please indicate the folder that contains your supporting files for this request."
+          >
+            <InfoIcon />
+          </BootstrapTooltip>
+        </Grid>
+      </Grid>
       <Grid
         container
         alignItems="center"
@@ -247,7 +472,7 @@ function FilesList(props) {
       >
         <Grid item>
           <Typography display="inline" component="h2" variant="h6">
-            Output files
+            File details
           </Typography>
         </Grid>
         <Grid item>
@@ -256,7 +481,7 @@ function FilesList(props) {
             color="primary"
             onClick={(e) => toggleDrawer(e, 'addFile', true)}
           >
-            Add Output File
+            Add file
           </Button>
         </Grid>
       </Grid>
@@ -342,11 +567,12 @@ function FilesList(props) {
         open={open.dialogAddSupporting}
         aria-labelledby="form-dialog-title"
         fullWidth
-        maxWidth="xs"
+        className={classes.root}
+        scroll="paper"
       >
         <DialogTitle
           id="form-dialog-title"
-          className={classes.dialogTitle}
+          className={classes.vettingContainerTitle}
           disableTypography
         >
           <Typography variant="h6" component="h2">
@@ -360,49 +586,54 @@ function FilesList(props) {
             <CloseIcon />
           </IconButton>
         </DialogTitle>
-        <DialogContent className={classes.dialogContent}>
-          <FormControl
-            required
-            variant="outlined"
-            fullWidth
-            margin="dense"
-            className={classes.inputMargin}
-          >
-            <InputLabel id="outputFolder-label">Output folder name</InputLabel>
-            <Select
-              id="supportingFilesFolder"
-              label="Supporting folder *"
-              labelId="supportingFilesFolder-label"
-            >
-              <MenuItem key={-1} value="">
-                None
-              </MenuItem>
-            </Select>
-          </FormControl>
-          <Typography variant="subtitle2">File #1 *</Typography>
-          <Typography variant="subtitle2">
-            Residual tables (see the vetting orientation)
-          </Typography>
-          <TextField
-            className={classes.inputMargin}
-            margin="dense"
-            id="notes2"
-            label="Notes"
-            multiline
-            rows={4}
-            variant="outlined"
-            fullWidth
-            required
-            onCut={(e) => disableCutCopyPaste(e, 'cut', 'notes')}
-            onCopy={(e) => disableCutCopyPaste(e, 'copy', 'notes')}
-            onPaste={(e) => disableCutCopyPaste(e, 'paste', 'notes')}
-            onClick={() => toggleHelperText('notes')}
-            onBlur={() => toggleHelperText('notes')}
-            onFocus={() => toggleHelperText('notes')}
-            value={state.notes.text}
-            error={Boolean(state.notes.errorText)}
-            helperText={state.notes.errorText}
-          />
+        <Divider />
+        <DialogContent>
+          <div className={classes.vettingSection}>
+            <div className={classes.vettingRow}>
+              <div className={classes.vettingColumn}>
+                <FormControl required variant="outlined" fullWidth>
+                  <InputLabel id="outputFolder-label">
+                    Output folder name
+                  </InputLabel>
+                  <Select
+                    id="supportingFilesFolder"
+                    label="Supporting folder *"
+                    labelId="supportingFilesFolder-label"
+                  >
+                    <MenuItem key={-1} value="">
+                      None
+                    </MenuItem>
+                  </Select>
+                </FormControl>
+              </div>
+            </div>
+            <Typography variant="subtitle2">File #1 *</Typography>
+            <Typography variant="subtitle2">
+              Residual tables (see the vetting orientation)
+            </Typography>
+            <div className={classes.vettingRow}>
+              <div className={classes.vettingColumn}>
+                <TextField
+                  id="notes2"
+                  label="Notes"
+                  multiline
+                  rows={4}
+                  variant="outlined"
+                  fullWidth
+                  required
+                  onCut={(e) => disableCutCopyPaste(e, 'cut', 'notes')}
+                  onCopy={(e) => disableCutCopyPaste(e, 'copy', 'notes')}
+                  onPaste={(e) => disableCutCopyPaste(e, 'paste', 'notes')}
+                  onClick={() => toggleHelperText('notes')}
+                  onBlur={() => toggleHelperText('notes')}
+                  onFocus={() => toggleHelperText('notes')}
+                  defaultvalue={state.notes.text}
+                  error={Boolean(state.notes.errorText)}
+                  helperText={state.notes.errorText}
+                />
+              </div>
+            </div>
+          </div>
         </DialogContent>
         <DialogActions className={classes.dialogFooter}>
           <Button
@@ -427,11 +658,12 @@ function FilesList(props) {
         open={open.deleteFile}
         aria-labelledby="delete-dialog-title"
         fullWidth
-        maxWidth="xs"
+        className={classes.root}
+        scroll="paper"
       >
         <DialogTitle
           id="delete-dialog-title"
-          className={classes.dialogTitle}
+          className={classes.vettingContainerTitle}
           disableTypography
         >
           <Typography variant="h6" component="h2">
@@ -445,11 +677,16 @@ function FilesList(props) {
             <CloseIcon />
           </IconButton>
         </DialogTitle>
-        <DialogContent className={classes.dialogContent}>
-          <Alert severity="warning">
-            Deleting this output file cannot be undone.
-          </Alert>
-        </DialogContent>
+        <Divider />
+        <div className={classes.vettingSection}>
+          <div className={classes.vettingRow}>
+            <div className={classes.vettingColumn}>
+              <Alert severity="warning">
+                Deleting this output file cannot be undone.
+              </Alert>
+            </div>
+          </div>
+        </div>
         <DialogActions className={classes.dialogFooter}>
           <Button
             color="primary"

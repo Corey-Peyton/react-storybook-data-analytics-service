@@ -17,9 +17,13 @@ function AdditionalInfo(props) {
   return (
     <React.Fragment>
       <Typography>
-        Use this section to add any information that you think might be helpful for the Lead analyst while reviewing your vetting request.
+        Use this section to add any information that you think might be helpful
+        for the Analyst(s) while reviewing your vetting request.
       </Typography>
       <Divider className={classes.divider} />
+      <Typography component="h2" variant="h6" className="mb-2">
+        Additional information
+      </Typography>
       <TextField
         className={classes.inputMargin}
         margin="dense"
