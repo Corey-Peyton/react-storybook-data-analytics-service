@@ -8,7 +8,6 @@ import {
   IconButton,
   Drawer,
   Button,
-  Box,
   Avatar,
   Menu,
   MenuItem,
@@ -118,7 +117,7 @@ const useStyles = makeStyles((theme) => ({
     },
   },
   vettingText: {
-    paddingLeft: theme.spacing(1),
+    paddingLeft: theme.spacing(2),
   },
   analystListing: {
     display: 'flex',
@@ -146,6 +145,12 @@ export default function ManageTeamDrawer(props) {
   const [analysts, setAnalysts] = React.useState(analystList);
   const [anchorEl, setAnchorEl] = React.useState(null);
   const [snackbar, setSnackbar] = React.useState(false);
+  const [assign, setAssign] = React.useState(() => {
+    const current = analysts.filter((analyst) => analyst.current);
+    if (!current[0].assigned) {
+      return true;
+    }
+  });
   const [dialog, setOpen] = React.useState({
     noLead: false,
     assignAsLead: false,
@@ -220,6 +225,28 @@ export default function ManageTeamDrawer(props) {
     }
   };
 
+  const toggleAssignMeMenu = (value) => {
+    if (value.current && value.assigned) {
+      setAssign(true);
+    } else if (value.current && !value.assigned) {
+      setAssign(false);
+    }
+  };
+
+  const handleAssignMeAs = (value, role) => {
+    const current = analysts.filter((analyst) => analyst.current);
+    setAnalysts(
+        analysts.map((item) =>
+        item.role === 'lead' ?
+          {...item, role: 'support'} :
+          item.id === current[0].id ?
+          {...item, assigned: true, role: role, phone: value} :
+          item,
+        ),
+    );
+    setAssign(false);
+  };
+
   const leadAnalysts = () => {
     const content = analysts
         .filter((analyst) => analyst.assigned && analyst.role === 'lead')
@@ -235,6 +262,7 @@ export default function ManageTeamDrawer(props) {
               <div className={classes.analystListing}>
                 <Typography className={classes.vettingText} variant="body2">
                   {analyst.name}
+                  {analyst.current ? ' (You)' : false}
                 </Typography>
                 <Typography className={classes.vettingText} variant="body2">
                   {analyst.email}
@@ -249,6 +277,7 @@ export default function ManageTeamDrawer(props) {
                 unassignRequest={unassignRequest(analyst)}
                 controls={index}
                 current={analyst.current}
+                toggleAssignMeMenu={() => toggleAssignMeMenu(analyst)}
               />
             </div>
           );
@@ -261,18 +290,20 @@ export default function ManageTeamDrawer(props) {
           <Avatar className={classes.pink}>
             <PersonIcon />
           </Avatar>
-          <Box fontStyle="italic" className={classes.box}>
-            <Typography variant="body2" color="textSecondary" className="ml-1">
-              {t('No lead assigned')}
-            </Typography>
-          </Box>
+          <Typography variant="body2" color="textSecondary" className="ml-1">
+            {t('No lead assigned')}
+          </Typography>
         </div>
       );
     }
   };
 
   const supportAnalysts = () => {
-    const content = analysts
+    const sortedAnalysts = analysts.sort((a, b) =>
+      a.name.localeCompare(b.name),
+    ); // sorts supported analysts alphabetically
+
+    const content = sortedAnalysts
         .filter((analyst) => analyst.assigned && analyst.role === 'support')
         .map((analyst, index) => {
           return (
@@ -280,12 +311,14 @@ export default function ManageTeamDrawer(props) {
               <Avatar
                 style={handleAvatarStyle(analyst.avatar)}
                 className={classes.avatar}
+                onClick={() => console.log(analysts)}
               >
                 {handleInitials(analyst.name)}
               </Avatar>
               <div className={classes.analystListing}>
                 <Typography className={classes.vettingText} variant="body2">
                   {analyst.name}
+                  {analyst.current ? ' (You)' : false}
                 </Typography>
                 <Typography className={classes.vettingText} variant="body2">
                   {analyst.email}
@@ -300,6 +333,7 @@ export default function ManageTeamDrawer(props) {
                 unassignRequest={unassignRequest(analyst)}
                 controls={index}
                 current={analyst.current}
+                toggleAssignMeMenu={() => toggleAssignMeMenu(analyst)}
               />
             </div>
           );
@@ -312,11 +346,9 @@ export default function ManageTeamDrawer(props) {
           <Avatar className={classes.pink}>
             <PersonIcon />
           </Avatar>
-          <Box fontStyle="italic" className={classes.box}>
-            <Typography variant="body2" color="textSecondary" className="ml-1">
-              {t('No support assigned')}
-            </Typography>
-          </Box>
+          <Typography variant="body2" color="textSecondary" className="ml-1">
+            {t('No support assigned')}
+          </Typography>
         </div>
       );
     }
@@ -352,39 +384,57 @@ export default function ManageTeamDrawer(props) {
               <Typography variant="subtitle1">{t('Assignees')}</Typography>
             </div>
             <div className={clsx(classes.vettingColumn, classes.widthAuto)}>
-              <Button
-                aria-controls="simple-menu"
-                aria-haspopup="true"
-                onClick={handleClick}
-                className={classes.textNowrap}
-                color="primary"
-              >
-                Assign me as
-                <ArrowDropDownIcon />
-              </Button>
-              <Menu
-                id="assign-as-menu"
-                anchorEl={anchorEl}
-                keepMounted
-                open={Boolean(anchorEl)}
-                onClose={handleClose}
-              >
-                {/* This menu is only visible if the current user is NOT already assigned to the request */}
-                <MenuItem
-                  onClick={() => {
-                    toggleDialog('assignAsLead', !dialog.assignAsLead);
-                  }}
-                >
-                  Assign me as lead
-                </MenuItem>
-                <MenuItem
-                  onClick={() => {
-                    toggleDialog('assignAsSupport', !dialog.assignAsSupport);
-                  }}
-                >
-                  Assign me as support
-                </MenuItem>
-              </Menu>
+              {assign && (
+                <>
+                  <Button
+                    aria-controls="assign-as-menu"
+                    aria-haspopup="true"
+                    onClick={handleClick}
+                    className={clsx(
+                        classes.textNowrap,
+                        'MuiIconButton-edgeEnd',
+                    )}
+                    color="primary"
+                  >
+                    Assign me as
+                    <ArrowDropDownIcon />
+                  </Button>
+                  <Menu
+                    id="assign-as-menu"
+                    anchorEl={anchorEl}
+                    keepMounted
+                    open={Boolean(anchorEl)}
+                    onClose={handleClose}
+                    getContentAnchorEl={null}
+                    anchorOrigin={{
+                      vertical: 'bottom',
+                      horizontal: 'right',
+                    }}
+                    transformOrigin={{
+                      vertical: 'top',
+                      horizontal: 'right',
+                    }}
+                  >
+                    <MenuItem
+                      onClick={() => {
+                        toggleDialog('assignAsLead', !dialog.assignAsLead);
+                      }}
+                    >
+                      Assign me as lead
+                    </MenuItem>
+                    <MenuItem
+                      onClick={() => {
+                        toggleDialog(
+                            'assignAsSupport',
+                            !dialog.assignAsSupport,
+                        );
+                      }}
+                    >
+                      Assign me as support
+                    </MenuItem>
+                  </Menu>
+                </>
+              )}
             </div>
           </div>
           <div className={classes.vettingRow}>
@@ -407,8 +457,8 @@ export default function ManageTeamDrawer(props) {
       </div>
       <div className={classes.footer}>
         <Button
-          variant="contained"
-          color="default"
+          variant="outlined"
+          color="primary"
           className={classes.footerBtns}
           onClick={clickHandler}
         >
@@ -448,12 +498,14 @@ export default function ManageTeamDrawer(props) {
       <DialogAssignAsLead
         open={dialog.assignAsLead}
         toggleDialog={() => toggleDialog('assignAsLead', !dialog.assignAsLead)}
+        handleAssignMeAs={handleAssignMeAs}
       />
       <DialogAssignAsSupport
         open={dialog.assignAsSupport}
         toggleDialog={() =>
           toggleDialog('assignAsSupport', !dialog.assignAsSupport)
         }
+        handleAssignMeAs={handleAssignMeAs}
       />
       <CustomizedSnackbar
         open={snackbar}

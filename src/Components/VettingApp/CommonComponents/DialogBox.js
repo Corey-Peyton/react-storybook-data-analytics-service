@@ -2528,7 +2528,7 @@ export function DialogNoLead(props) {
 export function DialogAssignAsLead(props) {
   const classes = useStyles();
   const {t} = useTranslation();
-  const {toggleDialog, open} = props;
+  const {toggleDialog, open, handleAssignMeAs} = props;
   const initial = {
     // blank object used to reset state
     phone: {
@@ -2599,6 +2599,7 @@ export function DialogAssignAsLead(props) {
       // if no errors exist, submit the form and reset the inputs
       toggleDialog();
       setState({...initial});
+      handleAssignMeAs(state.phone.text, 'lead');
     } else {
       for (const property in state) {
         // focus on the first input that has an error on submit
@@ -2715,7 +2716,7 @@ export function DialogAssignAsLead(props) {
             <div className={classes.vettingSection}>
               <div className={classes.vettingRow}>
                 <div className={classes.vettingColumn}>
-                  <Typography variant="subtitle2">
+                  <Typography variant="body2">
                     {t(
                         'To assign yourself to the request you must first enter a secure phone number',
                     )}
@@ -2786,7 +2787,7 @@ export function DialogAssignAsLead(props) {
 export function DialogAssignAsSupport(props) {
   const classes = useStyles();
   const {t} = useTranslation();
-  const {toggleDialog, open} = props;
+  const {toggleDialog, open, handleAssignMeAs} = props;
   const initial = {
     // blank object used to reset state
     phone: {
@@ -2857,6 +2858,7 @@ export function DialogAssignAsSupport(props) {
       // if no errors exist, submit the form and reset the inputs
       toggleDialog();
       setState({...initial});
+      handleAssignMeAs(state.phone.text, 'support');
     } else {
       for (const property in state) {
         // focus on the first input that has an error on submit
@@ -2973,7 +2975,7 @@ export function DialogAssignAsSupport(props) {
             <div className={classes.vettingSection}>
               <div className={classes.vettingRow}>
                 <div className={classes.vettingColumn}>
-                  <Typography variant="subtitle2">
+                  <Typography variant="body2">
                     {t(
                         'To assign yourself to the request you must first enter a secure phone number',
                     )}

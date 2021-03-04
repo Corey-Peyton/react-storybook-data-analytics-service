@@ -423,7 +423,7 @@ export function ActionsMenu(props) {
           <MenuItem onClick={contextManageTeam}>
             <ListItemText
               primary={
-                <Typography variant="body2">{t('Manage team')}</Typography>
+                <Typography variant="body2">{t('Manage assignees')}</Typography>
               }
             />
           </MenuItem>
@@ -623,7 +623,7 @@ export function ActionsMenu(props) {
         <MenuItem onClick={contextManageTeam}>
           <ListItemText
             primary={
-              <Typography variant="body2">{t('Manage team')}</Typography>
+              <Typography variant="body2">{t('Manage assignees')}</Typography>
             }
           />
         </MenuItem>
@@ -673,7 +673,7 @@ export function ActionsMenu(props) {
         <MenuItem onClick={contextManageTeam}>
           <ListItemText
             primary={
-              <Typography variant="body2">{t('Manage team')}</Typography>
+              <Typography variant="body2">{t('Manage assignees')}</Typography>
             }
           />
         </MenuItem>
@@ -800,6 +800,7 @@ export function AnalystMenu(props) {
     unassignRequest,
     controls,
     current,
+    toggleAssignMeMenu,
   } = props;
   const {t} = useTranslation();
   let StyledMenuVar;
@@ -839,8 +840,14 @@ export function AnalystMenu(props) {
         <MenuItem>
           <ListItemText
             primary={
-              <Typography variant="body2" onClick={unassignRequest}>
-                {current ? t('Assign myself') : t('Unassign user')}
+              <Typography
+                variant="body2"
+                onClick={() => {
+                  unassignRequest();
+                  toggleAssignMeMenu();
+                }}
+              >
+                {current ? t('Unassign myself') : t('Unassign user')}
               </Typography>
             }
           />
@@ -868,8 +875,14 @@ export function AnalystMenu(props) {
         <MenuItem>
           <ListItemText
             primary={
-              <Typography variant="body2" onClick={unassignRequest}>
-                {current ? t('Assign myself') : t('Unassign user')}
+              <Typography
+                variant="body2"
+                onClick={() => {
+                  unassignRequest();
+                  toggleAssignMeMenu();
+                }}
+              >
+                {current ? t('Unassign myself') : t('Unassign user')}
               </Typography>
             }
           />
@@ -884,6 +897,7 @@ export function AnalystMenu(props) {
         aria-controls={ariaControls}
         aria-haspopup="true"
         aria-label="Actions menu"
+        edge="end"
       >
         <MoreVertIcon />
       </IconButton>
