@@ -23,10 +23,10 @@ import {
 import ArrowForwardIosIcon from '@material-ui/icons/ArrowForwardIos';
 import Avatar from '@material-ui/core/Avatar';
 import ArrowBackIosIcon from '@material-ui/icons/ArrowBackIos';
-import AnalystInfo from './AnalystInfo';
-import FilesList from './FilesList';
-import ResidualDisclosure from './ResidualDisclosure';
-import AdditionalInfo from './Additionalnfo';
+import AnalystInfo from '../CommonComponents/RequestForm/Index';
+import FilesList from '../CommonComponents/RequestForm/FilesList';
+import ResidualDisclosure from '../CommonComponents/RequestForm/ResidualDisclosure';
+import AdditionalInfo from '../CommonComponents/RequestForm/Additionalnfo';
 import ToolBarUnassign from './ToolBarUnAssign';
 import ToolBarAssign from './ToolBarAssign';
 import MoreVertIcon from '@material-ui/icons/MoreVert';
@@ -40,6 +40,7 @@ import Footer from '../CommonComponents/Footer';
 import CloseIcon from '@material-ui/icons/Close';
 import FloatingSupportButton from '../CommonComponents/Support';
 import CutCopyPasteAlert from '../CommonComponents/CutCopyPasteAlert';
+
 
 const useStyles = makeStyles((theme) => ({
   dialogTitle: {
