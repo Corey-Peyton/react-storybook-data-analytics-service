@@ -121,7 +121,7 @@ const useStyles = makeStyles((theme) => ({
     padding: theme.spacing(0, 3, 3, 3),
   },
   errorMsg: {
-    margin: 0,
+    margin: [0, '!important'],
     textAlign: 'left',
   },
   vettingContainerTitle: {
@@ -179,7 +179,7 @@ function VettingRequestResearcher(props) {
     activeStep: 0,
     completed: {},
     open: false,
-    errors: [1, 0, 0, 0],
+    errors: [0, 4, 0, 0],
     title: function() {
       if (from === '/vetting-app/dashboard-researcher') {
         return name.text;
@@ -372,7 +372,7 @@ function VettingRequestResearcher(props) {
                         variant="body2"
                         color="error"
                       >
-                        {state.errors[index]} error
+                        {state.errors[index]} errors
                       </Typography>
                     );
                   }
