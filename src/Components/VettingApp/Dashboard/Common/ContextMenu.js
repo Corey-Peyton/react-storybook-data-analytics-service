@@ -63,6 +63,7 @@ export function ActionsMenu(props) {
     status,
     contextStatusClick,
     contextSummaryClick,
+    toggleManageTeamDrawer,
     controls,
   } = props;
   const {t} = useTranslation();
@@ -103,35 +104,46 @@ export function ActionsMenu(props) {
 
   const ariaControls = `actions-menu-${controls}`;
 
-  const handleClick = (event) => {
-    event.stopPropagation();
-    setAnchorEl(event.currentTarget);
+  const handleClick = (e) => {
+    e.stopPropagation();
+    setAnchorEl(e.currentTarget);
     contextStatusClick(status);
   };
 
-  const handleClose = () => {
+  const handleClose = (e) => {
+    e.stopPropagation();
     setAnchorEl(null);
   };
 
-  const triggerAction = (messageVal, severityVal) => {
+  const triggerAction = (messageVal, severityVal, e) => {
+    e.stopPropagation();
     setAction({...action, message: messageVal, severity: severityVal});
     setOpen({...open, snackbar: true});
-    handleClose();
+    handleClose(e);
   };
 
-  const toggleSummary = () => {
-    handleClose();
+  const toggleSummary = (e) => {
+    e.stopPropagation();
+    handleClose(e);
     contextSummaryClick();
   };
 
-  const toggleSnackbar = (value) => {
-    setOpen({...open, snackbar: !open.snackbar});
-    handleClose();
+  const contextManageTeam = (e) => {
+    e.stopPropagation();
+    handleClose(e);
+    toggleManageTeamDrawer(e);
   };
 
-  const toggleDialog = (state, value) => {
+  const toggleSnackbar = (e) => {
+    e.stopPropagation();
+    setOpen({...open, snackbar: !open.snackbar});
+    handleClose(e);
+  };
+
+  const toggleDialog = (state, value, e) => {
+    e.stopPropagation();
     setOpen({...open, [state]: value});
-    handleClose();
+    handleClose(e);
   };
 
   if (status === 'Draft') {
@@ -152,9 +164,14 @@ export function ActionsMenu(props) {
           />
         </MenuItem>
         <MenuItem
-          onClick={() =>
-            triggerAction(actionList.message.submit, actionList.severity.submit)
-          }
+          onClick={(e) => {
+            e.stopPropagation();
+            triggerAction(
+                actionList.message.submit,
+                actionList.severity.submit,
+                e,
+            );
+          }}
         >
           <ListItemIcon className={classes.listItemIcon}>
             <SendIcon fontSize="small" />
@@ -166,7 +183,10 @@ export function ActionsMenu(props) {
           />
         </MenuItem>
         <MenuItem
-          onClick={() => toggleDialog('dialogWithdraw', !open.dialogWithdraw)}
+          onClick={(e) => {
+            e.stopPropagation();
+            toggleDialog('dialogWithdraw', !open.dialogWithdraw, e);
+          }}
         >
           <ListItemIcon className={classes.listItemIcon}>
             <ExitToAppIcon fontSize="small" />
@@ -415,14 +435,10 @@ export function ActionsMenu(props) {
               }
             />
           </MenuItem>
-          <MenuItem
-            onClick={() =>
-              toggleDialog('dialogManageTeam', !open.dialogManageTeam)
-            }
-          >
+          <MenuItem onClick={contextManageTeam}>
             <ListItemText
               primary={
-                <Typography variant="body2">{t('Manage team')}</Typography>
+                <Typography variant="body2">{t('Manage assignees')}</Typography>
               }
             />
           </MenuItem>
@@ -619,14 +635,10 @@ export function ActionsMenu(props) {
             }
           />
         </MenuItem>
-        <MenuItem
-          onClick={() =>
-            toggleDialog('dialogManageTeam', !open.dialogManageTeam)
-          }
-        >
+        <MenuItem onClick={contextManageTeam}>
           <ListItemText
             primary={
-              <Typography variant="body2">{t('Manage team')}</Typography>
+              <Typography variant="body2">{t('Manage assignees')}</Typography>
             }
           />
         </MenuItem>
@@ -673,14 +685,10 @@ export function ActionsMenu(props) {
             }
           />
         </MenuItem>
-        <MenuItem
-          onClick={() =>
-            toggleDialog('dialogManageTeam', !open.dialogManageTeam)
-          }
-        >
+        <MenuItem onClick={contextManageTeam}>
           <ListItemText
             primary={
-              <Typography variant="body2">{t('Manage team')}</Typography>
+              <Typography variant="body2">{t('Manage assignees')}</Typography>
             }
           />
         </MenuItem>
@@ -800,7 +808,15 @@ export function ActionsMenu(props) {
 
 // //////////////////////////// Analyst role dialog box context menu
 export function AnalystMenu(props) {
-  const {role, makeSupport, makeLead, unassignRequest, controls} = props;
+  const {
+    role,
+    makeSupport,
+    makeLead,
+    unassignRequest,
+    controls,
+    current,
+    toggleAssignMeMenu,
+  } = props;
   const {t} = useTranslation();
   let StyledMenuVar;
 
@@ -825,19 +841,29 @@ export function AnalystMenu(props) {
         open={Boolean(anchorEl)}
         onClose={handleClose}
       >
-        <MenuItem>
+        <MenuItem onClick={makeSupport}>
           <ListItemText
             primary={
-              <Typography variant="body2" onClick={unassignRequest}>
-                {t('Unassign from me')}
+              <Typography variant="body2">
+                {current ?
+                  t('Assign me as support') :
+                  t('Assign user as support')}
               </Typography>
             }
           />
         </MenuItem>
-        <MenuItem onClick={makeSupport}>
+        <MenuItem>
           <ListItemText
             primary={
-              <Typography variant="body2">{t('Make me support')}</Typography>
+              <Typography
+                variant="body2"
+                onClick={() => {
+                  unassignRequest();
+                  toggleAssignMeMenu();
+                }}
+              >
+                {current ? t('Unassign myself') : t('Unassign user')}
+              </Typography>
             }
           />
         </MenuItem>
@@ -852,19 +878,27 @@ export function AnalystMenu(props) {
         open={Boolean(anchorEl)}
         onClose={handleClose}
       >
-        <MenuItem>
+        <MenuItem onClick={makeLead}>
           <ListItemText
             primary={
-              <Typography variant="body2" onClick={unassignRequest}>
-                {t('Unassign from me')}
+              <Typography variant="body2">
+                {current ? t('Assign me as lead') : t('Assign user as lead')}
               </Typography>
             }
           />
         </MenuItem>
-        <MenuItem onClick={makeLead}>
+        <MenuItem>
           <ListItemText
             primary={
-              <Typography variant="body2">{t('Make me lead')}</Typography>
+              <Typography
+                variant="body2"
+                onClick={() => {
+                  unassignRequest();
+                  toggleAssignMeMenu();
+                }}
+              >
+                {current ? t('Unassign myself') : t('Unassign user')}
+              </Typography>
             }
           />
         </MenuItem>
@@ -878,6 +912,7 @@ export function AnalystMenu(props) {
         aria-controls={ariaControls}
         aria-haspopup="true"
         aria-label="Actions menu"
+        edge="end"
       >
         <MoreVertIcon />
       </IconButton>
