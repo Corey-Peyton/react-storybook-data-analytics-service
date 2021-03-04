@@ -290,7 +290,7 @@ export default function ManageTeamDrawer(props) {
           <Avatar className={classes.pink}>
             <PersonIcon />
           </Avatar>
-          <Typography variant="body2" color="textSecondary" className="ml-1">
+          <Typography variant="body2" color="textSecondary" className="ml-2">
             {t('No lead assigned')}
           </Typography>
         </div>
@@ -346,7 +346,7 @@ export default function ManageTeamDrawer(props) {
           <Avatar className={classes.pink}>
             <PersonIcon />
           </Avatar>
-          <Typography variant="body2" color="textSecondary" className="ml-1">
+          <Typography variant="body2" color="textSecondary" className="ml-2">
             {t('No support assigned')}
           </Typography>
         </div>
@@ -484,9 +484,12 @@ export default function ManageTeamDrawer(props) {
         anchor="right"
         open={open}
         onEscapeKeyDown={clickHandler}
-        onBackdropClick={clickHandler}
+        onBackdropClick={(e) => {
+          e.preventDefault();
+        }}
         variant="temporary"
         className={classes.drawer}
+        disableBackdropClick
       >
         {content()}
       </Drawer>
