@@ -3,10 +3,7 @@ import {useTranslation} from 'react-i18next';
 import {makeStyles} from '@material-ui/core/styles';
 import {Typography, TableCell, Chip} from '@material-ui/core';
 
-import {
-  DialogAnalyst,
-  DialogManageTeam,
-} from '../../CommonComponents/DialogBox';
+import {DialogAnalyst} from '../../CommonComponents/DialogBox';
 import {ROW_HEIGHT} from './TableContainerComponent';
 
 const useStyles = makeStyles((theme) => ({
@@ -25,7 +22,7 @@ const useStyles = makeStyles((theme) => ({
 
 export default function AnalystCell(props) {
   const {t} = useTranslation();
-  const {role, analysts, support} = props;
+  const {role, analysts, support, toggleManageTeamDrawer} = props;
   const extraAnalysts = support.length;
   const classes = useStyles();
   const [open, setOpen] = React.useState({
@@ -69,27 +66,19 @@ export default function AnalystCell(props) {
         <TableCell className={classes.tablesCellsFlex}>
           <Chip
             label={analysts}
-            onClick={() => toggleDialog('list')}
+            onClick={toggleManageTeamDrawer}
             className="mr-1"
           />
           <Chip
             label={`${extraAnalysts} ${t('support')}`}
-            onClick={() => toggleDialog('list')}
-          />
-          <DialogManageTeam
-            open={open.manageTeam}
-            toggleDialog={() => toggleDialog('list')}
+            onClick={toggleManageTeamDrawer}
           />
         </TableCell>
       );
     } else if (analysts !== '' && support.length === 0) {
       return (
         <TableCell className={classes.tablesCellsFlex}>
-          <Chip label={analysts} onClick={() => toggleDialog('list')} />
-          <DialogManageTeam
-            open={open.manageTeam}
-            toggleDialog={() => toggleDialog('list')}
-          />
+          <Chip label={analysts} onClick={toggleManageTeamDrawer} />
         </TableCell>
       );
     } else if (analysts === '' && support.length > 0) {
@@ -100,12 +89,8 @@ export default function AnalystCell(props) {
           </Typography>
           <Chip
             label={`${extraAnalysts} ${t('support')}`}
-            onClick={() => toggleDialog('list')}
+            onClick={toggleManageTeamDrawer}
             className="ml-1"
-          />
-          <DialogManageTeam
-            open={open.manageTeam}
-            toggleDialog={() => toggleDialog('list')}
           />
         </TableCell>
       );
@@ -115,10 +100,6 @@ export default function AnalystCell(props) {
           <Typography variant="body2" color="textSecondary">
             {t('Unassigned')}
           </Typography>
-          <DialogManageTeam
-            open={open.manageTeam}
-            toggleDialog={() => toggleDialog('list')}
-          />
         </TableCell>
       );
     }

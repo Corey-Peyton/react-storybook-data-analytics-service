@@ -63,6 +63,7 @@ export function ActionsMenu(props) {
     status,
     contextStatusClick,
     contextSummaryClick,
+    toggleManageTeamDrawer,
     controls,
   } = props;
   const {t} = useTranslation();
@@ -121,6 +122,11 @@ export function ActionsMenu(props) {
   const toggleSummary = () => {
     handleClose();
     contextSummaryClick();
+  };
+
+  const contextManageTeam = () => {
+    handleClose();
+    toggleManageTeamDrawer();
   };
 
   const toggleSnackbar = (value) => {
@@ -414,14 +420,10 @@ export function ActionsMenu(props) {
               }
             />
           </MenuItem>
-          <MenuItem
-            onClick={() =>
-              toggleDialog('dialogManageTeam', !open.dialogManageTeam)
-            }
-          >
+          <MenuItem onClick={contextManageTeam}>
             <ListItemText
               primary={
-                <Typography variant="body2">{t('Manage team')}</Typography>
+                <Typography variant="body2">{t('Manage assignees')}</Typography>
               }
             />
           </MenuItem>
@@ -618,14 +620,10 @@ export function ActionsMenu(props) {
             }
           />
         </MenuItem>
-        <MenuItem
-          onClick={() =>
-            toggleDialog('dialogManageTeam', !open.dialogManageTeam)
-          }
-        >
+        <MenuItem onClick={contextManageTeam}>
           <ListItemText
             primary={
-              <Typography variant="body2">{t('Manage team')}</Typography>
+              <Typography variant="body2">{t('Manage assignees')}</Typography>
             }
           />
         </MenuItem>
@@ -672,14 +670,10 @@ export function ActionsMenu(props) {
             }
           />
         </MenuItem>
-        <MenuItem
-          onClick={() =>
-            toggleDialog('dialogManageTeam', !open.dialogManageTeam)
-          }
-        >
+        <MenuItem onClick={contextManageTeam}>
           <ListItemText
             primary={
-              <Typography variant="body2">{t('Manage team')}</Typography>
+              <Typography variant="body2">{t('Manage assignees')}</Typography>
             }
           />
         </MenuItem>
@@ -799,7 +793,15 @@ export function ActionsMenu(props) {
 
 // //////////////////////////// Analyst role dialog box context menu
 export function AnalystMenu(props) {
-  const {role, makeSupport, makeLead, unassignRequest, controls} = props;
+  const {
+    role,
+    makeSupport,
+    makeLead,
+    unassignRequest,
+    controls,
+    current,
+    toggleAssignMeMenu,
+  } = props;
   const {t} = useTranslation();
   let StyledMenuVar;
 
@@ -824,19 +826,29 @@ export function AnalystMenu(props) {
         open={Boolean(anchorEl)}
         onClose={handleClose}
       >
-        <MenuItem>
+        <MenuItem onClick={makeSupport}>
           <ListItemText
             primary={
-              <Typography variant="body2" onClick={unassignRequest}>
-                {t('Unassign from me')}
+              <Typography variant="body2">
+                {current ?
+                  t('Assign me as support') :
+                  t('Assign user as support')}
               </Typography>
             }
           />
         </MenuItem>
-        <MenuItem onClick={makeSupport}>
+        <MenuItem>
           <ListItemText
             primary={
-              <Typography variant="body2">{t('Make me support')}</Typography>
+              <Typography
+                variant="body2"
+                onClick={() => {
+                  unassignRequest();
+                  toggleAssignMeMenu();
+                }}
+              >
+                {current ? t('Unassign myself') : t('Unassign user')}
+              </Typography>
             }
           />
         </MenuItem>
@@ -851,19 +863,27 @@ export function AnalystMenu(props) {
         open={Boolean(anchorEl)}
         onClose={handleClose}
       >
-        <MenuItem>
+        <MenuItem onClick={makeLead}>
           <ListItemText
             primary={
-              <Typography variant="body2" onClick={unassignRequest}>
-                {t('Unassign from me')}
+              <Typography variant="body2">
+                {current ? t('Assign me as lead') : t('Assign user as lead')}
               </Typography>
             }
           />
         </MenuItem>
-        <MenuItem onClick={makeLead}>
+        <MenuItem>
           <ListItemText
             primary={
-              <Typography variant="body2">{t('Make me lead')}</Typography>
+              <Typography
+                variant="body2"
+                onClick={() => {
+                  unassignRequest();
+                  toggleAssignMeMenu();
+                }}
+              >
+                {current ? t('Unassign myself') : t('Unassign user')}
+              </Typography>
             }
           />
         </MenuItem>
@@ -877,6 +897,7 @@ export function AnalystMenu(props) {
         aria-controls={ariaControls}
         aria-haspopup="true"
         aria-label="Actions menu"
+        edge="end"
       >
         <MoreVertIcon />
       </IconButton>
