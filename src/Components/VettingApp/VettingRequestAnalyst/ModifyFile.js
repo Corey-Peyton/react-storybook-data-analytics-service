@@ -27,12 +27,13 @@ import InfoIcon from '@material-ui/icons/Info';
 import CloseIcon from '@material-ui/icons/Close';
 
 const useStyles = makeStyles((theme) => ({
-  marginHelperText: {
-    marginBottom: theme.spacing(1),
-  },
   inputMargin: {
-    marginTop: theme.spacing(1),
-    marginBottom: theme.spacing(1),
+    marginTop: theme.spacing(0),
+    marginBottom: theme.spacing(3),
+  },
+  radioMargin: {
+    marginTop: theme.spacing(0),
+    marginBottom: theme.spacing(2),
   },
   lineHeight: {
     lineHeight: 'normal',
@@ -45,7 +46,7 @@ const useStyles = makeStyles((theme) => ({
   },
   appBar: {
     'backgroundColor': theme.palette.common.white,
-    'margin': theme.spacing(0, -3, 3, -3),
+    'margin': theme.spacing(0, -3, 3, 0),
     'boxShadow': theme.shadows[0],
     'borderBottom': '1px solid',
     'borderBottomColor': theme.palette.divider,
@@ -61,14 +62,13 @@ const useStyles = makeStyles((theme) => ({
   body: {
     marginTop: theme.spacing(8),
     marginBottom: theme.spacing(8),
-    padding: theme.spacing(2, 3, 2, 0),
+    padding: theme.spacing(2, 3, 2, 3),
     overflowY: 'auto',
     overflowX: 'hidden',
   },
   footer: {
     display: 'flex',
     justifyContent: 'flex-end',
-    marginLeft: theme.spacing(-3),
     marginRight: theme.spacing(-3),
     padding: theme.spacing(1.75, 3),
     borderTop: '1px solid',
@@ -265,7 +265,7 @@ function OutputFileForm(props) {
       errorText: '',
       invalid: '',
       commands: '',
-      helperText: '',
+      helperText: 'Seperate by semicolon (e.g. LFS 2012; LFS 2011; CCHS 2009)',
     },
     outputmethod: {
       text: '',
@@ -363,7 +363,7 @@ function OutputFileForm(props) {
       errorText: '',
       invalid: '',
       commands: '',
-      helperText: '',
+      helperText: 'Seperate by semicolon (e.g. LFS 2012; LFS 2011; CCHS 2009)',
     },
     outputmethod: {
       text: '',
@@ -562,7 +562,7 @@ function OutputFileForm(props) {
         onClick={() => toggleHelperText('sheetname')}
         onBlur={() => toggleHelperText('sheetname')}
         onFocus={() => toggleHelperText('sheetname')}
-        defaultvalue={state.sheetname.text}
+        defaultValue={state.sheetname.text}
         error={Boolean(state.sheetname.errorText)}
         helperText={state.sheetname.helperText}
       />
@@ -570,7 +570,7 @@ function OutputFileForm(props) {
         className={classes.inputMargin}
         margin="dense"
         id="datasetName"
-        label="Survey or dataset name and cycle(s)"
+        label="Survey or dataset name(s) and cycle(s)"
         variant="outlined"
         fullWidth
         required
@@ -580,9 +580,9 @@ function OutputFileForm(props) {
         onClick={() => toggleHelperText('survey')}
         onBlur={() => toggleHelperText('survey')}
         onFocus={() => toggleHelperText('survey')}
-        defaultvalue={state.survey.text}
+        defaultValue={state.survey.text}
         error={Boolean(state.survey.errorText)}
-        helperText={state.survey.errorText}
+        helperText={state.survey.helperText}
       />
       <FormControl
         className={classes.inputMargin}
@@ -632,12 +632,12 @@ function OutputFileForm(props) {
           onClick={() => toggleHelperText('outputmethod')}
           onBlur={() => toggleHelperText('outputmethod')}
           onFocus={() => toggleHelperText('outputmethod')}
-          defaultvalue={state.outputmethod.text}
+          defaultValue={state.outputmethod.text}
           error={Boolean(state.outputmethod.errorText)}
           helperText={state.outputmethod.errorText}
         />
       </div>
-      <div className="emphasisBox minHeight">
+      <div className="emphasisBox mb-3">
         <Typography variant="subtitle2" component="p">
           If you are not sure about the Output Method above, you can search for
           the proper one below:
@@ -665,7 +665,47 @@ function OutputFileForm(props) {
           }}
         />
       </div>
-      <FormControl component="fieldset" required>
+      <TextField
+        className={classes.inputMargin}
+        margin="dense"
+        id="sampleUsed"
+        label="Sample, sub-sample or inclusions/exclusions used"
+        variant="outlined"
+        fullWidth
+        required
+        onCut={(e) => disableCutCopyPaste(e, 'cut', 'sample')}
+        onCopy={(e) => disableCutCopyPaste(e, 'copy', 'sample')}
+        onPaste={(e) => disableCutCopyPaste(e, 'paste', 'sample')}
+        onClick={() => toggleHelperText('sample')}
+        onBlur={() => toggleHelperText('sample')}
+        onFocus={() => toggleHelperText('sample')}
+        defaultValue={state.sample.text}
+        error={Boolean(state.sample.errorText)}
+        helperText={state.sample.helperText}
+      />
+      <TextField
+        className={classes.inputMargin}
+        margin="dense"
+        id="geographyLevel"
+        label="Level of geography"
+        variant="outlined"
+        fullWidth
+        required
+        onCut={(e) => disableCutCopyPaste(e, 'cut', 'geography')}
+        onCopy={(e) => disableCutCopyPaste(e, 'copy', 'geography')}
+        onPaste={(e) => disableCutCopyPaste(e, 'paste', 'geography')}
+        onClick={() => toggleHelperText('geography')}
+        onBlur={() => toggleHelperText('geography')}
+        onFocus={() => toggleHelperText('geography')}
+        defaultValue={state.geography.text}
+        error={Boolean(state.geography.errorText)}
+        helperText={state.geography.helperText}
+      />
+      <FormControl
+        component="fieldset"
+        className={classes.radioMargin}
+        required
+      >
         <FormLabel component="legend">
           Does this output include a weight variable?
         </FormLabel>
@@ -689,89 +729,56 @@ function OutputFileForm(props) {
         <FormHelperText></FormHelperText>
       </FormControl>
       {state.includeWeightVariable === 'Yes' && (
-        <div className="minHeight2">
-          <>
-            <TextField
-              className={classes.inputMargin}
-              margin="dense"
-              id="weightVariableName"
-              label="Name of weight variable"
-              variant="outlined"
-              required
-              fullWidth
-              onCut={(e) => disableCutCopyPaste(e, 'cut', 'weightvariable')}
-              onCopy={(e) => disableCutCopyPaste(e, 'copy', 'weightvariable')}
-              onPaste={(e) => disableCutCopyPaste(e, 'paste', 'weightvariable')}
-              onChange={(e) => handleChange(e, 'info')}
-              onClick={() => toggleHelperText('weightvariable')}
-              onBlur={() => toggleHelperText('weightvariable')}
-              onFocus={() => toggleHelperText('weightvariable')}
-              defaultvalue={state.weightvariable.text}
-              error={Boolean(state.weightvariable.errorText)}
-              helperText={state.weightvariable.errorText}
-            />
-            <FormControl component="fieldset" required>
-              <FormLabel component="legend" className="screen-reader-text">
-                Is the weight variable scaled or normalized?
-              </FormLabel>
-              <RadioGroup id="weightVariableType">
-                <FormControlLabel
-                  value="Scaled"
-                  control={<Radio color="primary" />}
-                  label="Scaled"
-                />
-                <FormControlLabel
-                  value="Normalized"
-                  control={<Radio color="primary" />}
-                  label="Normalized"
-                />
-              </RadioGroup>
-              <FormHelperText></FormHelperText>
-            </FormControl>
-          </>
-        </div>
+        <>
+          <TextField
+            className={classes.inputMargin}
+            margin="dense"
+            id="weightVariableName"
+            label="Name of weight variable"
+            variant="outlined"
+            required
+            fullWidth
+            onCut={(e) => disableCutCopyPaste(e, 'cut', 'weightvariable')}
+            onCopy={(e) => disableCutCopyPaste(e, 'copy', 'weightvariable')}
+            onPaste={(e) => disableCutCopyPaste(e, 'paste', 'weightvariable')}
+            onChange={(e) => handleChange(e, 'info')}
+            onClick={() => toggleHelperText('weightvariable')}
+            onBlur={() => toggleHelperText('weightvariable')}
+            onFocus={() => toggleHelperText('weightvariable')}
+            defaultValue={state.weightvariable.text}
+            error={Boolean(state.weightvariable.errorText)}
+            helperText={state.weightvariable.errorText}
+          />
+          <FormControl
+            component="fieldset"
+            className={classes.radioMargin}
+            required
+          >
+            <FormLabel component="legend">
+              Was the weighted variable scaled/normalized?
+            </FormLabel>
+            <RadioGroup id="weightVariableType">
+              <FormControlLabel
+                value="Yes"
+                control={<Radio color="primary" />}
+                label="Yes"
+              />
+              <FormControlLabel
+                value="No"
+                control={<Radio color="primary" />}
+                label="No"
+              />
+            </RadioGroup>
+            <FormHelperText></FormHelperText>
+          </FormControl>
+        </>
       )}
-      <TextField
-        className={classes.marginHelperText}
-        margin="dense"
-        id="sampleUsed"
-        label="Sample, sub-sample or inclusions/exclusions used"
-        variant="outlined"
-        fullWidth
-        required
-        onCut={(e) => disableCutCopyPaste(e, 'cut', 'sample')}
-        onCopy={(e) => disableCutCopyPaste(e, 'copy', 'sample')}
-        onPaste={(e) => disableCutCopyPaste(e, 'paste', 'sample')}
-        onClick={() => toggleHelperText('sample')}
-        onBlur={() => toggleHelperText('sample')}
-        onFocus={() => toggleHelperText('sample')}
-        defaultvalue={state.sample.text}
-        error={Boolean(state.sample.errorText)}
-        helperText={state.sample.helperText}
-      />
-      <TextField
-        className={classes.marginHelperText}
-        margin="dense"
-        id="geographyLevel"
-        label="Level of Geography"
-        variant="outlined"
-        fullWidth
-        onCut={(e) => disableCutCopyPaste(e, 'cut', 'geography')}
-        onCopy={(e) => disableCutCopyPaste(e, 'copy', 'geography')}
-        onPaste={(e) => disableCutCopyPaste(e, 'paste', 'geography')}
-        onClick={() => toggleHelperText('geography')}
-        onBlur={() => toggleHelperText('geography')}
-        onFocus={() => toggleHelperText('geography')}
-        defaultvalue={state.geography.text}
-        error={Boolean(state.geography.errorText)}
-        helperText={state.geography.helperText}
-      />
       <Typography variant="subtitle2" className="mb-2 mt-1" component="h3">
         Output supporting files
       </Typography>
       <FormControl
         component="fieldset"
-        className={classes.inputMargin}
+        className={classes.radioMargin}
         required
       >
         <FormLabel component="legend">Is linked data used?</FormLabel>
@@ -791,11 +798,6 @@ function OutputFileForm(props) {
             control={<Radio color="primary" />}
             label="No"
           />
-          <FormControlLabel
-            value="NA"
-            control={<Radio color="primary" />}
-            label="N/A"
-          />
         </RadioGroup>
         <FormHelperText></FormHelperText>
       </FormControl>
@@ -814,13 +816,13 @@ function OutputFileForm(props) {
           onClick={() => toggleHelperText('linkage')}
           onBlur={() => toggleHelperText('linkage')}
           onFocus={() => toggleHelperText('linkage')}
-          defaultvalue={state.linkage.text}
+          defaultValue={state.linkage.text}
           error={Boolean(state.linkage.errorText)}
           helperText={state.linkage.helperText}
         />
       )}
       <FormControl
-        className={classes.inputMargin}
+        className={classes.radioMargin}
         component="fieldset"
         required
       >
@@ -842,15 +844,10 @@ function OutputFileForm(props) {
             control={<Radio color="primary" />}
             label="No"
           />
-          <FormControlLabel
-            value="NA"
-            control={<Radio color="primary" />}
-            label="N/A"
-          />
         </RadioGroup>
         <FormHelperText></FormHelperText>
       </FormControl>
-      <FormControl className={classes.inputMargin} component="fieldset">
+      <FormControl className={classes.radioMargin} component="fieldset">
         <FormLabel component="legend">
           Does the request include descriptive statistics?
         </FormLabel>
@@ -860,35 +857,62 @@ function OutputFileForm(props) {
           name="descriptiveStats"
           onChange={handleRadioChange}
         >
-          <FormControlLabel value="Yes" control={<Radio />} label="Yes" />
-          <FormControlLabel value="No" control={<Radio />} label="No" />
-          <FormControlLabel value="NA" control={<Radio />} label="N/A" />
+          <FormControlLabel
+            value="Yes"
+            control={<Radio color="primary" />}
+            label="Yes"
+          />
+          <FormControlLabel
+            value="No"
+            control={<Radio color="primary" />}
+            label="No"
+          />
         </RadioGroup>
         <FormHelperText></FormHelperText>
       </FormControl>
       {state.descriptiveStats === 'Yes' && (
-        <FormControl className={classes.inputMargin} component="fieldset">
-          <FormLabel component="legend" className={classes.lineHeight}>
-            Is the output clearly labelled (tables have a title and every
-            variable and category is labelled)?
-          </FormLabel>
-          <RadioGroup id="outpuLabelled">
-            <FormControlLabel value="Yes" control={<Radio />} label="Yes" />
-            <FormControlLabel value="No" control={<Radio />} label="No" />
-          </RadioGroup>
-          <FormHelperText></FormHelperText>
-          <FormLabel component="legend">
-            Are minimum cell sizes met as per the rules for the data?
-          </FormLabel>
-          <RadioGroup id="minimumCellSizes">
-            <FormControlLabel value="Yes" control={<Radio />} label="Yes" />
-            <FormControlLabel value="No" control={<Radio />} label="No" />
-          </RadioGroup>
-          <FormHelperText></FormHelperText>
-        </FormControl>
+        <>
+          <FormControl className={classes.radioMargin} component="fieldset">
+            <FormLabel component="legend" className={classes.lineHeight}>
+              Is the output clearly labelled (tables have a title and every
+              variable and category is labelled)?
+            </FormLabel>
+            <RadioGroup id="outpuLabelled">
+              <FormControlLabel
+                value="Yes"
+                control={<Radio color="primary" />}
+                label="Yes"
+              />
+              <FormControlLabel
+                value="No"
+                control={<Radio color="primary" />}
+                label="No"
+              />
+            </RadioGroup>
+            <FormHelperText></FormHelperText>
+          </FormControl>
+          <FormControl className={classes.radioMargin} component="fieldset">
+            <FormLabel component="legend">
+              Are minimum cell sizes met as per the rules for the data?
+            </FormLabel>
+            <RadioGroup id="minimumCellSizes">
+              <FormControlLabel
+                value="Yes"
+                control={<Radio color="primary" />}
+                label="Yes"
+              />
+              <FormControlLabel
+                value="No"
+                control={<Radio color="primary" />}
+                label="No"
+              />
+            </RadioGroup>
+            <FormHelperText></FormHelperText>
+          </FormControl>
+        </>
       )}
       <FormControl
-        className={classes.inputMargin}
+        className={classes.radioMargin}
         component="fieldset"
         required
       >
@@ -910,70 +934,10 @@ function OutputFileForm(props) {
             control={<Radio color="primary" />}
             label="No"
           />
-          <FormControlLabel
-            value="NA"
-            control={<Radio color="primary" />}
-            label="N/A"
-          />
         </RadioGroup>
         <FormHelperText></FormHelperText>
       </FormControl>
-      <FormControl
-        className={classes.inputMargin}
-        component="fieldset"
-        required
-      >
-        <FormLabel component="legend" className={classes.tooltipLabel}>
-          Did you apply modified (e.g. standardized) weights in the analysis?{' '}
-          <BootstrapTooltip title="If yes, consult with your analyst about the vetting rules for modified weights.">
-            <InfoIcon />
-          </BootstrapTooltip>
-        </FormLabel>
-        <RadioGroup
-          id="modifiedWeights"
-          value={state.modifiedWeights}
-          name="modifiedWeights"
-          onChange={handleRadioChange}
-        >
-          <FormControlLabel
-            value="Yes"
-            control={<Radio color="primary" />}
-            label="Yes"
-          />
-          <FormControlLabel
-            value="No"
-            control={<Radio color="primary" />}
-            label="No"
-          />
-          <FormControlLabel
-            value="NA"
-            control={<Radio color="primary" />}
-            label="N/A"
-          />
-        </RadioGroup>
-        <FormHelperText></FormHelperText>
-      </FormControl>
-      {state.modifiedWeights === 'Yes' && (
-        <TextField
-          className={classes.inputMargin}
-          margin="dense"
-          id="modifiedDesc"
-          label="Describe why and how the weights were modified"
-          variant="outlined"
-          fullWidth
-          required
-          onCut={(e) => disableCutCopyPaste(e, 'cut', 'modified')}
-          onCopy={(e) => disableCutCopyPaste(e, 'copy', 'modified')}
-          onPaste={(e) => disableCutCopyPaste(e, 'paste', 'modified')}
-          onClick={() => toggleHelperText('modified')}
-          onBlur={() => toggleHelperText('modified')}
-          onFocus={() => toggleHelperText('modified')}
-          defaultvalue={state.modified.text}
-          error={Boolean(state.modified.errorText)}
-          helperText={state.modified.errorText}
-        />
-      )}
-      <FormControl className={classes.inputMargin} component="fieldset">
+      <FormControl className={classes.radioMargin} component="fieldset">
         <FormLabel component="legend">
           Does this output include a correlation or covariance matrix?
         </FormLabel>
@@ -993,41 +957,66 @@ function OutputFileForm(props) {
             control={<Radio color="primary" />}
             label="No"
           />
-          <FormControlLabel
-            value="NA"
-            control={<Radio color="primary" />}
-            label="N/A"
-          />
         </RadioGroup>
       </FormControl>
       {state.covariance === 'Yes' && (
-        <FormControl className={classes.inputMargin} component="fieldset">
-          <FormLabel component="legend">
-            Does the matrix include continuous variables?
-          </FormLabel>
-          <RadioGroup id="continuousVariables" className={classes.inputMargin}>
-            <FormControlLabel value="Yes" control={<Radio />} label="Yes" />
-            <FormControlLabel value="No" control={<Radio />} label="No" />
-          </RadioGroup>
-          <FormLabel component="legend">
-            Does the matrix inclue dichotomous variables?
-          </FormLabel>
-          <RadioGroup id="dichotomousVariables" className={classes.inputMargin}>
-            <FormControlLabel value="Yes" control={<Radio />} label="Yes" />
-            <FormControlLabel value="No" control={<Radio />} label="No" />
-          </RadioGroup>
-          <FormLabel component="legend" className={classes.lineHeight}>
-            Does the matrix include a dichotomous variable correlated with a
-            continuous variable?
-          </FormLabel>
-          <RadioGroup id="dichotomousVariable">
-            <FormControlLabel value="Yes" control={<Radio />} label="Yes" />
-            <FormControlLabel value="No" control={<Radio />} label="No" />
-          </RadioGroup>
-        </FormControl>
+        <>
+          <FormControl className={classes.radioMargin} component="fieldset">
+            <FormLabel component="legend">
+              Does the matrix include continuous variables?
+            </FormLabel>
+            <RadioGroup id="continuousVariables">
+              <FormControlLabel
+                value="Yes"
+                control={<Radio color="primary" />}
+                label="Yes"
+              />
+              <FormControlLabel
+                value="No"
+                control={<Radio color="primary" />}
+                label="No"
+              />
+            </RadioGroup>
+          </FormControl>
+          <FormControl className={classes.radioMargin} component="fieldset">
+            <FormLabel component="legend">
+              Does the matrix inclue dichotomous variables?
+            </FormLabel>
+            <RadioGroup id="dichotomousVariables">
+              <FormControlLabel
+                value="Yes"
+                control={<Radio color="primary" />}
+                label="Yes"
+              />
+              <FormControlLabel
+                value="No"
+                control={<Radio color="primary" />}
+                label="No"
+              />
+            </RadioGroup>
+          </FormControl>
+          <FormControl className={classes.radioMargin} component="fieldset">
+            <FormLabel component="legend" className={classes.lineHeight}>
+              Does the matrix include a dichotomous variable correlated with a
+              continuous variable?
+            </FormLabel>
+            <RadioGroup id="dichotomousVariable">
+              <FormControlLabel
+                value="Yes"
+                control={<Radio color="primary" />}
+                label="Yes"
+              />
+              <FormControlLabel
+                value="No"
+                control={<Radio color="primary" />}
+                label="No"
+              />
+            </RadioGroup>
+          </FormControl>
+        </>
       )}
       <FormControl
-        className={classes.inputMargin}
+        className={classes.radioMargin}
         component="fieldset"
         required
       >
@@ -1053,11 +1042,6 @@ function OutputFileForm(props) {
             control={<Radio color="primary" />}
             label="No"
           />
-          <FormControlLabel
-            value="NA"
-            control={<Radio color="primary" />}
-            label="N/A"
-          />
         </RadioGroup>
         <FormHelperText></FormHelperText>
       </FormControl>
@@ -1076,12 +1060,12 @@ function OutputFileForm(props) {
           onClick={() => toggleHelperText('rounding')}
           onBlur={() => toggleHelperText('rounding')}
           onFocus={() => toggleHelperText('rounding')}
-          defaultvalue={state.rounding.text}
+          defaultValue={state.rounding.text}
           error={Boolean(state.rounding.errorText)}
           helperText={state.rounding.errorText}
         />
       )}
-      <div className="emphasisBox minHeight3">
+      <div className="emphasisBox mb-3">
         <Typography variant="subtitle2" className="mb-2" component="h3">
           Mandatory supporting files:
         </Typography>
@@ -1107,18 +1091,6 @@ function OutputFileForm(props) {
           NOTE: supporting files will not be released. Please name your support
           files to allow easy pairing of the corresponding output file.
         </Typography>
-      </div>
-      <div className={classes.buttonTooltip}>
-        <Button
-          variant="contained"
-          color="primary"
-          onClick={() => props.handleClickOpen('dialogAddSupporting')}
-        >
-          Add Supporting File
-        </Button>
-        <BootstrapTooltip title="In addition to the mandatory files listed, include other files as required by the Survey Specific Guidelines, syntax files or other files requested by the analyst.">
-          <InfoIcon />
-        </BootstrapTooltip>
       </div>
       <Grid container justify="space-between" alignItems="center">
         <Grid item>
@@ -1163,7 +1135,7 @@ function OutputFileForm(props) {
         onClick={() => toggleHelperText('contents')}
         onBlur={() => toggleHelperText('contents')}
         onFocus={() => toggleHelperText('contents')}
-        defaultvalue={state.contents.text}
+        defaultValue={state.contents.text}
         error={Boolean(state.contents.errorText)}
         helperText={state.contents.errorText}
       />
@@ -1183,7 +1155,7 @@ function OutputFileForm(props) {
         onClick={() => toggleHelperText('notes')}
         onBlur={() => toggleHelperText('notes')}
         onFocus={() => toggleHelperText('notes')}
-        defaultvalue={state.notes.text}
+        defaultValue={state.notes.text}
         error={Boolean(state.notes.errorText)}
         helperText={state.notes.errorText}
       />
@@ -1230,7 +1202,7 @@ function OutputFileForm(props) {
         onClick={() => toggleHelperText('contents2')}
         onBlur={() => toggleHelperText('contents2')}
         onFocus={() => toggleHelperText('contents2')}
-        defaultvalue={state.contents2.text}
+        defaultValue={state.contents2.text}
         error={Boolean(state.contents2.errorText)}
         helperText={state.contents2.errorText}
       />
@@ -1250,10 +1222,23 @@ function OutputFileForm(props) {
         onClick={() => toggleHelperText('notes2')}
         onBlur={() => toggleHelperText('notes2')}
         onFocus={() => toggleHelperText('notes2')}
-        defaultvalue={state.notes2.text}
+        defaultValue={state.notes2.text}
         error={Boolean(state.notes2.errorText)}
         helperText={state.notes2.errorText}
       />
+
+      <div className={classes.buttonTooltip}>
+        <Button
+          variant="contained"
+          color="primary"
+          onClick={() => props.handleClickOpen('dialogAddSupporting')}
+        >
+          Add Supporting File
+        </Button>
+        <BootstrapTooltip title="In addition to the mandatory files listed, include other files as required by the Survey Specific Guidelines, syntax files or other files requested by the analyst.">
+          <InfoIcon />
+        </BootstrapTooltip>
+      </div>
     </>
   );
 }

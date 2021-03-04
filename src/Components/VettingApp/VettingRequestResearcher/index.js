@@ -121,7 +121,7 @@ const useStyles = makeStyles((theme) => ({
     padding: theme.spacing(0, 3, 3, 3),
   },
   errorMsg: {
-    margin: 0,
+    margin: [0, '!important'],
     textAlign: 'left',
   },
   vettingContainerTitle: {
@@ -166,7 +166,7 @@ const useStyles = makeStyles((theme) => ({
 function getSteps() {
   return [
     'Researcher information',
-    'Files list request',
+    'Output details',
     'Residual disclosure',
     'Additional information',
   ];
@@ -179,7 +179,7 @@ function VettingRequestResearcher(props) {
     activeStep: 0,
     completed: {},
     open: false,
-    errors: [1, 0, 0, 0],
+    errors: [0, 4, 0, 0],
     title: function() {
       if (from === '/vetting-app/dashboard-researcher') {
         return name.text;
@@ -372,7 +372,7 @@ function VettingRequestResearcher(props) {
                         variant="body2"
                         color="error"
                       >
-                        {state.errors[index]} error
+                        {state.errors[index]} errors
                       </Typography>
                     );
                   }
@@ -490,7 +490,7 @@ function VettingRequestResearcher(props) {
           aria-describedby="alert-dialog-description"
           className={classes.root}
           disableBackdropClick
-          scroll='paper'
+          scroll="paper"
         >
           <DialogTitle id="alert-dialog-title">
             <div className={classes.vettingContainerTitle}>

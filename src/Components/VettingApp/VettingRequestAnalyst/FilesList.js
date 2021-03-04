@@ -21,13 +21,28 @@ import {
   Card,
   CardContent,
   CardActions,
+  FormLabel,
+  FormControlLabel,
+  RadioGroup,
+  Radio,
+  Tooltip,
 } from '@material-ui/core';
 import Snackbar from '@material-ui/core/Snackbar';
 import Alert from '@material-ui/lab/Alert';
 import {AddFile, ModifyFile} from './ModifyFile';
 import CloseIcon from '@material-ui/icons/Close';
+import InfoIcon from '@material-ui/icons/Info';
 import Icon from '@mdi/react';
 import {mdiFileDocumentOutline} from '@mdi/js';
+
+const useStylesBootstrap = makeStyles((theme) => ({
+  arrow: {
+    color: theme.palette.common.black,
+  },
+  tooltip: {
+    backgroundColor: theme.palette.common.black,
+  },
+}));
 
 const useStyles = makeStyles((theme) => ({
   vettingContainerTitle: {
@@ -97,7 +112,6 @@ const useStyles = makeStyles((theme) => ({
     '& .MuiDrawer-paper': {
       maxWidth: '400px',
       boxSizing: 'border-box',
-      paddingLeft: theme.spacing(3),
     },
   },
   icon: {
@@ -112,6 +126,28 @@ const useStyles = makeStyles((theme) => ({
       paddingTop: 0,
       paddingBottom: 0,
     },
+  },
+  emphasisBox: {
+    background: theme.palette.grey[200],
+    padding: theme.spacing(2),
+    marginBottom: theme.spacing(3),
+    borderLeftStyle: 'solid',
+    borderLeftWidth: '5px',
+    borderLeftColor: theme.palette.primary.main,
+  },
+  tooltipLabel: {
+    '& svg': {
+      verticalAlign: 'middle',
+      paddingLeft: theme.spacing(1),
+    },
+  },
+  tooltip: {
+    paddingLeft: theme.spacing(1),
+    marginTop: theme.spacing(1),
+  },
+  inputMargin: {
+    marginTop: theme.spacing(0),
+    marginBottom: theme.spacing(3),
   },
 }));
 
@@ -133,6 +169,12 @@ const files = [
     error: true,
   },
 ];
+
+function BootstrapTooltip(props) {
+  const classes = useStylesBootstrap();
+
+  return <Tooltip arrow classes={classes} {...props} />;
+}
 
 function FilesList(props) {
   const classes = useStyles();
@@ -265,10 +307,163 @@ function FilesList(props) {
   return (
     <React.Fragment>
       <Typography>
-        A brief explanation is needed to explain to external users what and why
-        they need to complete this section.
+        Please provide some information about this request as well as your
+        output and supporting files.
       </Typography>
       <Divider className={classes.divider} />
+      <Typography component="h2" variant="h6" className="mb-2">
+        Screening questions
+      </Typography>
+      <div className={classes.emphasisBox}>
+        <Typography variant="subtitle2" component="h3" className="mb-3">
+          Please consider the following guidelines:
+        </Typography>
+        <ul>
+          <li>
+            <Typography variant="body2">
+              Check your output against the vetting guidelines.
+            </Typography>
+          </li>
+          <li>
+            <Typography variant="body2">
+              Delete values you do not need released at this time.
+            </Typography>
+          </li>
+        </ul>
+        <Typography variant="body2" className="mt-3">
+          This request will be stored as part of the request record.
+        </Typography>
+      </div>
+      <FormControl
+        component="fieldset"
+        className={classes.inputMargin}
+        required
+      >
+        <FormLabel component="legend">
+          Is the requested output consistent with the approved proposal for this
+          project?
+        </FormLabel>
+        <RadioGroup id="approvedProposal" name="approvedProposal">
+          <FormControlLabel
+            value="Yes"
+            control={<Radio color="primary" />}
+            label="Yes"
+          />
+          <FormControlLabel
+            value="No"
+            control={<Radio color="primary" />}
+            label="No"
+          />
+        </RadioGroup>
+      </FormControl>
+      <FormControl
+        component="fieldset"
+        className={classes.inputMargin}
+        required
+      >
+        <FormLabel component="legend">
+          Have you checked the vetting rules to determine if there are
+          geographical, institutional, household size and/or population
+          requirements for your output?
+        </FormLabel>
+        <RadioGroup id="vettingRules" name="vettingRules">
+          <FormControlLabel
+            value="Yes"
+            control={<Radio color="primary" />}
+            label="Yes"
+          />
+          <FormControlLabel
+            value="No"
+            control={<Radio color="primary" />}
+            label="No"
+          />
+        </RadioGroup>
+      </FormControl>
+      <FormControl
+        component="fieldset"
+        className={classes.inputMargin}
+        required
+      >
+        <FormLabel component="legend" className={classes.tooltipLabel}>
+          Is the requested output your final output?
+          <BootstrapTooltip title="If no, future vetting release requests under this contract may be restricted due to residual disclosure. You are strongly encouraged to consult with your analyst.">
+            <InfoIcon />
+          </BootstrapTooltip>
+        </FormLabel>
+        <RadioGroup id="finalOutput" name="finalOutput">
+          <FormControlLabel
+            value="Yes"
+            control={<Radio color="primary" />}
+            label="Yes"
+          />
+          <FormControlLabel
+            value="No"
+            control={<Radio color="primary" />}
+            label="No"
+          />
+        </RadioGroup>
+      </FormControl>
+      <Typography component="h2" variant="h6" className="mb-2">
+        File location
+      </Typography>
+      <Grid container>
+        <Grid item xs={6}>
+          <FormControl
+            className={classes.inputMargin}
+            margin="dense"
+            variant="outlined"
+            fullWidth
+            required
+          >
+            <InputLabel id="outputFolder-label">Output folder</InputLabel>
+            <Select
+              id="outputFolder"
+              label="Output folder"
+              labelId="outputFolder-label"
+            >
+              <MenuItem>Folder 1</MenuItem>
+              <MenuItem>Folder 2</MenuItem>
+            </Select>
+          </FormControl>
+        </Grid>
+        <Grid item>
+          <BootstrapTooltip
+            className={classes.tooltip}
+            title="Please indicate the folder that contains your files for release for this request."
+          >
+            <InfoIcon />
+          </BootstrapTooltip>
+        </Grid>
+      </Grid>
+      <Grid container>
+        <Grid item xs={6}>
+          <FormControl
+            className={classes.inputMargin}
+            margin="dense"
+            variant="outlined"
+            fullWidth
+            required
+          >
+            <InputLabel id="supportFolder-label">Supporting folder</InputLabel>
+            <Select
+              id="supportFolder"
+              label="Supporting folder"
+              labelId="supportFolder-label"
+            >
+              <MenuItem>Folder 1</MenuItem>
+              <MenuItem>Folder 2</MenuItem>
+            </Select>
+          </FormControl>
+        </Grid>
+        <Grid item>
+          <BootstrapTooltip
+            className={classes.tooltip}
+            title=" Please indicate the folder that contains your supporting files for this request."
+          >
+            <InfoIcon />
+          </BootstrapTooltip>
+        </Grid>
+      </Grid>
       <Grid
         container
         alignItems="center"
@@ -277,7 +472,7 @@ function FilesList(props) {
       >
         <Grid item>
           <Typography display="inline" component="h2" variant="h6">
-            Output files
+            File details
           </Typography>
         </Grid>
         <Grid item>
@@ -286,7 +481,7 @@ function FilesList(props) {
             color="primary"
             onClick={(e) => toggleDrawer(e, 'addFile', true)}
           >
-            Add Output File
+            Add file
           </Button>
         </Grid>
       </Grid>
@@ -373,7 +568,7 @@ function FilesList(props) {
         aria-labelledby="form-dialog-title"
         fullWidth
         className={classes.root}
-        scroll='paper'
+        scroll="paper"
       >
         <DialogTitle
           id="form-dialog-title"
@@ -464,7 +659,7 @@ function FilesList(props) {
         aria-labelledby="delete-dialog-title"
         fullWidth
         className={classes.root}
-        scroll='paper'
+        scroll="paper"
       >
         <DialogTitle
           id="delete-dialog-title"
