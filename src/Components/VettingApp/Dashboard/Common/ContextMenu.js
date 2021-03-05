@@ -18,7 +18,6 @@ import {mdiFileDocumentOutline, mdiPencil, mdiEye, mdiShare} from '@mdi/js';
 import CustomizedSnackbar from './CustomizedSnackbar';
 import {
   DialogWithdraw,
-  DialogManageTeam,
   DialogUnassign,
   DialogSupport,
   DialogAssign,
@@ -127,7 +126,6 @@ export function ActionsMenu(props) {
     handleClose(e);
     contextSummaryClick();
   };
-
   const contextManageTeam = (e) => {
     e.stopPropagation();
     handleClose(e);
@@ -135,9 +133,7 @@ export function ActionsMenu(props) {
   };
 
   const toggleSnackbar = (e) => {
-    e.stopPropagation();
     setOpen({...open, snackbar: !open.snackbar});
-    handleClose(e);
   };
 
   const toggleDialog = (state, value, e) => {
@@ -220,7 +216,10 @@ export function ActionsMenu(props) {
           onClose={handleClose}
         >
           <MenuItem
-            onClick={() => toggleDialog('dialogAssign', !open.dialogAssign)}
+            onClick={(e) => {
+              e.stopPropagation();
+              toggleDialog('dialogAssign', !open.dialogAssign, e);
+            }}
             open={open.dialogAssign}
           >
             <ListItemText
@@ -251,7 +250,10 @@ export function ActionsMenu(props) {
             />
           </MenuItem>
           <MenuItem
-            onClick={() => toggleDialog('dialogWithdraw', !open.dialogWithdraw)}
+            onClick={(e) => {
+              e.stopPropagation();
+              toggleDialog('dialogWithdraw', !open.dialogWithdraw, e);
+            }}
           >
             <ListItemIcon className={classes.listItemIcon}>
               <ExitToAppIcon fontSize="small" />
@@ -293,7 +295,10 @@ export function ActionsMenu(props) {
             />
           </MenuItem>
           <MenuItem
-            onClick={() => toggleDialog('dialogAssign', !open.dialogAssign)}
+            onClick={(e) => {
+              e.stopPropagation();
+              toggleDialog('dialogAssign', !open.dialogAssign, e);
+            }}
             open={open.dialogAssign}
           >
             <ListItemText
@@ -329,7 +334,10 @@ export function ActionsMenu(props) {
             />
           </MenuItem>
           <MenuItem
-            onClick={() => toggleDialog('dialogWithdraw', !open.dialogWithdraw)}
+            onClick={(e) => {
+              e.stopPropagation();
+              toggleDialog('dialogWithdraw', !open.dialogWithdraw, e);
+            }}
           >
             <ListItemIcon className={classes.listItemIcon}>
               <ExitToAppIcon fontSize="small" />
@@ -339,12 +347,14 @@ export function ActionsMenu(props) {
             />
           </MenuItem>
           <MenuItem
-            onClick={() =>
+            onClick={(e) => {
+              e.stopPropagation();
               triggerAction(
                   actionList.message.submit,
                   actionList.severity.submit,
-              )
-            }
+                  e,
+              );
+            }}
           >
             <ListItemIcon className={classes.listItemIcon}>
               <Icon path={mdiShare} size={1} className="icon-grey" />
@@ -388,7 +398,10 @@ export function ActionsMenu(props) {
             />
           </MenuItem>
           <MenuItem
-            onClick={() => toggleDialog('dialogApprove', !open.dialogApprove)}
+            onClick={(e) => {
+              e.stopPropagation();
+              toggleDialog('dialogApprove', !open.dialogApprove, e);
+            }}
             open={open.dialogApprove}
           >
             <ListItemText
@@ -396,7 +409,10 @@ export function ActionsMenu(props) {
             />
           </MenuItem>
           <MenuItem
-            onClick={() => toggleDialog('dialogDenied', !open.dialogDenied)}
+            onClick={(e) => {
+              e.stopPropagation();
+              toggleDialog('dialogDenied', !open.dialogDenied, e);
+            }}
             open={open.dialogDenied}
           >
             <ListItemText
@@ -404,7 +420,10 @@ export function ActionsMenu(props) {
             />
           </MenuItem>
           <MenuItem
-            onClick={() => toggleDialog('dialogUpdate', !open.dialogUpdate)}
+            onClick={(e) => {
+              e.stopPropagation();
+              toggleDialog('dialogUpdate', !open.dialogUpdate, e);
+            }}
             open={open.dialogUpdate}
           >
             <ListItemText
@@ -416,7 +435,10 @@ export function ActionsMenu(props) {
             />
           </MenuItem>
           <MenuItem
-            onClick={() => toggleDialog('dialogUnassign', !open.dialogUnassign)}
+            onClick={(e) => {
+              e.stopPropagation();
+              toggleDialog('dialogUnassign', !open.dialogUnassign, e);
+            }}
             open={open.dialogUnassign}
           >
             <ListItemText
@@ -426,7 +448,10 @@ export function ActionsMenu(props) {
             />
           </MenuItem>
           <MenuItem
-            onClick={() => toggleDialog('dialogSupport', !open.dialogSupport)}
+            onClick={(e) => {
+              e.stopPropagation();
+              toggleDialog('dialogSupport', !open.dialogSupport, e);
+            }}
             open={open.dialogSupport}
           >
             <ListItemText
@@ -459,7 +484,10 @@ export function ActionsMenu(props) {
           onClose={handleClose}
         >
           <MenuItem
-            onClick={() => toggleDialog('dialogWithdraw', !open.dialogWithdraw)}
+            onClick={(e) => {
+              e.stopPropagation();
+              toggleDialog('dialogWithdraw', !open.dialogWithdraw, e);
+            }}
           >
             <ListItemIcon className={classes.listItemIcon}>
               <ExitToAppIcon fontSize="small" />
@@ -493,9 +521,14 @@ export function ActionsMenu(props) {
         onClose={handleClose}
       >
         <MenuItem
-          onClick={() =>
-            triggerAction(actionList.message.reopen, actionList.severity.reopen)
-          }
+          onClick={(e) => {
+            e.stopPropagation();
+            triggerAction(
+                actionList.message.reopen,
+                actionList.severity.reopen,
+                e,
+            );
+          }}
         >
           <ListItemIcon className={classes.listItemIcon}>
             <PageReloadIcon width={20} height={20} />
@@ -505,9 +538,14 @@ export function ActionsMenu(props) {
           />
         </MenuItem>
         <MenuItem
-          onClick={() =>
-            triggerAction(actionList.message.delete, actionList.severity.delete)
-          }
+          onClick={(e) => {
+            e.stopPropagation();
+            triggerAction(
+                actionList.message.delete,
+                actionList.severity.delete,
+                e,
+            );
+          }}
         >
           <ListItemIcon className={classes.listItemIcon}>
             <DeleteIcon fontSize="small" />
@@ -590,7 +628,10 @@ export function ActionsMenu(props) {
           />
         </MenuItem>
         <MenuItem
-          onClick={() => toggleDialog('dialogApprove', !open.dialogApprove)}
+          onClick={(e) => {
+            e.stopPropagation();
+            toggleDialog('dialogApprove', !open.dialogApprove, e);
+          }}
           open={open.dialogApprove}
         >
           <ListItemText
@@ -598,7 +639,10 @@ export function ActionsMenu(props) {
           />
         </MenuItem>
         <MenuItem
-          onClick={() => toggleDialog('dialogDenied', !open.dialogDenied)}
+          onClick={(e) => {
+            e.stopPropagation();
+            toggleDialog('dialogDenied', !open.dialogDenied, e);
+          }}
           open={open.dialogDenied}
         >
           <ListItemText
@@ -606,7 +650,10 @@ export function ActionsMenu(props) {
           />
         </MenuItem>
         <MenuItem
-          onClick={() => toggleDialog('dialogUpdate', !open.dialogUpdate)}
+          onClick={(e) => {
+            e.stopPropagation();
+            toggleDialog('dialogUpdate', !open.dialogUpdate, e);
+          }}
           open={open.dialogUpdate}
         >
           <ListItemText
@@ -616,7 +663,10 @@ export function ActionsMenu(props) {
           />
         </MenuItem>
         <MenuItem
-          onClick={() => toggleDialog('dialogUnassign', !open.dialogUnassign)}
+          onClick={(e) => {
+            e.stopPropagation();
+            toggleDialog('dialogUnassign', !open.dialogUnassign, e);
+          }}
           open={open.dialogUnassign}
         >
           <ListItemText
@@ -626,7 +676,10 @@ export function ActionsMenu(props) {
           />
         </MenuItem>
         <MenuItem
-          onClick={() => toggleDialog('dialogSupport', !open.dialogSupport)}
+          onClick={(e) => {
+            e.stopPropagation();
+            toggleDialog('dialogSupport', !open.dialogSupport, e);
+          }}
           open={open.dialogSupport}
         >
           <ListItemText
@@ -666,7 +719,10 @@ export function ActionsMenu(props) {
           />
         </MenuItem>
         <MenuItem
-          onClick={() => toggleDialog('dialogAssign', !open.dialogAssign)}
+          onClick={(e) => {
+            e.stopPropagation();
+            toggleDialog('dialogAssign', !open.dialogAssign, e);
+          }}
           open={open.dialogAssign}
         >
           <ListItemText
@@ -676,7 +732,10 @@ export function ActionsMenu(props) {
           />
         </MenuItem>
         <MenuItem
-          onClick={() => toggleDialog('dialogSupport', !open.dialogSupport)}
+          onClick={(e) => {
+            e.stopPropagation();
+            toggleDialog('dialogSupport', !open.dialogSupport, e);
+          }}
           open={open.dialogSupport}
         >
           <ListItemText
@@ -765,41 +824,45 @@ export function ActionsMenu(props) {
         role="alert"
       />
       <DialogWithdraw
-        toggleDialog={() =>
-          toggleDialog('dialogWithdraw', !open.dialogWithdraw)
+        toggleDialog={(e) =>
+          toggleDialog('dialogWithdraw', !open.dialogWithdraw, e)
         }
         open={open.dialogWithdraw}
       />
-      <DialogManageTeam
-        toggleDialog={() =>
-          toggleDialog('dialogManageTeam', !open.dialogManageTeam)
-        }
-        open={open.dialogManageTeam}
-      />
       <DialogUnassign
-        toggleDialog={() =>
-          toggleDialog('dialogUnassign', !open.dialogUnassign)
+        toggleDialog={(e) =>
+          toggleDialog('dialogUnassign', !open.dialogUnassign, e)
         }
         open={open.dialogUnassign}
       />
       <DialogSupport
-        toggleDialog={() => toggleDialog('dialogSupport', !open.dialogSupport)}
+        toggleDialog={(e) =>
+          toggleDialog('dialogSupport', !open.dialogSupport, e)
+        }
         open={open.dialogSupport}
       />
       <DialogAssign
-        toggleDialog={() => toggleDialog('dialogAssign', !open.dialogAssign)}
+        toggleDialog={(e) =>
+          toggleDialog('dialogAssign', !open.dialogAssign, e)
+        }
         open={open.dialogAssign}
       />
       <DialogUpdate
-        toggleDialog={() => toggleDialog('dialogUpdate', !open.dialogUpdate)}
+        toggleDialog={(e) =>
+          toggleDialog('dialogUpdate', !open.dialogUpdate, e)
+        }
         open={open.dialogUpdate}
       />
       <DialogDenied
-        toggleDialog={() => toggleDialog('dialogDenied', !open.dialogDenied)}
+        toggleDialog={(e) =>
+          toggleDialog('dialogDenied', !open.dialogDenied, e)
+        }
         open={open.dialogDenied}
       />
       <DialogApprove
-        toggleDialog={() => toggleDialog('dialogApprove', !open.dialogApprove)}
+        toggleDialog={(e) =>
+          toggleDialog('dialogApprove', !open.dialogApprove, e)
+        }
         open={open.dialogApprove}
       />
     </div>
@@ -829,6 +892,7 @@ export function AnalystMenu(props) {
   };
 
   const handleClick = (event) => {
+    event.stopPropagation();
     setAnchorEl(event.currentTarget);
   };
 

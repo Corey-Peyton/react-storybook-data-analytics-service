@@ -206,7 +206,9 @@ export default function SummaryDrawer(props) {
         anchor="right"
         open={props.open}
         onEscapeKeyDown={props.clickHandler}
-        onBackdropClick={props.clickHandler}
+        onBackdropClick={(e) => {
+          e.preventDefault();
+        }}
         variant="temporary"
         className={classes.drawer}
       >
