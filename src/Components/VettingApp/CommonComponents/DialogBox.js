@@ -164,6 +164,10 @@ export function DialogAnalyst(props) {
   const {t} = useTranslation();
   const classes = useStyles();
 
+  const handleClick = (e) => {
+    e.stopPropagation();
+  };
+
   return (
     <React.Fragment>
       <Dialog
@@ -173,6 +177,7 @@ export function DialogAnalyst(props) {
         className={classes.root}
         disableBackdropClick
         scroll="paper"
+        onClick={handleClick}
       >
         <DialogTitle id="dashboard-dialog-title">
           <div className={classes.vettingContainerTitle}>
@@ -257,6 +262,10 @@ export function DialogManageTeam(props) {
     );
   };
 
+  const handleClick = (e) => {
+    e.stopPropagation();
+  };
+
   function selectSupports(value) {
     const ids = value.map((item) => {
       return item.id;
@@ -320,6 +329,7 @@ export function DialogManageTeam(props) {
         open={open}
         className={classes.root}
         disableBackdropClick
+        onClick={handleClick}
       >
         <DialogTitle id="dashboard-dialog-title">
           <div className={classes.vettingContainerTitle}>
@@ -542,11 +552,12 @@ export function DialogWithdraw(props) {
   };
 
   const submitForm = (e) => {
+    e.stopPropagation();
     e.preventDefault();
     const err = validateForm();
     if (!err) {
       // if no errors exist, submit the form and reset the inputs
-      toggleDialog();
+      toggleDialog(e);
       setSnackbar(!snackbar);
       setState({...initial});
     } else {
@@ -637,18 +648,23 @@ export function DialogWithdraw(props) {
     }
   };
 
+  const handleClick = (e) => {
+    e.stopPropagation();
+  };
+
   return (
     <React.Fragment>
       <Dialog
-        onClose={() => {
+        onClose={(e) => {
           setState({...initial});
-          toggleDialog();
+          toggleDialog(e);
         }}
         aria-labelledby="dashboard-dialog-title"
         open={open}
         className={classes.root}
         disableBackdropClick
         scroll="paper"
+        onClick={handleClick}
       >
         <DialogTitle id="dashboard-dialog-title">
           <div className={classes.vettingContainerTitle}>
@@ -704,9 +720,9 @@ export function DialogWithdraw(props) {
           <Button
             variant="outlined"
             color="primary"
-            onClick={() => {
+            onClick={(e) => {
               setState({...initial});
-              toggleDialog();
+              toggleDialog(e);
             }}
             className={classes.footerBtns}
           >
@@ -739,6 +755,10 @@ export function DialogUnassign(props) {
   const {t} = useTranslation();
   const {toggleDialog, open} = props;
 
+  const handleClick = (e) => {
+    e.stopPropagation();
+  };
+
   return (
     <React.Fragment>
       <Dialog
@@ -748,6 +768,7 @@ export function DialogUnassign(props) {
         className={classes.root}
         disableBackdropClick
         scroll="paper"
+        onClick={handleClick}
       >
         <DialogTitle id="dashboard-dialog-title">
           <div className={classes.vettingContainerTitle}>
@@ -806,6 +827,10 @@ export function DialogSupport(props) {
   const {t} = useTranslation();
   const {toggleDialog, open} = props;
 
+  const handleClick = (e) => {
+    e.stopPropagation();
+  };
+
   return (
     <React.Fragment>
       <Dialog
@@ -815,6 +840,7 @@ export function DialogSupport(props) {
         className={classes.root}
         disableBackdropClick
         scroll="paper"
+        onClick={handleClick}
       >
         <DialogTitle id="dashboard-dialog-title">
           <div className={classes.vettingContainerTitle}>
@@ -936,11 +962,12 @@ export function DialogAssign(props) {
   };
 
   const submitForm = (e) => {
+    e.stopPropagation();
     e.preventDefault();
     const err = validateForm();
     if (!err) {
       // if no errors exist, submit the form and reset the inputs
-      toggleDialog();
+      toggleDialog(e);
       setState({...initial});
     } else {
       for (const property in state) {
@@ -1026,18 +1053,23 @@ export function DialogAssign(props) {
     }
   };
 
+  const handleClick = (e) => {
+    e.stopPropagation();
+  };
+
   return (
     <React.Fragment>
       <Dialog
-        onClose={() => {
+        onClose={(e) => {
           setState({...initial});
-          toggleDialog();
+          toggleDialog(e);
         }}
         aria-labelledby="dashboard-dialog-title"
         open={open}
         className={classes.root}
         disableBackdropClick
         scroll="paper"
+        onClick={handleClick}
       >
         <DialogTitle id="dashboard-dialog-title">
           <div className={classes.vettingContainerTitle}>
@@ -1100,9 +1132,9 @@ export function DialogAssign(props) {
           <Button
             variant="outlined"
             color="primary"
-            onClick={() => {
+            onClick={(e) => {
               setState({...initial});
-              toggleDialog();
+              toggleDialog(e);
             }}
             className={classes.footerBtns}
           >
@@ -1190,11 +1222,12 @@ export function DialogUpdate(props) {
   };
 
   const submitForm = (e) => {
+    e.stopPropagation();
     e.preventDefault();
     const err = validateForm();
     if (!err) {
       // if no errors exist, submit the form and reset the inputs
-      toggleDialog();
+      toggleDialog(e);
       setState({...initial});
     } else {
       for (const property in state) {
@@ -1280,18 +1313,23 @@ export function DialogUpdate(props) {
     }
   };
 
+  const handleClick = (e) => {
+    e.stopPropagation();
+  };
+
   return (
     <React.Fragment>
       <Dialog
-        onClose={() => {
+        onClose={(e) => {
           setState({...initial});
-          toggleDialog();
+          toggleDialog(e);
         }}
         aria-labelledby="dashboard-dialog-title"
         open={open}
         className={classes.root}
         scroll="paper"
         disableBackdropClick
+        onClick={handleClick}
       >
         <DialogTitle id="dashboard-dialog-title">
           <div className={classes.vettingContainerTitle}>
@@ -1351,9 +1389,9 @@ export function DialogUpdate(props) {
           <Button
             variant="outlined"
             color="primary"
-            onClick={() => {
+            onClick={(e) => {
               setState({...initial});
-              toggleDialog();
+              toggleDialog(e);
             }}
             className={classes.footerBtns}
           >
@@ -1499,11 +1537,12 @@ export function DialogDenied(props) {
   };
 
   const submitForm = (e) => {
+    e.stopPropagation();
     e.preventDefault();
     const err = validateForm();
     if (!err) {
       // if no errors exist, submit the form, toggle snackbar, and reset the inputs
-      toggleDialog();
+      toggleDialog(e);
       setSnackbar(!snackbar);
       setState({...initial});
     } else {
@@ -1599,18 +1638,23 @@ export function DialogDenied(props) {
     }
   };
 
+  const handleClick = (e) => {
+    e.stopPropagation();
+  };
+
   return (
     <React.Fragment>
       <Dialog
-        onClose={() => {
+        onClose={(e) => {
           setState({...initial});
-          toggleDialog();
+          toggleDialog(e);
         }}
         aria-labelledby="dashboard-dialog-title"
         open={open}
         className={classes.root}
         disableBackdropClick
         scroll="paper"
+        onClick={handleClick}
       >
         <DialogTitle id="dashboard-dialog-title">
           <div className={classes.vettingContainerTitle}>
@@ -1820,9 +1864,9 @@ export function DialogDenied(props) {
           <Button
             variant="outlined"
             color="primary"
-            onClick={() => {
+            onClick={(e) => {
               setState({...initial});
-              toggleDialog();
+              toggleDialog(e);
             }}
             className={classes.footerBtns}
           >
@@ -1938,11 +1982,12 @@ export function DialogApprove(props) {
   };
 
   const submitForm = (e) => {
+    e.stopPropagation();
     e.preventDefault();
     const err = validateForm();
     if (!err) {
       // if no errors exist, submit the form, toggle snackbar, and reset the inputs
-      toggleDialog();
+      toggleDialog(e);
       setSnackbar(!snackbar);
       setState({...initial});
     } else {
@@ -2032,6 +2077,10 @@ export function DialogApprove(props) {
     }
   };
 
+  const handleClick = (e) => {
+    e.stopPropagation();
+  };
+
   return (
     <React.Fragment>
       <Dialog
@@ -2041,6 +2090,7 @@ export function DialogApprove(props) {
         className={classes.root}
         disableBackdropClick
         scroll="paper"
+        onClick={handleClick}
       >
         <DialogTitle id="dashboard-dialog-title">
           <div className={classes.vettingContainerTitle}>
@@ -2144,9 +2194,9 @@ export function DialogApprove(props) {
           <Button
             variant="outlined"
             color="primary"
-            onClick={() => {
+            onClick={(e) => {
               setState({...initial});
-              toggleDialog();
+              toggleDialog(e);
             }}
             className={classes.footerBtns}
           >
@@ -2350,6 +2400,10 @@ export function DialognNewRequestTitle(props) {
     }
   };
 
+  const handleClick = (e) => {
+    e.stopPropagation();
+  };
+
   return (
     <React.Fragment>
       <Dialog
@@ -2362,6 +2416,7 @@ export function DialognNewRequestTitle(props) {
         className={classes.root}
         disableBackdropClick
         scroll="paper"
+        onClick={handleClick}
       >
         <DialogTitle id="dashboard-dialog-title">
           <div className={classes.vettingContainerTitle}>

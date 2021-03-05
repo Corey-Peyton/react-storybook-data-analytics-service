@@ -3,7 +3,6 @@ import {useTranslation} from 'react-i18next';
 import {makeStyles} from '@material-ui/core/styles';
 import {Typography, TableCell, Chip} from '@material-ui/core';
 
-import {DialogAnalyst} from '../../CommonComponents/DialogBox';
 import {ROW_HEIGHT} from './TableContainerComponent';
 
 const useStyles = makeStyles((theme) => ({
@@ -22,33 +21,21 @@ const useStyles = makeStyles((theme) => ({
 
 export default function AnalystCell(props) {
   const {t} = useTranslation();
-  const {role, analysts, support, toggleManageTeamDrawer} = props;
+  const {
+    role,
+    analysts,
+    support,
+    toggleDialog,
+    toggleManageTeamDrawer,
+  } = props;
   const extraAnalysts = support.length;
   const classes = useStyles();
-  const [open, setOpen] = React.useState({
-    analystInfo: false,
-    manageTeam: false,
-  });
-
-  function toggleDialog(value) {
-    if (value === 'info') {
-      setOpen({...open, analystInfo: !open.analystInfo});
-    }
-    if (value === 'list') {
-      setOpen({...open, manageTeam: !open.manageTeam});
-    }
-  }
 
   if (role === 'researcher') {
     if (analysts !== '') {
       return (
         <TableCell className={classes.tablesCellsFlex}>
-          <Chip label={analysts} onClick={() => toggleDialog('info')} />
-          <DialogAnalyst
-            open={open.analystInfo}
-            toggleDialog={() => toggleDialog('info')}
-            header="Assignee details"
-          />
+          <Chip label={analysts} onClick={toggleDialog} />
         </TableCell>
       );
     } else {
@@ -66,19 +53,31 @@ export default function AnalystCell(props) {
         <TableCell className={classes.tablesCellsFlex}>
           <Chip
             label={analysts}
-            onClick={toggleManageTeamDrawer}
+            onClick={(e) => {
+              e.stopPropagation();
+              toggleManageTeamDrawer(e);
+            }}
             className="mr-1"
           />
           <Chip
             label={`${extraAnalysts} ${t('support')}`}
-            onClick={toggleManageTeamDrawer}
+            onClick={(e) => {
+              e.stopPropagation();
+              toggleManageTeamDrawer(e);
+            }}
           />
         </TableCell>
       );
     } else if (analysts !== '' && support.length === 0) {
       return (
         <TableCell className={classes.tablesCellsFlex}>
-          <Chip label={analysts} onClick={toggleManageTeamDrawer} />
+          <Chip
+            label={analysts}
+            onClick={(e) => {
+              e.stopPropagation();
+              toggleManageTeamDrawer(e);
+            }}
+          />
         </TableCell>
       );
     } else if (analysts === '' && support.length > 0) {
@@ -89,7 +88,10 @@ export default function AnalystCell(props) {
           </Typography>
           <Chip
             label={`${extraAnalysts} ${t('support')}`}
-            onClick={toggleManageTeamDrawer}
+            onClick={(e) => {
+              e.stopPropagation();
+              toggleManageTeamDrawer(e);
+            }}
             className="ml-1"
           />
         </TableCell>

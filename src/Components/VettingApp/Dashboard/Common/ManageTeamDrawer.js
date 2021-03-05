@@ -157,7 +157,8 @@ export default function ManageTeamDrawer(props) {
     assignAsSupport: false,
   });
 
-  const SnackbarClose = () => {
+  const SnackbarClose = (e) => {
+    e.stopPropagation();
     setSnackbar(false);
   };
 

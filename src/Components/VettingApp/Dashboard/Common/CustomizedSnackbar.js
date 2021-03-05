@@ -21,6 +21,10 @@ export default function CustomizedSnackbar(props) {
   const {t} = useTranslation();
   const classes = useStyles();
 
+  const handleClick = (e) => {
+    e.stopPropagation();
+  };
+
   return (
     <div className={classes.root}>
       <Snackbar
@@ -31,6 +35,7 @@ export default function CustomizedSnackbar(props) {
           vertical: 'bottom',
           horizontal: 'left',
         }}
+        onClick={handleClick}
       >
         <Alert onClose={props.toggleSnackbar} severity={props.severity}>
           {t(props.message)}
