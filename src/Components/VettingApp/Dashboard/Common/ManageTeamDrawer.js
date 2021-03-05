@@ -11,6 +11,7 @@ import {
   Avatar,
   Menu,
   MenuItem,
+  ListItemText,
 } from '@material-ui/core';
 import CloseIcon from '@material-ui/icons/Close';
 import PersonIcon from '@material-ui/icons/Person';
@@ -421,7 +422,13 @@ export default function ManageTeamDrawer(props) {
                         toggleDialog('assignAsLead', !dialog.assignAsLead);
                       }}
                     >
-                      Assign me as lead
+                      <ListItemText
+                        primary={
+                          <Typography variant="body2">
+                            Assign me as lead
+                          </Typography>
+                        }
+                      />
                     </MenuItem>
                     <MenuItem
                       onClick={() => {
@@ -431,7 +438,13 @@ export default function ManageTeamDrawer(props) {
                         );
                       }}
                     >
-                      Assign me as support
+                      <ListItemText
+                        primary={
+                          <Typography variant="body2">
+                            Assign me as support
+                          </Typography>
+                        }
+                      />
                     </MenuItem>
                   </Menu>
                 </>
