@@ -38,14 +38,15 @@ deploy_review:
 
 stop_review:
   stage: deploy_review
+  only:
+    - branches
+  except:
+    - master
   script:
-    - surge teardown https://uxdc-daaas-$CI_ENVIRONMENT_SLUG.surge.sh
+    - node_modules/.bin/surge teardown https://uxdc-daaas-$CI_ENVIRONMENT_SLUG.surge.sh
   environment:
     name: review/$CI_COMMIT_REF_NAME
     action: stop
-  rules:
-    - if: $CI_MERGE_REQUEST_ID
-      when: manual
 
 # Job name for gitlab to recognise this results in assets for Gitlab Pages
 # https://docs.gitlab.com/ee/user/project/pages/introduction.html#gitlab-pages-requirements
