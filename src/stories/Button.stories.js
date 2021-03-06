@@ -1,36 +1,169 @@
 import React from 'react';
 
-import { Button } from './Button';
+import {Button} from '../Components/CommonComponents/Button';
+import Icon from '@mdi/react';
+import {mdiPlus} from '@mdi/js';
 
 export default {
-  title: 'Example/Button',
+  title: 'Design System/Buttons/Button',
   component: Button,
-  argTypes: {
-    backgroundColor: { control: 'color' },
-  },
 };
 
-const Template = (args) => <Button {...args} />;
-
-export const Primary = Template.bind({});
-Primary.args = {
-  primary: true,
-  label: 'Button',
+export const AllButtons = (args) => {
+  return (
+    <>
+      <Button variant="contained" color="primary" className="m-1">
+        Primary
+      </Button>
+      <Button variant="contained" disabled className="m-1">
+        Disabled
+      </Button>
+      <br />
+      <Button variant="outlined" color="primary" className="m-1">
+        Primary
+      </Button>
+      <Button variant="outlined" disabled className="m-1">
+        Disabled
+      </Button>
+      <br />
+      <Button className="m-1">Default</Button>
+      <Button color="primary" className="m-1">
+        Primary
+      </Button>
+      <Button disabled className="m-1">
+        Disabled
+      </Button>
+    </>
+  );
 };
 
-export const Secondary = Template.bind({});
-Secondary.args = {
-  label: 'Button',
+export const ContainedButtons = (args) => {
+  return (
+    <>
+      <Button variant="contained" color="primary" className="m-1">
+        Primary
+      </Button>
+      <Button variant="contained" disabled className="m-1">
+        Disabled
+      </Button>
+      <Button
+        variant="contained"
+        color="primary"
+        href="#contained-buttons"
+        className="m-1"
+      >
+        Link
+      </Button>
+      <Button
+        variant="contained"
+        color="primary"
+        startIcon={<Icon path={mdiPlus} size={1} />}
+        className="m-1"
+      >
+        Start icon
+      </Button>
+      <Button
+        variant="contained"
+        color="primary"
+        endIcon={<Icon path={mdiPlus} size={1} />}
+        className="m-1"
+      >
+        End icon
+      </Button>
+      <Button
+        variant="contained"
+        color="primary"
+        endIcon={<Icon path={mdiPlus} size={1} />}
+        disabled
+        className="m-1"
+      >
+        Icon disabled
+      </Button>
+    </>
+  );
 };
 
-export const Large = Template.bind({});
-Large.args = {
-  size: 'large',
-  label: 'Button',
+export const OutlinedButtons = (args) => {
+  return (
+    <>
+      <Button variant="outlined" color="primary" className="m-1">
+        Primary
+      </Button>
+      <Button variant="outlined" disabled className="m-1">
+        Disabled
+      </Button>
+      <Button
+        variant="outlined"
+        color="primary"
+        href="#outlined-buttons"
+        className="m-1"
+      >
+        Link
+      </Button>
+      <Button
+        variant="outlined"
+        color="primary"
+        startIcon={<Icon path={mdiPlus} size={1} />}
+        className="m-1"
+      >
+        Start icon
+      </Button>
+      <Button
+        variant="outlined"
+        color="primary"
+        endIcon={<Icon path={mdiPlus} size={1} />}
+        className="m-1"
+      >
+        End icon
+      </Button>
+      <Button
+        variant="outlined"
+        color="primary"
+        startIcon={<Icon path={mdiPlus} size={1} />}
+        disabled
+        className="m-1"
+      >
+        Icon disabled
+      </Button>
+    </>
+  );
 };
 
-export const Small = Template.bind({});
-Small.args = {
-  size: 'small',
-  label: 'Button',
+export const TextButtons = (args) => {
+  return (
+    <>
+      <Button className="m-1">Default</Button>
+      <Button color="primary" className="m-1">
+        Primary
+      </Button>
+      <Button disabled className="m-1">
+        Disabled
+      </Button>
+      <Button href="#text-buttons" color="primary" className="m-1">
+        Link
+      </Button>
+      <Button
+        startIcon={<Icon path={mdiPlus} size={1} />}
+        color="primary"
+        className="m-1"
+      >
+        Start icon
+      </Button>
+      <Button
+        endIcon={<Icon path={mdiPlus} size={1} />}
+        color="primary"
+        className="m-1"
+      >
+        End icon
+      </Button>
+      <Button
+        startIcon={<Icon path={mdiPlus} size={1} />}
+        color="primary"
+        disabled
+        className="m-1"
+      >
+        Icon disabled
+      </Button>
+    </>
+  );
 };
