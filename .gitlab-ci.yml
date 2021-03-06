@@ -21,7 +21,7 @@ lint:
     - npm run lint
 
 deploy_review:
-  stage: deploy review
+  stage: deploy_review
   only:
     - branches
   except:
