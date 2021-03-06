@@ -422,7 +422,7 @@ function CreateAccountPage(props) {
                 <Grid item className={classes.loginInput}>
                   <Typography className={classes.loginLink}>
                     <Button
-                      // component={RouterLink}
+                      component={RouterLink}
                       to="/sign-in"
                       color="primary"
                       className="btn-edge-start"
@@ -478,7 +478,7 @@ function CreateAccountPage(props) {
                 <Grid item className={classes.loginInput}>
                   <Typography className={classes.loginLink}>
                     <Button
-                      // component={RouterLink}
+                      component={RouterLink}
                       to="/sign-in"
                       color="primary"
                       className="btn-edge-start"
@@ -491,7 +491,7 @@ function CreateAccountPage(props) {
                   <Button
                     variant="contained"
                     color="primary"
-                    // component={RouterLink}
+                    component={RouterLink}
                     to="/sign-in"
                   >
                     {t('Done')}
@@ -508,5 +508,4 @@ function CreateAccountPage(props) {
   );
 }
 
-// export default withRouter(CreateAccountPage);
-export default CreateAccountPage;
+export default withRouter(CreateAccountPage);
