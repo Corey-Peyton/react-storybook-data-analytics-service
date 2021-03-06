@@ -62,3 +62,14 @@ pages:
     - public # The built files for Gitlab Pages to serve
   only:
     - master # Only run on master branch
+
+storybook:
+  stage: deploy
+  # Export storybook as a static site (to public)
+  script:
+    - npm install
+    - npm run build-storybook
+    - node_modules/.bin/surge ./storybook-static https://uxdc-daaas-storybook.surge.sh    
+  # Only run on the `storybook` branch
+  only:
+    - master
