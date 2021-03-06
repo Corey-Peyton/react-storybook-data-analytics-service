@@ -35,6 +35,8 @@ deploy_review:
     name: review/$CI_COMMIT_REF_NAME
     url: http://uxdc-daaas-$CI_ENVIRONMENT_SLUG.surge.sh
     on_stop: stop_review
+  rules:
+    - if: $CI_MERGE_REQUEST_ID
 
 stop_review:
   stage: deploy_review
@@ -48,7 +50,8 @@ stop_review:
     name: review/$CI_COMMIT_REF_NAME
     action: stop
   rules:
-    when: manual
+    - if: $CI_MERGE_REQUEST_ID
+      when: manual
 
 # Job name for gitlab to recognise this results in assets for Gitlab Pages
 # https://docs.gitlab.com/ee/user/project/pages/introduction.html#gitlab-pages-requirements
