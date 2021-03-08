@@ -9,7 +9,7 @@ cache:
 # Name the stages involved in the pipeline
 stages:
 - lint
-- deploy review
+- deploy_review
 - deploy
 
 lint:
@@ -20,8 +20,8 @@ lint:
   script:
     - npm run lint
 
-deploy review:
-  stage: deploy review
+deploy_review:
+  stage: deploy_review
   only:
     - branches
   except:
@@ -34,6 +34,20 @@ deploy review:
   environment:
     name: review/$CI_COMMIT_REF_NAME
     url: http://uxdc-daaas-$CI_ENVIRONMENT_SLUG.surge.sh
+    on_stop: stop_review
+
+stop_review:
+  stage: deploy_review
+  only:
+    - branches
+  except:
+    - master
+  script:
+    - node_modules/.bin/surge teardown https://uxdc-daaas-$CI_ENVIRONMENT_SLUG.surge.sh
+  environment:
+    name: review/$CI_COMMIT_REF_NAME
+    action: stop
+  when: manual 
 
 # Job name for gitlab to recognise this results in assets for Gitlab Pages
 # https://docs.gitlab.com/ee/user/project/pages/introduction.html#gitlab-pages-requirements
@@ -50,3 +64,14 @@ pages:
     - public # The built files for Gitlab Pages to serve
   only:
     - master # Only run on master branch
+
+storybook:
+  stage: deploy
+  # Export storybook as a static site (to public)
+  script:
+    - npm install
+    - npm run build-storybook
+    - node_modules/.bin/surge ./storybook-static https://uxdc-daaas-storybook.surge.sh    
+  # Only run on the `storybook` branch
+  only:
+    - master
