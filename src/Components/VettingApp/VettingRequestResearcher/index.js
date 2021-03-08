@@ -26,7 +26,7 @@ import ArrowForwardIosIcon from '@material-ui/icons/ArrowForwardIos';
 import ArrowBackIosIcon from '@material-ui/icons/ArrowBackIos';
 import Icon from '@mdi/react';
 import {mdiLockOpenVariant} from '@mdi/js';
-import ResearcherInfo from '../CommonComponents/RequestForm/Index';
+import ResearcherInfo from '../CommonComponents/RequestForm/ResearcherInfo';
 import FilesList from '../CommonComponents/RequestForm/FilesList';
 import ResidualDisclosure from '../CommonComponents/RequestForm/ResidualDisclosure';
 import AdditionalInfo from '../CommonComponents/RequestForm/Additionalnfo';

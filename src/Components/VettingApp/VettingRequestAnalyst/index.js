@@ -23,7 +23,7 @@ import {
 import ArrowForwardIosIcon from '@material-ui/icons/ArrowForwardIos';
 import Avatar from '@material-ui/core/Avatar';
 import ArrowBackIosIcon from '@material-ui/icons/ArrowBackIos';
-import AnalystInfo from '../CommonComponents/RequestForm/Index';
+import AnalystInfo from '../CommonComponents/RequestForm/ResearcherInfo';
 import FilesList from '../CommonComponents/RequestForm/FilesList';
 import ResidualDisclosure from '../CommonComponents/RequestForm/ResidualDisclosure';
 import AdditionalInfo from '../CommonComponents/RequestForm/Additionalnfo';
