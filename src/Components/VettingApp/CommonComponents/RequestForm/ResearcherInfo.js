@@ -45,7 +45,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-function AnalystInfo(props) {
+function ResearchInfo(props) {
   const classes = useStyles();
   const {t} = useTranslation();
 
@@ -413,6 +413,7 @@ function AnalystInfo(props) {
             label="Request name"
             variant="outlined"
             defaultValue="Untitled request"
+            value={props.title}
             fullWidth
             margin="dense"
             className={classes.inputMargin}
@@ -476,4 +477,4 @@ function AnalystInfo(props) {
     </React.Fragment>
   );
 }
-export default AnalystInfo;
+export default ResearchInfo;
