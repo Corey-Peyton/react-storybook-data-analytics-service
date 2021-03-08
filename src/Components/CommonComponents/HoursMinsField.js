@@ -2,18 +2,15 @@ import React from 'react';
 import {makeStyles} from '@material-ui/core/styles';
 import PropTypes from 'prop-types';
 import clsx from 'clsx';
-// import InputMask from 'react-input-mask';
 import {
   OutlinedInput,
   FormControl,
   InputLabel,
   FormHelperText,
   TextField,
-  FormControlLabel,
 } from '@material-ui/core';
 import {InputGroup} from 'react-bootstrap';
 import NumberFormat from 'react-number-format';
-// import moment from 'moment';
 
 const useStyles = makeStyles((theme) => ({
   hoursInputGroup: {
@@ -110,17 +107,6 @@ function MultiInput(props) {
 
   return (
     <InputGroup className={classes.inputGroup}>
-      {/* <InputMask
-        className={classes.input}
-        placeholder="--"
-        mask="999999"
-        name={`${props.id}-hours`}
-        onFocus={props.onFocus}
-        onBlur={props.onBlur}
-        maskChar=" "
-        size="6"
-        onChange={props.handleHoursChange}
-      /> */}
       <NumberFormat
         className={classes.inputComponent}
         placeholder="--"
@@ -142,17 +128,6 @@ function MultiInput(props) {
           hours
         </InputGroup.Text>
       </InputGroup.Append>
-      {/* <InputMask
-        className={classes.input}
-        placeholder="--"
-        mask="99"
-        name={`${props.id}-minutes`}
-        onFocus={props.onFocus}
-        onBlur={props.onBlur}
-        maskChar=" "
-        size="2"
-        onChange={props.handleMinsChange}
-      /> */}
       <NumberFormat
         className={classes.inputComponent}
         placeholder="--"

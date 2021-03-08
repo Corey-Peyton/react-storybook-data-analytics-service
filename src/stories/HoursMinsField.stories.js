@@ -35,13 +35,12 @@ export const BasicField = (args) => {
   const handleValidation = (event) => {
     const hours = parseInt(state.hours, 10);
     const mins = parseInt(state.minutes, 10);
-    console.log(hours, mins);
-    if (hours === 0 && mins === 0) {
-      setState({...state, error: 'The minimum accepted value is 1 minute.'});
-    } else if (!hours && !mins) {
-      setState({...state, error: 'Enter an estimated time.'});
-    } else {
+    if (hours > 0 || mins > 0) {
       setState({...state, error: ''});
+    } else if (hours === 0 || mins === 0) {
+      setState({...state, error: 'The minimum accepted value is 1 minute.'});
+    } else {
+      setState({...state, error: 'Enter an estimated time.'});
     }
   };
 
