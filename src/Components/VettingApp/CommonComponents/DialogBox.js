@@ -649,6 +649,7 @@ export function DialogWithdraw(props) {
   };
 
   const handleClick = (e) => {
+    e.preventDefault();
     e.stopPropagation();
   };
 
@@ -665,6 +666,12 @@ export function DialogWithdraw(props) {
         disableBackdropClick
         scroll="paper"
         onClick={handleClick}
+        onKeyPress={(e) => {
+          if (e.key === 'Enter') {
+            e.preventDefault();
+            e.stopPropagation();
+          }
+        }}
       >
         <DialogTitle id="dashboard-dialog-title">
           <div className={classes.vettingContainerTitle}>
@@ -674,6 +681,13 @@ export function DialogWithdraw(props) {
               onClick={toggleDialog}
               edge="end"
               aria-label="Withdraw request - close"
+              onKeyPress={(e) => {
+                e.preventDefault();
+                e.stopPropagation();
+                if (e.key === 'Enter') {
+                  toggleDialog(e);
+                }
+              }}
             >
               <CloseIcon />
             </IconButton>
@@ -725,6 +739,14 @@ export function DialogWithdraw(props) {
               toggleDialog(e);
             }}
             className={classes.footerBtns}
+            onKeyPress={(e) => {
+              e.preventDefault();
+              e.stopPropagation();
+              if (e.key === 'Enter') {
+                setState({...initial});
+                toggleDialog(e);
+              }
+            }}
           >
             {t('Cancel')}
           </Button>
@@ -734,6 +756,12 @@ export function DialogWithdraw(props) {
             className={classes.footerBtns}
             type="submit"
             form="withdraw-form"
+            onKeyPress={(e) => {
+              e.stopPropagation();
+              if (e.key === 'Enter') {
+                submitForm(e);
+              }
+            }}
           >
             {t('Withdraw request')}
           </Button>
@@ -756,6 +784,7 @@ export function DialogUnassign(props) {
   const {toggleDialog, open} = props;
 
   const handleClick = (e) => {
+    e.preventDefault();
     e.stopPropagation();
   };
 
@@ -769,6 +798,12 @@ export function DialogUnassign(props) {
         disableBackdropClick
         scroll="paper"
         onClick={handleClick}
+        onKeyPress={(e) => {
+          if (e.key === 'Enter') {
+            e.preventDefault();
+            e.stopPropagation();
+          }
+        }}
       >
         <DialogTitle id="dashboard-dialog-title">
           <div className={classes.vettingContainerTitle}>
@@ -778,6 +813,13 @@ export function DialogUnassign(props) {
               onClick={toggleDialog}
               edge="end"
               aria-label="Unassign from me - close"
+              onKeyPress={(e) => {
+                e.preventDefault();
+                e.stopPropagation();
+                if (e.key === 'Enter') {
+                  toggleDialog(e);
+                }
+              }}
             >
               <CloseIcon />
             </IconButton>
@@ -804,6 +846,13 @@ export function DialogUnassign(props) {
             color="primary"
             onClick={toggleDialog}
             className={classes.footerBtns}
+            onKeyPress={(e) => {
+              e.preventDefault();
+              e.stopPropagation();
+              if (e.key === 'Enter') {
+                toggleDialog(e);
+              }
+            }}
           >
             {t('Cancel')}
           </Button>
@@ -812,6 +861,13 @@ export function DialogUnassign(props) {
             color="primary"
             onClick={toggleDialog}
             className={classes.footerBtns}
+            onKeyPress={(e) => {
+              e.preventDefault();
+              e.stopPropagation();
+              if (e.key === 'Enter') {
+                toggleDialog(e);
+              }
+            }}
           >
             {t('Unassign')}
           </Button>
@@ -828,6 +884,7 @@ export function DialogSupport(props) {
   const {toggleDialog, open} = props;
 
   const handleClick = (e) => {
+    e.preventDefault();
     e.stopPropagation();
   };
 
@@ -841,6 +898,12 @@ export function DialogSupport(props) {
         disableBackdropClick
         scroll="paper"
         onClick={handleClick}
+        onKeyPress={(e) => {
+          if (e.key === 'Enter') {
+            e.preventDefault();
+            e.stopPropagation();
+          }
+        }}
       >
         <DialogTitle id="dashboard-dialog-title">
           <div className={classes.vettingContainerTitle}>
@@ -850,6 +913,13 @@ export function DialogSupport(props) {
               onClick={toggleDialog}
               edge="end"
               aria-label="Make me support - close"
+              onKeyPress={(e) => {
+                e.preventDefault();
+                e.stopPropagation();
+                if (e.key === 'Enter') {
+                  toggleDialog(e);
+                }
+              }}
             >
               <CloseIcon />
             </IconButton>
@@ -876,6 +946,13 @@ export function DialogSupport(props) {
             color="primary"
             onClick={toggleDialog}
             className={classes.footerBtns}
+            onKeyPress={(e) => {
+              e.preventDefault();
+              e.stopPropagation();
+              if (e.key === 'Enter') {
+                toggleDialog(e);
+              }
+            }}
           >
             {t('Cancel')}
           </Button>
@@ -884,6 +961,13 @@ export function DialogSupport(props) {
             color="primary"
             onClick={toggleDialog}
             className={classes.footerBtns}
+            onKeyPress={(e) => {
+              e.preventDefault();
+              e.stopPropagation();
+              if (e.key === 'Enter') {
+                toggleDialog(e);
+              }
+            }}
           >
             {t('Continue')}
           </Button>
@@ -1054,6 +1138,7 @@ export function DialogAssign(props) {
   };
 
   const handleClick = (e) => {
+    e.preventDefault();
     e.stopPropagation();
   };
 
@@ -1070,6 +1155,12 @@ export function DialogAssign(props) {
         disableBackdropClick
         scroll="paper"
         onClick={handleClick}
+        onKeyPress={(e) => {
+          if (e.key === 'Enter') {
+            e.preventDefault();
+            e.stopPropagation();
+          }
+        }}
       >
         <DialogTitle id="dashboard-dialog-title">
           <div className={classes.vettingContainerTitle}>
@@ -1079,6 +1170,13 @@ export function DialogAssign(props) {
               onClick={toggleDialog}
               edge="end"
               aria-label="Assign to me - close"
+              onKeyPress={(e) => {
+                e.preventDefault();
+                e.stopPropagation();
+                if (e.key === 'Enter') {
+                  toggleDialog(e);
+                }
+              }}
             >
               <CloseIcon />
             </IconButton>
@@ -1137,6 +1235,13 @@ export function DialogAssign(props) {
               toggleDialog(e);
             }}
             className={classes.footerBtns}
+            onKeyPress={(e) => {
+              e.preventDefault();
+              e.stopPropagation();
+              if (e.key === 'Enter') {
+                toggleDialog(e);
+              }
+            }}
           >
             {t('Cancel')}
           </Button>
@@ -1146,6 +1251,12 @@ export function DialogAssign(props) {
             color="primary"
             className={classes.footerBtns}
             form="assign-form"
+            onKeyPress={(e) => {
+              e.stopPropagation();
+              if (e.key === 'Enter') {
+                submitForm(e);
+              }
+            }}
           >
             {t('Continue')}
           </Button>
@@ -1314,6 +1425,7 @@ export function DialogUpdate(props) {
   };
 
   const handleClick = (e) => {
+    e.preventDefault();
     e.stopPropagation();
   };
 
@@ -1330,6 +1442,12 @@ export function DialogUpdate(props) {
         scroll="paper"
         disableBackdropClick
         onClick={handleClick}
+        onKeyPress={(e) => {
+          if (e.key === 'Enter') {
+            e.preventDefault();
+            e.stopPropagation();
+          }
+        }}
       >
         <DialogTitle id="dashboard-dialog-title">
           <div className={classes.vettingContainerTitle}>
@@ -1339,6 +1457,13 @@ export function DialogUpdate(props) {
               onClick={toggleDialog}
               edge="end"
               aria-label="Request an update - close"
+              onKeyPress={(e) => {
+                e.preventDefault();
+                e.stopPropagation();
+                if (e.key === 'Enter') {
+                  toggleDialog(e);
+                }
+              }}
             >
               <CloseIcon />
             </IconButton>
@@ -1394,6 +1519,14 @@ export function DialogUpdate(props) {
               toggleDialog(e);
             }}
             className={classes.footerBtns}
+            onKeyPress={(e) => {
+              e.preventDefault();
+              e.stopPropagation();
+              if (e.key === 'Enter') {
+                setState({...initial});
+                toggleDialog(e);
+              }
+            }}
           >
             {t('Cancel')}
           </Button>
@@ -1403,6 +1536,12 @@ export function DialogUpdate(props) {
             color="primary"
             className={classes.footerBtns}
             form="update-form"
+            onKeyPress={(e) => {
+              e.stopPropagation();
+              if (e.key === 'Enter') {
+                submitForm(e);
+              }
+            }}
           >
             {t('Submit request')}
           </Button>
@@ -1639,6 +1778,7 @@ export function DialogDenied(props) {
   };
 
   const handleClick = (e) => {
+    e.preventDefault();
     e.stopPropagation();
   };
 
@@ -1655,6 +1795,12 @@ export function DialogDenied(props) {
         disableBackdropClick
         scroll="paper"
         onClick={handleClick}
+        onKeyPress={(e) => {
+          if (e.key === 'Enter') {
+            e.preventDefault();
+            e.stopPropagation();
+          }
+        }}
       >
         <DialogTitle id="dashboard-dialog-title">
           <div className={classes.vettingContainerTitle}>
@@ -1664,6 +1810,13 @@ export function DialogDenied(props) {
               onClick={toggleDialog}
               edge="end"
               aria-label="Deny request - close"
+              onKeyPress={(e) => {
+                e.preventDefault();
+                e.stopPropagation();
+                if (e.key === 'Enter') {
+                  toggleDialog(e);
+                }
+              }}
             >
               <CloseIcon />
             </IconButton>
@@ -1869,6 +2022,14 @@ export function DialogDenied(props) {
               toggleDialog(e);
             }}
             className={classes.footerBtns}
+            onKeyPress={(e) => {
+              e.preventDefault();
+              e.stopPropagation();
+              if (e.key === 'Enter') {
+                setState({...initial});
+                toggleDialog(e);
+              }
+            }}
           >
             {t('Cancel')}
           </Button>
@@ -1878,6 +2039,12 @@ export function DialogDenied(props) {
             color="primary"
             className={classes.footerBtns}
             form="deny-form"
+            onKeyPress={(e) => {
+              e.stopPropagation();
+              if (e.key === 'Enter') {
+                submitForm(e);
+              }
+            }}
           >
             {t('Submit')}
           </Button>
@@ -2078,6 +2245,7 @@ export function DialogApprove(props) {
   };
 
   const handleClick = (e) => {
+    e.preventDefault();
     e.stopPropagation();
   };
 
@@ -2091,6 +2259,12 @@ export function DialogApprove(props) {
         disableBackdropClick
         scroll="paper"
         onClick={handleClick}
+        onKeyPress={(e) => {
+          if (e.key === 'Enter') {
+            e.preventDefault();
+            e.stopPropagation();
+          }
+        }}
       >
         <DialogTitle id="dashboard-dialog-title">
           <div className={classes.vettingContainerTitle}>
@@ -2100,6 +2274,13 @@ export function DialogApprove(props) {
               onClick={toggleDialog}
               edge="end"
               aria-label="Approve request - close"
+              onKeyPress={(e) => {
+                e.preventDefault();
+                e.stopPropagation();
+                if (e.key === 'Enter') {
+                  toggleDialog(e);
+                }
+              }}
             >
               <CloseIcon />
             </IconButton>
@@ -2199,6 +2380,14 @@ export function DialogApprove(props) {
               toggleDialog(e);
             }}
             className={classes.footerBtns}
+            onKeyPress={(e) => {
+              e.preventDefault();
+              e.stopPropagation();
+              if (e.key === 'Enter') {
+                setState({...initial});
+                toggleDialog(e);
+              }
+            }}
           >
             {t('Cancel')}
           </Button>
@@ -2208,6 +2397,12 @@ export function DialogApprove(props) {
             color="primary"
             className={classes.footerBtns}
             form="approve-form"
+            onKeyPress={(e) => {
+              e.stopPropagation();
+              if (e.key === 'Enter') {
+                submitForm(e);
+              }
+            }}
           >
             {t('Submit')}
           </Button>
@@ -2548,8 +2743,8 @@ export function DialogNoLead(props) {
           <Button
             variant="outlined"
             color="primary"
-            onClick={() => {
-              toggleDialog();
+            onClick={(e) => {
+              toggleDialog(e);
             }}
             className={classes.footerBtns}
           >
@@ -2558,9 +2753,9 @@ export function DialogNoLead(props) {
           <Button
             variant="contained"
             color="primary"
-            onClick={() => {
-              toggleDialog();
-              toggleManageTeamDrawer();
+            onClick={(e) => {
+              toggleDialog(e);
+              toggleManageTeamDrawer(e);
               setSnackbar(!snackbar);
             }}
             className={classes.footerBtns}

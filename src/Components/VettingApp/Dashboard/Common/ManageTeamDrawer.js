@@ -158,8 +158,7 @@ export default function ManageTeamDrawer(props) {
     assignAsSupport: false,
   });
 
-  const SnackbarClose = (e) => {
-    e.stopPropagation();
+  const SnackbarClose = () => {
     setSnackbar(false);
   };
 
@@ -212,7 +211,7 @@ export default function ManageTeamDrawer(props) {
     handleClose();
   };
 
-  const applyChanges = () => {
+  const applyChanges = (e) => {
     let isLead = false;
     analysts.forEach((analyst) => {
       if (analyst.role === 'lead') {
@@ -313,7 +312,6 @@ export default function ManageTeamDrawer(props) {
               <Avatar
                 style={handleAvatarStyle(analyst.avatar)}
                 className={classes.avatar}
-                onClick={() => console.log(analysts)}
               >
                 {handleInitials(analyst.name)}
               </Avatar>
@@ -405,6 +403,7 @@ export default function ManageTeamDrawer(props) {
                     id="assign-as-menu"
                     anchorEl={anchorEl}
                     keepMounted
+                    disablePortal
                     open={Boolean(anchorEl)}
                     onClose={handleClose}
                     getContentAnchorEl={null}
@@ -482,8 +481,8 @@ export default function ManageTeamDrawer(props) {
           variant="contained"
           color="primary"
           className={classes.footerBtns}
-          onClick={() => {
-            applyChanges();
+          onClick={(e) => {
+            applyChanges(e);
           }}
         >
           {t('Apply')}
