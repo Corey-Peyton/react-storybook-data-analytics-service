@@ -126,6 +126,27 @@ export default function TableContainerComponent(props) {
     });
   };
 
+  const navigateRows = (e) => {
+    const current = e.target;
+    if (e.key === 'ArrowUp') {
+      if (
+        current.previousElementSibling &&
+        current.previousElementSibling.classList.contains(
+            'makeStyles-tableRow-296',
+        )
+      ) {
+        current.previousElementSibling.focus();
+      }
+    } else if (e.key === 'ArrowDown') {
+      if (
+        current.nextElementSibling &&
+        current.nextElementSibling.classList.contains('makeStyles-tableRow-296')
+      ) {
+        current.nextElementSibling.focus();
+      }
+    }
+  };
+
   const emptyRows =
     rowsPerPage -
     Math.min(rowsPerPage, filteredRows().length - page * rowsPerPage);
@@ -164,6 +185,7 @@ export default function TableContainerComponent(props) {
                         navigateToRequest();
                       }
                     }}
+                    onKeyUp={navigateRows}
                   >
                     <TableCell id={labelId} className={classes.tablesCells}>
                       <Typography variant="body2" noWrap={true}>

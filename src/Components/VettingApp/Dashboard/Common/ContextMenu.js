@@ -811,6 +811,13 @@ export function ActionsMenu(props) {
         aria-haspopup="true"
         aria-label="Actions menu"
         edge="end"
+        onKeyPress={(e) => {
+          e.preventDefault();
+          e.stopPropagation();
+          if (e.key === 'Enter') {
+            handleClick(e);
+          }
+        }}
       >
         <MoreVertIcon />
       </IconButton>
@@ -902,6 +909,7 @@ export function AnalystMenu(props) {
         id={ariaControls}
         anchorEl={anchorEl}
         keepMounted
+        disablePortal
         open={Boolean(anchorEl)}
         onClose={handleClose}
       >
@@ -916,16 +924,15 @@ export function AnalystMenu(props) {
             }
           />
         </MenuItem>
-        <MenuItem>
+        <MenuItem
+          onClick={() => {
+            unassignRequest();
+            toggleAssignMeMenu();
+          }}
+        >
           <ListItemText
             primary={
-              <Typography
-                variant="body2"
-                onClick={() => {
-                  unassignRequest();
-                  toggleAssignMeMenu();
-                }}
-              >
+              <Typography variant="body2">
                 {current ? t('Unassign myself') : t('Unassign user')}
               </Typography>
             }
@@ -939,6 +946,7 @@ export function AnalystMenu(props) {
         id={ariaControls}
         anchorEl={anchorEl}
         keepMounted
+        disablePortal
         open={Boolean(anchorEl)}
         onClose={handleClose}
       >
@@ -951,16 +959,15 @@ export function AnalystMenu(props) {
             }
           />
         </MenuItem>
-        <MenuItem>
+        <MenuItem
+          onClick={() => {
+            unassignRequest();
+            toggleAssignMeMenu();
+          }}
+        >
           <ListItemText
             primary={
-              <Typography
-                variant="body2"
-                onClick={() => {
-                  unassignRequest();
-                  toggleAssignMeMenu();
-                }}
-              >
+              <Typography variant="body2">
                 {current ? t('Unassign myself') : t('Unassign user')}
               </Typography>
             }
