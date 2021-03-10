@@ -273,7 +273,6 @@ function VettingRequestResearcher(props) {
   };
 
   const handleTitleChange = (e) => {
-    console.log(e.target.value);
     const title = e.target.value;
     if (title !== '') {
       setState({...state, title: e.target.value});
