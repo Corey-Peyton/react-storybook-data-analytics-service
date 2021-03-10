@@ -48,6 +48,74 @@ const useStyles = makeStyles((theme) => ({
 function ResearchInfo(props) {
   const classes = useStyles();
   const {t} = useTranslation();
+  const initial = {
+    Firstname: {
+      text: '',
+      errorText: '',
+      invalid: '',
+      commands: '',
+    },
+    Lastname: {
+      text: '',
+      errorText: '',
+      invalid: '',
+      commands: '',
+    },
+    Username: {
+      text: '',
+      errorText: '',
+      invalid: '',
+      commands: '',
+    },
+    Role: {
+      text: '',
+      errorText: '',
+      invalid: '',
+      commands: '',
+    },
+    Email: {
+      text: '',
+      errorText: '',
+      invalid: '',
+      commands: '',
+    },
+    Phonenumber: {
+      text: '',
+      errorText: '',
+      invalid: '',
+      commands: '',
+    },
+    project: {
+      text: '',
+      errorText: '',
+      invalid: '',
+      commands: '',
+    },
+    RequestID: {
+      text: '',
+      errorText: '',
+      invalid: '',
+      commands: '',
+    },
+    Requestname: {
+      text: 'Untitled request',
+      errorText: '',
+      invalid: '',
+      commands: '',
+    },
+    Createdon: {
+      text: '',
+      errorText: '',
+      invalid: '',
+      commands: '',
+    },
+    Updatedon: {
+      text: '',
+      errorText: '',
+      invalid: '',
+      commands: '',
+    },
+  };
 
   const [state, setState] = React.useState({
     Firstname: {
@@ -99,7 +167,7 @@ function ResearchInfo(props) {
       commands: '',
     },
     Requestname: {
-      text: '',
+      text: 'Untitled request',
       errorText: '',
       invalid: '',
       commands: '',
@@ -209,6 +277,16 @@ function ResearchInfo(props) {
         });
       }
     }
+    if (!state[value].text) {
+      // if field is empty, set field to "untitled request"
+      setState({
+        ...state,
+        [value]: {
+          ...state[value],
+          text: initial[value].text,
+        },
+      });
+    }
   };
 
   return (
@@ -255,7 +333,6 @@ function ResearchInfo(props) {
             required
             fullWidth
             margin="dense"
-            defaultValue={props.title}
             className={classes.inputMargin}
             onCut={(e) => disableCutCopyPaste(e, 'cut', 'Lastname')}
             onCopy={(e) => disableCutCopyPaste(e, 'copy', 'Lastname')}
@@ -298,7 +375,6 @@ function ResearchInfo(props) {
             required
             fullWidth
             margin="dense"
-            defaultValue={props.title}
             className={classes.inputMargin}
             onCut={(e) => disableCutCopyPaste(e, 'cut', 'Role')}
             onCopy={(e) => disableCutCopyPaste(e, 'copy', 'Role')}
@@ -307,7 +383,7 @@ function ResearchInfo(props) {
             onClick={() => toggleHelperText('Role')}
             onBlur={() => toggleHelperText('Role')}
             onFocus={() => toggleHelperText('Role')}
-            value="?"
+            value="Primary Researcher"
             error={Boolean(state.Role.errorText)}
             helperText={state.Role.errorText}
             inputProps={{readOnly: true}}
@@ -320,7 +396,6 @@ function ResearchInfo(props) {
             required
             fullWidth
             margin="dense"
-            defaultValue={props.title}
             className={classes.inputMargin}
             onCut={(e) => disableCutCopyPaste(e, 'cut', 'Email')}
             onCopy={(e) => disableCutCopyPaste(e, 'copy', 'Email')}
@@ -412,15 +487,17 @@ function ResearchInfo(props) {
             name="Requestname"
             label="Request name"
             variant="outlined"
-            defaultValue="Untitled request"
-            value={props.title}
+            value={state.Requestname.text}
             fullWidth
             margin="dense"
             className={classes.inputMargin}
             onCut={(e) => disableCutCopyPaste(e, 'cut', 'Requestname')}
             onCopy={(e) => disableCutCopyPaste(e, 'copy', 'Requestname')}
             onPaste={(e) => disableCutCopyPaste(e, 'paste', 'Requestname')}
-            onChange={(e) => handleChange(e, 'Requestname')}
+            onChange={(e) => {
+              handleChange(e, 'Requestname');
+              props.handleTitleChange(e);
+            }}
             onClick={() => toggleHelperText('Requestname')}
             onBlur={() => toggleHelperText('Requestname')}
             onFocus={() => toggleHelperText('Requestname')}
