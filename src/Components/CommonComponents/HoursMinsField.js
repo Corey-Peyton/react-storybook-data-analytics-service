@@ -9,7 +9,6 @@ import {
   InputLabel,
   FormHelperText,
   TextField,
-  FormControlLabel,
 } from '@material-ui/core';
 import {InputGroup} from 'react-bootstrap';
 import NumberFormat from 'react-number-format';
