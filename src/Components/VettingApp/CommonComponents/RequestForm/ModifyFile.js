@@ -257,8 +257,7 @@ function OutputFileForm(props) {
       errorText: '',
       invalid: '',
       commands: '',
-      helperText:
-        'Each sheet for a spreadsheet file should be listed separately',
+      helperText: 'For spreadsheets only. Add a file for each sheet.',
     },
     survey: {
       text: '',
@@ -286,8 +285,7 @@ function OutputFileForm(props) {
       errorText: '',
       invalid: '',
       commands: '',
-      helperText:
-        'Example: males 50 years of age or older. Required if you subsetted or selected only a certain set of respondents from the data for all or part of the analysis',
+      helperText: '(e.g. Males 50 years of age or older)',
     },
     geography: {
       text: '',
@@ -301,7 +299,7 @@ function OutputFileForm(props) {
       errorText: '',
       invalid: '',
       commands: '',
-      helperText: 'Examples: person-based, record-based, matching geographies',
+      helperText: '(e.g. person-based, record-based, matching geographies)',
     },
     modified: {
       text: '',
@@ -355,8 +353,7 @@ function OutputFileForm(props) {
       errorText: '',
       invalid: '',
       commands: '',
-      helperText:
-        'Each sheet for a spreadsheet file should be listed separately',
+      helperText: 'For spreadsheets only. Add a file for each sheet.',
     },
     survey: {
       text: '',
@@ -384,8 +381,7 @@ function OutputFileForm(props) {
       errorText: '',
       invalid: '',
       commands: '',
-      helperText:
-        'Example: males 50 years of age or older. Required if you subsetted or selected only a certain set of respondents from the data for all or part of the analysis',
+      helperText: '(e.g. Males 50 years of age or older)',
     },
     geography: {
       text: '',
@@ -399,7 +395,7 @@ function OutputFileForm(props) {
       errorText: '',
       invalid: '',
       commands: '',
-      helperText: 'Examples: person-based, record-based, matching geographies',
+      helperText: '(e.g. person-based, record-based, matching geographies)',
     },
     modified: {
       text: '',
@@ -554,7 +550,6 @@ function OutputFileForm(props) {
         label="Sheet name"
         variant="outlined"
         fullWidth
-        required
         onCut={(e) => disableCutCopyPaste(e, 'cut', 'sheetname')}
         onCopy={(e) => disableCutCopyPaste(e, 'copy', 'sheetname')}
         onPaste={(e) => disableCutCopyPaste(e, 'paste', 'sheetname')}
@@ -806,7 +801,7 @@ function OutputFileForm(props) {
           className={classes.inputMargin}
           margin="dense"
           id="linkageDescription"
-          label="Describe how linkage was done"
+          label="Describe linkage method"
           variant="outlined"
           fullWidth
           required
@@ -829,7 +824,7 @@ function OutputFileForm(props) {
         <FormLabel component="legend" className={classes.tooltipLabel}>
           Are variables related to income, earnings, tax and/or dollar values
           included?{' '}
-          <BootstrapTooltip title="If no, future vetting release reuests under this contract may be restricted due to residual disclosure. You are strongly encouraged to consult with your analyst.">
+          <BootstrapTooltip title="If no, future vetting release reuests under this contract may be restricted due to residual disclosure. You are strongly encouraged to consult with your Analyst.">
             <InfoIcon />
           </BootstrapTooltip>
         </FormLabel>
@@ -1111,11 +1106,11 @@ function OutputFileForm(props) {
         variant="outlined"
         fullWidth
       >
-        <InputLabel id="outputFolder1-label">Output Folder Name</InputLabel>
+        <InputLabel id="suppFolder1-label">Supporting folder</InputLabel>
         <Select
-          id="outputFolder1"
-          label="Output Folder Name *"
-          labelId="outputFolder1-label"
+          id="suppFolder1"
+          label="Supporting folder *"
+          labelId="suppFolder1-label"
         >
           <MenuItem>Folder 1</MenuItem>
           <MenuItem>Folder 2</MenuItem>
@@ -1125,7 +1120,7 @@ function OutputFileForm(props) {
         className={classes.inputMargin}
         margin="dense"
         id="fileContents1"
-        label="File Contents"
+        label="File contents"
         variant="outlined"
         fullWidth
         required
@@ -1178,11 +1173,11 @@ function OutputFileForm(props) {
         variant="outlined"
         fullWidth
       >
-        <InputLabel id="outputFolder2-label">Output Folder Name</InputLabel>
+        <InputLabel id="suppFolder2-label">Supporting folder</InputLabel>
         <Select
-          id="outputFolder2"
-          label="Output Folder Name *"
-          labelId="outputFolder2-label"
+          id="suppFolder2"
+          label="Supporting folder *"
+          labelId="suppFolder2-label"
         >
           <MenuItem>Folder 1</MenuItem>
           <MenuItem>Folder 2</MenuItem>
@@ -1192,7 +1187,7 @@ function OutputFileForm(props) {
         className={classes.inputMargin}
         margin="dense"
         id="fileContents2"
-        label="File Contents"
+        label="File contents"
         variant="outlined"
         fullWidth
         required
@@ -1233,9 +1228,9 @@ function OutputFileForm(props) {
           color="primary"
           onClick={() => props.handleClickOpen('dialogAddSupporting')}
         >
-          Add Supporting File
+          Add supporting file
         </Button>
-        <BootstrapTooltip title="In addition to the mandatory files listed, include other files as required by the Survey Specific Guidelines, syntax files or other files requested by the analyst.">
+        <BootstrapTooltip title="In addition to the mandatory files listed, include other files as required by the Survey Specific Guidelines, syntax files or other files requested by the Analyst.">
           <InfoIcon />
         </BootstrapTooltip>
       </div>

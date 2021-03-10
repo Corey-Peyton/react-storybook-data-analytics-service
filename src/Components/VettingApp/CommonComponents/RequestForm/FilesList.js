@@ -386,7 +386,7 @@ function FilesList(props) {
       >
         <FormLabel component="legend" className={classes.tooltipLabel}>
           Is the requested output your final output?
-          <BootstrapTooltip title="If no, future vetting release requests under this contract may be restricted due to residual disclosure. You are strongly encouraged to consult with your analyst.">
+          <BootstrapTooltip title="If no, future vetting release requests under this contract may be restricted due to residual disclosure. You are strongly encouraged to consult with your Analyst.">
             <InfoIcon />
           </BootstrapTooltip>
         </FormLabel>
@@ -592,8 +592,8 @@ function FilesList(props) {
             <div className={classes.vettingRow}>
               <div className={classes.vettingColumn}>
                 <FormControl required variant="outlined" fullWidth>
-                  <InputLabel id="outputFolder-label">
-                    Output folder name
+                  <InputLabel id="supportingFilesFolder-label">
+                    Supporting folder
                   </InputLabel>
                   <Select
                     id="supportingFilesFolder"
