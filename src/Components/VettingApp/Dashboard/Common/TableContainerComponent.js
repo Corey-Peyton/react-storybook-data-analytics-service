@@ -1,6 +1,6 @@
 import React from 'react';
 import {useTranslation} from 'react-i18next';
-import {makeStyles} from '@material-ui/core/styles';
+import {makeStyles, fade} from '@material-ui/core/styles';
 import {useHistory} from 'react-router-dom';
 import {
   Typography,
@@ -37,8 +37,11 @@ const useStyles = makeStyles((theme) => ({
     minHeight: `calc(${ROW_HEIGHT}px - ${theme.spacing(2)}px)`,
   },
   tableRow: {
-    cursor: 'pointer',
-    height: ROW_HEIGHT,
+    'cursor': 'pointer',
+    'height': ROW_HEIGHT,
+    '&:focus': {
+      backgroundColor: fade(theme.palette.common.black, 0.08),
+    },
   },
   status: {
     textTransform: 'uppercase',
@@ -114,6 +117,36 @@ export default function TableContainerComponent(props) {
     }
   }
 
+  const navigateToRequest = () => {
+    history.push({
+      pathname:
+        role === 'researcher' ?
+          '/vetting-app/request-researcher' :
+          '/vetting-app/request-analyst-assigned',
+    });
+  };
+
+  const navigateRows = (e) => {
+    const current = e.target;
+    if (e.key === 'ArrowUp') {
+      if (
+        current.previousElementSibling &&
+        current.previousElementSibling.classList.contains(
+            'makeStyles-tableRow-296',
+        )
+      ) {
+        current.previousElementSibling.focus();
+      }
+    } else if (e.key === 'ArrowDown') {
+      if (
+        current.nextElementSibling &&
+        current.nextElementSibling.classList.contains('makeStyles-tableRow-296')
+      ) {
+        current.nextElementSibling.focus();
+      }
+    }
+  };
+
   const emptyRows =
     rowsPerPage -
     Math.min(rowsPerPage, filteredRows().length - page * rowsPerPage);
@@ -143,17 +176,16 @@ export default function TableContainerComponent(props) {
                 return (
                   <TableRow
                     hover
-                    tabIndex={-1}
+                    tabIndex={0}
                     key={row.id}
                     className={classes.tableRow}
-                    onClick={() => {
-                      history.push({
-                        pathname:
-                        role === 'researcher' ?
-                          '/vetting-app/request-researcher' :
-                          '/vetting-app/request-analyst-assigned',
-                      });
+                    onClick={navigateToRequest}
+                    onKeyPress={(e) => {
+                      if (e.key === 'Enter') {
+                        navigateToRequest();
+                      }
                     }}
+                    onKeyUp={navigateRows}
                   >
                     <TableCell id={labelId} className={classes.tablesCells}>
                       <Typography variant="body2" noWrap={true}>
