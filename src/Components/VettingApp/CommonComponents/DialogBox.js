@@ -168,8 +168,6 @@ export function DialogAnalyst(props) {
     e.stopPropagation();
   };
 
-  console.log(mdiRollerSkate);
-
   return (
     <React.Fragment>
       <Dialog
