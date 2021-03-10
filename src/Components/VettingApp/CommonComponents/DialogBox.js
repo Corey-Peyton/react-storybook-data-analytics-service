@@ -7,7 +7,7 @@ import {makeStyles} from '@material-ui/core/styles';
 import {green} from '@material-ui/core/colors';
 import CloseIcon from '@material-ui/icons/Close';
 import Icon from '@mdi/react';
-import {mdiAccount} from '@mdi/js';
+import {mdiAccount, mdiRollerSkate} from '@mdi/js';
 import {
   Box,
   Typography,
@@ -168,6 +168,8 @@ export function DialogAnalyst(props) {
     e.stopPropagation();
   };
 
+  console.log(mdiRollerSkate);
+
   return (
     <React.Fragment>
       <Dialog
@@ -181,7 +183,7 @@ export function DialogAnalyst(props) {
       >
         <DialogTitle id="dashboard-dialog-title">
           <div className={classes.vettingContainerTitle}>
-            <Typography variant="h6">{t(header)}</Typography>
+            <Typography variant="h6">{header} </Typography>
             <IconButton
               id="dialog-close"
               onClick={toggleDialog}
