@@ -7,7 +7,7 @@ import {makeStyles} from '@material-ui/core/styles';
 import {green} from '@material-ui/core/colors';
 import CloseIcon from '@material-ui/icons/Close';
 import Icon from '@mdi/react';
-import {mdiAccount, mdiRollerSkate} from '@mdi/js';
+import {mdiAccount} from '@mdi/js';
 import {
   Box,
   Typography,
