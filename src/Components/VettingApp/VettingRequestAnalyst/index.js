@@ -40,6 +40,7 @@ import Footer from '../CommonComponents/Footer';
 import CloseIcon from '@material-ui/icons/Close';
 import FloatingSupportButton from '../CommonComponents/Support';
 import CutCopyPasteAlert from '../CommonComponents/CutCopyPasteAlert';
+import ManageTeamDrawer from '../Dashboard/Common/ManageTeamDrawer';
 
 const useStyles = makeStyles((theme) => ({
   dialogTitle: {
@@ -142,6 +143,13 @@ function getSteps() {
 }
 
 function VettingRequestAnalyst(props) {
+  // const {clickHandler} = props;
+  const [open, setOpen] = React.useState({
+    manageTeamDrawer: false,
+  });
+  const toggleManageTeamDrawer = () => {
+    setOpen({...open, manageTeamDrawer: !open.manageTeamDrawer});
+  };
   const classes = useStyles();
   const [state, setState] = React.useState({
     activeStep: 0,
@@ -273,6 +281,11 @@ function VettingRequestAnalyst(props) {
       <Header />
       <main className={classes.main} tabIndex="-1">
         <Container maxWidth="xl" className="page-container">
+          <ManageTeamDrawer
+            open={open.manageTeamDrawer}
+            clickHandler={toggleManageTeamDrawer}
+            toggleManageTeamDrawer={toggleManageTeamDrawer}
+          />
           <AppBar position="static" className={classes.appBar} color="default">
             {state.lead === state.userName ? (
               <ToolBarUnassign handleUnassignFromMe={handleUnassignFromMe} />
