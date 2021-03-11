@@ -181,7 +181,7 @@ export function DialogAnalyst(props) {
       >
         <DialogTitle id="dashboard-dialog-title">
           <div className={classes.vettingContainerTitle}>
-            <Typography variant="h6">{t(header)}</Typography>
+            <Typography variant="h6">{header} </Typography>
             <IconButton
               id="dialog-close"
               onClick={toggleDialog}
