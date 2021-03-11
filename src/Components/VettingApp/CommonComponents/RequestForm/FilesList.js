@@ -27,13 +27,18 @@ import {
   Radio,
   Tooltip,
 } from '@material-ui/core';
-import Snackbar from '@material-ui/core/Snackbar';
 import Alert from '@material-ui/lab/Alert';
 import {AddFile, ModifyFile} from './ModifyFile';
 import CloseIcon from '@material-ui/icons/Close';
 import InfoIcon from '@material-ui/icons/Info';
 import Icon from '@mdi/react';
 import {mdiFileDocumentOutline} from '@mdi/js';
+import {
+  SnackbarAddOutputFile,
+  SnackbarAddSupportFile,
+  SnackbarDeleteOutputFile,
+  SnackbarUpdateOutputFile,
+} from '../Snackbars';
 
 const useStylesBootstrap = makeStyles((theme) => ({
   arrow: {
@@ -706,81 +711,25 @@ function FilesList(props) {
         </DialogActions>
       </Dialog>
       {/* Add supporting file snackbar */}
-      <Snackbar
+      <SnackbarAddSupportFile
         open={open.snackbarAddSupporting}
-        autoHideDuration={6000}
-        onClose={() => handleClickClose('snackbarAddSupporting')}
-        anchorOrigin={{
-          vertical: 'bottom',
-          horizontal: 'left',
-        }}
-      >
-        <Alert
-          severity="success"
-          variant="filled"
-          onClose={() => handleClickClose('snackbarAddSupporting')}
-        >
-          The supporting file has been added
-        </Alert>
-      </Snackbar>
+        handleClose={() => handleClickClose('snackbarAddSupporting')}
+      />
       {/* Create output file snackbar */}
-      <Snackbar
+      <SnackbarAddOutputFile
         open={open.snackbarCreate}
-        autoHideDuration={6000}
-        onClose={() => handleClickClose('snackbarCreate')}
-        anchorOrigin={{
-          vertical: 'bottom',
-          horizontal: 'left',
-        }}
-      >
-        <Alert
-          severity="success"
-          className={classes.alert}
-          variant="filled"
-          onClose={() => handleClickClose('snackbarCreate')}
-        >
-          Output file created
-        </Alert>
-      </Snackbar>
+        handleClose={() => handleClickClose('snackbarCreate')}
+      />
       {/* Update output file snackbar */}
-      <Snackbar
+      <SnackbarUpdateOutputFile
         open={open.snackbarUpdate}
-        autoHideDuration={6000}
-        onClose={() => handleClickClose('snackbarUpdate')}
-        anchorOrigin={{
-          vertical: 'bottom',
-          horizontal: 'left',
-        }}
-      >
-        <Alert
-          severity="success"
-          className={classes.alert}
-          variant="filled"
-          onClose={() => handleClickClose('snackbarUpdate')}
-        >
-          Output file updated
-        </Alert>
-      </Snackbar>
+        handleClose={() => handleClickClose('snackbarUpdate')}
+      />
       {/* Delete output file snackbar */}
-      <Snackbar
+      <SnackbarDeleteOutputFile
         open={open.snackbarDelete}
-        autoHideDuration={6000}
-        onClose={() => handleClickClose('snackbarDelete')}
-        anchorOrigin={{
-          vertical: 'bottom',
-          horizontal: 'left',
-        }}
-      >
-        <Alert
-          severity="success"
-          className={classes.alert}
-          variant="filled"
-          onClose={() => handleClickClose('snackbarDelete')}
-        >
-          The output file 'Example output file card name' has been successfully
-          deleted!
-        </Alert>
-      </Snackbar>
+        handleClose={() => handleClickClose('snackbarDelete')}
+      />
     </React.Fragment>
   );
 }

@@ -17,7 +17,6 @@ import {
   DialogContentText,
   IconButton,
   DialogActions,
-  Snackbar,
   StepLabel,
 } from '@material-ui/core';
 import ArrowForwardIosIcon from '@material-ui/icons/ArrowForwardIos';
@@ -34,12 +33,15 @@ import SearchBar from '../../SearchBar';
 import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
 import AppBarAssign from './AppBarAssign';
-import Alert from '@material-ui/lab/Alert';
 import Header from '../CommonComponents/Header';
 import Footer from '../CommonComponents/Footer';
 import CloseIcon from '@material-ui/icons/Close';
 import FloatingSupportButton from '../CommonComponents/Support';
 import CutCopyPasteAlert from '../CommonComponents/CutCopyPasteAlert';
+import {
+  SnackbarSubmitRequest,
+  SnackbarUnassign,
+} from '../CommonComponents/Snackbars';
 
 const useStyles = makeStyles((theme) => ({
   dialogTitle: {
@@ -279,25 +281,10 @@ function VettingRequestAnalyst(props) {
             ) : (
               <ToolBarAssign handleAssignToMe={handleAssignToMe} />
             )}
-            <Snackbar
-              onClose={() => snackbarHandleClose('snackBarUnassign')}
+            <SnackbarUnassign
               open={openSnackbar.snackBarUnassign}
-              autoHideDuration={6000}
-              anchorOrigin={{
-                vertical: 'bottom',
-                horizontal: 'left',
-              }}
-            >
-              <Alert
-                open={openSnackbar.snackBarUnassign}
-                onClose={() => snackbarHandleClose('snackBarUnassign')}
-                severity="success"
-                className={classes.alert}
-                variant="filled"
-              >
-                You have been unassigned from request 10_2020_4564677
-              </Alert>
-            </Snackbar>
+              handleClose={() => snackbarHandleClose('snackBarUnassign')}
+            />
           </AppBar>
           <Paper className={classes.paper}>
             <Grid container alignItems="center">
@@ -406,25 +393,10 @@ function VettingRequestAnalyst(props) {
                   >
                     Submit request
                   </Button>
-                  <Snackbar
+                  <SnackbarSubmitRequest
                     open={openSnackbar.snackbarSubmitted}
-                    onClose={() => snackbarHandleClose('snackbarSubmitted')}
-                    autoHideDuration={6000}
-                    anchorOrigin={{
-                      vertical: 'bottom',
-                      horizontal: 'left',
-                    }}
-                  >
-                    <Alert
-                      onClose={() => snackbarHandleClose('snackbarSubmitted')}
-                      severity="success"
-                      className={classes.alert}
-                      variant="filled"
-                    >
-                      This vetting request has been already submitted. You will
-                      be notified with any updates.
-                    </Alert>
-                  </Snackbar>
+                    handleClose={() => snackbarHandleClose('snackbarSubmitted')}
+                  />
                 </Grid>
               ) : (
                 <Grid item>

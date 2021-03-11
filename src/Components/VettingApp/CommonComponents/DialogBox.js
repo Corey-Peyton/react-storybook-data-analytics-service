@@ -30,7 +30,7 @@ import Autocomplete from '@material-ui/lab/Autocomplete';
 import NumberFormat from 'react-number-format';
 import Alert from '@material-ui/lab/Alert';
 
-import CustomizedSnackbar from '../Dashboard/Common/CustomizedSnackbar';
+import {Snackbar} from '../../CommonComponents/Snackbar';
 import {AnalystMenu} from '../Dashboard/Common/ContextMenu';
 import {analystList} from '../../../Data/fakeData';
 
@@ -766,7 +766,7 @@ export function DialogWithdraw(props) {
           </Button>
         </DialogActions>
       </Dialog>
-      <CustomizedSnackbar
+      <Snackbar
         open={snackbar}
         severity="success"
         message={t('Vetting request has been withdrawn')}
@@ -2044,7 +2044,7 @@ export function DialogDenied(props) {
           </Button>
         </DialogActions>
       </Dialog>
-      <CustomizedSnackbar
+      <Snackbar
         open={snackbar}
         severity="success"
         message={t('Vetting request 10-2020-2354326 has been denied')}
@@ -2401,7 +2401,7 @@ export function DialogApprove(props) {
           </Button>
         </DialogActions>
       </Dialog>
-      <CustomizedSnackbar
+      <Snackbar
         open={snackbar}
         severity="success"
         message={t('Vetting request 10-2020-2354326 has been approved')}
@@ -2757,7 +2757,7 @@ export function DialogNoLead(props) {
           </Button>
         </DialogActions>
       </Dialog>
-      <CustomizedSnackbar
+      <Snackbar
         open={snackbar}
         severity="success"
         message={t('Assignee changes applied to request 0000-00001')}
