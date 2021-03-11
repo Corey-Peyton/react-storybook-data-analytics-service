@@ -649,7 +649,6 @@ export function DialogWithdraw(props) {
   };
 
   const handleClick = (e) => {
-    e.preventDefault();
     e.stopPropagation();
   };
 
@@ -784,7 +783,6 @@ export function DialogUnassign(props) {
   const {toggleDialog, open} = props;
 
   const handleClick = (e) => {
-    e.preventDefault();
     e.stopPropagation();
   };
 
@@ -884,7 +882,6 @@ export function DialogSupport(props) {
   const {toggleDialog, open} = props;
 
   const handleClick = (e) => {
-    e.preventDefault();
     e.stopPropagation();
   };
 
@@ -1138,7 +1135,6 @@ export function DialogAssign(props) {
   };
 
   const handleClick = (e) => {
-    e.preventDefault();
     e.stopPropagation();
   };
 
@@ -1425,7 +1421,6 @@ export function DialogUpdate(props) {
   };
 
   const handleClick = (e) => {
-    e.preventDefault();
     e.stopPropagation();
   };
 
@@ -1778,7 +1773,6 @@ export function DialogDenied(props) {
   };
 
   const handleClick = (e) => {
-    e.preventDefault();
     e.stopPropagation();
   };
 
@@ -2245,7 +2239,6 @@ export function DialogApprove(props) {
   };
 
   const handleClick = (e) => {
-    e.preventDefault();
     e.stopPropagation();
   };
 

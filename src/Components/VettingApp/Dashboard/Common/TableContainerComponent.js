@@ -132,7 +132,7 @@ export default function TableContainerComponent(props) {
       if (
         current.previousElementSibling &&
         current.previousElementSibling.classList.contains(
-            'makeStyles-tableRow-296',
+            'MuiTableRow-root',
         )
       ) {
         current.previousElementSibling.focus();
@@ -140,7 +140,7 @@ export default function TableContainerComponent(props) {
     } else if (e.key === 'ArrowDown') {
       if (
         current.nextElementSibling &&
-        current.nextElementSibling.classList.contains('makeStyles-tableRow-296')
+        current.nextElementSibling.classList.contains('MuiTableRow-root')
       ) {
         current.nextElementSibling.focus();
       }
