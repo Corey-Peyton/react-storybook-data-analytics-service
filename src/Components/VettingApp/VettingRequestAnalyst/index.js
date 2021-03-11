@@ -23,7 +23,7 @@ import {
 import ArrowForwardIosIcon from '@material-ui/icons/ArrowForwardIos';
 import Avatar from '@material-ui/core/Avatar';
 import ArrowBackIosIcon from '@material-ui/icons/ArrowBackIos';
-import AnalystInfo from '../CommonComponents/RequestForm/ResearcherInfo';
+import ResearcherInfo from '../CommonComponents/RequestForm/ResearcherInfo';
 import FilesList from '../CommonComponents/RequestForm/FilesList';
 import ResidualDisclosure from '../CommonComponents/RequestForm/ResidualDisclosure';
 import AdditionalInfo from '../CommonComponents/RequestForm/Additionalnfo';
@@ -40,7 +40,6 @@ import Footer from '../CommonComponents/Footer';
 import CloseIcon from '@material-ui/icons/Close';
 import FloatingSupportButton from '../CommonComponents/Support';
 import CutCopyPasteAlert from '../CommonComponents/CutCopyPasteAlert';
-
 
 const useStyles = makeStyles((theme) => ({
   dialogTitle: {
@@ -230,7 +229,7 @@ function VettingRequestAnalyst(props) {
   const getStepContent = (step) => {
     switch (step) {
       case 0:
-        return <AnalystInfo handleTitleChange={handleTitleChange} />;
+        return <ResearcherInfo handleTitleChange={handleTitleChange} />;
       case 1:
         return <FilesList />;
       case 2:
@@ -247,7 +246,7 @@ function VettingRequestAnalyst(props) {
     if (title !== '') {
       setState({...state, title: e.target.value});
     } else {
-      setState({...state, title: 'New vetting request'});
+      setState({...state, title: 'Untitled request'});
     }
   };
 

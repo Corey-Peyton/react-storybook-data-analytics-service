@@ -85,11 +85,11 @@ export default function TableContainerComponent(props) {
   } = props;
   const [order, setOrder] = React.useState('asc');
   const [orderBy, setOrderBy] = React.useState('calories');
-  // const [selected, setSelected] = React.useState([]);
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(5);
   const [open, setOpen] = React.useState({
-    requesterInfo: false,
+    info: false,
+    role: '',
   });
   const {t} = useTranslation();
   const classes = useStyles();
@@ -110,10 +110,10 @@ export default function TableContainerComponent(props) {
     setPage(0);
   };
 
-  function toggleDialog(value, e) {
+  function toggleDialog(value, e, role) {
     e.stopPropagation();
     if (value === 'info') {
-      setOpen({...open, requesterInfo: !open.requesterInfo});
+      setOpen({...open, info: !open.info, role: role});
     }
   }
 
@@ -124,6 +124,27 @@ export default function TableContainerComponent(props) {
           '/vetting-app/request-researcher' :
           '/vetting-app/request-analyst-assigned',
     });
+  };
+
+  const navigateRows = (e) => {
+    const current = e.target;
+    if (e.key === 'ArrowUp') {
+      if (
+        current.previousElementSibling &&
+        current.previousElementSibling.classList.contains(
+            'makeStyles-tableRow-296',
+        )
+      ) {
+        current.previousElementSibling.focus();
+      }
+    } else if (e.key === 'ArrowDown') {
+      if (
+        current.nextElementSibling &&
+        current.nextElementSibling.classList.contains('makeStyles-tableRow-296')
+      ) {
+        current.nextElementSibling.focus();
+      }
+    }
   };
 
   const emptyRows =
@@ -164,6 +185,7 @@ export default function TableContainerComponent(props) {
                         navigateToRequest();
                       }
                     }}
+                    onKeyUp={navigateRows}
                   >
                     <TableCell id={labelId} className={classes.tablesCells}>
                       <Typography variant="body2" noWrap={true}>
@@ -200,7 +222,7 @@ export default function TableContainerComponent(props) {
                         label={row.researcher}
                         onClick={(e) => {
                           e.stopPropagation();
-                          toggleDialog('info', e);
+                          toggleDialog('info', e, 'requester');
                         }}
                       />
                     </TableCell>
@@ -210,7 +232,7 @@ export default function TableContainerComponent(props) {
                       role={role}
                       toggleDialog={(e) => {
                         e.stopPropagation();
-                        toggleDialog('info', e);
+                        toggleDialog('info', e, 'assignee');
                       }}
                       toggleManageTeamDrawer={toggleManageTeamDrawer}
                     />
@@ -256,9 +278,11 @@ export default function TableContainerComponent(props) {
         onChangeRowsPerPage={handleChangeRowsPerPage}
       />
       <DialogAnalyst
-        open={open.requesterInfo}
-        toggleDialog={(e) => toggleDialog('info', e)}
-        header="Requester details"
+        open={open.info}
+        toggleDialog={(e) => toggleDialog('info', e, open.role)}
+        header={
+          open.role === 'assignee' ? 'Assignee details' : 'Requester details'
+        }
       />
     </TableContainer>
   );

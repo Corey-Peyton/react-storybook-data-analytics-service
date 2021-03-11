@@ -174,19 +174,12 @@ function getSteps() {
 
 function VettingRequestResearcher(props) {
   const classes = useStyles();
-  const {name, from} = (props.location && props.location.state) || {};
   const [state, setState] = React.useState({
     activeStep: 0,
     completed: {},
     open: false,
     errors: [0, 4, 0, 0],
-    title: function() {
-      if (from === '/vetting-app/dashboard-researcher') {
-        return name.text;
-      } else {
-        return 'Untitled request';
-      }
-    },
+    title: 'Untitled request',
   });
   const steps = getSteps();
 
@@ -265,7 +258,7 @@ function VettingRequestResearcher(props) {
           <ResearcherInfo
             handleTitleChange={handleTitleChange}
             handleFieldOnBlur={handleFieldOnBlur}
-            title={state.title()}
+            title={state.title}
           />
         );
       case 1:
@@ -280,13 +273,12 @@ function VettingRequestResearcher(props) {
   };
 
   const handleTitleChange = (e) => {
-    const val = e.target.value;
-    setState({
-      ...state,
-      title: function() {
-        return val;
-      },
-    });
+    const title = e.target.value;
+    if (title !== '') {
+      setState({...state, title: e.target.value});
+    } else {
+      setState({...state, title: 'Untitled request'});
+    }
   };
 
   const handleFieldOnBlur = (e) => {
@@ -331,7 +323,7 @@ function VettingRequestResearcher(props) {
                   Vetting request · ID 0101-000000
                 </Typography>
                 <Typography variant="h6" component="h1">
-                  {state.title()}
+                  {state.title}
                 </Typography>
               </Grid>
               <Grid item>
@@ -505,7 +497,7 @@ function VettingRequestResearcher(props) {
             <div className={classes.vettingSection}>
               <div className={classes.vettingRow}>
                 <div className={classes.vettingColumn}>
-                  <Typography variant="body2">{`Are you sure you want to delete the Vetting disclosure request "${state.title()}"?`}</Typography>
+                  <Typography variant="body2">{`Are you sure you want to delete the Vetting disclosure request "${state.title}"?`}</Typography>
                 </div>
               </div>
             </div>
