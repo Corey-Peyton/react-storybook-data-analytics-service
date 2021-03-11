@@ -15,7 +15,7 @@ import Icon from '@mdi/react';
 import PageReloadIcon from '../../CommonComponents/PageReloadIcon';
 import {mdiFileDocumentOutline, mdiPencil, mdiEye, mdiShare} from '@mdi/js';
 
-import CustomizedSnackbar from './CustomizedSnackbar';
+import {Snackbar} from '../../../CommonComponents/Snackbar';
 import {
   DialogWithdraw,
   DialogUnassign,
@@ -823,7 +823,7 @@ export function ActionsMenu(props) {
       </IconButton>
       {StyledMenuVar}
 
-      <CustomizedSnackbar
+      <Snackbar
         open={open.snackbar}
         severity={action.severity}
         message={action.message}

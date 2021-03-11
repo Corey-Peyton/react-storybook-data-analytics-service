@@ -26,11 +26,14 @@ import {
   DialogActions,
   Select,
   InputLabel,
-  Snackbar,
   Divider,
 } from '@material-ui/core';
 import Alert from '@material-ui/lab/Alert';
 import CloseIcon from '@material-ui/icons/Close';
+import {
+  SnackbarApproveRequest,
+  SnackbarDenyRequest,
+} from '../CommonComponents/Snackbars';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -497,24 +500,10 @@ function ToolBarUnassign(props) {
           </Button>
         </DialogActions>
       </Dialog>
-      <Snackbar
+      <SnackbarApproveRequest
         open={open.snackBarApprove}
-        onClose={() => handleClickClose('snackBarApprove')}
-        autoHideDuration={6000}
-        anchorOrigin={{
-          vertical: 'bottom',
-          horizontal: 'left',
-        }}
-      >
-        <Alert
-          onClose={() => handleClickClose('snackBarApprove')}
-          severity="success"
-          className={classes.alert}
-          variant="filled"
-        >
-          The vetting request 10_2020_4564677 has been approved.
-        </Alert>
-      </Snackbar>
+        handleClose={() => handleClickClose('snackBarApprove')}
+      />
       <Dialog
         open={open.dialogDeny}
         onClose={() => handleClickClose('dialogDeny')}
@@ -697,24 +686,10 @@ function ToolBarUnassign(props) {
           </Button>
         </DialogActions>
       </Dialog>
-      <Snackbar
+      <SnackbarDenyRequest
         open={open.snackBarDeny}
-        onClose={() => handleClickClose('snackBarDeny')}
-        autoHideDuration={6000}
-        anchorOrigin={{
-          vertical: 'bottom',
-          horizontal: 'left',
-        }}
-      >
-        <Alert
-          onClose={() => handleClickClose('snackBarDeny')}
-          severity="success"
-          className={classes.alert}
-          variant="filled"
-        >
-          The vetting request 10_2020_4564677 has been denied.
-        </Alert>
-      </Snackbar>
+        handleClose={() => handleClickClose('snackBarDeny')}
+      />
     </Toolbar>
   );
 }
