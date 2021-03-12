@@ -762,7 +762,7 @@ export function DialogWithdraw(props) {
               }
             }}
           >
-            {t('Withdraw request')}
+            {t('Withdraw')}
           </Button>
         </DialogActions>
       </Dialog>
@@ -1262,7 +1262,7 @@ export function DialogAssign(props) {
   );
 }
 
-// ////////////////////////////////////////// REQUEST AN UPDATE
+// ////////////////////////////////////////// REQUEST CHANGES
 export function DialogUpdate(props) {
   const classes = useStyles();
   const {t} = useTranslation();
@@ -1446,12 +1446,12 @@ export function DialogUpdate(props) {
       >
         <DialogTitle id="dashboard-dialog-title">
           <div className={classes.vettingContainerTitle}>
-            <Typography variant="h6">{t('Request an update')}</Typography>
+            <Typography variant="h6">{t('Request changes')}</Typography>
             <IconButton
               id="dialog-close"
               onClick={toggleDialog}
               edge="end"
-              aria-label="Request an update - close"
+              aria-label="Request changes - close"
               onKeyPress={(e) => {
                 e.preventDefault();
                 e.stopPropagation();
@@ -1538,7 +1538,7 @@ export function DialogUpdate(props) {
               }
             }}
           >
-            {t('Submit request')}
+            {t('Send')}
           </Button>
         </DialogActions>
       </Dialog>
@@ -2040,7 +2040,7 @@ export function DialogDenied(props) {
               }
             }}
           >
-            {t('Submit')}
+            {t('Deny')}
           </Button>
         </DialogActions>
       </Dialog>
@@ -2397,7 +2397,7 @@ export function DialogApprove(props) {
               }
             }}
           >
-            {t('Submit')}
+            {t('Approve')}
           </Button>
         </DialogActions>
       </Dialog>
@@ -2625,7 +2625,7 @@ export function DialognNewRequestTitle(props) {
             <div className={classes.vettingSection}>
               <div className={classes.vettingRow}>
                 <div className={classes.vettingColumn}>
-                  <Typography variant="subtitle2">
+                  <Typography variant="body2">
                     {t('Please name your new request.')}
                   </Typography>
                 </div>

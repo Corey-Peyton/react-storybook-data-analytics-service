@@ -131,9 +131,7 @@ export default function TableContainerComponent(props) {
     if (e.key === 'ArrowUp') {
       if (
         current.previousElementSibling &&
-        current.previousElementSibling.classList.contains(
-            'MuiTableRow-root',
-        )
+        current.previousElementSibling.classList.contains('MuiTableRow-root')
       ) {
         current.previousElementSibling.focus();
       }
@@ -227,7 +225,7 @@ export default function TableContainerComponent(props) {
                       />
                     </TableCell>
                     <AnalystCell
-                      analysts={row.analysts}
+                      lead={row.lead}
                       support={row.support}
                       role={role}
                       toggleDialog={(e) => {
@@ -254,6 +252,7 @@ export default function TableContainerComponent(props) {
                         toggleManageTeamDrawer={toggleManageTeamDrawer}
                         role={role}
                         controls={index}
+                        analyst={row}
                       />
                     </TableCell>
                   </TableRow>

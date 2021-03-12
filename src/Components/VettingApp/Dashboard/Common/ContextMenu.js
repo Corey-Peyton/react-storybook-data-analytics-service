@@ -1,19 +1,12 @@
 import React from 'react';
 import {useTranslation} from 'react-i18next';
-import {makeStyles, withStyles} from '@material-ui/core/styles';
+import {withStyles} from '@material-ui/core/styles';
 import {Typography} from '@material-ui/core';
 import IconButton from '@material-ui/core/IconButton';
 import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
-import DeleteIcon from '@material-ui/icons/Delete';
-import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
-import SendIcon from '@material-ui/icons/Send';
-import ExitToAppIcon from '@material-ui/icons/ExitToApp';
 import MoreVertIcon from '@material-ui/icons/MoreVert';
-import Icon from '@mdi/react';
-import PageReloadIcon from '../../CommonComponents/PageReloadIcon';
-import {mdiFileDocumentOutline, mdiPencil, mdiEye, mdiShare} from '@mdi/js';
 
 import CustomizedSnackbar from './CustomizedSnackbar';
 import {
@@ -25,14 +18,7 @@ import {
   DialogDenied,
   DialogApprove,
 } from '../../CommonComponents/DialogBox';
-
-const useStyles = makeStyles((theme) => ({
-  listItemIcon: {
-    width: 'auto',
-    minWidth: 0,
-    paddingRight: theme.spacing(2),
-  },
-}));
+import {analystList} from '../../../../Data/fakeData';
 
 const StyledMenu = withStyles({
   paper: {
@@ -64,11 +50,11 @@ export function ActionsMenu(props) {
     contextSummaryClick,
     toggleManageTeamDrawer,
     controls,
+    analyst,
   } = props;
   const {t} = useTranslation();
   let StyledMenuVar;
 
-  const classes = useStyles();
   const [anchorEl, setAnchorEl] = React.useState(null);
   const [open, setOpen] = React.useState({
     snackbar: false,
@@ -142,142 +128,58 @@ export function ActionsMenu(props) {
     handleClose(e);
   };
 
-  if (status === 'Draft') {
-    StyledMenuVar = (
-      <StyledMenu
-        id={ariaControls}
-        anchorEl={anchorEl}
-        keepMounted
-        open={Boolean(anchorEl)}
-        onClose={handleClose}
-      >
-        <MenuItem onClick={handleClose}>
-          <ListItemIcon className={classes.listItemIcon}>
-            <Icon path={mdiPencil} size={1} className="icon-grey" />
-          </ListItemIcon>
-          <ListItemText
-            primary={<Typography variant="body2">{t('Edit')}</Typography>}
-          />
-        </MenuItem>
-        <MenuItem
-          onClick={(e) => {
-            e.stopPropagation();
-            triggerAction(
-                actionList.message.submit,
-                actionList.severity.submit,
-                e,
-            );
-          }}
-        >
-          <ListItemIcon className={classes.listItemIcon}>
-            <SendIcon fontSize="small" />
-          </ListItemIcon>
-          <ListItemText
-            primary={
-              <Typography variant="body2">{t('Submit request')}</Typography>
-            }
-          />
-        </MenuItem>
-        <MenuItem
-          onClick={(e) => {
-            e.stopPropagation();
-            toggleDialog('dialogWithdraw', !open.dialogWithdraw, e);
-          }}
-        >
-          <ListItemIcon className={classes.listItemIcon}>
-            <ExitToAppIcon fontSize="small" />
-          </ListItemIcon>
-          <ListItemText
-            primary={<Typography variant="body2">{t('Withdraw')}</Typography>}
-          />
-        </MenuItem>
-        <MenuItem onClick={toggleSummary}>
-          <ListItemIcon className={classes.listItemIcon}>
-            <Icon
-              path={mdiFileDocumentOutline}
-              size={1}
-              className="icon-grey"
-            />
-          </ListItemIcon>
-          <ListItemText
-            primary={<Typography variant="body2">{t('Summary')}</Typography>}
-          />
-        </MenuItem>
-      </StyledMenu>
-    );
-  } else if (status === 'Submitted') {
-    if (role === 'analyst') {
-      StyledMenuVar = (
-        <StyledMenu
-          id={ariaControls}
-          anchorEl={anchorEl}
-          keepMounted
-          open={Boolean(anchorEl)}
-          onClose={handleClose}
-        >
-          <MenuItem
-            onClick={(e) => {
-              e.stopPropagation();
-              toggleDialog('dialogAssign', !open.dialogAssign, e);
-            }}
-            open={open.dialogAssign}
-          >
-            <ListItemText
-              primary={
-                <Typography variant="body2">{t('Assign to me')}</Typography>
-              }
-            />
-          </MenuItem>
-        </StyledMenu>
-      );
-    } else {
-      StyledMenuVar = (
-        <StyledMenu
-          id={ariaControls}
-          anchorEl={anchorEl}
-          keepMounted
-          open={Boolean(anchorEl)}
-          onClose={handleClose}
-        >
+  const assignAsHandler = () => {
+    for (let i = 0; i < analystList.length; i++) {
+      const person = analystList[i].name;
+      const supports = analyst.support.filter((val) => val === person);
+
+      if (person === analyst.lead) {
+        return (
           <MenuItem onClick={handleClose}>
-            <ListItemIcon className={classes.listItemIcon}>
-              <Icon path={mdiEye} size={1} className="icon-grey" />
-            </ListItemIcon>
             <ListItemText
               primary={
-                <Typography variant="body2">{t('View request')}</Typography>
+                <Typography variant="body2">
+                  {t('Assign me as support')}
+                </Typography>
               }
             />
           </MenuItem>
-          <MenuItem
-            onClick={(e) => {
-              e.stopPropagation();
-              toggleDialog('dialogWithdraw', !open.dialogWithdraw, e);
-            }}
-          >
-            <ListItemIcon className={classes.listItemIcon}>
-              <ExitToAppIcon fontSize="small" />
-            </ListItemIcon>
+        );
+      } else if (supports.length !== 0) {
+        return (
+          <MenuItem onClick={handleClose}>
             <ListItemText
-              primary={<Typography variant="body2">{t('Withdraw')}</Typography>}
+              primary={
+                <Typography variant="body2">
+                  {t('Assign me as lead')}
+                </Typography>
+              }
             />
           </MenuItem>
-          <MenuItem onClick={toggleSummary}>
-            <ListItemIcon className={classes.listItemIcon}>
-              <Icon
-                path={mdiFileDocumentOutline}
-                size={1}
-                className="icon-grey"
-              />
-            </ListItemIcon>
-            <ListItemText
-              primary={<Typography variant="body2">{t('Summary')}</Typography>}
-            />
-          </MenuItem>
-        </StyledMenu>
-      );
+        );
+      }
     }
-  } else if (status === 'Update requested') {
+  };
+
+  const startReviewHandler = () => {
+    for (let i = 0; i < analystList.length; i++) {
+      const person = analystList[i].name;
+
+      if (person === analyst.lead) {
+        return (
+          <MenuItem onClick={handleClose}>
+            <ListItemText
+              primary={
+                <Typography variant="body2">{t('Start review')}</Typography>
+              }
+            />
+          </MenuItem>
+        );
+      }
+    }
+  };
+
+  if (status === 'draft') {
     if (role === 'analyst') {
       StyledMenuVar = (
         <StyledMenu
@@ -294,22 +196,34 @@ export function ActionsMenu(props) {
               }
             />
           </MenuItem>
+
+          {assignAsHandler()}
+
           <MenuItem
             onClick={(e) => {
               e.stopPropagation();
-              toggleDialog('dialogAssign', !open.dialogAssign, e);
+              toggleDialog('dialogUnassign', !open.dialogUnassign, e);
             }}
-            open={open.dialogAssign}
+            open={open.dialogUnassign}
           >
             <ListItemText
               primary={
-                <Typography variant="body2">{t('Assign to me')}</Typography>
+                <Typography variant="body2">{t('Unassign myself')}</Typography>
+              }
+            />
+          </MenuItem>
+          <MenuItem onClick={contextManageTeam}>
+            <ListItemText
+              primary={
+                <Typography variant="body2">{t('Manage assignees')}</Typography>
               }
             />
           </MenuItem>
           <MenuItem onClick={toggleSummary}>
             <ListItemText
-              primary={<Typography variant="body2">{t('Summary')}</Typography>}
+              primary={
+                <Typography variant="body2">{t('View summary')}</Typography>
+              }
             />
           </MenuItem>
         </StyledMenu>
@@ -324,26 +238,8 @@ export function ActionsMenu(props) {
           onClose={handleClose}
         >
           <MenuItem onClick={handleClose}>
-            <ListItemIcon className={classes.listItemIcon}>
-              <Icon path={mdiEye} size={1} className="icon-grey" />
-            </ListItemIcon>
             <ListItemText
-              primary={
-                <Typography variant="body2">{t('View request')}</Typography>
-              }
-            />
-          </MenuItem>
-          <MenuItem
-            onClick={(e) => {
-              e.stopPropagation();
-              toggleDialog('dialogWithdraw', !open.dialogWithdraw, e);
-            }}
-          >
-            <ListItemIcon className={classes.listItemIcon}>
-              <ExitToAppIcon fontSize="small" />
-            </ListItemIcon>
-            <ListItemText
-              primary={<Typography variant="body2">{t('Withdraw')}</Typography>}
+              primary={<Typography variant="body2">{t('Edit')}</Typography>}
             />
           </MenuItem>
           <MenuItem
@@ -356,25 +252,464 @@ export function ActionsMenu(props) {
               );
             }}
           >
-            <ListItemIcon className={classes.listItemIcon}>
-              <Icon path={mdiShare} size={1} className="icon-grey" />
-            </ListItemIcon>
+            <ListItemText
+              primary={<Typography variant="body2">{t('Submit')}</Typography>}
+            />
+          </MenuItem>
+          <MenuItem
+            onClick={(e) => {
+              e.stopPropagation();
+              toggleDialog('dialogWithdraw', !open.dialogWithdraw, e);
+            }}
+          >
+            <ListItemText
+              primary={<Typography variant="body2">{t('Withdraw')}</Typography>}
+            />
+          </MenuItem>
+          <MenuItem onClick={handleClose}>
             <ListItemText
               primary={
-                <Typography variant="body2">{t('Resubmit request')}</Typography>
+                <Typography variant="body2">{t('View assignee')}</Typography>
               }
             />
           </MenuItem>
           <MenuItem onClick={toggleSummary}>
-            <ListItemIcon className={classes.listItemIcon}>
-              <Icon
-                path={mdiFileDocumentOutline}
-                size={1}
-                className="icon-grey"
-              />
-            </ListItemIcon>
             <ListItemText
-              primary={<Typography variant="body2">{t('Summary')}</Typography>}
+              primary={
+                <Typography variant="body2">{t('View summary')}</Typography>
+              }
+            />
+          </MenuItem>
+        </StyledMenu>
+      );
+    }
+  } else if (status === 'submitted') {
+    if (role === 'analyst') {
+      StyledMenuVar = (
+        <StyledMenu
+          id={ariaControls}
+          anchorEl={anchorEl}
+          keepMounted
+          open={Boolean(anchorEl)}
+          onClose={handleClose}
+        >
+          <MenuItem onClick={handleClose}>
+            <ListItemText
+              primary={
+                <Typography variant="body2">{t('View request')}</Typography>
+              }
+            />
+          </MenuItem>
+
+          {startReviewHandler()}
+
+          {assignAsHandler()}
+
+          <MenuItem
+            onClick={(e) => {
+              e.stopPropagation();
+              toggleDialog('dialogUnassign', !open.dialogUnassign, e);
+            }}
+            open={open.dialogUnassign}
+          >
+            <ListItemText
+              primary={
+                <Typography variant="body2">{t('Unassign myself')}</Typography>
+              }
+            />
+          </MenuItem>
+          <MenuItem onClick={contextManageTeam}>
+            <ListItemText
+              primary={
+                <Typography variant="body2">{t('Manage assignees')}</Typography>
+              }
+            />
+          </MenuItem>
+          <MenuItem onClick={toggleSummary}>
+            <ListItemText
+              primary={
+                <Typography variant="body2">{t('View summary')}</Typography>
+              }
+            />
+          </MenuItem>
+        </StyledMenu>
+      );
+    } else {
+      StyledMenuVar = (
+        <StyledMenu
+          id={ariaControls}
+          anchorEl={anchorEl}
+          keepMounted
+          open={Boolean(anchorEl)}
+          onClose={handleClose}
+        >
+          <MenuItem onClick={handleClose}>
+            <ListItemText
+              primary={
+                <Typography variant="body2">{t('View request')}</Typography>
+              }
+            />
+          </MenuItem>
+          <MenuItem
+            onClick={(e) => {
+              e.stopPropagation();
+              toggleDialog('dialogWithdraw', !open.dialogWithdraw, e);
+            }}
+          >
+            <ListItemText
+              primary={<Typography variant="body2">{t('Withdraw')}</Typography>}
+            />
+          </MenuItem>
+          <MenuItem onClick={handleClose}>
+            <ListItemText
+              primary={
+                <Typography variant="body2">{t('View assignee')}</Typography>
+              }
+            />
+          </MenuItem>
+          <MenuItem onClick={toggleSummary}>
+            <ListItemText
+              primary={
+                <Typography variant="body2">{t('View summary')}</Typography>
+              }
+            />
+          </MenuItem>
+        </StyledMenu>
+      );
+    }
+  } else if (status === 'under review') {
+    if (role === 'analyst') {
+      StyledMenuVar = (
+        <StyledMenu
+          id={ariaControls}
+          anchorEl={anchorEl}
+          keepMounted
+          open={Boolean(anchorEl)}
+          onClose={handleClose}
+        >
+          <MenuItem onClick={handleClose}>
+            <ListItemText
+              primary={
+                <Typography variant="body2">{t('View request')}</Typography>
+              }
+            />
+          </MenuItem>
+          <MenuItem
+            onClick={(e) => {
+              e.stopPropagation();
+              toggleDialog('dialogApprove', !open.dialogApprove, e);
+            }}
+            open={open.dialogApprove}
+          >
+            <ListItemText
+              primary={<Typography variant="body2">{t('Approve')}</Typography>}
+            />
+          </MenuItem>
+          <MenuItem
+            onClick={(e) => {
+              e.stopPropagation();
+              toggleDialog('dialogDenied', !open.dialogDenied, e);
+            }}
+            open={open.dialogDenied}
+          >
+            <ListItemText
+              primary={<Typography variant="body2">{t('Deny')}</Typography>}
+            />
+          </MenuItem>
+          <MenuItem
+            onClick={(e) => {
+              e.stopPropagation();
+              toggleDialog('dialogUpdate', !open.dialogUpdate, e);
+            }}
+            open={open.dialogUpdate}
+          >
+            <ListItemText
+              primary={
+                <Typography variant="body2">{t('Request changes')}</Typography>
+              }
+            />
+          </MenuItem>
+
+          {assignAsHandler()}
+
+          <MenuItem
+            onClick={(e) => {
+              e.stopPropagation();
+              toggleDialog('dialogUnassign', !open.dialogUnassign, e);
+            }}
+            open={open.dialogUnassign}
+          >
+            <ListItemText
+              primary={
+                <Typography variant="body2">{t('Unassign myself')}</Typography>
+              }
+            />
+          </MenuItem>
+          <MenuItem onClick={contextManageTeam}>
+            <ListItemText
+              primary={
+                <Typography variant="body2">{t('Manage assignees')}</Typography>
+              }
+            />
+          </MenuItem>
+          <MenuItem onClick={toggleSummary}>
+            <ListItemText
+              primary={
+                <Typography variant="body2">{t('View summary')}</Typography>
+              }
+            />
+          </MenuItem>
+        </StyledMenu>
+      );
+    } else {
+      StyledMenuVar = (
+        <StyledMenu
+          id={ariaControls}
+          anchorEl={anchorEl}
+          keepMounted
+          open={Boolean(anchorEl)}
+          onClose={handleClose}
+        >
+          <MenuItem onClick={handleClose}>
+            <ListItemText
+              primary={<Typography variant="body2">{t('Edit')}</Typography>}
+            />
+          </MenuItem>
+          <MenuItem
+            onClick={(e) => {
+              e.stopPropagation();
+              triggerAction(
+                  actionList.message.submit,
+                  actionList.severity.submit,
+                  e,
+              );
+            }}
+          >
+            <ListItemText
+              primary={<Typography variant="body2">{t('Submit')}</Typography>}
+            />
+          </MenuItem>
+          <MenuItem
+            onClick={(e) => {
+              e.stopPropagation();
+              toggleDialog('dialogWithdraw', !open.dialogWithdraw, e);
+            }}
+          >
+            <ListItemText
+              primary={<Typography variant="body2">{t('Withdraw')}</Typography>}
+            />
+          </MenuItem>
+          <MenuItem onClick={handleClose}>
+            <ListItemText
+              primary={
+                <Typography variant="body2">{t('View assignee')}</Typography>
+              }
+            />
+          </MenuItem>
+          <MenuItem onClick={toggleSummary}>
+            <ListItemText
+              primary={
+                <Typography variant="body2">{t('View summary')}</Typography>
+              }
+            />
+          </MenuItem>
+        </StyledMenu>
+      );
+    }
+  }
+  if (status === 'changes requested') {
+    if (role === 'analyst') {
+      StyledMenuVar = (
+        <StyledMenu
+          id={ariaControls}
+          anchorEl={anchorEl}
+          keepMounted
+          open={Boolean(anchorEl)}
+          onClose={handleClose}
+        >
+          <MenuItem onClick={handleClose}>
+            <ListItemText
+              primary={
+                <Typography variant="body2">{t('View request')}</Typography>
+              }
+            />
+          </MenuItem>
+
+          {assignAsHandler()}
+
+          <MenuItem
+            onClick={(e) => {
+              e.stopPropagation();
+              toggleDialog('dialogUnassign', !open.dialogUnassign, e);
+            }}
+            open={open.dialogUnassign}
+          >
+            <ListItemText
+              primary={
+                <Typography variant="body2">{t('Unassign myself')}</Typography>
+              }
+            />
+          </MenuItem>
+          <MenuItem onClick={contextManageTeam}>
+            <ListItemText
+              primary={
+                <Typography variant="body2">{t('Manage assignees')}</Typography>
+              }
+            />
+          </MenuItem>
+          <MenuItem onClick={toggleSummary}>
+            <ListItemText
+              primary={
+                <Typography variant="body2">{t('View summary')}</Typography>
+              }
+            />
+          </MenuItem>
+        </StyledMenu>
+      );
+    } else {
+      StyledMenuVar = (
+        <StyledMenu
+          id={ariaControls}
+          anchorEl={anchorEl}
+          keepMounted
+          open={Boolean(anchorEl)}
+          onClose={handleClose}
+        >
+          <MenuItem onClick={handleClose}>
+            <ListItemText
+              primary={<Typography variant="body2">{t('Edit')}</Typography>}
+            />
+          </MenuItem>
+          <MenuItem
+            onClick={(e) => {
+              e.stopPropagation();
+              triggerAction(
+                  actionList.message.submit,
+                  actionList.severity.submit,
+                  e,
+              );
+            }}
+          >
+            <ListItemText
+              primary={<Typography variant="body2">{t('Submit')}</Typography>}
+            />
+          </MenuItem>
+          <MenuItem
+            onClick={(e) => {
+              e.stopPropagation();
+              toggleDialog('dialogWithdraw', !open.dialogWithdraw, e);
+            }}
+          >
+            <ListItemText
+              primary={<Typography variant="body2">{t('Withdraw')}</Typography>}
+            />
+          </MenuItem>
+          <MenuItem onClick={handleClose}>
+            <ListItemText
+              primary={
+                <Typography variant="body2">{t('View assignee')}</Typography>
+              }
+            />
+          </MenuItem>
+          <MenuItem onClick={toggleSummary}>
+            <ListItemText
+              primary={
+                <Typography variant="body2">{t('View summary')}</Typography>
+              }
+            />
+          </MenuItem>
+        </StyledMenu>
+      );
+    }
+  } else if (status === 'Changes requested') {
+    if (role === 'analyst') {
+      StyledMenuVar = (
+        <StyledMenu
+          id={ariaControls}
+          anchorEl={anchorEl}
+          keepMounted
+          open={Boolean(anchorEl)}
+          onClose={handleClose}
+        >
+          <MenuItem onClick={handleClose}>
+            <ListItemText
+              primary={
+                <Typography variant="body2">{t('View request')}</Typography>
+              }
+            />
+          </MenuItem>
+          <MenuItem
+            onClick={(e) => {
+              e.stopPropagation();
+              toggleDialog('dialogAssign', !open.dialogAssign, e);
+            }}
+            open={open.dialogAssign}
+          >
+            <ListItemText
+              primary={
+                <Typography variant="body2">{t('Assign to me')}</Typography>
+              }
+            />
+          </MenuItem>
+          <MenuItem onClick={toggleSummary}>
+            <ListItemText
+              primary={
+                <Typography variant="body2">{t('View summary')}</Typography>
+              }
+            />
+          </MenuItem>
+        </StyledMenu>
+      );
+    } else {
+      StyledMenuVar = (
+        <StyledMenu
+          id={ariaControls}
+          anchorEl={anchorEl}
+          keepMounted
+          open={Boolean(anchorEl)}
+          onClose={handleClose}
+        >
+          <MenuItem onClick={handleClose}>
+            <ListItemText
+              primary={<Typography variant="body2">{t('Edit')}</Typography>}
+            />
+          </MenuItem>
+          <MenuItem
+            onClick={(e) => {
+              e.stopPropagation();
+              triggerAction(
+                  actionList.message.submit,
+                  actionList.severity.submit,
+                  e,
+              );
+            }}
+          >
+            <ListItemText
+              primary={<Typography variant="body2">{t('Submit')}</Typography>}
+            />
+          </MenuItem>
+          <MenuItem
+            onClick={(e) => {
+              e.stopPropagation();
+              toggleDialog('dialogWithdraw', !open.dialogWithdraw, e);
+            }}
+          >
+            <ListItemText
+              primary={<Typography variant="body2">{t('Withdraw')}</Typography>}
+            />
+          </MenuItem>
+          <MenuItem onClick={handleClose}>
+            <ListItemText
+              primary={
+                <Typography variant="body2">{t('View assignee')}</Typography>
+              }
+            />
+          </MenuItem>
+          <MenuItem onClick={toggleSummary}>
+            <ListItemText
+              primary={
+                <Typography variant="body2">{t('View summary')}</Typography>
+              }
             />
           </MenuItem>
         </StyledMenu>
@@ -469,7 +804,9 @@ export function ActionsMenu(props) {
           </MenuItem>
           <MenuItem onClick={toggleSummary}>
             <ListItemText
-              primary={<Typography variant="body2">{t('Summary')}</Typography>}
+              primary={
+                <Typography variant="body2">{t('View summary')}</Typography>
+              }
             />
           </MenuItem>
         </StyledMenu>
@@ -489,23 +826,15 @@ export function ActionsMenu(props) {
               toggleDialog('dialogWithdraw', !open.dialogWithdraw, e);
             }}
           >
-            <ListItemIcon className={classes.listItemIcon}>
-              <ExitToAppIcon fontSize="small" />
-            </ListItemIcon>
             <ListItemText
               primary={<Typography variant="body2">{t('Withdraw')}</Typography>}
             />
           </MenuItem>
           <MenuItem onClick={toggleSummary}>
-            <ListItemIcon className={classes.listItemIcon}>
-              <Icon
-                path={mdiFileDocumentOutline}
-                size={1}
-                className="icon-grey"
-              />
-            </ListItemIcon>
             <ListItemText
-              primary={<Typography variant="body2">{t('Summary')}</Typography>}
+              primary={
+                <Typography variant="body2">{t('View summary')}</Typography>
+              }
             />
           </MenuItem>
         </StyledMenu>
@@ -520,6 +849,13 @@ export function ActionsMenu(props) {
         open={Boolean(anchorEl)}
         onClose={handleClose}
       >
+        <MenuItem onClick={handleClose}>
+          <ListItemText
+            primary={
+              <Typography variant="body2">{t('View request')}</Typography>
+            }
+          />
+        </MenuItem>
         <MenuItem
           onClick={(e) => {
             e.stopPropagation();
@@ -530,11 +866,22 @@ export function ActionsMenu(props) {
             );
           }}
         >
-          <ListItemIcon className={classes.listItemIcon}>
-            <PageReloadIcon width={20} height={20} />
-          </ListItemIcon>
           <ListItemText
-            primary={<Typography variant="body2">{t('Reopen')}</Typography>}
+            primary={<Typography variant="body2">{t('Reactivate')}</Typography>}
+          />
+        </MenuItem>
+        <MenuItem onClick={handleClose}>
+          <ListItemText
+            primary={
+              <Typography variant="body2">{t('View assignee')}</Typography>
+            }
+          />
+        </MenuItem>
+        <MenuItem onClick={toggleSummary}>
+          <ListItemText
+            primary={
+              <Typography variant="body2">{t('View summary')}</Typography>
+            }
           />
         </MenuItem>
         <MenuItem
@@ -547,23 +894,8 @@ export function ActionsMenu(props) {
             );
           }}
         >
-          <ListItemIcon className={classes.listItemIcon}>
-            <DeleteIcon fontSize="small" />
-          </ListItemIcon>
           <ListItemText
             primary={<Typography variant="body2">{t('Delete')}</Typography>}
-          />
-        </MenuItem>
-        <MenuItem onClick={toggleSummary}>
-          <ListItemIcon className={classes.listItemIcon}>
-            <Icon
-              path={mdiFileDocumentOutline}
-              size={1}
-              className="icon-grey"
-            />
-          </ListItemIcon>
-          <ListItemText
-            primary={<Typography variant="body2">{t('Summary')}</Typography>}
           />
         </MenuItem>
       </StyledMenu>
@@ -596,112 +928,30 @@ export function ActionsMenu(props) {
           open={Boolean(anchorEl)}
           onClose={handleClose}
         >
-          <MenuItem onClick={toggleSummary}>
-            <ListItemIcon className={classes.listItemIcon}>
-              <Icon
-                path={mdiFileDocumentOutline}
-                size={1}
-                className="icon-grey"
-              />
-            </ListItemIcon>
+          <MenuItem onClick={handleClose}>
             <ListItemText
-              primary={<Typography variant="body2">{t('Summary')}</Typography>}
+              primary={
+                <Typography variant="body2">{t('View request')}</Typography>
+              }
+            />
+          </MenuItem>
+          <MenuItem onClick={handleClose}>
+            <ListItemText
+              primary={
+                <Typography variant="body2">{t('View assignee')}</Typography>
+              }
+            />
+          </MenuItem>
+          <MenuItem onClick={toggleSummary}>
+            <ListItemText
+              primary={
+                <Typography variant="body2">{t('View summary')}</Typography>
+              }
             />
           </MenuItem>
         </StyledMenu>
       );
     }
-  } else if (status === 'assigned to me') {
-    StyledMenuVar = (
-      <StyledMenu
-        id={ariaControls}
-        anchorEl={anchorEl}
-        keepMounted
-        open={Boolean(anchorEl)}
-        onClose={handleClose}
-      >
-        <MenuItem onClick={handleClose}>
-          <ListItemText
-            primary={
-              <Typography variant="body2">{t('View request')}</Typography>
-            }
-          />
-        </MenuItem>
-        <MenuItem
-          onClick={(e) => {
-            e.stopPropagation();
-            toggleDialog('dialogApprove', !open.dialogApprove, e);
-          }}
-          open={open.dialogApprove}
-        >
-          <ListItemText
-            primary={<Typography variant="body2">{t('Approve')}</Typography>}
-          />
-        </MenuItem>
-        <MenuItem
-          onClick={(e) => {
-            e.stopPropagation();
-            toggleDialog('dialogDenied', !open.dialogDenied, e);
-          }}
-          open={open.dialogDenied}
-        >
-          <ListItemText
-            primary={<Typography variant="body2">{t('Deny')}</Typography>}
-          />
-        </MenuItem>
-        <MenuItem
-          onClick={(e) => {
-            e.stopPropagation();
-            toggleDialog('dialogUpdate', !open.dialogUpdate, e);
-          }}
-          open={open.dialogUpdate}
-        >
-          <ListItemText
-            primary={
-              <Typography variant="body2">{t('Request an update')}</Typography>
-            }
-          />
-        </MenuItem>
-        <MenuItem
-          onClick={(e) => {
-            e.stopPropagation();
-            toggleDialog('dialogUnassign', !open.dialogUnassign, e);
-          }}
-          open={open.dialogUnassign}
-        >
-          <ListItemText
-            primary={
-              <Typography variant="body2">{t('Unassign from me')}</Typography>
-            }
-          />
-        </MenuItem>
-        <MenuItem
-          onClick={(e) => {
-            e.stopPropagation();
-            toggleDialog('dialogSupport', !open.dialogSupport, e);
-          }}
-          open={open.dialogSupport}
-        >
-          <ListItemText
-            primary={
-              <Typography variant="body2">{t('Make me support')}</Typography>
-            }
-          />
-        </MenuItem>
-        <MenuItem onClick={contextManageTeam}>
-          <ListItemText
-            primary={
-              <Typography variant="body2">{t('Manage assignees')}</Typography>
-            }
-          />
-        </MenuItem>
-        <MenuItem onClick={toggleSummary}>
-          <ListItemText
-            primary={<Typography variant="body2">{t('Summary')}</Typography>}
-          />
-        </MenuItem>
-      </StyledMenu>
-    );
   } else if (status === 'unassigned') {
     StyledMenuVar = (
       <StyledMenu
@@ -753,7 +1003,9 @@ export function ActionsMenu(props) {
         </MenuItem>
         <MenuItem onClick={toggleSummary}>
           <ListItemText
-            primary={<Typography variant="body2">{t('Summary')}</Typography>}
+            primary={
+              <Typography variant="body2">{t('View summary')}</Typography>
+            }
           />
         </MenuItem>
       </StyledMenu>
@@ -786,16 +1038,25 @@ export function ActionsMenu(props) {
           open={Boolean(anchorEl)}
           onClose={handleClose}
         >
-          <MenuItem onClick={toggleSummary}>
-            <ListItemIcon className={classes.listItemIcon}>
-              <Icon
-                path={mdiFileDocumentOutline}
-                size={1}
-                className="icon-grey"
-              />
-            </ListItemIcon>
+          <MenuItem onClick={handleClose}>
             <ListItemText
-              primary={<Typography variant="body2">{t('Summary')}</Typography>}
+              primary={
+                <Typography variant="body2">{t('View request')}</Typography>
+              }
+            />
+          </MenuItem>
+          <MenuItem onClick={handleClose}>
+            <ListItemText
+              primary={
+                <Typography variant="body2">{t('View assignee')}</Typography>
+              }
+            />
+          </MenuItem>
+          <MenuItem onClick={toggleSummary}>
+            <ListItemText
+              primary={
+                <Typography variant="body2">{t('View summary')}</Typography>
+              }
             />
           </MenuItem>
         </StyledMenu>
