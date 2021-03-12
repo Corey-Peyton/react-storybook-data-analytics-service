@@ -30,9 +30,14 @@ import Autocomplete from '@material-ui/lab/Autocomplete';
 import NumberFormat from 'react-number-format';
 import Alert from '@material-ui/lab/Alert';
 
-import {Snackbar} from '../../CommonComponents/Snackbar';
 import {AnalystMenu} from '../Dashboard/Common/ContextMenu';
 import {analystList} from '../../../Data/fakeData';
+import {
+  SnackbarApproveRequest,
+  SnackbarAssigneeChange,
+  SnackbarDenyRequest,
+  SnackbarWithdrawRequest,
+} from './Snackbars';
 
 const ROW_HEIGHT = 56;
 
@@ -766,12 +771,7 @@ export function DialogWithdraw(props) {
           </Button>
         </DialogActions>
       </Dialog>
-      <Snackbar
-        open={snackbar}
-        severity="success"
-        message={t('Vetting request has been withdrawn')}
-        toggleSnackbar={SnackbarClose}
-      />
+      <SnackbarWithdrawRequest open={snackbar} handleClose={SnackbarClose} />
     </React.Fragment>
   );
 }
@@ -2044,12 +2044,7 @@ export function DialogDenied(props) {
           </Button>
         </DialogActions>
       </Dialog>
-      <Snackbar
-        open={snackbar}
-        severity="success"
-        message={t('Vetting request 10-2020-2354326 has been denied')}
-        toggleSnackbar={SnackbarClose}
-      />
+      <SnackbarDenyRequest open={snackbar} handleClose={SnackbarClose} />
     </React.Fragment>
   );
 }
@@ -2401,12 +2396,7 @@ export function DialogApprove(props) {
           </Button>
         </DialogActions>
       </Dialog>
-      <Snackbar
-        open={snackbar}
-        severity="success"
-        message={t('Vetting request 10-2020-2354326 has been approved')}
-        toggleSnackbar={SnackbarClose}
-      />
+      <SnackbarApproveRequest open={snackbar} handleClose={SnackbarClose} />
     </React.Fragment>
   );
 }
@@ -2757,12 +2747,7 @@ export function DialogNoLead(props) {
           </Button>
         </DialogActions>
       </Dialog>
-      <Snackbar
-        open={snackbar}
-        severity="success"
-        message={t('Assignee changes applied to request 0000-00001')}
-        toggleSnackbar={SnackbarClose}
-      />
+      <SnackbarAssigneeChange open={snackbar} handleClose={SnackbarClose} />
     </React.Fragment>
   );
 }
