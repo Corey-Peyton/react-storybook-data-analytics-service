@@ -523,7 +523,7 @@ export default function ManageTeamDrawer(props) {
         }
         handleAssignMeAs={handleAssignMeAs}
       />
-      <SnackbarAssigneeChange open={snackbar} handleClsoe={SnackbarClose} />
+      <SnackbarAssigneeChange open={snackbar} handleClose={SnackbarClose} />
     </div>
   );
 }

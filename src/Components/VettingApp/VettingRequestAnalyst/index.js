@@ -39,6 +39,7 @@ import CloseIcon from '@material-ui/icons/Close';
 import FloatingSupportButton from '../CommonComponents/Support';
 import CutCopyPasteAlert from '../CommonComponents/CutCopyPasteAlert';
 import {
+  SnackbarAssignLead,
   SnackbarSubmitRequest,
   SnackbarUnassign,
 } from '../CommonComponents/Snackbars';
@@ -218,6 +219,7 @@ function VettingRequestAnalyst(props) {
   const [openSnackbar, setOpenSnackbar] = React.useState({
     snackbarSubmitted: false,
     snackBarUnassign: false,
+    snackBarAssign: false,
   });
 
   const snackbarHandleClick = (state) => {
@@ -263,6 +265,7 @@ function VettingRequestAnalyst(props) {
 
   const handleAssignToMe = () => {
     setState({...state, lead: state.userName});
+    setOpenSnackbar({...openSnackbar, snackBarAssign: true});
   };
 
   const handleUnassignFromMe = () => {
@@ -284,6 +287,10 @@ function VettingRequestAnalyst(props) {
             <SnackbarUnassign
               open={openSnackbar.snackBarUnassign}
               handleClose={() => snackbarHandleClose('snackBarUnassign')}
+            />
+            <SnackbarAssignLead
+              open={openSnackbar.snackBarAssign}
+              handleClose={() => snackbarHandleClose('snackBarAssign')}
             />
           </AppBar>
           <Paper className={classes.paper}>

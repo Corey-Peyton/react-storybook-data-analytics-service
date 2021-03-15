@@ -35,7 +35,11 @@ import {analystList} from '../../../Data/fakeData';
 import {
   SnackbarApproveRequest,
   SnackbarAssigneeChange,
+  SnackbarAssignLead,
+  SnackbarAssignSupport,
   SnackbarDenyRequest,
+  SnackbarSubmitRequest,
+  SnackbarUnassign,
   SnackbarWithdrawRequest,
 } from './Snackbars';
 
@@ -781,9 +785,18 @@ export function DialogUnassign(props) {
   const classes = useStyles();
   const {t} = useTranslation();
   const {toggleDialog, open} = props;
+  const [snackbar, setSnackbar] = React.useState(false);
 
   const handleClick = (e) => {
     e.stopPropagation();
+  };
+
+  const snackbarOpen = () => {
+    setSnackbar(true);
+  };
+
+  const SnackbarClose = () => {
+    setSnackbar(false);
   };
 
   return (
@@ -857,7 +870,10 @@ export function DialogUnassign(props) {
           <Button
             variant="contained"
             color="primary"
-            onClick={toggleDialog}
+            onClick={(e) => {
+              toggleDialog(e);
+              snackbarOpen();
+            }}
             className={classes.footerBtns}
             onKeyPress={(e) => {
               e.preventDefault();
@@ -871,6 +887,7 @@ export function DialogUnassign(props) {
           </Button>
         </DialogActions>
       </Dialog>
+      <SnackbarUnassign open={snackbar} handleClose={SnackbarClose} />
     </React.Fragment>
   );
 }
@@ -880,9 +897,18 @@ export function DialogSupport(props) {
   const classes = useStyles();
   const {t} = useTranslation();
   const {toggleDialog, open} = props;
+  const [snackbar, setSnackbar] = React.useState(false);
 
   const handleClick = (e) => {
     e.stopPropagation();
+  };
+
+  const snackbarOpen = () => {
+    setSnackbar(true);
+  };
+
+  const SnackbarClose = () => {
+    setSnackbar(false);
   };
 
   return (
@@ -956,7 +982,10 @@ export function DialogSupport(props) {
           <Button
             variant="contained"
             color="primary"
-            onClick={toggleDialog}
+            onClick={(e) => {
+              toggleDialog(e);
+              snackbarOpen();
+            }}
             className={classes.footerBtns}
             onKeyPress={(e) => {
               e.preventDefault();
@@ -970,6 +999,7 @@ export function DialogSupport(props) {
           </Button>
         </DialogActions>
       </Dialog>
+      <SnackbarAssignSupport open={snackbar} handleClose={SnackbarClose} />
     </React.Fragment>
   );
 }
@@ -979,6 +1009,7 @@ export function DialogAssign(props) {
   const classes = useStyles();
   const {t} = useTranslation();
   const {toggleDialog, open} = props;
+  const [snackbar, setSnackbar] = React.useState(false);
   const initial = {
     // blank object used to reset state
     phone: {
@@ -1025,6 +1056,10 @@ export function DialogAssign(props) {
     }
   };
 
+  const SnackbarClose = () => {
+    setSnackbar(false);
+  };
+
   const validateForm = () => {
     let isError = false;
     if (!state.phone.text.match(phoneExp)) {
@@ -1049,6 +1084,7 @@ export function DialogAssign(props) {
     if (!err) {
       // if no errors exist, submit the form and reset the inputs
       toggleDialog(e);
+      setSnackbar(!snackbar);
       setState({...initial});
     } else {
       for (const property in state) {
@@ -1258,6 +1294,7 @@ export function DialogAssign(props) {
           </Button>
         </DialogActions>
       </Dialog>
+      <SnackbarAssignLead open={snackbar} handleClose={SnackbarClose} />
     </React.Fragment>
   );
 }
@@ -1267,6 +1304,7 @@ export function DialogUpdate(props) {
   const classes = useStyles();
   const {t} = useTranslation();
   const {toggleDialog, open} = props;
+  const [snackbar, setSnackbar] = React.useState(false);
   const initial = {
     // blank object used to reset state
     comments: {
@@ -1311,6 +1349,10 @@ export function DialogUpdate(props) {
     }
   };
 
+  const SnackbarClose = () => {
+    setSnackbar(false);
+  };
+
   const validateForm = () => {
     let isError = false;
     if (state.comments.text.trim() === '') {
@@ -1335,6 +1377,7 @@ export function DialogUpdate(props) {
     if (!err) {
       // if no errors exist, submit the form and reset the inputs
       toggleDialog(e);
+      setSnackbar(!snackbar);
       setState({...initial});
     } else {
       for (const property in state) {
@@ -1542,6 +1585,7 @@ export function DialogUpdate(props) {
           </Button>
         </DialogActions>
       </Dialog>
+      <SnackbarSubmitRequest open={snackbar} handleClose={SnackbarClose} />
     </React.Fragment>
   );
 }
