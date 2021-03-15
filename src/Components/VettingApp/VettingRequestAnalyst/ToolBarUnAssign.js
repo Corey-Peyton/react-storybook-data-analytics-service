@@ -322,7 +322,7 @@ function ToolBarUnassign(props) {
         startIcon={<ReplayIcon />}
         onClick={() => handleClickOpen('dialogUpdate')}
       >
-        Request an update
+        Request changes
       </Button>
       {/* Request an update snackbar */}
       <SnackbarChangeRequest
@@ -341,7 +341,7 @@ function ToolBarUnassign(props) {
       >
         <DialogTitle id="alert-dialog-update">
           <div className={classes.vettingContainerTitle}>
-            Request an update
+            Request changes
             <IconButton
               onClick={() => handleClickClose('dialogUpdate')}
               edge="end"
