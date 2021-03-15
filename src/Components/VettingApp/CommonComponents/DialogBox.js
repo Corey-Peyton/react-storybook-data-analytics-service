@@ -39,7 +39,6 @@ import {
   SnackbarAssignSupport,
   SnackbarChangeRequest,
   SnackbarDenyRequest,
-  SnackbarSubmitRequest,
   SnackbarUnassign,
   SnackbarWithdrawRequest,
 } from './Snackbars';
