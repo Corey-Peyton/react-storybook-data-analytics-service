@@ -23,7 +23,7 @@ import {
   DialogAssignAsLead,
   DialogAssignAsSupport,
 } from '../../CommonComponents/DialogBox';
-import CustomizedSnackbar from './CustomizedSnackbar';
+import {SnackbarAssigneeChange} from '../../CommonComponents/Snackbars';
 
 const DRAWER_WIDTH = 400;
 
@@ -523,12 +523,7 @@ export default function ManageTeamDrawer(props) {
         }
         handleAssignMeAs={handleAssignMeAs}
       />
-      <CustomizedSnackbar
-        open={snackbar}
-        severity="success"
-        message={t('Assignee changes applied to request 0000-00001')}
-        toggleSnackbar={SnackbarClose}
-      />
+      <SnackbarAssigneeChange open={snackbar} handleClose={SnackbarClose} />
     </div>
   );
 }

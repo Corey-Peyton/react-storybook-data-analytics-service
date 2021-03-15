@@ -8,7 +8,11 @@ import MenuItem from '@material-ui/core/MenuItem';
 import ListItemText from '@material-ui/core/ListItemText';
 import MoreVertIcon from '@material-ui/icons/MoreVert';
 
-import CustomizedSnackbar from './CustomizedSnackbar';
+import {
+  SnackbarDeleteRequest,
+  SnackbarReactivateRequest,
+  SnackbarSubmitRequest,
+} from '../../CommonComponents/Snackbars';
 import {
   DialogWithdraw,
   DialogUnassign,
@@ -57,7 +61,9 @@ export function ActionsMenu(props) {
 
   const [anchorEl, setAnchorEl] = React.useState(null);
   const [open, setOpen] = React.useState({
-    snackbar: false,
+    snackbarReopen: false,
+    snackbarSubmit: false,
+    snackbarDelete: false,
     dialogWithdraw: false,
     dialogManageTeam: false,
     dialogUnassign: false,
@@ -67,25 +73,6 @@ export function ActionsMenu(props) {
     dialogDenied: false,
     dialogApprove: false,
   });
-  const [action, setAction] = React.useState({
-    message: '',
-    severity: '',
-  });
-
-  const actionList = {
-    message: {
-      withdraw: 'Vetting request has been withdrawn',
-      reopen: 'Vetting request has been reopened',
-      submit: 'Vetting request has been submitted',
-      delete: 'Vetting request has been deleted',
-    },
-    severity: {
-      withdraw: 'success',
-      reopen: 'success',
-      submit: 'success',
-      delete: 'error',
-    },
-  };
 
   const ariaControls = `actions-menu-${controls}`;
 
@@ -100,11 +87,12 @@ export function ActionsMenu(props) {
     setAnchorEl(null);
   };
 
-  const triggerAction = (messageVal, severityVal, e) => {
-    e.stopPropagation();
-    setAction({...action, message: messageVal, severity: severityVal});
-    setOpen({...open, snackbar: true});
-    handleClose(e);
+  const handleSnackbarOpen = (state) => {
+    setOpen({...open, [state]: true});
+  };
+
+  const handleSnackbarClose = (state) => {
+    setOpen({...open, [state]: false});
   };
 
   const toggleSummary = (e) => {
@@ -116,10 +104,6 @@ export function ActionsMenu(props) {
     e.stopPropagation();
     handleClose(e);
     toggleManageTeamDrawer(e);
-  };
-
-  const toggleSnackbar = (e) => {
-    setOpen({...open, snackbar: !open.snackbar});
   };
 
   const toggleDialog = (state, value, e) => {
@@ -245,11 +229,7 @@ export function ActionsMenu(props) {
           <MenuItem
             onClick={(e) => {
               e.stopPropagation();
-              triggerAction(
-                  actionList.message.submit,
-                  actionList.severity.submit,
-                  e,
-              );
+              handleSnackbarOpen('snackbarSubmit');
             }}
           >
             <ListItemText
@@ -478,11 +458,7 @@ export function ActionsMenu(props) {
           <MenuItem
             onClick={(e) => {
               e.stopPropagation();
-              triggerAction(
-                  actionList.message.submit,
-                  actionList.severity.submit,
-                  e,
-              );
+              handleSnackbarOpen('snackbarSubmit');
             }}
           >
             <ListItemText
@@ -583,11 +559,7 @@ export function ActionsMenu(props) {
           <MenuItem
             onClick={(e) => {
               e.stopPropagation();
-              triggerAction(
-                  actionList.message.submit,
-                  actionList.severity.submit,
-                  e,
-              );
+              handleSnackbarOpen('snackbarSubmit');
             }}
           >
             <ListItemText
@@ -677,11 +649,7 @@ export function ActionsMenu(props) {
           <MenuItem
             onClick={(e) => {
               e.stopPropagation();
-              triggerAction(
-                  actionList.message.submit,
-                  actionList.severity.submit,
-                  e,
-              );
+              handleSnackbarOpen('snackbarSubmit');
             }}
           >
             <ListItemText
@@ -859,11 +827,7 @@ export function ActionsMenu(props) {
         <MenuItem
           onClick={(e) => {
             e.stopPropagation();
-            triggerAction(
-                actionList.message.reopen,
-                actionList.severity.reopen,
-                e,
-            );
+            handleSnackbarOpen('snackbarReopen');
           }}
         >
           <ListItemText
@@ -887,11 +851,7 @@ export function ActionsMenu(props) {
         <MenuItem
           onClick={(e) => {
             e.stopPropagation();
-            triggerAction(
-                actionList.message.delete,
-                actionList.severity.delete,
-                e,
-            );
+            handleSnackbarOpen('snackbarDelete');
           }}
         >
           <ListItemText
@@ -1084,12 +1044,17 @@ export function ActionsMenu(props) {
       </IconButton>
       {StyledMenuVar}
 
-      <CustomizedSnackbar
-        open={open.snackbar}
-        severity={action.severity}
-        message={action.message}
-        toggleSnackbar={toggleSnackbar}
-        role="alert"
+      <SnackbarReactivateRequest
+        open={open.snackbarReopen}
+        handleClose={() => handleSnackbarClose('snackbarReopen')}
+      />
+      <SnackbarSubmitRequest
+        open={open.snackbarSubmit}
+        handleClose={() => handleSnackbarClose('snackbarSubmit')}
+      />
+      <SnackbarDeleteRequest
+        open={open.snackbarDelete}
+        handleClose={() => handleSnackbarClose('snackbarDelete')}
       />
       <DialogWithdraw
         toggleDialog={(e) =>

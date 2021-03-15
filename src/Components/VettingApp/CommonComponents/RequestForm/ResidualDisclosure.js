@@ -17,7 +17,6 @@ import {
   TextField,
   IconButton,
   Tooltip,
-  Snackbar,
   DialogTitle,
   Dialog,
   DialogActions,
@@ -26,6 +25,10 @@ import Alert from '@material-ui/lab/Alert';
 import DeleteIcon from '@material-ui/icons/Delete';
 import CloseIcon from '@material-ui/icons/Close';
 import InfoIcon from '@material-ui/icons/Info';
+import {
+  SnackbarAddSupportFile,
+  SnackbarDeleteSupportFile,
+} from '../Snackbars';
 
 const useStylesBootstrap = makeStyles((theme) => ({
   arrow: {
@@ -1127,42 +1130,15 @@ function ResidualDisclosure(props) {
         </div>
       )}
       {/* Add file snackbar */}
-      <Snackbar
+      <SnackbarAddSupportFile
         open={state.snackbarAddFile}
-        autoHideDuration={6000}
-        onClose={() => handleClickClose('snackbarAddFile')}
-        anchorOrigin={{
-          vertical: 'bottom',
-          horizontal: 'left',
-        }}
-      >
-        <Alert
-          severity="success"
-          variant="filled"
-          onClose={() => handleClickClose('snackbarAddFile')}
-        >
-          File added
-        </Alert>
-      </Snackbar>
+        handleClose={() => handleClickClose('snackbarAddFile')}
+      />
       {/* Delete file snackbar */}
-      <Snackbar
+      <SnackbarDeleteSupportFile
         open={state.snackbarDelete}
-        autoHideDuration={6000}
-        onClose={() => handleClickClose('snackbarDelete')}
-        anchorOrigin={{
-          vertical: 'bottom',
-          horizontal: 'left',
-        }}
-      >
-        <Alert
-          severity="success"
-          className={classes.alert}
-          variant="filled"
-          onClose={() => handleClickClose('snackbarDelete')}
-        >
-          The file 'File 3' has been successfully deleted!
-        </Alert>
-      </Snackbar>
+        handleClose={() => handleClickClose('snackbarDelete')}
+      />
       {/* Delete file dialog */}
       <Dialog
         open={state.dialogDeleteFile}
