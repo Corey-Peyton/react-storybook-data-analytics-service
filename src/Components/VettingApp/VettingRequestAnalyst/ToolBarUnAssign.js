@@ -32,7 +32,9 @@ import Alert from '@material-ui/lab/Alert';
 import CloseIcon from '@material-ui/icons/Close';
 import {
   SnackbarApproveRequest,
+  SnackbarChangeRequest,
   SnackbarDenyRequest,
+  SnackbarSaveRequest,
 } from '../CommonComponents/Snackbars';
 
 const useStyles = makeStyles((theme) => ({
@@ -113,7 +115,9 @@ function ToolBarUnassign(props) {
     dialogDeny: false,
     snackBarDeny: false,
     snackBarApprove: false,
+    snackbarSave: false,
     dialogApprove: false,
+    snackbarChange: false,
   });
 
   const [state, setState] = React.useState({
@@ -140,11 +144,16 @@ function ToolBarUnassign(props) {
     setOpen({...open, dialogApprove: false, snackBarApprove: true});
   };
 
+  const handleSubmitChange = () => {
+    setOpen({...open, dialogUpdate: false, snackbarChange: true});
+  };
+
   const [selected, setSelected] = React.useState('');
 
   const handleChange = (event) => {
     setSelected(event.target.value);
   };
+
   const disableCutCopyPaste = (e, command, value) => {
     // display error if user tries to cut/copy/paste
     let msg;
@@ -297,9 +306,15 @@ function ToolBarUnassign(props) {
         color="primary"
         className={classes.headerBtn}
         startIcon={<SaveIcon />}
+        onClick={() => handleClickOpen('snackbarSave')}
       >
         Save
       </Button>
+      {/* Save request snackbar */}
+      <SnackbarSaveRequest
+        open={open.snackbarSave}
+        handleClose={() => handleClickClose('snackbarSave')}
+      />
       <Button
         variant="outlined"
         color="primary"
@@ -309,6 +324,11 @@ function ToolBarUnassign(props) {
       >
         Request an update
       </Button>
+      {/* Request an update snackbar */}
+      <SnackbarChangeRequest
+        open={open.snackbarChange}
+        handleClose={() => handleClickClose('snackbarChange')}
+      />
       {/* Requst an update dialog */}
       <Dialog
         open={open.dialogUpdate}
@@ -370,7 +390,7 @@ function ToolBarUnassign(props) {
             Cancel
           </Button>
           <Button
-            onClick={() => handleClickClose('dialogUpdate')}
+            onClick={handleSubmitChange}
             color="primary"
             variant="contained"
             className={classes.footerBtns}

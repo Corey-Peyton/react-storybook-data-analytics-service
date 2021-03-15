@@ -37,6 +37,7 @@ import {
   SnackbarAssigneeChange,
   SnackbarAssignLead,
   SnackbarAssignSupport,
+  SnackbarChangeRequest,
   SnackbarDenyRequest,
   SnackbarSubmitRequest,
   SnackbarUnassign,
@@ -1585,7 +1586,7 @@ export function DialogUpdate(props) {
           </Button>
         </DialogActions>
       </Dialog>
-      <SnackbarSubmitRequest open={snackbar} handleClose={SnackbarClose} />
+      <SnackbarChangeRequest open={snackbar} handleClose={SnackbarClose} />
     </React.Fragment>
   );
 }
