@@ -40,8 +40,7 @@ function ToolBar() {
     <Toolbar>
       <IconButton
         edge="start"
-        clas
-        sName={classes.menuButton}
+        className={classes.menuButton}
         color="inherit"
         aria-label="Back to vetting requests dashboard"
       >
