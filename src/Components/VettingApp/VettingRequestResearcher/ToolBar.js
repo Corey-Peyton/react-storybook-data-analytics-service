@@ -5,6 +5,11 @@ import ExitToAppIcon from '@material-ui/icons/ExitToApp';
 import SaveIcon from '@material-ui/icons/Save';
 import SendIcon from '@material-ui/icons/Send';
 import ArrowBackIcon from '@material-ui/icons/ArrowBack';
+import {DialogWithdraw} from '../CommonComponents/DialogBox';
+import {
+  SnackbarSaveRequest,
+  SnackbarSubmitRequest,
+} from '../CommonComponents/Snackbars';
 
 const useStyles = makeStyles((theme) => ({
   title: {
@@ -17,10 +22,20 @@ const useStyles = makeStyles((theme) => ({
 
 function ToolBar() {
   const classes = useStyles();
-  /* const setOpen = React.useState(false);
-  const handleDialogOpen = () => {
-    setOpen(true);
-  }; */
+  const [state, setState] = React.useState({
+    snackbarSave: false,
+    snackbarSubmit: false,
+    dialogWithdraw: false,
+  });
+
+  const handleOpen = (element) => {
+    setState({...state, [element]: true});
+  };
+
+  const handleClose = (element) => {
+    setState({...state, [element]: false});
+  };
+
   return (
     <Toolbar>
       <IconButton
@@ -38,7 +53,7 @@ function ToolBar() {
         color="default"
         className={classes.headerBtn}
         startIcon={<ExitToAppIcon />}
-        // onClick={props.handleDialogOpen}
+        onClick={() => handleOpen('dialogWithdraw')}
       >
         Withdraw
       </Button>
@@ -47,6 +62,7 @@ function ToolBar() {
         color="primary"
         className={classes.headerBtn}
         startIcon={<SaveIcon />}
+        onClick={() => handleOpen('snackbarSave')}
       >
         Save
       </Button>
@@ -55,9 +71,25 @@ function ToolBar() {
         color="primary"
         className={classes.headerBtn}
         startIcon={<SendIcon />}
+        onClick={() => handleOpen('snackbarSubmit')}
       >
         Submit request
       </Button>
+      {/* Save request snackbar */}
+      <SnackbarSaveRequest
+        open={state.snackbarSave}
+        handleClose={() => handleClose('snackbarSave')}
+      />
+      {/* Submit request snackbar */}
+      <SnackbarSubmitRequest
+        open={state.snackbarSubmit}
+        handleClose={() => handleClose('snackbarSubmit')}
+      />
+      {/* Withdraw request dialog */}
+      <DialogWithdraw
+        toggleDialog={() => handleClose('dialogWithdraw')}
+        open={state.dialogWithdraw}
+      />
     </Toolbar>
   );
 }

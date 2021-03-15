@@ -11,7 +11,6 @@ import {
   Typography,
   Divider,
   AppBar,
-  Snackbar,
   StepLabel,
 } from '@material-ui/core';
 import ArrowForwardIosIcon from '@material-ui/icons/ArrowForwardIos';
@@ -23,11 +22,15 @@ import AdditionalInfo from '../CommonComponents/RequestForm/Additionalnfo';
 import ToolBarUnassign from './ToolBarUnAssign';
 import ToolBarAssign from './ToolBarAssign';
 import AppBarAssign from './AppBarAssign';
-import Alert from '@material-ui/lab/Alert';
 import Header from '../CommonComponents/Header';
 import Footer from '../CommonComponents/Footer';
 import FloatingSupportButton from '../CommonComponents/Support';
 import CutCopyPasteAlert from '../CommonComponents/CutCopyPasteAlert';
+import {
+  SnackbarAssignLead,
+  SnackbarSubmitRequest,
+  SnackbarUnassign,
+} from '../CommonComponents/Snackbars';
 import ManageTeamDrawer from '../Dashboard/Common/ManageTeamDrawer';
 
 const useStyles = makeStyles((theme) => ({
@@ -193,6 +196,7 @@ function VettingRequestAnalyst(props) {
   const [openSnackbar, setOpenSnackbar] = React.useState({
     snackbarSubmitted: false,
     snackBarUnassign: false,
+    snackBarAssign: false,
   });
 
   const snackbarHandleClick = (state) => {
@@ -238,6 +242,7 @@ function VettingRequestAnalyst(props) {
 
   const handleAssignToMe = () => {
     setState({...state, lead: state.userName});
+    setOpenSnackbar({...openSnackbar, snackBarAssign: true});
   };
 
   const handleUnassignFromMe = () => {
@@ -261,25 +266,14 @@ function VettingRequestAnalyst(props) {
             ) : (
               <ToolBarAssign handleAssignToMe={handleAssignToMe} />
             )}
-            <Snackbar
-              onClose={() => snackbarHandleClose('snackBarUnassign')}
+            <SnackbarUnassign
               open={openSnackbar.snackBarUnassign}
-              autoHideDuration={6000}
-              anchorOrigin={{
-                vertical: 'bottom',
-                horizontal: 'left',
-              }}
-            >
-              <Alert
-                open={openSnackbar.snackBarUnassign}
-                onClose={() => snackbarHandleClose('snackBarUnassign')}
-                severity="success"
-                className={classes.alert}
-                variant="filled"
-              >
-                You have been unassigned from request 10_2020_4564677
-              </Alert>
-            </Snackbar>
+              handleClose={() => snackbarHandleClose('snackBarUnassign')}
+            />
+            <SnackbarAssignLead
+              open={openSnackbar.snackBarAssign}
+              handleClose={() => snackbarHandleClose('snackBarAssign')}
+            />
           </AppBar>
           <Paper className={classes.paper}>
             <Grid container alignItems="center">
@@ -388,25 +382,10 @@ function VettingRequestAnalyst(props) {
                   >
                     Submit request
                   </Button>
-                  <Snackbar
+                  <SnackbarSubmitRequest
                     open={openSnackbar.snackbarSubmitted}
-                    onClose={() => snackbarHandleClose('snackbarSubmitted')}
-                    autoHideDuration={6000}
-                    anchorOrigin={{
-                      vertical: 'bottom',
-                      horizontal: 'left',
-                    }}
-                  >
-                    <Alert
-                      onClose={() => snackbarHandleClose('snackbarSubmitted')}
-                      severity="success"
-                      className={classes.alert}
-                      variant="filled"
-                    >
-                      This vetting request has been already submitted. You will
-                      be notified with any updates.
-                    </Alert>
-                  </Snackbar>
+                    handleClose={() => snackbarHandleClose('snackbarSubmitted')}
+                  />
                 </Grid>
               ) : (
                 <Grid item>
