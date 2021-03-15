@@ -5,6 +5,7 @@ import ExitToAppIcon from '@material-ui/icons/ExitToApp';
 import SaveIcon from '@material-ui/icons/Save';
 import SendIcon from '@material-ui/icons/Send';
 import ArrowBackIcon from '@material-ui/icons/ArrowBack';
+import {DialogWithdraw} from '../CommonComponents/DialogBox';
 import {
   SnackbarSaveRequest,
   SnackbarSubmitRequest,
@@ -24,6 +25,7 @@ function ToolBar() {
   const [state, setState] = React.useState({
     snackbarSave: false,
     snackbarSubmit: false,
+    dialogWithdraw: false,
   });
 
   const handleOpen = (element) => {
@@ -52,7 +54,7 @@ function ToolBar() {
         color="default"
         className={classes.headerBtn}
         startIcon={<ExitToAppIcon />}
-        // onClick={props.handleDialogOpen}
+        onClick={() => handleOpen('dialogWithdraw')}
       >
         Withdraw
       </Button>
@@ -83,6 +85,11 @@ function ToolBar() {
       <SnackbarSubmitRequest
         open={state.snackbarSubmit}
         handleClose={() => handleClose('snackbarSubmit')}
+      />
+      {/* Withdraw request dialog */}
+      <DialogWithdraw
+        toggleDialog={() => handleClose('dialogWithdraw')}
+        open={state.dialogWithdraw}
       />
     </Toolbar>
   );
