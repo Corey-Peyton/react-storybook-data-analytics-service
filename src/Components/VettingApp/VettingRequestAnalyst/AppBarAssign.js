@@ -16,6 +16,9 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 function Assignee(props) {
+  const {
+    toggleManageTeamDrawer,
+  } = props;
   // No analysts assigned
   if (props.lead === '' && props.support.length === 0) {
     return (
@@ -25,7 +28,10 @@ function Assignee(props) {
     );
     // Only lead analyst assigned
   } else if (props.lead !== '' && props.support.length === 0) {
-    return <Chip label={props.lead} onClick={props.handleDialogOpen} />;
+    return <Chip label={props.lead} onClick={(e) => {
+      e.stopPropagation();
+      toggleManageTeamDrawer(e);
+    }} />;
     // Only support analysts assigned
   } else if (props.lead === '' && props.support.length !== 0) {
     return (
@@ -35,7 +41,10 @@ function Assignee(props) {
         </Typography>
         <Chip
           label={`${props.support.length} support`}
-          onClick={props.handleDialogOpen}
+          onClick={(e) => {
+            e.stopPropagation();
+            toggleManageTeamDrawer(e);
+          }}
           className="ml-1"
         />
       </>
@@ -47,7 +56,10 @@ function Assignee(props) {
         <Chip label={props.lead} onClick={props.handleDialogOpen} />
         <Chip
           label={`${props.support.length} support`}
-          onClick={props.handleDialogOpen}
+          onClick={(e) => {
+            e.stopPropagation();
+            toggleManageTeamDrawer(e);
+          }}
           className="ml-1"
         />
       </>

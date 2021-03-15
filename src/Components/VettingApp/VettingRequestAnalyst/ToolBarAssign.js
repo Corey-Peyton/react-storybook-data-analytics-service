@@ -20,6 +20,10 @@ import DialogContent from '@material-ui/core/DialogContent';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import CloseIcon from '@material-ui/icons/Close';
 import NumberFormat from 'react-number-format';
+import {
+  SnackbarAssignLead,
+  SnackbarSaveRequest,
+} from '../CommonComponents/Snackbars';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -78,13 +82,20 @@ const useStyles = makeStyles((theme) => ({
 
 function ToolBarAssign(props) {
   const classes = useStyles();
-  const handleClose = () => {
-    setOpen(false);
+  const [open, setOpen] = React.useState({
+    dialogAssign: false,
+    snackbarSave: false,
+    snackbarAssign: false,
+  });
+
+  const handleOpen = (element) => {
+    setOpen({...open, [element]: true});
   };
-  const [open, setOpen] = React.useState(false);
-  const handleClickOpen = () => {
-    setOpen(true);
+
+  const handleClose = (element) => {
+    setOpen({...open, [element]: false});
   };
+
   const [state, setState] = React.useState({
     phone: '',
   });
@@ -174,7 +185,7 @@ function ToolBarAssign(props) {
       <Button
         color="primary"
         className={classes.headerBtn}
-        onClick={handleClickOpen}
+        onClick={() => handleOpen('dialogAssign')}
         startIcon={
           <Icon path={mdiAccountPlus} className="icon-grey" size={1} />
         }
@@ -188,21 +199,33 @@ function ToolBarAssign(props) {
         color="primary"
         className={classes.headerBtn}
         startIcon={<SaveIcon />}
+        onClick={() => handleOpen('snackbarSave')}
       >
         Save
       </Button>
+      {/* Save request snackbar */}
+      <SnackbarSaveRequest
+        open={open.snackbarSave}
+        handleClose={() => handleClose('snackbarSave')}
+      />
+      {/* Assign to me snackbar */}
+      <SnackbarAssignLead
+        open={open.snackbarAssign}
+        handleClose={() => handleClose('snackbarAssign')}
+      />
+      {/* Assign to me dialog */}
       <Dialog
-        open={open}
-        onClose={handleClose}
+        open={open.dialogAssign}
+        onClose={() => handleClose('dialogAssign')}
         aria-labelledby="form-dialog-title"
-        scroll='paper'
+        scroll="paper"
         disableBackdropClick
         className={classes.root}
       >
         <DialogTitle id="dashboard-dialog-title">
           <div className={classes.vettingContainerTitle}>
             <Typography variant="h6">Assign vetting request to me</Typography>
-            <IconButton onClick={handleClose} edge="end">
+            <IconButton onClick={() => handleClose('dialogAssign')} edge="end">
               <CloseIcon />
             </IconButton>
           </div>
@@ -247,13 +270,17 @@ function ToolBarAssign(props) {
         </DialogContent>
         <Divider />
         <DialogActions className={classes.dialogFooter}>
-          <Button onClick={handleClose} color="primary" variant="outlined">
+          <Button
+            onClick={() => handleClose('dialogAssign')}
+            color="primary"
+            variant="outlined"
+          >
             Cancel
           </Button>
           <Button
             onClick={() => {
               props.handleAssignToMe();
-              handleClose();
+              handleClose('dialogAssign');
             }}
             color="primary"
             variant="contained"

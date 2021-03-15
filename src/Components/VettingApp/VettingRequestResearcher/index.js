@@ -18,10 +18,8 @@ import {
   DialogTitle,
   DialogContent,
   DialogActions,
-  Snackbar,
   IconButton,
 } from '@material-ui/core';
-import Alert from '@material-ui/lab/Alert';
 import ArrowForwardIosIcon from '@material-ui/icons/ArrowForwardIos';
 import ArrowBackIosIcon from '@material-ui/icons/ArrowBackIos';
 import Icon from '@mdi/react';
@@ -37,6 +35,10 @@ import Header from '../CommonComponents/Header';
 import Footer from '../CommonComponents/Footer';
 import CutCopyPasteAlert from '../CommonComponents/CutCopyPasteAlert';
 import CloseIcon from '@material-ui/icons/Close';
+import {
+  SnackbarDeleteRequest,
+  SnackbarSubmitRequest,
+} from '../CommonComponents/Snackbars';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -438,25 +440,10 @@ function VettingRequestResearcher(props) {
                   >
                     Submit request
                   </Button>
-                  <Snackbar
+                  <SnackbarSubmitRequest
                     open={openSnackbar}
-                    onClose={snackbarhandleClose}
-                    autoHideDuration={6000}
-                    anchorOrigin={{
-                      vertical: 'bottom',
-                      horizontal: 'left',
-                    }}
-                  >
-                    <Alert
-                      onClose={snackbarhandleClose}
-                      severity="success"
-                      className={classes.alert}
-                      variant="filled"
-                    >
-                      This vetting request has been already submitted. You will
-                      be notified with any updates.
-                    </Alert>
-                  </Snackbar>
+                    handleClose={snackbarhandleClose}
+                  />
                 </Grid>
               ) : (
                 <Grid item>
@@ -524,24 +511,10 @@ function VettingRequestResearcher(props) {
             </Button>
           </DialogActions>
         </Dialog>
-        <Snackbar
+        <SnackbarDeleteRequest
           open={openSnackbarDelete}
-          onClose={snackbardeletehandleClose}
-          autoHideDuration={6000}
-          anchorOrigin={{
-            vertical: 'bottom',
-            horizontal: 'left',
-          }}
-        >
-          <Alert
-            onClose={snackbardeletehandleClose}
-            severity="success"
-            className={classes.alert}
-            variant="filled"
-          >
-            Your request has been deleted
-          </Alert>
-        </Snackbar>
+          handleClose={snackbardeletehandleClose}
+        />
       </main>
       <Footer />
     </React.Fragment>

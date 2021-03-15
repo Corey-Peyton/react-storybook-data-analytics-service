@@ -11,17 +11,9 @@ import {
   Typography,
   Divider,
   AppBar,
-  Dialog,
-  DialogTitle,
-  DialogContent,
-  DialogContentText,
-  IconButton,
-  DialogActions,
-  Snackbar,
   StepLabel,
 } from '@material-ui/core';
 import ArrowForwardIosIcon from '@material-ui/icons/ArrowForwardIos';
-import Avatar from '@material-ui/core/Avatar';
 import ArrowBackIosIcon from '@material-ui/icons/ArrowBackIos';
 import ResearcherInfo from '../CommonComponents/RequestForm/ResearcherInfo';
 import FilesList from '../CommonComponents/RequestForm/FilesList';
@@ -29,17 +21,17 @@ import ResidualDisclosure from '../CommonComponents/RequestForm/ResidualDisclosu
 import AdditionalInfo from '../CommonComponents/RequestForm/Additionalnfo';
 import ToolBarUnassign from './ToolBarUnAssign';
 import ToolBarAssign from './ToolBarAssign';
-import MoreVertIcon from '@material-ui/icons/MoreVert';
-import SearchBar from '../../SearchBar';
-import Menu from '@material-ui/core/Menu';
-import MenuItem from '@material-ui/core/MenuItem';
 import AppBarAssign from './AppBarAssign';
-import Alert from '@material-ui/lab/Alert';
 import Header from '../CommonComponents/Header';
 import Footer from '../CommonComponents/Footer';
-import CloseIcon from '@material-ui/icons/Close';
 import FloatingSupportButton from '../CommonComponents/Support';
 import CutCopyPasteAlert from '../CommonComponents/CutCopyPasteAlert';
+import {
+  SnackbarAssignLead,
+  SnackbarSubmitRequest,
+  SnackbarUnassign,
+} from '../CommonComponents/Snackbars';
+import ManageTeamDrawer from '../Dashboard/Common/ManageTeamDrawer';
 
 const useStyles = makeStyles((theme) => ({
   dialogTitle: {
@@ -142,6 +134,12 @@ function getSteps() {
 }
 
 function VettingRequestAnalyst(props) {
+  const [open, setOpen] = React.useState({
+    manageTeamDrawer: false,
+  });
+  const toggleManageTeamDrawer = () => {
+    setOpen({...open, manageTeamDrawer: !open.manageTeamDrawer});
+  };
   const classes = useStyles();
   const [state, setState] = React.useState({
     activeStep: 0,
@@ -154,10 +152,6 @@ function VettingRequestAnalyst(props) {
     support: props.support,
   });
   const steps = getSteps();
-
-  const handleDialogClose = () => {
-    setState({...state, open: false});
-  };
 
   const totalSteps = () => {
     return steps.length;
@@ -199,23 +193,10 @@ function VettingRequestAnalyst(props) {
     handleNext();
   };
 
-  const [anchorEl, setAnchorEl] = React.useState(null);
-
-  const handleClick = (event) => {
-    setAnchorEl(event.currentTarget);
-  };
-
-  const handleClose = () => {
-    setAnchorEl(null);
-  };
-
-  const handleDialogOpen = () => {
-    setState({...state, open: true});
-  };
-
   const [openSnackbar, setOpenSnackbar] = React.useState({
     snackbarSubmitted: false,
     snackBarUnassign: false,
+    snackBarAssign: false,
   });
 
   const snackbarHandleClick = (state) => {
@@ -261,6 +242,7 @@ function VettingRequestAnalyst(props) {
 
   const handleAssignToMe = () => {
     setState({...state, lead: state.userName});
+    setOpenSnackbar({...openSnackbar, snackBarAssign: true});
   };
 
   const handleUnassignFromMe = () => {
@@ -273,31 +255,25 @@ function VettingRequestAnalyst(props) {
       <Header />
       <main className={classes.main} tabIndex="-1">
         <Container maxWidth="xl" className="page-container">
+          <ManageTeamDrawer
+            open={open.manageTeamDrawer}
+            clickHandler={toggleManageTeamDrawer}
+            toggleManageTeamDrawer={toggleManageTeamDrawer}
+          />
           <AppBar position="static" className={classes.appBar} color="default">
             {state.lead === state.userName ? (
               <ToolBarUnassign handleUnassignFromMe={handleUnassignFromMe} />
             ) : (
               <ToolBarAssign handleAssignToMe={handleAssignToMe} />
             )}
-            <Snackbar
-              onClose={() => snackbarHandleClose('snackBarUnassign')}
+            <SnackbarUnassign
               open={openSnackbar.snackBarUnassign}
-              autoHideDuration={6000}
-              anchorOrigin={{
-                vertical: 'bottom',
-                horizontal: 'left',
-              }}
-            >
-              <Alert
-                open={openSnackbar.snackBarUnassign}
-                onClose={() => snackbarHandleClose('snackBarUnassign')}
-                severity="success"
-                className={classes.alert}
-                variant="filled"
-              >
-                You have been unassigned from request 10_2020_4564677
-              </Alert>
-            </Snackbar>
+              handleClose={() => snackbarHandleClose('snackBarUnassign')}
+            />
+            <SnackbarAssignLead
+              open={openSnackbar.snackBarAssign}
+              handleClose={() => snackbarHandleClose('snackBarAssign')}
+            />
           </AppBar>
           <Paper className={classes.paper}>
             <Grid container alignItems="center">
@@ -305,7 +281,7 @@ function VettingRequestAnalyst(props) {
                 title={state.title}
                 lead={state.lead}
                 support={state.support}
-                handleDialogOpen={handleDialogOpen}
+                toggleManageTeamDrawer={toggleManageTeamDrawer}
               />
             </Grid>
             <Divider className={classes.divider} />
@@ -406,25 +382,10 @@ function VettingRequestAnalyst(props) {
                   >
                     Submit request
                   </Button>
-                  <Snackbar
+                  <SnackbarSubmitRequest
                     open={openSnackbar.snackbarSubmitted}
-                    onClose={() => snackbarHandleClose('snackbarSubmitted')}
-                    autoHideDuration={6000}
-                    anchorOrigin={{
-                      vertical: 'bottom',
-                      horizontal: 'left',
-                    }}
-                  >
-                    <Alert
-                      onClose={() => snackbarHandleClose('snackbarSubmitted')}
-                      severity="success"
-                      className={classes.alert}
-                      variant="filled"
-                    >
-                      This vetting request has been already submitted. You will
-                      be notified with any updates.
-                    </Alert>
-                  </Snackbar>
+                    handleClose={() => snackbarHandleClose('snackbarSubmitted')}
+                  />
                 </Grid>
               ) : (
                 <Grid item>
@@ -442,90 +403,6 @@ function VettingRequestAnalyst(props) {
           </Paper>
           <FloatingSupportButton />
         </Container>
-
-        <Dialog
-          open={state.open}
-          onClose={handleDialogClose}
-          aria-labelledby="alert-dialog-title"
-          aria-describedby="alert-dialog-description"
-          className={classes.root}
-          scroll="paper"
-        >
-          <DialogTitle id="alert-dialog-manage">
-            <div className={classes.dialogTitle}>
-              Manage team
-              <IconButton onClick={handleDialogClose} edge="end">
-                <CloseIcon />
-              </IconButton>
-            </div>
-          </DialogTitle>
-          <Divider className="mt-1 mb-2" />
-          <DialogContent className="pr-3 pl-3">
-            <DialogContentText id="alert-manage-team-lead">
-              <Typography variant="subtitle2" className="pb-1">
-                <strong>Lead</strong>
-              </Typography>
-              <Avatar src="/broken-image.jpg" />
-              <Typography variant="body2" className={classes.negativeMargin}>
-                Brian Bill
-              </Typography>
-              <Typography variant="body2" className={classes.negativeMargin2}>
-                brian.bill@canada.ca
-                <IconButton aria-haspopup="true" onClick={handleClick}>
-                  <MoreVertIcon />
-                </IconButton>
-                <Menu
-                  id="menu-team-lead"
-                  anchorEl={anchorEl}
-                  keepMounted
-                  open={Boolean(anchorEl)}
-                  onClose={handleClose}
-                >
-                  <MenuItem onClick={handleClose}>Unassign from me</MenuItem>
-                  <MenuItem onClick={handleClose}>Make me lead</MenuItem>
-                </Menu>
-              </Typography>
-              <Divider className={classes.divider} />
-              <SearchBar placeholder="Search support analysts" />
-            </DialogContentText>
-            <DialogContentText id="alert-manage-team-analyst">
-              <Typography variant="subtitle2" className="pb-1">
-                <strong>Support Analysts</strong>
-              </Typography>
-              <Avatar src="/broken-image.jpg" />
-              <Typography variant="body2" className={classes.negativeMargin}>
-                Tony Stark
-              </Typography>
-              <Typography variant="body2" className={classes.negativeMargin2}>
-                tony.stark@canada.ca
-                <IconButton aria-haspopup="true" onClick={handleClick}>
-                  <MoreVertIcon />
-                </IconButton>
-                <Menu
-                  id="menu-team-analyst"
-                  anchorEl={anchorEl}
-                  keepMounted
-                  open={Boolean(anchorEl)}
-                  onClose={handleClose}
-                >
-                  <MenuItem onClick={handleClose}>Unassign from me</MenuItem>
-                  <MenuItem onClick={handleClose}>Make me lead</MenuItem>
-                </Menu>
-              </Typography>
-            </DialogContentText>
-          </DialogContent>
-          <Divider className={classes.divider} />
-          <DialogActions className={classes.dialogActions}>
-            <Button
-              onClick={handleDialogClose}
-              color="primary"
-              variant="contained"
-              className="ml-2"
-            >
-              Go back
-            </Button>
-          </DialogActions>
-        </Dialog>
       </main>
       <Footer />
     </>
