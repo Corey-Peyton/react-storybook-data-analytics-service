@@ -30,27 +30,37 @@ const useStyles = makeStyles((theme) => ({
     padding: theme.spacing(0.5, 2),
     display: 'flex',
   },
+  headerBtn: {
+    marginLeft: theme.spacing(1),
+  },
 }));
 
 function Assignee(props) {
   const {toggleManageTeamDrawer} = props;
+  const classes = useStyles();
   // No analysts assigned
   if (props.lead === '' && props.support.length === 0) {
-    return (
-      <Typography color="textSecondary">
-        Unassigned
-      </Typography>
-    );
+    return <Typography color="textSecondary">Unassigned</Typography>;
     // Only lead analyst assigned
   } else if (props.lead !== '' && props.support.length === 0) {
     return (
-      <Chip
-        label={props.lead}
-        onClick={(e) => {
-          e.stopPropagation();
-          toggleManageTeamDrawer(e);
-        }}
-      />
+      <>
+        <Chip
+          label={props.lead}
+          onClick={(e) => {
+            e.stopPropagation();
+            toggleManageTeamDrawer(e);
+          }}
+        />
+        <Chip
+          label={`${props.support.length} support`}
+          className={classes.headerBtn}
+          onClick={(e) => {
+            e.stopPropagation();
+            toggleManageTeamDrawer(e);
+          }}
+        />
+      </>
     );
     // Only support analysts assigned
   } else if (props.lead === '' && props.support.length !== 0) {
