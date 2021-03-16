@@ -1,6 +1,8 @@
 import React from 'react';
 import {Grid, Chip, Typography} from '@material-ui/core';
 import {makeStyles} from '@material-ui/core/styles';
+import {mdiInboxArrowDown} from '@mdi/js';
+import Icon from '@mdi/react';
 
 const useStyles = makeStyles((theme) => ({
   title: {
@@ -13,25 +15,43 @@ const useStyles = makeStyles((theme) => ({
     display: 'flex',
     alignItems: 'center',
   },
+  icongrey: {
+    marginLeft: theme.spacing(1),
+    color: theme.palette.grey[600],
+    fill: theme.palette.grey[600],
+  },
+  statusRight: {
+    padding: theme.spacing(0.5, 2),
+    borderLeftWidth: '1px',
+    borderLeftStyle: 'solid',
+    borderLeftColor: theme.palette.divider,
+  },
+  statusLeft: {
+    padding: theme.spacing(0.5, 2),
+    display: 'flex',
+  },
 }));
 
 function Assignee(props) {
-  const {
-    toggleManageTeamDrawer,
-  } = props;
+  const {toggleManageTeamDrawer} = props;
   // No analysts assigned
   if (props.lead === '' && props.support.length === 0) {
     return (
-      <Typography variant="body2" color="textSecondary">
+      <Typography color="textSecondary">
         Unassigned
       </Typography>
     );
     // Only lead analyst assigned
   } else if (props.lead !== '' && props.support.length === 0) {
-    return <Chip label={props.lead} onClick={(e) => {
-      e.stopPropagation();
-      toggleManageTeamDrawer(e);
-    }} />;
+    return (
+      <Chip
+        label={props.lead}
+        onClick={(e) => {
+          e.stopPropagation();
+          toggleManageTeamDrawer(e);
+        }}
+      />
+    );
     // Only support analysts assigned
   } else if (props.lead === '' && props.support.length !== 0) {
     return (
@@ -80,13 +100,15 @@ function AppBarUnAssign(props) {
         </Typography>
       </Grid>
       <Grid item>
-        <Chip
-          label="Disclosure Analysis"
-          className={`${classes.upperCase} mr-1`}
-        />
+        <div className={classes.statusLeft}>
+          <Icon path={mdiInboxArrowDown} size={1} />
+          <Typography className={classes.icongrey}>Submitted</Typography>
+        </div>
       </Grid>
       <Grid item className={classes.assignee}>
-        <Assignee {...props} />
+        <div className={classes.statusRight}>
+          <Assignee {...props} />
+        </div>
       </Grid>
     </Grid>
   );

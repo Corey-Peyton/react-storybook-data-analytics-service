@@ -12,7 +12,6 @@ import {
   Typography,
   Divider,
   Chip,
-  Tooltip,
   AppBar,
   Dialog,
   DialogTitle,
@@ -25,7 +24,7 @@ import Alert from '@material-ui/lab/Alert';
 import ArrowForwardIosIcon from '@material-ui/icons/ArrowForwardIos';
 import ArrowBackIosIcon from '@material-ui/icons/ArrowBackIos';
 import Icon from '@mdi/react';
-import {mdiLockOpenVariant} from '@mdi/js';
+import {mdiInboxArrowDown, mdiFileEditOutline} from '@mdi/js';
 import ResearcherInfo from '../CommonComponents/RequestForm/ResearcherInfo';
 import FilesList from '../CommonComponents/RequestForm/FilesList';
 import ResidualDisclosure from '../CommonComponents/RequestForm/ResidualDisclosure';
@@ -37,6 +36,7 @@ import Header from '../CommonComponents/Header';
 import Footer from '../CommonComponents/Footer';
 import CutCopyPasteAlert from '../CommonComponents/CutCopyPasteAlert';
 import CloseIcon from '@material-ui/icons/Close';
+import {DialogAnalyst} from '../CommonComponents/DialogBox';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -81,11 +81,20 @@ const useStyles = makeStyles((theme) => ({
   title: {
     flexGrow: 1,
   },
-  lockTooltip: {
+  icongrey: {
+    marginLeft: theme.spacing(1),
+    color: theme.palette.grey[600],
+    fill: theme.palette.grey[600],
+  },
+  statusRight: {
     padding: theme.spacing(0.5, 2),
     borderLeftWidth: '1px',
     borderLeftStyle: 'solid',
     borderLeftColor: theme.palette.divider,
+  },
+  statusLeft: {
+    padding: theme.spacing(0.5, 2),
+    display: 'flex',
   },
   stepperContainer: {
     'display': 'flex',
@@ -182,6 +191,75 @@ function VettingRequestResearcher(props) {
     title: 'Untitled request',
   });
   const steps = getSteps();
+
+  function status() {
+    if (state.activeStep === 3) {
+      return (
+        <>
+          <Grid item>
+            <div className={classes.statusLeft}>
+              <Icon path={mdiInboxArrowDown} size={1} />
+              <Typography className={classes.icongrey}>Submitted</Typography>
+            </div>
+          </Grid>
+          <Grid item>
+            <div className={classes.statusRight}>
+              <Typography color="textSecondary">Unassigned</Typography>
+            </div>
+          </Grid>
+        </>
+      );
+    } else if (state.activeStep === 0 || state.activeStep === 1) {
+      return (
+        <>
+          <Grid item>
+            <div className={classes.statusLeft}>
+              <Icon path={mdiInboxArrowDown} size={1} />
+              <Typography className={classes.icongrey}>Submitted</Typography>
+            </div>
+          </Grid>
+          <Grid item>
+            <div className={classes.statusRight}>
+              <Chip
+                label="Tony Stark"
+                onClick={(e) => {
+                  e.stopPropagation();
+                  toggleDialog('info', e);
+                }}
+              />
+            </div>
+          </Grid>
+        </>
+      );
+    } else {
+      return (
+        <>
+          <Grid item>
+            <div className={classes.statusLeft}>
+              <Icon path={mdiFileEditOutline} size={1} />{' '}
+              <Typography className={classes.icongrey}>Draft</Typography>
+            </div>
+          </Grid>
+          <Grid item>
+            <div className={classes.statusRight}>
+              <Chip
+                label="Tony Stark"
+                onClick={(e) => {
+                  e.stopPropagation();
+                  toggleDialog('info', e);
+                }}
+              />
+            </div>
+          </Grid>
+        </>
+      );
+    }
+  }
+
+  const [open, setOpen] = React.useState({
+    info: false,
+    deleteDialog: false,
+  });
 
   const handleDialogOpen = () => {
     setState({...state, open: true});
@@ -304,11 +382,23 @@ function VettingRequestResearcher(props) {
     return state.errors[step] !== 0;
   };
 
+  function toggleDialog(value, e, role) {
+    e.stopPropagation();
+    if (value === 'info') {
+      setOpen({...open, info: !open.info, role: role});
+    }
+  }
+
   return (
     <React.Fragment>
       <Header />
       <main className={classes.main} tabIndex="-1">
         <Container maxWidth={false} className="page-container">
+          <DialogAnalyst
+            open={open.info}
+            toggleDialog={(e) => toggleDialog('info', e, open.role)}
+            header="Assignee details"
+          />
           <AppBar position="static" className={classes.appBar} color="default">
             {state.activeStep === 3 ? (
               <ToolBarDelete handleDialogOpen={handleDialogOpen} />
@@ -326,20 +416,7 @@ function VettingRequestResearcher(props) {
                   {state.title}
                 </Typography>
               </Grid>
-              <Grid item>
-                <Chip label="Draft" className="mr-2" />
-              </Grid>
-              <Grid item>
-                <div className={classes.lockTooltip}>
-                  <Tooltip title="This vetting request is unlocked and marked as “Draft.” You can either send or withdraw this vetting request.">
-                    <Icon
-                      path={mdiLockOpenVariant}
-                      size={1}
-                      className="icon-grey"
-                    />
-                  </Tooltip>
-                </div>
-              </Grid>
+              {status()}
             </Grid>
             <Divider className={classes.divider} />
             <div className={classes.stepperContainer}>
