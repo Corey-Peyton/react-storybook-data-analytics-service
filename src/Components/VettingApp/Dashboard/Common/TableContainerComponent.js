@@ -246,13 +246,14 @@ export default function TableContainerComponent(props) {
                     </TableCell>
                     <TableCell align="center">
                       <ActionsMenu
+                        statusHead={row.statusHead}
                         status={row.status}
                         contextSummaryClick={contextSummaryClick}
                         contextStatusClick={contextStatusClick}
                         toggleManageTeamDrawer={toggleManageTeamDrawer}
                         role={role}
                         controls={index}
-                        analyst={row}
+                        request={row}
                       />
                     </TableCell>
                   </TableRow>
