@@ -8,6 +8,10 @@ const useStyles = makeStyles((theme) => ({
   title: {
     flexGrow: 1,
   },
+  divider: {
+    height: '40px',
+    marginTop: theme.spacing(1.25),
+  },
   upperCase: {
     textTransform: 'uppercase',
   },
@@ -37,7 +41,11 @@ function Assignee(props) {
   const classes = useStyles();
   // No analysts assigned
   if (props.lead === '' && props.support.length === 0) {
-    return <Typography variant="body2" color="textSecondary">Unassigned</Typography>;
+    return (
+      <Typography variant="body2" color="textSecondary">
+        Unassigned
+      </Typography>
+    );
     // Only lead analyst assigned
   } else if (props.lead !== '' && props.support.length === 0) {
     return (
@@ -109,10 +117,12 @@ function AppBarUnAssign(props) {
       <Grid item>
         <div className={classes.statusLeft}>
           <Icon path={mdiInboxArrowDown} size={1} />
-          <Typography variant="body2" className={classes.icongrey}>Submitted</Typography>
+          <Typography variant="body2" className={classes.icongrey}>
+            Submitted
+          </Typography>
         </div>
       </Grid>
-      <Divider orientation="vertical" flexItem />
+      <Divider className={classes.divider} orientation="vertical" flexItem />
       <Grid item className={classes.assignee}>
         <div className={classes.statusRight}>
           <Assignee {...props} />
