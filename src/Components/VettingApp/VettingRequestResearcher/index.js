@@ -11,7 +11,6 @@ import {
   StepLabel,
   Typography,
   Divider,
-  Chip,
   AppBar,
   Dialog,
   DialogTitle,
@@ -22,7 +21,7 @@ import {
 import ArrowForwardIosIcon from '@material-ui/icons/ArrowForwardIos';
 import ArrowBackIosIcon from '@material-ui/icons/ArrowBackIos';
 import Icon from '@mdi/react';
-import {mdiInboxArrowDown, mdiFileEditOutline} from '@mdi/js';
+import {mdiFileEditOutline} from '@mdi/js';
 import ResearcherInfo from '../CommonComponents/RequestForm/ResearcherInfo';
 import FilesList from '../CommonComponents/RequestForm/FilesList';
 import ResidualDisclosure from '../CommonComponents/RequestForm/ResidualDisclosure';
@@ -194,70 +193,6 @@ function VettingRequestResearcher(props) {
   });
   const steps = getSteps();
 
-  function status() {
-    if (state.activeStep === 3) {
-      return (
-        <>
-          <Grid item>
-            <div className={classes.statusLeft}>
-              <Icon path={mdiInboxArrowDown} size={1} />
-              <Typography className={classes.icongrey}>Submitted</Typography>
-            </div>
-          </Grid>
-          <Grid item>
-            <div className={classes.statusRight}>
-              <Typography color="textSecondary">Unassigned</Typography>
-            </div>
-          </Grid>
-        </>
-      );
-    } else if (state.activeStep === 0 || state.activeStep === 1) {
-      return (
-        <>
-          <Grid item>
-            <div className={classes.statusLeft}>
-              <Icon path={mdiInboxArrowDown} size={1} />
-              <Typography className={classes.icongrey}>Submitted</Typography>
-            </div>
-          </Grid>
-          <Grid item>
-            <div className={classes.statusRight}>
-              <Chip
-                label="Tony Stark"
-                onClick={(e) => {
-                  e.stopPropagation();
-                  toggleDialog('info', e);
-                }}
-              />
-            </div>
-          </Grid>
-        </>
-      );
-    } else {
-      return (
-        <>
-          <Grid item>
-            <div className={classes.statusLeft}>
-              <Icon path={mdiFileEditOutline} size={1} />{' '}
-              <Typography className={classes.icongrey}>Draft</Typography>
-            </div>
-          </Grid>
-          <Grid item>
-            <div className={classes.statusRight}>
-              <Chip
-                label="Tony Stark"
-                onClick={(e) => {
-                  e.stopPropagation();
-                  toggleDialog('info', e);
-                }}
-              />
-            </div>
-          </Grid>
-        </>
-      );
-    }
-  }
-
   const [open, setOpen] = React.useState({
     info: false,
     deleteDialog: false,
@@ -418,7 +353,17 @@ function VettingRequestResearcher(props) {
                   {state.title}
                 </Typography>
               </Grid>
-              {status()}
+              <Grid item>
+                <div className={classes.statusLeft}>
+                  <Icon path={mdiFileEditOutline} size={1} />{' '}
+                  <Typography className={classes.icongrey}>Draft</Typography>
+                </div>
+              </Grid>
+              <Grid item>
+                <div className={classes.statusRight}>
+                  <Typography className={classes.icongrey}>Unassigned</Typography>
+                </div>
+              </Grid>
             </Grid>
             <Divider className={classes.divider} />
             <div className={classes.stepperContainer}>
