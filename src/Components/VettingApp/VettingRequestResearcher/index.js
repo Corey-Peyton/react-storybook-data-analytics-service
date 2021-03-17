@@ -341,7 +341,7 @@ function VettingRequestResearcher(props) {
               </Grid>
               <Divider orientation="vertical" flexItem />
               <Grid item>
-                <Typography variant="body2" className={classes.statusRight}>
+                <Typography variant="body2" color="textSecondary" className={classes.statusRight}>
                   Unassigned
                 </Typography>
               </Grid>

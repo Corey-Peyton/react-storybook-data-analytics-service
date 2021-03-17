@@ -36,7 +36,7 @@ function Assignee(props) {
   const classes = useStyles();
   // No analysts assigned
   if (props.lead === '' && props.support.length === 0) {
-    return <Typography variant="body2">Unassigned</Typography>;
+    return <Typography variant="body2" color="textSecondary">Unassigned</Typography>;
     // Only lead analyst assigned
   } else if (props.lead !== '' && props.support.length === 0) {
     return (
