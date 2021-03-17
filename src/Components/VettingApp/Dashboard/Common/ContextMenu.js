@@ -21,8 +21,9 @@ import {
   DialogUpdate,
   DialogDenied,
   DialogApprove,
+  DialogInfo,
 } from '../../CommonComponents/DialogBox';
-import {analystList} from '../../../../Data/fakeData';
+import {loggedInUser} from '../../../../Data/fakeData';
 
 const StyledMenu = withStyles({
   paper: {
@@ -58,6 +59,7 @@ export function ActionsMenu(props) {
     request,
   } = props;
   const {t} = useTranslation();
+  const currentUser = loggedInUser();
   let StyledMenuVar;
 
   const [anchorEl, setAnchorEl] = React.useState(null);
@@ -73,6 +75,8 @@ export function ActionsMenu(props) {
     dialogUpdate: false,
     dialogDenied: false,
     dialogApprove: false,
+    dialogInfo: false,
+    role: '',
   });
 
   const ariaControls = `actions-menu-${controls}`;
@@ -107,9 +111,9 @@ export function ActionsMenu(props) {
     toggleManageTeamDrawer(e);
   };
 
-  const toggleDialog = (state, value, e) => {
+  const toggleDialog = (state, value, e, role) => {
     e.stopPropagation();
-    setOpen({...open, [state]: value});
+    setOpen({...open, [state]: value, role: role});
     handleClose(e);
   };
 
@@ -163,12 +167,34 @@ export function ActionsMenu(props) {
     );
   };
 
-  const viewAssigneeMenuItem = () => {
+  const assigneeDetailsMenuItem = () => {
     return (
-      <MenuItem onClick={handleClose}>
+      <MenuItem
+        onClick={(e) => {
+          e.stopPropagation();
+          toggleDialog('dialogInfo', !open.dialogInfo, e, 'assignee');
+        }}
+      >
         <ListItemText
           primary={
-            <Typography variant="body2">{t('View assignee')}</Typography>
+            <Typography variant="body2">{t('Assignee details')}</Typography>
+          }
+        />
+      </MenuItem>
+    );
+  };
+
+  const requesterDetailsMenuItem = () => {
+    return (
+      <MenuItem
+        onClick={(e) => {
+          e.stopPropagation();
+          toggleDialog('dialogInfo', !open.dialogInfo, e, 'requester');
+        }}
+      >
+        <ListItemText
+          primary={
+            <Typography variant="body2">{t('Requester details')}</Typography>
           }
         />
       </MenuItem>
@@ -191,192 +217,156 @@ export function ActionsMenu(props) {
   };
 
   const assignAsLeadMenuItem = () => {
-    for (let i = 0; i < analystList.length; i++) {
-      const analyst = analystList[i];
-      const loggedIn = analystList[i].current;
-
-      if (loggedIn && request.lead !== analyst.name) {
-        return (
-          <MenuItem
-            onClick={(e) => {
-              e.stopPropagation();
-              toggleDialog('dialogAssign', !open.dialogAssign, e);
-            }}
-            open={open.dialogAssign}
-          >
-            <ListItemText
-              primary={
-                <Typography variant="body2">
-                  {t('Assign me as lead')}
-                </Typography>
-              }
-            />
-          </MenuItem>
-        );
-      }
+    if (request.lead !== currentUser) {
+      return (
+        <MenuItem
+          onClick={(e) => {
+            e.stopPropagation();
+            toggleDialog('dialogAssign', !open.dialogAssign, e);
+          }}
+          open={open.dialogAssign}
+        >
+          <ListItemText
+            primary={
+              <Typography variant="body2">{t('Assign me as lead')}</Typography>
+            }
+          />
+        </MenuItem>
+      );
     }
   };
 
   const assignAsSupportMenuItem = () => {
-    for (let i = 0; i < analystList.length; i++) {
-      const analyst = analystList[i];
-      const loggedIn = analystList[i].current;
+    const supports = request.support.includes(currentUser);
 
-      if (loggedIn && request.lead === analyst.name) {
-        return (
-          <MenuItem
-            onClick={(e) => {
-              e.stopPropagation();
-              toggleDialog('dialogSupport', !open.dialogSupport, e);
-            }}
-            open={open.dialogSupport}
-          >
-            <ListItemText
-              primary={
-                <Typography variant="body2">
-                  {t('Assign me as support')}
-                </Typography>
-              }
-            />
-          </MenuItem>
-        );
-      }
+    if (currentUser === request.lead || !supports) {
+      return (
+        <MenuItem
+          onClick={(e) => {
+            e.stopPropagation();
+            toggleDialog('dialogSupport', !open.dialogSupport, e);
+          }}
+          open={open.dialogSupport}
+        >
+          <ListItemText
+            primary={
+              <Typography variant="body2">
+                {t('Assign me as support')}
+              </Typography>
+            }
+          />
+        </MenuItem>
+      );
     }
   };
 
   const startReviewHandler = () => {
-    for (let i = 0; i < analystList.length; i++) {
-      const analyst = analystList[i];
-      const loggedIn = analystList[i].current;
-
-      if (loggedIn && request.lead === analyst.name) {
-        return (
-          <MenuItem onClick={handleClose}>
-            <ListItemText
-              primary={
-                <Typography variant="body2">{t('Start review')}</Typography>
-              }
-            />
-          </MenuItem>
-        );
-      }
+    if (currentUser === request.lead) {
+      return (
+        <MenuItem onClick={handleClose}>
+          <ListItemText
+            primary={
+              <Typography variant="body2">{t('Start review')}</Typography>
+            }
+          />
+        </MenuItem>
+      );
     }
   };
 
   const unassignMenuItem = () => {
-    for (let i = 0; i < analystList.length; i++) {
-      const analyst = analystList[i];
-      const loggedIn = analystList[i].current;
-      const supports = request.support.filter((val) => val === analyst.name);
+    const supports = request.support.includes(currentUser);
 
-      if (loggedIn) {
-        if (analyst.name === request.lead || supports[0] === analyst.name) {
-          return (
-            <MenuItem
-              onClick={(e) => {
-                e.stopPropagation();
-                toggleDialog('dialogUnassign', !open.dialogUnassign, e);
-              }}
-              open={open.dialogUnassign}
-            >
-              <ListItemText
-                primary={
-                  <Typography variant="body2">
-                    {t('Unassign myself')}
-                  </Typography>
-                }
-              />
-            </MenuItem>
-          );
-        }
-      }
+    if (currentUser === request.lead || supports) {
+      return (
+        <MenuItem
+          onClick={(e) => {
+            e.stopPropagation();
+            toggleDialog('dialogUnassign', !open.dialogUnassign, e);
+          }}
+          open={open.dialogUnassign}
+        >
+          <ListItemText
+            primary={
+              <Typography variant="body2">{t('Unassign myself')}</Typography>
+            }
+          />
+        </MenuItem>
+      );
     }
   };
 
   const approveMenuItem = () => {
-    for (let i = 0; i < analystList.length; i++) {
-      const analyst = analystList[i];
-      const loggedIn = analystList[i].current;
-
-      if (loggedIn && analyst.name === request.lead) {
-        return (
-          <MenuItem
-            onClick={(e) => {
-              e.stopPropagation();
-              toggleDialog('dialogApprove', !open.dialogApprove, e);
-            }}
-            open={open.dialogApprove}
-          >
-            <ListItemText
-              primary={<Typography variant="body2">{t('Approve')}</Typography>}
-            />
-          </MenuItem>
-        );
-      }
+    if (currentUser === request.lead) {
+      return (
+        <MenuItem
+          onClick={(e) => {
+            e.stopPropagation();
+            toggleDialog('dialogApprove', !open.dialogApprove, e);
+          }}
+          open={open.dialogApprove}
+        >
+          <ListItemText
+            primary={<Typography variant="body2">{t('Approve')}</Typography>}
+          />
+        </MenuItem>
+      );
     }
   };
 
   const denyMenuItem = () => {
-    for (let i = 0; i < analystList.length; i++) {
-      const analyst = analystList[i];
-      const loggedIn = analystList[i].current;
-
-      if (loggedIn && analyst.name === request.lead) {
-        return (
-          <MenuItem
-            onClick={(e) => {
-              e.stopPropagation();
-              toggleDialog('dialogDenied', !open.dialogDenied, e);
-            }}
-            open={open.dialogDenied}
-          >
-            <ListItemText
-              primary={<Typography variant="body2">{t('Deny')}</Typography>}
-            />
-          </MenuItem>
-        );
-      }
+    if (currentUser === request.lead) {
+      return (
+        <MenuItem
+          onClick={(e) => {
+            e.stopPropagation();
+            toggleDialog('dialogDenied', !open.dialogDenied, e);
+          }}
+          open={open.dialogDenied}
+        >
+          <ListItemText
+            primary={<Typography variant="body2">{t('Deny')}</Typography>}
+          />
+        </MenuItem>
+      );
     }
   };
 
   const requestChangesMenuItem = () => {
-    for (let i = 0; i < analystList.length; i++) {
-      const analyst = analystList[i];
-      const loggedIn = analystList[i].current;
-
-      if (loggedIn && analyst.name === request.lead) {
-        return (
-          <MenuItem
-            onClick={(e) => {
-              e.stopPropagation();
-              toggleDialog('dialogUpdate', !open.dialogUpdate, e);
-            }}
-            open={open.dialogUpdate}
-          >
-            <ListItemText
-              primary={
-                <Typography variant="body2">{t('Request changes')}</Typography>
-              }
-            />
-          </MenuItem>
-        );
-      }
+    if (currentUser === request.lead) {
+      return (
+        <MenuItem
+          onClick={(e) => {
+            e.stopPropagation();
+            toggleDialog('dialogUpdate', !open.dialogUpdate, e);
+          }}
+          open={open.dialogUpdate}
+        >
+          <ListItemText
+            primary={
+              <Typography variant="body2">{t('Request changes')}</Typography>
+            }
+          />
+        </MenuItem>
+      );
     }
   };
 
   const reactivateMenuItem = () => {
-    return (
-      <MenuItem
-        onClick={(e) => {
-          e.stopPropagation();
-          handleSnackbarOpen('snackbarReopen');
-        }}
-      >
-        <ListItemText
-          primary={<Typography variant="body2">{t('Reactivate')}</Typography>}
-        />
-      </MenuItem>
-    );
+    if (currentUser === request.lead) {
+      return (
+        <MenuItem
+          onClick={(e) => {
+            e.stopPropagation();
+            handleSnackbarOpen('snackbarReopen');
+          }}
+        >
+          <ListItemText
+            primary={<Typography variant="body2">{t('Reactivate')}</Typography>}
+          />
+        </MenuItem>
+      );
+    }
   };
 
   const manageAssigneesMenuItem = () => {
@@ -391,11 +381,11 @@ export function ActionsMenu(props) {
     );
   };
 
-  const viewSummaryMenuItem = () => {
+  const summaryMenuItem = () => {
     return (
       <MenuItem onClick={toggleSummary}>
         <ListItemText
-          primary={<Typography variant="body2">{t('View summary')}</Typography>}
+          primary={<Typography variant="body2">{t('Summary')}</Typography>}
         />
       </MenuItem>
     );
@@ -417,7 +407,8 @@ export function ActionsMenu(props) {
             {assignAsSupportMenuItem()}
             {unassignMenuItem()}
             {manageAssigneesMenuItem()}
-            {viewSummaryMenuItem()}
+            {requesterDetailsMenuItem()}
+            {summaryMenuItem()}
           </StyledMenu>
         );
       } else if (status === 'submitted') {
@@ -435,7 +426,8 @@ export function ActionsMenu(props) {
             {assignAsSupportMenuItem()}
             {unassignMenuItem()}
             {manageAssigneesMenuItem()}
-            {viewSummaryMenuItem()}
+            {requesterDetailsMenuItem()}
+            {summaryMenuItem()}
           </StyledMenu>
         );
       } else if (status === 'under review') {
@@ -455,7 +447,8 @@ export function ActionsMenu(props) {
             {assignAsSupportMenuItem()}
             {unassignMenuItem()}
             {manageAssigneesMenuItem()}
-            {viewSummaryMenuItem()}
+            {requesterDetailsMenuItem()}
+            {summaryMenuItem()}
           </StyledMenu>
         );
       } else if (status === 'changes requested') {
@@ -472,7 +465,8 @@ export function ActionsMenu(props) {
             {assignAsSupportMenuItem()}
             {unassignMenuItem()}
             {manageAssigneesMenuItem()}
-            {viewSummaryMenuItem()}
+            {requesterDetailsMenuItem()}
+            {summaryMenuItem()}
           </StyledMenu>
         );
       }
@@ -489,7 +483,8 @@ export function ActionsMenu(props) {
           {assignAsLeadMenuItem()}
           {assignAsSupportMenuItem()}
           {manageAssigneesMenuItem()}
-          {viewSummaryMenuItem()}
+          {requesterDetailsMenuItem()}
+          {summaryMenuItem()}
         </StyledMenu>
       );
     } else if (statusHead === 'active') {
@@ -507,7 +502,8 @@ export function ActionsMenu(props) {
             {assignAsSupportMenuItem()}
             {unassignMenuItem()}
             {manageAssigneesMenuItem()}
-            {viewSummaryMenuItem()}
+            {requesterDetailsMenuItem()}
+            {summaryMenuItem()}
           </StyledMenu>
         );
       } else if (status === 'submitted') {
@@ -525,7 +521,8 @@ export function ActionsMenu(props) {
             {assignAsSupportMenuItem()}
             {unassignMenuItem()}
             {manageAssigneesMenuItem()}
-            {viewSummaryMenuItem()}
+            {requesterDetailsMenuItem()}
+            {summaryMenuItem()}
           </StyledMenu>
         );
       } else if (status === 'under review') {
@@ -545,7 +542,8 @@ export function ActionsMenu(props) {
             {assignAsSupportMenuItem()}
             {unassignMenuItem()}
             {manageAssigneesMenuItem()}
-            {viewSummaryMenuItem()}
+            {requesterDetailsMenuItem()}
+            {summaryMenuItem()}
           </StyledMenu>
         );
       } else if (status === 'changes requested') {
@@ -561,7 +559,8 @@ export function ActionsMenu(props) {
             {assignAsLeadMenuItem()}
             {assignAsSupportMenuItem()}
             {manageAssigneesMenuItem()}
-            {viewSummaryMenuItem()}
+            {requesterDetailsMenuItem()}
+            {summaryMenuItem()}
           </StyledMenu>
         );
       }
@@ -577,7 +576,8 @@ export function ActionsMenu(props) {
           {viewRequestMenuItem()}
           {reactivateMenuItem()}
           {manageAssigneesMenuItem()}
-          {viewSummaryMenuItem()}
+          {requesterDetailsMenuItem()}
+          {summaryMenuItem()}
         </StyledMenu>
       );
     } else if (statusHead === 'denied') {
@@ -592,7 +592,8 @@ export function ActionsMenu(props) {
           {viewRequestMenuItem()}
           {reactivateMenuItem()}
           {manageAssigneesMenuItem()}
-          {viewSummaryMenuItem()}
+          {requesterDetailsMenuItem()}
+          {summaryMenuItem()}
         </StyledMenu>
       );
     }
@@ -611,8 +612,9 @@ export function ActionsMenu(props) {
             {editMenuItem()}
             {submitMenuItem()}
             {withdrawMenuItem()}
-            {viewAssigneeMenuItem()}
-            {viewSummaryMenuItem()}
+            {assigneeDetailsMenuItem()}
+            {requesterDetailsMenuItem()}
+            {summaryMenuItem()}
           </StyledMenu>
         );
       } else if (status === 'submitted') {
@@ -626,8 +628,9 @@ export function ActionsMenu(props) {
           >
             {viewRequestMenuItem()}
             {withdrawMenuItem()}
-            {viewAssigneeMenuItem()}
-            {viewSummaryMenuItem()}
+            {assigneeDetailsMenuItem()}
+            {requesterDetailsMenuItem()}
+            {summaryMenuItem()}
           </StyledMenu>
         );
       } else if (status === 'changes requested') {
@@ -642,8 +645,9 @@ export function ActionsMenu(props) {
             {editMenuItem()}
             {submitMenuItem()}
             {withdrawMenuItem()}
-            {viewAssigneeMenuItem()}
-            {viewSummaryMenuItem()}
+            {assigneeDetailsMenuItem()}
+            {requesterDetailsMenuItem()}
+            {summaryMenuItem()}
           </StyledMenu>
         );
       }
@@ -658,8 +662,9 @@ export function ActionsMenu(props) {
         >
           {viewRequestMenuItem()}
           {reactivateMenuItem()}
-          {viewAssigneeMenuItem()}
-          {viewSummaryMenuItem()}
+          {assigneeDetailsMenuItem()}
+          {requesterDetailsMenuItem()}
+          {summaryMenuItem()}
           {deleteMenuItem()}
         </StyledMenu>
       );
@@ -673,8 +678,9 @@ export function ActionsMenu(props) {
           onClose={handleClose}
         >
           {viewRequestMenuItem()}
-          {viewAssigneeMenuItem()}
-          {viewSummaryMenuItem()}
+          {assigneeDetailsMenuItem()}
+          {requesterDetailsMenuItem()}
+          {summaryMenuItem()}
         </StyledMenu>
       );
     } else if (statusHead === 'denied') {
@@ -687,8 +693,9 @@ export function ActionsMenu(props) {
           onClose={handleClose}
         >
           {viewRequestMenuItem()}
-          {viewAssigneeMenuItem()}
-          {viewSummaryMenuItem()}
+          {assigneeDetailsMenuItem()}
+          {requesterDetailsMenuItem()}
+          {summaryMenuItem()}
         </StyledMenu>
       );
     }
@@ -767,6 +774,13 @@ export function ActionsMenu(props) {
           toggleDialog('dialogApprove', !open.dialogApprove, e)
         }
         open={open.dialogApprove}
+      />
+      <DialogInfo
+        toggleDialog={(e) => toggleDialog('dialogInfo', !open.dialogInfo, e)}
+        open={open.dialogInfo}
+        header={
+          open.role === 'assignee' ? 'Assignee details' : 'Requester details'
+        }
       />
     </div>
   );

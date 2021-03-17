@@ -322,7 +322,7 @@ export const projects = [
 export const requestListResearchers = [
   {
     id: '1001-1234567',
-    title: 'Title (Tony as lead)',
+    title: 'Untitled request',
     project: '20-SSH-UTO-1111',
     statusHead: 'assigned to me',
     status: 'draft',
@@ -347,7 +347,7 @@ export const requestListResearchers = [
   },
   {
     id: '1001-1234569',
-    title: 'Title (Tony as support)',
+    title: 'Untitled request',
     project: '20-SSH-UTO-1111',
     statusHead: 'assigned to me',
     status: 'draft',
@@ -357,7 +357,7 @@ export const requestListResearchers = [
     expiration: 'Sep. 20, 2020',
     researcher: 'Steve Rogers',
     analysts: {
-      lead: 'Ultron',
+      lead: 'Thor Odinson',
       support: ['Tony Stark'],
     },
     files: [
@@ -372,7 +372,7 @@ export const requestListResearchers = [
   },
   {
     id: '1001-2234572',
-    title: 'Title (Tony as lead)',
+    title: 'Untitled request',
     project: '20-SSH-UTO-1111',
     statusHead: 'assigned to me',
     status: 'submitted',
@@ -397,7 +397,7 @@ export const requestListResearchers = [
   },
   {
     id: '1001-2234573',
-    title: 'Title (Tony as support)',
+    title: 'Untitled request',
     project: '20-SSH-UTO-1111',
     statusHead: 'assigned to me',
     status: 'submitted',
@@ -407,7 +407,7 @@ export const requestListResearchers = [
     expiration: 'Sep. 20, 2020',
     researcher: 'Steve Rogers',
     analysts: {
-      lead: 'Ultron',
+      lead: 'Thor Odinson',
       support: ['Tony Stark'],
     },
     files: [
@@ -422,7 +422,7 @@ export const requestListResearchers = [
   },
   {
     id: '1001-2234574',
-    title: 'Title (Tony as lead)',
+    title: 'Untitled request',
     project: '20-SSH-UTO-1111',
     statusHead: 'assigned to me',
     status: 'under review',
@@ -447,7 +447,7 @@ export const requestListResearchers = [
   },
   {
     id: '1001-2234575',
-    title: 'Title (Tony as support)',
+    title: 'Untitled request',
     project: '20-SSH-UTO-1111',
     statusHead: 'assigned to me',
     status: 'under review',
@@ -457,7 +457,7 @@ export const requestListResearchers = [
     expiration: 'Sep. 20, 2020',
     researcher: 'Steve Rogers',
     analysts: {
-      lead: 'Ultron',
+      lead: 'Thor Odinson',
       support: ['Tony Stark'],
     },
     files: [
@@ -472,7 +472,7 @@ export const requestListResearchers = [
   },
   {
     id: '1001-2234576',
-    title: 'Title (Tony as lead)',
+    title: 'Untitled request',
     project: '20-SSH-UTO-1111',
     statusHead: 'assigned to me',
     status: 'changes requested',
@@ -497,7 +497,7 @@ export const requestListResearchers = [
   },
   {
     id: '1001-2234577',
-    title: 'Title (Tony as support)',
+    title: 'Untitled request',
     project: '20-SSH-UTO-1111',
     statusHead: 'assigned to me',
     status: 'changes requested',
@@ -507,7 +507,7 @@ export const requestListResearchers = [
     expiration: 'Sep. 20, 2020',
     researcher: 'Steve Rogers',
     analysts: {
-      lead: 'Ultron',
+      lead: 'Thor Odinson',
       support: ['Tony Stark'],
     },
     files: [
@@ -522,7 +522,7 @@ export const requestListResearchers = [
   },
   {
     id: '1001-1234501',
-    title: 'Example title',
+    title: 'Untitled request',
     project: '20-SSH-UTO-1111',
     statusHead: 'active',
     status: 'draft',
@@ -547,7 +547,7 @@ export const requestListResearchers = [
   },
   {
     id: '1001-1234502',
-    title: 'Example title',
+    title: 'Untitled request',
     project: '20-SSH-UTO-1111',
     statusHead: 'withdrawn',
     status: 'withdrawn',
@@ -570,7 +570,7 @@ export const requestListResearchers = [
   },
   {
     id: '1001-1234503',
-    title: 'Example title',
+    title: 'Untitled request',
     project: '20-SSH-UTO-1111',
     statusHead: 'withdrawn',
     status: 'withdrawn',
@@ -589,7 +589,7 @@ export const requestListResearchers = [
   },
   {
     id: '1001-1234504',
-    title: 'Example title',
+    title: 'Untitled request',
     project: '20-SSH-UTO-1111',
     statusHead: 'unassigned',
     status: 'draft',
@@ -607,7 +607,7 @@ export const requestListResearchers = [
   },
   {
     id: '1001-1234511',
-    title: 'Example title',
+    title: 'Untitled request',
     project: '20-SSH-UTO-1111',
     statusHead: 'unassigned',
     status: 'submitted',
@@ -632,7 +632,7 @@ export const requestListResearchers = [
   },
   {
     id: '1001-2234501',
-    title: 'Example title',
+    title: 'Untitled request',
     project: '20-SSH-UTO-1111',
     statusHead: 'unassigned',
     status: 'under review',
@@ -657,7 +657,7 @@ export const requestListResearchers = [
   },
   {
     id: '1001-2234502',
-    title: 'Example title',
+    title: 'Untitled request',
     project: '20-SSH-UTO-1111',
     statusHead: 'unassigned',
     status: 'changes requested',
@@ -682,7 +682,7 @@ export const requestListResearchers = [
   },
   {
     id: '1001-1234505',
-    title: 'Example title',
+    title: 'Untitled request',
     project: '20-SSH-UTO-1111',
     statusHead: 'active',
     status: 'draft',
@@ -700,7 +700,7 @@ export const requestListResearchers = [
   },
   {
     id: '1001-1334505',
-    title: 'Example title',
+    title: 'Untitled request',
     project: '20-SSH-UTO-1111',
     statusHead: 'active',
     status: 'draft',
@@ -718,7 +718,7 @@ export const requestListResearchers = [
   },
   {
     id: '1001-1234506',
-    title: 'Example title',
+    title: 'Untitled request',
     project: '20-SSH-UTO-1111',
     statusHead: 'approved',
     status: 'approved',
@@ -736,7 +736,7 @@ export const requestListResearchers = [
   },
   {
     id: '1001-1234507',
-    title: 'Example title',
+    title: 'Untitled request',
     project: '20-SSH-UTO-1111',
     statusHead: 'approved',
     status: 'approved',
@@ -744,9 +744,9 @@ export const requestListResearchers = [
     created: 'Aug. 20, 2020',
     updated: 'Aug. 22, 2020',
     expiration: 'Sep. 20, 2020',
-    researcher: 'Steve Jobs',
+    researcher: 'Steve Rogers',
     analysts: {
-      lead: 'Vision',
+      lead: 'Bruce Banner',
       support: [],
     },
     files: ['File one', 'File 5', 'File 8'],
@@ -754,7 +754,7 @@ export const requestListResearchers = [
   },
   {
     id: '1001-1234508',
-    title: 'Example title',
+    title: 'Untitled request',
     project: '20-SSH-UTO-1111',
     statusHead: 'active',
     status: 'submitted',
@@ -772,7 +772,7 @@ export const requestListResearchers = [
   },
   {
     id: '1001-1234509',
-    title: 'Example title',
+    title: 'Untitled request',
     project: '20-SSH-UTO-1111',
     statusHead: 'active',
     status: 'submitted',
@@ -790,7 +790,7 @@ export const requestListResearchers = [
   },
   {
     id: '1001-1334509',
-    title: 'Example title',
+    title: 'Untitled request',
     project: '20-SSH-UTO-1111',
     statusHead: 'active',
     status: 'submitted',
@@ -800,7 +800,7 @@ export const requestListResearchers = [
     expiration: 'Sep. 20, 2020',
     researcher: 'Steve Rogers',
     analysts: {
-      lead: 'Vision',
+      lead: 'Bruce Banner',
       support: ['Clint Barton'],
     },
     files: ['File one', 'File 8'],
@@ -808,7 +808,7 @@ export const requestListResearchers = [
   },
   {
     id: '1001-1234510',
-    title: 'Example title',
+    title: 'Untitled request',
     project: '20-SSH-UTO-1111',
     statusHead: 'active',
     status: 'under review',
@@ -826,7 +826,7 @@ export const requestListResearchers = [
   },
   {
     id: '1001-1234512',
-    title: 'Example title',
+    title: 'Untitled request',
     project: '20-SSH-UTO-1111',
     statusHead: 'approved',
     status: 'approved',
@@ -834,10 +834,10 @@ export const requestListResearchers = [
     created: 'Aug. 21, 2020',
     updated: 'Aug. 24, 2020',
     expiration: 'Sep. 20, 2020',
-    researcher: 'Mr. Rogers',
+    researcher: 'Steve Rogers',
     analysts: {
       lead: '',
-      support: ['Tony Stank'],
+      support: ['Tony Stark'],
     },
     files: [
       'This is file 1',
@@ -851,7 +851,7 @@ export const requestListResearchers = [
   },
   {
     id: '1001-1234513',
-    title: 'Example title',
+    title: 'Untitled request',
     project: '20-SSH-UTO-1111',
     statusHead: 'active',
     status: 'under review',
@@ -876,7 +876,7 @@ export const requestListResearchers = [
   },
   {
     id: '1001-1434514',
-    title: 'Example title',
+    title: 'Untitled request',
     project: '20-SSH-UTO-1111',
     statusHead: 'active',
     status: 'under review',
@@ -886,7 +886,7 @@ export const requestListResearchers = [
     expiration: 'Sep. 20, 2020',
     researcher: 'Steve Rogers',
     analysts: {
-      lead: 'Vision',
+      lead: 'Bruce Banner',
       support: [],
     },
     files: [
@@ -901,7 +901,7 @@ export const requestListResearchers = [
   },
   {
     id: '1001-1234514',
-    title: 'Example title',
+    title: 'Untitled request',
     project: '20-SSH-UTO-1111',
     statusHead: 'denied',
     status: 'denied',
@@ -911,7 +911,7 @@ export const requestListResearchers = [
     expiration: 'Sep. 20, 2020',
     researcher: 'Steve Rogers',
     analysts: {
-      lead: 'Tony Stank',
+      lead: 'Tony Stark',
       support: [],
     },
     files: [
@@ -924,7 +924,7 @@ export const requestListResearchers = [
   },
   {
     id: '1001-1234515',
-    title: 'Example title',
+    title: 'Untitled request',
     project: '20-SSH-UTO-1111',
     statusHead: 'denied',
     status: 'denied',
@@ -943,7 +943,7 @@ export const requestListResearchers = [
   },
   {
     id: '1001-1234516',
-    title: 'Example title',
+    title: 'Untitled request',
     project: '20-SSH-UTO-1111',
     statusHead: 'active',
     status: 'changes requested',
@@ -961,7 +961,7 @@ export const requestListResearchers = [
   },
   {
     id: '1001-1234517',
-    title: 'Example title',
+    title: 'Untitled request',
     project: '20-SSH-UTO-1111',
     statusHead: 'active',
     status: 'changes requested',
@@ -989,7 +989,7 @@ export const requestListResearchers = [
     expiration: 'Sep. 20, 2020',
     researcher: 'Steve Rogers',
     analysts: {
-      lead: 'Vision',
+      lead: 'Bruce Banner',
       support: [],
     },
     files: ['File 4', 'File 5'],
@@ -1135,3 +1135,11 @@ const colors = [green[500], blue[500], red[500], purple[500]];
 analystList.forEach((val, index) => {
   analystList[index].avatar = colors[index % colors.length];
 });
+
+export const loggedInUser = () => {
+  for (let i = 0; i < analystList.length; i++) {
+    if (analystList[i].current) {
+      return analystList[i].name;
+    }
+  }
+};

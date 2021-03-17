@@ -168,7 +168,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 // ////////////////////////////////////////// ANALYST INFORMATION
-export function DialogAnalyst(props) {
+export function DialogInfo(props) {
   const {open, toggleDialog, header} = props;
   const {t} = useTranslation();
   const classes = useStyles();

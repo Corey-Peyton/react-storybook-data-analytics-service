@@ -13,7 +13,7 @@ import {
   Chip,
 } from '@material-ui/core';
 
-import {DialogAnalyst} from '../../CommonComponents/DialogBox';
+import {DialogInfo} from '../../CommonComponents/DialogBox';
 import {ActionsMenu} from './ContextMenu';
 import DashboardTableHead from './DashboardTableHead';
 import AnalystCell from './AnalystCell';
@@ -277,7 +277,7 @@ export default function TableContainerComponent(props) {
         onChangePage={handleChangePage}
         onChangeRowsPerPage={handleChangeRowsPerPage}
       />
-      <DialogAnalyst
+      <DialogInfo
         open={open.info}
         toggleDialog={(e) => toggleDialog('info', e, open.role)}
         header={
