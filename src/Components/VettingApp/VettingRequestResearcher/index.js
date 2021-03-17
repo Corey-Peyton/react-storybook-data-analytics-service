@@ -69,6 +69,10 @@ const useStyles = makeStyles((theme) => ({
   headerBtn: {
     marginLeft: theme.spacing(3),
   },
+  dividerHeight: {
+    height: '40px',
+    marginTop: theme.spacing(1.25),
+  },
   paper: {
     maxWidth: '1280px',
     margin: 'auto',
@@ -339,7 +343,7 @@ function VettingRequestResearcher(props) {
                   <Typography variant="body2" className={classes.icongrey}>Draft</Typography>
                 </div>
               </Grid>
-              <Divider orientation="vertical" flexItem />
+              <Divider className={classes.dividerHeight} orientation="vertical" flexItem />
               <Grid item>
                 <Typography variant="body2" color="textSecondary" className={classes.statusRight}>
                   Unassigned
