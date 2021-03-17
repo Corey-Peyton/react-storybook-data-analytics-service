@@ -1,5 +1,5 @@
 import React from 'react';
-import {Grid, Chip, Typography} from '@material-ui/core';
+import {Grid, Chip, Typography, Divider} from '@material-ui/core';
 import {makeStyles} from '@material-ui/core/styles';
 import {mdiInboxArrowDown} from '@mdi/js';
 import Icon from '@mdi/react';
@@ -17,18 +17,14 @@ const useStyles = makeStyles((theme) => ({
   },
   icongrey: {
     marginLeft: theme.spacing(1),
-    color: theme.palette.grey[600],
-    fill: theme.palette.grey[600],
   },
   statusRight: {
     padding: theme.spacing(0.5, 2),
-    borderLeftWidth: '1px',
-    borderLeftStyle: 'solid',
-    borderLeftColor: theme.palette.divider,
   },
   statusLeft: {
     padding: theme.spacing(0.5, 2),
     display: 'flex',
+    alignItems: 'center',
   },
   headerBtn: {
     marginLeft: theme.spacing(1),
@@ -40,7 +36,7 @@ function Assignee(props) {
   const classes = useStyles();
   // No analysts assigned
   if (props.lead === '' && props.support.length === 0) {
-    return <Typography color="textSecondary">Unassigned</Typography>;
+    return <Typography variant="body2">Unassigned</Typography>;
     // Only lead analyst assigned
   } else if (props.lead !== '' && props.support.length === 0) {
     return (
@@ -112,9 +108,10 @@ function AppBarUnAssign(props) {
       <Grid item>
         <div className={classes.statusLeft}>
           <Icon path={mdiInboxArrowDown} size={1} />
-          <Typography className={classes.icongrey}>Submitted</Typography>
+          <Typography variant="body2" className={classes.icongrey}>Submitted</Typography>
         </div>
       </Grid>
+      <Divider orientation="vertical" flexItem />
       <Grid item className={classes.assignee}>
         <div className={classes.statusRight}>
           <Assignee {...props} />

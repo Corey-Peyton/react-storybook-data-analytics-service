@@ -33,7 +33,6 @@ import Header from '../CommonComponents/Header';
 import Footer from '../CommonComponents/Footer';
 import CutCopyPasteAlert from '../CommonComponents/CutCopyPasteAlert';
 import CloseIcon from '@material-ui/icons/Close';
-import {DialogAnalyst} from '../CommonComponents/DialogBox';
 import {
   SnackbarDeleteRequest,
   SnackbarSubmitRequest,
@@ -84,18 +83,15 @@ const useStyles = makeStyles((theme) => ({
   },
   icongrey: {
     marginLeft: theme.spacing(1),
-    color: theme.palette.grey[600],
-    fill: theme.palette.grey[600],
   },
   statusRight: {
     padding: theme.spacing(0.5, 2),
-    borderLeftWidth: '1px',
-    borderLeftStyle: 'solid',
-    borderLeftColor: theme.palette.divider,
+    paddingRight: theme.spacing(0),
   },
   statusLeft: {
     padding: theme.spacing(0.5, 2),
     display: 'flex',
+    alignItems: 'center',
   },
   stepperContainer: {
     'display': 'flex',
@@ -192,11 +188,6 @@ function VettingRequestResearcher(props) {
     title: 'Untitled request',
   });
   const steps = getSteps();
-
-  const [open, setOpen] = React.useState({
-    info: false,
-    deleteDialog: false,
-  });
 
   const handleDialogOpen = () => {
     setState({...state, open: true});
@@ -319,23 +310,11 @@ function VettingRequestResearcher(props) {
     return state.errors[step] !== 0;
   };
 
-  function toggleDialog(value, e, role) {
-    e.stopPropagation();
-    if (value === 'info') {
-      setOpen({...open, info: !open.info, role: role});
-    }
-  }
-
   return (
     <React.Fragment>
       <Header />
       <main className={classes.main} tabIndex="-1">
         <Container maxWidth={false} className="page-container">
-          <DialogAnalyst
-            open={open.info}
-            toggleDialog={(e) => toggleDialog('info', e, open.role)}
-            header="Assignee details"
-          />
           <AppBar position="static" className={classes.appBar} color="default">
             {state.activeStep === 3 ? (
               <ToolBarDelete handleDialogOpen={handleDialogOpen} />
@@ -353,16 +332,18 @@ function VettingRequestResearcher(props) {
                   {state.title}
                 </Typography>
               </Grid>
+              <Divider />
               <Grid item>
                 <div className={classes.statusLeft}>
                   <Icon path={mdiFileEditOutline} size={1} />{' '}
-                  <Typography className={classes.icongrey}>Draft</Typography>
+                  <Typography variant="body2" className={classes.icongrey}>Draft</Typography>
                 </div>
               </Grid>
+              <Divider orientation="vertical" flexItem />
               <Grid item>
-                <div className={classes.statusRight}>
-                  <Typography className={classes.icongrey}>Unassigned</Typography>
-                </div>
+                <Typography variant="body2" className={classes.statusRight}>
+                  Unassigned
+                </Typography>
               </Grid>
             </Grid>
             <Divider className={classes.divider} />
