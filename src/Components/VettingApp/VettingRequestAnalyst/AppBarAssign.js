@@ -20,6 +20,7 @@ const useStyles = makeStyles((theme) => ({
   },
   statusRight: {
     padding: theme.spacing(0.5, 2),
+    paddingRight: theme.spacing(0),
   },
   statusLeft: {
     padding: theme.spacing(0.5, 2),
