@@ -221,9 +221,8 @@ export function ActionsMenu(props) {
     for (let i = 0; i < analystList.length; i++) {
       const analyst = analystList[i];
       const loggedIn = analystList[i].current;
-      const supports = request.support.filter((val) => val === analyst.name);
 
-      if (loggedIn && supports[0] !== analyst.name) {
+      if (loggedIn && request.lead === analyst.name) {
         return (
           <MenuItem
             onClick={(e) => {
@@ -247,9 +246,10 @@ export function ActionsMenu(props) {
 
   const startReviewHandler = () => {
     for (let i = 0; i < analystList.length; i++) {
-      const person = analystList[i].name;
+      const analyst = analystList[i];
+      const loggedIn = analystList[i].current;
 
-      if (person === request.lead) {
+      if (loggedIn && request.lead === analyst.name) {
         return (
           <MenuItem onClick={handleClose}>
             <ListItemText
