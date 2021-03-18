@@ -62,7 +62,7 @@ export default function AppRouter() {
           <Route
             path="/vetting-app/request-analyst-unassigned"
             render={() => (
-              <VettingRequestAnalyst userName="sdfg" lead="sdfg" support={[]}/>
+              <VettingRequestAnalyst userName="Tony Stark" lead="" support={[]}/>
             )}
           />
           {/* Routes for archived pages */}
