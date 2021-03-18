@@ -37,28 +37,28 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 function Assignee(props) {
-  const {toggleManageTeamDrawer} = props;
+  const {toggleManageTeamDrawer, lead, support, handleDialogOpen} = props;
   const classes = useStyles();
   // No analysts assigned
-  if (props.lead === '' && props.support.length === 0) {
+  if (lead === '' && support.length === 0) {
     return (
       <Typography variant="body2" color="textSecondary">
         Unassigned
       </Typography>
     );
     // Only lead analyst assigned
-  } else if (props.lead !== '' && props.support.length === 0) {
+  } else if (lead !== '' && support.length === 0) {
     return (
       <>
         <Chip
-          label={props.lead}
+          label={lead}
           onClick={(e) => {
             e.stopPropagation();
             toggleManageTeamDrawer(e);
           }}
         />
         <Chip
-          label={`${props.support.length} support`}
+          label={`${support.length} support`}
           className={classes.headerBtn}
           onClick={(e) => {
             e.stopPropagation();
@@ -68,14 +68,14 @@ function Assignee(props) {
       </>
     );
     // Only support analysts assigned
-  } else if (props.lead === '' && props.support.length !== 0) {
+  } else if (lead === '' && support.length !== 0) {
     return (
       <>
         <Typography variant="body2" color="textSecondary">
           No lead
         </Typography>
         <Chip
-          label={`${props.support.length} support`}
+          label={`${support.length} support`}
           onClick={(e) => {
             e.stopPropagation();
             toggleManageTeamDrawer(e);
@@ -88,9 +88,9 @@ function Assignee(props) {
   } else {
     return (
       <>
-        <Chip label={props.lead} onClick={props.handleDialogOpen} />
+        <Chip label={lead} onClick={handleDialogOpen} />
         <Chip
-          label={`${props.support.length} support`}
+          label={`${support.length} support`}
           onClick={(e) => {
             e.stopPropagation();
             toggleManageTeamDrawer(e);
