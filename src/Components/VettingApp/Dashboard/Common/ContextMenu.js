@@ -574,10 +574,10 @@ export function ActionsMenu(props) {
           onClose={handleClose}
         >
           {viewRequestMenuItem()}
+          {reactivateMenuItem()}
           {assignAsLeadMenuItem()}
           {assignAsSupportMenuItem()}
           {unassignMenuItem()}
-          {reactivateMenuItem()}
           {manageAssigneesMenuItem()}
           {requesterDetailsMenuItem()}
           {summaryMenuItem()}
@@ -593,10 +593,10 @@ export function ActionsMenu(props) {
           onClose={handleClose}
         >
           {viewRequestMenuItem()}
+          {reactivateMenuItem()}
           {assignAsLeadMenuItem()}
           {assignAsSupportMenuItem()}
           {unassignMenuItem()}
-          {reactivateMenuItem()}
           {manageAssigneesMenuItem()}
           {requesterDetailsMenuItem()}
           {summaryMenuItem()}
