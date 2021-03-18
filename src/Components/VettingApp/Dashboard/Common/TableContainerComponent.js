@@ -13,7 +13,7 @@ import {
   Chip,
 } from '@material-ui/core';
 
-import {DialogAnalyst} from '../../CommonComponents/DialogBox';
+import {DialogInfo} from '../../CommonComponents/DialogBox';
 import {ActionsMenu} from './ContextMenu';
 import DashboardTableHead from './DashboardTableHead';
 import AnalystCell from './AnalystCell';
@@ -131,9 +131,7 @@ export default function TableContainerComponent(props) {
     if (e.key === 'ArrowUp') {
       if (
         current.previousElementSibling &&
-        current.previousElementSibling.classList.contains(
-            'MuiTableRow-root',
-        )
+        current.previousElementSibling.classList.contains('MuiTableRow-root')
       ) {
         current.previousElementSibling.focus();
       }
@@ -227,7 +225,7 @@ export default function TableContainerComponent(props) {
                       />
                     </TableCell>
                     <AnalystCell
-                      analysts={row.analysts}
+                      lead={row.lead}
                       support={row.support}
                       role={role}
                       toggleDialog={(e) => {
@@ -248,12 +246,14 @@ export default function TableContainerComponent(props) {
                     </TableCell>
                     <TableCell align="center">
                       <ActionsMenu
+                        statusHead={row.statusHead}
                         status={row.status}
                         contextSummaryClick={contextSummaryClick}
                         contextStatusClick={contextStatusClick}
                         toggleManageTeamDrawer={toggleManageTeamDrawer}
                         role={role}
                         controls={index}
+                        request={row}
                       />
                     </TableCell>
                   </TableRow>
@@ -277,7 +277,7 @@ export default function TableContainerComponent(props) {
         onChangePage={handleChangePage}
         onChangeRowsPerPage={handleChangeRowsPerPage}
       />
-      <DialogAnalyst
+      <DialogInfo
         open={open.info}
         toggleDialog={(e) => toggleDialog('info', e, open.role)}
         header={
