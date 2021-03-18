@@ -70,7 +70,7 @@ const useStyles = makeStyles((theme) => ({
     marginLeft: theme.spacing(3),
   },
   dividerHeight: {
-    height: '40px',
+    height: theme.spacing(5),
     marginTop: theme.spacing(1.25),
   },
   paper: {
@@ -339,7 +339,7 @@ function VettingRequestResearcher(props) {
               <Divider />
               <Grid item>
                 <div className={classes.statusLeft}>
-                  <Icon path={mdiFileEditOutline} size={1} />{' '}
+                  <Icon path={mdiFileEditOutline} size={1} />
                   <Typography variant="body2" className={classes.icongrey}>Draft</Typography>
                 </div>
               </Grid>

@@ -9,7 +9,7 @@ const useStyles = makeStyles((theme) => ({
     flexGrow: 1,
   },
   divider: {
-    height: '40px',
+    height: theme.spacing(5),
     marginTop: theme.spacing(1.25),
   },
   upperCase: {
