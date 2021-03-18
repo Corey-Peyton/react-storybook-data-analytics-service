@@ -2740,7 +2740,7 @@ export function DialogNoLead(props) {
       >
         <DialogTitle id="dashboard-dialog-title">
           <div className={classes.vettingContainerTitle}>
-            <Typography variant="h6">{t('No lead assigned')}</Typography>
+            <Typography variant="h6">{t('Continued with no lead?')}</Typography>
             <IconButton
               id="dialog-close"
               onClick={toggleDialog}
@@ -2758,7 +2758,7 @@ export function DialogNoLead(props) {
               <div className={classes.vettingColumn}>
                 <Alert severity="warning" className={classes.alert}>
                   {t(
-                      'The lead was removed and no one was assigned in their place. If you choose to continue, an email will be sent to the requester notifying them that no one is assigned to their request.',
+                      'If you continue, the request will have no lead and the requester will be notified of the change.',
                   )}
                 </Alert>
               </div>
