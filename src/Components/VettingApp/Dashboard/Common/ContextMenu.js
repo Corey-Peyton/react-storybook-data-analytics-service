@@ -574,6 +574,9 @@ export function ActionsMenu(props) {
           onClose={handleClose}
         >
           {viewRequestMenuItem()}
+          {assignAsLeadMenuItem()}
+          {assignAsSupportMenuItem()}
+          {unassignMenuItem()}
           {reactivateMenuItem()}
           {manageAssigneesMenuItem()}
           {requesterDetailsMenuItem()}
@@ -590,6 +593,9 @@ export function ActionsMenu(props) {
           onClose={handleClose}
         >
           {viewRequestMenuItem()}
+          {assignAsLeadMenuItem()}
+          {assignAsSupportMenuItem()}
+          {unassignMenuItem()}
           {reactivateMenuItem()}
           {manageAssigneesMenuItem()}
           {requesterDetailsMenuItem()}
