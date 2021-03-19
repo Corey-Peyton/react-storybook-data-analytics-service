@@ -11,8 +11,6 @@ import {
   StepLabel,
   Typography,
   Divider,
-  Chip,
-  Tooltip,
   AppBar,
   Dialog,
   DialogTitle,
@@ -23,7 +21,7 @@ import {
 import ArrowForwardIosIcon from '@material-ui/icons/ArrowForwardIos';
 import ArrowBackIosIcon from '@material-ui/icons/ArrowBackIos';
 import Icon from '@mdi/react';
-import {mdiLockOpenVariant} from '@mdi/js';
+import {mdiFileEditOutline} from '@mdi/js';
 import ResearcherInfo from '../CommonComponents/RequestForm/ResearcherInfo';
 import FilesList from '../CommonComponents/RequestForm/FilesList';
 import ResidualDisclosure from '../CommonComponents/RequestForm/ResidualDisclosure';
@@ -71,6 +69,10 @@ const useStyles = makeStyles((theme) => ({
   headerBtn: {
     marginLeft: theme.spacing(3),
   },
+  dividerHeight: {
+    height: theme.spacing(5),
+    marginTop: theme.spacing(1.25),
+  },
   paper: {
     maxWidth: '1280px',
     margin: 'auto',
@@ -83,11 +85,17 @@ const useStyles = makeStyles((theme) => ({
   title: {
     flexGrow: 1,
   },
-  lockTooltip: {
+  icongrey: {
+    marginLeft: theme.spacing(1),
+  },
+  statusRight: {
     padding: theme.spacing(0.5, 2),
-    borderLeftWidth: '1px',
-    borderLeftStyle: 'solid',
-    borderLeftColor: theme.palette.divider,
+    paddingRight: theme.spacing(0),
+  },
+  statusLeft: {
+    padding: theme.spacing(0.5, 2),
+    display: 'flex',
+    alignItems: 'center',
   },
   stepperContainer: {
     'display': 'flex',
@@ -328,19 +336,18 @@ function VettingRequestResearcher(props) {
                   {state.title}
                 </Typography>
               </Grid>
+              <Divider />
               <Grid item>
-                <Chip label="Draft" className="mr-2" />
-              </Grid>
-              <Grid item>
-                <div className={classes.lockTooltip}>
-                  <Tooltip title="This vetting request is unlocked and marked as “Draft.” You can either send or withdraw this vetting request.">
-                    <Icon
-                      path={mdiLockOpenVariant}
-                      size={1}
-                      className="icon-grey"
-                    />
-                  </Tooltip>
+                <div className={classes.statusLeft}>
+                  <Icon path={mdiFileEditOutline} size={1} />
+                  <Typography variant="body2" className={classes.icongrey}>Draft</Typography>
                 </div>
+              </Grid>
+              <Divider className={classes.dividerHeight} orientation="vertical" flexItem />
+              <Grid item>
+                <Typography variant="body2" color="textSecondary" className={classes.statusRight}>
+                  Unassigned
+                </Typography>
               </Grid>
             </Grid>
             <Divider className={classes.divider} />

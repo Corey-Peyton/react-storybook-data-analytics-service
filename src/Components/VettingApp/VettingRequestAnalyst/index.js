@@ -109,15 +109,6 @@ const useStyles = makeStyles((theme) => ({
   dialogActions: {
     padding: theme.spacing(0, 3, 3, 3),
   },
-  negativeMargin: {
-    marginTop: '-37px',
-    marginLeft: '45px',
-    paddingBottom: '10px',
-  },
-  negativeMargin2: {
-    marginTop: '-20px',
-    marginLeft: '45px',
-  },
   errorMsg: {
     margin: 0,
     textAlign: 'left',

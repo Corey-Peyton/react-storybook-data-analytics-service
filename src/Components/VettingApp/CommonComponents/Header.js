@@ -1,5 +1,11 @@
 import React from 'react';
-import {AppBar, Toolbar, MenuItem, ListItemText, Menu} from '@material-ui/core';
+import {
+  AppBar,
+  Toolbar,
+  MenuItem,
+  ListItemText,
+  Menu,
+} from '@material-ui/core';
 import {makeStyles} from '@material-ui/styles';
 import {withStyles} from '@material-ui/styles';
 import Avatar from '@material-ui/core/Avatar';
@@ -91,22 +97,26 @@ function ShowMenuButton(props) {
   const classes = defaultStyles();
   if (props.role === 'analyst' || props.role === 'researcher') {
     return (
-      <IconButton onClick={props.clickHandler} className={classes.iconButton} edge="start" aria-label="Show menu button">
+      <IconButton
+        onClick={props.clickHandler}
+        className={classes.iconButton}
+        edge="start"
+        aria-label="Show menu button"
+      >
         <MenuIcon />
       </IconButton>
     );
   } else {
     return false;
   }
-};
+}
 
 export default function DefaultHeader(props) {
   const classes = defaultStyles();
 
   const [state, setState] = React.useState({
     windowWidth: window.innerWidth,
-  },
-  );
+  });
 
   const [anchorEl, setAnchorEl] = React.useState(null);
 
@@ -136,7 +146,7 @@ export default function DefaultHeader(props) {
         className={`${classes.appBar} ${props.flat && classes.flatHeader}`}
       >
         <Toolbar className={classes.toolbar}>
-          <ShowMenuButton clickHandler={props.clickHandler} role={props.role}/>
+          <ShowMenuButton clickHandler={props.clickHandler} role={props.role} />
           <div className={classes.branding}>
             <BrandingStatsCan />
           </div>
@@ -149,9 +159,10 @@ export default function DefaultHeader(props) {
             variant="contained"
             className={classes.button}
             onClick={handleClick}
-            edge='end'
+            edge="end"
           >
-            <Avatar className={classes.small}><span className={classes.purple}>A</span>
+            <Avatar className={classes.small}>
+              <span className={classes.purple}>TS</span>
             </Avatar>
           </IconButton>
           <StyledMenu
@@ -173,4 +184,3 @@ export default function DefaultHeader(props) {
     </React.Fragment>
   );
 }
-
