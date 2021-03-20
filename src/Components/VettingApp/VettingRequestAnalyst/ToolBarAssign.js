@@ -1,5 +1,4 @@
 import React from 'react';
-import {useTranslation} from 'react-i18next';
 import {makeStyles} from '@material-ui/core/styles';
 import {
   Button,
@@ -99,8 +98,6 @@ function ToolBarAssign(props) {
   const [state, setState] = React.useState({
   });
 
-  const {t} = useTranslation();
-
   return (
     <Toolbar>
       <IconButton
@@ -149,7 +146,6 @@ function ToolBarAssign(props) {
         open={open.snackbarAssign}
         handleClose={() => handleClose('snackbarAssign')}
       />
-      {/* Assign to me dialog */}
     </Toolbar>
   );
 }

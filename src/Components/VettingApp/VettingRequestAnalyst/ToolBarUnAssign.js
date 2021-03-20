@@ -218,6 +218,7 @@ function ToolBarUnassign(props) {
       >
         Save
       </Button>
+      {/* Save request snackbar */}
       <SnackbarSaveRequest
         open={open.snackbarSave}
         handleClose={() => handleClickClose('snackbarSave')}
@@ -235,6 +236,7 @@ function ToolBarUnassign(props) {
         toggleDialog={() => handleClose('dialogUpdate')}
         open={state.dialogUpdate}
       />
+      {/* Request an update snackbar */}
       <SnackbarChangeRequest
         open={open.snackbarChange}
         handleClose={() => handleClickClose('snackbarChange')}
