@@ -2357,7 +2357,17 @@ export function DialogApprove(props) {
                   label="Billable hours"
                   handleHoursChange={(e) => handleChange(e, 'hours')}
                   handleMinsChange={(e) => handleChange(e, 'minutes')}
-                  onCopy={(e) => disableCutCopyPaste(e, 'copy', 'hours')}
+                  onCut={(e) => disableCutCopyPaste(e, 'cut', 'billableHours')}
+                  onCopy={(e) =>
+                    disableCutCopyPaste(e, 'copy', 'billableHours')
+                  }
+                  onPaste={(e) =>
+                    disableCutCopyPaste(e, 'paste', 'billableHours')
+                  }
+                  onChange={(e) => handleChange(e, 'billableHours')}
+                  onClick={() => toggleHelperText('billableHours')}
+                  onBlur={() => toggleHelperText('billableHours')}
+                  onFocus={() => toggleHelperText('billableHours')}
                   error={state.billableHours.errorText}
                 />
                 {/* <div className={classes.vettingColumn}> */}

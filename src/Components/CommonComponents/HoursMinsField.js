@@ -82,15 +82,18 @@ export function HoursMinsField(props) {
         required={props.required}
         id={props.id}
         label={props.label}
-        value={props.value}
         inputComponent={MultiInput}
         className={clsx({'Mui-focused': state.focused})}
         inputProps={{
-          onFocus: () => handleFocus(),
-          onBlur: () => handleBlur(),
-          handleHoursChange: props.handleHoursChange,
-          handleMinsChange: props.handleMinsChange,
-          required: props.required,
+          onFocus: () => {
+            handleFocus();
+            props.onFocus && props.onFocus();
+          },
+          onBlur: () => {
+            handleBlur();
+            props.onBlur && props.onBlur();
+          },
+          ...props,
         }}
         error={Boolean(props.error)}
         notched
@@ -125,9 +128,13 @@ function MultiInput(props) {
           size: 6,
           className: classes.input,
         }}
+        onChange={props.handleHoursChange}
         onFocus={props.onFocus}
         onBlur={props.onBlur}
-        onChange={props.handleHoursChange}
+        onCut={props.onCut}
+        onCopy={props.onCopy}
+        onPaste={props.onPaste}
+        onClick={props.onClick}
       />
       <InputGroup.Append className={classes.hoursInputGroup}>
         <InputGroup.Text className={classes.inputGroupText}>
@@ -153,9 +160,13 @@ function MultiInput(props) {
           size: 2,
           className: classes.input,
         }}
+        onChange={props.handleMinsChange}
         onFocus={props.onFocus}
         onBlur={props.onBlur}
-        onChange={props.handleMinsChange}
+        onCut={props.onCut}
+        onCopy={props.onCopy}
+        onPaste={props.onPaste}
+        onClick={props.onClick}
       />
       <InputGroup.Append>
         <InputGroup.Text className={classes.inputGroupText}>
