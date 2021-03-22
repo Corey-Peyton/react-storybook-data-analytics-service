@@ -74,11 +74,12 @@ export function HoursMinsField(props) {
         error={Boolean(props.error)}
         component="legend"
         shrink
+        required={props.required}
       >
         {props.label}
       </InputLabel>
       <OutlinedInput
-        // {...props}
+        required={props.required}
         id={props.id}
         label={props.label}
         value={props.value}
@@ -89,6 +90,7 @@ export function HoursMinsField(props) {
           onBlur: () => handleBlur(),
           handleHoursChange: props.handleHoursChange,
           handleMinsChange: props.handleMinsChange,
+          required: props.required,
         }}
         error={Boolean(props.error)}
         notched
@@ -118,7 +120,7 @@ function MultiInput(props) {
         customInput={TextField}
         type="text"
         format="######"
-        required
+        required={props.required}
         inputProps={{
           size: 6,
           className: classes.input,
@@ -146,7 +148,7 @@ function MultiInput(props) {
           const {formattedValue, floatValue} = values;
           return formattedValue === '' || floatValue <= 59;
         }}
-        required
+        required={props.required}
         inputProps={{
           size: 2,
           className: classes.input,
@@ -187,11 +189,23 @@ HoursMinsField.propTypes = {
    */
   color: PropTypes.oneOf(Object.values(COLOR)),
   /**
-    If true, the input element will be disabled.
+   If true, the input elements will be required.
+   */
+  required: PropTypes.bool,
+  /**
+    If true, the input elements will be disabled.
    */
   disabled: PropTypes.bool,
   /**
    It prevents the user from changing the value of the field (not from interacting with the field).
    */
   readOnly: PropTypes.bool,
+};
+
+HoursMinsField.defaultProps = {
+  autoFocus: false,
+  color: COLOR.PRIMARY,
+  required: false,
+  disabled: false,
+  readOnly: false,
 };
