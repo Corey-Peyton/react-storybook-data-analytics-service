@@ -11,6 +11,7 @@ import {
 } from '@material-ui/core';
 import {InputGroup} from 'react-bootstrap';
 import NumberFormat from 'react-number-format';
+import {useTranslation} from 'react-i18next';
 
 const useStyles = makeStyles((theme) => ({
   hoursInputGroup: {
@@ -53,7 +54,6 @@ const useStyles = makeStyles((theme) => ({
 
 export function HoursMinsField(props) {
   const classes = useStyles();
-  // const {t} = useTranslation();
 
   const [state, setState] = React.useState({
     focused: false,
@@ -68,17 +68,17 @@ export function HoursMinsField(props) {
   };
 
   return (
-    <FormControl>
+    <FormControl component="fieldset">
       <InputLabel
         classes={{root: classes.inputLabel, shrink: classes.shrink}}
-        htmlFor={props.id}
         error={Boolean(props.error)}
+        component="legend"
         shrink
       >
         {props.label}
       </InputLabel>
       <OutlinedInput
-        {...props}
+        // {...props}
         id={props.id}
         label={props.label}
         value={props.value}
@@ -104,13 +104,17 @@ export function HoursMinsField(props) {
 
 function MultiInput(props) {
   const classes = useStyles();
+  const {t} = useTranslation();
 
   return (
     <InputGroup className={classes.inputGroup}>
+      <InputLabel className="screen-reader-text" htmlFor={`${props.id}-hours`}>
+        {t('hours')}
+      </InputLabel>
       <NumberFormat
+        id={`${props.id}-hours`}
         className={classes.inputComponent}
         placeholder="--"
-        aria-label="hours"
         customInput={TextField}
         type="text"
         format="######"
@@ -125,19 +129,22 @@ function MultiInput(props) {
       />
       <InputGroup.Append className={classes.hoursInputGroup}>
         <InputGroup.Text className={classes.inputGroupText}>
-          hours
+          {t('hours')}
         </InputGroup.Text>
       </InputGroup.Append>
+      <InputLabel className="screen-reader-text" htmlFor={`${props.id}-mins`}>
+        {t('minutes')}
+      </InputLabel>
       <NumberFormat
+        id={`${props.id}-mins`}
         className={classes.inputComponent}
         placeholder="--"
-        aria-label="minutes"
         customInput={TextField}
         type="text"
         format="##"
         isAllowed={(values) => {
           const {formattedValue, floatValue} = values;
-          return formattedValue === '' || floatValue <= 60;
+          return formattedValue === '' || floatValue <= 59;
         }}
         required
         inputProps={{
@@ -150,7 +157,7 @@ function MultiInput(props) {
       />
       <InputGroup.Append>
         <InputGroup.Text className={classes.inputGroupText}>
-          minutes
+          {t('minutes')}
         </InputGroup.Text>
       </InputGroup.Append>
     </InputGroup>
