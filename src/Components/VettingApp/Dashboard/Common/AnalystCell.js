@@ -21,21 +21,15 @@ const useStyles = makeStyles((theme) => ({
 
 export default function AnalystCell(props) {
   const {t} = useTranslation();
-  const {
-    role,
-    analysts,
-    support,
-    toggleDialog,
-    toggleManageTeamDrawer,
-  } = props;
+  const {role, lead, support, toggleDialog, toggleManageTeamDrawer} = props;
   const extraAnalysts = support.length;
   const classes = useStyles();
 
   if (role === 'researcher') {
-    if (analysts !== '') {
+    if (lead !== '') {
       return (
         <TableCell className={classes.tablesCellsFlex}>
-          <Chip label={analysts} onClick={toggleDialog} />
+          <Chip label={lead} onClick={toggleDialog} />
         </TableCell>
       );
     } else {
@@ -48,11 +42,11 @@ export default function AnalystCell(props) {
       );
     }
   } else if (role === 'analyst') {
-    if (analysts !== '' && support.length > 0) {
+    if (lead !== '' && support.length > 0) {
       return (
         <TableCell className={classes.tablesCellsFlex}>
           <Chip
-            label={analysts}
+            label={lead}
             onClick={(e) => {
               e.stopPropagation();
               toggleManageTeamDrawer(e);
@@ -68,11 +62,11 @@ export default function AnalystCell(props) {
           />
         </TableCell>
       );
-    } else if (analysts !== '' && support.length === 0) {
+    } else if (lead !== '' && support.length === 0) {
       return (
         <TableCell className={classes.tablesCellsFlex}>
           <Chip
-            label={analysts}
+            label={lead}
             onClick={(e) => {
               e.stopPropagation();
               toggleManageTeamDrawer(e);
@@ -80,7 +74,7 @@ export default function AnalystCell(props) {
           />
         </TableCell>
       );
-    } else if (analysts === '' && support.length > 0) {
+    } else if (lead === '' && support.length > 0) {
       return (
         <TableCell className={classes.tablesCellsFlex}>
           <Typography variant="body2" color="textSecondary">

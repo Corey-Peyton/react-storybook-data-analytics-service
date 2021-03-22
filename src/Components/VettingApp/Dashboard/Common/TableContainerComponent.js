@@ -12,8 +12,18 @@ import {
   TableRow,
   Chip,
 } from '@material-ui/core';
+import Icon from '@mdi/react';
+import {
+  mdiUndo,
+  mdiFileEditOutline,
+  mdiInboxArrowDown,
+  mdiProgressCheck,
+  mdiCheck,
+  mdiCancel,
+  mdiEmailEditOutline,
+} from '@mdi/js';
 
-import {DialogAnalyst} from '../../CommonComponents/DialogBox';
+import {DialogInfo} from '../../CommonComponents/DialogBox';
 import {ActionsMenu} from './ContextMenu';
 import DashboardTableHead from './DashboardTableHead';
 import AnalystCell from './AnalystCell';
@@ -32,7 +42,6 @@ const useStyles = makeStyles((theme) => ({
   },
   tablesCellsFlex: {
     display: 'flex',
-    justifyContent: 'space-between',
     alignItems: 'center',
     minHeight: `calc(${ROW_HEIGHT}px - ${theme.spacing(2)}px)`,
   },
@@ -43,8 +52,14 @@ const useStyles = makeStyles((theme) => ({
       backgroundColor: fade(theme.palette.common.black, 0.08),
     },
   },
+  statusCell: {
+    display: 'flex',
+  },
   status: {
-    textTransform: 'uppercase',
+    'paddingLeft': theme.spacing(1),
+    '&:first-letter': {
+      textTransform: 'capitalize',
+    },
   },
 }));
 
@@ -131,9 +146,7 @@ export default function TableContainerComponent(props) {
     if (e.key === 'ArrowUp') {
       if (
         current.previousElementSibling &&
-        current.previousElementSibling.classList.contains(
-            'MuiTableRow-root',
-        )
+        current.previousElementSibling.classList.contains('MuiTableRow-root')
       ) {
         current.previousElementSibling.focus();
       }
@@ -150,6 +163,53 @@ export default function TableContainerComponent(props) {
   const emptyRows =
     rowsPerPage -
     Math.min(rowsPerPage, filteredRows().length - page * rowsPerPage);
+
+  const statusIcon = (value) => {
+    switch (value) {
+      case 'withdrawn':
+        return <Icon path={mdiUndo} size={1} className={classes.statusIcon} />;
+      case 'draft':
+        return (
+          <Icon
+            path={mdiFileEditOutline}
+            size={1}
+            className={classes.statusIcon}
+          />
+        );
+      case 'submitted':
+        return (
+          <Icon
+            path={mdiInboxArrowDown}
+            size={1}
+            className={classes.statusIcon}
+          />
+        );
+      case 'under review':
+        return (
+          <Icon
+            path={mdiProgressCheck}
+            size={1}
+            className={classes.statusIcon}
+          />
+        );
+      case 'approved':
+        return <Icon path={mdiCheck} size={1} className={classes.statusIcon} />;
+      case 'denied':
+        return (
+          <Icon path={mdiCancel} size={1} className={classes.statusIcon} />
+        );
+      case 'changes requested':
+        return (
+          <Icon
+            path={mdiEmailEditOutline}
+            size={1}
+            className={classes.statusIcon}
+          />
+        );
+      default:
+        return;
+    }
+  };
 
   return (
     <TableContainer className={classes.tableContainer}>
@@ -197,11 +257,7 @@ export default function TableContainerComponent(props) {
                     </TableCell>
                     {role === 'analyst' ? (
                     <TableCell>
-                      <Typography
-                        variant="body2"
-                        noWrap={true}
-                        className={classes.status}
-                      >
+                      <Typography variant="body2" noWrap={true}>
                         {row.project}
                       </Typography>
                     </TableCell>
@@ -209,13 +265,16 @@ export default function TableContainerComponent(props) {
                     false
                   )}
                     <TableCell>
-                      <Typography
-                        variant="body2"
-                        noWrap={true}
-                        className={classes.status}
-                      >
-                        {row.status}
-                      </Typography>
+                      <div className={classes.tablesCellsFlex}>
+                        {statusIcon(row.status)}
+                        <Typography
+                          variant="body2"
+                          noWrap={true}
+                          className={classes.status}
+                        >
+                          {row.status}
+                        </Typography>
+                      </div>
                     </TableCell>
                     <TableCell>
                       <Chip
@@ -227,7 +286,7 @@ export default function TableContainerComponent(props) {
                       />
                     </TableCell>
                     <AnalystCell
-                      analysts={row.analysts}
+                      lead={row.lead}
                       support={row.support}
                       role={role}
                       toggleDialog={(e) => {
@@ -248,12 +307,14 @@ export default function TableContainerComponent(props) {
                     </TableCell>
                     <TableCell align="center">
                       <ActionsMenu
+                        statusHead={row.statusHead}
                         status={row.status}
                         contextSummaryClick={contextSummaryClick}
                         contextStatusClick={contextStatusClick}
                         toggleManageTeamDrawer={toggleManageTeamDrawer}
                         role={role}
                         controls={index}
+                        request={row}
                       />
                     </TableCell>
                   </TableRow>
@@ -277,7 +338,7 @@ export default function TableContainerComponent(props) {
         onChangePage={handleChangePage}
         onChangeRowsPerPage={handleChangeRowsPerPage}
       />
-      <DialogAnalyst
+      <DialogInfo
         open={open.info}
         toggleDialog={(e) => toggleDialog('info', e, open.role)}
         header={
