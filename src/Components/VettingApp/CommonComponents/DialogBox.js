@@ -2721,22 +2721,39 @@ export function DialognNewRequestTitle(props) {
 export function DialogNoLead(props) {
   const classes = useStyles();
   const {t} = useTranslation();
-  const {toggleDialog, open, toggleManageTeamDrawer, origin} = props;
-  const [snackbar, setSnackbar] = React.useState(false);
+  const {toggleDialog, open, toggleManageTeamDrawer, origin, action} = props;
+  const [snackbar, setSnackbar] = React.useState({
+    snackbarAssigneeChange: false,
+    snackbarAssignSupport: false,
+    SnackbarUnassign: false,
+  });
 
-  const SnackbarClose = () => {
-    setSnackbar(false);
+  const handleSnackbarOpen = (state) => {
+    setSnackbar({...snackbar, [state]: true});
+  };
+
+  const handleSnackbarClose = (state) => {
+    setSnackbar({...snackbar, [state]: false});
   };
 
   const submitDialog = (e) => {
     if (origin === 'manageTeamDrawer') {
       toggleDialog(e);
-      setSnackbar(!snackbar);
+      handleSnackbarOpen('snackbarAssigneeChange');
       toggleManageTeamDrawer(e);
     } else if (origin === 'actionsMenu') {
-      toggleDialog(e);
-      setSnackbar(!snackbar);
+      if (action === 'assignAsSupport') {
+        toggleDialog(e);
+        handleSnackbarOpen('snackbarAssignSupport');
+      } else if (action === 'unassign') {
+        toggleDialog(e);
+        handleSnackbarOpen('snackbarUnassign');
+      }
     }
+  };
+
+  const handleClick = (e) => {
+    e.stopPropagation();
   };
 
   return (
@@ -2748,6 +2765,7 @@ export function DialogNoLead(props) {
         className={classes.root}
         disableBackdropClick
         scroll="paper"
+        onClick={handleClick}
         onKeyPress={(e) => {
           if (e.key === 'Enter') {
             e.preventDefault();
@@ -2823,7 +2841,18 @@ export function DialogNoLead(props) {
           </Button>
         </DialogActions>
       </Dialog>
-      <SnackbarAssigneeChange open={snackbar} handleClose={SnackbarClose} />
+      <SnackbarAssigneeChange
+        open={snackbar.snackbarAssigneeChange}
+        handleClose={() => handleSnackbarClose('snackbarAssigneeChange')}
+      />
+      <SnackbarAssignSupport
+        open={snackbar.snackbarAssignSupport}
+        handleClose={() => handleSnackbarClose('snackbarAssignSupport')}
+      />
+      <SnackbarUnassign
+        open={snackbar.snackbarUnassign}
+        handleClose={() => handleSnackbarClose('snackbarUnassign')}
+      />
     </React.Fragment>
   );
 }
@@ -2833,6 +2862,9 @@ export function DialogAssignAsLead(props) {
   const classes = useStyles();
   const {t} = useTranslation();
   const {toggleDialog, open, handleAssignMeAs, origin} = props;
+  const [snackbar, setSnackbar] = React.useState({
+    snackbarAssignLead: false,
+  });
   const initial = {
     // blank object used to reset state
     phone: {
@@ -2852,6 +2884,14 @@ export function DialogAssignAsLead(props) {
   });
 
   const phoneExp = /^[+][1]\s\([0-9]{3}\)\s[0-9]{3}\s[0-9]{4}/;
+
+  const handleSnackbarOpen = (state) => {
+    setSnackbar({...snackbar, [state]: true});
+  };
+
+  const handleSnackbarClose = (state) => {
+    setSnackbar({...snackbar, [state]: false});
+  };
 
   const handleChange = (e, val) => {
     const comment = e.target.value.trim();
@@ -2903,6 +2943,7 @@ export function DialogAssignAsLead(props) {
       // if no errors exist, submit the form and reset the inputs
       toggleDialog(e);
       setState({...initial});
+      handleSnackbarOpen('snackbarAssignLead');
       if (origin === 'manageTeamDrawer') {
         handleAssignMeAs(state.phone.text, 'lead');
       }
@@ -3117,6 +3158,10 @@ export function DialogAssignAsLead(props) {
           </Button>
         </DialogActions>
       </Dialog>
+      <SnackbarAssignLead
+        open={snackbar.snackbarAssignLead}
+        handleClose={() => handleSnackbarClose('snackbarAssignLead')}
+      />
     </React.Fragment>
   );
 }
@@ -3126,6 +3171,9 @@ export function DialogAssignAsSupport(props) {
   const classes = useStyles();
   const {t} = useTranslation();
   const {toggleDialog, open, handleAssignMeAs, origin} = props;
+  const [snackbar, setSnackbar] = React.useState({
+    snackbarAssignSupport: false,
+  });
   const initial = {
     // blank object used to reset state
     phone: {
@@ -3145,6 +3193,14 @@ export function DialogAssignAsSupport(props) {
   });
 
   const phoneExp = /^[+][1]\s\([0-9]{3}\)\s[0-9]{3}\s[0-9]{4}/;
+
+  const handleSnackbarOpen = (state) => {
+    setSnackbar({...snackbar, [state]: true});
+  };
+
+  const handleSnackbarClose = (state) => {
+    setSnackbar({...snackbar, [state]: false});
+  };
 
   const handleChange = (e, val) => {
     const comment = e.target.value.trim();
@@ -3196,6 +3252,7 @@ export function DialogAssignAsSupport(props) {
       // if no errors exist, submit the form and reset the inputs
       toggleDialog(e);
       setState({...initial});
+      handleSnackbarOpen('snackbarAssignSupport');
       if (origin === 'manageTeamDrawer') {
         handleAssignMeAs(state.phone.text, 'support');
       }
@@ -3410,6 +3467,10 @@ export function DialogAssignAsSupport(props) {
           </Button>
         </DialogActions>
       </Dialog>
+      <SnackbarAssignSupport
+        open={snackbar.snackbarAssignSupport}
+        handleClose={() => handleSnackbarClose('snackbarAssignSupport')}
+      />
     </React.Fragment>
   );
 }

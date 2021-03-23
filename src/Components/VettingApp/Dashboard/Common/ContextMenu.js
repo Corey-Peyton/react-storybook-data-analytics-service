@@ -12,6 +12,9 @@ import {
   SnackbarDeleteRequest,
   SnackbarReactivateRequest,
   SnackbarSubmitRequest,
+  SnackbarAssignLead,
+  SnackbarAssignSupport,
+  SnackbarUnassign,
 } from '../../CommonComponents/Snackbars';
 import {
   DialogWithdraw,
@@ -70,6 +73,9 @@ export function ActionsMenu(props) {
     snackbarReopen: false,
     snackbarSubmit: false,
     snackbarDelete: false,
+    snackbarAssignLead: false,
+    snackbarAssignSupport: false,
+    SnackbarUnassign: false,
     dialogWithdraw: false,
     dialogManageTeam: false,
     dialogUnassign: false,
@@ -83,6 +89,7 @@ export function ActionsMenu(props) {
     dialogAssignAsLead: false,
     dialogAssignAsSupport: false,
     role: '',
+    action: '',
   });
 
   const ariaControls = `actions-menu-${controls}`;
@@ -117,9 +124,9 @@ export function ActionsMenu(props) {
     toggleManageTeamDrawer(e);
   };
 
-  const toggleDialog = (state, value, e, role) => {
+  const toggleDialog = (state, value, e, role, action) => {
     e.stopPropagation();
-    setOpen({...open, [state]: value, role: role});
+    setOpen({...open, [state]: value, role: role, action: action});
     handleClose(e);
   };
 
@@ -232,6 +239,7 @@ export function ActionsMenu(props) {
           onClick={(e) => {
             e.stopPropagation();
             handleClose(e);
+            handleSnackbarOpen('snackbarAssignLead');
           }}
         >
           <ListItemText
@@ -270,7 +278,13 @@ export function ActionsMenu(props) {
         <MenuItem
           onClick={(e) => {
             e.stopPropagation();
-            toggleDialog('dialogNoLead', !open.dialogNoLead, e);
+            toggleDialog(
+                'dialogNoLead',
+                !open.dialogNoLead,
+                e,
+                open.role,
+                'assignAsSupport',
+            );
           }}
           open={open.dialogNoLead}
         >
@@ -331,7 +345,13 @@ export function ActionsMenu(props) {
         <MenuItem
           onClick={(e) => {
             e.stopPropagation();
-            toggleDialog('dialogNoLead', !open.dialogNoLead, e);
+            toggleDialog(
+                'dialogNoLead',
+                !open.dialogNoLead,
+                e,
+                open.role,
+                'unassign',
+            );
           }}
         >
           <ListItemText
@@ -343,7 +363,12 @@ export function ActionsMenu(props) {
       );
     } else if (supports) {
       return (
-        <MenuItem onClick={handleClose}>
+        <MenuItem
+          onClick={(e) => {
+            handleClose(e);
+            handleSnackbarOpen('snackbarUnassign');
+          }}
+        >
           <ListItemText
             primary={
               <Typography variant="body2">{t('Unassign myself')}</Typography>
@@ -417,6 +442,7 @@ export function ActionsMenu(props) {
           onClick={(e) => {
             e.stopPropagation();
             handleSnackbarOpen('snackbarReopen');
+            handleClose(e);
           }}
         >
           <ListItemText
@@ -797,6 +823,18 @@ export function ActionsMenu(props) {
         open={open.snackbarDelete}
         handleClose={() => handleSnackbarClose('snackbarDelete')}
       />
+      <SnackbarAssignLead
+        open={open.snackbarAssignLead}
+        handleClose={() => handleSnackbarClose('snackbarAssignLead')}
+      />
+      <SnackbarAssignSupport
+        open={open.snackbarAssignSupport}
+        handleClose={() => handleSnackbarClose('snackbarAssignSupport')}
+      />
+      <SnackbarUnassign
+        open={open.snackbarUnassign}
+        handleClose={() => handleSnackbarClose('snackbarUnassign')}
+      />
       <DialogWithdraw
         toggleDialog={(e) =>
           toggleDialog('dialogWithdraw', !open.dialogWithdraw, e)
@@ -852,6 +890,7 @@ export function ActionsMenu(props) {
         }
         open={open.dialogNoLead}
         origin="actionsMenu"
+        action={open.action}
       />
       <DialogAssignAsLead
         open={open.dialogAssignAsLead}
