@@ -508,13 +508,17 @@ export default function ManageTeamDrawer(props) {
       </Drawer>
       <DialogNoLead
         open={dialog.noLead}
-        toggleDialog={() => toggleDialog('noLead', !dialog.noLead)}
+        toggleDialog={(e) => {
+          toggleDialog('noLead', !dialog.noLead);
+        }}
         toggleManageTeamDrawer={toggleManageTeamDrawer}
+        origin="manageTeamDrawer"
       />
       <DialogAssignAsLead
         open={dialog.assignAsLead}
         toggleDialog={() => toggleDialog('assignAsLead', !dialog.assignAsLead)}
         handleAssignMeAs={handleAssignMeAs}
+        origin="manageTeamDrawer"
       />
       <DialogAssignAsSupport
         open={dialog.assignAsSupport}
@@ -522,6 +526,7 @@ export default function ManageTeamDrawer(props) {
           toggleDialog('assignAsSupport', !dialog.assignAsSupport)
         }
         handleAssignMeAs={handleAssignMeAs}
+        origin="manageTeamDrawer"
       />
       <SnackbarAssigneeChange open={snackbar} handleClose={SnackbarClose} />
     </div>

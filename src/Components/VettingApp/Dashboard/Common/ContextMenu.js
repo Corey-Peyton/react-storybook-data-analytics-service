@@ -22,6 +22,9 @@ import {
   DialogDenied,
   DialogApprove,
   DialogInfo,
+  DialogNoLead,
+  DialogAssignAsLead,
+  DialogAssignAsSupport,
 } from '../../CommonComponents/DialogBox';
 import {loggedInUser} from '../../../../Data/fakeData';
 
@@ -76,6 +79,9 @@ export function ActionsMenu(props) {
     dialogDenied: false,
     dialogApprove: false,
     dialogInfo: false,
+    dialogNoLead: false,
+    dialogAssignAsLead: false,
+    dialogAssignAsSupport: false,
     role: '',
   });
 
@@ -217,14 +223,33 @@ export function ActionsMenu(props) {
   };
 
   const assignAsLeadMenuItem = () => {
-    if (request.lead !== currentUser) {
+    const supports = request.support.includes(currentUser);
+
+    if (supports) {
+      // if logged in user IS assigned as support
       return (
         <MenuItem
           onClick={(e) => {
             e.stopPropagation();
-            toggleDialog('dialogAssign', !open.dialogAssign, e);
+            handleClose(e);
           }}
-          open={open.dialogAssign}
+        >
+          <ListItemText
+            primary={
+              <Typography variant="body2">{t('Assign me as lead')}</Typography>
+            }
+          />
+        </MenuItem>
+      );
+    } else if (currentUser !== request.lead) {
+      // if logged in user is NOT assigned as lead OR support
+      return (
+        <MenuItem
+          onClick={(e) => {
+            e.stopPropagation();
+            toggleDialog('dialogAssignAsLead', !open.dialogAssignAsLead, e);
+          }}
+          open={open.dialogAssignAsLead}
         >
           <ListItemText
             primary={
@@ -239,14 +264,38 @@ export function ActionsMenu(props) {
   const assignAsSupportMenuItem = () => {
     const supports = request.support.includes(currentUser);
 
-    if (currentUser === request.lead || !supports) {
+    if (currentUser === request.lead) {
+      // if logged in user IS assigned as lead
       return (
         <MenuItem
           onClick={(e) => {
             e.stopPropagation();
-            toggleDialog('dialogSupport', !open.dialogSupport, e);
+            toggleDialog('dialogNoLead', !open.dialogNoLead, e);
           }}
-          open={open.dialogSupport}
+          open={open.dialogNoLead}
+        >
+          <ListItemText
+            primary={
+              <Typography variant="body2">
+                {t('Assign me as support')}
+              </Typography>
+            }
+          />
+        </MenuItem>
+      );
+    } else if (!supports) {
+      // if logged in user is NOT assigned as lead OR support
+      return (
+        <MenuItem
+          onClick={(e) => {
+            e.stopPropagation();
+            toggleDialog(
+                'dialogAssignAsSupport',
+                !open.dialogAssignAsSupport,
+                e,
+            );
+          }}
+          open={open.dialogAssignAsSupport}
         >
           <ListItemText
             primary={
@@ -277,15 +326,24 @@ export function ActionsMenu(props) {
   const unassignMenuItem = () => {
     const supports = request.support.includes(currentUser);
 
-    if (currentUser === request.lead || supports) {
+    if (currentUser === request.lead) {
       return (
         <MenuItem
           onClick={(e) => {
             e.stopPropagation();
-            toggleDialog('dialogUnassign', !open.dialogUnassign, e);
+            toggleDialog('dialogNoLead', !open.dialogNoLead, e);
           }}
-          open={open.dialogUnassign}
         >
+          <ListItemText
+            primary={
+              <Typography variant="body2">{t('Unassign myself')}</Typography>
+            }
+          />
+        </MenuItem>
+      );
+    } else if (supports) {
+      return (
+        <MenuItem onClick={handleClose}>
           <ListItemText
             primary={
               <Typography variant="body2">{t('Unassign myself')}</Typography>
@@ -787,6 +845,27 @@ export function ActionsMenu(props) {
         header={
           open.role === 'assignee' ? 'Assignee details' : 'Requester details'
         }
+      />
+      <DialogNoLead
+        toggleDialog={(e) =>
+          toggleDialog('dialogNoLead', !open.dialogNoLead, e)
+        }
+        open={open.dialogNoLead}
+        origin="actionsMenu"
+      />
+      <DialogAssignAsLead
+        open={open.dialogAssignAsLead}
+        toggleDialog={(e) =>
+          toggleDialog('dialogAssignAsLead', !open.dialogAssignAsLead, e)
+        }
+        origin="actionsMenu"
+      />
+      <DialogAssignAsSupport
+        open={open.dialogAssignAsSupport}
+        toggleDialog={(e) =>
+          toggleDialog('dialogAssignAsSupport', !open.dialogAssignAsSupport, e)
+        }
+        origin="actionsMenu"
       />
     </div>
   );

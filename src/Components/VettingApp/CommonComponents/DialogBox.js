@@ -2721,11 +2721,22 @@ export function DialognNewRequestTitle(props) {
 export function DialogNoLead(props) {
   const classes = useStyles();
   const {t} = useTranslation();
-  const {toggleDialog, open, toggleManageTeamDrawer} = props;
+  const {toggleDialog, open, toggleManageTeamDrawer, origin} = props;
   const [snackbar, setSnackbar] = React.useState(false);
 
   const SnackbarClose = () => {
     setSnackbar(false);
+  };
+
+  const submitDialog = (e) => {
+    if (origin === 'manageTeamDrawer') {
+      toggleDialog(e);
+      setSnackbar(!snackbar);
+      toggleManageTeamDrawer(e);
+    } else if (origin === 'actionsMenu') {
+      toggleDialog(e);
+      setSnackbar(!snackbar);
+    }
   };
 
   return (
@@ -2737,15 +2748,28 @@ export function DialogNoLead(props) {
         className={classes.root}
         disableBackdropClick
         scroll="paper"
+        onKeyPress={(e) => {
+          if (e.key === 'Enter') {
+            e.preventDefault();
+            e.stopPropagation();
+          }
+        }}
       >
         <DialogTitle id="dashboard-dialog-title">
           <div className={classes.vettingContainerTitle}>
-            <Typography variant="h6">{t('Continued with no lead?')}</Typography>
+            <Typography variant="h6">{t('Continue with no lead?')}</Typography>
             <IconButton
               id="dialog-close"
               onClick={toggleDialog}
               edge="end"
               aria-label="No lead assigned - close"
+              onKeyPress={(e) => {
+                e.preventDefault();
+                e.stopPropagation();
+                if (e.key === 'Enter') {
+                  toggleDialog(e);
+                }
+              }}
             >
               <CloseIcon />
             </IconButton>
@@ -2770,22 +2794,30 @@ export function DialogNoLead(props) {
           <Button
             variant="outlined"
             color="primary"
-            onClick={(e) => {
-              toggleDialog(e);
-            }}
+            onClick={toggleDialog}
             className={classes.footerBtns}
+            onKeyPress={(e) => {
+              e.preventDefault();
+              e.stopPropagation();
+              if (e.key === 'Enter') {
+                toggleDialog(e);
+              }
+            }}
           >
             {t('Cancel')}
           </Button>
           <Button
             variant="contained"
             color="primary"
-            onClick={(e) => {
-              toggleDialog(e);
-              toggleManageTeamDrawer(e);
-              setSnackbar(!snackbar);
-            }}
+            onClick={submitDialog}
             className={classes.footerBtns}
+            onKeyPress={(e) => {
+              e.preventDefault();
+              e.stopPropagation();
+              if (e.key === 'Enter') {
+                submitDialog(e);
+              }
+            }}
           >
             {t('Continue')}
           </Button>
@@ -2800,7 +2832,7 @@ export function DialogNoLead(props) {
 export function DialogAssignAsLead(props) {
   const classes = useStyles();
   const {t} = useTranslation();
-  const {toggleDialog, open, handleAssignMeAs} = props;
+  const {toggleDialog, open, handleAssignMeAs, origin} = props;
   const initial = {
     // blank object used to reset state
     phone: {
@@ -2869,9 +2901,11 @@ export function DialogAssignAsLead(props) {
     const err = validateForm();
     if (!err) {
       // if no errors exist, submit the form and reset the inputs
-      toggleDialog();
+      toggleDialog(e);
       setState({...initial});
-      handleAssignMeAs(state.phone.text, 'lead');
+      if (origin === 'manageTeamDrawer') {
+        handleAssignMeAs(state.phone.text, 'lead');
+      }
     } else {
       for (const property in state) {
         // focus on the first input that has an error on submit
@@ -2956,6 +2990,10 @@ export function DialogAssignAsLead(props) {
     }
   };
 
+  const handleClick = (e) => {
+    e.stopPropagation();
+  };
+
   return (
     <React.Fragment>
       <Dialog
@@ -2968,6 +3006,13 @@ export function DialogAssignAsLead(props) {
         className={classes.root}
         disableBackdropClick
         scroll="paper"
+        onClick={handleClick}
+        onKeyPress={(e) => {
+          if (e.key === 'Enter') {
+            e.preventDefault();
+            e.stopPropagation();
+          }
+        }}
       >
         <DialogTitle id="dashboard-dialog-title">
           <div className={classes.vettingContainerTitle}>
@@ -2977,6 +3022,13 @@ export function DialogAssignAsLead(props) {
               onClick={toggleDialog}
               edge="end"
               aria-label="Assign me as lead - close"
+              onKeyPress={(e) => {
+                e.preventDefault();
+                e.stopPropagation();
+                if (e.key === 'Enter') {
+                  toggleDialog(e);
+                }
+              }}
             >
               <CloseIcon />
             </IconButton>
@@ -3032,11 +3084,18 @@ export function DialogAssignAsLead(props) {
           <Button
             variant="outlined"
             color="primary"
-            onClick={() => {
+            onClick={(e) => {
               setState({...initial});
-              toggleDialog();
+              toggleDialog(e);
             }}
             className={classes.footerBtns}
+            onKeyPress={(e) => {
+              e.preventDefault();
+              e.stopPropagation();
+              if (e.key === 'Enter') {
+                toggleDialog(e);
+              }
+            }}
           >
             {t('Cancel')}
           </Button>
@@ -3046,6 +3105,13 @@ export function DialogAssignAsLead(props) {
             color="primary"
             className={classes.footerBtns}
             form="assign-form"
+            onKeyPress={(e) => {
+              e.preventDefault();
+              e.stopPropagation();
+              if (e.key === 'Enter') {
+                submitForm(e);
+              }
+            }}
           >
             {t('Assign')}
           </Button>
@@ -3059,7 +3125,7 @@ export function DialogAssignAsLead(props) {
 export function DialogAssignAsSupport(props) {
   const classes = useStyles();
   const {t} = useTranslation();
-  const {toggleDialog, open, handleAssignMeAs} = props;
+  const {toggleDialog, open, handleAssignMeAs, origin} = props;
   const initial = {
     // blank object used to reset state
     phone: {
@@ -3128,9 +3194,11 @@ export function DialogAssignAsSupport(props) {
     const err = validateForm();
     if (!err) {
       // if no errors exist, submit the form and reset the inputs
-      toggleDialog();
+      toggleDialog(e);
       setState({...initial});
-      handleAssignMeAs(state.phone.text, 'support');
+      if (origin === 'manageTeamDrawer') {
+        handleAssignMeAs(state.phone.text, 'support');
+      }
     } else {
       for (const property in state) {
         // focus on the first input that has an error on submit
@@ -3215,6 +3283,10 @@ export function DialogAssignAsSupport(props) {
     }
   };
 
+  const handleClick = (e) => {
+    e.stopPropagation();
+  };
+
   return (
     <React.Fragment>
       <Dialog
@@ -3227,6 +3299,13 @@ export function DialogAssignAsSupport(props) {
         className={classes.root}
         disableBackdropClick
         scroll="paper"
+        onClick={handleClick}
+        onKeyPress={(e) => {
+          if (e.key === 'Enter') {
+            e.preventDefault();
+            e.stopPropagation();
+          }
+        }}
       >
         <DialogTitle id="dashboard-dialog-title">
           <div className={classes.vettingContainerTitle}>
@@ -3236,6 +3315,13 @@ export function DialogAssignAsSupport(props) {
               onClick={toggleDialog}
               edge="end"
               aria-label="Assign me as support - close"
+              onKeyPress={(e) => {
+                e.preventDefault();
+                e.stopPropagation();
+                if (e.key === 'Enter') {
+                  toggleDialog(e);
+                }
+              }}
             >
               <CloseIcon />
             </IconButton>
@@ -3291,11 +3377,18 @@ export function DialogAssignAsSupport(props) {
           <Button
             variant="outlined"
             color="primary"
-            onClick={() => {
+            onClick={(e) => {
               setState({...initial});
-              toggleDialog();
+              toggleDialog(e);
             }}
             className={classes.footerBtns}
+            onKeyPress={(e) => {
+              e.preventDefault();
+              e.stopPropagation();
+              if (e.key === 'Enter') {
+                toggleDialog(e);
+              }
+            }}
           >
             {t('Cancel')}
           </Button>
@@ -3305,6 +3398,13 @@ export function DialogAssignAsSupport(props) {
             color="primary"
             className={classes.footerBtns}
             form="assign-form"
+            onKeyPress={(e) => {
+              e.preventDefault();
+              e.stopPropagation();
+              if (e.key === 'Enter') {
+                submitForm(e);
+              }
+            }}
           >
             {t('Assign')}
           </Button>
