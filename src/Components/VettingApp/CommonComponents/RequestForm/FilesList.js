@@ -228,10 +228,6 @@ function FilesList(props) {
     setOpen({...open, snackbarUpdate: true, editFile: false});
   };
 
-  const deleteFile = () => {
-    setOpen({...open, snackbarDelete: true, deleteFile: false});
-  };
-
   const addSupportingFile = () => {
     setOpen({
       ...open,
@@ -543,7 +539,7 @@ function FilesList(props) {
               </Button>
               <Button
                 color="primary"
-                onClick={() => handleClickOpen('deleteFile')}
+                onClick={() => handleClickOpen('snackbarDelete')}
               >
                 Delete
               </Button>
@@ -659,7 +655,7 @@ function FilesList(props) {
         </DialogActions>
       </Dialog>
       {/* Delete output file dialog */}
-      <Dialog
+      {/* <Dialog
         open={open.deleteFile}
         aria-labelledby="delete-dialog-title"
         fullWidth
@@ -709,7 +705,7 @@ function FilesList(props) {
             Delete
           </Button>
         </DialogActions>
-      </Dialog>
+      </Dialog> */}
       {/* Add supporting file snackbar */}
       <SnackbarAddSupportFile
         open={open.snackbarAddSupporting}

@@ -1,11 +1,6 @@
 import React from 'react';
 import {makeStyles} from '@material-ui/core/styles';
-import {
-  Button,
-  Toolbar,
-  IconButton,
-  Typography,
-} from '@material-ui/core';
+import {Button, Toolbar, IconButton, Typography} from '@material-ui/core';
 import Icon from '@mdi/react';
 import SaveIcon from '@material-ui/icons/Save';
 import ArrowBackIcon from '@material-ui/icons/ArrowBack';
@@ -95,8 +90,7 @@ function ToolBarAssign(props) {
     setState({...state, [element]: false});
   };
 
-  const [state, setState] = React.useState({
-  });
+  const [state, setState] = React.useState({});
 
   return (
     <Toolbar>
@@ -126,6 +120,9 @@ function ToolBarAssign(props) {
       <DialogAssign
         toggleDialog={() => handleClosed('dialogAssign')}
         open={state.dialogAssign}
+        onClick={() => {
+          props.handleAssignToMe();
+        }}
       />
       <Button
         variant="outlined"
