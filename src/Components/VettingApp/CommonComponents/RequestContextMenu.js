@@ -8,19 +8,11 @@ import MenuItem from '@material-ui/core/MenuItem';
 import ListItemText from '@material-ui/core/ListItemText';
 import MoreVertIcon from '@material-ui/icons/MoreVert';
 
+import {SnackbarDeleteRequest} from './Snackbars';
 import {
-  SnackbarDeleteRequest,
-  SnackbarReactivateRequest,
-  SnackbarSubmitRequest,
-} from './Snackbars';
-import {
-  DialogWithdraw,
   DialogUnassign,
   DialogSupport,
   DialogAssign,
-  DialogUpdate,
-  DialogDenied,
-  DialogApprove,
   DialogInfo,
 } from './DialogBox';
 import {loggedInUser} from '../../../Data/fakeData';
@@ -50,11 +42,10 @@ const StyledMenu = withStyles({
 export function ActionsMenu(props) {
   const {
     role,
-    statusHead,
     status,
-    contextStatusClick,
-    contextSummaryClick,
-    toggleManageTeamDrawer,
+    // contextStatusClick,
+    // contextSummaryClick,
+    // toggleManageTeamDrawer,
     controls,
     request,
   } = props;
@@ -84,7 +75,7 @@ export function ActionsMenu(props) {
   const handleClick = (e) => {
     e.stopPropagation();
     setAnchorEl(e.currentTarget);
-    contextStatusClick(status);
+    // contextStatusClick(status);
   };
 
   const handleClose = (e) => {
@@ -103,68 +94,18 @@ export function ActionsMenu(props) {
   const toggleSummary = (e) => {
     e.stopPropagation();
     handleClose(e);
-    contextSummaryClick();
+    // contextSummaryClick();
   };
   const contextManageTeam = (e) => {
     e.stopPropagation();
     handleClose(e);
-    toggleManageTeamDrawer(e);
+    // toggleManageTeamDrawer(e);
   };
 
   const toggleDialog = (state, value, e, role) => {
     e.stopPropagation();
     setOpen({...open, [state]: value, role: role});
     handleClose(e);
-  };
-
-  const viewRequestMenuItem = () => {
-    return (
-      <MenuItem onClick={handleClose}>
-        <ListItemText
-          primary={<Typography variant="body2">{t('View request')}</Typography>}
-        />
-      </MenuItem>
-    );
-  };
-
-  const editMenuItem = () => {
-    return (
-      <MenuItem onClick={handleClose}>
-        <ListItemText
-          primary={<Typography variant="body2">{t('Edit')}</Typography>}
-        />
-      </MenuItem>
-    );
-  };
-
-  const submitMenuItem = () => {
-    return (
-      <MenuItem
-        onClick={(e) => {
-          e.stopPropagation();
-          handleSnackbarOpen('snackbarSubmit');
-        }}
-      >
-        <ListItemText
-          primary={<Typography variant="body2">{t('Submit')}</Typography>}
-        />
-      </MenuItem>
-    );
-  };
-
-  const withdrawMenuItem = () => {
-    return (
-      <MenuItem
-        onClick={(e) => {
-          e.stopPropagation();
-          toggleDialog('dialogWithdraw', !open.dialogWithdraw, e);
-        }}
-      >
-        <ListItemText
-          primary={<Typography variant="body2">{t('Withdraw')}</Typography>}
-        />
-      </MenuItem>
-    );
   };
 
   const assigneeDetailsMenuItem = () => {
@@ -260,20 +201,6 @@ export function ActionsMenu(props) {
     }
   };
 
-  const startReviewHandler = () => {
-    if (currentUser === request.lead) {
-      return (
-        <MenuItem onClick={handleClose}>
-          <ListItemText
-            primary={
-              <Typography variant="body2">{t('Start review')}</Typography>
-            }
-          />
-        </MenuItem>
-      );
-    }
-  };
-
   const unassignMenuItem = () => {
     const supports = request.support.includes(currentUser);
 
@@ -290,79 +217,6 @@ export function ActionsMenu(props) {
             primary={
               <Typography variant="body2">{t('Unassign myself')}</Typography>
             }
-          />
-        </MenuItem>
-      );
-    }
-  };
-
-  const approveMenuItem = () => {
-    if (currentUser === request.lead) {
-      return (
-        <MenuItem
-          onClick={(e) => {
-            e.stopPropagation();
-            toggleDialog('dialogApprove', !open.dialogApprove, e);
-          }}
-          open={open.dialogApprove}
-        >
-          <ListItemText
-            primary={<Typography variant="body2">{t('Approve')}</Typography>}
-          />
-        </MenuItem>
-      );
-    }
-  };
-
-  const denyMenuItem = () => {
-    if (currentUser === request.lead) {
-      return (
-        <MenuItem
-          onClick={(e) => {
-            e.stopPropagation();
-            toggleDialog('dialogDenied', !open.dialogDenied, e);
-          }}
-          open={open.dialogDenied}
-        >
-          <ListItemText
-            primary={<Typography variant="body2">{t('Deny')}</Typography>}
-          />
-        </MenuItem>
-      );
-    }
-  };
-
-  const requestChangesMenuItem = () => {
-    if (currentUser === request.lead) {
-      return (
-        <MenuItem
-          onClick={(e) => {
-            e.stopPropagation();
-            toggleDialog('dialogUpdate', !open.dialogUpdate, e);
-          }}
-          open={open.dialogUpdate}
-        >
-          <ListItemText
-            primary={
-              <Typography variant="body2">{t('Request changes')}</Typography>
-            }
-          />
-        </MenuItem>
-      );
-    }
-  };
-
-  const reactivateMenuItem = () => {
-    if (currentUser === request.lead) {
-      return (
-        <MenuItem
-          onClick={(e) => {
-            e.stopPropagation();
-            handleSnackbarOpen('snackbarReopen');
-          }}
-        >
-          <ListItemText
-            primary={<Typography variant="body2">{t('Reactivate')}</Typography>}
           />
         </MenuItem>
       );
@@ -392,272 +246,29 @@ export function ActionsMenu(props) {
   };
 
   if (role === 'analyst') {
-    if (statusHead === 'assigned to me') {
-      if (status === 'draft') {
-        StyledMenuVar = (
-          <StyledMenu
-            id={ariaControls}
-            anchorEl={anchorEl}
-            keepMounted
-            open={Boolean(anchorEl)}
-            onClose={handleClose}
-          >
-            {viewRequestMenuItem()}
-            {assignAsLeadMenuItem()}
-            {assignAsSupportMenuItem()}
-            {unassignMenuItem()}
-            {manageAssigneesMenuItem()}
-            {requesterDetailsMenuItem()}
-            {summaryMenuItem()}
-          </StyledMenu>
-        );
-      } else if (status === 'submitted') {
-        StyledMenuVar = (
-          <StyledMenu
-            id={ariaControls}
-            anchorEl={anchorEl}
-            keepMounted
-            open={Boolean(anchorEl)}
-            onClose={handleClose}
-          >
-            {viewRequestMenuItem()}
-            {startReviewHandler()}
-            {assignAsLeadMenuItem()}
-            {assignAsSupportMenuItem()}
-            {unassignMenuItem()}
-            {manageAssigneesMenuItem()}
-            {requesterDetailsMenuItem()}
-            {summaryMenuItem()}
-          </StyledMenu>
-        );
-      } else if (status === 'under review') {
-        StyledMenuVar = (
-          <StyledMenu
-            id={ariaControls}
-            anchorEl={anchorEl}
-            keepMounted
-            open={Boolean(anchorEl)}
-            onClose={handleClose}
-          >
-            {viewRequestMenuItem()}
-            {approveMenuItem()}
-            {denyMenuItem()}
-            {requestChangesMenuItem()}
-            {assignAsLeadMenuItem()}
-            {assignAsSupportMenuItem()}
-            {unassignMenuItem()}
-            {manageAssigneesMenuItem()}
-            {requesterDetailsMenuItem()}
-            {summaryMenuItem()}
-          </StyledMenu>
-        );
-      } else if (status === 'changes requested') {
-        StyledMenuVar = (
-          <StyledMenu
-            id={ariaControls}
-            anchorEl={anchorEl}
-            keepMounted
-            open={Boolean(anchorEl)}
-            onClose={handleClose}
-          >
-            {viewRequestMenuItem()}
-            {assignAsLeadMenuItem()}
-            {assignAsSupportMenuItem()}
-            {unassignMenuItem()}
-            {manageAssigneesMenuItem()}
-            {requesterDetailsMenuItem()}
-            {summaryMenuItem()}
-          </StyledMenu>
-        );
-      }
-    } else if (statusHead === 'unassigned') {
-      StyledMenuVar = (
-        <StyledMenu
-          id={ariaControls}
-          anchorEl={anchorEl}
-          keepMounted
-          open={Boolean(anchorEl)}
-          onClose={handleClose}
-        >
-          {viewRequestMenuItem()}
-          {assignAsLeadMenuItem()}
-          {assignAsSupportMenuItem()}
-          {manageAssigneesMenuItem()}
-          {requesterDetailsMenuItem()}
-          {summaryMenuItem()}
-        </StyledMenu>
-      );
-    } else if (statusHead === 'active') {
-      if (status === 'draft') {
-        StyledMenuVar = (
-          <StyledMenu
-            id={ariaControls}
-            anchorEl={anchorEl}
-            keepMounted
-            open={Boolean(anchorEl)}
-            onClose={handleClose}
-          >
-            {viewRequestMenuItem()}
-            {assignAsLeadMenuItem()}
-            {assignAsSupportMenuItem()}
-            {unassignMenuItem()}
-            {manageAssigneesMenuItem()}
-            {requesterDetailsMenuItem()}
-            {summaryMenuItem()}
-          </StyledMenu>
-        );
-      } else if (status === 'submitted') {
-        StyledMenuVar = (
-          <StyledMenu
-            id={ariaControls}
-            anchorEl={anchorEl}
-            keepMounted
-            open={Boolean(anchorEl)}
-            onClose={handleClose}
-          >
-            {viewRequestMenuItem()}
-            {startReviewHandler()}
-            {assignAsLeadMenuItem()}
-            {assignAsSupportMenuItem()}
-            {unassignMenuItem()}
-            {manageAssigneesMenuItem()}
-            {requesterDetailsMenuItem()}
-            {summaryMenuItem()}
-          </StyledMenu>
-        );
-      } else if (status === 'under review') {
-        StyledMenuVar = (
-          <StyledMenu
-            id={ariaControls}
-            anchorEl={anchorEl}
-            keepMounted
-            open={Boolean(anchorEl)}
-            onClose={handleClose}
-          >
-            {viewRequestMenuItem()}
-            {approveMenuItem()}
-            {denyMenuItem()}
-            {requestChangesMenuItem()}
-            {assignAsLeadMenuItem()}
-            {assignAsSupportMenuItem()}
-            {unassignMenuItem()}
-            {manageAssigneesMenuItem()}
-            {requesterDetailsMenuItem()}
-            {summaryMenuItem()}
-          </StyledMenu>
-        );
-      } else if (status === 'changes requested') {
-        StyledMenuVar = (
-          <StyledMenu
-            id={ariaControls}
-            anchorEl={anchorEl}
-            keepMounted
-            open={Boolean(anchorEl)}
-            onClose={handleClose}
-          >
-            {viewRequestMenuItem()}
-            {assignAsLeadMenuItem()}
-            {assignAsSupportMenuItem()}
-            {manageAssigneesMenuItem()}
-            {requesterDetailsMenuItem()}
-            {summaryMenuItem()}
-          </StyledMenu>
-        );
-      }
-    } else if (statusHead === 'approved') {
-      StyledMenuVar = (
-        <StyledMenu
-          id={ariaControls}
-          anchorEl={anchorEl}
-          keepMounted
-          open={Boolean(anchorEl)}
-          onClose={handleClose}
-        >
-          {viewRequestMenuItem()}
-          {reactivateMenuItem()}
-          {assignAsLeadMenuItem()}
-          {assignAsSupportMenuItem()}
-          {unassignMenuItem()}
-          {manageAssigneesMenuItem()}
-          {requesterDetailsMenuItem()}
-          {summaryMenuItem()}
-        </StyledMenu>
-      );
-    } else if (statusHead === 'denied') {
-      StyledMenuVar = (
-        <StyledMenu
-          id={ariaControls}
-          anchorEl={anchorEl}
-          keepMounted
-          open={Boolean(anchorEl)}
-          onClose={handleClose}
-        >
-          {viewRequestMenuItem()}
-          {reactivateMenuItem()}
-          {assignAsLeadMenuItem()}
-          {assignAsSupportMenuItem()}
-          {unassignMenuItem()}
-          {manageAssigneesMenuItem()}
-          {requesterDetailsMenuItem()}
-          {summaryMenuItem()}
-        </StyledMenu>
-      );
-    }
+    StyledMenuVar = (
+      <StyledMenu
+        id={ariaControls}
+        anchorEl={anchorEl}
+        keepMounted
+        open={Boolean(anchorEl)}
+        onClose={handleClose}
+      >
+        {assignAsLeadMenuItem()}
+        {assignAsSupportMenuItem()}
+        {unassignMenuItem()}
+        {manageAssigneesMenuItem()}
+        {requesterDetailsMenuItem()}
+        {summaryMenuItem()}
+      </StyledMenu>
+    );
   } else {
     // ROLE = RESEARCHER
-    if (statusHead === 'active') {
-      if (status === 'draft') {
-        StyledMenuVar = (
-          <StyledMenu
-            id={ariaControls}
-            anchorEl={anchorEl}
-            keepMounted
-            open={Boolean(anchorEl)}
-            onClose={handleClose}
-          >
-            {editMenuItem()}
-            {submitMenuItem()}
-            {withdrawMenuItem()}
-            {assigneeDetailsMenuItem()}
-            {requesterDetailsMenuItem()}
-            {summaryMenuItem()}
-          </StyledMenu>
-        );
-      } else if (status === 'submitted') {
-        StyledMenuVar = (
-          <StyledMenu
-            id={ariaControls}
-            anchorEl={anchorEl}
-            keepMounted
-            open={Boolean(anchorEl)}
-            onClose={handleClose}
-          >
-            {viewRequestMenuItem()}
-            {withdrawMenuItem()}
-            {assigneeDetailsMenuItem()}
-            {requesterDetailsMenuItem()}
-            {summaryMenuItem()}
-          </StyledMenu>
-        );
-      } else if (status === 'changes requested') {
-        StyledMenuVar = (
-          <StyledMenu
-            id={ariaControls}
-            anchorEl={anchorEl}
-            keepMounted
-            open={Boolean(anchorEl)}
-            onClose={handleClose}
-          >
-            {editMenuItem()}
-            {submitMenuItem()}
-            {withdrawMenuItem()}
-            {assigneeDetailsMenuItem()}
-            {requesterDetailsMenuItem()}
-            {summaryMenuItem()}
-          </StyledMenu>
-        );
-      }
-    } else if (statusHead === 'withdrawn') {
+    if (
+      status === 'withdrawn' ||
+      status === 'approved' ||
+      status === 'denied'
+    ) {
       StyledMenuVar = (
         <StyledMenu
           id={ariaControls}
@@ -666,15 +277,13 @@ export function ActionsMenu(props) {
           open={Boolean(anchorEl)}
           onClose={handleClose}
         >
-          {viewRequestMenuItem()}
-          {reactivateMenuItem()}
           {assigneeDetailsMenuItem()}
           {requesterDetailsMenuItem()}
           {summaryMenuItem()}
           {deleteMenuItem()}
         </StyledMenu>
       );
-    } else if (statusHead === 'approved') {
+    } else {
       StyledMenuVar = (
         <StyledMenu
           id={ariaControls}
@@ -683,22 +292,6 @@ export function ActionsMenu(props) {
           open={Boolean(anchorEl)}
           onClose={handleClose}
         >
-          {viewRequestMenuItem()}
-          {assigneeDetailsMenuItem()}
-          {requesterDetailsMenuItem()}
-          {summaryMenuItem()}
-        </StyledMenu>
-      );
-    } else if (statusHead === 'denied') {
-      StyledMenuVar = (
-        <StyledMenu
-          id={ariaControls}
-          anchorEl={anchorEl}
-          keepMounted
-          open={Boolean(anchorEl)}
-          onClose={handleClose}
-        >
-          {viewRequestMenuItem()}
           {assigneeDetailsMenuItem()}
           {requesterDetailsMenuItem()}
           {summaryMenuItem()}
@@ -727,23 +320,9 @@ export function ActionsMenu(props) {
       </IconButton>
       {StyledMenuVar}
 
-      <SnackbarReactivateRequest
-        open={open.snackbarReopen}
-        handleClose={() => handleSnackbarClose('snackbarReopen')}
-      />
-      <SnackbarSubmitRequest
-        open={open.snackbarSubmit}
-        handleClose={() => handleSnackbarClose('snackbarSubmit')}
-      />
       <SnackbarDeleteRequest
         open={open.snackbarDelete}
         handleClose={() => handleSnackbarClose('snackbarDelete')}
-      />
-      <DialogWithdraw
-        toggleDialog={(e) =>
-          toggleDialog('dialogWithdraw', !open.dialogWithdraw, e)
-        }
-        open={open.dialogWithdraw}
       />
       <DialogUnassign
         toggleDialog={(e) =>
@@ -763,24 +342,6 @@ export function ActionsMenu(props) {
         }
         open={open.dialogAssign}
       />
-      <DialogUpdate
-        toggleDialog={(e) =>
-          toggleDialog('dialogUpdate', !open.dialogUpdate, e)
-        }
-        open={open.dialogUpdate}
-      />
-      <DialogDenied
-        toggleDialog={(e) =>
-          toggleDialog('dialogDenied', !open.dialogDenied, e)
-        }
-        open={open.dialogDenied}
-      />
-      <DialogApprove
-        toggleDialog={(e) =>
-          toggleDialog('dialogApprove', !open.dialogApprove, e)
-        }
-        open={open.dialogApprove}
-      />
       <DialogInfo
         toggleDialog={(e) => toggleDialog('dialogInfo', !open.dialogInfo, e)}
         open={open.dialogInfo}
@@ -788,122 +349,6 @@ export function ActionsMenu(props) {
           open.role === 'assignee' ? 'Assignee details' : 'Requester details'
         }
       />
-    </div>
-  );
-}
-
-// //////////////////////////// Analyst role dialog box context menu
-export function AnalystMenu(props) {
-  const {
-    role,
-    makeSupport,
-    makeLead,
-    unassignRequest,
-    controls,
-    current,
-    toggleAssignMeMenu,
-  } = props;
-  const {t} = useTranslation();
-  let StyledMenuVar;
-
-  const [anchorEl, setAnchorEl] = React.useState(null);
-
-  const ariaControls = `context-menu-${controls}`;
-
-  const handleClose = () => {
-    setAnchorEl(null);
-  };
-
-  const handleClick = (event) => {
-    event.stopPropagation();
-    setAnchorEl(event.currentTarget);
-  };
-
-  if (role === 'lead') {
-    StyledMenuVar = (
-      <StyledMenu
-        id={ariaControls}
-        anchorEl={anchorEl}
-        keepMounted
-        disablePortal
-        open={Boolean(anchorEl)}
-        onClose={handleClose}
-      >
-        <MenuItem onClick={makeSupport}>
-          <ListItemText
-            primary={
-              <Typography variant="body2">
-                {current ?
-                  t('Assign me as support') :
-                  t('Assign user as support')}
-              </Typography>
-            }
-          />
-        </MenuItem>
-        <MenuItem
-          onClick={() => {
-            unassignRequest();
-            toggleAssignMeMenu();
-          }}
-        >
-          <ListItemText
-            primary={
-              <Typography variant="body2">
-                {current ? t('Unassign myself') : t('Unassign user')}
-              </Typography>
-            }
-          />
-        </MenuItem>
-      </StyledMenu>
-    );
-  } else if (role === 'support') {
-    StyledMenuVar = (
-      <StyledMenu
-        id={ariaControls}
-        anchorEl={anchorEl}
-        keepMounted
-        disablePortal
-        open={Boolean(anchorEl)}
-        onClose={handleClose}
-      >
-        <MenuItem onClick={makeLead}>
-          <ListItemText
-            primary={
-              <Typography variant="body2">
-                {current ? t('Assign me as lead') : t('Assign user as lead')}
-              </Typography>
-            }
-          />
-        </MenuItem>
-        <MenuItem
-          onClick={() => {
-            unassignRequest();
-            toggleAssignMeMenu();
-          }}
-        >
-          <ListItemText
-            primary={
-              <Typography variant="body2">
-                {current ? t('Unassign myself') : t('Unassign user')}
-              </Typography>
-            }
-          />
-        </MenuItem>
-      </StyledMenu>
-    );
-  }
-  return (
-    <div>
-      <IconButton
-        onClick={handleClick}
-        aria-controls={ariaControls}
-        aria-haspopup="true"
-        aria-label="Actions menu"
-        edge="end"
-      >
-        <MoreVertIcon />
-      </IconButton>
-      {StyledMenuVar}
     </div>
   );
 }
