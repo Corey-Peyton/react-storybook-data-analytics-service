@@ -1,11 +1,6 @@
 import React from 'react';
 import {makeStyles} from '@material-ui/core/styles';
-import {
-  Button,
-  Toolbar,
-  IconButton,
-  Typography,
-} from '@material-ui/core';
+import {Button, Toolbar, IconButton, Typography} from '@material-ui/core';
 import Icon from '@mdi/react';
 import ReplayIcon from '@material-ui/icons/Replay';
 import SaveIcon from '@material-ui/icons/Save';
@@ -96,6 +91,14 @@ function ToolBarUnassign(props) {
   };
 
   const [open, setOpen] = React.useState({
+    dialogApprove: false,
+    dialogUnAssign: false,
+    snackbarSave: false,
+    dialogUpdate: false,
+    snackbarChange: false,
+    snackBarDeny: false,
+    snackBarApprove: false,
+    dialogDenied: false,
   });
 
   const handleClickOpen = (state) => {
@@ -186,8 +189,12 @@ function ToolBarUnassign(props) {
         open={Boolean(anchorEl)}
         onClose={handleClosed}
       >
-        <MenuItem onClick={() => handleClickOpen('dialogApprove')}>Approve</MenuItem>
-        <MenuItem onClick={() => handleClickOpen('dialogDenied')}>Deny</MenuItem>
+        <MenuItem onClick={() => handleClickOpen('dialogApprove')}>
+          Approve
+        </MenuItem>
+        <MenuItem onClick={() => handleClickOpen('dialogDenied')}>
+          Deny
+        </MenuItem>
       </Menu>
       <DialogApprove
         toggleDialog={() => handleClickClose('dialogApprove')}
