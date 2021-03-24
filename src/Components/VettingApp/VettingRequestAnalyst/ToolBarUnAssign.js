@@ -218,10 +218,10 @@ function ToolBarUnassign(props) {
         // contextStatusClick={contextStatusClick}
         // toggleManageTeamDrawer={toggleManageTeamDrawer}
         status={'draft'}
-        role={'lead'}
+        role={'analyst'}
         request={{
           lead: '',
-          support: [],
+          support: ['Tony Stark'],
         }}
       />
     </Toolbar>
