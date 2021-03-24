@@ -90,9 +90,6 @@ const useStyles = makeStyles((theme) => ({
     'display': 'flex',
     'alignItems': 'center',
     'marginBottom': theme.spacing(3),
-    '& svg': {
-      marginLeft: theme.spacing(1),
-    },
   },
 }));
 
