@@ -75,7 +75,7 @@ export function ActionsMenu(props) {
     snackbarDelete: false,
     snackbarAssignLead: false,
     snackbarAssignSupport: false,
-    SnackbarUnassign: false,
+    snackbarUnassign: false,
     dialogWithdraw: false,
     dialogManageTeam: false,
     dialogUnassign: false,
@@ -85,7 +85,8 @@ export function ActionsMenu(props) {
     dialogDenied: false,
     dialogApprove: false,
     dialogInfo: false,
-    dialogNoLead: false,
+    dialogNoLeadUnassign: false,
+    dialogNoLeadAssignSupport: false,
     dialogAssignAsLead: false,
     dialogAssignAsSupport: false,
     role: '',
@@ -128,6 +129,22 @@ export function ActionsMenu(props) {
     e.stopPropagation();
     setOpen({...open, [state]: value, role: role, action: action});
     handleClose(e);
+  };
+
+  const unassignLead = (e) => {
+    setOpen({
+      ...open,
+      dialogNoLeadUnassign: !open.dialogNoLeadUnassign,
+      snackbarUnassign: true,
+    });
+  };
+
+  const assignSupportNoLead = (e) => {
+    setOpen({
+      ...open,
+      dialogNoLeadAssignSupport: !open.dialogNoLeadAssignSupport,
+      snackbarAssignSupport: true,
+    });
   };
 
   const viewRequestMenuItem = () => {
@@ -257,7 +274,6 @@ export function ActionsMenu(props) {
             e.stopPropagation();
             toggleDialog('dialogAssignAsLead', !open.dialogAssignAsLead, e);
           }}
-          open={open.dialogAssignAsLead}
         >
           <ListItemText
             primary={
@@ -279,14 +295,11 @@ export function ActionsMenu(props) {
           onClick={(e) => {
             e.stopPropagation();
             toggleDialog(
-                'dialogNoLead',
-                !open.dialogNoLead,
+                'dialogNoLeadAssignSupport',
+                !open.dialogNoLeadAssignSupport,
                 e,
-                open.role,
-                'assignAsSupport',
             );
           }}
-          open={open.dialogNoLead}
         >
           <ListItemText
             primary={
@@ -309,7 +322,6 @@ export function ActionsMenu(props) {
                 e,
             );
           }}
-          open={open.dialogAssignAsSupport}
         >
           <ListItemText
             primary={
@@ -345,13 +357,7 @@ export function ActionsMenu(props) {
         <MenuItem
           onClick={(e) => {
             e.stopPropagation();
-            toggleDialog(
-                'dialogNoLead',
-                !open.dialogNoLead,
-                e,
-                open.role,
-                'unassign',
-            );
+            toggleDialog('dialogNoLeadUnassign', !open.dialogNoLeadUnassign, e);
           }}
         >
           <ListItemText
@@ -387,7 +393,6 @@ export function ActionsMenu(props) {
             e.stopPropagation();
             toggleDialog('dialogApprove', !open.dialogApprove, e);
           }}
-          open={open.dialogApprove}
         >
           <ListItemText
             primary={<Typography variant="body2">{t('Approve')}</Typography>}
@@ -405,7 +410,6 @@ export function ActionsMenu(props) {
             e.stopPropagation();
             toggleDialog('dialogDenied', !open.dialogDenied, e);
           }}
-          open={open.dialogDenied}
         >
           <ListItemText
             primary={<Typography variant="body2">{t('Deny')}</Typography>}
@@ -423,7 +427,6 @@ export function ActionsMenu(props) {
             e.stopPropagation();
             toggleDialog('dialogUpdate', !open.dialogUpdate, e);
           }}
-          open={open.dialogUpdate}
         >
           <ListItemText
             primary={
@@ -886,11 +889,21 @@ export function ActionsMenu(props) {
       />
       <DialogNoLead
         toggleDialog={(e) =>
-          toggleDialog('dialogNoLead', !open.dialogNoLead, e)
+          toggleDialog('dialogNoLeadUnassign', !open.dialogNoLeadUnassign, e)
         }
-        open={open.dialogNoLead}
-        origin="actionsMenu"
-        action={open.action}
+        open={open.dialogNoLeadUnassign}
+        submitDialog={unassignLead}
+      />
+      <DialogNoLead
+        toggleDialog={(e) =>
+          toggleDialog(
+              'dialogNoLeadAssignSupport',
+              !open.dialogNoLeadAssignSupport,
+              e,
+          )
+        }
+        open={open.dialogNoLeadAssignSupport}
+        submitDialog={assignSupportNoLead}
       />
       <DialogAssignAsLead
         open={open.dialogAssignAsLead}

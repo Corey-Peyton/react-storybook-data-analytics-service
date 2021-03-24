@@ -34,7 +34,6 @@ import {AnalystMenu} from '../Dashboard/Common/ContextMenu';
 import {analystList} from '../../../Data/fakeData';
 import {
   SnackbarApproveRequest,
-  SnackbarAssigneeChange,
   SnackbarAssignLead,
   SnackbarAssignSupport,
   SnackbarChangeRequest,
@@ -2721,36 +2720,7 @@ export function DialognNewRequestTitle(props) {
 export function DialogNoLead(props) {
   const classes = useStyles();
   const {t} = useTranslation();
-  const {toggleDialog, open, toggleManageTeamDrawer, origin, action} = props;
-  const [snackbar, setSnackbar] = React.useState({
-    snackbarAssigneeChange: false,
-    snackbarAssignSupport: false,
-    SnackbarUnassign: false,
-  });
-
-  const handleSnackbarOpen = (state) => {
-    setSnackbar({...snackbar, [state]: true});
-  };
-
-  const handleSnackbarClose = (state) => {
-    setSnackbar({...snackbar, [state]: false});
-  };
-
-  const submitDialog = (e) => {
-    if (origin === 'manageTeamDrawer') {
-      toggleDialog(e);
-      handleSnackbarOpen('snackbarAssigneeChange');
-      toggleManageTeamDrawer(e);
-    } else if (origin === 'actionsMenu') {
-      if (action === 'assignAsSupport') {
-        toggleDialog(e);
-        handleSnackbarOpen('snackbarAssignSupport');
-      } else if (action === 'unassign') {
-        toggleDialog(e);
-        handleSnackbarOpen('snackbarUnassign');
-      }
-    }
-  };
+  const {submitDialog, toggleDialog, open} = props;
 
   const handleClick = (e) => {
     e.stopPropagation();
@@ -2841,18 +2811,6 @@ export function DialogNoLead(props) {
           </Button>
         </DialogActions>
       </Dialog>
-      <SnackbarAssigneeChange
-        open={snackbar.snackbarAssigneeChange}
-        handleClose={() => handleSnackbarClose('snackbarAssigneeChange')}
-      />
-      <SnackbarAssignSupport
-        open={snackbar.snackbarAssignSupport}
-        handleClose={() => handleSnackbarClose('snackbarAssignSupport')}
-      />
-      <SnackbarUnassign
-        open={snackbar.snackbarUnassign}
-        handleClose={() => handleSnackbarClose('snackbarUnassign')}
-      />
     </React.Fragment>
   );
 }
