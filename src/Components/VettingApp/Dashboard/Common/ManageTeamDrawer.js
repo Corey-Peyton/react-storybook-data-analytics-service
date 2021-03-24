@@ -145,7 +145,9 @@ export default function ManageTeamDrawer(props) {
   const {t} = useTranslation();
   const [analysts, setAnalysts] = React.useState(analystList);
   const [anchorEl, setAnchorEl] = React.useState(null);
-  const [snackbar, setSnackbar] = React.useState(false);
+  const [snackbar, setSnackbar] = React.useState({
+    snackbarAssigneeChange: false,
+  });
   const [assign, setAssign] = React.useState(() => {
     const current = analysts.filter((analyst) => analyst.current);
     if (!current[0].assigned) {
@@ -158,8 +160,12 @@ export default function ManageTeamDrawer(props) {
     assignAsSupport: false,
   });
 
-  const SnackbarClose = () => {
-    setSnackbar(false);
+  const handleSnackbarOpen = (state) => {
+    setSnackbar({...snackbar, [state]: true});
+  };
+
+  const handleSnackbarClose = (state) => {
+    setSnackbar({...snackbar, [state]: false});
   };
 
   const makeLead = (value) => (e) => {
@@ -190,6 +196,12 @@ export default function ManageTeamDrawer(props) {
           item,
         ),
     );
+  };
+
+  const unassignLead = () => {
+    toggleDialog('noLead', !dialog.noLead);
+    toggleManageTeamDrawer();
+    handleSnackbarOpen('snackbarAssigneeChange');
   };
 
   const handleClick = (event) => {
@@ -508,13 +520,15 @@ export default function ManageTeamDrawer(props) {
       </Drawer>
       <DialogNoLead
         open={dialog.noLead}
-        toggleDialog={() => toggleDialog('noLead', !dialog.noLead)}
+        submitDialog={unassignLead}
         toggleManageTeamDrawer={toggleManageTeamDrawer}
+        origin="manageTeamDrawer"
       />
       <DialogAssignAsLead
         open={dialog.assignAsLead}
         toggleDialog={() => toggleDialog('assignAsLead', !dialog.assignAsLead)}
         handleAssignMeAs={handleAssignMeAs}
+        origin="manageTeamDrawer"
       />
       <DialogAssignAsSupport
         open={dialog.assignAsSupport}
@@ -522,8 +536,12 @@ export default function ManageTeamDrawer(props) {
           toggleDialog('assignAsSupport', !dialog.assignAsSupport)
         }
         handleAssignMeAs={handleAssignMeAs}
+        origin="manageTeamDrawer"
       />
-      <SnackbarAssigneeChange open={snackbar} handleClose={SnackbarClose} />
+      <SnackbarAssigneeChange
+        open={snackbar.snackbarAssigneeChange}
+        handleClose={() => handleSnackbarClose('snackbarAssigneeChange')}
+      />
     </div>
   );
 }

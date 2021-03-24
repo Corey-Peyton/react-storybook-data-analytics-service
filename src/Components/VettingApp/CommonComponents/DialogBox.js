@@ -34,7 +34,6 @@ import {AnalystMenu} from '../Dashboard/Common/ContextMenu';
 import {analystList} from '../../../Data/fakeData';
 import {
   SnackbarApproveRequest,
-  SnackbarAssigneeChange,
   SnackbarAssignLead,
   SnackbarAssignSupport,
   SnackbarChangeRequest,
@@ -2721,11 +2720,10 @@ export function DialognNewRequestTitle(props) {
 export function DialogNoLead(props) {
   const classes = useStyles();
   const {t} = useTranslation();
-  const {toggleDialog, open, toggleManageTeamDrawer} = props;
-  const [snackbar, setSnackbar] = React.useState(false);
+  const {submitDialog, toggleDialog, open} = props;
 
-  const SnackbarClose = () => {
-    setSnackbar(false);
+  const handleClick = (e) => {
+    e.stopPropagation();
   };
 
   return (
@@ -2737,15 +2735,29 @@ export function DialogNoLead(props) {
         className={classes.root}
         disableBackdropClick
         scroll="paper"
+        onClick={handleClick}
+        onKeyPress={(e) => {
+          if (e.key === 'Enter') {
+            e.preventDefault();
+            e.stopPropagation();
+          }
+        }}
       >
         <DialogTitle id="dashboard-dialog-title">
           <div className={classes.vettingContainerTitle}>
-            <Typography variant="h6">{t('No lead assigned')}</Typography>
+            <Typography variant="h6">{t('Continue with no lead?')}</Typography>
             <IconButton
               id="dialog-close"
               onClick={toggleDialog}
               edge="end"
               aria-label="No lead assigned - close"
+              onKeyPress={(e) => {
+                e.preventDefault();
+                e.stopPropagation();
+                if (e.key === 'Enter') {
+                  toggleDialog(e);
+                }
+              }}
             >
               <CloseIcon />
             </IconButton>
@@ -2758,7 +2770,7 @@ export function DialogNoLead(props) {
               <div className={classes.vettingColumn}>
                 <Alert severity="warning" className={classes.alert}>
                   {t(
-                      'The lead was removed and no one was assigned in their place. If you choose to continue, an email will be sent to the requester notifying them that no one is assigned to their request.',
+                      'If you continue, the request will have no lead and the requester will be notified of the change.',
                   )}
                 </Alert>
               </div>
@@ -2770,28 +2782,35 @@ export function DialogNoLead(props) {
           <Button
             variant="outlined"
             color="primary"
-            onClick={(e) => {
-              toggleDialog(e);
-            }}
+            onClick={toggleDialog}
             className={classes.footerBtns}
+            onKeyPress={(e) => {
+              e.preventDefault();
+              e.stopPropagation();
+              if (e.key === 'Enter') {
+                toggleDialog(e);
+              }
+            }}
           >
             {t('Cancel')}
           </Button>
           <Button
             variant="contained"
             color="primary"
-            onClick={(e) => {
-              toggleDialog(e);
-              toggleManageTeamDrawer(e);
-              setSnackbar(!snackbar);
-            }}
+            onClick={submitDialog}
             className={classes.footerBtns}
+            onKeyPress={(e) => {
+              e.preventDefault();
+              e.stopPropagation();
+              if (e.key === 'Enter') {
+                submitDialog(e);
+              }
+            }}
           >
             {t('Continue')}
           </Button>
         </DialogActions>
       </Dialog>
-      <SnackbarAssigneeChange open={snackbar} handleClose={SnackbarClose} />
     </React.Fragment>
   );
 }
@@ -2800,7 +2819,10 @@ export function DialogNoLead(props) {
 export function DialogAssignAsLead(props) {
   const classes = useStyles();
   const {t} = useTranslation();
-  const {toggleDialog, open, handleAssignMeAs} = props;
+  const {toggleDialog, open, handleAssignMeAs, origin} = props;
+  const [snackbar, setSnackbar] = React.useState({
+    snackbarAssignLead: false,
+  });
   const initial = {
     // blank object used to reset state
     phone: {
@@ -2820,6 +2842,14 @@ export function DialogAssignAsLead(props) {
   });
 
   const phoneExp = /^[+][1]\s\([0-9]{3}\)\s[0-9]{3}\s[0-9]{4}/;
+
+  const handleSnackbarOpen = (state) => {
+    setSnackbar({...snackbar, [state]: true});
+  };
+
+  const handleSnackbarClose = (state) => {
+    setSnackbar({...snackbar, [state]: false});
+  };
 
   const handleChange = (e, val) => {
     const comment = e.target.value.trim();
@@ -2869,9 +2899,12 @@ export function DialogAssignAsLead(props) {
     const err = validateForm();
     if (!err) {
       // if no errors exist, submit the form and reset the inputs
-      toggleDialog();
+      toggleDialog(e);
       setState({...initial});
-      handleAssignMeAs(state.phone.text, 'lead');
+      handleSnackbarOpen('snackbarAssignLead');
+      if (origin === 'manageTeamDrawer') {
+        handleAssignMeAs(state.phone.text, 'lead');
+      }
     } else {
       for (const property in state) {
         // focus on the first input that has an error on submit
@@ -2956,6 +2989,10 @@ export function DialogAssignAsLead(props) {
     }
   };
 
+  const handleClick = (e) => {
+    e.stopPropagation();
+  };
+
   return (
     <React.Fragment>
       <Dialog
@@ -2968,6 +3005,13 @@ export function DialogAssignAsLead(props) {
         className={classes.root}
         disableBackdropClick
         scroll="paper"
+        onClick={handleClick}
+        onKeyPress={(e) => {
+          if (e.key === 'Enter') {
+            e.preventDefault();
+            e.stopPropagation();
+          }
+        }}
       >
         <DialogTitle id="dashboard-dialog-title">
           <div className={classes.vettingContainerTitle}>
@@ -2977,6 +3021,13 @@ export function DialogAssignAsLead(props) {
               onClick={toggleDialog}
               edge="end"
               aria-label="Assign me as lead - close"
+              onKeyPress={(e) => {
+                e.preventDefault();
+                e.stopPropagation();
+                if (e.key === 'Enter') {
+                  toggleDialog(e);
+                }
+              }}
             >
               <CloseIcon />
             </IconButton>
@@ -3032,11 +3083,18 @@ export function DialogAssignAsLead(props) {
           <Button
             variant="outlined"
             color="primary"
-            onClick={() => {
+            onClick={(e) => {
               setState({...initial});
-              toggleDialog();
+              toggleDialog(e);
             }}
             className={classes.footerBtns}
+            onKeyPress={(e) => {
+              e.preventDefault();
+              e.stopPropagation();
+              if (e.key === 'Enter') {
+                toggleDialog(e);
+              }
+            }}
           >
             {t('Cancel')}
           </Button>
@@ -3046,11 +3104,22 @@ export function DialogAssignAsLead(props) {
             color="primary"
             className={classes.footerBtns}
             form="assign-form"
+            onKeyPress={(e) => {
+              e.preventDefault();
+              e.stopPropagation();
+              if (e.key === 'Enter') {
+                submitForm(e);
+              }
+            }}
           >
             {t('Assign')}
           </Button>
         </DialogActions>
       </Dialog>
+      <SnackbarAssignLead
+        open={snackbar.snackbarAssignLead}
+        handleClose={() => handleSnackbarClose('snackbarAssignLead')}
+      />
     </React.Fragment>
   );
 }
@@ -3059,7 +3128,10 @@ export function DialogAssignAsLead(props) {
 export function DialogAssignAsSupport(props) {
   const classes = useStyles();
   const {t} = useTranslation();
-  const {toggleDialog, open, handleAssignMeAs} = props;
+  const {toggleDialog, open, handleAssignMeAs, origin} = props;
+  const [snackbar, setSnackbar] = React.useState({
+    snackbarAssignSupport: false,
+  });
   const initial = {
     // blank object used to reset state
     phone: {
@@ -3079,6 +3151,14 @@ export function DialogAssignAsSupport(props) {
   });
 
   const phoneExp = /^[+][1]\s\([0-9]{3}\)\s[0-9]{3}\s[0-9]{4}/;
+
+  const handleSnackbarOpen = (state) => {
+    setSnackbar({...snackbar, [state]: true});
+  };
+
+  const handleSnackbarClose = (state) => {
+    setSnackbar({...snackbar, [state]: false});
+  };
 
   const handleChange = (e, val) => {
     const comment = e.target.value.trim();
@@ -3128,9 +3208,12 @@ export function DialogAssignAsSupport(props) {
     const err = validateForm();
     if (!err) {
       // if no errors exist, submit the form and reset the inputs
-      toggleDialog();
+      toggleDialog(e);
       setState({...initial});
-      handleAssignMeAs(state.phone.text, 'support');
+      handleSnackbarOpen('snackbarAssignSupport');
+      if (origin === 'manageTeamDrawer') {
+        handleAssignMeAs(state.phone.text, 'support');
+      }
     } else {
       for (const property in state) {
         // focus on the first input that has an error on submit
@@ -3215,6 +3298,10 @@ export function DialogAssignAsSupport(props) {
     }
   };
 
+  const handleClick = (e) => {
+    e.stopPropagation();
+  };
+
   return (
     <React.Fragment>
       <Dialog
@@ -3227,6 +3314,13 @@ export function DialogAssignAsSupport(props) {
         className={classes.root}
         disableBackdropClick
         scroll="paper"
+        onClick={handleClick}
+        onKeyPress={(e) => {
+          if (e.key === 'Enter') {
+            e.preventDefault();
+            e.stopPropagation();
+          }
+        }}
       >
         <DialogTitle id="dashboard-dialog-title">
           <div className={classes.vettingContainerTitle}>
@@ -3236,6 +3330,13 @@ export function DialogAssignAsSupport(props) {
               onClick={toggleDialog}
               edge="end"
               aria-label="Assign me as support - close"
+              onKeyPress={(e) => {
+                e.preventDefault();
+                e.stopPropagation();
+                if (e.key === 'Enter') {
+                  toggleDialog(e);
+                }
+              }}
             >
               <CloseIcon />
             </IconButton>
@@ -3291,11 +3392,18 @@ export function DialogAssignAsSupport(props) {
           <Button
             variant="outlined"
             color="primary"
-            onClick={() => {
+            onClick={(e) => {
               setState({...initial});
-              toggleDialog();
+              toggleDialog(e);
             }}
             className={classes.footerBtns}
+            onKeyPress={(e) => {
+              e.preventDefault();
+              e.stopPropagation();
+              if (e.key === 'Enter') {
+                toggleDialog(e);
+              }
+            }}
           >
             {t('Cancel')}
           </Button>
@@ -3305,11 +3413,22 @@ export function DialogAssignAsSupport(props) {
             color="primary"
             className={classes.footerBtns}
             form="assign-form"
+            onKeyPress={(e) => {
+              e.preventDefault();
+              e.stopPropagation();
+              if (e.key === 'Enter') {
+                submitForm(e);
+              }
+            }}
           >
             {t('Assign')}
           </Button>
         </DialogActions>
       </Dialog>
+      <SnackbarAssignSupport
+        open={snackbar.snackbarAssignSupport}
+        handleClose={() => handleSnackbarClose('snackbarAssignSupport')}
+      />
     </React.Fragment>
   );
 }
