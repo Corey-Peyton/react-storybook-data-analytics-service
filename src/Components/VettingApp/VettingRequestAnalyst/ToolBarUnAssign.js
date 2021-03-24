@@ -98,23 +98,12 @@ function ToolBarUnassign(props) {
   const [open, setOpen] = React.useState({
   });
 
-  const [state, setState] = React.useState({
-  });
-
   const handleClickOpen = (state) => {
     setOpen({...open, [state]: true});
   };
 
   const handleClickClose = (state) => {
     setOpen({...open, [state]: false});
-  };
-
-  const handleOpen = (element) => {
-    setState({...state, [element]: true});
-  };
-
-  const handleClose = (element) => {
-    setState({...state, [element]: false});
   };
 
   const handleClosed = () => {
@@ -135,7 +124,7 @@ function ToolBarUnassign(props) {
         Vetting requests dashboard
       </Typography>
       <Button
-        onClick={() => handleOpen('dialogUnAssign')}
+        onClick={() => handleClickOpen('dialogUnAssign')}
         className={classes.headerBtn}
         startIcon={
           <Icon path={mdiAccountPlus} className="icon-grey" size={1} />
@@ -144,11 +133,8 @@ function ToolBarUnassign(props) {
         Unassign from me
       </Button>
       <DialogUnassign
-        toggleDialog={() => handleClose('dialogUnAssign')}
-        open={state.dialogUnAssign}
-        onClick={() => {
-          props.handleUnassignFromMe();
-        }}
+        toggleDialog={() => handleClickClose('dialogUnAssign')}
+        open={open.dialogUnAssign}
       />
       <Button
         variant="outlined"
@@ -169,13 +155,13 @@ function ToolBarUnassign(props) {
         color="primary"
         className={classes.headerBtn}
         startIcon={<ReplayIcon />}
-        onClick={() => handleOpen('dialogUpdate')}
+        onClick={() => handleClickOpen('dialogUpdate')}
       >
         Request changes
       </Button>
       <DialogUpdate
-        toggleDialog={() => handleClose('dialogUpdate')}
-        open={state.dialogUpdate}
+        toggleDialog={() => handleClickClose('dialogUpdate')}
+        open={open.dialogUpdate}
       />
       {/* Request an update snackbar */}
       <SnackbarChangeRequest
@@ -200,16 +186,16 @@ function ToolBarUnassign(props) {
         open={Boolean(anchorEl)}
         onClose={handleClosed}
       >
-        <MenuItem onClick={() => handleOpen('dialogApprove')}>Approve</MenuItem>
-        <MenuItem onClick={() => handleOpen('dialogDenied')}>Deny</MenuItem>
+        <MenuItem onClick={() => handleClickOpen('dialogApprove')}>Approve</MenuItem>
+        <MenuItem onClick={() => handleClickOpen('dialogDenied')}>Deny</MenuItem>
       </Menu>
       <DialogApprove
-        toggleDialog={() => handleClose('dialogApprove')}
-        open={state.dialogApprove}
+        toggleDialog={() => handleClickClose('dialogApprove')}
+        open={open.dialogApprove}
       />
       <DialogDenied
-        toggleDialog={() => handleClose('dialogDenied')}
-        open={state.dialogDenied}
+        toggleDialog={() => handleClickClose('dialogDenied')}
+        open={open.dialogDenied}
       />
       <SnackbarApproveRequest
         open={open.snackBarApprove}
