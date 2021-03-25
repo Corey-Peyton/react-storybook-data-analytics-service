@@ -22,15 +22,15 @@ const useStyles = makeStyles((theme) => ({
     '& .MuiDialogTitle-root': {
       padding: theme.spacing(1.5, 3),
     },
-    'position': 'relative',
+    // 'position': 'relative',
   },
   fab: {
-    position: 'absolute',
-    bottom: theme.spacing(2),
-    right: theme.spacing(2),
+    position: 'fixed',
+    bottom: theme.spacing(3),
+    right: theme.spacing(3),
   },
   extendedIcon: {
-    margin: theme.spacing(1),
+    marginRight: theme.spacing(1),
   },
   vettingContainerTitle: {
     display: 'flex',
@@ -170,7 +170,6 @@ export default function FloatingSupportButton() {
         color="primary"
         variant="extended"
         aria-label="support"
-        size="medium"
         onClick={handleClickOpen}
         className={classes.fab}
       >
