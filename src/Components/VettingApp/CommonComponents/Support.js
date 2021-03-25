@@ -22,12 +22,12 @@ const useStyles = makeStyles((theme) => ({
     '& .MuiDialogTitle-root': {
       padding: theme.spacing(1.5, 3),
     },
+    'position': 'relative',
   },
   fab: {
-    margin: theme.spacing(1),
-    position: 'fixed',
-    left: '88%',
-    top: '50%',
+    position: 'absolute',
+    bottom: theme.spacing(2),
+    right: theme.spacing(2),
   },
   extendedIcon: {
     margin: theme.spacing(1),
@@ -232,7 +232,7 @@ export default function FloatingSupportButton() {
           </div>
         </DialogContent>
         <Divider />
-        <DialogActions className={classes.dialogFooter}>
+        <DialogActions>
           <Button onClick={handleClose} color="primary" variant="outlined">
             Cancel
           </Button>
@@ -240,7 +240,6 @@ export default function FloatingSupportButton() {
             onClick={handleClose}
             color="primary"
             variant="contained"
-            className={classes.footerBtns}
           >
             Submit
           </Button>
