@@ -19,8 +19,8 @@ import ResearcherInfo from '../CommonComponents/RequestForm/ResearcherInfo';
 import FilesList from '../CommonComponents/RequestForm/FilesList';
 import ResidualDisclosure from '../CommonComponents/RequestForm/ResidualDisclosure';
 import AdditionalInfo from '../CommonComponents/RequestForm/Additionalnfo';
-import ToolBarUnassign from './ToolBarUnAssign';
-import ToolBarAssign from './ToolBarAssign';
+import RequestToolbar from '../CommonComponents/RequestToolbar';
+// import ToolBarAssign from './ToolBarAssign';
 import AppBarAssign from './AppBarAssign';
 import Header from '../CommonComponents/Header';
 import Footer from '../CommonComponents/Footer';
@@ -231,16 +231,6 @@ function VettingRequestAnalyst(props) {
     return state.errors[step] !== 0;
   };
 
-  const handleAssignToMe = () => {
-    setState({...state, lead: state.userName});
-    setOpenSnackbar({...openSnackbar, snackBarAssign: true});
-  };
-
-  const handleUnassignFromMe = () => {
-    setState({...state, lead: ''});
-    setOpenSnackbar({...openSnackbar, snackBarUnassign: true});
-  };
-
   return (
     <>
       <Header />
@@ -252,11 +242,18 @@ function VettingRequestAnalyst(props) {
             toggleManageTeamDrawer={toggleManageTeamDrawer}
           />
           <AppBar position="static" className={classes.appBar} color="default">
-            {state.lead === state.userName ? (
-              <ToolBarUnassign handleUnassignFromMe={handleUnassignFromMe} />
-            ) : (
-              <ToolBarAssign handleAssignToMe={handleAssignToMe} />
-            )}
+            {/* {state.lead === state.userName ? ( */}
+            <RequestToolbar
+              role="analyst"
+              status="submitted"
+              assignees={{
+                lead: 'Tony Stark',
+                support: ['Bruce Banner'],
+              }}
+            />
+            {/* ) : ( */}
+            {/* <ToolBarAssign handleAssignToMe={handleAssignToMe} /> */}
+            {/* )} */}
             <SnackbarUnassign
               open={openSnackbar.snackBarUnassign}
               handleClose={() => snackbarHandleClose('snackBarUnassign')}

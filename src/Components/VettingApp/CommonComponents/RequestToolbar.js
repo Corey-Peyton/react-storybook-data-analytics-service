@@ -14,14 +14,14 @@ import {
   SnackbarChangeRequest,
   SnackbarDenyRequest,
   SnackbarSaveRequest,
-} from '../CommonComponents/Snackbars';
+} from './Snackbars';
 import {
   DialogDenied,
   DialogUpdate,
   DialogApprove,
   DialogUnassign,
-} from '../CommonComponents/DialogBox';
-import {ActionsMenu} from '../CommonComponents/RequestContextMenu';
+} from './DialogBox';
+import {ActionsMenu} from './RequestContextMenu';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -83,7 +83,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-function ToolBarUnassign(props) {
+function RequestToolbar(props) {
   const classes = useStyles();
   const [anchorEl, setAnchorEl] = React.useState(null);
 
@@ -217,15 +217,12 @@ function ToolBarUnassign(props) {
         // contextSummaryClick={contextSummaryClick}
         // contextStatusClick={contextStatusClick}
         // toggleManageTeamDrawer={toggleManageTeamDrawer}
-        status={'draft'}
-        role={'analyst'}
-        request={{
-          lead: '',
-          support: ['Tony Stark'],
-        }}
+        status={props.status}
+        role={props.role}
+        request={props.assignees}
       />
     </Toolbar>
   );
 }
 
-export default ToolBarUnassign;
+export default RequestToolbar;
