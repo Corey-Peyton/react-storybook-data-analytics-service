@@ -6,6 +6,9 @@ import ExitToAppIcon from '@material-ui/icons/ExitToApp';
 import SaveIcon from '@material-ui/icons/Save';
 import SendIcon from '@material-ui/icons/Send';
 import ArrowBackIcon from '@material-ui/icons/ArrowBack';
+import {
+  SnackbarDeleteRequest,
+} from '../CommonComponents/Snackbars';
 
 const useStyles = makeStyles((theme) => ({
   main: {
@@ -22,6 +25,18 @@ const useStyles = makeStyles((theme) => ({
 
 function ToolBarDelete(props) {
   const classes = useStyles();
+  const [open, setOpen] = React.useState({
+    snackbarDelete: false,
+  });
+
+  const handleSnackbarOpen = (state) => {
+    setOpen({...open, [state]: true});
+  };
+
+  const handleSnackbarClose = (state) => {
+    setOpen({...open, [state]: false});
+  };
+
   return (
     <Toolbar>
       <IconButton
@@ -62,10 +77,17 @@ function ToolBarDelete(props) {
         color="default"
         className={classes.headerBtn}
         startIcon={<DeleteIcon />}
-        onClick={props.handleDialogOpen}
+        onClick={(e) => {
+          e.stopPropagation();
+          handleSnackbarOpen('snackbarDelete');
+        }}
       >
               Delete
       </Button>
+      <SnackbarDeleteRequest
+        open={open.snackbarDelete}
+        handleClose={() => handleSnackbarClose('snackbarDelete')}
+      />
     </Toolbar>
   );
 }

@@ -17,13 +17,8 @@ import {
   TextField,
   IconButton,
   Tooltip,
-  DialogTitle,
-  Dialog,
-  DialogActions,
 } from '@material-ui/core';
-import Alert from '@material-ui/lab/Alert';
 import DeleteIcon from '@material-ui/icons/Delete';
-import CloseIcon from '@material-ui/icons/Close';
 import InfoIcon from '@material-ui/icons/Info';
 import {
   SnackbarAddSupportFile,
@@ -301,10 +296,6 @@ function ResidualDisclosure(props) {
 
   const handleAddFile = () => {
     setState({...state, addFile: true, snackbarAddFile: true});
-  };
-
-  const handleDeleteFile = () => {
-    setState({...state, dialogDeleteFile: false, snackbarDelete: true});
   };
 
   const handleClickOpen = (element) => {
@@ -641,7 +632,7 @@ function ResidualDisclosure(props) {
                         aria-label="delete file 3"
                         className={classes.margin}
                         edge="end"
-                        onClick={() => handleClickOpen('dialogDeleteFile')}
+                        onClick={() => handleClickOpen('snackbarDelete')}
                       >
                         <DeleteIcon />
                       </IconButton>
@@ -1058,7 +1049,7 @@ function ResidualDisclosure(props) {
                         aria-label="delete file 3"
                         className={classes.margin}
                         edge="end"
-                        onClick={() => handleClickOpen('dialogDeleteFile')}
+                        onClick={() => handleClickOpen('snackbarDelete')}
                       >
                         <DeleteIcon />
                       </IconButton>
@@ -1139,58 +1130,6 @@ function ResidualDisclosure(props) {
         open={state.snackbarDelete}
         handleClose={() => handleClickClose('snackbarDelete')}
       />
-      {/* Delete file dialog */}
-      <Dialog
-        open={state.dialogDeleteFile}
-        aria-labelledby="delete-dialog-title"
-        fullWidth
-        className={classes.root}
-        scroll="paper"
-      >
-        <DialogTitle
-          id="delete-dialog-title"
-          className={classes.vettingContainerTitle}
-          disableTypography
-        >
-          <Typography variant="h6" component="h2">
-            Delete this file?
-          </Typography>
-          <IconButton
-            onClick={() => handleClickClose('dialogDeleteFile')}
-            edge="end"
-            aria-label="Close delete output file"
-          >
-            <CloseIcon />
-          </IconButton>
-        </DialogTitle>
-        <Divider />
-        <div className={classes.vettingSection}>
-          <div className={classes.vettingRow}>
-            <div className={classes.vettingColumn}>
-              <Alert severity="warning">
-                Deleting this file cannot be undone.
-              </Alert>
-            </div>
-          </div>
-        </div>
-        <DialogActions className={classes.dialogFooter}>
-          <Button
-            color="primary"
-            variant="outlined"
-            onClick={() => handleClickClose('dialogDeleteFile')}
-          >
-            Cancel
-          </Button>
-          <Button
-            color="primary"
-            variant="contained"
-            onClick={handleDeleteFile}
-            className={classes.footerBtns}
-          >
-            Delete
-          </Button>
-        </DialogActions>
-      </Dialog>
     </React.Fragment>
   );
 }
