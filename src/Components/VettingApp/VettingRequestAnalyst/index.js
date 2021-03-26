@@ -250,6 +250,7 @@ function VettingRequestAnalyst(props) {
                 lead: 'Tony Stark',
                 support: ['Bruce Banner'],
               }}
+              toggleManageTeamDrawer={toggleManageTeamDrawer}
             />
             {/* ) : ( */}
             {/* <ToolBarAssign handleAssignToMe={handleAssignToMe} /> */}

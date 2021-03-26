@@ -8,7 +8,11 @@ import MenuItem from '@material-ui/core/MenuItem';
 import ListItemText from '@material-ui/core/ListItemText';
 import MoreVertIcon from '@material-ui/icons/MoreVert';
 
-import {SnackbarAssignSupport, SnackbarDeleteRequest} from './Snackbars';
+import {
+  SnackbarAssignSupport,
+  SnackbarDeleteRequest,
+  SnackbarUnassign,
+} from './Snackbars';
 import {
   DialogUnassign,
   // DialogSupport,
@@ -76,6 +80,8 @@ export function ActionsMenu(props) {
     role: '',
     dialogNoLeadAssignSupport: false,
     dialogAssignAsSupport: false,
+    dialogNoLeadUnassign: false,
+    snackbarUnassign: false,
   });
 
   const ariaControls = `actions-menu-${controls}`;
@@ -102,8 +108,9 @@ export function ActionsMenu(props) {
   const toggleSummary = (e) => {
     e.stopPropagation();
     handleClose(e);
-    contextSummaryClick();
+    setOpen({...open, summaryDrawer: !open.summaryDrawer});
   };
+
   const contextManageTeam = (e) => {
     e.stopPropagation();
     handleClose(e);
@@ -121,6 +128,14 @@ export function ActionsMenu(props) {
       ...open,
       dialogNoLeadAssignSupport: !open.dialogNoLeadAssignSupport,
       snackbarAssignSupport: true,
+    });
+  };
+
+  const unassignLead = (e) => {
+    setOpen({
+      ...open,
+      dialogNoLeadUnassign: !open.dialogNoLeadUnassign,
+      snackbarUnassign: true,
     });
   };
 
@@ -163,6 +178,7 @@ export function ActionsMenu(props) {
       <MenuItem
         onClick={(e) => {
           e.stopPropagation();
+          handleClose(e);
           handleSnackbarOpen('snackbarDelete');
         }}
       >
@@ -246,14 +262,28 @@ export function ActionsMenu(props) {
   const unassignMenuItem = () => {
     const supports = request.support.includes(currentUser);
 
-    if (currentUser === request.lead || supports) {
+    if (currentUser === request.lead) {
       return (
         <MenuItem
           onClick={(e) => {
             e.stopPropagation();
-            toggleDialog('dialogUnassign', !open.dialogUnassign, e);
+            toggleDialog('dialogNoLeadUnassign', !open.dialogNoLeadUnassign, e);
           }}
-          open={open.dialogUnassign}
+        >
+          <ListItemText
+            primary={
+              <Typography variant="body2">{t('Unassign myself')}</Typography>
+            }
+          />
+        </MenuItem>
+      );
+    } else if (supports) {
+      return (
+        <MenuItem
+          onClick={(e) => {
+            handleClose(e);
+            handleSnackbarOpen('snackbarUnassign');
+          }}
         >
           <ListItemText
             primary={
@@ -370,6 +400,10 @@ export function ActionsMenu(props) {
         open={open.snackbarAssignSupport}
         handleClose={() => handleSnackbarClose('snackbarAssignSupport')}
       />
+      <SnackbarUnassign
+        open={open.snackbarUnassign}
+        handleClose={() => handleSnackbarClose('snackbarUnassign')}
+      />
       <DialogUnassign
         toggleDialog={(e) =>
           toggleDialog('dialogUnassign', !open.dialogUnassign, e)
@@ -399,6 +433,13 @@ export function ActionsMenu(props) {
         open={open.dialogNoLeadAssignSupport}
         submitDialog={(e) => assignAsSupport(e)}
       />
+      <DialogNoLead
+        toggleDialog={(e) =>
+          toggleDialog('dialogNoLeadUnassign', !open.dialogNoLeadUnassign, e)
+        }
+        open={open.dialogNoLeadUnassign}
+        submitDialog={(e) => unassignLead(e)}
+      />
       <DialogAssign
         toggleDialog={(e) =>
           toggleDialog('dialogAssign', !open.dialogAssign, e)
@@ -407,19 +448,18 @@ export function ActionsMenu(props) {
       />
       <DialogInfo
         toggleDialog={(e) =>
-          toggleDialog('dialogInfoAssignee', !open.dialogInfo, e)
+          toggleDialog('dialogInfoAssignee', !open.dialogInfoAssignee, e)
         }
         open={open.dialogInfoAssignee}
         header={'Assignee details'}
       />
       <DialogInfo
         toggleDialog={(e) =>
-          toggleDialog('dialogInfoRequester', !open.dialogInfo, e)
+          toggleDialog('dialogInfoRequester', !open.dialogInfoRequester, e)
         }
         open={open.dialogInfoRequester}
         header={'Requester details'}
       />
-
       {/* Summary drawer */}
       <SummaryDrawer
         open={open.summaryDrawer}

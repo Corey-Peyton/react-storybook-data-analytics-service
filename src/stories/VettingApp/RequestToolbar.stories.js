@@ -1,6 +1,7 @@
 import React from 'react';
 
 import RequestToolbar from '../../Components/VettingApp/CommonComponents/RequestToolbar';
+import ManageTeamDrawer from '../../Components/VettingApp/CommonComponents/ManageTeamDrawer';
 
 export default {
   title: 'Organisms/Vetting/RequestToolbar',
@@ -8,236 +9,508 @@ export default {
 };
 
 export const AnalystUnassignedDraft = (args) => {
+  const [open, setOpen] = React.useState({
+    manageTeamDrawer: false,
+  });
+
+  const toggleManageTeamDrawer = () => {
+    setOpen({...open, manageTeamDrawer: !open.manageTeamDrawer});
+  };
+
   return (
-    <RequestToolbar
-      role="analyst"
-      status="draft"
-      assignees={{
-        lead: '',
-        support: [],
-      }}
-    />
+    <>
+      <RequestToolbar
+        role="analyst"
+        status="draft"
+        assignees={{
+          lead: '',
+          support: [],
+        }}
+        toggleManageTeamDrawer={toggleManageTeamDrawer}
+      />
+      <ManageTeamDrawer
+        open={open.manageTeamDrawer}
+        clickHandler={toggleManageTeamDrawer}
+        toggleManageTeamDrawer={toggleManageTeamDrawer}
+      />
+    </>
   );
 };
 
 export const AnalystLeadDraft = (args) => {
+  const [open, setOpen] = React.useState({
+    manageTeamDrawer: false,
+  });
+
+  const toggleManageTeamDrawer = () => {
+    setOpen({...open, manageTeamDrawer: !open.manageTeamDrawer});
+  };
   return (
-    <RequestToolbar
-      role="analyst"
-      status="draft"
-      assignees={{
-        lead: 'Tony Stark',
-        support: [],
-      }}
-    />
+    <>
+      <RequestToolbar
+        role="analyst"
+        status="draft"
+        assignees={{
+          lead: 'Tony Stark',
+          support: [],
+        }}
+        toggleManageTeamDrawer={toggleManageTeamDrawer}
+      />
+      <ManageTeamDrawer
+        open={open.manageTeamDrawer}
+        clickHandler={toggleManageTeamDrawer}
+        toggleManageTeamDrawer={toggleManageTeamDrawer}
+      />
+    </>
   );
 };
 
 export const AnalystSupportDraft = (args) => {
+  const [open, setOpen] = React.useState({
+    manageTeamDrawer: false,
+  });
+
+  const toggleManageTeamDrawer = () => {
+    setOpen({...open, manageTeamDrawer: !open.manageTeamDrawer});
+  };
   return (
-    <RequestToolbar
-      role="analyst"
-      status="draft"
-      assignees={{
-        lead: '',
-        support: ['Tony Stark'],
-      }}
-    />
+    <>
+      <RequestToolbar
+        role="analyst"
+        status="draft"
+        assignees={{
+          lead: '',
+          support: ['Tony Stark'],
+        }}
+        toggleManageTeamDrawer={toggleManageTeamDrawer}
+      />
+      <ManageTeamDrawer
+        open={open.manageTeamDrawer}
+        clickHandler={toggleManageTeamDrawer}
+        toggleManageTeamDrawer={toggleManageTeamDrawer}
+      />
+    </>
   );
 };
 
 export const AnalystUnassignedSubmitted = (args) => {
+  const [open, setOpen] = React.useState({
+    manageTeamDrawer: false,
+  });
+
+  const toggleManageTeamDrawer = () => {
+    setOpen({...open, manageTeamDrawer: !open.manageTeamDrawer});
+  };
   return (
-    <RequestToolbar
-      role="analyst"
-      status="submitted"
-      assignees={{
-        lead: '',
-        support: [],
-      }}
-    />
+    <>
+      <RequestToolbar
+        role="analyst"
+        status="submitted"
+        assignees={{
+          lead: '',
+          support: [],
+        }}
+        toggleManageTeamDrawer={toggleManageTeamDrawer}
+      />
+
+      <ManageTeamDrawer
+        open={open.manageTeamDrawer}
+        clickHandler={toggleManageTeamDrawer}
+        toggleManageTeamDrawer={toggleManageTeamDrawer}
+      />
+    </>
   );
 };
 
 export const AnalystLeadSubmitted = (args) => {
+  const [open, setOpen] = React.useState({
+    manageTeamDrawer: false,
+  });
+
+  const toggleManageTeamDrawer = () => {
+    setOpen({...open, manageTeamDrawer: !open.manageTeamDrawer});
+  };
   return (
-    <RequestToolbar
-      role="analyst"
-      status="submitted"
-      assignees={{
-        lead: 'Tony Stark',
-        support: [],
-      }}
-    />
+    <>
+      <RequestToolbar
+        role="analyst"
+        status="submitted"
+        assignees={{
+          lead: 'Tony Stark',
+          support: [],
+        }}
+        toggleManageTeamDrawer={toggleManageTeamDrawer}
+      />
+      <ManageTeamDrawer
+        open={open.manageTeamDrawer}
+        clickHandler={toggleManageTeamDrawer}
+        toggleManageTeamDrawer={toggleManageTeamDrawer}
+      />
+    </>
   );
 };
 
 export const AnalystSupportSubmitted = (args) => {
+  const [open, setOpen] = React.useState({
+    manageTeamDrawer: false,
+  });
+
+  const toggleManageTeamDrawer = () => {
+    setOpen({...open, manageTeamDrawer: !open.manageTeamDrawer});
+  };
   return (
-    <RequestToolbar
-      role="analyst"
-      status="submitted"
-      assignees={{
-        lead: '',
-        support: ['Tony Stark'],
-      }}
-    />
+    <>
+      <RequestToolbar
+        role="analyst"
+        status="submitted"
+        assignees={{
+          lead: '',
+          support: ['Tony Stark'],
+        }}
+        toggleManageTeamDrawer={toggleManageTeamDrawer}
+      />
+      <ManageTeamDrawer
+        open={open.manageTeamDrawer}
+        clickHandler={toggleManageTeamDrawer}
+        toggleManageTeamDrawer={toggleManageTeamDrawer}
+      />
+    </>
   );
 };
 
 export const AnalystUnassignedUnderReview = (args) => {
+  const [open, setOpen] = React.useState({
+    manageTeamDrawer: false,
+  });
+
+  const toggleManageTeamDrawer = () => {
+    setOpen({...open, manageTeamDrawer: !open.manageTeamDrawer});
+  };
   return (
-    <RequestToolbar
-      role="analyst"
-      status="under review"
-      assignees={{
-        lead: '',
-        support: [],
-      }}
-    />
+    <>
+      <RequestToolbar
+        role="analyst"
+        status="under review"
+        assignees={{
+          lead: '',
+          support: [],
+        }}
+        toggleManageTeamDrawer={toggleManageTeamDrawer}
+      />
+      <ManageTeamDrawer
+        open={open.manageTeamDrawer}
+        clickHandler={toggleManageTeamDrawer}
+        toggleManageTeamDrawer={toggleManageTeamDrawer}
+      />
+    </>
   );
 };
 
 export const AnalystLeadUnderReview = (args) => {
+  const [open, setOpen] = React.useState({
+    manageTeamDrawer: false,
+  });
+
+  const toggleManageTeamDrawer = () => {
+    setOpen({...open, manageTeamDrawer: !open.manageTeamDrawer});
+  };
   return (
-    <RequestToolbar
-      role="analyst"
-      status="under review"
-      assignees={{
-        lead: 'Tony Stark',
-        support: [],
-      }}
-    />
+    <>
+      <RequestToolbar
+        role="analyst"
+        status="under review"
+        assignees={{
+          lead: 'Tony Stark',
+          support: [],
+        }}
+        toggleManageTeamDrawer={toggleManageTeamDrawer}
+      />
+      <ManageTeamDrawer
+        open={open.manageTeamDrawer}
+        clickHandler={toggleManageTeamDrawer}
+        toggleManageTeamDrawer={toggleManageTeamDrawer}
+      />
+    </>
   );
 };
 
 export const AnalystSupportUnderReview = (args) => {
+  const [open, setOpen] = React.useState({
+    manageTeamDrawer: false,
+  });
+
+  const toggleManageTeamDrawer = () => {
+    setOpen({...open, manageTeamDrawer: !open.manageTeamDrawer});
+  };
   return (
-    <RequestToolbar
-      role="analyst"
-      status="under review"
-      assignees={{
-        lead: '',
-        support: ['Tony Stark'],
-      }}
-    />
+    <>
+      <RequestToolbar
+        role="analyst"
+        status="under review"
+        assignees={{
+          lead: '',
+          support: ['Tony Stark'],
+        }}
+        toggleManageTeamDrawer={toggleManageTeamDrawer}
+      />
+      <ManageTeamDrawer
+        open={open.manageTeamDrawer}
+        clickHandler={toggleManageTeamDrawer}
+        toggleManageTeamDrawer={toggleManageTeamDrawer}
+      />
+    </>
   );
 };
 
 export const AnalystUnassignedChangesRequested = (args) => {
+  const [open, setOpen] = React.useState({
+    manageTeamDrawer: false,
+  });
+
+  const toggleManageTeamDrawer = () => {
+    setOpen({...open, manageTeamDrawer: !open.manageTeamDrawer});
+  };
   return (
-    <RequestToolbar
-      role="analyst"
-      status="changes requested"
-      assignees={{
-        lead: '',
-        support: [],
-      }}
-    />
+    <>
+      <RequestToolbar
+        role="analyst"
+        status="changes requested"
+        assignees={{
+          lead: '',
+          support: [],
+        }}
+        toggleManageTeamDrawer={toggleManageTeamDrawer}
+      />
+      <ManageTeamDrawer
+        open={open.manageTeamDrawer}
+        clickHandler={toggleManageTeamDrawer}
+        toggleManageTeamDrawer={toggleManageTeamDrawer}
+      />
+    </>
   );
 };
 
 export const AnalystLeadChangesRequested = (args) => {
+  const [open, setOpen] = React.useState({
+    manageTeamDrawer: false,
+  });
+
+  const toggleManageTeamDrawer = () => {
+    setOpen({...open, manageTeamDrawer: !open.manageTeamDrawer});
+  };
   return (
-    <RequestToolbar
-      role="analyst"
-      status="changes requested"
-      assignees={{
-        lead: 'Tony Stark',
-        support: [],
-      }}
-    />
+    <>
+      <RequestToolbar
+        role="analyst"
+        status="changes requested"
+        assignees={{
+          lead: 'Tony Stark',
+          support: [],
+        }}
+        toggleManageTeamDrawer={toggleManageTeamDrawer}
+      />
+      <ManageTeamDrawer
+        open={open.manageTeamDrawer}
+        clickHandler={toggleManageTeamDrawer}
+        toggleManageTeamDrawer={toggleManageTeamDrawer}
+      />
+    </>
   );
 };
 
 export const AnalystSupportChangesRequested = (args) => {
+  const [open, setOpen] = React.useState({
+    manageTeamDrawer: false,
+  });
+
+  const toggleManageTeamDrawer = () => {
+    setOpen({...open, manageTeamDrawer: !open.manageTeamDrawer});
+  };
   return (
-    <RequestToolbar
-      role="analyst"
-      status="changes requested"
-      assignees={{
-        lead: '',
-        support: ['Tony Stark'],
-      }}
-    />
+    <>
+      <RequestToolbar
+        role="analyst"
+        status="changes requested"
+        assignees={{
+          lead: '',
+          support: ['Tony Stark'],
+        }}
+        toggleManageTeamDrawer={toggleManageTeamDrawer}
+      />
+      <ManageTeamDrawer
+        open={open.manageTeamDrawer}
+        clickHandler={toggleManageTeamDrawer}
+        toggleManageTeamDrawer={toggleManageTeamDrawer}
+      />
+    </>
   );
 };
 
 export const AnalystUnassignedApproved = (args) => {
+  const [open, setOpen] = React.useState({
+    manageTeamDrawer: false,
+  });
+
+  const toggleManageTeamDrawer = () => {
+    setOpen({...open, manageTeamDrawer: !open.manageTeamDrawer});
+  };
   return (
-    <RequestToolbar
-      role="analyst"
-      status="approved"
-      assignees={{
-        lead: '',
-        support: [],
-      }}
-    />
+    <>
+      <RequestToolbar
+        role="analyst"
+        status="approved"
+        assignees={{
+          lead: '',
+          support: [],
+        }}
+        toggleManageTeamDrawer={toggleManageTeamDrawer}
+      />
+      <ManageTeamDrawer
+        open={open.manageTeamDrawer}
+        clickHandler={toggleManageTeamDrawer}
+        toggleManageTeamDrawer={toggleManageTeamDrawer}
+      />
+    </>
   );
 };
 
 export const AnalystLeadApproved = (args) => {
+  const [open, setOpen] = React.useState({
+    manageTeamDrawer: false,
+  });
+
+  const toggleManageTeamDrawer = () => {
+    setOpen({...open, manageTeamDrawer: !open.manageTeamDrawer});
+  };
   return (
-    <RequestToolbar
-      role="analyst"
-      status="approved"
-      assignees={{
-        lead: 'Tony Stark',
-        support: [],
-      }}
-    />
+    <>
+      <RequestToolbar
+        role="analyst"
+        status="approved"
+        assignees={{
+          lead: 'Tony Stark',
+          support: [],
+        }}
+        toggleManageTeamDrawer={toggleManageTeamDrawer}
+      />
+      <ManageTeamDrawer
+        open={open.manageTeamDrawer}
+        clickHandler={toggleManageTeamDrawer}
+        toggleManageTeamDrawer={toggleManageTeamDrawer}
+      />
+    </>
   );
 };
 
 export const AnalystSupportApproved = (args) => {
+  const [open, setOpen] = React.useState({
+    manageTeamDrawer: false,
+  });
+
+  const toggleManageTeamDrawer = () => {
+    setOpen({...open, manageTeamDrawer: !open.manageTeamDrawer});
+  };
   return (
-    <RequestToolbar
-      role="analyst"
-      status="approved"
-      assignees={{
-        lead: '',
-        support: ['Tony Stark'],
-      }}
-    />
+    <>
+      <RequestToolbar
+        role="analyst"
+        status="approved"
+        assignees={{
+          lead: '',
+          support: ['Tony Stark'],
+        }}
+        toggleManageTeamDrawer={toggleManageTeamDrawer}
+      />
+      <ManageTeamDrawer
+        open={open.manageTeamDrawer}
+        clickHandler={toggleManageTeamDrawer}
+        toggleManageTeamDrawer={toggleManageTeamDrawer}
+      />
+    </>
   );
 };
 
 export const AnalystUnassignedDenied = (args) => {
+  const [open, setOpen] = React.useState({
+    manageTeamDrawer: false,
+  });
+
+  const toggleManageTeamDrawer = () => {
+    setOpen({...open, manageTeamDrawer: !open.manageTeamDrawer});
+  };
   return (
-    <RequestToolbar
-      role="analyst"
-      status="denied"
-      assignees={{
-        lead: '',
-        support: [],
-      }}
-    />
+    <>
+      <RequestToolbar
+        role="analyst"
+        status="denied"
+        assignees={{
+          lead: '',
+          support: [],
+        }}
+        toggleManageTeamDrawer={toggleManageTeamDrawer}
+      />
+      <ManageTeamDrawer
+        open={open.manageTeamDrawer}
+        clickHandler={toggleManageTeamDrawer}
+        toggleManageTeamDrawer={toggleManageTeamDrawer}
+      />
+    </>
   );
 };
 
 export const AnalystLeadDenied = (args) => {
+  const [open, setOpen] = React.useState({
+    manageTeamDrawer: false,
+  });
+
+  const toggleManageTeamDrawer = () => {
+    setOpen({...open, manageTeamDrawer: !open.manageTeamDrawer});
+  };
   return (
-    <RequestToolbar
-      role="analyst"
-      status="denied"
-      assignees={{
-        lead: 'Tony Stark',
-        support: [],
-      }}
-    />
+    <>
+      <RequestToolbar
+        role="analyst"
+        status="denied"
+        assignees={{
+          lead: 'Tony Stark',
+          support: [],
+        }}
+        toggleManageTeamDrawer={toggleManageTeamDrawer}
+      />
+      <ManageTeamDrawer
+        open={open.manageTeamDrawer}
+        clickHandler={toggleManageTeamDrawer}
+        toggleManageTeamDrawer={toggleManageTeamDrawer}
+      />
+    </>
   );
 };
 
 export const AnalystSupportDenied = (args) => {
+  const [open, setOpen] = React.useState({
+    manageTeamDrawer: false,
+  });
+
+  const toggleManageTeamDrawer = () => {
+    setOpen({...open, manageTeamDrawer: !open.manageTeamDrawer});
+  };
   return (
-    <RequestToolbar
-      role="analyst"
-      status="denied"
-      assignees={{
-        lead: '',
-        support: ['Tony Stark'],
-      }}
-    />
+    <>
+      <RequestToolbar
+        role="analyst"
+        status="denied"
+        assignees={{
+          lead: '',
+          support: ['Tony Stark'],
+        }}
+        toggleManageTeamDrawer={toggleManageTeamDrawer}
+      />
+      <ManageTeamDrawer
+        open={open.manageTeamDrawer}
+        clickHandler={toggleManageTeamDrawer}
+        toggleManageTeamDrawer={toggleManageTeamDrawer}
+      />
+    </>
   );
 };
 

@@ -343,7 +343,7 @@ function RequestToolbar(props) {
       <ActionsMenu
         // contextSummaryClick={contextSummaryClick}
         // contextStatusClick={contextStatusClick}
-        // toggleManageTeamDrawer={toggleManageTeamDrawer}
+        toggleManageTeamDrawer={props.toggleManageTeamDrawer}
         status={props.status}
         role={props.role}
         request={props.assignees}
