@@ -40,6 +40,7 @@ import {
   SnackbarDenyRequest,
   SnackbarUnassign,
   SnackbarWithdrawRequest,
+  SnackbarSupportFab,
 } from './Snackbars';
 
 const ROW_HEIGHT = 56;
@@ -1585,6 +1586,297 @@ export function DialogUpdate(props) {
         </DialogActions>
       </Dialog>
       <SnackbarChangeRequest open={snackbar} handleClose={SnackbarClose} />
+    </React.Fragment>
+  );
+}
+
+// ////////////////////////////////////////// GET SUPPORT FAB
+export function DialogGetSupportFab(props) {
+  const classes = useStyles();
+  const {t} = useTranslation();
+  const {toggleDialog, open} = props;
+  const [snackbar, setSnackbar] = React.useState(false);
+  const initial = {
+    // blank object used to reset state
+    comments: {
+      text: '',
+      errorText: '',
+      invalid: '',
+      commands: '',
+    },
+  };
+  const [state, setState] = React.useState({
+    comments: {
+      text: '',
+      errorText: '',
+      invalid: '',
+      commands: '',
+    },
+  });
+
+  const handleChange = (e, val) => {
+    const comment = e.target.value;
+    setState({
+      ...state,
+      [val]: {
+        // updates state with text from input
+        ...state[val],
+        text: comment,
+      },
+    });
+
+    if (e.target.value && state.comments.errorText) {
+      // if input text is valid, clear error
+      setState({
+        ...state,
+        [val]: {
+          ...state[val],
+          text: comment,
+          errorText: '',
+          invalid: '',
+          commands: '',
+        },
+      });
+    }
+  };
+
+  const SnackbarClose = () => {
+    setSnackbar(false);
+  };
+
+  const validateForm = () => {
+    let isError = false;
+    if (state.comments.text.trim() === '') {
+      isError = true;
+      state.comments.invalid = t('Enter some comments.');
+      state.comments.errorText = t('Enter some comments.');
+    }
+
+    if (isError) {
+      setState({
+        ...state,
+      });
+    }
+
+    return isError;
+  };
+
+  const submitForm = (e) => {
+    e.stopPropagation();
+    e.preventDefault();
+    const err = validateForm();
+    if (!err) {
+      // if no errors exist, submit the form and reset the inputs
+      toggleDialog(e);
+      setSnackbar(!snackbar);
+      setState({...initial});
+    } else {
+      for (const property in state) {
+        // focus on the first input that has an error on submit
+        if (state[property].invalid) {
+          switch (property) {
+            case 'comments':
+              document.getElementById('comments-input').focus();
+              break;
+            default:
+              break;
+          }
+          break;
+        }
+      }
+    }
+  };
+
+  const disableCutCopyPaste = (e, command, value) => {
+    // display error if user tries to cut/copy/paste
+    let msg;
+    e.preventDefault();
+    switch (command) {
+      case 'cut':
+        msg = t('Cut has been disabled for security purposes.');
+        setState({
+          ...state,
+          [value]: {
+            ...state[value],
+            commands: msg,
+            errorText: msg,
+          },
+        });
+        break;
+      case 'copy':
+        msg = t('Copy has been disabled for security purposes.');
+        setState({
+          ...state,
+          [value]: {
+            ...state[value],
+            commands: msg,
+            errorText: msg,
+          },
+        });
+        break;
+      case 'paste':
+        msg = t('Paste has been disabled for security purposes.');
+        setState({
+          ...state,
+          [value]: {
+            ...state[value],
+            commands: msg,
+            errorText: msg,
+          },
+        });
+        break;
+      default:
+        break;
+    }
+  };
+
+  const toggleHelperText = (value) => {
+    if (state[value].commands === state[value].errorText) {
+      if (Boolean(state[value].invalid)) {
+        // set error text back to invalid error
+        setState({
+          ...state,
+          [value]: {
+            ...state[value],
+            errorText: state[value].invalid,
+          },
+        });
+      } else {
+        // clear error text if no invalid error exists
+        setState({
+          ...state,
+          [value]: {
+            ...state[value],
+            errorText: '',
+          },
+        });
+      }
+    }
+  };
+
+  const handleClick = (e) => {
+    e.stopPropagation();
+  };
+
+  return (
+    <React.Fragment>
+      <Dialog
+        onClose={(e) => {
+          setState({...initial});
+          toggleDialog(e);
+        }}
+        aria-labelledby="dashboard-dialog-title"
+        open={open}
+        className={classes.root}
+        scroll="paper"
+        disableBackdropClick
+        onClick={handleClick}
+        onKeyPress={(e) => {
+          if (e.key === 'Enter') {
+            e.preventDefault();
+            e.stopPropagation();
+          }
+        }}
+      >
+        <DialogTitle id="dashboard-dialog-title">
+          <div className={classes.vettingContainerTitle}>
+            <Typography variant="h6">{t('Get support')}</Typography>
+            <IconButton
+              id="dialog-close"
+              onClick={toggleDialog}
+              edge="end"
+              aria-label="Get support - close"
+              onKeyPress={(e) => {
+                e.preventDefault();
+                e.stopPropagation();
+                if (e.key === 'Enter') {
+                  toggleDialog(e);
+                }
+              }}
+            >
+              <CloseIcon />
+            </IconButton>
+          </div>
+        </DialogTitle>
+        <Divider />
+        <DialogContent>
+          <form onSubmit={submitForm} noValidate id="update-form">
+            <div className={classes.vettingSection}>
+              <div className={classes.vettingRow}>
+                <div className={classes.vettingColumn}>
+                  <Alert severity="warning" className={classes.alert}>
+                    {t('Do not include any confidential information.')}
+                  </Alert>
+                </div>
+              </div>
+              <div className={classes.vettingRow}>
+                <div className={classes.vettingColumn}>
+                  <FormControl variant="outlined" className={classes.textField}>
+                    <TextField
+                      id="comments-input"
+                      label={t('Comments')}
+                      aria-label={t('Comments')}
+                      value={state.comments.text}
+                      variant="outlined"
+                      multiline
+                      required
+                      error={Boolean(state.comments.errorText)}
+                      helperText={state.comments.errorText}
+                      onCut={(e) => disableCutCopyPaste(e, 'cut', 'comments')}
+                      onCopy={(e) => disableCutCopyPaste(e, 'copy', 'comments')}
+                      onPaste={(e) =>
+                        disableCutCopyPaste(e, 'paste', 'comments')
+                      }
+                      onChange={(e) => handleChange(e, 'comments')}
+                      onClick={() => toggleHelperText('comments')}
+                      onBlur={() => toggleHelperText('comments')}
+                      onFocus={() => toggleHelperText('comments')}
+                    />
+                  </FormControl>
+                </div>
+              </div>
+            </div>
+          </form>
+        </DialogContent>
+        <Divider />
+        <DialogActions>
+          <Button
+            variant="outlined"
+            color="primary"
+            onClick={(e) => {
+              setState({...initial});
+              toggleDialog(e);
+            }}
+            className={classes.footerBtns}
+            onKeyPress={(e) => {
+              e.preventDefault();
+              e.stopPropagation();
+              if (e.key === 'Enter') {
+                setState({...initial});
+                toggleDialog(e);
+              }
+            }}
+          >
+            {t('Cancel')}
+          </Button>
+          <Button
+            type="submit"
+            variant="contained"
+            color="primary"
+            className={classes.footerBtns}
+            form="update-form"
+            onKeyPress={(e) => {
+              e.stopPropagation();
+              if (e.key === 'Enter') {
+                submitForm(e);
+              }
+            }}
+          >
+            {t('Send')}
+          </Button>
+        </DialogActions>
+      </Dialog>
+      <SnackbarSupportFab open={snackbar} handleClose={SnackbarClose} />
     </React.Fragment>
   );
 }
