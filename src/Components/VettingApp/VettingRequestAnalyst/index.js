@@ -25,11 +25,7 @@ import Header from '../CommonComponents/Header';
 import Footer from '../CommonComponents/Footer';
 import FloatingSupportButton from '../CommonComponents/Support';
 import CutCopyPasteAlert from '../CommonComponents/CutCopyPasteAlert';
-import {
-  SnackbarAssignLead,
-  SnackbarSubmitRequest,
-  SnackbarUnassign,
-} from '../CommonComponents/Snackbars';
+import {SnackbarSubmitRequest} from '../CommonComponents/Snackbars';
 import ManageTeamDrawer from '../CommonComponents/ManageTeamDrawer';
 
 const useStyles = makeStyles((theme) => ({
@@ -217,8 +213,8 @@ function VettingRequestAnalyst(props) {
               role="analyst"
               status="submitted"
               assignees={{
-                lead: 'Tony Stark',
-                support: ['Bruce Banner'],
+                lead: state.lead,
+                support: state.support,
               }}
               toggleManageTeamDrawer={toggleManageTeamDrawer}
             />

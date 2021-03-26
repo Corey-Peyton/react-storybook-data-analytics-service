@@ -26,8 +26,6 @@ import ResearcherInfo from '../CommonComponents/RequestForm/ResearcherInfo';
 import FilesList from '../CommonComponents/RequestForm/FilesList';
 import ResidualDisclosure from '../CommonComponents/RequestForm/ResidualDisclosure';
 import AdditionalInfo from '../CommonComponents/RequestForm/Additionalnfo';
-import ToolBarDelete from './ToolBarDelete';
-import ToolBar from './ToolBar';
 import FloatingSupportButton from '../CommonComponents/Support';
 import Header from '../CommonComponents/Header';
 import Footer from '../CommonComponents/Footer';
@@ -37,6 +35,7 @@ import {
   SnackbarDeleteRequest,
   SnackbarSubmitRequest,
 } from '../CommonComponents/Snackbars';
+import RequestToolbar from '../CommonComponents/RequestToolbar';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -65,9 +64,6 @@ const useStyles = makeStyles((theme) => ({
     boxShadow: 'none',
     borderBottom: '1px solid',
     borderBottomColor: theme.palette.divider,
-  },
-  headerBtn: {
-    marginLeft: theme.spacing(3),
   },
   dividerHeight: {
     height: theme.spacing(5),
@@ -124,15 +120,8 @@ const useStyles = makeStyles((theme) => ({
   footerBtns: {
     marginLeft: [theme.spacing(2), '!important'],
   },
-  deleteBtn: {
-    color: theme.palette.error.main,
-  },
   dialogActions: {
     padding: theme.spacing(0, 3, 3, 3),
-  },
-  errorMsg: {
-    margin: [0, '!important'],
-    textAlign: 'left',
   },
   vettingContainerTitle: {
     display: 'flex',
@@ -193,9 +182,9 @@ function VettingRequestResearcher(props) {
   });
   const steps = getSteps();
 
-  const handleDialogOpen = () => {
-    setState({...state, open: true});
-  };
+  // const handleDialogOpen = () => {
+  //   setState({...state, open: true});
+  // };
 
   const handleDialogClose = () => {
     setState({...state, open: false});
@@ -320,11 +309,14 @@ function VettingRequestResearcher(props) {
       <main className={classes.main} tabIndex="-1">
         <Container maxWidth={false} className="page-container">
           <AppBar position="static" className={classes.appBar} color="default">
-            {state.activeStep === 3 ? (
-              <ToolBarDelete handleDialogOpen={handleDialogOpen} />
-            ) : (
-              <ToolBar />
-            )}
+            <RequestToolbar
+              role="researcher"
+              status="draft"
+              assignees={{
+                lead: '',
+                support: [],
+              }}
+            />
           </AppBar>
           <Paper className={classes.paper}>
             <Grid container alignItems="center">
@@ -340,12 +332,22 @@ function VettingRequestResearcher(props) {
               <Grid item>
                 <div className={classes.statusLeft}>
                   <Icon path={mdiFileEditOutline} size={1} />
-                  <Typography variant="body2" className={classes.icongrey}>Draft</Typography>
+                  <Typography variant="body2" className={classes.icongrey}>
+                    Draft
+                  </Typography>
                 </div>
               </Grid>
-              <Divider className={classes.dividerHeight} orientation="vertical" flexItem />
+              <Divider
+                className={classes.dividerHeight}
+                orientation="vertical"
+                flexItem
+              />
               <Grid item>
-                <Typography variant="body2" color="textSecondary" className={classes.statusRight}>
+                <Typography
+                  variant="body2"
+                  color="textSecondary"
+                  className={classes.statusRight}
+                >
                   Unassigned
                 </Typography>
               </Grid>
