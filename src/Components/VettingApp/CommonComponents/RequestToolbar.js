@@ -24,7 +24,10 @@ import {
   SnackbarApproveRequest,
   // SnackbarChangeRequest,
   SnackbarDenyRequest,
+  SnackbarReactivateRequest,
   SnackbarSaveRequest,
+  SnackbarStartReview,
+  SnackbarSubmitRequest,
 } from './Snackbars';
 import {
   DialogDenied,
@@ -117,8 +120,11 @@ function RequestToolbar(props) {
     snackbarChange: false,
     snackBarDeny: false,
     snackBarApprove: false,
+    snackbarStart: false,
     dialogDenied: false,
     dialogWithdraw: false,
+    snackbarReactivate: false,
+    snackbarSubmit: false,
   });
 
   const handleClickOpen = (state) => {
@@ -149,7 +155,7 @@ function RequestToolbar(props) {
             variant="text"
             color="primary"
             startIcon={<Icon path={mdiRestore} size={1} />}
-            // onClick={() => handleClickOpen('dialogUpdate')}
+            onClick={() => handleClickOpen('snackbarReactivate')}
           >
             Reactivate
           </Button>
@@ -232,7 +238,7 @@ function RequestToolbar(props) {
             variant="contained"
             color="primary"
             startIcon={<Icon path={mdiPlaySpeed} size={1} />}
-            // onClick={() => handleClickOpen('dialogUpdate')}
+            onClick={() => handleClickOpen('snackbarStart')}
           >
             Start review
           </Button>
@@ -249,7 +255,7 @@ function RequestToolbar(props) {
             variant="contained"
             color="primary"
             startIcon={<Icon path={mdiInboxArrowDown} size={1} />}
-            // onClick={() => handleClickOpen('dialogUpdate')}
+            onClick={() => handleClickOpen('snackbarSubmit')}
           >
             Submit
           </Button>
@@ -383,6 +389,21 @@ function RequestToolbar(props) {
       <SnackbarSaveRequest
         open={open.snackbarSave}
         handleClose={() => handleClickClose('snackbarSave')}
+      />
+      {/* Start review snackbar */}
+      <SnackbarStartReview
+        open={open.snackbarStart}
+        handleClose={() => handleClickClose('snackbarStart')}
+      />
+      {/* Reactivate request snackbar */}
+      <SnackbarReactivateRequest
+        open={open.snackbarReactivate}
+        handleClose={() => handleClickClose('snackbarReactivate')}
+      />
+      {/* Submit request snackbar */}
+      <SnackbarSubmitRequest
+        open={open.snackbarSubmit}
+        handleClose={() => handleClickClose('snackbarSubmit')}
       />
     </Toolbar>
   );

@@ -272,3 +272,16 @@ export function SnackbarSupportFab(props) {
     />
   );
 }
+
+export function SnackbarStartReview(props) {
+  const {t} = useTranslation();
+
+  return (
+    <Snackbar
+      message={t('Request review started')}
+      severity="success"
+      open={props.open}
+      handleClose={props.handleClose}
+    />
+  );
+}
