@@ -1765,7 +1765,7 @@ export function DialogGetSupportFab(props) {
           setState({...initial});
           toggleDialog(e);
         }}
-        aria-labelledby="dashboard-dialog-title"
+        aria-labelledby="get-support-dialog-title"
         open={open}
         className={classes.root}
         scroll="paper"
