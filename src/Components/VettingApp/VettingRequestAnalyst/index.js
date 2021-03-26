@@ -20,7 +20,6 @@ import FilesList from '../CommonComponents/RequestForm/FilesList';
 import ResidualDisclosure from '../CommonComponents/RequestForm/ResidualDisclosure';
 import AdditionalInfo from '../CommonComponents/RequestForm/Additionalnfo';
 import RequestToolbar from '../CommonComponents/RequestToolbar';
-// import ToolBarAssign from './ToolBarAssign';
 import AppBarAssign from './AppBarAssign';
 import Header from '../CommonComponents/Header';
 import Footer from '../CommonComponents/Footer';
@@ -34,29 +33,6 @@ import {
 import ManageTeamDrawer from '../CommonComponents/ManageTeamDrawer';
 
 const useStyles = makeStyles((theme) => ({
-  dialogTitle: {
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'space-between',
-  },
-  root: {
-    '& .MuiDialog-paperWidthSm': {
-      'width': 400,
-      '& .MuiTextField-root': {
-        width: '100%',
-      },
-      '& .MuiFormLabel-root': {
-        'line-height': 1,
-      },
-      '& .MuiInputBase-input': {
-        'max-height': 130,
-        'overflow': 'hidden auto !important',
-      },
-      '& .MuiAutocomplete-endAdornment': {
-        top: '5.5px',
-      },
-    },
-  },
   main: {
     background: theme.palette.grey[100],
     paddingBottom: theme.spacing(6),
@@ -105,9 +81,6 @@ const useStyles = makeStyles((theme) => ({
     paddingTop: theme.spacing(3),
     borderTop: 'solid 1px',
     borderTopColor: theme.palette.divider,
-  },
-  dialogActions: {
-    padding: theme.spacing(0, 3, 3, 3),
   },
   errorMsg: {
     margin: 0,
@@ -186,8 +159,6 @@ function VettingRequestAnalyst(props) {
 
   const [openSnackbar, setOpenSnackbar] = React.useState({
     snackbarSubmitted: false,
-    snackBarUnassign: false,
-    snackBarAssign: false,
   });
 
   const snackbarHandleClick = (state) => {
@@ -242,7 +213,6 @@ function VettingRequestAnalyst(props) {
             toggleManageTeamDrawer={toggleManageTeamDrawer}
           />
           <AppBar position="static" className={classes.appBar} color="default">
-            {/* {state.lead === state.userName ? ( */}
             <RequestToolbar
               role="analyst"
               status="submitted"
@@ -251,17 +221,6 @@ function VettingRequestAnalyst(props) {
                 support: ['Bruce Banner'],
               }}
               toggleManageTeamDrawer={toggleManageTeamDrawer}
-            />
-            {/* ) : ( */}
-            {/* <ToolBarAssign handleAssignToMe={handleAssignToMe} /> */}
-            {/* )} */}
-            <SnackbarUnassign
-              open={openSnackbar.snackBarUnassign}
-              handleClose={() => snackbarHandleClose('snackBarUnassign')}
-            />
-            <SnackbarAssignLead
-              open={openSnackbar.snackBarAssign}
-              handleClose={() => snackbarHandleClose('snackBarAssign')}
             />
           </AppBar>
           <Paper className={classes.paper}>

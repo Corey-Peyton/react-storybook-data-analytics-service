@@ -2,15 +2,11 @@ import React from 'react';
 import clsx from 'clsx';
 import {makeStyles} from '@material-ui/core/styles';
 import {Button, Toolbar, IconButton, Typography} from '@material-ui/core';
-// import ReplayIcon from '@material-ui/icons/Replay';
-// import SaveIcon from '@material-ui/icons/Save';
 import ArrowBackIcon from '@material-ui/icons/ArrowBack';
 import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
-// import ArrowDropDownIcon from '@material-ui/icons/ArrowDropDown';
 import Icon from '@mdi/react';
 import {
-  // mdiAccountPlus,
   mdiContentSave,
   mdiEmailEditOutline,
   mdiInboxArrowDown,
@@ -22,7 +18,6 @@ import {
 } from '@mdi/js';
 import {
   SnackbarApproveRequest,
-  // SnackbarChangeRequest,
   SnackbarDenyRequest,
   SnackbarReactivateRequest,
   SnackbarSaveRequest,
@@ -34,63 +29,11 @@ import {
   DialogUpdate,
   DialogApprove,
   DialogWithdraw,
-  // DialogUnassign,
 } from './DialogBox';
 import {ActionsMenu} from './RequestContextMenu';
 import {loggedInUser} from '../../../Data/fakeData';
 
 const useStyles = makeStyles((theme) => ({
-  root: {
-    '& .MuiDialogTitle-root': {
-      padding: theme.spacing(1.5, 3),
-    },
-    '& .MuiSelect-select': {
-      height: [theme.spacing(7), '!important'],
-      paddingTop: 0,
-      paddingBottom: 0,
-    },
-  },
-  vettingContainerTitle: {
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'space-between',
-  },
-  vettingSection: {
-    display: 'flex',
-    flexFlow: 'column',
-    padding: theme.spacing(3),
-    overflowY: 'auto',
-  },
-  vettingRow: {
-    'display': 'flex',
-    'margin': theme.spacing(1.5, 0),
-    'flexFlow': 'row',
-    'height': '100%',
-    'justifyContent': 'center',
-    'width': '100%',
-    'alignItems': 'center',
-    '&:first-child': {
-      marginTop: 0,
-    },
-    '&:last-child': {
-      marginBottom: 0,
-    },
-  },
-  vettingColumn: {
-    'display': 'flex',
-    'flexDirection': 'column',
-    'width': '100%',
-    'justifyContent': 'center',
-    'marginRight': theme.spacing(1),
-    'height': '100%',
-    '&:last-child': {
-      marginRight: 0,
-    },
-  },
-  main: {
-    background: theme.palette.grey[100],
-    paddingBottom: theme.spacing(6),
-  },
   title: {
     flexGrow: 1,
   },
@@ -114,17 +57,15 @@ function RequestToolbar(props) {
 
   const [open, setOpen] = React.useState({
     dialogApprove: false,
-    dialogUnAssign: false,
-    snackbarSave: false,
     dialogUpdate: false,
-    snackbarChange: false,
-    snackBarDeny: false,
-    snackBarApprove: false,
-    snackbarStart: false,
     dialogDenied: false,
     dialogWithdraw: false,
     snackbarReactivate: false,
     snackbarSubmit: false,
+    snackbarSave: false,
+    snackbarDeny: false,
+    snackbarApprove: false,
+    snackbarStart: false,
   });
 
   const handleClickOpen = (state) => {
@@ -307,25 +248,6 @@ function RequestToolbar(props) {
       <Typography variant="subtitle1" component="p" className={classes.title}>
         Vetting requests dashboard
       </Typography>
-      {/* <Button
-        onClick={() => handleClickOpen('dialogUnAssign')}
-        className={classes.headerBtn}
-        startIcon={
-          <Icon path={mdiAccountPlus} className="icon-grey" size={1} />
-        }
-      >
-        Unassign from me
-      </Button> */}
-      {/* <DialogUnassign
-        toggleDialog={() => handleClickClose('dialogUnAssign')}
-        open={open.dialogUnAssign}
-      /> */}
-      {/* Request an update snackbar */}
-      {/* <SnackbarChangeRequest
-        open={open.snackbarChange}
-        handleClose={() => handleClickClose('snackbarChange')}
-      /> */}
-      {/* */}
       {role === 'analyst' && (
         <>
           {assignees.lead === currentUser && (
@@ -347,8 +269,6 @@ function RequestToolbar(props) {
         </>
       )}
       <ActionsMenu
-        // contextSummaryClick={contextSummaryClick}
-        // contextStatusClick={contextStatusClick}
         toggleManageTeamDrawer={props.toggleManageTeamDrawer}
         status={props.status}
         role={props.role}
@@ -377,13 +297,13 @@ function RequestToolbar(props) {
       />
       {/* Approve request snackbar */}
       <SnackbarApproveRequest
-        open={open.snackBarApprove}
-        handleClose={() => handleClickClose('snackBarApprove')}
+        open={open.snackbarApprove}
+        handleClose={() => handleClickClose('snackbarApprove')}
       />
       {/* Deny request snackbar */}
       <SnackbarDenyRequest
-        open={open.snackBarDeny}
-        handleClose={() => handleClickClose('snackBarDeny')}
+        open={open.snackbarDeny}
+        handleClose={() => handleClickClose('snackbarDeny')}
       />
       {/* Save request snackbar */}
       <SnackbarSaveRequest

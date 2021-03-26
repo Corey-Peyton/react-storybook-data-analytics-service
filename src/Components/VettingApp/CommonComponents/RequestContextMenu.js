@@ -15,14 +15,12 @@ import {
 } from './Snackbars';
 import {
   DialogUnassign,
-  // DialogSupport,
   DialogAssign,
   DialogInfo,
   DialogAssignAsSupport,
   DialogNoLead,
 } from './DialogBox';
 import SummaryDrawer from './SummaryDrawer';
-// import ManageTeamDrawer from './ManageTeamDrawer';
 import {loggedInUser} from '../../../Data/fakeData';
 
 const StyledMenu = withStyles({
@@ -46,42 +44,23 @@ const StyledMenu = withStyles({
   />
 ));
 
-// //////////////////////////// Dashboard actions menu
 export function ActionsMenu(props) {
-  const {
-    role,
-    status,
-    // contextStatusClick,
-    contextSummaryClick,
-    toggleManageTeamDrawer,
-    controls,
-    request,
-  } = props;
+  const {role, status, toggleManageTeamDrawer, controls, request} = props;
   const {t} = useTranslation();
   const currentUser = loggedInUser();
   let StyledMenuVar;
 
   const [anchorEl, setAnchorEl] = React.useState(null);
   const [open, setOpen] = React.useState({
-    snackbarReopen: false,
-    snackbarSubmit: false,
     snackbarDelete: false,
-    dialogWithdraw: false,
-    dialogManageTeam: false,
-    dialogUnassign: false,
-    dialogSupport: false,
+    snackbarUnassign: false,
     dialogAssign: false,
-    dialogUpdate: false,
-    dialogDenied: false,
-    dialogApprove: false,
     dialogInfoAssignee: false,
     dialogInfoRequester: false,
-    summaryDrawer: false,
-    role: '',
     dialogNoLeadAssignSupport: false,
     dialogAssignAsSupport: false,
     dialogNoLeadUnassign: false,
-    snackbarUnassign: false,
+    summaryDrawer: false,
   });
 
   const ariaControls = `actions-menu-${controls}`;
@@ -89,7 +68,6 @@ export function ActionsMenu(props) {
   const handleClick = (e) => {
     e.stopPropagation();
     setAnchorEl(e.currentTarget);
-    // contextStatusClick(status);
   };
 
   const handleClose = (e) => {
@@ -391,37 +369,29 @@ export function ActionsMenu(props) {
         <MoreVertIcon />
       </IconButton>
       {StyledMenuVar}
-
+      {/* Delete request snackbar */}
       <SnackbarDeleteRequest
         open={open.snackbarDelete}
         handleClose={() => handleSnackbarClose('snackbarDelete')}
       />
+      {/* Assign as support snackbar */}
       <SnackbarAssignSupport
         open={open.snackbarAssignSupport}
         handleClose={() => handleSnackbarClose('snackbarAssignSupport')}
       />
+      {/* Unassign myself snackbar */}
       <SnackbarUnassign
         open={open.snackbarUnassign}
         handleClose={() => handleSnackbarClose('snackbarUnassign')}
       />
-      <DialogUnassign
-        toggleDialog={(e) =>
-          toggleDialog('dialogUnassign', !open.dialogUnassign, e)
-        }
-        open={open.dialogUnassign}
-      />
-      {/* <DialogSupport
-        toggleDialog={(e) =>
-          toggleDialog('dialogSupport', !open.dialogSupport, e)
-        }
-        open={open.dialogSupport}
-      /> */}
+      {/* Assign as support dialog */}
       <DialogAssignAsSupport
         toggleDialog={(e) =>
           toggleDialog('dialogAssignAsSupport', !open.dialogAssignAsSupport, e)
         }
         open={open.dialogAssignAsSupport}
       />
+      {/* Assign lead as support warning dialog */}
       <DialogNoLead
         toggleDialog={(e) =>
           toggleDialog(
@@ -433,6 +403,7 @@ export function ActionsMenu(props) {
         open={open.dialogNoLeadAssignSupport}
         submitDialog={(e) => assignAsSupport(e)}
       />
+      {/* Unassign lead warning dialog */}
       <DialogNoLead
         toggleDialog={(e) =>
           toggleDialog('dialogNoLeadUnassign', !open.dialogNoLeadUnassign, e)
@@ -440,12 +411,14 @@ export function ActionsMenu(props) {
         open={open.dialogNoLeadUnassign}
         submitDialog={(e) => unassignLead(e)}
       />
+      {/* Assign as lead dialog */}
       <DialogAssign
         toggleDialog={(e) =>
           toggleDialog('dialogAssign', !open.dialogAssign, e)
         }
         open={open.dialogAssign}
       />
+      {/* Assignee details dialog */}
       <DialogInfo
         toggleDialog={(e) =>
           toggleDialog('dialogInfoAssignee', !open.dialogInfoAssignee, e)
@@ -453,6 +426,7 @@ export function ActionsMenu(props) {
         open={open.dialogInfoAssignee}
         header={'Assignee details'}
       />
+      {/* Requester details dialog */}
       <DialogInfo
         toggleDialog={(e) =>
           toggleDialog('dialogInfoRequester', !open.dialogInfoRequester, e)
