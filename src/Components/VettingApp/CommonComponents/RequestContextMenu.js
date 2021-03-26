@@ -15,6 +15,7 @@ import {
   DialogAssign,
   DialogInfo,
 } from './DialogBox';
+import SummaryDrawer from './SummaryDrawer';
 import {loggedInUser} from '../../../Data/fakeData';
 
 const StyledMenu = withStyles({
@@ -67,6 +68,7 @@ export function ActionsMenu(props) {
     dialogDenied: false,
     dialogApprove: false,
     dialogInfo: false,
+    summaryDrawer: false,
     role: '',
   });
 
@@ -348,6 +350,13 @@ export function ActionsMenu(props) {
         header={
           open.role === 'assignee' ? 'Assignee details' : 'Requester details'
         }
+      />
+
+      {/* Summary drawer */}
+      <SummaryDrawer
+        open={open.summaryDrawer}
+        clickHandler={toggleSummary}
+        status={status}
       />
     </div>
   );

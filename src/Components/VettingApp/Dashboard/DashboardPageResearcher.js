@@ -12,7 +12,7 @@ import TableContainerComponent from './Common/TableContainerComponent';
 import TabPanel from './Common/DashboardTabPanel';
 import Header from '../CommonComponents/Header';
 import Footer from '../CommonComponents/Footer';
-import SummaryDrawer from './Common/SummaryDrawer';
+import SummaryDrawer from '../CommonComponents/SummaryDrawer';
 import ProjectsDrawer from './Common/ProjectsDrawer';
 import BypassBlocks from '../../BypassBlocks';
 import {requestListResearchers} from '../../../Data/fakeData';

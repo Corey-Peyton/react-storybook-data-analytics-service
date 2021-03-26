@@ -31,7 +31,7 @@ import {
   SnackbarSubmitRequest,
   SnackbarUnassign,
 } from '../CommonComponents/Snackbars';
-import ManageTeamDrawer from '../Dashboard/Common/ManageTeamDrawer';
+import ManageTeamDrawer from '../CommonComponents/ManageTeamDrawer';
 
 const useStyles = makeStyles((theme) => ({
   dialogTitle: {

@@ -30,6 +30,7 @@ import {
   DialogDenied,
   DialogUpdate,
   DialogApprove,
+  DialogWithdraw,
   DialogUnassign,
 } from './DialogBox';
 import {ActionsMenu} from './RequestContextMenu';
@@ -117,6 +118,7 @@ function RequestToolbar(props) {
     snackBarDeny: false,
     snackBarApprove: false,
     dialogDenied: false,
+    dialogWithdraw: false,
   });
 
   const handleClickOpen = (state) => {
@@ -277,7 +279,7 @@ function RequestToolbar(props) {
             variant="text"
             color="primary"
             startIcon={<Icon path={mdiUndo} size={1} />}
-            // onClick={() => handleClickOpen('dialogUpdate')}
+            onClick={() => handleClickOpen('dialogWithdraw')}
           >
             Withdraw
           </Button>
@@ -360,6 +362,12 @@ function RequestToolbar(props) {
       <DialogDenied
         toggleDialog={() => handleClickClose('dialogDenied')}
         open={open.dialogDenied}
+      />
+
+      {/* Withdraw request dialog */}
+      <DialogWithdraw
+        toggleDialog={() => handleClickClose('dialogWithdraw')}
+        open={open.dialogWithdraw}
       />
       {/* Approve request snackbar */}
       <SnackbarApproveRequest
