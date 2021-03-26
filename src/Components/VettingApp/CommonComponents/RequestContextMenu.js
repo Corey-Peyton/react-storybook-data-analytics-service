@@ -8,14 +8,17 @@ import MenuItem from '@material-ui/core/MenuItem';
 import ListItemText from '@material-ui/core/ListItemText';
 import MoreVertIcon from '@material-ui/icons/MoreVert';
 
-import {SnackbarDeleteRequest} from './Snackbars';
+import {SnackbarAssignSupport, SnackbarDeleteRequest} from './Snackbars';
 import {
   DialogUnassign,
-  DialogSupport,
+  // DialogSupport,
   DialogAssign,
   DialogInfo,
+  DialogAssignAsSupport,
+  DialogNoLead,
 } from './DialogBox';
 import SummaryDrawer from './SummaryDrawer';
+// import ManageTeamDrawer from './ManageTeamDrawer';
 import {loggedInUser} from '../../../Data/fakeData';
 
 const StyledMenu = withStyles({
@@ -45,8 +48,8 @@ export function ActionsMenu(props) {
     role,
     status,
     // contextStatusClick,
-    // contextSummaryClick,
-    // toggleManageTeamDrawer,
+    contextSummaryClick,
+    toggleManageTeamDrawer,
     controls,
     request,
   } = props;
@@ -67,9 +70,12 @@ export function ActionsMenu(props) {
     dialogUpdate: false,
     dialogDenied: false,
     dialogApprove: false,
-    dialogInfo: false,
+    dialogInfoAssignee: false,
+    dialogInfoRequester: false,
     summaryDrawer: false,
     role: '',
+    dialogNoLeadAssignSupport: false,
+    dialogAssignAsSupport: false,
   });
 
   const ariaControls = `actions-menu-${controls}`;
@@ -96,18 +102,26 @@ export function ActionsMenu(props) {
   const toggleSummary = (e) => {
     e.stopPropagation();
     handleClose(e);
-    // contextSummaryClick();
+    contextSummaryClick();
   };
   const contextManageTeam = (e) => {
     e.stopPropagation();
     handleClose(e);
-    // toggleManageTeamDrawer(e);
+    toggleManageTeamDrawer(e);
   };
 
-  const toggleDialog = (state, value, e, role) => {
+  const toggleDialog = (state, value, e) => {
     e.stopPropagation();
-    setOpen({...open, [state]: value, role: role});
+    setOpen({...open, [state]: value});
     handleClose(e);
+  };
+
+  const assignAsSupport = (e) => {
+    setOpen({
+      ...open,
+      dialogNoLeadAssignSupport: !open.dialogNoLeadAssignSupport,
+      snackbarAssignSupport: true,
+    });
   };
 
   const assigneeDetailsMenuItem = () => {
@@ -115,7 +129,7 @@ export function ActionsMenu(props) {
       <MenuItem
         onClick={(e) => {
           e.stopPropagation();
-          toggleDialog('dialogInfo', !open.dialogInfo, e, 'assignee');
+          toggleDialog('dialogInfoAssignee', !open.dialogInfo, e);
         }}
       >
         <ListItemText
@@ -132,7 +146,7 @@ export function ActionsMenu(props) {
       <MenuItem
         onClick={(e) => {
           e.stopPropagation();
-          toggleDialog('dialogInfo', !open.dialogInfo, e, 'requester');
+          toggleDialog('dialogInfoRequester', !open.dialogInfo, e);
         }}
       >
         <ListItemText
@@ -182,14 +196,40 @@ export function ActionsMenu(props) {
   const assignAsSupportMenuItem = () => {
     const supports = request.support.includes(currentUser);
 
-    if (currentUser === request.lead || !supports) {
+    if (currentUser === request.lead) {
+      // if logged in user IS assigned as lead
       return (
         <MenuItem
           onClick={(e) => {
             e.stopPropagation();
-            toggleDialog('dialogSupport', !open.dialogSupport, e);
+            toggleDialog(
+                'dialogNoLeadAssignSupport',
+                !open.dialogNoLeadAssignSupport,
+                e,
+            );
           }}
-          open={open.dialogSupport}
+        >
+          <ListItemText
+            primary={
+              <Typography variant="body2">
+                {t('Assign me as support')}
+              </Typography>
+            }
+          />
+        </MenuItem>
+      );
+    } else if (!supports) {
+      // if logged in user is NOT assigned as lead OR support
+      return (
+        <MenuItem
+          onClick={(e) => {
+            e.stopPropagation();
+            toggleDialog(
+                'dialogAssignAsSupport',
+                !open.dialogAssignAsSupport,
+                e,
+            );
+          }}
         >
           <ListItemText
             primary={
@@ -326,17 +366,38 @@ export function ActionsMenu(props) {
         open={open.snackbarDelete}
         handleClose={() => handleSnackbarClose('snackbarDelete')}
       />
+      <SnackbarAssignSupport
+        open={open.snackbarAssignSupport}
+        handleClose={() => handleSnackbarClose('snackbarAssignSupport')}
+      />
       <DialogUnassign
         toggleDialog={(e) =>
           toggleDialog('dialogUnassign', !open.dialogUnassign, e)
         }
         open={open.dialogUnassign}
       />
-      <DialogSupport
+      {/* <DialogSupport
         toggleDialog={(e) =>
           toggleDialog('dialogSupport', !open.dialogSupport, e)
         }
         open={open.dialogSupport}
+      /> */}
+      <DialogAssignAsSupport
+        toggleDialog={(e) =>
+          toggleDialog('dialogAssignAsSupport', !open.dialogAssignAsSupport, e)
+        }
+        open={open.dialogAssignAsSupport}
+      />
+      <DialogNoLead
+        toggleDialog={(e) =>
+          toggleDialog(
+              'dialogNoLeadAssignSupport',
+              !open.dialogNoLeadAssignSupport,
+              e,
+          )
+        }
+        open={open.dialogNoLeadAssignSupport}
+        submitDialog={(e) => assignAsSupport(e)}
       />
       <DialogAssign
         toggleDialog={(e) =>
@@ -345,11 +406,18 @@ export function ActionsMenu(props) {
         open={open.dialogAssign}
       />
       <DialogInfo
-        toggleDialog={(e) => toggleDialog('dialogInfo', !open.dialogInfo, e)}
-        open={open.dialogInfo}
-        header={
-          open.role === 'assignee' ? 'Assignee details' : 'Requester details'
+        toggleDialog={(e) =>
+          toggleDialog('dialogInfoAssignee', !open.dialogInfo, e)
         }
+        open={open.dialogInfoAssignee}
+        header={'Assignee details'}
+      />
+      <DialogInfo
+        toggleDialog={(e) =>
+          toggleDialog('dialogInfoRequester', !open.dialogInfo, e)
+        }
+        open={open.dialogInfoRequester}
+        header={'Requester details'}
       />
 
       {/* Summary drawer */}
