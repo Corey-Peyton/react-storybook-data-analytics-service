@@ -18,8 +18,8 @@ const useStyles = makeStyles((theme) => ({
     justifyContent: 'space-between',
     alignItems: 'center',
     background: theme.palette.common.white,
-    // borderTop: '1px solid',
-    // borderTopColor: theme.palette.divider,
+    borderTop: '1px solid',
+    borderTopColor: theme.palette.divider,
   },
   footerBtn: {
     color: theme.palette.text.secondary,
