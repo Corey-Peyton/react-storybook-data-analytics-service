@@ -1,7 +1,13 @@
 import React from 'react';
 import clsx from 'clsx';
 import {makeStyles} from '@material-ui/core/styles';
-import {Button, Toolbar, IconButton, Typography} from '@material-ui/core';
+import {
+  AppBar,
+  Button,
+  Toolbar,
+  IconButton,
+  Typography,
+} from '@material-ui/core';
 import ArrowBackIcon from '@material-ui/icons/ArrowBack';
 import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
@@ -34,6 +40,14 @@ import {ActionsMenu} from './RequestContextMenu';
 import {loggedInUser} from '../../../Data/fakeData';
 
 const useStyles = makeStyles((theme) => ({
+  appBar: {
+    margin: theme.spacing(0, -2),
+    width: 'auto',
+    backgroundColor: theme.palette.common.white,
+    boxShadow: 'none',
+    borderBottom: '1px solid',
+    borderBottomColor: theme.palette.divider,
+  },
   title: {
     flexGrow: 1,
   },
@@ -236,96 +250,98 @@ function RequestToolbar(props) {
   };
 
   return (
-    <Toolbar>
-      <IconButton
-        edge="start"
-        className={classes.menuButton}
-        color="inherit"
-        aria-label="Back to vetting requests dashboard"
-      >
-        <ArrowBackIcon />
-      </IconButton>
-      <Typography variant="subtitle1" component="p" className={classes.title}>
-        Vetting requests dashboard
-      </Typography>
-      {role === 'analyst' && (
-        <>
-          {assignees.lead === currentUser && (
-            <>
-              {reactivateButton()}
-              {requestChangesButton()}
-              {resolveButton()}
-              {startReviewButton()}
-            </>
-          )}
-        </>
-      )}
-      {role === 'researcher' && (
-        <>
-          {withdrawButton()}
-          {saveButton()}
-          {submitButton()}
-          {status === 'withdrawn' && reactivateButton()}
-        </>
-      )}
-      <ActionsMenu
-        toggleManageTeamDrawer={props.toggleManageTeamDrawer}
-        status={props.status}
-        role={props.role}
-        request={props.assignees}
-      />
-      {/* Request changes dialog */}
-      <DialogUpdate
-        toggleDialog={() => handleClickClose('dialogUpdate')}
-        open={open.dialogUpdate}
-      />
-      {/* Approve request dialog */}
-      <DialogApprove
-        toggleDialog={() => handleClickClose('dialogApprove')}
-        open={open.dialogApprove}
-      />
-      {/* Deny request dialog */}
-      <DialogDenied
-        toggleDialog={() => handleClickClose('dialogDenied')}
-        open={open.dialogDenied}
-      />
+    <AppBar position="static" className={classes.appBar} color="default">
+      <Toolbar>
+        <IconButton
+          edge="start"
+          className={classes.menuButton}
+          color="inherit"
+          aria-label="Back to vetting requests dashboard"
+        >
+          <ArrowBackIcon />
+        </IconButton>
+        <Typography variant="subtitle1" component="p" className={classes.title}>
+          Vetting requests dashboard
+        </Typography>
+        {role === 'analyst' && (
+          <>
+            {assignees.lead === currentUser && (
+              <>
+                {reactivateButton()}
+                {requestChangesButton()}
+                {resolveButton()}
+                {startReviewButton()}
+              </>
+            )}
+          </>
+        )}
+        {role === 'researcher' && (
+          <>
+            {withdrawButton()}
+            {saveButton()}
+            {submitButton()}
+            {status === 'withdrawn' && reactivateButton()}
+          </>
+        )}
+        <ActionsMenu
+          toggleManageTeamDrawer={props.toggleManageTeamDrawer}
+          status={props.status}
+          role={props.role}
+          request={props.assignees}
+        />
+        {/* Request changes dialog */}
+        <DialogUpdate
+          toggleDialog={() => handleClickClose('dialogUpdate')}
+          open={open.dialogUpdate}
+        />
+        {/* Approve request dialog */}
+        <DialogApprove
+          toggleDialog={() => handleClickClose('dialogApprove')}
+          open={open.dialogApprove}
+        />
+        {/* Deny request dialog */}
+        <DialogDenied
+          toggleDialog={() => handleClickClose('dialogDenied')}
+          open={open.dialogDenied}
+        />
 
-      {/* Withdraw request dialog */}
-      <DialogWithdraw
-        toggleDialog={() => handleClickClose('dialogWithdraw')}
-        open={open.dialogWithdraw}
-      />
-      {/* Approve request snackbar */}
-      <SnackbarApproveRequest
-        open={open.snackbarApprove}
-        handleClose={() => handleClickClose('snackbarApprove')}
-      />
-      {/* Deny request snackbar */}
-      <SnackbarDenyRequest
-        open={open.snackbarDeny}
-        handleClose={() => handleClickClose('snackbarDeny')}
-      />
-      {/* Save request snackbar */}
-      <SnackbarSaveRequest
-        open={open.snackbarSave}
-        handleClose={() => handleClickClose('snackbarSave')}
-      />
-      {/* Start review snackbar */}
-      <SnackbarStartReview
-        open={open.snackbarStart}
-        handleClose={() => handleClickClose('snackbarStart')}
-      />
-      {/* Reactivate request snackbar */}
-      <SnackbarReactivateRequest
-        open={open.snackbarReactivate}
-        handleClose={() => handleClickClose('snackbarReactivate')}
-      />
-      {/* Submit request snackbar */}
-      <SnackbarSubmitRequest
-        open={open.snackbarSubmit}
-        handleClose={() => handleClickClose('snackbarSubmit')}
-      />
-    </Toolbar>
+        {/* Withdraw request dialog */}
+        <DialogWithdraw
+          toggleDialog={() => handleClickClose('dialogWithdraw')}
+          open={open.dialogWithdraw}
+        />
+        {/* Approve request snackbar */}
+        <SnackbarApproveRequest
+          open={open.snackbarApprove}
+          handleClose={() => handleClickClose('snackbarApprove')}
+        />
+        {/* Deny request snackbar */}
+        <SnackbarDenyRequest
+          open={open.snackbarDeny}
+          handleClose={() => handleClickClose('snackbarDeny')}
+        />
+        {/* Save request snackbar */}
+        <SnackbarSaveRequest
+          open={open.snackbarSave}
+          handleClose={() => handleClickClose('snackbarSave')}
+        />
+        {/* Start review snackbar */}
+        <SnackbarStartReview
+          open={open.snackbarStart}
+          handleClose={() => handleClickClose('snackbarStart')}
+        />
+        {/* Reactivate request snackbar */}
+        <SnackbarReactivateRequest
+          open={open.snackbarReactivate}
+          handleClose={() => handleClickClose('snackbarReactivate')}
+        />
+        {/* Submit request snackbar */}
+        <SnackbarSubmitRequest
+          open={open.snackbarSubmit}
+          handleClose={() => handleClickClose('snackbarSubmit')}
+        />
+      </Toolbar>
+    </AppBar>
   );
 }
 

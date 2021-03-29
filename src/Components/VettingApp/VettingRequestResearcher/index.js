@@ -11,7 +11,6 @@ import {
   StepLabel,
   Typography,
   Divider,
-  AppBar,
   Dialog,
   DialogTitle,
   DialogContent,
@@ -53,14 +52,6 @@ const useStyles = makeStyles((theme) => ({
   dividercutcopypaste: {
     marginBottom: theme.spacing(2),
     marginTop: theme.spacing(3),
-  },
-  appBar: {
-    margin: theme.spacing(0, -2),
-    width: 'auto',
-    backgroundColor: theme.palette.common.white,
-    boxShadow: 'none',
-    borderBottom: '1px solid',
-    borderBottomColor: theme.palette.divider,
   },
   dividerHeight: {
     height: theme.spacing(5),
@@ -305,16 +296,14 @@ function VettingRequestResearcher(props) {
       <Header />
       <main className={classes.main} tabIndex="-1">
         <Container maxWidth={false} className="page-container">
-          <AppBar position="static" className={classes.appBar} color="default">
-            <RequestToolbar
-              role="researcher"
-              status="draft"
-              assignees={{
-                lead: '',
-                support: [],
-              }}
-            />
-          </AppBar>
+          <RequestToolbar
+            role="researcher"
+            status="draft"
+            assignees={{
+              lead: '',
+              support: [],
+            }}
+          />
           <Paper className={classes.paper}>
             <Grid container alignItems="center">
               <Grid item className={classes.title}>

@@ -10,7 +10,6 @@ import {
   StepButton,
   Typography,
   Divider,
-  AppBar,
   StepLabel,
 } from '@material-ui/core';
 import ArrowForwardIosIcon from '@material-ui/icons/ArrowForwardIos';
@@ -39,14 +38,6 @@ const useStyles = makeStyles((theme) => ({
   dividercutcopypaste: {
     marginBottom: theme.spacing(2),
     marginTop: theme.spacing(3),
-  },
-  appBar: {
-    margin: theme.spacing(0, -2),
-    width: 'auto',
-    backgroundColor: theme.palette.common.white,
-    boxShadow: 'none',
-    borderBottom: '1px solid',
-    borderBottomColor: theme.palette.divider,
   },
   paper: {
     maxWidth: '1280px',
@@ -208,17 +199,15 @@ function VettingRequestAnalyst(props) {
             clickHandler={toggleManageTeamDrawer}
             toggleManageTeamDrawer={toggleManageTeamDrawer}
           />
-          <AppBar position="static" className={classes.appBar} color="default">
-            <RequestToolbar
-              role="analyst"
-              status="submitted"
-              assignees={{
-                lead: state.lead,
-                support: state.support,
-              }}
-              toggleManageTeamDrawer={toggleManageTeamDrawer}
-            />
-          </AppBar>
+          <RequestToolbar
+            role="analyst"
+            status="submitted"
+            assignees={{
+              lead: state.lead,
+              support: state.support,
+            }}
+            toggleManageTeamDrawer={toggleManageTeamDrawer}
+          />
           <Paper className={classes.paper}>
             <Grid container alignItems="center">
               <AppBarAssign
