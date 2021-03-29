@@ -39,6 +39,7 @@ import {
   SnackbarDeleteOutputFile,
   SnackbarUpdateOutputFile,
 } from '../Snackbars';
+import {DialogDelete} from '../DialogBox';
 
 const useStylesBootstrap = makeStyles((theme) => ({
   arrow: {
@@ -658,58 +659,12 @@ function FilesList(props) {
           </Button>
         </DialogActions>
       </Dialog>
-      {/* Delete output file dialog */}
-      <Dialog
+      {/* Delete dialog */}
+      <DialogDelete
+        submitDialog={deleteFile}
         open={open.deleteFile}
-        aria-labelledby="delete-dialog-title"
-        fullWidth
-        className={classes.root}
-        scroll="paper"
-      >
-        <DialogTitle
-          id="delete-dialog-title"
-          className={classes.vettingContainerTitle}
-          disableTypography
-        >
-          <Typography variant="h6" component="h2">
-            Delete this output file?
-          </Typography>
-          <IconButton
-            onClick={() => handleClickClose('deleteFile')}
-            edge="end"
-            aria-label="Close delete output file"
-          >
-            <CloseIcon />
-          </IconButton>
-        </DialogTitle>
-        <Divider />
-        <div className={classes.vettingSection}>
-          <div className={classes.vettingRow}>
-            <div className={classes.vettingColumn}>
-              <Alert severity="warning">
-                Deleting this output file cannot be undone.
-              </Alert>
-            </div>
-          </div>
-        </div>
-        <DialogActions className={classes.dialogFooter}>
-          <Button
-            color="primary"
-            variant="outlined"
-            onClick={() => handleClickClose('deleteFile')}
-          >
-            Cancel
-          </Button>
-          <Button
-            color="primary"
-            variant="contained"
-            onClick={deleteFile}
-            className={classes.footerBtns}
-          >
-            Delete
-          </Button>
-        </DialogActions>
-      </Dialog>
+        toggleDialog={() => handleClickClose('deleteFile')}
+      />
       {/* Add supporting file snackbar */}
       <SnackbarAddSupportFile
         open={open.snackbarAddSupporting}
