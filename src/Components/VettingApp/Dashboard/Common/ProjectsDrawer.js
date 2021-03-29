@@ -24,7 +24,7 @@ const useStyles = makeStyles((theme) => ({
   drawerPaper: {
     boxSizing: 'border-box',
     width: DRAWER_WIDTH,
-    height: `calc(100% - 70px)`,
+    height: '100vh',
     paddingTop: theme.spacing(8),
     paddingBottom: theme.spacing(10.5),
     paddingRight: theme.spacing(1.25),
