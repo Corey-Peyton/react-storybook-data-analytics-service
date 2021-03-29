@@ -6,6 +6,7 @@ import TreeView from '@material-ui/lab/TreeView';
 import TreeItem from '@material-ui/lab/TreeItem';
 import FolderOpenIcon from '@material-ui/icons/FolderOpen';
 import {makeStyles} from '@material-ui/styles';
+import {HEAD_H} from '../../../../Theme/constants';
 import {
   createMuiTheme,
   MuiThemeProvider,
@@ -24,9 +25,9 @@ const useStyles = makeStyles((theme) => ({
   drawerPaper: {
     boxSizing: 'border-box',
     width: DRAWER_WIDTH,
-    height: '100vh',
-    paddingTop: theme.spacing(8),
-    paddingBottom: theme.spacing(10.5),
+    height: `calc(100vh - ${HEAD_H}px)`,
+    marginTop: theme.spacing(8),
+    paddingBottom: theme.spacing(2),
     paddingRight: theme.spacing(1.25),
     zIndex: '10 !important',
     overflowX: 'hidden',
@@ -49,11 +50,6 @@ const useStyles = makeStyles((theme) => ({
   },
   drawerSectionIndex: {
     zIndex: -10,
-  },
-  treeItem: {
-    '&:last-child': {
-      paddingBottom: theme.spacing(10.5),
-    },
   },
   closeBtn: {
     flexGrow: 1,
@@ -244,7 +240,6 @@ export default function ProjectsDrawer(props) {
             key={`${index}`}
             labelText={el}
             labelIcon={FolderOpenIcon}
-            className={classes.treeItem}
             tooltip={t(el)}
           />
         ))}
