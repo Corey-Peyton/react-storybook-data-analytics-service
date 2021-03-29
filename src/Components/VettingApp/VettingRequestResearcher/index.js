@@ -46,9 +46,6 @@ const useStyles = makeStyles((theme) => ({
   main: {
     background: theme.palette.grey[100],
     paddingBottom: theme.spacing(6),
-    borderBottomWidth: '1px',
-    borderBottomStyle: 'solid',
-    borderBottomColor: theme.palette.grey[300],
   },
   divider: {
     margin: theme.spacing(3, 0),

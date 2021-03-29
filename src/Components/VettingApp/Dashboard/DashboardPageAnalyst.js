@@ -17,6 +17,7 @@ import BypassBlocks from '../../BypassBlocks';
 import {requestListResearchers} from '../../../Data/fakeData';
 import {DRAWER_WIDTH} from './Common/ProjectsDrawer';
 import ManageTeamDrawer from '../CommonComponents/ManageTeamDrawer';
+import {FOOT_H} from '../../../Theme/constants';
 
 const useStyles = makeStyles((theme) => ({
   main: {
@@ -45,6 +46,8 @@ const useStyles = makeStyles((theme) => ({
     justifyContent: 'space-between',
   },
   content: {
+    minHeight: `calc(100vh - ${FOOT_H}px)`,
+    boxSizing: 'border-box',
     background: theme.palette.grey[100],
     padding: theme.spacing(0, 3, 3, 3),
     paddingTop: theme.spacing(11),
