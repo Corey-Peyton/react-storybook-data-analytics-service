@@ -3,6 +3,7 @@ import {useTranslation} from 'react-i18next';
 import {makeStyles} from '@material-ui/core/styles';
 import DeleteIcon from '@material-ui/icons/Delete';
 import clsx from 'clsx';
+import {SnackbarDeleteSupportFile} from '../Snackbars';
 import {
   FormControl,
   InputLabel,
@@ -25,6 +26,7 @@ import {
 import Autocomplete from '@material-ui/lab/Autocomplete';
 import InfoIcon from '@material-ui/icons/Info';
 import CloseIcon from '@material-ui/icons/Close';
+import {DialogDelete} from '../DialogBox';
 
 const useStyles = makeStyles((theme) => ({
   inputMargin: {
@@ -86,12 +88,9 @@ const useStyles = makeStyles((theme) => ({
     },
   },
   buttonTooltip: {
-    'display': 'flex',
-    'alignItems': 'center',
-    'marginBottom': theme.spacing(3),
-    '& svg': {
-      marginLeft: theme.spacing(1),
-    },
+    display: 'flex',
+    alignItems: 'center',
+    marginBottom: theme.spacing(3),
   },
 }));
 
@@ -252,6 +251,8 @@ function OutputFileForm(props) {
     descriptiveStats: null,
     modifiedWeights: null,
     covariance: null,
+    snackbarDelete: false,
+    dialogDelete: false,
     sheetname: {
       text: '',
       errorText: '',
@@ -516,12 +517,24 @@ function OutputFileForm(props) {
     setSelected(event.target.value);
   };
 
+  const handleClickOpen = (element) => {
+    setState({...state, [element]: true});
+  };
+
+  const handleClickClose = (element) => {
+    setState({...state, [element]: false});
+  };
+
   const handleRadioChange = (event) => {
     const name = event.target.name;
     setState({
       ...state,
       [name]: event.target.value,
     });
+  };
+
+  const handleDeleteFile = () => {
+    setState({...state, dialogDelete: false, snackbarDelete: true});
   };
 
   return (
@@ -1094,7 +1107,11 @@ function OutputFileForm(props) {
           </Typography>
         </Grid>
         <Grid item>
-          <IconButton aria-label="delete" className={classes.margin}>
+          <IconButton
+            aria-label="delete"
+            className={classes.margin}
+            onClick={() => handleClickOpen('dialogDelete')}
+          >
             <DeleteIcon />
           </IconButton>
         </Grid>
@@ -1161,7 +1178,11 @@ function OutputFileForm(props) {
           </Typography>
         </Grid>
         <Grid item>
-          <IconButton aria-label="delete" className={classes.margin}>
+          <IconButton
+            aria-label="delete"
+            className={classes.margin}
+            onClick={() => handleClickOpen('dialogDelete')}
+          >
             <DeleteIcon />
           </IconButton>
         </Grid>
@@ -1233,6 +1254,17 @@ function OutputFileForm(props) {
         <BootstrapTooltip title="In addition to the mandatory files listed, include other files as required by the Survey Specific Guidelines, syntax files or other files requested by the Analyst.">
           <InfoIcon />
         </BootstrapTooltip>
+        {/* Delete file snackbar */}
+        <SnackbarDeleteSupportFile
+          open={state.snackbarDelete}
+          handleClose={() => handleClickClose('snackbarDelete')}
+        />
+        {/* Delete dialog */}
+        <DialogDelete
+          submitDialog={handleDeleteFile}
+          toggleDialog={() => handleClickClose('dialogDelete')}
+          open={state.dialogDelete}
+        />
       </div>
     </>
   );

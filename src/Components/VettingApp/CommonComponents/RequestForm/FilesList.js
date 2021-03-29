@@ -200,7 +200,7 @@ function FilesList(props) {
     snackbarDelete: false,
     addFile: false,
     editFile: false,
-    deleteFile: false,
+    dialogDelete: false,
   });
 
   const toggleDrawer = (event, drawer, state) => {
@@ -230,7 +230,7 @@ function FilesList(props) {
   };
 
   const deleteFile = () => {
-    setOpen({...open, snackbarDelete: true, deleteFile: false});
+    setOpen({...open, snackbarDelete: true, dialogDelete: false});
   };
 
   const addSupportingFile = () => {
@@ -544,7 +544,7 @@ function FilesList(props) {
               </Button>
               <Button
                 color="primary"
-                onClick={() => handleClickOpen('deleteFile')}
+                onClick={() => handleClickOpen('dialogDelete')}
               >
                 Delete
               </Button>
@@ -662,8 +662,8 @@ function FilesList(props) {
       {/* Delete dialog */}
       <DialogDelete
         submitDialog={deleteFile}
-        open={open.deleteFile}
-        toggleDialog={() => handleClickClose('deleteFile')}
+        open={open.dialogDelete}
+        toggleDialog={() => handleClickClose('dialogDelete')}
       />
       {/* Add supporting file snackbar */}
       <SnackbarAddSupportFile
