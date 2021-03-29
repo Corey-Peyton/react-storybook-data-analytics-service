@@ -18,6 +18,7 @@ import {requestListResearchers} from '../../../Data/fakeData';
 import {DRAWER_WIDTH} from './Common/ProjectsDrawer';
 import ManageTeamDrawer from '../CommonComponents/ManageTeamDrawer';
 import {FOOT_H} from '../../../Theme/constants';
+import FloatingSupportButton from '../CommonComponents/Support';
 
 const useStyles = makeStyles((theme) => ({
   main: {
@@ -352,6 +353,7 @@ export default function DashboardPageAnalyst() {
           </TabPanel>
         </Paper>
         <Footer open={open.projectsDrawer} />
+        <FloatingSupportButton />
       </main>
     </React.Fragment>
   );
