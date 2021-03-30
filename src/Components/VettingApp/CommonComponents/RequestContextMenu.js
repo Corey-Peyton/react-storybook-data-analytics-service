@@ -1,6 +1,6 @@
 import React from 'react';
 import {useTranslation} from 'react-i18next';
-import {withStyles} from '@material-ui/core/styles';
+import {makeStyles, withStyles} from '@material-ui/core/styles';
 import {Typography} from '@material-ui/core';
 import IconButton from '@material-ui/core/IconButton';
 import Menu from '@material-ui/core/Menu';
@@ -14,13 +14,21 @@ import {
   SnackbarUnassign,
 } from './Snackbars';
 import {
-  DialogAssign,
   DialogInfo,
   DialogAssignAsSupport,
   DialogNoLead,
+  DialogAssignAsLead,
 } from './DialogBox';
 import SummaryDrawer from './SummaryDrawer';
 import {loggedInUser} from '../../../Data/fakeData';
+
+const useStyles = makeStyles((theme) => ({
+  menu: {
+    paddingLeft: theme.spacing(1),
+    borderLeft: '1px solid',
+    borderLeftColor: theme.palette.divider,
+  },
+}));
 
 const StyledMenu = withStyles({
   paper: {
@@ -44,6 +52,7 @@ const StyledMenu = withStyles({
 ));
 
 export function ActionsMenu(props) {
+  const classes = useStyles();
   const {role, status, toggleManageTeamDrawer, controls, request} = props;
   const {t} = useTranslation();
   const currentUser = loggedInUser();
@@ -350,7 +359,7 @@ export function ActionsMenu(props) {
   }
 
   return (
-    <div>
+    <div className={classes.menu}>
       <IconButton
         onClick={handleClick}
         aria-controls={ariaControls}
@@ -411,7 +420,7 @@ export function ActionsMenu(props) {
         submitDialog={(e) => unassignLead(e)}
       />
       {/* Assign as lead dialog */}
-      <DialogAssign
+      <DialogAssignAsLead
         toggleDialog={(e) =>
           toggleDialog('dialogAssign', !open.dialogAssign, e)
         }

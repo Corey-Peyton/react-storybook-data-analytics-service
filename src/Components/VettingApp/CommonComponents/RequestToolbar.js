@@ -50,12 +50,10 @@ const useStyles = makeStyles((theme) => ({
   },
   title: {
     flexGrow: 1,
+    paddingLeft: theme.spacing(1),
   },
   headerBtnEnd: {
     paddingRight: theme.spacing(2),
-    marginRight: theme.spacing(1),
-    borderRight: '1px solid',
-    borderRightColor: theme.palette.divider,
   },
   headerBtn: {
     marginRight: theme.spacing(2),
@@ -255,13 +253,12 @@ function RequestToolbar(props) {
         <IconButton
           edge="start"
           className={classes.menuButton}
-          color="inherit"
-          aria-label="Back to vetting requests dashboard"
+          aria-label="Back to dashboard"
         >
           <ArrowBackIcon />
         </IconButton>
-        <Typography variant="subtitle1" component="p" className={classes.title}>
-          Vetting requests dashboard
+        <Typography variant="body2" component="p" className={classes.title}>
+          Dashboard
         </Typography>
         {role === 'analyst' && (
           <>
