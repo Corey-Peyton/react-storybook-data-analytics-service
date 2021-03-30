@@ -320,11 +320,7 @@ export function ActionsMenu(props) {
     );
   } else {
     // ROLE = RESEARCHER
-    if (
-      status === 'withdrawn' ||
-      status === 'approved' ||
-      status === 'denied'
-    ) {
+    if (status === 'withdrawn') {
       StyledMenuVar = (
         <StyledMenu
           id={ariaControls}
