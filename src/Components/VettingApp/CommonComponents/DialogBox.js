@@ -1,6 +1,7 @@
 /* eslint-disable jsx-a11y/no-autofocus */
 import React from 'react';
 import clsx from 'clsx';
+import Grid from '@material-ui/core/Grid';
 import {useTranslation} from 'react-i18next';
 import {useHistory, useLocation} from 'react-router-dom';
 import {makeStyles} from '@material-ui/core/styles';
@@ -8,6 +9,7 @@ import {green} from '@material-ui/core/colors';
 import CloseIcon from '@material-ui/icons/Close';
 import Icon from '@mdi/react';
 import {mdiAccount} from '@mdi/js';
+import {Link as RouterLink} from 'react-router-dom';
 import {
   Box,
   Typography,
@@ -136,13 +138,11 @@ const useStyles = makeStyles((theme) => ({
     maxHeight: `calc(${ROW_HEIGHT}px * 3)`,
     overflow: 'auto',
   },
-  vettingContainerFooter: {
-    padding: theme.spacing(1.75, 3),
-    display: 'flex',
-    justifyContent: 'flex-end',
-  },
   footerBtns: {
     marginLeft: theme.spacing(2),
+  },
+  gridfooterBtns: {
+    marginLeft: theme.spacing(3),
   },
   box: {
     padding: theme.spacing(1, 0),
@@ -888,6 +888,130 @@ export function DialogUnassign(props) {
         </DialogActions>
       </Dialog>
       <SnackbarUnassign open={snackbar} handleClose={SnackbarClose} />
+    </React.Fragment>
+  );
+}
+
+// ////////////////////////////////////////// SAVE BEFORE LEAVING
+export function DialogSaveBeforeLeaving(props) {
+  const classes = useStyles();
+  const {t} = useTranslation();
+  const {toggleDialog, open} = props;
+
+  const handleClick = (e) => {
+    e.stopPropagation();
+  };
+
+  return (
+    <React.Fragment>
+      <Dialog
+        onClose={toggleDialog}
+        aria-labelledby="dashboard-dialog-title"
+        open={open}
+        className={classes.root}
+        disableBackdropClick
+        scroll="paper"
+        onClick={handleClick}
+        onKeyPress={(e) => {
+          if (e.key === 'Enter') {
+            e.preventDefault();
+            e.stopPropagation();
+          }
+        }}
+      >
+        <DialogTitle id="dashboard-dialog-title">
+          <div className={classes.vettingContainerTitle}>
+            <Typography variant="h6">{t('Save before leaving?')}</Typography>
+            <IconButton
+              id="dialog-close"
+              onClick={toggleDialog}
+              edge="end"
+              aria-label="Save before leaving - close"
+              onKeyPress={(e) => {
+                e.preventDefault();
+                e.stopPropagation();
+                if (e.key === 'Enter') {
+                  toggleDialog(e);
+                }
+              }}
+            >
+              <CloseIcon />
+            </IconButton>
+          </div>
+        </DialogTitle>
+        <Divider />
+        <DialogContent>
+          <div className={classes.vettingSection}>
+            <div className={classes.vettingRow}>
+              <div className={classes.vettingColumn}>
+                <Alert severity="warning" className={classes.alert}>
+                  {t('Do not include any confidential information.')}
+                </Alert>
+              </div>
+            </div>
+          </div>
+        </DialogContent>
+        <Divider />
+        <DialogActions>
+          <Grid container spacing={2}>
+            <Grid item container>
+              <Grid item xs={2}>
+                <Button
+                  color="primary"
+                  component={RouterLink}
+                  to="/vetting-app/dashboard-analyst"
+                  onClick={toggleDialog}
+                  onKeyPress={(e) => {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    if (e.key === 'Enter') {
+                      toggleDialog(e);
+                    }
+                  }}
+                >
+                  {t('Don`t save')}
+                </Button>
+              </Grid>
+              <Grid item xs={6} />
+              <Grid item xs={2}>
+                <Button
+                  variant="outlined"
+                  color="primary"
+                  onClick={toggleDialog}
+                  className={classes.gridfooterBtns}
+                  onKeyPress={(e) => {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    if (e.key === 'Enter') {
+                      toggleDialog(e);
+                    }
+                  }}
+                >
+                  {t('Cancel')}
+                </Button>
+              </Grid>
+              <Grid item xs={2}>
+                <Button
+                  variant="contained"
+                  color="primary"
+                  component={RouterLink}
+                  to="/vetting-app/dashboard-analyst"
+                  className={classes.gridfooterBtns}
+                  onKeyPress={(e) => {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    if (e.key === 'Enter') {
+                      toggleDialog(e);
+                    }
+                  }}
+                >
+                  {t('Save')}
+                </Button>
+              </Grid>
+            </Grid>
+          </Grid>
+        </DialogActions>
+      </Dialog>
     </React.Fragment>
   );
 }

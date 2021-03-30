@@ -1,4 +1,5 @@
 import React from 'react';
+import {DialogSaveBeforeLeaving} from '../CommonComponents/DialogBox';
 import {makeStyles} from '@material-ui/core/styles';
 import {
   Paper,
@@ -127,6 +128,7 @@ function getSteps() {
 function VettingRequestAnalyst(props) {
   const [open, setOpen] = React.useState({
     manageTeamDrawer: false,
+    DialogSaveBeforeLeaving: false,
   });
   const toggleManageTeamDrawer = () => {
     setOpen({...open, manageTeamDrawer: !open.manageTeamDrawer});
@@ -196,6 +198,14 @@ function VettingRequestAnalyst(props) {
 
   const snackbarHandleClose = (state) => {
     setOpenSnackbar({...openSnackbar, [state]: false});
+  };
+
+  const handleClickClose = (state) => {
+    setOpen({...open, [state]: false});
+  };
+
+  const handleClickOpen = (state) => {
+    setOpen({...open, [state]: true});
   };
 
   const getStepContent = (step) => {
@@ -357,12 +367,16 @@ function VettingRequestAnalyst(props) {
                     variant="contained"
                     color="primary"
                     className={classes.button}
-                    onClick={handleBack}
+                    onClick={() => handleClickOpen('DialogSaveBeforeLeaving')}
                   >
                     Back
                   </Button>
                 </Grid>
               )}
+              <DialogSaveBeforeLeaving
+                toggleDialog={() => handleClickClose('DialogSaveBeforeLeaving')}
+                open={open.DialogSaveBeforeLeaving}
+              />
               {state.activeStep === getSteps().length - 1 ? (
                 <Grid item>
                   <Button
