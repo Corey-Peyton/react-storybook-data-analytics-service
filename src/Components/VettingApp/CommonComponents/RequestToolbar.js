@@ -1,5 +1,5 @@
 import React from 'react';
-import {makeStyles} from '@material-ui/core/styles';
+import {makeStyles, withStyles} from '@material-ui/core/styles';
 import {
   AppBar,
   Button,
@@ -7,6 +7,7 @@ import {
   IconButton,
   Typography,
   Grid,
+  Divider,
 } from '@material-ui/core';
 import ArrowBackIcon from '@material-ui/icons/ArrowBack';
 import Menu from '@material-ui/core/Menu';
@@ -59,6 +60,27 @@ const useStyles = makeStyles((theme) => ({
     alignItems: 'center',
   },
 }));
+
+const StyledMenu = withStyles({
+  paper: {
+    border: '1px solid #d3d4d5',
+  },
+})((props) => (
+  <Menu
+    disableScrollLock={false}
+    elevation={4}
+    getContentAnchorEl={null}
+    anchorOrigin={{
+      vertical: 'bottom',
+      horizontal: 'right',
+    }}
+    transformOrigin={{
+      vertical: 'top',
+      horizontal: 'right',
+    }}
+    {...props}
+  />
+));
 
 function RequestToolbar(props) {
   const classes = useStyles();
@@ -148,7 +170,7 @@ function RequestToolbar(props) {
           >
             Resolve
           </Button>
-          <Menu
+          <StyledMenu
             id="resolve-menu"
             anchorEl={anchorEl}
             keepMounted
@@ -156,12 +178,12 @@ function RequestToolbar(props) {
             onClose={handleMenuClose}
           >
             <MenuItem onClick={() => handleClickOpen('dialogApprove')}>
-              Approve
+              <Typography variant="body2">Approve</Typography>
             </MenuItem>
             <MenuItem onClick={() => handleClickOpen('dialogDenied')}>
-              Deny
+              <Typography variant="body2">Deny</Typography>
             </MenuItem>
-          </Menu>
+          </StyledMenu>
         </>
       );
     }
@@ -276,6 +298,7 @@ function RequestToolbar(props) {
                 {status === 'withdrawn' && reactivateButton()}
               </>
             )}
+            <Divider orientation="vertical" flexItem />
             <ActionsMenu
               toggleManageTeamDrawer={props.toggleManageTeamDrawer}
               status={props.status}

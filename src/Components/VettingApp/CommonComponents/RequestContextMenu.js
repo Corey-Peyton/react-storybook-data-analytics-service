@@ -25,8 +25,6 @@ import {loggedInUser} from '../../../Data/fakeData';
 const useStyles = makeStyles((theme) => ({
   menu: {
     paddingLeft: theme.spacing(1),
-    borderLeft: '1px solid',
-    borderLeftColor: theme.palette.divider,
   },
 }));
 
