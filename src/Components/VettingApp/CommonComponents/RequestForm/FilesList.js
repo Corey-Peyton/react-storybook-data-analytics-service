@@ -39,6 +39,7 @@ import {
   SnackbarDeleteOutputFile,
   SnackbarUpdateOutputFile,
 } from '../Snackbars';
+import {DialogDelete} from '../DialogBox';
 
 const useStylesBootstrap = makeStyles((theme) => ({
   arrow: {
@@ -199,7 +200,7 @@ function FilesList(props) {
     snackbarDelete: false,
     addFile: false,
     editFile: false,
-    deleteFile: false,
+    dialogDelete: false,
   });
 
   const toggleDrawer = (event, drawer, state) => {
@@ -226,6 +227,10 @@ function FilesList(props) {
 
   const updateFile = () => {
     setOpen({...open, snackbarUpdate: true, editFile: false});
+  };
+
+  const deleteFile = () => {
+    setOpen({...open, snackbarDelete: true, dialogDelete: false});
   };
 
   const addSupportingFile = () => {
@@ -539,7 +544,7 @@ function FilesList(props) {
               </Button>
               <Button
                 color="primary"
-                onClick={() => handleClickOpen('snackbarDelete')}
+                onClick={() => handleClickOpen('dialogDelete')}
               >
                 Delete
               </Button>
@@ -654,6 +659,12 @@ function FilesList(props) {
           </Button>
         </DialogActions>
       </Dialog>
+      {/* Delete dialog */}
+      <DialogDelete
+        submitDialog={deleteFile}
+        open={open.dialogDelete}
+        toggleDialog={() => handleClickClose('dialogDelete')}
+      />
       {/* Add supporting file snackbar */}
       <SnackbarAddSupportFile
         open={open.snackbarAddSupporting}
