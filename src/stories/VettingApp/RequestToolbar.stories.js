@@ -36,6 +36,7 @@ export const AnalystUnassignedDraft = (args) => {
     </>
   );
 };
+AnalystUnassignedDraft.storyName = 'Analyst (Unassigned) - Draft';
 
 export const AnalystLeadDraft = (args) => {
   const [open, setOpen] = React.useState({
@@ -64,6 +65,7 @@ export const AnalystLeadDraft = (args) => {
     </>
   );
 };
+AnalystLeadDraft.storyName = 'Analyst (Lead) - Draft';
 
 export const AnalystSupportDraft = (args) => {
   const [open, setOpen] = React.useState({
@@ -92,6 +94,7 @@ export const AnalystSupportDraft = (args) => {
     </>
   );
 };
+AnalystSupportDraft.storyName = 'Analyst (Support) - Draft';
 
 export const AnalystUnassignedSubmitted = (args) => {
   const [open, setOpen] = React.useState({
@@ -121,6 +124,7 @@ export const AnalystUnassignedSubmitted = (args) => {
     </>
   );
 };
+AnalystUnassignedSubmitted.storyName = 'Analyst (Unassigned) - Submitted';
 
 export const AnalystLeadSubmitted = (args) => {
   const [open, setOpen] = React.useState({
@@ -149,6 +153,7 @@ export const AnalystLeadSubmitted = (args) => {
     </>
   );
 };
+AnalystLeadSubmitted.storyName = 'Analyst (Lead) - Submitted';
 
 export const AnalystSupportSubmitted = (args) => {
   const [open, setOpen] = React.useState({
@@ -177,6 +182,7 @@ export const AnalystSupportSubmitted = (args) => {
     </>
   );
 };
+AnalystSupportSubmitted.storyName = 'Analyst (Support) - Submitted';
 
 export const AnalystUnassignedUnderReview = (args) => {
   const [open, setOpen] = React.useState({
@@ -205,6 +211,7 @@ export const AnalystUnassignedUnderReview = (args) => {
     </>
   );
 };
+AnalystUnassignedUnderReview.storyName = 'Analyst (Unassigned) - Under review';
 
 export const AnalystLeadUnderReview = (args) => {
   const [open, setOpen] = React.useState({
@@ -233,6 +240,7 @@ export const AnalystLeadUnderReview = (args) => {
     </>
   );
 };
+AnalystLeadUnderReview.storyName = 'Analyst (Lead) - Under review';
 
 export const AnalystSupportUnderReview = (args) => {
   const [open, setOpen] = React.useState({
@@ -261,6 +269,7 @@ export const AnalystSupportUnderReview = (args) => {
     </>
   );
 };
+AnalystSupportUnderReview.storyName = 'Analyst (Support) - Under review';
 
 export const AnalystUnassignedChangesRequested = (args) => {
   const [open, setOpen] = React.useState({
@@ -289,6 +298,8 @@ export const AnalystUnassignedChangesRequested = (args) => {
     </>
   );
 };
+AnalystUnassignedChangesRequested.storyName =
+  'Analyst (Unassigned) - Changes requested';
 
 export const AnalystLeadChangesRequested = (args) => {
   const [open, setOpen] = React.useState({
@@ -317,6 +328,7 @@ export const AnalystLeadChangesRequested = (args) => {
     </>
   );
 };
+AnalystLeadChangesRequested.storyName = 'Analyst (Lead) - Changes requested';
 
 export const AnalystSupportChangesRequested = (args) => {
   const [open, setOpen] = React.useState({
@@ -345,6 +357,8 @@ export const AnalystSupportChangesRequested = (args) => {
     </>
   );
 };
+AnalystSupportChangesRequested.storyName =
+  'Analyst (Support) - Changes requested';
 
 export const AnalystUnassignedApproved = (args) => {
   const [open, setOpen] = React.useState({
@@ -373,6 +387,7 @@ export const AnalystUnassignedApproved = (args) => {
     </>
   );
 };
+AnalystUnassignedApproved.storyName = 'Analyst (Unassigned) - Approved';
 
 export const AnalystLeadApproved = (args) => {
   const [open, setOpen] = React.useState({
@@ -401,6 +416,7 @@ export const AnalystLeadApproved = (args) => {
     </>
   );
 };
+AnalystLeadApproved.storyName = 'Analyst (Lead) - Approved';
 
 export const AnalystSupportApproved = (args) => {
   const [open, setOpen] = React.useState({
@@ -429,6 +445,7 @@ export const AnalystSupportApproved = (args) => {
     </>
   );
 };
+AnalystSupportApproved.storyName = 'Analyst (Support) - Approved';
 
 export const AnalystUnassignedDenied = (args) => {
   const [open, setOpen] = React.useState({
@@ -457,6 +474,7 @@ export const AnalystUnassignedDenied = (args) => {
     </>
   );
 };
+AnalystUnassignedDenied.storyName = 'Analyst (Unassigned) - Denied';
 
 export const AnalystLeadDenied = (args) => {
   const [open, setOpen] = React.useState({
@@ -485,6 +503,7 @@ export const AnalystLeadDenied = (args) => {
     </>
   );
 };
+AnalystLeadDenied.storyName = 'Analyst (Lead) - Denied';
 
 export const AnalystSupportDenied = (args) => {
   const [open, setOpen] = React.useState({
@@ -513,6 +532,7 @@ export const AnalystSupportDenied = (args) => {
     </>
   );
 };
+AnalystSupportDenied.storyName = 'Analyst (Support) - Denied';
 
 export const ResearcherDraft = (args) => {
   return (
@@ -526,6 +546,7 @@ export const ResearcherDraft = (args) => {
     />
   );
 };
+ResearcherDraft.storyName = 'Researcher - Draft';
 
 export const ResearcherSubmitted = (args) => {
   return (
@@ -539,6 +560,7 @@ export const ResearcherSubmitted = (args) => {
     />
   );
 };
+ResearcherSubmitted.storyName = 'Researcher - Submitted';
 
 export const ResearcherUnderReview = (args) => {
   return (
@@ -552,6 +574,7 @@ export const ResearcherUnderReview = (args) => {
     />
   );
 };
+ResearcherUnderReview.storyName = 'Researcher - Under review';
 
 export const ResearcherChangesRequested = (args) => {
   return (
@@ -565,6 +588,7 @@ export const ResearcherChangesRequested = (args) => {
     />
   );
 };
+ResearcherChangesRequested.storyName = 'Researcher - Changes requested';
 
 export const ResearcherWithdrawn = (args) => {
   return (
@@ -578,6 +602,7 @@ export const ResearcherWithdrawn = (args) => {
     />
   );
 };
+ResearcherWithdrawn.storyName = 'Researcher - Withdrawn';
 
 export const ResearcherApproved = (args) => {
   return (
@@ -591,6 +616,7 @@ export const ResearcherApproved = (args) => {
     />
   );
 };
+ResearcherApproved.storyName = 'Researcher - Approved';
 
 export const ResearcherDenied = (args) => {
   return (
@@ -604,3 +630,4 @@ export const ResearcherDenied = (args) => {
     />
   );
 };
+ResearcherDenied.storyName = 'Researcher - Denied';
