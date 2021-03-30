@@ -11,26 +11,35 @@ import {DRAWER_WIDTH} from '../Dashboard/Common/ProjectsDrawer';
 const date = moment().format('YYYY-MM-DD');
 
 const useStyles = makeStyles((theme) => ({
+  root: {
+    'height': '200px',
+    '& .MuiButton-text': {
+      padding: theme.spacing(0.75, 1.5),
+    },
+    '& .MuiIconButton-edgeStart': {
+      marginLeft: theme.spacing(-1.5),
+    },
+  },
   footer: {
-    height: theme.spacing(5),
+    height: 'auto',
     padding: theme.spacing(3),
     display: 'flex',
+    flexFlow: 'column',
     justifyContent: 'space-between',
-    alignItems: 'center',
     background: theme.palette.common.white,
     borderTop: '1px solid',
     borderTopColor: theme.palette.divider,
   },
   footerBtn: {
     color: theme.palette.text.secondary,
-    margin: theme.spacing(0, 0.5, 0, 0),
   },
   canadaLogo: {
     height: '24px',
+    margin: theme.spacing(3, 0),
   },
   langBtnContainer: {
-    paddingRight: theme.spacing(0.5),
-    marginRight: theme.spacing(0.5),
+    // paddingRight: theme.spacing(0.5),
+    // marginRight: theme.spacing(0.5),
     borderRightWidth: '1px',
     borderRightStyle: 'solid',
     borderRightColor: theme.palette.divider,
@@ -50,7 +59,7 @@ const Footer = React.forwardRef((props, ref) => {
 
   return (
     <footer
-      className={clsx(classes.footer, {
+      className={clsx(classes.root, classes.footer, {
         [classes.contentShift]: props.open,
       })}
       ref={ref}
@@ -60,7 +69,10 @@ const Footer = React.forwardRef((props, ref) => {
         <li>
           <div className={classes.langBtnContainer}>
             <h2 className="screen-reader-text">{t('Language selection')}</h2>
-            <Button id="test" className={classes.footerBtn}>
+            <Button
+              id="test"
+              className={clsx(classes.footerBtn, 'MuiIconButton-edgeStart')}
+            >
               <span lang="fr">Français</span>
             </Button>
           </div>
@@ -73,16 +85,6 @@ const Footer = React.forwardRef((props, ref) => {
         <li>
           <Button className={classes.footerBtn}>{t('Privacy')}</Button>
         </li>
-        <li>
-          <Typography
-            className="ml-1"
-            variant="subtitle2"
-            color="textSecondary"
-            component="p"
-          >
-            Date modified: {date}
-          </Typography>
-        </li>
       </ul>
       <div className={classes.canadaLogo}>
         <img
@@ -90,6 +92,9 @@ const Footer = React.forwardRef((props, ref) => {
           alt={t('Symbol of the Government of Canada')}
         />
       </div>
+      <Typography variant="body2" color="textSecondary" component="p">
+        Date modified: {date}
+      </Typography>
     </footer>
   );
 });
