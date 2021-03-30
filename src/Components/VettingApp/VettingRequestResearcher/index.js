@@ -37,6 +37,9 @@ import {
 import RequestToolbar from '../CommonComponents/RequestToolbar';
 
 const useStyles = makeStyles((theme) => ({
+  pageContainer: {
+    marginTop: theme.spacing(8),
+  },
   root: {
     '& .MuiDialogTitle-root': {
       padding: theme.spacing(1.5, 3),
@@ -295,7 +298,7 @@ function VettingRequestResearcher(props) {
     <React.Fragment>
       <Header />
       <main className={classes.main} tabIndex="-1">
-        <Container maxWidth={false} className="page-container">
+        <Container maxWidth={false} className={classes.pageContainer}>
           <RequestToolbar
             role="researcher"
             status="draft"

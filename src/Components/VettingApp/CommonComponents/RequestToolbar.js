@@ -1,5 +1,4 @@
 import React from 'react';
-import clsx from 'clsx';
 import {makeStyles} from '@material-ui/core/styles';
 import {
   AppBar,
@@ -7,6 +6,7 @@ import {
   Toolbar,
   IconButton,
   Typography,
+  Grid,
 } from '@material-ui/core';
 import ArrowBackIcon from '@material-ui/icons/ArrowBack';
 import Menu from '@material-ui/core/Menu';
@@ -41,7 +41,7 @@ import {loggedInUser} from '../../../Data/fakeData';
 
 const useStyles = makeStyles((theme) => ({
   appBar: {
-    margin: theme.spacing(0, -2),
+    margin: theme.spacing(0, -3),
     width: 'auto',
     backgroundColor: theme.palette.common.white,
     boxShadow: 'none',
@@ -49,14 +49,14 @@ const useStyles = makeStyles((theme) => ({
     borderBottomColor: theme.palette.divider,
   },
   title: {
-    flexGrow: 1,
     paddingLeft: theme.spacing(1),
-  },
-  headerBtnEnd: {
-    paddingRight: theme.spacing(2),
   },
   headerBtn: {
     marginRight: theme.spacing(2),
+  },
+  actions: {
+    display: 'flex',
+    alignItems: 'center',
   },
 }));
 
@@ -103,16 +103,15 @@ function RequestToolbar(props) {
       status === 'withdrawn'
     ) {
       return (
-        <div className={classes.headerBtnEnd}>
-          <Button
-            variant="text"
-            color="primary"
-            startIcon={<Icon path={mdiRestore} size={1} />}
-            onClick={() => handleClickOpen('snackbarReactivate')}
-          >
-            Reactivate
-          </Button>
-        </div>
+        <Button
+          className={classes.headerBtn}
+          variant="text"
+          color="primary"
+          startIcon={<Icon path={mdiRestore} size={1} />}
+          onClick={() => handleClickOpen('snackbarReactivate')}
+        >
+          Reactivate
+        </Button>
       );
     }
   };
@@ -136,8 +135,9 @@ function RequestToolbar(props) {
   const resolveButton = () => {
     if (status === 'under review') {
       return (
-        <div className={classes.headerBtnEnd}>
+        <>
           <Button
+            className={classes.headerBtn}
             aria-controls="resolve-menu"
             aria-haspopup="true"
             onClick={handleMenuOpen}
@@ -162,7 +162,7 @@ function RequestToolbar(props) {
               Deny
             </MenuItem>
           </Menu>
-        </div>
+        </>
       );
     }
   };
@@ -186,16 +186,15 @@ function RequestToolbar(props) {
   const startReviewButton = () => {
     if (status === 'submitted') {
       return (
-        <div className={classes.headerBtnEnd}>
-          <Button
-            variant="contained"
-            color="primary"
-            startIcon={<Icon path={mdiPlaySpeed} size={1} />}
-            onClick={() => handleClickOpen('snackbarStart')}
-          >
-            Start review
-          </Button>
-        </div>
+        <Button
+          className={classes.headerBtn}
+          variant="contained"
+          color="primary"
+          startIcon={<Icon path={mdiPlaySpeed} size={1} />}
+          onClick={() => handleClickOpen('snackbarStart')}
+        >
+          Start review
+        </Button>
       );
     }
   };
@@ -203,16 +202,15 @@ function RequestToolbar(props) {
   const submitButton = () => {
     if (status === 'draft' || status === 'changes requested') {
       return (
-        <div className={classes.headerBtnEnd}>
-          <Button
-            variant="contained"
-            color="primary"
-            startIcon={<Icon path={mdiInboxArrowDown} size={1} />}
-            onClick={() => handleClickOpen('snackbarSubmit')}
-          >
-            Submit
-          </Button>
-        </div>
+        <Button
+          className={classes.headerBtn}
+          variant="contained"
+          color="primary"
+          startIcon={<Icon path={mdiInboxArrowDown} size={1} />}
+          onClick={() => handleClickOpen('snackbarSubmit')}
+        >
+          Submit
+        </Button>
       );
     }
   };
@@ -224,25 +222,15 @@ function RequestToolbar(props) {
       status !== 'denied'
     ) {
       return (
-        <div
-          className={clsx({
-            [classes.headerBtnEnd]:
-              status !== 'draft' && status !== 'changes requested',
-          })}
+        <Button
+          className={classes.headerBtn}
+          variant="text"
+          color="primary"
+          startIcon={<Icon path={mdiUndo} size={1} />}
+          onClick={() => handleClickOpen('dialogWithdraw')}
         >
-          <Button
-            className={clsx({
-              [classes.headerBtn]:
-                status === 'draft' || status === 'changes requested',
-            })}
-            variant="text"
-            color="primary"
-            startIcon={<Icon path={mdiUndo} size={1} />}
-            onClick={() => handleClickOpen('dialogWithdraw')}
-          >
-            Withdraw
-          </Button>
-        </div>
+          Withdraw
+        </Button>
       );
     }
   };
@@ -250,42 +238,52 @@ function RequestToolbar(props) {
   return (
     <AppBar position="static" className={classes.appBar} color="default">
       <Toolbar>
-        <IconButton
-          edge="start"
-          className={classes.menuButton}
-          aria-label="Back to dashboard"
-        >
-          <ArrowBackIcon />
-        </IconButton>
-        <Typography variant="body2" component="p" className={classes.title}>
-          Dashboard
-        </Typography>
-        {role === 'analyst' && (
-          <>
-            {assignees.lead === currentUser && (
+        <Grid container justify="space-between">
+          <Grid item>
+            <IconButton
+              edge="start"
+              className={classes.menuButton}
+              aria-label="Back to dashboard"
+            >
+              <ArrowBackIcon />
+            </IconButton>
+            <Typography
+              variant="body2"
+              component="span"
+              className={classes.title}
+            >
+              Dashboard
+            </Typography>
+          </Grid>
+          <Grid item className={classes.actions}>
+            {role === 'analyst' && (
               <>
-                {reactivateButton()}
-                {requestChangesButton()}
-                {resolveButton()}
-                {startReviewButton()}
+                {assignees.lead === currentUser && (
+                  <>
+                    {reactivateButton()}
+                    {requestChangesButton()}
+                    {resolveButton()}
+                    {startReviewButton()}
+                  </>
+                )}
               </>
             )}
-          </>
-        )}
-        {role === 'researcher' && (
-          <>
-            {withdrawButton()}
-            {saveButton()}
-            {submitButton()}
-            {status === 'withdrawn' && reactivateButton()}
-          </>
-        )}
-        <ActionsMenu
-          toggleManageTeamDrawer={props.toggleManageTeamDrawer}
-          status={props.status}
-          role={props.role}
-          request={props.assignees}
-        />
+            {role === 'researcher' && (
+              <>
+                {withdrawButton()}
+                {saveButton()}
+                {submitButton()}
+                {status === 'withdrawn' && reactivateButton()}
+              </>
+            )}
+            <ActionsMenu
+              toggleManageTeamDrawer={props.toggleManageTeamDrawer}
+              status={props.status}
+              role={props.role}
+              request={props.assignees}
+            />
+          </Grid>
+        </Grid>
         {/* Request changes dialog */}
         <DialogUpdate
           toggleDialog={() => handleClickClose('dialogUpdate')}

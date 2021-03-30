@@ -28,6 +28,9 @@ import {SnackbarSubmitRequest} from '../CommonComponents/Snackbars';
 import ManageTeamDrawer from '../CommonComponents/ManageTeamDrawer';
 
 const useStyles = makeStyles((theme) => ({
+  pageContainer: {
+    marginTop: theme.spacing(8),
+  },
   main: {
     background: theme.palette.grey[100],
     paddingBottom: theme.spacing(6),
@@ -193,7 +196,7 @@ function VettingRequestAnalyst(props) {
     <>
       <Header />
       <main className={classes.main} tabIndex="-1">
-        <Container maxWidth="xl" className="page-container">
+        <Container maxWidth="xl" className={classes.pageContainer}>
           <ManageTeamDrawer
             open={open.manageTeamDrawer}
             clickHandler={toggleManageTeamDrawer}
