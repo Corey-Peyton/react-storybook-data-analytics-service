@@ -47,9 +47,6 @@ const useStyles = makeStyles((theme) => ({
   main: {
     background: theme.palette.grey[100],
     paddingBottom: theme.spacing(6),
-    borderBottomWidth: '1px',
-    borderBottomStyle: 'solid',
-    borderBottomColor: theme.palette.grey[300],
   },
   divider: {
     margin: theme.spacing(3, 0),
@@ -340,12 +337,22 @@ function VettingRequestResearcher(props) {
               <Grid item>
                 <div className={classes.statusLeft}>
                   <Icon path={mdiFileEditOutline} size={1} />
-                  <Typography variant="body2" className={classes.icongrey}>Draft</Typography>
+                  <Typography variant="body2" className={classes.icongrey}>
+                    Draft
+                  </Typography>
                 </div>
               </Grid>
-              <Divider className={classes.dividerHeight} orientation="vertical" flexItem />
+              <Divider
+                className={classes.dividerHeight}
+                orientation="vertical"
+                flexItem
+              />
               <Grid item>
-                <Typography variant="body2" color="textSecondary" className={classes.statusRight}>
+                <Typography
+                  variant="body2"
+                  color="textSecondary"
+                  className={classes.statusRight}
+                >
                   Unassigned
                 </Typography>
               </Grid>

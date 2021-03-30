@@ -6,8 +6,11 @@ import Icon from '@mdi/react';
 import {mdiFacebook, mdiTwitter} from '@mdi/js';
 const useStyles = makeStyles((theme) => ({
   footer: {
-    margin: theme.spacing(6, 0, 6, 0),
-    textAlign: 'center',
+    'margin': theme.spacing(6, 0, 6, 0),
+    'textAlign': 'center',
+    '&>ul': {
+      justifyContent: 'center',
+    },
     [theme.breakpoints.down('xs')]: {
       'marginTop': 0,
       'marginBottom': theme.spacing(3),
@@ -65,7 +68,8 @@ const CenteredFooter = (props) => {
             className={classes.footerBtn}
           >
             <Icon path={mdiFacebook} size={1} className="icon-grey" />
-          </IconButton></li>
+          </IconButton>
+        </li>
         <li>
           <IconButton
             aria-label={t('Twitter')}
@@ -73,12 +77,15 @@ const CenteredFooter = (props) => {
             className={classes.footerBtn}
           >
             <Icon path={mdiTwitter} size={1} className="icon-grey" />
-          </IconButton></li>
+          </IconButton>
+        </li>
         <li>
           <Button className={classes.footerBtn}>{t('About')}</Button>
         </li>
         <li>
-          <Button className={classes.footerBtn}>{t('Terms and conditions')}</Button>
+          <Button className={classes.footerBtn}>
+            {t('Terms and conditions')}
+          </Button>
         </li>
         <li>
           <Button className={classes.footerBtn}>{t('Privacy')}</Button>

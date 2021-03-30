@@ -12,44 +12,21 @@ const date = moment().format('YYYY-MM-DD');
 
 const useStyles = makeStyles((theme) => ({
   footer: {
-    position: 'relative',
-    zIndex: 1200,
-    padding: theme.spacing(3, 0, 3, 0),
+    height: theme.spacing(5),
+    padding: theme.spacing(3),
     display: 'flex',
     justifyContent: 'space-between',
     alignItems: 'center',
-    background: 'white',
-    [theme.breakpoints.down('sm')]: {
-      'justifyContent': 'center',
-      '& ul': {
-        display: 'flex',
-        flexWrap: 'wrap',
-        justifyContent: 'center',
-        alignItems: 'center',
-      },
-    },
+    background: theme.palette.common.white,
+    borderTop: '1px solid',
+    borderTopColor: theme.palette.divider,
   },
   footerBtn: {
     color: theme.palette.text.secondary,
     margin: theme.spacing(0, 0.5, 0, 0),
   },
-  dateModified: {
-    fontFamily: 'Roboto !important',
-    color: '#0000008A',
-    fontSize: '14px',
-    fontWeight: '500',
-    fontStyle: 'italic',
-  },
   canadaLogo: {
     height: '24px',
-    display: 'flex',
-    textAlign: 'right',
-    paddingRight: theme.spacing(1),
-    [theme.breakpoints.down('sm')]: {
-      width: '100%',
-      marginTop: theme.spacing(3),
-      textAlign: 'center',
-    },
   },
   langBtnContainer: {
     paddingRight: theme.spacing(0.5),
@@ -64,10 +41,6 @@ const useStyles = makeStyles((theme) => ({
       duration: theme.transitions.duration.enteringScreen,
     }),
     marginLeft: DRAWER_WIDTH,
-  },
-  footerFIP: {
-    height: '100%',
-    width: '100%',
   },
 }));
 
@@ -101,7 +74,12 @@ const Footer = React.forwardRef((props, ref) => {
           <Button className={classes.footerBtn}>{t('Privacy')}</Button>
         </li>
         <li>
-          <Typography variant="subtitle2" color="textSecondary" component="p">
+          <Typography
+            className="ml-1"
+            variant="subtitle2"
+            color="textSecondary"
+            component="p"
+          >
             Date modified: {date}
           </Typography>
         </li>
@@ -110,7 +88,6 @@ const Footer = React.forwardRef((props, ref) => {
         <img
           src={process.env.PUBLIC_URL + '/images/wmms.svg'}
           alt={t('Symbol of the Government of Canada')}
-          className={classes.footerFIP}
         />
       </div>
     </footer>

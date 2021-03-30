@@ -225,7 +225,8 @@ export const useStyles = makeStyles({
       fill: theme.palette.grey[600],
     },
     '.list-horizontal': {
-      'display': 'inline-block',
+      'display': 'flex',
+      'alignItems': 'center',
       'padding': 0,
       '& li': {
         display: 'inline-block',
