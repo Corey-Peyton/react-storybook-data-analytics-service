@@ -27,6 +27,7 @@ import {
   DialogNoLead,
   DialogAssignAsLead,
   DialogAssignAsSupport,
+  DialogDelete,
 } from '../../CommonComponents/DialogBox';
 import {loggedInUser} from '../../../../Data/fakeData';
 
@@ -88,6 +89,7 @@ export function ActionsMenu(props) {
     dialogNoLeadAssignSupport: false,
     dialogAssignAsLead: false,
     dialogAssignAsSupport: false,
+    dialogDelete: false,
     role: '',
     action: '',
   });
@@ -144,6 +146,11 @@ export function ActionsMenu(props) {
       dialogNoLeadAssignSupport: !open.dialogNoLeadAssignSupport,
       snackbarAssignSupport: true,
     });
+  };
+
+  const deleteRequest = (e) => {
+    e.stopPropagation();
+    setOpen({...open, dialogDelete: false, snackbarDelete: true});
   };
 
   const viewRequestMenuItem = () => {
@@ -235,7 +242,7 @@ export function ActionsMenu(props) {
       <MenuItem
         onClick={(e) => {
           e.stopPropagation();
-          handleSnackbarOpen('snackbarDelete');
+          toggleDialog('dialogDelete', !open.dialogDelete, e);
         }}
       >
         <ListItemText
@@ -917,6 +924,13 @@ export function ActionsMenu(props) {
           toggleDialog('dialogAssignAsSupport', !open.dialogAssignAsSupport, e)
         }
         origin="actionsMenu"
+      />
+      <DialogDelete
+        submitDialog={deleteRequest}
+        open={open.dialogDelete}
+        toggleDialog={(e) => {
+          toggleDialog('dialogDelete', !open.dialogDelete, e);
+        }}
       />
     </div>
   );

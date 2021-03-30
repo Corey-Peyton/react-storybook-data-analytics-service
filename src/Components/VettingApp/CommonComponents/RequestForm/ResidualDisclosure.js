@@ -24,6 +24,7 @@ import {
   SnackbarAddSupportFile,
   SnackbarDeleteSupportFile,
 } from '../Snackbars';
+import {DialogDelete} from '../DialogBox';
 
 const useStylesBootstrap = makeStyles((theme) => ({
   arrow: {
@@ -141,7 +142,7 @@ function ResidualDisclosure(props) {
     notes3: '',
     snackbarAddFile: false,
     snackbarDelete: false,
-    dialogDeleteFile: false,
+    dialogDelete: false,
   });
 
   const initial = {
@@ -296,6 +297,10 @@ function ResidualDisclosure(props) {
 
   const handleAddFile = () => {
     setState({...state, addFile: true, snackbarAddFile: true});
+  };
+
+  const handleDeleteFile = () => {
+    setState({...state, dialogDelete: false, snackbarDelete: true});
   };
 
   const handleClickOpen = (element) => {
@@ -632,7 +637,7 @@ function ResidualDisclosure(props) {
                         aria-label="delete file 3"
                         className={classes.margin}
                         edge="end"
-                        onClick={() => handleClickOpen('snackbarDelete')}
+                        onClick={() => handleClickOpen('dialogDelete')}
                       >
                         <DeleteIcon />
                       </IconButton>
@@ -1049,7 +1054,7 @@ function ResidualDisclosure(props) {
                         aria-label="delete file 3"
                         className={classes.margin}
                         edge="end"
-                        onClick={() => handleClickOpen('snackbarDelete')}
+                        onClick={() => handleClickOpen('dialogDelete')}
                       >
                         <DeleteIcon />
                       </IconButton>
@@ -1129,6 +1134,12 @@ function ResidualDisclosure(props) {
       <SnackbarDeleteSupportFile
         open={state.snackbarDelete}
         handleClose={() => handleClickClose('snackbarDelete')}
+      />
+      {/* Delete dialog */}
+      <DialogDelete
+        submitDialog={handleDeleteFile}
+        toggleDialog={() => handleClickClose('dialogDelete')}
+        open={state.dialogDelete}
       />
     </React.Fragment>
   );
