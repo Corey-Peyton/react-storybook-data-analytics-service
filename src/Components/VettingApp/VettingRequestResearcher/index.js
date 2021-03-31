@@ -11,11 +11,6 @@ import {
   StepLabel,
   Typography,
   Divider,
-  Dialog,
-  DialogTitle,
-  DialogContent,
-  DialogActions,
-  IconButton,
 } from '@material-ui/core';
 import ArrowForwardIosIcon from '@material-ui/icons/ArrowForwardIos';
 import ArrowBackIosIcon from '@material-ui/icons/ArrowBackIos';
@@ -29,21 +24,12 @@ import FloatingSupportButton from '../CommonComponents/Support';
 import Header from '../CommonComponents/Header';
 import Footer from '../CommonComponents/Footer';
 import CutCopyPasteAlert from '../CommonComponents/CutCopyPasteAlert';
-import CloseIcon from '@material-ui/icons/Close';
-import {
-  SnackbarDeleteRequest,
-  SnackbarSubmitRequest,
-} from '../CommonComponents/Snackbars';
+import {SnackbarSubmitRequest} from '../CommonComponents/Snackbars';
 import RequestToolbar from '../CommonComponents/RequestToolbar';
 
 const useStyles = makeStyles((theme) => ({
   pageContainer: {
     marginTop: theme.spacing(8),
-  },
-  root: {
-    '& .MuiDialogTitle-root': {
-      padding: theme.spacing(1.5, 3),
-    },
   },
   main: {
     background: theme.palette.grey[100],
@@ -103,54 +89,6 @@ const useStyles = makeStyles((theme) => ({
     borderTopWidth: '1px',
     borderTopColor: theme.palette.divider,
   },
-  dialogFooter: {
-    padding: theme.spacing(3, 3),
-    display: 'flex',
-    justifyContent: 'flex-end',
-  },
-  footerBtns: {
-    marginLeft: [theme.spacing(2), '!important'],
-  },
-  dialogActions: {
-    padding: theme.spacing(0, 3, 3, 3),
-  },
-  vettingContainerTitle: {
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'space-between',
-  },
-  vettingSection: {
-    display: 'flex',
-    flexFlow: 'column',
-    padding: theme.spacing(3),
-    overflowY: 'auto',
-  },
-  vettingRow: {
-    'display': 'flex',
-    'margin': theme.spacing(1.5, 0),
-    'flexFlow': 'row',
-    'height': '100%',
-    'justifyContent': 'center',
-    'width': '100%',
-    'alignItems': 'center',
-    '&:first-child': {
-      marginTop: 0,
-    },
-    '&:last-child': {
-      marginBottom: 0,
-    },
-  },
-  vettingColumn: {
-    'display': 'flex',
-    'flexDirection': 'column',
-    'width': '100%',
-    'justifyContent': 'center',
-    'marginRight': theme.spacing(1),
-    'height': '100%',
-    '&:last-child': {
-      marginRight: 0,
-    },
-  },
 }));
 
 function getSteps() {
@@ -172,14 +110,6 @@ function VettingRequestResearcher(props) {
     title: 'Untitled request',
   });
   const steps = getSteps();
-
-  // const handleDialogOpen = () => {
-  //   setState({...state, open: true});
-  // };
-
-  const handleDialogClose = () => {
-    setState({...state, open: false});
-  };
 
   const totalSteps = () => {
     return steps.length;
@@ -229,16 +159,6 @@ function VettingRequestResearcher(props) {
 
   const handleClick = () => {
     setOpenSnackbar(true);
-  };
-
-  const [openSnackbarDelete, setOpenSnackbarDelete] = React.useState(false);
-
-  const handleClickDelete = () => {
-    setOpenSnackbarDelete(true);
-  };
-
-  const snackbardeletehandleClose = () => {
-    setOpenSnackbarDelete(false);
   };
 
   const getStepContent = (step) => {
@@ -459,60 +379,6 @@ function VettingRequestResearcher(props) {
           </Paper>
           <FloatingSupportButton />
         </Container>
-
-        <Dialog
-          open={state.open}
-          onClose={handleDialogClose}
-          aria-labelledby="alert-dialog-title"
-          aria-describedby="alert-dialog-description"
-          className={classes.root}
-          disableBackdropClick
-          scroll="paper"
-        >
-          <DialogTitle id="alert-dialog-title">
-            <div className={classes.vettingContainerTitle}>
-              Delete vetting request
-              <IconButton onClick={handleDialogClose} edge="end">
-                <CloseIcon />
-              </IconButton>
-            </div>
-          </DialogTitle>
-          <Divider />
-          <DialogContent>
-            <div className={classes.vettingSection}>
-              <div className={classes.vettingRow}>
-                <div className={classes.vettingColumn}>
-                  <Typography variant="body2">{`Are you sure you want to delete the Vetting disclosure request "${state.title}"?`}</Typography>
-                </div>
-              </div>
-            </div>
-          </DialogContent>
-          <Divider />
-          <DialogActions className={classes.dialogFooter}>
-            <Button
-              onClick={handleDialogClose}
-              color="primary"
-              variant="outlined"
-            >
-              Cancel
-            </Button>
-            <Button
-              color="primary"
-              variant="contained"
-              className={classes.footerBtns}
-              onClick={() => {
-                handleClickDelete();
-                handleDialogClose();
-              }}
-            >
-              Delete request
-            </Button>
-          </DialogActions>
-        </Dialog>
-        <SnackbarDeleteRequest
-          open={openSnackbarDelete}
-          handleClose={snackbardeletehandleClose}
-        />
       </main>
       <Footer />
     </React.Fragment>

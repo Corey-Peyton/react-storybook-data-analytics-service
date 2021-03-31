@@ -18,6 +18,7 @@ import {
   DialogAssignAsSupport,
   DialogNoLead,
   DialogAssignAsLead,
+  DialogDelete,
 } from './DialogBox';
 import SummaryDrawer from './SummaryDrawer';
 import {loggedInUser} from '../../../Data/fakeData';
@@ -66,6 +67,7 @@ export function ActionsMenu(props) {
     dialogNoLeadAssignSupport: false,
     dialogAssignAsSupport: false,
     dialogNoLeadUnassign: false,
+    dialogDelete: false,
     summaryDrawer: false,
   });
 
@@ -123,6 +125,10 @@ export function ActionsMenu(props) {
     });
   };
 
+  const deleteRequest = (e) => {
+    setOpen({...open, dialogDelete: false, snackbarDelete: true});
+  };
+
   const assigneeDetailsMenuItem = () => {
     return (
       <MenuItem
@@ -163,7 +169,7 @@ export function ActionsMenu(props) {
         onClick={(e) => {
           e.stopPropagation();
           handleClose(e);
-          handleSnackbarOpen('snackbarDelete');
+          toggleDialog('dialogDelete', !open.dialogDelete, e);
         }}
       >
         <ListItemText
@@ -435,6 +441,14 @@ export function ActionsMenu(props) {
         }
         open={open.dialogInfoRequester}
         header={'Requester details'}
+      />
+      {/* Delete request dialog */}
+      <DialogDelete
+        submitDialog={deleteRequest}
+        open={open.dialogDelete}
+        toggleDialog={(e) => {
+          toggleDialog('dialogDelete', !open.dialogDelete, e);
+        }}
       />
       {/* Summary drawer */}
       <SummaryDrawer
