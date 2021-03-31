@@ -953,61 +953,56 @@ export function DialogSaveBeforeLeaving(props) {
         </DialogContent>
         <Divider />
         <DialogActions>
-          <Grid container spacing={2}>
-            <Grid item container>
-              <Grid item xs={2}>
-                <Button
-                  color="primary"
-                  component={RouterLink}
-                  to="/vetting-app/dashboard-analyst"
-                  onClick={toggleDialog}
-                  onKeyPress={(e) => {
-                    e.preventDefault();
-                    e.stopPropagation();
-                    if (e.key === 'Enter') {
-                      toggleDialog(e);
-                    }
-                  }}
-                >
-                  {t('Don`t save')}
-                </Button>
-              </Grid>
-              <Grid item xs={6} />
-              <Grid item xs={2}>
-                <Button
-                  variant="outlined"
-                  color="primary"
-                  onClick={toggleDialog}
-                  className={classes.gridfooterBtns}
-                  onKeyPress={(e) => {
-                    e.preventDefault();
-                    e.stopPropagation();
-                    if (e.key === 'Enter') {
-                      toggleDialog(e);
-                    }
-                  }}
-                >
-                  {t('Cancel')}
-                </Button>
-              </Grid>
-              <Grid item xs={2}>
-                <Button
-                  variant="contained"
-                  color="primary"
-                  component={RouterLink}
-                  to="/vetting-app/dashboard-analyst"
-                  className={classes.gridfooterBtns}
-                  onKeyPress={(e) => {
-                    e.preventDefault();
-                    e.stopPropagation();
-                    if (e.key === 'Enter') {
-                      toggleDialog(e);
-                    }
-                  }}
-                >
-                  {t('Save')}
-                </Button>
-              </Grid>
+          <Grid container justify="space-between">
+            <Grid item>
+              <Button
+                color="primary"
+                component={RouterLink}
+                to="/vetting-app/dashboard-analyst"
+                onClick={toggleDialog}
+                onKeyPress={(e) => {
+                  e.preventDefault();
+                  e.stopPropagation();
+                  if (e.key === 'Enter') {
+                    toggleDialog(e);
+                  }
+                }}
+              >
+                {t('Don`t save')}
+              </Button>
+            </Grid>
+            <Grid item>
+              <Button
+                variant="outlined"
+                color="primary"
+                onClick={toggleDialog}
+                className={classes.gridfooterBtns}
+                onKeyPress={(e) => {
+                  e.preventDefault();
+                  e.stopPropagation();
+                  if (e.key === 'Enter') {
+                    toggleDialog(e);
+                  }
+                }}
+              >
+                {t('Cancel')}
+              </Button>
+              <Button
+                variant="contained"
+                color="primary"
+                component={RouterLink}
+                to="/vetting-app/dashboard-analyst"
+                className={classes.gridfooterBtns}
+                onKeyPress={(e) => {
+                  e.preventDefault();
+                  e.stopPropagation();
+                  if (e.key === 'Enter') {
+                    toggleDialog(e);
+                  }
+                }}
+              >
+                {t('Save')}
+              </Button>
             </Grid>
           </Grid>
         </DialogActions>
