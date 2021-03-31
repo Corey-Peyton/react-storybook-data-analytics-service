@@ -1,5 +1,6 @@
 import React from 'react';
 import {makeStyles, withStyles} from '@material-ui/core/styles';
+import {DialogSaveBeforeLeaving} from '../CommonComponents/DialogBox';
 import {
   AppBar,
   Button,
@@ -266,6 +267,7 @@ function RequestToolbar(props) {
               edge="start"
               className={classes.menuButton}
               aria-label="Back to dashboard"
+              onClick={() => handleClickOpen('DialogSaveBeforeLeaving')}
             >
               <ArrowBackIcon />
             </IconButton>
@@ -277,6 +279,11 @@ function RequestToolbar(props) {
               Dashboard
             </Typography>
           </Grid>
+          <DialogSaveBeforeLeaving
+            toggleDialog={() => handleClickClose('DialogSaveBeforeLeaving')}
+            open={open.DialogSaveBeforeLeaving}
+          />
+
           <Grid item className={classes.actions}>
             {role === 'analyst' && (
               <>
