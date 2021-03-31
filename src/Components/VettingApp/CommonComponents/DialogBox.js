@@ -945,7 +945,7 @@ export function DialogSaveBeforeLeaving(props) {
             <div className={classes.vettingRow}>
               <div className={classes.vettingColumn}>
                 <Alert severity="warning" className={classes.alert}>
-                  {t('Do not include any confidential information.')}
+                  {t('If you don`t save your changes will be lost.')}
                 </Alert>
               </div>
             </div>
