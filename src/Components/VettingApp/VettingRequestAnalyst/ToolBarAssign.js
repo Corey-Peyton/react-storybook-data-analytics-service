@@ -1,5 +1,6 @@
 import React from 'react';
 import {makeStyles} from '@material-ui/core/styles';
+import {DialogSaveBeforeLeaving} from '../CommonComponents/DialogBox';
 import {Button, Toolbar, IconButton, Typography} from '@material-ui/core';
 import Icon from '@mdi/react';
 import SaveIcon from '@material-ui/icons/Save';
@@ -99,9 +100,14 @@ function ToolBarAssign(props) {
         className={classes.menuButton}
         color="inherit"
         aria-label="Back to vetting requests dashboard"
+        onClick={() => handleOpen('DialogSaveBeforeLeaving')}
       >
         <ArrowBackIcon />
       </IconButton>
+      <DialogSaveBeforeLeaving
+        toggleDialog={() => handleClose('DialogSaveBeforeLeaving')}
+        open={open.DialogSaveBeforeLeaving}
+      />
       <Typography variant="subtitle1" component="p" className={classes.title}>
         Vetting requests dashboard
       </Typography>
