@@ -227,10 +227,10 @@ function VettingRequestResearcher(props) {
     setState({...state, activeStep: newActiveStep});
   };
 
-  const handleBack = () => {
+/*   const handleBack = () => {
     const prevActiveStep = state.activeStep;
     setState({...state, activeStep: prevActiveStep - 1});
-  };
+  }; */
 
   const handleStep = (step) => () => {
     setState({...state, activeStep: step});
@@ -374,7 +374,7 @@ function VettingRequestResearcher(props) {
             <div className={classes.stepperContainer}>
               {state.activeStep !== 0 && (
                 <Button
-                  onClick={handleBack}
+                  onClick={() => handleClickOpen('DialogSaveBeforeLeaving')}
                   className={classes.stepperBackBtn}
                   startIcon={<ArrowBackIosIcon />}
                 >
