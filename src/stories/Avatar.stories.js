@@ -4,7 +4,7 @@ import {Avatar} from '../Components/CommonComponents/Avatar';
 import avatarImg from './assets/avatar.jpg';
 
 export default {
-  title: 'Design System/Avatar',
+  title: 'Atoms/Avatar',
   component: Avatar,
 };
 

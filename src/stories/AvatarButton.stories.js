@@ -4,7 +4,7 @@ import {AvatarButton} from '../Components/CommonComponents/AvatarButton';
 import avatarImg from './assets/avatar.jpg';
 
 export default {
-  title: 'Design System/Buttons/AvatarButton',
+  title: 'Atoms/Buttons/AvatarButton',
   component: AvatarButton,
 };
 

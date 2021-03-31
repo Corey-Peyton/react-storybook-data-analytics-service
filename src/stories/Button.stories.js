@@ -5,7 +5,7 @@ import Icon from '@mdi/react';
 import {mdiPlus} from '@mdi/js';
 
 export default {
-  title: 'Design System/Buttons/Button',
+  title: 'Atoms/Buttons/Button',
   component: Button,
 };
 

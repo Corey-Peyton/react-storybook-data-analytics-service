@@ -20,7 +20,6 @@ import {
   DialogWithdraw,
   DialogUnassign,
   DialogSupport,
-  DialogAssign,
   DialogUpdate,
   DialogDenied,
   DialogApprove,
@@ -863,7 +862,7 @@ export function ActionsMenu(props) {
         }
         open={open.dialogSupport}
       />
-      <DialogAssign
+      <DialogAssignAsLead
         toggleDialog={(e) =>
           toggleDialog('dialogAssign', !open.dialogAssign, e)
         }
