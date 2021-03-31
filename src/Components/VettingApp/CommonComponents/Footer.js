@@ -11,15 +11,6 @@ import {DRAWER_WIDTH} from '../Dashboard/Common/ProjectsDrawer';
 const date = moment().format('YYYY-MM-DD');
 
 const useStyles = makeStyles((theme) => ({
-  // root: {
-  //   'height': '200px',
-  //   '& .MuiButton-text': {
-  //     // padding: theme.spacing(0.75, 1.5),
-  //   },
-  //   '& .MuiIconButton-edgeStart': {
-  //     // marginLeft: theme.spacing(-1.5),
-  //   },
-  // },
   footer: {
     height: 'auto',
     display: 'flex',
