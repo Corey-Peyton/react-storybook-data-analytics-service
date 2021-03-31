@@ -16,14 +16,14 @@ import {
 import CloseIcon from '@material-ui/icons/Close';
 import PersonIcon from '@material-ui/icons/Person';
 
-import {AnalystMenu} from '../../Dashboard/Common/ContextMenu';
-import {analystList} from '../../../../Data/fakeData';
+import {AnalystMenu} from '../Dashboard/Common/ContextMenu';
+import {analystList} from '../../../Data/fakeData';
 import {
   DialogNoLead,
   DialogAssignAsLead,
   DialogAssignAsSupport,
-} from '../../CommonComponents/DialogBox';
-import {SnackbarAssigneeChange} from '../../CommonComponents/Snackbars';
+} from './DialogBox';
+import {SnackbarAssigneeChange} from './Snackbars';
 
 const DRAWER_WIDTH = 400;
 

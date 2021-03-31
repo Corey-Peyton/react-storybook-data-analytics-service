@@ -5,7 +5,7 @@ import {Dialog} from '../Components/CommonComponents/Dialog';
 import {Typography, TextField} from '@material-ui/core';
 
 export default {
-  title: 'Design System/Dialog',
+  title: 'Molecules/Dialog',
   component: Dialog,
 };
 

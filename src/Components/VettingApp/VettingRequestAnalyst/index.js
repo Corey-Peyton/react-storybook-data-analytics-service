@@ -10,7 +10,6 @@ import {
   StepButton,
   Typography,
   Divider,
-  AppBar,
   StepLabel,
 } from '@material-ui/core';
 import ArrowForwardIosIcon from '@material-ui/icons/ArrowForwardIos';
@@ -19,43 +18,18 @@ import ResearcherInfo from '../CommonComponents/RequestForm/ResearcherInfo';
 import FilesList from '../CommonComponents/RequestForm/FilesList';
 import ResidualDisclosure from '../CommonComponents/RequestForm/ResidualDisclosure';
 import AdditionalInfo from '../CommonComponents/RequestForm/Additionalnfo';
-import ToolBarUnassign from './ToolBarUnAssign';
-import ToolBarAssign from './ToolBarAssign';
+import RequestToolbar from '../CommonComponents/RequestToolbar';
 import AppBarAssign from './AppBarAssign';
 import Header from '../CommonComponents/Header';
 import Footer from '../CommonComponents/Footer';
 import FloatingSupportButton from '../CommonComponents/Support';
 import CutCopyPasteAlert from '../CommonComponents/CutCopyPasteAlert';
-import {
-  SnackbarAssignLead,
-  SnackbarSubmitRequest,
-  SnackbarUnassign,
-} from '../CommonComponents/Snackbars';
-import ManageTeamDrawer from '../Dashboard/Common/ManageTeamDrawer';
+import {SnackbarSubmitRequest} from '../CommonComponents/Snackbars';
+import ManageTeamDrawer from '../CommonComponents/ManageTeamDrawer';
 
 const useStyles = makeStyles((theme) => ({
-  dialogTitle: {
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'space-between',
-  },
-  root: {
-    '& .MuiDialog-paperWidthSm': {
-      'width': 400,
-      '& .MuiTextField-root': {
-        width: '100%',
-      },
-      '& .MuiFormLabel-root': {
-        'line-height': 1,
-      },
-      '& .MuiInputBase-input': {
-        'max-height': 130,
-        'overflow': 'hidden auto !important',
-      },
-      '& .MuiAutocomplete-endAdornment': {
-        top: '5.5px',
-      },
-    },
+  pageContainer: {
+    marginTop: theme.spacing(8),
   },
   main: {
     background: theme.palette.grey[100],
@@ -67,14 +41,6 @@ const useStyles = makeStyles((theme) => ({
   dividercutcopypaste: {
     marginBottom: theme.spacing(2),
     marginTop: theme.spacing(3),
-  },
-  appBar: {
-    margin: theme.spacing(0, -2),
-    width: 'auto',
-    backgroundColor: theme.palette.common.white,
-    boxShadow: 'none',
-    borderBottom: '1px solid',
-    borderBottomColor: theme.palette.divider,
   },
   paper: {
     maxWidth: '1280px',
@@ -105,9 +71,6 @@ const useStyles = makeStyles((theme) => ({
     paddingTop: theme.spacing(3),
     borderTop: 'solid 1px',
     borderTopColor: theme.palette.divider,
-  },
-  dialogActions: {
-    padding: theme.spacing(0, 3, 3, 3),
   },
   errorMsg: {
     margin: 0,
@@ -186,8 +149,6 @@ function VettingRequestAnalyst(props) {
 
   const [openSnackbar, setOpenSnackbar] = React.useState({
     snackbarSubmitted: false,
-    snackBarUnassign: false,
-    snackBarAssign: false,
   });
 
   const snackbarHandleClick = (state) => {
@@ -231,41 +192,25 @@ function VettingRequestAnalyst(props) {
     return state.errors[step] !== 0;
   };
 
-  const handleAssignToMe = () => {
-    setState({...state, lead: state.userName});
-    setOpenSnackbar({...openSnackbar, snackBarAssign: true});
-  };
-
-  const handleUnassignFromMe = () => {
-    setState({...state, lead: ''});
-    setOpenSnackbar({...openSnackbar, snackBarUnassign: true});
-  };
-
   return (
     <>
       <Header />
       <main className={classes.main} tabIndex="-1">
-        <Container maxWidth="xl" className="page-container">
+        <Container maxWidth="xl" className={classes.pageContainer}>
           <ManageTeamDrawer
             open={open.manageTeamDrawer}
             clickHandler={toggleManageTeamDrawer}
             toggleManageTeamDrawer={toggleManageTeamDrawer}
           />
-          <AppBar position="static" className={classes.appBar} color="default">
-            {state.lead === state.userName ? (
-              <ToolBarUnassign handleUnassignFromMe={handleUnassignFromMe} />
-            ) : (
-              <ToolBarAssign handleAssignToMe={handleAssignToMe} />
-            )}
-            <SnackbarUnassign
-              open={openSnackbar.snackBarUnassign}
-              handleClose={() => snackbarHandleClose('snackBarUnassign')}
-            />
-            <SnackbarAssignLead
-              open={openSnackbar.snackBarAssign}
-              handleClose={() => snackbarHandleClose('snackBarAssign')}
-            />
-          </AppBar>
+          <RequestToolbar
+            role="analyst"
+            status="submitted"
+            assignees={{
+              lead: state.lead,
+              support: state.support,
+            }}
+            toggleManageTeamDrawer={toggleManageTeamDrawer}
+          />
           <Paper className={classes.paper}>
             <Grid container alignItems="center">
               <AppBarAssign

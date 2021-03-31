@@ -4,7 +4,7 @@ import {Snackbar} from '../Components/CommonComponents/Snackbar';
 import {Button} from '../Components/CommonComponents/Button';
 
 export default {
-  title: 'Design System/Snackbar',
+  title: 'Molecules/Snackbar',
   component: Snackbar,
 };
 

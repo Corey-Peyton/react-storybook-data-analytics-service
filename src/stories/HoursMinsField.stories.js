@@ -5,7 +5,7 @@ import {HoursMinsField} from '../Components/CommonComponents/HoursMinsField';
 import {Button} from '../Components/CommonComponents/Button';
 
 export default {
-  title: 'Design System/HoursMinsField',
+  title: 'Molecules/HoursMinsField',
   component: HoursMinsField,
 };
 
