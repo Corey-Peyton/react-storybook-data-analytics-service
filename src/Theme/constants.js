@@ -5,4 +5,4 @@ export const LG_SCREEN = 1919;
 
 export const HEAD_H = 64;
 export const HEAD_H_XS = 128;
-export const FOOT_H = 89;
+export const FOOT_H = 177;
