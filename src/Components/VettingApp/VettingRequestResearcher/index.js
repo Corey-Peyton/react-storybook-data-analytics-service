@@ -227,7 +227,7 @@ function VettingRequestResearcher(props) {
     setState({...state, activeStep: newActiveStep});
   };
 
-/*   const handleBack = () => {
+  /*   const handleBack = () => {
     const prevActiveStep = state.activeStep;
     setState({...state, activeStep: prevActiveStep - 1});
   }; */
