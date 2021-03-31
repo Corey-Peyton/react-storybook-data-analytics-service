@@ -6,10 +6,7 @@ import {useHistory, useLocation} from 'react-router-dom';
 import {makeStyles} from '@material-ui/core/styles';
 import {green} from '@material-ui/core/colors';
 import CloseIcon from '@material-ui/icons/Close';
-import Icon from '@mdi/react';
-import {mdiAccount} from '@mdi/js';
 import {
-  Box,
   Typography,
   TextField,
   FormControl,
@@ -26,12 +23,9 @@ import {
   FormControlLabel,
   FormHelperText,
 } from '@material-ui/core';
-import Autocomplete from '@material-ui/lab/Autocomplete';
 import NumberFormat from 'react-number-format';
 import Alert from '@material-ui/lab/Alert';
 
-import {AnalystMenu} from '../Dashboard/Common/ContextMenu';
-import {analystList} from '../../../Data/fakeData';
 import {
   SnackbarApproveRequest,
   SnackbarAssignLead,
@@ -40,6 +34,7 @@ import {
   SnackbarDenyRequest,
   SnackbarUnassign,
   SnackbarWithdrawRequest,
+  SnackbarSupportFab,
 } from './Snackbars';
 import {HoursMinsField} from '../../CommonComponents/HoursMinsField';
 
@@ -226,258 +221,6 @@ export function DialogInfo(props) {
         <DialogActions>
           <Button variant="contained" color="primary" onClick={toggleDialog}>
             {t('Done')}
-          </Button>
-        </DialogActions>
-      </Dialog>
-    </React.Fragment>
-  );
-}
-
-// ////////////////////////////////////////// MANAGE TEAM
-export function DialogManageTeam(props) {
-  const {open, toggleDialog} = props;
-  const {t} = useTranslation();
-  const classes = useStyles();
-  const [analysts, setAnalysts] = React.useState(analystList);
-  const [selected, setSelected] = React.useState([]);
-
-  const makeLead = (value) => (e) => {
-    setAnalysts(
-        analysts.map((item) =>
-        item.role === 'lead' ?
-          {...item, role: 'support'} :
-          item.id === value.id ?
-          {...item, role: 'lead'} :
-          item,
-        ),
-    );
-  };
-
-  const makeSupport = (value) => (e) => {
-    setAnalysts(
-        analysts.map((item) =>
-        item.id === value.id ? {...item, role: 'support'} : item,
-        ),
-    );
-  };
-
-  const unassignRequest = (value) => (e) => {
-    setAnalysts(
-        analysts.map((item) =>
-        item.id === value.id ?
-          {...item, assigned: false, role: 'support'} :
-          item,
-        ),
-    );
-  };
-
-  const handleClick = (e) => {
-    e.stopPropagation();
-  };
-
-  function selectSupports(value) {
-    const ids = value.map((item) => {
-      return item.id;
-    });
-
-    setAnalysts(
-        analysts.map((item) =>
-        ids.includes(item.id) ?
-          {...item, assigned: true, role: 'support'} :
-          item,
-        ),
-    );
-
-    setSelected([]);
-  }
-
-  const leadAnalysts = () => {
-    const content = analysts
-        .filter((analyst) => analyst.assigned && analyst.role === 'lead')
-        .map((analyst, index) => {
-          return (
-            <div className={classes.vettingRow} key={analyst.id}>
-              <Avatar>
-                <Icon path={mdiAccount} size={1} />
-              </Avatar>
-              <div className={classes.analystListing}>
-                <Typography className={classes.vettingText} variant="body2">
-                  {analyst.name}
-                </Typography>
-                <Typography className={classes.vettingText} variant="body2">
-                  {analyst.email}
-                </Typography>
-              </div>
-              <AnalystMenu
-                role={'lead'}
-                makeSupport={makeSupport(analyst)}
-                unassignRequest={unassignRequest(analyst)}
-                controls={index}
-              />
-            </div>
-          );
-        });
-    if (content.length > 0) {
-      return content;
-    } else {
-      return (
-        <div className={classes.vettingRow}>
-          <Box fontStyle="italic" className={classes.box}>
-            <Typography>{t('No lead assigned')}</Typography>
-          </Box>
-        </div>
-      );
-    }
-  };
-
-  return (
-    <React.Fragment>
-      <Dialog
-        onClose={toggleDialog}
-        aria-labelledby="dashboard-dialog-title"
-        open={open}
-        className={classes.root}
-        disableBackdropClick
-        onClick={handleClick}
-      >
-        <DialogTitle id="dashboard-dialog-title">
-          <div className={classes.vettingContainerTitle}>
-            <Typography variant="h6">{t('Manage team')}</Typography>
-            <IconButton
-              id="dialog-close"
-              edge="end"
-              onClick={toggleDialog}
-              aria-label="Manage team - close"
-            >
-              <CloseIcon />
-            </IconButton>
-          </div>
-        </DialogTitle>
-        <Divider />
-        <DialogContent>
-          <div className={classes.vettingSection}>
-            <div className={classes.vettingRow}>
-              <div className={classes.vettingColumn}>
-                <Typography variant="subtitle2">{t('Lead')}</Typography>
-              </div>
-            </div>
-            <div className={classes.vettingRow}>
-              <div className={classes.vettingColumn}>{leadAnalysts()}</div>
-            </div>
-          </div>
-          <Divider />
-          <div className={classes.vettingSection}>
-            <div className={classes.vettingRow}>
-              <div className={classes.vettingColumn}>
-                <FormControl variant="outlined" className={classes.textField}>
-                  <Autocomplete
-                    value={selected}
-                    multiple
-                    limitTags={2}
-                    clearOnEscape={true}
-                    disableCloseOnSelect={true}
-                    id="analyst-multiselect"
-                    options={analysts.filter((analyst) => !analyst.assigned)}
-                    getOptionLabel={(option) => option.name}
-                    onChange={(event, value) => {
-                      setSelected(value);
-                    }}
-                    renderInput={(params) => {
-                      return (
-                        <TextField
-                          {...params}
-                          variant="outlined"
-                          fullWidth
-                          label={t('Search support analysts')}
-                        />
-                      );
-                    }}
-                  />
-                </FormControl>
-              </div>
-            </div>
-            <div className={classes.vettingRow}>
-              <div className={classes.vettingColumn}>
-                <Button
-                  variant="outlined"
-                  color="primary"
-                  onClick={() => selectSupports(selected)}
-                >
-                  {t('Add support analyst')}
-                </Button>
-              </div>
-            </div>
-            <div className={classes.vettingRow}>
-              <div className={classes.vettingColumn}>
-                <Typography variant="subtitle2">
-                  {t('Support Analysts')}
-                </Typography>
-              </div>
-            </div>
-
-            <div className={classes.vettingRow}>
-              <div className={classes.vettingColumn}>
-                <div className={classes.supportAnalysts}>
-                  {analysts
-                      .filter(
-                          (analyst) =>
-                            analyst.assigned && analyst.role === 'support',
-                      )
-                      .map((analyst, index) => {
-                        return (
-                          <div
-                            className={classes.vettingRow}
-                            key={analyst.id}
-                            style={{height: 'auto'}}
-                          >
-                            <Avatar>
-                              <Icon path={mdiAccount} size={1} />
-                            </Avatar>
-                            <div className={classes.analystListing}>
-                              <Typography
-                                className={classes.vettingText}
-                                variant="body2"
-                              >
-                                {analyst.name}
-                              </Typography>
-                              <Typography
-                                className={classes.vettingText}
-                                variant="body2"
-                              >
-                                {analyst.email}
-                              </Typography>
-                            </div>
-                            <AnalystMenu
-                              role={'support'}
-                              makeLead={makeLead(analyst)}
-                              unassignRequest={unassignRequest(analyst)}
-                              controls={index}
-                            />
-                          </div>
-                        );
-                      })}
-                </div>
-              </div>
-            </div>
-          </div>
-        </DialogContent>
-        <Divider />
-        <DialogActions>
-          <Button
-            variant="outlined"
-            color="primary"
-            onClick={toggleDialog}
-            className={classes.footerBtns}
-          >
-            {t('Cancel')}
-          </Button>
-          <Button
-            variant="contained"
-            color="primary"
-            onClick={toggleDialog}
-            className={classes.footerBtns}
-          >
-            {t('Apply')}
           </Button>
         </DialogActions>
       </Dialog>
@@ -1004,301 +747,6 @@ export function DialogSupport(props) {
   );
 }
 
-// ////////////////////////////////////////// ASSIGN TO ME
-export function DialogAssign(props) {
-  const classes = useStyles();
-  const {t} = useTranslation();
-  const {toggleDialog, open} = props;
-  const [snackbar, setSnackbar] = React.useState(false);
-  const initial = {
-    // blank object used to reset state
-    phone: {
-      text: '',
-      errorText: '',
-      invalid: '',
-      commands: '',
-    },
-  };
-  const [state, setState] = React.useState({
-    phone: {
-      text: '',
-      errorText: '',
-      invalid: '',
-      commands: '',
-    },
-  });
-
-  const phoneExp = /^[+][1]\s\([0-9]{3}\)\s[0-9]{3}\s[0-9]{4}/;
-
-  const handleChange = (e, val) => {
-    const comment = e.target.value.trim();
-    setState({
-      ...state,
-      [val]: {
-        // updates state with text from input
-        ...state[val],
-        text: comment,
-      },
-    });
-
-    if (e.target.value.match(phoneExp) && state[val].errorText) {
-      // if input text is valid, clear error
-      setState({
-        ...state,
-        [val]: {
-          ...state[val],
-          text: comment,
-          errorText: '',
-          invalid: '',
-          commands: '',
-        },
-      });
-    }
-  };
-
-  const SnackbarClose = () => {
-    setSnackbar(false);
-  };
-
-  const validateForm = () => {
-    let isError = false;
-    if (!state.phone.text.match(phoneExp)) {
-      isError = true;
-      state.phone.invalid = t('Enter phone number.');
-      state.phone.errorText = t('Enter phone number.');
-    }
-
-    if (isError) {
-      setState({
-        ...state,
-      });
-    }
-
-    return isError;
-  };
-
-  const submitForm = (e) => {
-    e.stopPropagation();
-    e.preventDefault();
-    const err = validateForm();
-    if (!err) {
-      // if no errors exist, submit the form and reset the inputs
-      toggleDialog(e);
-      setSnackbar(!snackbar);
-      setState({...initial});
-    } else {
-      for (const property in state) {
-        // focus on the first input that has an error on submit
-        if (state[property].invalid) {
-          switch (property) {
-            case 'phone':
-              document.getElementById('phone-input').focus();
-              break;
-            default:
-              break;
-          }
-          break;
-        }
-      }
-    }
-  };
-
-  const disableCutCopyPaste = (e, command, value) => {
-    // display error if user tries to cut/copy/paste
-    let msg;
-    e.preventDefault();
-    switch (command) {
-      case 'cut':
-        msg = t('Cut has been disabled for security purposes.');
-        setState({
-          ...state,
-          [value]: {
-            ...state[value],
-            commands: msg,
-            errorText: msg,
-          },
-        });
-        break;
-      case 'copy':
-        msg = t('Copy has been disabled for security purposes.');
-        setState({
-          ...state,
-          [value]: {
-            ...state[value],
-            commands: msg,
-            errorText: msg,
-          },
-        });
-        break;
-      case 'paste':
-        msg = t('Paste has been disabled for security purposes.');
-        setState({
-          ...state,
-          [value]: {
-            ...state[value],
-            commands: msg,
-            errorText: msg,
-          },
-        });
-        break;
-      default:
-        break;
-    }
-  };
-
-  const toggleHelperText = (value) => {
-    if (state[value].commands === state[value].errorText) {
-      if (Boolean(state[value].invalid)) {
-        // set error text back to invalid error
-        setState({
-          ...state,
-          [value]: {
-            ...state[value],
-            errorText: state[value].invalid,
-          },
-        });
-      } else {
-        // clear error text if no invalid error exists
-        setState({
-          ...state,
-          [value]: {
-            ...state[value],
-            errorText: '',
-          },
-        });
-      }
-    }
-  };
-
-  const handleClick = (e) => {
-    e.stopPropagation();
-  };
-
-  return (
-    <React.Fragment>
-      <Dialog
-        onClose={(e) => {
-          setState({...initial});
-          toggleDialog(e);
-        }}
-        aria-labelledby="dashboard-dialog-title"
-        open={open}
-        className={classes.root}
-        disableBackdropClick
-        scroll="paper"
-        onClick={handleClick}
-        onKeyPress={(e) => {
-          if (e.key === 'Enter') {
-            e.preventDefault();
-            e.stopPropagation();
-          }
-        }}
-      >
-        <DialogTitle id="dashboard-dialog-title">
-          <div className={classes.vettingContainerTitle}>
-            <Typography variant="h6">{t('Assign to me')}</Typography>
-            <IconButton
-              id="dialog-close"
-              onClick={toggleDialog}
-              edge="end"
-              aria-label="Assign to me - close"
-              onKeyPress={(e) => {
-                e.preventDefault();
-                e.stopPropagation();
-                if (e.key === 'Enter') {
-                  toggleDialog(e);
-                }
-              }}
-            >
-              <CloseIcon />
-            </IconButton>
-          </div>
-        </DialogTitle>
-        <Divider />
-        <DialogContent>
-          <form onSubmit={submitForm} noValidate id="assign-form">
-            <div className={classes.vettingSection}>
-              <div className={classes.vettingRow}>
-                <div className={classes.vettingColumn}>
-                  <Typography variant="subtitle2">
-                    {t('Provide a phone number')}
-                  </Typography>
-                </div>
-              </div>
-              <div className={classes.vettingRow}>
-                <div className={classes.vettingColumn}>
-                  <FormControl variant="outlined" className={classes.textField}>
-                    <NumberFormat
-                      id="phone-input"
-                      label={t('Phone number')}
-                      aria-label={t('Phone number')}
-                      value={state.phone.text}
-                      customInput={TextField}
-                      type="text"
-                      variant="outlined"
-                      format="+1 (###) ### ####"
-                      mask="_"
-                      allowEmptyFormatting
-                      autoComplete="phone"
-                      error={Boolean(state.phone.errorText)}
-                      helperText={state.phone.errorText}
-                      required
-                      onCut={(e) => disableCutCopyPaste(e, 'cut', 'phone')}
-                      onCopy={(e) => disableCutCopyPaste(e, 'copy', 'phone')}
-                      onPaste={(e) => disableCutCopyPaste(e, 'paste', 'phone')}
-                      onChange={(e) => handleChange(e, 'phone')}
-                      onClick={() => toggleHelperText('phone')}
-                      onBlur={() => toggleHelperText('phone')}
-                      onFocus={() => toggleHelperText('phone')}
-                    />
-                  </FormControl>
-                </div>
-              </div>
-            </div>
-          </form>
-        </DialogContent>
-        <Divider />
-        <DialogActions>
-          <Button
-            variant="outlined"
-            color="primary"
-            onClick={(e) => {
-              setState({...initial});
-              toggleDialog(e);
-            }}
-            className={classes.footerBtns}
-            onKeyPress={(e) => {
-              e.preventDefault();
-              e.stopPropagation();
-              if (e.key === 'Enter') {
-                toggleDialog(e);
-              }
-            }}
-          >
-            {t('Cancel')}
-          </Button>
-          <Button
-            type="submit"
-            variant="contained"
-            color="primary"
-            className={classes.footerBtns}
-            form="assign-form"
-            onKeyPress={(e) => {
-              e.stopPropagation();
-              if (e.key === 'Enter') {
-                submitForm(e);
-              }
-            }}
-          >
-            {t('Continue')}
-          </Button>
-        </DialogActions>
-      </Dialog>
-      <SnackbarAssignLead open={snackbar} handleClose={SnackbarClose} />
-    </React.Fragment>
-  );
-}
-
 // ////////////////////////////////////////// REQUEST CHANGES
 export function DialogUpdate(props) {
   const classes = useStyles();
@@ -1586,6 +1034,297 @@ export function DialogUpdate(props) {
         </DialogActions>
       </Dialog>
       <SnackbarChangeRequest open={snackbar} handleClose={SnackbarClose} />
+    </React.Fragment>
+  );
+}
+
+// ////////////////////////////////////////// GET SUPPORT FAB
+export function DialogGetSupportFab(props) {
+  const classes = useStyles();
+  const {t} = useTranslation();
+  const {toggleDialog, open} = props;
+  const [snackbar, setSnackbar] = React.useState(false);
+  const initial = {
+    // blank object used to reset state
+    comments: {
+      text: '',
+      errorText: '',
+      invalid: '',
+      commands: '',
+    },
+  };
+  const [state, setState] = React.useState({
+    comments: {
+      text: '',
+      errorText: '',
+      invalid: '',
+      commands: '',
+    },
+  });
+
+  const handleChange = (e, val) => {
+    const comment = e.target.value;
+    setState({
+      ...state,
+      [val]: {
+        // updates state with text from input
+        ...state[val],
+        text: comment,
+      },
+    });
+
+    if (e.target.value && state.comments.errorText) {
+      // if input text is valid, clear error
+      setState({
+        ...state,
+        [val]: {
+          ...state[val],
+          text: comment,
+          errorText: '',
+          invalid: '',
+          commands: '',
+        },
+      });
+    }
+  };
+
+  const SnackbarClose = () => {
+    setSnackbar(false);
+  };
+
+  const validateForm = () => {
+    let isError = false;
+    if (state.comments.text.trim() === '') {
+      isError = true;
+      state.comments.invalid = t('Enter some comments.');
+      state.comments.errorText = t('Enter some comments.');
+    }
+
+    if (isError) {
+      setState({
+        ...state,
+      });
+    }
+
+    return isError;
+  };
+
+  const submitForm = (e) => {
+    e.stopPropagation();
+    e.preventDefault();
+    const err = validateForm();
+    if (!err) {
+      // if no errors exist, submit the form and reset the inputs
+      toggleDialog(e);
+      setSnackbar(!snackbar);
+      setState({...initial});
+    } else {
+      for (const property in state) {
+        // focus on the first input that has an error on submit
+        if (state[property].invalid) {
+          switch (property) {
+            case 'comments':
+              document.getElementById('comments-input').focus();
+              break;
+            default:
+              break;
+          }
+          break;
+        }
+      }
+    }
+  };
+
+  const disableCutCopyPaste = (e, command, value) => {
+    // display error if user tries to cut/copy/paste
+    let msg;
+    e.preventDefault();
+    switch (command) {
+      case 'cut':
+        msg = t('Cut has been disabled for security purposes.');
+        setState({
+          ...state,
+          [value]: {
+            ...state[value],
+            commands: msg,
+            errorText: msg,
+          },
+        });
+        break;
+      case 'copy':
+        msg = t('Copy has been disabled for security purposes.');
+        setState({
+          ...state,
+          [value]: {
+            ...state[value],
+            commands: msg,
+            errorText: msg,
+          },
+        });
+        break;
+      case 'paste':
+        msg = t('Paste has been disabled for security purposes.');
+        setState({
+          ...state,
+          [value]: {
+            ...state[value],
+            commands: msg,
+            errorText: msg,
+          },
+        });
+        break;
+      default:
+        break;
+    }
+  };
+
+  const toggleHelperText = (value) => {
+    if (state[value].commands === state[value].errorText) {
+      if (Boolean(state[value].invalid)) {
+        // set error text back to invalid error
+        setState({
+          ...state,
+          [value]: {
+            ...state[value],
+            errorText: state[value].invalid,
+          },
+        });
+      } else {
+        // clear error text if no invalid error exists
+        setState({
+          ...state,
+          [value]: {
+            ...state[value],
+            errorText: '',
+          },
+        });
+      }
+    }
+  };
+
+  const handleClick = (e) => {
+    e.stopPropagation();
+  };
+
+  return (
+    <React.Fragment>
+      <Dialog
+        onClose={(e) => {
+          setState({...initial});
+          toggleDialog(e);
+        }}
+        aria-labelledby="get-support-dialog-title"
+        open={open}
+        className={classes.root}
+        scroll="paper"
+        disableBackdropClick
+        onClick={handleClick}
+        onKeyPress={(e) => {
+          if (e.key === 'Enter') {
+            e.preventDefault();
+            e.stopPropagation();
+          }
+        }}
+      >
+        <DialogTitle id="dashboard-dialog-title">
+          <div className={classes.vettingContainerTitle}>
+            <Typography variant="h6">{t('Get support')}</Typography>
+            <IconButton
+              id="dialog-close"
+              onClick={toggleDialog}
+              edge="end"
+              aria-label="Get support - close"
+              onKeyPress={(e) => {
+                e.preventDefault();
+                e.stopPropagation();
+                if (e.key === 'Enter') {
+                  toggleDialog(e);
+                }
+              }}
+            >
+              <CloseIcon />
+            </IconButton>
+          </div>
+        </DialogTitle>
+        <Divider />
+        <DialogContent>
+          <form onSubmit={submitForm} noValidate id="update-form">
+            <div className={classes.vettingSection}>
+              <div className={classes.vettingRow}>
+                <div className={classes.vettingColumn}>
+                  <Alert severity="warning" className={classes.alert}>
+                    {t('Do not include any confidential information.')}
+                  </Alert>
+                </div>
+              </div>
+              <div className={classes.vettingRow}>
+                <div className={classes.vettingColumn}>
+                  <FormControl variant="outlined" className={classes.textField}>
+                    <TextField
+                      id="comments-input"
+                      label={t('Comments')}
+                      aria-label={t('Comments')}
+                      value={state.comments.text}
+                      variant="outlined"
+                      multiline
+                      required
+                      error={Boolean(state.comments.errorText)}
+                      helperText={state.comments.errorText}
+                      onCut={(e) => disableCutCopyPaste(e, 'cut', 'comments')}
+                      onCopy={(e) => disableCutCopyPaste(e, 'copy', 'comments')}
+                      onPaste={(e) =>
+                        disableCutCopyPaste(e, 'paste', 'comments')
+                      }
+                      onChange={(e) => handleChange(e, 'comments')}
+                      onClick={() => toggleHelperText('comments')}
+                      onBlur={() => toggleHelperText('comments')}
+                      onFocus={() => toggleHelperText('comments')}
+                    />
+                  </FormControl>
+                </div>
+              </div>
+            </div>
+          </form>
+        </DialogContent>
+        <Divider />
+        <DialogActions>
+          <Button
+            variant="outlined"
+            color="primary"
+            onClick={(e) => {
+              setState({...initial});
+              toggleDialog(e);
+            }}
+            className={classes.footerBtns}
+            onKeyPress={(e) => {
+              e.preventDefault();
+              e.stopPropagation();
+              if (e.key === 'Enter') {
+                setState({...initial});
+                toggleDialog(e);
+              }
+            }}
+          >
+            {t('Cancel')}
+          </Button>
+          <Button
+            type="submit"
+            variant="contained"
+            color="primary"
+            className={classes.footerBtns}
+            form="update-form"
+            onKeyPress={(e) => {
+              e.stopPropagation();
+              if (e.key === 'Enter') {
+                submitForm(e);
+              }
+            }}
+          >
+            {t('Send')}
+          </Button>
+        </DialogActions>
+      </Dialog>
+      <SnackbarSupportFab open={snackbar} handleClose={SnackbarClose} />
     </React.Fragment>
   );
 }
@@ -3475,6 +3214,103 @@ export function DialogAssignAsSupport(props) {
         open={snackbar.snackbarAssignSupport}
         handleClose={() => handleSnackbarClose('snackbarAssignSupport')}
       />
+    </React.Fragment>
+  );
+}
+
+// ////////////////////////////////////////// DELETE
+export function DialogDelete(props) {
+  const classes = useStyles();
+  const {t} = useTranslation();
+  const {submitDialog, toggleDialog, open} = props;
+
+  const handleClick = (e) => {
+    e.stopPropagation();
+  };
+
+  return (
+    <React.Fragment>
+      <Dialog
+        onClose={toggleDialog}
+        aria-labelledby="dashboard-dialog-title"
+        open={open}
+        className={classes.root}
+        disableBackdropClick
+        scroll="paper"
+        onClick={handleClick}
+        onKeyPress={(e) => {
+          if (e.key === 'Enter') {
+            e.preventDefault();
+            e.stopPropagation();
+          }
+        }}
+      >
+        <DialogTitle id="dashboard-dialog-title">
+          <div className={classes.vettingContainerTitle}>
+            <Typography variant="h6">{t('Delete permanently?')}</Typography>
+            <IconButton
+              id="dialog-close"
+              onClick={toggleDialog}
+              edge="end"
+              aria-label="Delete permanently - close"
+              onKeyPress={(e) => {
+                e.preventDefault();
+                e.stopPropagation();
+                if (e.key === 'Enter') {
+                  toggleDialog(e);
+                }
+              }}
+            >
+              <CloseIcon />
+            </IconButton>
+          </div>
+        </DialogTitle>
+        <Divider />
+        <DialogContent>
+          <div className={classes.vettingSection}>
+            <div className={classes.vettingRow}>
+              <div className={classes.vettingColumn}>
+                <Alert severity="warning" className={classes.alert}>
+                  {t('If you delete this item, it cannot be undone.')}
+                </Alert>
+              </div>
+            </div>
+          </div>
+        </DialogContent>
+        <Divider />
+        <DialogActions>
+          <Button
+            variant="outlined"
+            color="primary"
+            onClick={toggleDialog}
+            className={classes.footerBtns}
+            onKeyPress={(e) => {
+              e.preventDefault();
+              e.stopPropagation();
+              if (e.key === 'Enter') {
+                toggleDialog(e);
+              }
+            }}
+          >
+            {t('Cancel')}
+          </Button>
+          <Button
+            variant="contained"
+            color="primary"
+            onClick={submitDialog}
+            className={classes.footerBtns}
+            onKeyPress={(e) => {
+              e.preventDefault();
+              e.stopPropagation();
+              if (e.key === 'Enter') {
+                submitDialog(e);
+              }
+            }}
+          >
+            {t('Delete')}
+          </Button>
+        </DialogActions>
+      </Dialog>
     </React.Fragment>
   );
 }

@@ -11,12 +11,6 @@ import {
   StepLabel,
   Typography,
   Divider,
-  AppBar,
-  Dialog,
-  DialogTitle,
-  DialogContent,
-  DialogActions,
-  IconButton,
 } from '@material-ui/core';
 import ArrowForwardIosIcon from '@material-ui/icons/ArrowForwardIos';
 import ArrowBackIosIcon from '@material-ui/icons/ArrowBackIos';
@@ -26,30 +20,20 @@ import ResearcherInfo from '../CommonComponents/RequestForm/ResearcherInfo';
 import FilesList from '../CommonComponents/RequestForm/FilesList';
 import ResidualDisclosure from '../CommonComponents/RequestForm/ResidualDisclosure';
 import AdditionalInfo from '../CommonComponents/RequestForm/Additionalnfo';
-import ToolBarDelete from './ToolBarDelete';
-import ToolBar from './ToolBar';
 import FloatingSupportButton from '../CommonComponents/Support';
 import Header from '../CommonComponents/Header';
 import Footer from '../CommonComponents/Footer';
 import CutCopyPasteAlert from '../CommonComponents/CutCopyPasteAlert';
-import CloseIcon from '@material-ui/icons/Close';
-import {
-  SnackbarDeleteRequest,
-  SnackbarSubmitRequest,
-} from '../CommonComponents/Snackbars';
+import {SnackbarSubmitRequest} from '../CommonComponents/Snackbars';
+import RequestToolbar from '../CommonComponents/RequestToolbar';
 
 const useStyles = makeStyles((theme) => ({
-  root: {
-    '& .MuiDialogTitle-root': {
-      padding: theme.spacing(1.5, 3),
-    },
+  pageContainer: {
+    marginTop: theme.spacing(8),
   },
   main: {
     background: theme.palette.grey[100],
     paddingBottom: theme.spacing(6),
-    borderBottomWidth: '1px',
-    borderBottomStyle: 'solid',
-    borderBottomColor: theme.palette.grey[300],
   },
   divider: {
     margin: theme.spacing(3, 0),
@@ -57,17 +41,6 @@ const useStyles = makeStyles((theme) => ({
   dividercutcopypaste: {
     marginBottom: theme.spacing(2),
     marginTop: theme.spacing(3),
-  },
-  appBar: {
-    margin: theme.spacing(0, -2),
-    width: 'auto',
-    backgroundColor: theme.palette.common.white,
-    boxShadow: 'none',
-    borderBottom: '1px solid',
-    borderBottomColor: theme.palette.divider,
-  },
-  headerBtn: {
-    marginLeft: theme.spacing(3),
   },
   dividerHeight: {
     height: theme.spacing(5),
@@ -116,61 +89,6 @@ const useStyles = makeStyles((theme) => ({
     borderTopWidth: '1px',
     borderTopColor: theme.palette.divider,
   },
-  dialogFooter: {
-    padding: theme.spacing(3, 3),
-    display: 'flex',
-    justifyContent: 'flex-end',
-  },
-  footerBtns: {
-    marginLeft: [theme.spacing(2), '!important'],
-  },
-  deleteBtn: {
-    color: theme.palette.error.main,
-  },
-  dialogActions: {
-    padding: theme.spacing(0, 3, 3, 3),
-  },
-  errorMsg: {
-    margin: [0, '!important'],
-    textAlign: 'left',
-  },
-  vettingContainerTitle: {
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'space-between',
-  },
-  vettingSection: {
-    display: 'flex',
-    flexFlow: 'column',
-    padding: theme.spacing(3),
-    overflowY: 'auto',
-  },
-  vettingRow: {
-    'display': 'flex',
-    'margin': theme.spacing(1.5, 0),
-    'flexFlow': 'row',
-    'height': '100%',
-    'justifyContent': 'center',
-    'width': '100%',
-    'alignItems': 'center',
-    '&:first-child': {
-      marginTop: 0,
-    },
-    '&:last-child': {
-      marginBottom: 0,
-    },
-  },
-  vettingColumn: {
-    'display': 'flex',
-    'flexDirection': 'column',
-    'width': '100%',
-    'justifyContent': 'center',
-    'marginRight': theme.spacing(1),
-    'height': '100%',
-    '&:last-child': {
-      marginRight: 0,
-    },
-  },
 }));
 
 function getSteps() {
@@ -192,14 +110,6 @@ function VettingRequestResearcher(props) {
     title: 'Untitled request',
   });
   const steps = getSteps();
-
-  const handleDialogOpen = () => {
-    setState({...state, open: true});
-  };
-
-  const handleDialogClose = () => {
-    setState({...state, open: false});
-  };
 
   const totalSteps = () => {
     return steps.length;
@@ -249,16 +159,6 @@ function VettingRequestResearcher(props) {
 
   const handleClick = () => {
     setOpenSnackbar(true);
-  };
-
-  const [openSnackbarDelete, setOpenSnackbarDelete] = React.useState(false);
-
-  const handleClickDelete = () => {
-    setOpenSnackbarDelete(true);
-  };
-
-  const snackbardeletehandleClose = () => {
-    setOpenSnackbarDelete(false);
   };
 
   const getStepContent = (step) => {
@@ -318,14 +218,15 @@ function VettingRequestResearcher(props) {
     <React.Fragment>
       <Header />
       <main className={classes.main} tabIndex="-1">
-        <Container maxWidth={false} className="page-container">
-          <AppBar position="static" className={classes.appBar} color="default">
-            {state.activeStep === 3 ? (
-              <ToolBarDelete handleDialogOpen={handleDialogOpen} />
-            ) : (
-              <ToolBar />
-            )}
-          </AppBar>
+        <Container maxWidth={false} className={classes.pageContainer}>
+          <RequestToolbar
+            role="researcher"
+            status="draft"
+            assignees={{
+              lead: '',
+              support: [],
+            }}
+          />
           <Paper className={classes.paper}>
             <Grid container alignItems="center">
               <Grid item className={classes.title}>
@@ -340,12 +241,22 @@ function VettingRequestResearcher(props) {
               <Grid item>
                 <div className={classes.statusLeft}>
                   <Icon path={mdiFileEditOutline} size={1} />
-                  <Typography variant="body2" className={classes.icongrey}>Draft</Typography>
+                  <Typography variant="body2" className={classes.icongrey}>
+                    Draft
+                  </Typography>
                 </div>
               </Grid>
-              <Divider className={classes.dividerHeight} orientation="vertical" flexItem />
+              <Divider
+                className={classes.dividerHeight}
+                orientation="vertical"
+                flexItem
+              />
               <Grid item>
-                <Typography variant="body2" color="textSecondary" className={classes.statusRight}>
+                <Typography
+                  variant="body2"
+                  color="textSecondary"
+                  className={classes.statusRight}
+                >
                   Unassigned
                 </Typography>
               </Grid>
@@ -468,60 +379,6 @@ function VettingRequestResearcher(props) {
           </Paper>
           <FloatingSupportButton />
         </Container>
-
-        <Dialog
-          open={state.open}
-          onClose={handleDialogClose}
-          aria-labelledby="alert-dialog-title"
-          aria-describedby="alert-dialog-description"
-          className={classes.root}
-          disableBackdropClick
-          scroll="paper"
-        >
-          <DialogTitle id="alert-dialog-title">
-            <div className={classes.vettingContainerTitle}>
-              Delete vetting request
-              <IconButton onClick={handleDialogClose} edge="end">
-                <CloseIcon />
-              </IconButton>
-            </div>
-          </DialogTitle>
-          <Divider />
-          <DialogContent>
-            <div className={classes.vettingSection}>
-              <div className={classes.vettingRow}>
-                <div className={classes.vettingColumn}>
-                  <Typography variant="body2">{`Are you sure you want to delete the Vetting disclosure request "${state.title}"?`}</Typography>
-                </div>
-              </div>
-            </div>
-          </DialogContent>
-          <Divider />
-          <DialogActions className={classes.dialogFooter}>
-            <Button
-              onClick={handleDialogClose}
-              color="primary"
-              variant="outlined"
-            >
-              Cancel
-            </Button>
-            <Button
-              color="primary"
-              variant="contained"
-              className={classes.footerBtns}
-              onClick={() => {
-                handleClickDelete();
-                handleDialogClose();
-              }}
-            >
-              Delete request
-            </Button>
-          </DialogActions>
-        </Dialog>
-        <SnackbarDeleteRequest
-          open={openSnackbarDelete}
-          handleClose={snackbardeletehandleClose}
-        />
       </main>
       <Footer />
     </React.Fragment>

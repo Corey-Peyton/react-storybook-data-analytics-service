@@ -259,3 +259,29 @@ export function SnackbarDeleteSupportFile(props) {
     />
   );
 }
+
+export function SnackbarSupportFab(props) {
+  const {t} = useTranslation();
+
+  return (
+    <Snackbar
+      message={t('Support request sent')}
+      severity="success"
+      open={props.open}
+      handleClose={props.handleClose}
+    />
+  );
+}
+
+export function SnackbarStartReview(props) {
+  const {t} = useTranslation();
+
+  return (
+    <Snackbar
+      message={t('Request review started')}
+      severity="success"
+      open={props.open}
+      handleClose={props.handleClose}
+    />
+  );
+}
