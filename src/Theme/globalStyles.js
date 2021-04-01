@@ -133,9 +133,6 @@ export const useStyles = makeStyles({
     '.MuiTypography-gutterBottom': {
       marginBottom: '0.5em',
     },
-    '.MuiTypography-colorError': {
-      marginLeft: theme.spacing(2),
-    },
 
     // Pagination
     '.MuiPaginationItem-root': {
