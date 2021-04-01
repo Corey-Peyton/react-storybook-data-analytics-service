@@ -27,8 +27,9 @@ import {DialogInfo} from '../../CommonComponents/DialogBox';
 import {ActionsMenu} from './ContextMenu';
 import DashboardTableHead from './DashboardTableHead';
 import AnalystCell from './AnalystCell';
+import {currentDateTime} from '../../../../Data/fakeData';
 
-export const ROW_HEIGHT = 57;
+export const ROW_HEIGHT = 58;
 
 const useStyles = makeStyles((theme) => ({
   tableContainer: {
@@ -211,6 +212,56 @@ export default function TableContainerComponent(props) {
     }
   };
 
+  const handleDateTime = (value) => {
+    const months = [
+      'Jan',
+      'Feb',
+      'Mar',
+      'Apr',
+      'May',
+      'Jun',
+      'Jul',
+      'Aug',
+      'Sep',
+      'Oct',
+      'Nov',
+      'Dec',
+    ];
+    const timeDifference = currentDateTime - value;
+    const month = months[value.getMonth()];
+    const day = value.getDate();
+    const year = value.getFullYear();
+    let time;
+    // 1000ms = 1s
+    // 60000ms = 1min
+    // 3600000 = 1hr
+    // 86400000 = 24hr
+
+    if (timeDifference < 60000) {
+      // under 1 minute
+      return 'Just now';
+    } else if (timeDifference >= 60000 && timeDifference < 3600000) {
+      // between 1 minute - 1 hour
+      time = Math.floor(timeDifference / 60000);
+      if (time === 1) {
+        return '1 min ago';
+      } else {
+        return time + ' mins ago';
+      }
+    } else if (timeDifference >= 3600000 && timeDifference < 86400000) {
+      // between 1 hour - 24 hours
+      time = Math.floor(timeDifference / 3600000);
+      if (time === 1) {
+        return '1 hour ago';
+      } else {
+        return time + ' hours ago';
+      }
+    } else if (timeDifference >= 86400000) {
+      // over 24 hours
+      return month + ' ' + day + ', ' + year;
+    }
+  };
+
   return (
     <TableContainer className={classes.tableContainer}>
       <Table
@@ -302,7 +353,7 @@ export default function TableContainerComponent(props) {
                     </TableCell>
                     <TableCell>
                       <Typography variant="body2" noWrap={true}>
-                        {row.updated}
+                        {handleDateTime(row.updated)}
                       </Typography>
                     </TableCell>
                     <TableCell align="center">
@@ -323,7 +374,7 @@ export default function TableContainerComponent(props) {
 
           {emptyRows > 0 && (
             <TableRow style={{height: ROW_HEIGHT * emptyRows}}>
-              <TableCell colSpan={7} />
+              <TableCell colSpan={8} />
             </TableRow>
           )}
         </TableBody>
