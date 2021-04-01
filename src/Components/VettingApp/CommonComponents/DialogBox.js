@@ -7,7 +7,6 @@ import {useHistory, useLocation} from 'react-router-dom';
 import {makeStyles} from '@material-ui/core/styles';
 import {green} from '@material-ui/core/colors';
 import CloseIcon from '@material-ui/icons/Close';
-import {Link as RouterLink} from 'react-router-dom';
 import {
   Typography,
   TextField,
@@ -134,9 +133,6 @@ const useStyles = makeStyles((theme) => ({
   },
   footerBtns: {
     marginLeft: theme.spacing(2),
-  },
-  gridfooterBtns: {
-    marginLeft: theme.spacing(3),
   },
   box: {
     padding: theme.spacing(1, 0),
@@ -687,7 +683,7 @@ export function DialogSaveBeforeLeaving(props) {
             <div className={classes.vettingRow}>
               <div className={classes.vettingColumn}>
                 <Alert severity="warning" className={classes.alert}>
-                  {t('If you don`t save your changes will be lost.')}
+                  {t('If you don`t save, your changes will be lost.')}
                 </Alert>
               </div>
             </div>
@@ -699,9 +695,8 @@ export function DialogSaveBeforeLeaving(props) {
             <Grid item>
               <Button
                 color="primary"
-                component={RouterLink}
-                to="/vetting-app/dashboard-analyst"
                 onClick={toggleDialog}
+                className={clsx(classes.footerBtn, 'MuiIconButton-edgeStart')}
                 onKeyPress={(e) => {
                   e.preventDefault();
                   e.stopPropagation();
@@ -718,7 +713,7 @@ export function DialogSaveBeforeLeaving(props) {
                 variant="outlined"
                 color="primary"
                 onClick={toggleDialog}
-                className={classes.gridfooterBtns}
+                className={classes.footerBtns}
                 onKeyPress={(e) => {
                   e.preventDefault();
                   e.stopPropagation();
@@ -732,9 +727,8 @@ export function DialogSaveBeforeLeaving(props) {
               <Button
                 variant="contained"
                 color="primary"
-                component={RouterLink}
-                to="/vetting-app/dashboard-analyst"
-                className={classes.gridfooterBtns}
+                onClick={toggleDialog}
+                className={classes.footerBtns}
                 onKeyPress={(e) => {
                   e.preventDefault();
                   e.stopPropagation();
