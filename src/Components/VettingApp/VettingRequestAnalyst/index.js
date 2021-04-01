@@ -247,7 +247,6 @@ function VettingRequestAnalyst(props) {
                         {state.errors[index] === 1 ? 'error' : 'errors'}
                       </Typography>
                     );
-                    // test
                   }
                   return (
                     <Step key={label}>
