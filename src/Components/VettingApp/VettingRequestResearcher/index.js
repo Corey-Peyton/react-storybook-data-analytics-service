@@ -89,6 +89,10 @@ const useStyles = makeStyles((theme) => ({
     borderTopWidth: '1px',
     borderTopColor: theme.palette.divider,
   },
+  errorMsg: {
+    margin: 0,
+    textAlign: 'left',
+  },
 }));
 
 function getSteps() {
@@ -284,7 +288,8 @@ function VettingRequestResearcher(props) {
                         variant="body2"
                         color="error"
                       >
-                        {state.errors[index]} errors
+                        {state.errors[index]}{' '}
+                        {state.errors[index] === 1 ? 'error' : 'errors'}
                       </Typography>
                     );
                   }
