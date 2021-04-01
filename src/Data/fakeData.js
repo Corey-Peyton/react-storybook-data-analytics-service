@@ -327,8 +327,8 @@ export const requestListResearchers = [
     statusHead: 'assigned to me',
     status: 'draft',
     cancellationReason: '',
-    created: 'Aug. 28, 2020',
-    updated: 'Aug. 29, 2020',
+    created: 'Aug 28, 2020',
+    updated: new Date('2021-03-31T16:21:00'),
     expiration: 'Sep. 20, 2020',
     researcher: 'Steve Rogers',
     analysts: {
@@ -352,8 +352,8 @@ export const requestListResearchers = [
     statusHead: 'assigned to me',
     status: 'draft',
     cancellationReason: '',
-    created: 'Aug. 21, 2020',
-    updated: 'Aug. 24, 2020',
+    created: 'Aug 21, 2020',
+    updated: new Date('2021-03-31T16:20:30'),
     expiration: 'Sep. 20, 2020',
     researcher: 'Steve Rogers',
     analysts: {
@@ -377,8 +377,8 @@ export const requestListResearchers = [
     statusHead: 'assigned to me',
     status: 'submitted',
     cancellationReason: '',
-    created: 'Aug. 21, 2020',
-    updated: 'Aug. 24, 2020',
+    created: 'Aug 21, 2020',
+    updated: new Date('2021-03-31T15:22:20'),
     expiration: 'Sep. 20, 2020',
     researcher: 'Steve Rogers',
     analysts: {
@@ -402,8 +402,8 @@ export const requestListResearchers = [
     statusHead: 'assigned to me',
     status: 'submitted',
     cancellationReason: '',
-    created: 'Aug. 21, 2020',
-    updated: 'Aug. 24, 2020',
+    created: 'Aug 21, 2020',
+    updated: new Date('2021-03-31T15:15:30'),
     expiration: 'Sep. 20, 2020',
     researcher: 'Steve Rogers',
     analysts: {
@@ -427,8 +427,8 @@ export const requestListResearchers = [
     statusHead: 'assigned to me',
     status: 'under review',
     cancellationReason: '',
-    created: 'Aug. 21, 2020',
-    updated: 'Aug. 24, 2020',
+    created: 'Aug 21, 2020',
+    updated: new Date('2021-03-31T12:21:30'),
     expiration: 'Sep. 20, 2020',
     researcher: 'Steve Rogers',
     analysts: {
@@ -452,8 +452,8 @@ export const requestListResearchers = [
     statusHead: 'assigned to me',
     status: 'under review',
     cancellationReason: '',
-    created: 'Aug. 21, 2020',
-    updated: 'Aug. 24, 2020',
+    created: 'Aug 21, 2020',
+    updated: new Date('2012-12-03T16:20:30'),
     expiration: 'Sep. 20, 2020',
     researcher: 'Steve Rogers',
     analysts: {
@@ -477,8 +477,8 @@ export const requestListResearchers = [
     statusHead: 'assigned to me',
     status: 'changes requested',
     cancellationReason: '',
-    created: 'Aug. 21, 2020',
-    updated: 'Aug. 24, 2020',
+    created: 'Aug 21, 2020',
+    updated: new Date('2012-12-03T16:20:30'),
     expiration: 'Sep. 20, 2020',
     researcher: 'Steve Rogers',
     analysts: {
@@ -502,8 +502,8 @@ export const requestListResearchers = [
     statusHead: 'assigned to me',
     status: 'changes requested',
     cancellationReason: '',
-    created: 'Aug. 21, 2020',
-    updated: 'Aug. 24, 2020',
+    created: 'Aug 21, 2020',
+    updated: new Date('2012-12-03T16:20:30'),
     expiration: 'Sep. 20, 2020',
     researcher: 'Steve Rogers',
     analysts: {
@@ -527,8 +527,8 @@ export const requestListResearchers = [
     statusHead: 'active',
     status: 'draft',
     cancellationReason: '',
-    created: 'Aug. 20, 2020',
-    updated: 'Aug. 24, 2020',
+    created: 'Aug 20, 2020',
+    updated: new Date('2021-03-31T15:03:30'),
     expiration: 'Sep. 20, 2020',
     researcher: 'Steve Rogers',
     analysts: {
@@ -552,8 +552,8 @@ export const requestListResearchers = [
     statusHead: 'withdrawn',
     status: 'withdrawn',
     cancellationReason: '',
-    created: 'Aug. 20, 2020',
-    updated: 'Aug. 24, 2020',
+    created: 'Aug 20, 2020',
+    updated: new Date('2021-03-31T15:40:30'),
     expiration: 'Sep. 20, 2020',
     researcher: 'Steve Rogers',
     analysts: {
@@ -576,8 +576,8 @@ export const requestListResearchers = [
     status: 'withdrawn',
     cancellationReason:
       'No supporting documentation was provided by the researcher.',
-    created: 'Aug. 20, 2020',
-    updated: 'Aug. 24, 2020',
+    created: 'Aug 20, 2020',
+    updated: new Date('2021-03-31T09:21:30'),
     expiration: 'Sep. 20, 2020',
     researcher: 'Steve Rogers',
     analysts: {
@@ -594,8 +594,8 @@ export const requestListResearchers = [
     statusHead: 'unassigned',
     status: 'draft',
     cancellationReason: '',
-    created: 'Aug. 20, 2020',
-    updated: 'Aug. 23, 2020',
+    created: 'Aug 20, 2020',
+    updated: new Date('2021-03-31T16:21:00'),
     expiration: 'Sep. 20, 2020',
     researcher: 'Steve Rogers',
     analysts: {
@@ -612,8 +612,8 @@ export const requestListResearchers = [
     statusHead: 'unassigned',
     status: 'submitted',
     cancellationReason: '',
-    created: 'Aug. 28, 2020',
-    updated: 'Aug. 29, 2020',
+    created: 'Aug 28, 2020',
+    updated: new Date('2021-03-31T16:20:30'),
     expiration: 'Sep. 20, 2020',
     researcher: 'Steve Rogers',
     analysts: {
@@ -637,8 +637,8 @@ export const requestListResearchers = [
     statusHead: 'unassigned',
     status: 'under review',
     cancellationReason: '',
-    created: 'Aug. 28, 2020',
-    updated: 'Aug. 29, 2020',
+    created: 'Aug 28, 2020',
+    updated: new Date('2021-03-31T16:01:30'),
     expiration: 'Sep. 20, 2020',
     researcher: 'Steve Rogers',
     analysts: {
@@ -662,8 +662,8 @@ export const requestListResearchers = [
     statusHead: 'unassigned',
     status: 'changes requested',
     cancellationReason: '',
-    created: 'Aug. 28, 2020',
-    updated: 'Aug. 29, 2020',
+    created: 'Aug 28, 2020',
+    updated: new Date('2021-03-31T15:11:30'),
     expiration: 'Sep. 20, 2020',
     researcher: 'Steve Rogers',
     analysts: {
@@ -687,8 +687,8 @@ export const requestListResearchers = [
     statusHead: 'active',
     status: 'draft',
     cancellationReason: '',
-    created: 'Aug. 20, 2020',
-    updated: 'Aug. 22, 2020',
+    created: 'Aug 20, 2020',
+    updated: new Date('2021-03-30T18:21:30'),
     expiration: 'Sep. 20, 2020',
     researcher: 'Steve Rogers',
     analysts: {
@@ -705,8 +705,8 @@ export const requestListResearchers = [
     statusHead: 'active',
     status: 'draft',
     cancellationReason: '',
-    created: 'Aug. 20, 2020',
-    updated: 'Aug. 22, 2020',
+    created: 'Aug 20, 2020',
+    updated: new Date('2021-03-31T16:20:30'),
     expiration: 'Sep. 20, 2020',
     researcher: 'Steve Rogers',
     analysts: {
@@ -723,8 +723,8 @@ export const requestListResearchers = [
     statusHead: 'approved',
     status: 'approved',
     cancellationReason: '',
-    created: 'Aug. 20, 2020',
-    updated: 'Aug. 22, 2020',
+    created: 'Aug 20, 2020',
+    updated: new Date('2021-03-31T16:21:00'),
     expiration: 'Sep. 20, 2020',
     researcher: 'Steve Rogers',
     analysts: {
@@ -741,8 +741,8 @@ export const requestListResearchers = [
     statusHead: 'approved',
     status: 'approved',
     cancellationReason: '',
-    created: 'Aug. 20, 2020',
-    updated: 'Aug. 22, 2020',
+    created: 'Aug 20, 2020',
+    updated: new Date('2021-03-31T16:20:30'),
     expiration: 'Sep. 20, 2020',
     researcher: 'Steve Rogers',
     analysts: {
@@ -759,8 +759,8 @@ export const requestListResearchers = [
     statusHead: 'active',
     status: 'submitted',
     cancellationReason: '',
-    created: 'Aug. 20, 2020',
-    updated: 'Aug. 22, 2020',
+    created: 'Aug 20, 2020',
+    updated: new Date('2021-03-31T15:31:30'),
     expiration: 'Sep. 20, 2020',
     researcher: 'Steve Rogers',
     analysts: {
@@ -777,8 +777,8 @@ export const requestListResearchers = [
     statusHead: 'active',
     status: 'submitted',
     cancellationReason: '',
-    created: 'Aug. 20, 2020',
-    updated: 'Aug. 22, 2020',
+    created: 'Aug 20, 2020',
+    updated: new Date('2021-03-31T16:21:00'),
     expiration: 'Sep. 20, 2020',
     researcher: 'Steve Rogers',
     analysts: {
@@ -795,8 +795,8 @@ export const requestListResearchers = [
     statusHead: 'active',
     status: 'submitted',
     cancellationReason: '',
-    created: 'Aug. 20, 2020',
-    updated: 'Aug. 22, 2020',
+    created: 'Aug 20, 2020',
+    updated: new Date('2021-01-21T16:21:00'),
     expiration: 'Sep. 20, 2020',
     researcher: 'Steve Rogers',
     analysts: {
@@ -813,8 +813,8 @@ export const requestListResearchers = [
     statusHead: 'active',
     status: 'under review',
     cancellationReason: '',
-    created: 'Aug. 20, 2020',
-    updated: 'Aug. 22, 2020',
+    created: 'Aug 20, 2020',
+    updated: new Date('2021-01-21T16:21:00'),
     expiration: 'Sep. 20, 2020',
     researcher: 'Steve Rogers',
     analysts: {
@@ -831,8 +831,8 @@ export const requestListResearchers = [
     statusHead: 'approved',
     status: 'approved',
     cancellationReason: '',
-    created: 'Aug. 21, 2020',
-    updated: 'Aug. 24, 2020',
+    created: 'Aug 21, 2020',
+    updated: new Date('2021-03-31T16:11:30'),
     expiration: 'Sep. 20, 2020',
     researcher: 'Steve Rogers',
     analysts: {
@@ -856,8 +856,8 @@ export const requestListResearchers = [
     statusHead: 'active',
     status: 'under review',
     cancellationReason: '',
-    created: 'Aug. 20, 2020',
-    updated: 'Aug. 24, 2020',
+    created: 'Aug 20, 2020',
+    updated: new Date('2019-11-03T16:20:30'),
     expiration: 'Sep. 20, 2020',
     researcher: 'Steve Rogers',
     analysts: {
@@ -881,8 +881,8 @@ export const requestListResearchers = [
     statusHead: 'active',
     status: 'under review',
     cancellationReason: '',
-    created: 'Aug. 20, 2020',
-    updated: 'Aug. 24, 2020',
+    created: 'Aug 20, 2020',
+    updated: new Date('2019-11-03T16:20:30'),
     expiration: 'Sep. 20, 2020',
     researcher: 'Steve Rogers',
     analysts: {
@@ -906,8 +906,8 @@ export const requestListResearchers = [
     statusHead: 'denied',
     status: 'denied',
     cancellationReason: '',
-    created: 'Aug. 20, 2020',
-    updated: 'Aug. 24, 2020',
+    created: 'Aug 20, 2020',
+    updated: new Date('2021-03-31T15:08:30'),
     expiration: 'Sep. 20, 2020',
     researcher: 'Steve Rogers',
     analysts: {
@@ -930,8 +930,8 @@ export const requestListResearchers = [
     status: 'denied',
     cancellationReason:
       'No supporting documentation was provided by the researcher.',
-    created: 'Aug. 20, 2020',
-    updated: 'Aug. 24, 2020',
+    created: 'Aug 20, 2020',
+    updated: new Date('2019-11-03T16:20:30'),
     expiration: 'Sep. 20, 2020',
     researcher: 'Steve Rogers',
     analysts: {
@@ -948,8 +948,8 @@ export const requestListResearchers = [
     statusHead: 'active',
     status: 'changes requested',
     cancellationReason: '',
-    created: 'Aug. 20, 2020',
-    updated: 'Aug. 23, 2020',
+    created: 'Aug 20, 2020',
+    updated: new Date('2021-01-21T16:21:00'),
     expiration: 'Sep. 20, 2020',
     researcher: 'Steve Rogers',
     analysts: {
@@ -966,8 +966,8 @@ export const requestListResearchers = [
     statusHead: 'active',
     status: 'changes requested',
     cancellationReason: '',
-    created: 'Aug. 20, 2020',
-    updated: 'Aug. 23, 2020',
+    created: 'Aug 20, 2020',
+    updated: new Date('2021-01-21T16:21:00'),
     expiration: 'Sep. 20, 2020',
     researcher: 'Steve Rogers',
     analysts: {
@@ -984,8 +984,8 @@ export const requestListResearchers = [
     statusHead: 'active',
     status: 'changes requested',
     cancellationReason: '',
-    created: 'Aug. 20, 2020',
-    updated: 'Aug. 23, 2020',
+    created: 'Aug 20, 2020',
+    updated: new Date('2021-01-21T16:21:00'),
     expiration: 'Sep. 20, 2020',
     researcher: 'Steve Rogers',
     analysts: {
@@ -1143,3 +1143,5 @@ export const loggedInUser = () => {
     }
   }
 };
+
+export const currentDateTime = new Date('2021-03-31T16:21:30');

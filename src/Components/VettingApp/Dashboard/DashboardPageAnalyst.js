@@ -143,8 +143,8 @@ const headCells = [
     disablePadding: false,
     label: 'Assignee',
   },
-  {id: 'created', narrow: false, disablePadding: false, label: 'Created on'},
-  {id: 'updated', narrow: false, disablePadding: false, label: 'Updated on'},
+  {id: 'created', narrow: false, disablePadding: false, label: 'Created'},
+  {id: 'updated', narrow: false, disablePadding: false, label: 'Updated'},
   {id: 'actions', narrow: true, disablePadding: false, label: 'Actions'},
 ];
 
