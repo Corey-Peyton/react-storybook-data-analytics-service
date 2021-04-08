@@ -54,15 +54,15 @@ TextFields.propTypes = {
   */
   defaultValue: PropTypes.any,
   /**
-    If true, the button will be disabled.
+    If true, the textfield will be disabled.
   */
   disabled: PropTypes.bool,
   /**
-    If true, the input will not have an underline, applies to filled input only.
+    If true, the input will not have an underline, applies to filled textfields only.
   */
   disableUnderline: PropTypes.bool,
   /**
-  End InputAdornment for this component, applied to filled and outlined textfields only.
+  End InputAdornment for this component, applies to filled and outlined textfields only.
   */
   endAdornment: PropTypes.node,
   /**
@@ -122,7 +122,7 @@ It prevents the user from changing the value of the field (not from interacting 
   */
   select: PropTypes.bool,
   /**
-    The size of the button
+    The size of the textfield
   */
   size: PropTypes.oneOf(Object.values(SIZE)),
   /**
