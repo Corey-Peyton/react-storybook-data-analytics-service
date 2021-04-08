@@ -38,13 +38,6 @@ const SIZE = {
   SMALL: 'small',
   MEDIUM: 'medium',
 };
-
-const MARGIN = {
-  DENSE: 'dense',
-  NONE: 'none',
-  NORMAL: 'normal',
-};
-
 TextField.propTypes = {
   /**
     The color of the component
