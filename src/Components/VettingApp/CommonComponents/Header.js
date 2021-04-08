@@ -5,6 +5,7 @@ import {
   MenuItem,
   ListItemText,
   Menu,
+  Typography,
 } from '@material-ui/core';
 import {makeStyles} from '@material-ui/styles';
 import {withStyles} from '@material-ui/styles';
@@ -12,10 +13,8 @@ import Avatar from '@material-ui/core/Avatar';
 import {deepPurple} from '@material-ui/core/colors';
 import BrandingStatsCan from '../../../Components/Headers/BrandingStatsCan';
 import Language from '../../../Components/Headers/Language';
-import SendIcon from '@material-ui/icons/Send';
 import MenuIcon from '@material-ui/icons/Menu';
 import IconButton from '@material-ui/core/IconButton';
-import ExitToApp from '@material-ui/icons/ExitToApp';
 
 const StyledMenu = withStyles({
   paper: {
@@ -27,26 +26,15 @@ const StyledMenu = withStyles({
     getContentAnchorEl={null}
     anchorOrigin={{
       vertical: 'bottom',
-      horizontal: 'center',
+      horizontal: 'right',
     }}
     transformOrigin={{
       vertical: 'top',
-      horizontal: 'center',
+      horizontal: 'right',
     }}
     {...props}
   />
 ));
-
-const StyledMenuItem = withStyles((theme) => ({
-  root: {
-    '&:focus': {
-      'backgroundColor': theme.palette.common.white,
-      '& .MuiListItemIcon-root, & .MuiListItemText-primary': {
-        color: theme.palette.common.black,
-      },
-    },
-  },
-}))(MenuItem);
 
 const defaultStyles = makeStyles((theme) => ({
   appBar: {
@@ -172,12 +160,11 @@ export default function DefaultHeader(props) {
             open={Boolean(anchorEl)}
             onClose={handleClose}
           >
-            <StyledMenuItem>
-              <ExitToApp>
-                <SendIcon fontSize="small" />
-              </ExitToApp>
-              <ListItemText primary="Logout" />
-            </StyledMenuItem>
+            <MenuItem onClick={handleClose}>
+              <ListItemText
+                primary={<Typography variant="body2">Sign out</Typography>}
+              />
+            </MenuItem>
           </StyledMenu>
         </Toolbar>
       </AppBar>
