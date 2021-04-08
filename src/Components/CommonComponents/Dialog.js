@@ -67,6 +67,24 @@ const useStyles = makeStyles((theme) => ({
 
 export function Dialog(props) {
   const classes = useStyles();
+  const {
+    toggleDialog,
+    open,
+    handleClose,
+    id,
+    title,
+    content,
+    primaryButton,
+    secondaryButton,
+    thirdButton,
+    handlePrimaryClick,
+    handleSecondaryClick,
+    handleThirdClick,
+  } = props;
+
+  const handleClick = (e) => {
+    e.stopPropagation();
+  };
 
   return (
     <React.Fragment>
@@ -74,63 +92,99 @@ export function Dialog(props) {
         classes={{
           paper: classes.dialogPaper,
         }}
-        onClose={props.handleClose}
-        aria-labelledby={props.id}
-        open={props.open}
+        onClose={handleClose}
+        aria-labelledby={id}
+        open={open}
         maxWidth="sm"
         fullWidth={true}
+        disableBackdropClick
+        onClick={handleClick}
+        onKeyPress={(e) => {
+          if (e.key === 'Enter') {
+            e.preventDefault();
+            e.stopPropagation();
+          }
+        }}
       >
-        <DialogTitle
-          id={props.id}
-          className={classes.dialogTitle}
-          disableTypography
-        >
+        <DialogTitle id={id} className={classes.dialogTitle} disableTypography>
           <Typography variant="h6" component="h2">
-            {props.title}
+            {title}
           </Typography>
-          <IconButton onClick={props.handleClose} edge="end">
+          <IconButton
+            aria-label={`${title} - close`}
+            onClick={toggleDialog}
+            edge="end"
+            onKeyPress={(e) => {
+              e.preventDefault();
+              e.stopPropagation();
+              if (e.key === 'Enter') {
+                toggleDialog(e);
+              }
+            }}
+          >
             <CloseIcon />
           </IconButton>
         </DialogTitle>
         <DialogContent>
-          <div className={classes.vettingSection}>{props.content}</div>
+          <div className={classes.vettingSection}>{content}</div>
         </DialogContent>
-        {props.secondaryButton || props.primaryButton ? (
+        {secondaryButton || primaryButton ? (
           <DialogActions className={classes.dialogFooter}>
             <Grid container justify="space-between">
               <Grid item>
-                {props.thirdButton && (
+                {thirdButton && (
                   <Button
                     className={clsx(
                         classes.thirdButton,
                         'MuiIconButton-edgeStart',
                     )}
                     color="primary"
-                    onClick={props.handleThirdClick}
+                    onKeyPress={(e) => {
+                      e.preventDefault();
+                      e.stopPropagation();
+                      if (e.key === 'Enter') {
+                        handleThirdClick(e);
+                      }
+                    }}
+                    onClick={handleThirdClick}
                   >
-                    {props.secondaryButton}
+                    {secondaryButton}
                   </Button>
                 )}
               </Grid>
 
               <Grid item>
-                {props.secondaryButton && (
+                {secondaryButton && (
                   <Button
                     className={classes.secondaryButton}
                     variant="outlined"
                     color="primary"
-                    onClick={props.handleSecondaryClick}
+                    onKeyPress={(e) => {
+                      e.preventDefault();
+                      e.stopPropagation();
+                      if (e.key === 'Enter') {
+                        handleSecondaryClick(e);
+                      }
+                    }}
+                    onClick={handleSecondaryClick}
                   >
-                    {props.secondaryButton}
+                    {secondaryButton}
                   </Button>
                 )}
-                {props.primaryButton && (
+                {primaryButton && (
                   <Button
                     variant="contained"
                     color="primary"
-                    onClick={props.handlePrimaryClick}
+                    onKeyPress={(e) => {
+                      e.preventDefault();
+                      e.stopPropagation();
+                      if (e.key === 'Enter') {
+                        handlePrimaryClick(e);
+                      }
+                    }}
+                    onClick={handlePrimaryClick}
                   >
-                    {props.primaryButton}
+                    {primaryButton}
                   </Button>
                 )}
               </Grid>
@@ -170,6 +224,10 @@ Dialog.propTypes = {
    */
   secondaryButton: PropTypes.string,
   /**
+   Text for third button
+   */
+  thirdButton: PropTypes.string,
+  /**
    Click handler to close dialog
    */
   handleClose: PropTypes.func.isRequired,
@@ -181,6 +239,10 @@ Dialog.propTypes = {
    Click handler for secondary action
    */
   handleSecondaryClick: PropTypes.func,
+  /**
+   Click handler for third action
+   */
+  handleThirdClick: PropTypes.func,
 };
 
 Dialog.defaultProps = {

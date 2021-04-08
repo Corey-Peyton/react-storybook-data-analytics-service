@@ -51,21 +51,30 @@ export const InputDialog = (args) => {
 };
 
 export const SingleActionDialog = (args) => {
-  const [open, setOpen] = React.useState(false);
-  const handleOpen = () => {
-    setOpen(true);
+  const [open, setOpen] = React.useState({
+    dialogSingleAction: false,
+  });
+
+  const toggleDialog = (state, value, e) => {
+    e.stopPropagation();
+    setOpen({...open, [state]: value});
   };
-  const handleClose = () => {
-    setOpen(false);
-  };
+
   return (
     <>
-      <Button variant="contained" color="primary" onClick={handleOpen}>
+      <Button
+        variant="contained"
+        color="primary"
+        onClick={(e) => {
+          e.stopPropagation();
+          toggleDialog('dialogSingleAction', !open.dialogSingleAction, e);
+        }}
+      >
         Single action dialog
       </Button>
       <Dialog
         id="single-action-dialog"
-        open={open}
+        open={open.dialogSingleAction}
         title="Single action dialog"
         content={
           <>
@@ -75,8 +84,18 @@ export const SingleActionDialog = (args) => {
           </>
         }
         primaryButton="Close"
-        handlePrimaryClick={handleClose}
-        handleClose={handleClose}
+        handlePrimaryClick={(e) => {
+          e.stopPropagation();
+          toggleDialog('dialogSingleAction', !open.dialogSingleAction, e);
+        }}
+        handleClose={(e) => {
+          e.stopPropagation();
+          toggleDialog('dialogSingleAction', !open.dialogSingleAction, e);
+        }}
+        toggleDialog={(e) => {
+          e.stopPropagation();
+          toggleDialog('dialogSingleAction', !open.dialogSingleAction, e);
+        }}
       />
     </>
   );
