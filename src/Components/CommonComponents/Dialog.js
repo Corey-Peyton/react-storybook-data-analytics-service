@@ -1,5 +1,6 @@
 import React from 'react';
 import {makeStyles} from '@material-ui/core/styles';
+import clsx from 'clsx';
 import PropTypes from 'prop-types';
 import {
   Typography,
@@ -7,6 +8,7 @@ import {
   DialogTitle,
   DialogContent,
   DialogActions,
+  Grid,
 } from '@material-ui/core';
 import {Button} from './Button';
 import {IconButton} from './IconButton';
@@ -21,9 +23,6 @@ const useStyles = makeStyles((theme) => ({
     borderBottom: '1px solid',
     borderBottomColor: theme.palette.divider,
   },
-  dialogContent: {
-    padding: theme.spacing(3),
-  },
   dialogFooter: {
     padding: theme.spacing(1.75, 3),
     borderTop: '1px solid',
@@ -31,6 +30,38 @@ const useStyles = makeStyles((theme) => ({
   },
   secondaryButton: {
     marginRight: theme.spacing(1),
+  },
+  vettingSection: {
+    display: 'flex',
+    flexFlow: 'column',
+    padding: theme.spacing(3),
+    overflowY: 'auto',
+  },
+  vettingRow: {
+    'display': 'flex',
+    'margin': theme.spacing(1.5, 0),
+    'flexFlow': 'row',
+    'height': '100%',
+    'justifyContent': 'center',
+    'width': '100%',
+    'alignItems': 'center',
+    '&:first-child': {
+      marginTop: 0,
+    },
+    '&:last-child': {
+      marginBottom: 0,
+    },
+  },
+  vettingColumn: {
+    'display': 'flex',
+    'flexDirection': 'column',
+    'width': '100%',
+    'justifyContent': 'center',
+    'marginRight': theme.spacing(1),
+    'height': '100%',
+    '&:last-child': {
+      marginRight: 0,
+    },
   },
 }));
 
@@ -61,30 +92,49 @@ export function Dialog(props) {
             <CloseIcon />
           </IconButton>
         </DialogTitle>
-        <DialogContent className={classes.dialogContent}>
-          {props.content}
+        <DialogContent>
+          <div className={classes.vettingSection}>{props.content}</div>
         </DialogContent>
         {props.secondaryButton || props.primaryButton ? (
           <DialogActions className={classes.dialogFooter}>
-            {props.secondaryButton && (
-              <Button
-                className={classes.secondaryButton}
-                variant="outlined"
-                color="primary"
-                onClick={props.handleSecondaryClick}
-              >
-                {props.secondaryButton}
-              </Button>
-            )}
-            {props.primaryButton && (
-              <Button
-                variant="contained"
-                color="primary"
-                onClick={props.handlePrimaryClick}
-              >
-                {props.primaryButton}
-              </Button>
-            )}
+            <Grid container justify="space-between">
+              <Grid item>
+                {props.thirdButton && (
+                  <Button
+                    className={clsx(
+                        classes.thirdButton,
+                        'MuiIconButton-edgeStart',
+                    )}
+                    color="primary"
+                    onClick={props.handleThirdClick}
+                  >
+                    {props.secondaryButton}
+                  </Button>
+                )}
+              </Grid>
+
+              <Grid item>
+                {props.secondaryButton && (
+                  <Button
+                    className={classes.secondaryButton}
+                    variant="outlined"
+                    color="primary"
+                    onClick={props.handleSecondaryClick}
+                  >
+                    {props.secondaryButton}
+                  </Button>
+                )}
+                {props.primaryButton && (
+                  <Button
+                    variant="contained"
+                    color="primary"
+                    onClick={props.handlePrimaryClick}
+                  >
+                    {props.primaryButton}
+                  </Button>
+                )}
+              </Grid>
+            </Grid>
           </DialogActions>
         ) : (
           ''

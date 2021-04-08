@@ -9,69 +9,6 @@ export default {
   component: Dialog,
 };
 
-export const PassiveDialog = (args) => {
-  const [open, setOpen] = React.useState(false);
-  const handleOpen = () => {
-    setOpen(true);
-  };
-  const handleClose = () => {
-    setOpen(false);
-  };
-  return (
-    <>
-      <Button variant="contained" color="primary" onClick={handleOpen}>
-        Passive dialog
-      </Button>
-      <Dialog
-        id="passive-dialog"
-        open={open}
-        title="Passive dialog title"
-        content={
-          <Typography>
-            Passive dialog notification should only appear if there’s an action
-            the user needs to address immediately. Passive dialog notifications
-            are persistent on screen.
-          </Typography>
-        }
-        primaryButton="I got it"
-        handleClose={handleClose}
-      />
-    </>
-  );
-};
-
-export const TransactionalDialog = (args) => {
-  const [open, setOpen] = React.useState(false);
-  const handleOpen = () => {
-    setOpen(true);
-  };
-  const handleClose = () => {
-    setOpen(false);
-  };
-  return (
-    <>
-      <Button variant="contained" color="primary" onClick={handleOpen}>
-        Transactional dialog
-      </Button>
-      <Dialog
-        id="trans-dialog"
-        open={open}
-        title="Delete vetting request"
-        content={
-          <Typography>
-            Are you sure you want to delete the Vetting disclosure request
-            “Canadian Community Health Survey - Annual Component”?
-          </Typography>
-        }
-        primaryButton="Delete request"
-        secondaryButton="Cancel"
-        handleSecondaryClick={handleClose}
-        handleClose={handleClose}
-      />
-    </>
-  );
-};
-
 export const InputDialog = (args) => {
   const [open, setOpen] = React.useState(false);
   const handleOpen = () => {
@@ -112,3 +49,203 @@ export const InputDialog = (args) => {
     </>
   );
 };
+
+export const SingleActionDialog = (args) => {
+  const [open, setOpen] = React.useState(false);
+  const handleOpen = () => {
+    setOpen(true);
+  };
+  const handleClose = () => {
+    setOpen(false);
+  };
+  return (
+    <>
+      <Button variant="contained" color="primary" onClick={handleOpen}>
+        Single action dialog
+      </Button>
+      <Dialog
+        id="single-action-dialog"
+        open={open}
+        title="Single action dialog"
+        content={
+          <>
+            <Typography variant="body1">
+              This is an example of a dialog with one action.
+            </Typography>
+          </>
+        }
+        primaryButton="Close"
+        handlePrimaryClick={handleClose}
+        handleClose={handleClose}
+      />
+    </>
+  );
+};
+
+export const TwoActionDialog = (args) => {
+  const [open, setOpen] = React.useState(false);
+  const handleOpen = () => {
+    setOpen(true);
+  };
+  const handleClose = () => {
+    setOpen(false);
+  };
+  return (
+    <>
+      <Button variant="contained" color="primary" onClick={handleOpen}>
+        Two action dialog
+      </Button>
+      <Dialog
+        id="two-action-dialog"
+        open={open}
+        title="Two action dialog"
+        content={
+          <>
+            <Typography variant="body1">
+              This is an example of a dialog with two actions.
+            </Typography>
+          </>
+        }
+        primaryButton="Submit"
+        secondaryButton="Cancel"
+        handlePrimaryClick={handleClose}
+        handleSecondaryClick={handleClose}
+        handleClose={handleClose}
+      />
+    </>
+  );
+};
+
+export const ThreeActionDialog = (args) => {
+  const [open, setOpen] = React.useState(false);
+  const handleOpen = () => {
+    setOpen(true);
+  };
+  const handleClose = () => {
+    setOpen(false);
+  };
+  return (
+    <>
+      <Button variant="contained" color="primary" onClick={handleOpen}>
+        Three action dialog
+      </Button>
+      <Dialog
+        id="three-action-dialog"
+        open={open}
+        title="Three action dialog"
+        content={
+          <>
+            <Typography variant="body1">
+              This is an example of a dialog with three actions.
+            </Typography>
+          </>
+        }
+        primaryButton="Submit"
+        secondaryButton="Cancel"
+        thirdButton="Other"
+        handlePrimaryClick={handleClose}
+        handleSecondaryClick={handleClose}
+        handleThirdClick={handleClose}
+        handleClose={handleClose}
+      />
+    </>
+  );
+};
+
+// export function DialogNoLead(props) {
+//   const classes = useStyles();
+//   const {t} = useTranslation();
+//   const {submitDialog, toggleDialog, open} = props;
+
+//   const handleClick = (e) => {
+//     e.stopPropagation();
+//   };
+
+//   return (
+//     <React.Fragment>
+//       <Dialog
+//         onClose={toggleDialog}
+//         aria-labelledby="dashboard-dialog-title"
+//         open={open}
+//         className={classes.root}
+//         disableBackdropClick
+//         scroll="paper"
+//         onClick={handleClick}
+//         onKeyPress={(e) => {
+//           if (e.key === 'Enter') {
+//             e.preventDefault();
+//             e.stopPropagation();
+//           }
+//         }}
+//       >
+//         <DialogTitle id="dashboard-dialog-title">
+//           <div className={classes.vettingContainerTitle}>
+//             <Typography variant="h6">{t('Continue with no lead?')}</Typography>
+//             <IconButton
+//               id="dialog-close"
+//               onClick={toggleDialog}
+//               edge="end"
+//               aria-label="No lead assigned - close"
+//               onKeyPress={(e) => {
+//                 e.preventDefault();
+//                 e.stopPropagation();
+//                 if (e.key === 'Enter') {
+//                   toggleDialog(e);
+//                 }
+//               }}
+//             >
+//               <CloseIcon />
+//             </IconButton>
+//           </div>
+//         </DialogTitle>
+//         <Divider />
+//         <DialogContent>
+//           <div className={classes.vettingSection}>
+//             <div className={classes.vettingRow}>
+//               <div className={classes.vettingColumn}>
+//                 <Alert severity="warning" className={classes.alert}>
+//                   {t(
+//                       'If you continue, the request will have no lead and the requester will be notified of the change.',
+//                   )}
+//                 </Alert>
+//               </div>
+//             </div>
+//           </div>
+//         </DialogContent>
+//         <Divider />
+//         <DialogActions>
+//           <Button
+//             variant="outlined"
+//             color="primary"
+//             onClick={toggleDialog}
+//             className={classes.footerBtns}
+//             onKeyPress={(e) => {
+//               e.preventDefault();
+//               e.stopPropagation();
+//               if (e.key === 'Enter') {
+//                 toggleDialog(e);
+//               }
+//             }}
+//           >
+//             {t('Cancel')}
+//           </Button>
+//           <Button
+//             variant="contained"
+//             color="primary"
+//             onClick={submitDialog}
+//             className={classes.footerBtns}
+//             onKeyPress={(e) => {
+//               e.preventDefault();
+//               e.stopPropagation();
+//               if (e.key === 'Enter') {
+//                 submitDialog(e);
+//               }
+//             }}
+//           >
+//             {t('Continue')}
+//           </Button>
+//         </DialogActions>
+//       </Dialog>
+//     </React.Fragment>
+//   );
+// }
