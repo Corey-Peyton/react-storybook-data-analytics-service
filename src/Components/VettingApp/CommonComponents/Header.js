@@ -36,17 +36,6 @@ const StyledMenu = withStyles({
   />
 ));
 
-const StyledMenuItem = withStyles((theme) => ({
-  root: {
-    '&:focus': {
-      'backgroundColor': theme.palette.common.white,
-      '& .MuiListItemIcon-root, & .MuiListItemText-primary': {
-        color: theme.palette.common.black,
-      },
-    },
-  },
-}))(MenuItem);
-
 const defaultStyles = makeStyles((theme) => ({
   appBar: {
     zIndex: 1200,
