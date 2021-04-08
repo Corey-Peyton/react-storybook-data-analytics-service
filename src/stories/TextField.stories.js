@@ -1,18 +1,42 @@
 import React from 'react';
 
-import {TextField} from '../Components/CommonComponents/TextField';
+import {TextFields} from '../Components/CommonComponents/TextField';
 
 export default {
-  title: 'Molecules/TextField',
-  component: TextField,
+  title: 'Molecules/TextFields',
+  component: TextFields,
 };
 
-export const BasicOutlined = (args) => {
+export const AllTextFields = (args) => {
   return (
     <>
-      {/*       <TextField id="standard-basic" label="Standard" />
-      <TextField id="filled-basic" label="Filled" variant="filled" /> */}
-      <TextField id="outlined-basic" label="Outlined" variant="outlined" />
+      <TextFields id="standard-basic" label="Standard" />
+      <TextFields id="filled-basic" label="Filled" variant="filled" />
+      <TextFields id="outlined-basic" label="Outlined" variant="outlined" />
+    </>
+  );
+};
+
+export const StandardTextField = (args) => {
+  return (
+    <>
+      <TextFields id="standard-basic" label="Standard" />
+    </>
+  );
+};
+
+export const OutlinedTextField = (args) => {
+  return (
+    <>
+      <TextFields id="outlined-basic" label="Outlined" variant="outlined" />
+    </>
+  );
+};
+
+export const FilledTextField = (args) => {
+  return (
+    <>
+      <TextFields id="filled-basic" label="Filled" variant="filled" />
     </>
   );
 };

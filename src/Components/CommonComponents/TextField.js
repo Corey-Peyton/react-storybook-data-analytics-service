@@ -4,20 +4,18 @@ import {TextField as MUITextField} from '@material-ui/core';
 import {makeStyles} from '@material-ui/core/styles';
 
 const useStyles = makeStyles((theme) => ({
-  'Root': {
-    'margin': theme.spacing(1),
+  Root: {
+    margin: theme.spacing(1),
   },
 }));
 
-export function TextField(props) {
+export function TextFields(props) {
   const classes = useStyles();
   return (
     <MUITextField
-      classes={
-        {
-          root: classes.Root,
-        }
-      }
+      classes={{
+        root: classes.Root,
+      }}
       {...props}
     ></MUITextField>
   );
@@ -38,15 +36,35 @@ const SIZE = {
   SMALL: 'small',
   MEDIUM: 'medium',
 };
-TextField.propTypes = {
+TextFields.propTypes = {
+  /**
+    This prop helps users to fill forms faster, especially on mobile devices. The name can be confusing, as it's more like an autofill.
+  */
+  autoComplete: PropTypes.string,
+  /**
+   If true, the input element will be focused during the first mount.
+  */
+  autoFocus: PropTypes.bool,
   /**
     The color of the component
   */
   color: PropTypes.oneOf(Object.values(COLOR)),
   /**
+    The default value of the input element.
+  */
+  defaultValue: PropTypes.any,
+  /**
     If true, the button will be disabled.
   */
   disabled: PropTypes.bool,
+  /**
+    If true, the input will not have an underline, applies to filled input only.
+  */
+  disableUnderline: PropTypes.bool,
+  /**
+  End InputAdornment for this component, applied to filled and outlined textfields only.
+  */
+  endAdornment: PropTypes.node,
   /**
   If true, the label will be displayed in an error state.
   */
@@ -64,6 +82,10 @@ TextField.propTypes = {
   */
   id: PropTypes.string,
   /**
+  The label content.
+  */
+  label: PropTypes.node,
+  /**
   If dense or normal, will adjust vertical spacing of this and contained components.
   */
   margin: PropTypes.string,
@@ -75,6 +97,10 @@ TextField.propTypes = {
   The short hint displayed in the input before the user enters a value.
   */
   placeholder: PropTypes.string,
+  /**
+It prevents the user from changing the value of the field (not from interacting with the field), applies to filled textfields only.
+  */
+  readOnly: PropTypes.bool,
   /**
  If true, the label is displayed as required and the input element` will be required.
   */
@@ -88,6 +114,10 @@ TextField.propTypes = {
   */
   rowsmax: PropTypes.string,
   /**
+    Start InputAdornment for this component, applies to filled  and outlined textfields only.
+  */
+  startAdornment: PropTypes.node,
+  /**
     Render a Select element while passing the Input element to Select as input parameter. If this option is set you must pass the options of the select as children.
   */
   select: PropTypes.bool,
@@ -95,6 +125,10 @@ TextField.propTypes = {
     The size of the button
   */
   size: PropTypes.oneOf(Object.values(SIZE)),
+  /**
+    Type of the input element. It should be a valid HTML5 input type.
+  */
+  type: PropTypes.string,
   /**
 The value of the input element, required for a controlled component.
   */
@@ -105,10 +139,11 @@ The variant to use.
   variant: PropTypes.any,
 };
 
-TextField.defaultProps = {
+TextFields.defaultProps = {
   color: COLOR.PRIMARY,
   disabled: false,
   fullWidth: false,
   select: false,
+  autoFocus: false,
   variant: VARIANT.STANDARD,
 };
