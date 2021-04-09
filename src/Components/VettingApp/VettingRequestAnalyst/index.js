@@ -95,6 +95,7 @@ function VettingRequestAnalyst(props) {
     setOpen({...open, manageTeamDrawer: !open.manageTeamDrawer});
   };
   const classes = useStyles();
+
   const [state, setState] = React.useState({
     activeStep: 0,
     completed: {},
@@ -124,6 +125,7 @@ function VettingRequestAnalyst(props) {
   };
 
   const handleNext = () => {
+    window.scrollTo(0, 0);
     const newActiveStep =
       isLastStep() && !allStepsCompleted() ?
         steps.findIndex((step, i) => !(i in state.completed)) :
@@ -132,6 +134,7 @@ function VettingRequestAnalyst(props) {
   };
 
   const handleBack = () => {
+    window.scrollTo(0, 0);
     const prevActiveStep = state.activeStep;
     setState({...state, activeStep: prevActiveStep - 1});
   };
