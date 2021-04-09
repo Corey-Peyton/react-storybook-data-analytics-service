@@ -10,10 +10,6 @@ export default {
 };
 
 const useStyles = makeStyles((theme) => ({
-  root: {
-    display: 'flex',
-    flexWrap: 'wrap',
-  },
   textField: {
     width: '187px',
   },
@@ -58,6 +54,7 @@ export const StandardTextField = (args) => {
       />
       <TextFields id="standard-basic" label="Multiline" multiline rows={2} />
       <TextFields id="standard-basic" label="Dense margin" margin="dense" />
+      <TextFields id="standard-basic" label="Size medium" size="medium" />
     </>
   );
 };
@@ -135,6 +132,12 @@ export const OutlinedTextField = (args) => {
         label="Dense margin"
         variant="outlined"
         margin="dense"
+      />
+      <TextFields
+        id="standard-basic"
+        variant="outlined"
+        label="Size medium"
+        size="medium"
       />
     </>
   );
@@ -227,7 +230,14 @@ export const FilledTextField = (args) => {
         id="standard-basic"
         label="Dense margin"
         variant="filled"
-        margin="dense"
+        margin="normal"
+      />
+
+      <TextFields
+        id="standard-basic"
+        variant="filled"
+        label="Size small"
+        size="small"
       />
     </>
   );

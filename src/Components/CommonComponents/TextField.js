@@ -36,6 +36,12 @@ const SIZE = {
   SMALL: 'small',
   MEDIUM: 'medium',
 };
+
+const MARGIN = {
+  NONE: 'none',
+  NORMAL: 'normal',
+  DENSE: 'dense',
+};
 TextFields.propTypes = {
   /**
     This prop helps users to fill forms faster, especially on mobile devices. The name can be confusing, as it's more like an autofill.
@@ -146,4 +152,5 @@ TextFields.defaultProps = {
   select: false,
   autoFocus: false,
   variant: VARIANT.STANDARD,
+  margin: MARGIN.NONE,
 };
