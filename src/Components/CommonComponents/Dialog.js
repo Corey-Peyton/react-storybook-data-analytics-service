@@ -28,9 +28,6 @@ const useStyles = makeStyles((theme) => ({
     borderTop: '1px solid',
     borderTopColor: theme.palette.divider,
   },
-  secondaryButton: {
-    marginRight: theme.spacing(1),
-  },
   vettingSection: {
     display: 'flex',
     flexFlow: 'column',
@@ -61,6 +58,11 @@ const useStyles = makeStyles((theme) => ({
     'height': '100%',
     '&:last-child': {
       marginRight: 0,
+    },
+  },
+  btnGroup: {
+    '& button': {
+      marginLeft: theme.spacing(2),
     },
   },
 }));
@@ -148,12 +150,12 @@ export function Dialog(props) {
                     }}
                     onClick={handleThirdClick}
                   >
-                    {secondaryButton}
+                    {thirdButton}
                   </Button>
                 )}
               </Grid>
 
-              <Grid item>
+              <Grid item className={classes.btnGroup}>
                 {secondaryButton && (
                   <Button
                     className={classes.secondaryButton}

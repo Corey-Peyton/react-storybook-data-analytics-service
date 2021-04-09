@@ -9,46 +9,46 @@ export default {
   component: Dialog,
 };
 
-export const InputDialog = (args) => {
-  const [open, setOpen] = React.useState(false);
-  const handleOpen = () => {
-    setOpen(true);
-  };
-  const handleClose = () => {
-    setOpen(false);
-  };
-  return (
-    <>
-      <Button variant="contained" color="primary" onClick={handleOpen}>
-        Input dialog
-      </Button>
-      <Dialog
-        id="input-dialog"
-        open={open}
-        title="Assign to me"
-        content={
-          <>
-            <Typography variant="subtitle2" className="mb-2">
-              Provide a phone number
-            </Typography>
-            <TextField
-              className="m-0 w-50"
-              id="phone-num"
-              label="Phone number"
-              required
-              variant="outlined"
-              margin="dense"
-            />
-          </>
-        }
-        primaryButton="Assign to me"
-        secondaryButton="Cancel"
-        handleSecondaryClick={handleClose}
-        handleClose={handleClose}
-      />
-    </>
-  );
-};
+// export const InputDialog = (args) => {
+//   const [open, setOpen] = React.useState(false);
+//   const handleOpen = () => {
+//     setOpen(true);
+//   };
+//   const handleClose = () => {
+//     setOpen(false);
+//   };
+//   return (
+//     <>
+//       <Button variant="contained" color="primary" onClick={handleOpen}>
+//         Input dialog
+//       </Button>
+//       <Dialog
+//         id="input-dialog"
+//         open={open}
+//         title="Assign to me"
+//         content={
+//           <>
+//             <Typography variant="subtitle2" className="mb-2">
+//               Provide a phone number
+//             </Typography>
+//             <TextField
+//               className="m-0 w-50"
+//               id="phone-num"
+//               label="Phone number"
+//               required
+//               variant="outlined"
+//               margin="dense"
+//             />
+//           </>
+//         }
+//         primaryButton="Assign to me"
+//         secondaryButton="Cancel"
+//         handleSecondaryClick={handleClose}
+//         handleClose={handleClose}
+//       />
+//     </>
+//   );
+// };
 
 export const SingleActionDialog = (args) => {
   const [open, setOpen] = React.useState({
@@ -78,7 +78,7 @@ export const SingleActionDialog = (args) => {
         title="Single action dialog"
         content={
           <>
-            <Typography variant="body1">
+            <Typography variant="body2">
               This is an example of a dialog with one action.
             </Typography>
           </>
@@ -102,70 +102,117 @@ export const SingleActionDialog = (args) => {
 };
 
 export const TwoActionDialog = (args) => {
-  const [open, setOpen] = React.useState(false);
-  const handleOpen = () => {
-    setOpen(true);
+  const [open, setOpen] = React.useState({
+    dialogTwoAction: false,
+  });
+
+  const toggleDialog = (state, value, e) => {
+    e.stopPropagation();
+    setOpen({...open, [state]: value});
   };
-  const handleClose = () => {
-    setOpen(false);
-  };
+
   return (
     <>
-      <Button variant="contained" color="primary" onClick={handleOpen}>
+      <Button
+        variant="contained"
+        color="primary"
+        onClick={(e) => {
+          e.stopPropagation();
+          toggleDialog('dialogTwoAction', !open.dialogTwoAction, e);
+        }}
+      >
         Two action dialog
       </Button>
       <Dialog
         id="two-action-dialog"
-        open={open}
+        open={open.dialogTwoAction}
         title="Two action dialog"
         content={
           <>
-            <Typography variant="body1">
+            <Typography variant="body2">
               This is an example of a dialog with two actions.
             </Typography>
           </>
         }
         primaryButton="Submit"
         secondaryButton="Cancel"
-        handlePrimaryClick={handleClose}
-        handleSecondaryClick={handleClose}
-        handleClose={handleClose}
+        handlePrimaryClick={(e) => {
+          e.stopPropagation();
+          toggleDialog('dialogTwoAction', !open.dialogTwoAction, e);
+        }}
+        handleSecondaryClick={(e) => {
+          e.stopPropagation();
+          toggleDialog('dialogTwoAction', !open.dialogTwoAction, e);
+        }}
+        toggleDialog={(e) => {
+          e.stopPropagation();
+          toggleDialog('dialogTwoAction', !open.dialogTwoAction, e);
+        }}
+        handleClose={(e) => {
+          e.stopPropagation();
+          toggleDialog('dialogTwoAction', !open.dialogTwoAction, e);
+        }}
       />
     </>
   );
 };
 
 export const ThreeActionDialog = (args) => {
-  const [open, setOpen] = React.useState(false);
-  const handleOpen = () => {
-    setOpen(true);
+  const [open, setOpen] = React.useState({
+    dialogThreeAction: false,
+  });
+
+  const toggleDialog = (state, value, e) => {
+    e.stopPropagation();
+    setOpen({...open, [state]: value});
   };
-  const handleClose = () => {
-    setOpen(false);
-  };
+
   return (
     <>
-      <Button variant="contained" color="primary" onClick={handleOpen}>
+      <Button
+        variant="contained"
+        color="primary"
+        onClick={(e) => {
+          e.stopPropagation();
+          toggleDialog('dialogThreeAction', !open.dialogThreeAction, e);
+        }}
+      >
         Three action dialog
       </Button>
       <Dialog
         id="three-action-dialog"
-        open={open}
+        open={open.dialogThreeAction}
         title="Three action dialog"
         content={
           <>
-            <Typography variant="body1">
+            <Typography variant="body2">
               This is an example of a dialog with three actions.
             </Typography>
           </>
         }
         primaryButton="Submit"
         secondaryButton="Cancel"
-        thirdButton="Other"
-        handlePrimaryClick={handleClose}
-        handleSecondaryClick={handleClose}
-        handleThirdClick={handleClose}
-        handleClose={handleClose}
+        thirdButton="Other action"
+        handlePrimaryClick={(e) => {
+          e.stopPropagation();
+          toggleDialog('dialogThreeAction', !open.dialogThreeAction, e);
+        }}
+        handleSecondaryClick={(e) => {
+          e.stopPropagation();
+          toggleDialog('dialogThreeAction', !open.dialogThreeAction, e);
+        }}
+        handleThirdClick={(e) => {
+          e.stopPropagation();
+          toggleDialog('dialogThreeAction', !open.dialogThreeAction, e);
+        }}
+        toggleDialog={(e) => {
+          e.stopPropagation();
+          toggleDialog('dialogThreeAction', !open.dialogThreeAction, e);
+        }}
+        handleClose={(e) => {
+          e.stopPropagation();
+          toggleDialog('dialogThreeAction', !open.dialogThreeAction, e);
+        }}
       />
     </>
   );
