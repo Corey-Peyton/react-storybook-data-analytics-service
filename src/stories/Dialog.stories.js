@@ -2,53 +2,12 @@ import React from 'react';
 
 import {Button} from '../Components/CommonComponents/Button';
 import {Dialog} from '../Components/CommonComponents/Dialog';
-import {Typography, TextField} from '@material-ui/core';
+import {Typography} from '@material-ui/core';
 
 export default {
   title: 'Molecules/Dialog',
   component: Dialog,
 };
-
-// export const InputDialog = (args) => {
-//   const [open, setOpen] = React.useState(false);
-//   const handleOpen = () => {
-//     setOpen(true);
-//   };
-//   const handleClose = () => {
-//     setOpen(false);
-//   };
-//   return (
-//     <>
-//       <Button variant="contained" color="primary" onClick={handleOpen}>
-//         Input dialog
-//       </Button>
-//       <Dialog
-//         id="input-dialog"
-//         open={open}
-//         title="Assign to me"
-//         content={
-//           <>
-//             <Typography variant="subtitle2" className="mb-2">
-//               Provide a phone number
-//             </Typography>
-//             <TextField
-//               className="m-0 w-50"
-//               id="phone-num"
-//               label="Phone number"
-//               required
-//               variant="outlined"
-//               margin="dense"
-//             />
-//           </>
-//         }
-//         primaryButton="Assign to me"
-//         secondaryButton="Cancel"
-//         handleSecondaryClick={handleClose}
-//         handleClose={handleClose}
-//       />
-//     </>
-//   );
-// };
 
 export const SingleActionDialog = (args) => {
   const [open, setOpen] = React.useState({
@@ -217,101 +176,3 @@ export const ThreeActionDialog = (args) => {
     </>
   );
 };
-
-// export function DialogNoLead(props) {
-//   const classes = useStyles();
-//   const {t} = useTranslation();
-//   const {submitDialog, toggleDialog, open} = props;
-
-//   const handleClick = (e) => {
-//     e.stopPropagation();
-//   };
-
-//   return (
-//     <React.Fragment>
-//       <Dialog
-//         onClose={toggleDialog}
-//         aria-labelledby="dashboard-dialog-title"
-//         open={open}
-//         className={classes.root}
-//         disableBackdropClick
-//         scroll="paper"
-//         onClick={handleClick}
-//         onKeyPress={(e) => {
-//           if (e.key === 'Enter') {
-//             e.preventDefault();
-//             e.stopPropagation();
-//           }
-//         }}
-//       >
-//         <DialogTitle id="dashboard-dialog-title">
-//           <div className={classes.vettingContainerTitle}>
-//             <Typography variant="h6">{t('Continue with no lead?')}</Typography>
-//             <IconButton
-//               id="dialog-close"
-//               onClick={toggleDialog}
-//               edge="end"
-//               aria-label="No lead assigned - close"
-//               onKeyPress={(e) => {
-//                 e.preventDefault();
-//                 e.stopPropagation();
-//                 if (e.key === 'Enter') {
-//                   toggleDialog(e);
-//                 }
-//               }}
-//             >
-//               <CloseIcon />
-//             </IconButton>
-//           </div>
-//         </DialogTitle>
-//         <Divider />
-//         <DialogContent>
-//           <div className={classes.vettingSection}>
-//             <div className={classes.vettingRow}>
-//               <div className={classes.vettingColumn}>
-//                 <Alert severity="warning" className={classes.alert}>
-//                   {t(
-//                       'If you continue, the request will have no lead and the requester will be notified of the change.',
-//                   )}
-//                 </Alert>
-//               </div>
-//             </div>
-//           </div>
-//         </DialogContent>
-//         <Divider />
-//         <DialogActions>
-//           <Button
-//             variant="outlined"
-//             color="primary"
-//             onClick={toggleDialog}
-//             className={classes.footerBtns}
-//             onKeyPress={(e) => {
-//               e.preventDefault();
-//               e.stopPropagation();
-//               if (e.key === 'Enter') {
-//                 toggleDialog(e);
-//               }
-//             }}
-//           >
-//             {t('Cancel')}
-//           </Button>
-//           <Button
-//             variant="contained"
-//             color="primary"
-//             onClick={submitDialog}
-//             className={classes.footerBtns}
-//             onKeyPress={(e) => {
-//               e.preventDefault();
-//               e.stopPropagation();
-//               if (e.key === 'Enter') {
-//                 submitDialog(e);
-//               }
-//             }}
-//           >
-//             {t('Continue')}
-//           </Button>
-//         </DialogActions>
-//       </Dialog>
-//     </React.Fragment>
-//   );
-// }
