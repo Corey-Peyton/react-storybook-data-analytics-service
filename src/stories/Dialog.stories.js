@@ -47,10 +47,6 @@ export const SingleActionDialog = (args) => {
           e.stopPropagation();
           toggleDialog('dialogSingleAction', !open.dialogSingleAction, e);
         }}
-        handleClose={(e) => {
-          e.stopPropagation();
-          toggleDialog('dialogSingleAction', !open.dialogSingleAction, e);
-        }}
         toggleDialog={(e) => {
           e.stopPropagation();
           toggleDialog('dialogSingleAction', !open.dialogSingleAction, e);
@@ -104,10 +100,6 @@ export const TwoActionDialog = (args) => {
           toggleDialog('dialogTwoAction', !open.dialogTwoAction, e);
         }}
         toggleDialog={(e) => {
-          e.stopPropagation();
-          toggleDialog('dialogTwoAction', !open.dialogTwoAction, e);
-        }}
-        handleClose={(e) => {
           e.stopPropagation();
           toggleDialog('dialogTwoAction', !open.dialogTwoAction, e);
         }}
@@ -165,10 +157,6 @@ export const ThreeActionDialog = (args) => {
           toggleDialog('dialogThreeAction', !open.dialogThreeAction, e);
         }}
         toggleDialog={(e) => {
-          e.stopPropagation();
-          toggleDialog('dialogThreeAction', !open.dialogThreeAction, e);
-        }}
-        handleClose={(e) => {
           e.stopPropagation();
           toggleDialog('dialogThreeAction', !open.dialogThreeAction, e);
         }}

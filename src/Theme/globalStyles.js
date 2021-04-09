@@ -352,6 +352,38 @@ export const useStyles = makeStyles({
       paddingLeft: '14px',
       color: [theme.palette.common.black, '!important'],
     },
+    '.dialog-section': {
+      display: 'flex',
+      flexFlow: 'column',
+      padding: theme.spacing(3),
+      overflowY: 'auto',
+    },
+    '.row': {
+      'display': 'flex',
+      'margin': theme.spacing(1.5, 0),
+      'flexFlow': 'row',
+      'height': '100%',
+      'justifyContent': 'center',
+      'width': '100%',
+      'alignItems': 'center',
+      '&:first-child': {
+        marginTop: 0,
+      },
+      '&:last-child': {
+        marginBottom: 0,
+      },
+    },
+    '.column': {
+      'display': 'flex',
+      'flexDirection': 'column',
+      'width': '100%',
+      'justifyContent': 'center',
+      'marginRight': theme.spacing(1),
+      'height': '100%',
+      '&:last-child': {
+        marginRight: 0,
+      },
+    },
     '.mb-6': {
       marginBottom: theme.spacing(6),
     },

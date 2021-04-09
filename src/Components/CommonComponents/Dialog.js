@@ -28,38 +28,6 @@ const useStyles = makeStyles((theme) => ({
     borderTop: '1px solid',
     borderTopColor: theme.palette.divider,
   },
-  vettingSection: {
-    display: 'flex',
-    flexFlow: 'column',
-    padding: theme.spacing(3),
-    overflowY: 'auto',
-  },
-  vettingRow: {
-    'display': 'flex',
-    'margin': theme.spacing(1.5, 0),
-    'flexFlow': 'row',
-    'height': '100%',
-    'justifyContent': 'center',
-    'width': '100%',
-    'alignItems': 'center',
-    '&:first-child': {
-      marginTop: 0,
-    },
-    '&:last-child': {
-      marginBottom: 0,
-    },
-  },
-  vettingColumn: {
-    'display': 'flex',
-    'flexDirection': 'column',
-    'width': '100%',
-    'justifyContent': 'center',
-    'marginRight': theme.spacing(1),
-    'height': '100%',
-    '&:last-child': {
-      marginRight: 0,
-    },
-  },
   btnGroup: {
     '& button': {
       marginLeft: theme.spacing(2),
@@ -72,7 +40,6 @@ export function Dialog(props) {
   const {
     toggleDialog,
     open,
-    handleClose,
     id,
     title,
     content,
@@ -94,7 +61,7 @@ export function Dialog(props) {
         classes={{
           paper: classes.dialogPaper,
         }}
-        onClose={handleClose}
+        onClose={toggleDialog}
         aria-labelledby={id}
         open={open}
         maxWidth="sm"
@@ -128,7 +95,7 @@ export function Dialog(props) {
           </IconButton>
         </DialogTitle>
         <DialogContent>
-          <div className={classes.vettingSection}>{content}</div>
+          <div className="dialog-section">{content}</div>
         </DialogContent>
         {secondaryButton || primaryButton ? (
           <DialogActions className={classes.dialogFooter}>
@@ -229,10 +196,6 @@ Dialog.propTypes = {
    Text for third button
    */
   thirdButton: PropTypes.string,
-  /**
-   Click handler to close dialog
-   */
-  handleClose: PropTypes.func.isRequired,
   /**
    Click handler for primary action
    */
