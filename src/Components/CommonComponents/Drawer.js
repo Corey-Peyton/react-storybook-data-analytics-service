@@ -60,7 +60,7 @@ const useStyles = makeStyles((theme) => ({
     borderTopColor: theme.palette.divider,
     position: 'fixed',
     bottom: 0,
-    width: '400px',
+    width: DRAWER_WIDTH,
     boxSizing: 'border-box',
     backgroundColor: theme.palette.common.white,
     zIndex: 500,
@@ -164,7 +164,7 @@ Drawer.propTypes = {
   /**
    Text for primary button
    */
-  primaryButton: PropTypes.string,
+  primaryButton: PropTypes.string.isRequired,
   /**
    Text for secondary button
    */
@@ -176,7 +176,7 @@ Drawer.propTypes = {
   /**
    Click handler for primary action
    */
-  handlePrimaryClick: PropTypes.func,
+  handlePrimaryClick: PropTypes.func.isRequired,
   /**
    Click handler for secondary action
    */
