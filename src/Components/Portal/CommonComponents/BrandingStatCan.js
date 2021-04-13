@@ -3,7 +3,6 @@ import {makeStyles} from '@material-ui/styles';
 import {SM_SCREEN} from '../../../Theme/constants';
 const defaultStyles = makeStyles((theme) => ({
   brandImage: {
-    margin: theme.spacing(1.5),
     height: '100%',
     width: '100%',
   },
@@ -27,35 +26,19 @@ export default function BrandingStatsCan() {
   }, [state]);
   return (
     <React.Fragment>
-      {isSmScreen ? (
-        <a
-          href="https://www.statcan.gc.ca/eng/start"
-          className={classes.brandLink}
-        >
-          <img
-            src={process.env.PUBLIC_URL + '/images/flag.svg'}
-            alt=""
-            className={classes.brandImage}
-          />
-          <span className="screen-reader-text">
-            Statistics Canada / <span lang="fr">Statistique Canada</span>
-          </span>
-        </a>
-      ) : (
-        <a
-          href="https://www.statcan.gc.ca/eng/start"
-          className={classes.brandLink}
-        >
-          <img
-            src={process.env.PUBLIC_URL + '/images/sig-stats-can-blk-en.svg'}
-            alt=""
-            className={classes.brandImage}
-          />
-          <span className="screen-reader-text">
-            Statistics Canada / <span lang="fr">Statistique Canada</span>
-          </span>
-        </a>
-      )}
+      <a
+        href="https://www.statcan.gc.ca/eng/start"
+        className={classes.brandLink}
+      >
+        <img
+          src={process.env.PUBLIC_URL + '/images/sig-stats-can-blk-en.svg'}
+          alt=""
+          className={classes.brandImage}
+        />
+        <span className="screen-reader-text">
+          Statistics Canada / <span lang="fr">Statistique Canada</span>
+        </span>
+      </a>
     </React.Fragment>
   );
 }
