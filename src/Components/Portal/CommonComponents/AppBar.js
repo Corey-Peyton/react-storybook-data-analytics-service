@@ -11,7 +11,7 @@ import {
 } from '@material-ui/core';
 import {SM_SCREEN} from '../../../Theme/constants';
 import BrandingStatCan from './BrandingStatCan';
-import {HelpDrawer} from './Dialogs';
+import {HelpDrawer, FeedbackDialog} from './Dialogs';
 import Icon from '@mdi/react';
 import {
   mdiApps,
@@ -54,7 +54,12 @@ function AppBar(props) {
   });
   const [open, setOpen] = React.useState({
     helpDrawer: false,
+    feedbackDialog: false,
   });
+
+  const toggleDialog = (state, value) => {
+    setOpen({...open, [state]: value});
+  };
 
   const openDrawer = (element) => {
     setOpen({...open, [element]: true});
@@ -98,7 +103,9 @@ function AppBar(props) {
                 <Button
                   variant="text"
                   startIcon={<Icon path={mdiMessageAlert} size={1} />}
-                  // onClick={() => handleClickOpen('snackbarReactivate')}
+                  onClick={() =>
+                    toggleDialog('feedbackDialog', !open.feedbackDialog)
+                  }
                 >
                   Feedback
                 </Button>
@@ -181,6 +188,13 @@ function AppBar(props) {
       <HelpDrawer
         open={open.helpDrawer}
         closeDrawer={() => closeDrawer('helpDrawer')}
+      />
+      {/* Feedback dialog */}
+      <FeedbackDialog
+        open={open.feedbackDialog}
+        toggleDialog={() =>
+          toggleDialog('feedbackDialog', !open.feedbackDialog)
+        }
       />
     </>
   );

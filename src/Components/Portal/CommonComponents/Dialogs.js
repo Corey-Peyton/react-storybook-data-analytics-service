@@ -8,6 +8,7 @@ import {
   Button,
 } from '@material-ui/core';
 import {Drawer} from '../../CommonComponents/Drawer';
+import {Dialog} from '../../CommonComponents/Dialog';
 import Icon from '@mdi/react';
 import {mdiChevronDown, mdiEmail, mdiBookOpenPageVariant} from '@mdi/js';
 
@@ -110,6 +111,26 @@ export function HelpDrawer(props) {
       primaryButton="Close"
       handlePrimaryClick={props.closeDrawer}
       toggleDrawer={props.closeDrawer}
+    />
+  );
+}
+
+export function FeedbackDialog(props) {
+  const classes = useStyles();
+
+  const content = () => <>Test</>;
+
+  return (
+    <Dialog
+      id="feedback-dialog"
+      open={props.open}
+      title="Feedback"
+      content={content()}
+      primaryButton="Submit"
+      secondaryButton="Cancel"
+      handlePrimaryClick={props.toggleDialog}
+      handleSecondaryClick={props.toggleDialog}
+      toggleDialog={props.toggleDialog}
     />
   );
 }
