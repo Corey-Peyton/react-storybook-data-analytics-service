@@ -1,29 +1,14 @@
 import React from 'react';
 import {makeStyles} from '@material-ui/styles';
-import {SM_SCREEN} from '../../../Theme/constants';
-const defaultStyles = makeStyles((theme) => ({
+const useStyles = makeStyles((theme) => ({
   brandImage: {
     height: '100%',
     width: '100%',
   },
 }));
 export default function BrandingStatsCan() {
-  const classes = defaultStyles();
-  const [state, setState] = React.useState({
-    windowWidth: window.innerWidth,
-  });
-  const isSmScreen = state.windowWidth < SM_SCREEN;
-  React.useEffect(() => {
-    // Detect screen size
-    const handleResize = () =>
-      setState({...state, windowWidth: window.innerWidth});
-    window.addEventListener('resize', handleResize);
-    window.addEventListener('orientationchange', handleResize);
-    return () => {
-      window.removeEventListener('resize', handleResize);
-      window.removeEventListener('orientationchange', handleResize);
-    };
-  }, [state]);
+  const classes = useStyles();
+
   return (
     <React.Fragment>
       <a
