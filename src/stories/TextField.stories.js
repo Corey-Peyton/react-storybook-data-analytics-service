@@ -1,12 +1,11 @@
 import React from 'react';
-import {InputAdornment} from '@material-ui/core';
+import {InputAdornment, TextField} from '@material-ui/core';
 import {makeStyles} from '@material-ui/core/styles';
 import AccountCircle from '@material-ui/icons/AccountCircle';
-import {TextFields} from '../Components/CommonComponents/TextField';
 
 export default {
   title: 'Molecules/TextFields',
-  component: TextFields,
+  component: TextField,
 };
 
 const useStyles = makeStyles((theme) => ({
@@ -19,7 +18,7 @@ const useStyles = makeStyles((theme) => ({
 export const AllTextFields = (args) => {
   return (
     <>
-      <TextFields id="outlined-basic" label="Outlined" variant="outlined" margin="dense" />
+      <TextField id="outlined-basic" label="Outlined" variant="outlined" margin="dense" />
     </>
   );
 };
@@ -28,28 +27,30 @@ export const OutlinedTextField = (args) => {
   const classes = useStyles();
   return (
     <>
-      <TextFields
+      <TextField
         id="standard-basic"
         label="Full width"
         variant="outlined"
         fullWidth
         margin="dense"
       />
-      <TextFields
+      <TextField
         id="outlined-basic"
         label="Required"
         variant="outlined"
         required
         margin="dense"
+        className="mr-2"
       />
-      <TextFields
+      <TextField
         id="outlined-basic"
         label="Disabled"
         variant="outlined"
         disabled
         margin="dense"
+        className="mr-2"
       />
-      <TextFields
+      <TextField
         id="outlined-basic"
         label="Type"
         variant="outlined"
@@ -58,16 +59,18 @@ export const OutlinedTextField = (args) => {
           shrink: true,
         }}
         margin="dense"
+        className="mr-2"
       />
-      <TextFields
+      <TextField
         id="outlined-basic"
         label="Helper text"
         variant="outlined"
         defaultValue="Default Value"
         helperText="Some important text"
         margin="dense"
+        className="mr-2"
       />
-      <TextFields
+      <TextField
         label="Error"
         id="standard-start-adornment"
         variant="outlined"
@@ -75,12 +78,12 @@ export const OutlinedTextField = (args) => {
           error: true,
         }}
         margin="dense"
+        className="mr-2"
       />
-      <TextFields
+      <TextField
         label="Adornment"
         id="standard-start-adornment"
         variant="outlined"
-        className={classes.textField}
         InputProps={{
           startAdornment: (
             <InputAdornment position="start">
@@ -89,17 +92,19 @@ export const OutlinedTextField = (args) => {
           ),
         }}
         margin="dense"
+        className="mr-2"
       />
 
-      <TextFields
+      <TextField
         id="standard-basic"
         label="Multiline"
         variant="outlined"
         multiline
         rows={2}
         margin="dense"
+        className="mr-2"
       />
-      <TextFields
+      <TextField
         id="standard-basic"
         variant="outlined"
         label="Size medium"
