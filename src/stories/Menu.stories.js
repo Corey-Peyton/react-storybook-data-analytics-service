@@ -8,6 +8,8 @@ import {
   ListItemText,
   IconButton,
 } from '@material-ui/core';
+import Icon from '@mdi/react';
+import {mdiMenuDown} from '@mdi/js';
 import MoreVertIcon from '@material-ui/icons/MoreVert';
 
 export default {
@@ -125,6 +127,7 @@ export const ButtonMenu = (args) => {
         aria-label="Button menu"
         variant="contained"
         color="primary"
+        endIcon={<Icon path={mdiMenuDown} size={1} />}
       >
         Open menu
       </Button>
