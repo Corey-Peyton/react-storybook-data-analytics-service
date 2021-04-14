@@ -732,6 +732,22 @@ export function ActionsMenu(props) {
             {summaryMenuItem()}
           </StyledMenu>
         );
+      } else if (status === 'under review') {
+        StyledMenuVar = (
+          <StyledMenu
+            id={ariaControls}
+            anchorEl={anchorEl}
+            keepMounted
+            open={Boolean(anchorEl)}
+            onClose={handleClose}
+          >
+            {viewRequestMenuItem()}
+            {withdrawMenuItem()}
+            {assigneeDetailsMenuItem()}
+            {requesterDetailsMenuItem()}
+            {summaryMenuItem()}
+          </StyledMenu>
+        );
       } else if (status === 'changes requested') {
         StyledMenuVar = (
           <StyledMenu
