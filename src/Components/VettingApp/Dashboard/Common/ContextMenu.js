@@ -710,10 +710,10 @@ export function ActionsMenu(props) {
           >
             {editMenuItem()}
             {submitMenuItem()}
-            {withdrawMenuItem()}
             {assigneeDetailsMenuItem()}
             {requesterDetailsMenuItem()}
             {summaryMenuItem()}
+            {deleteMenuItem()}
           </StyledMenu>
         );
       } else if (status === 'submitted') {
@@ -764,7 +764,6 @@ export function ActionsMenu(props) {
           {assigneeDetailsMenuItem()}
           {requesterDetailsMenuItem()}
           {summaryMenuItem()}
-          {deleteMenuItem()}
         </StyledMenu>
       );
     } else if (statusHead === 'approved') {
