@@ -31,13 +31,9 @@ import {
   SnackbarSaveRequest,
   SnackbarStartReview,
   SnackbarSubmitRequest,
+  SnackbarWithdrawRequest,
 } from './Snackbars';
-import {
-  DialogDenied,
-  DialogUpdate,
-  DialogApprove,
-  DialogWithdraw,
-} from './DialogBox';
+import {DialogDenied, DialogUpdate, DialogApprove} from './DialogBox';
 import {ActionsMenu} from './RequestContextMenu';
 import {loggedInUser} from '../../../Data/fakeData';
 
@@ -94,13 +90,13 @@ function RequestToolbar(props) {
     dialogApprove: false,
     dialogUpdate: false,
     dialogDenied: false,
-    dialogWithdraw: false,
     snackbarReactivate: false,
     snackbarSubmit: false,
     snackbarSave: false,
     snackbarDeny: false,
     snackbarApprove: false,
     snackbarStart: false,
+    snackbarWithdraw: false,
   });
 
   const handleClickOpen = (state) => {
@@ -242,7 +238,8 @@ function RequestToolbar(props) {
     if (
       status !== 'withdrawn' &&
       status !== 'approved' &&
-      status !== 'denied'
+      status !== 'denied' &&
+      status !== 'draft'
     ) {
       return (
         <Button
@@ -250,7 +247,7 @@ function RequestToolbar(props) {
           variant="text"
           color="primary"
           startIcon={<Icon path={mdiUndo} size={1} />}
-          onClick={() => handleClickOpen('dialogWithdraw')}
+          onClick={() => handleClickOpen('snackbarWithdraw')}
         >
           Withdraw
         </Button>
@@ -330,11 +327,6 @@ function RequestToolbar(props) {
           open={open.dialogDenied}
         />
 
-        {/* Withdraw request dialog */}
-        <DialogWithdraw
-          toggleDialog={() => handleClickClose('dialogWithdraw')}
-          open={open.dialogWithdraw}
-        />
         {/* Approve request snackbar */}
         <SnackbarApproveRequest
           open={open.snackbarApprove}
@@ -364,6 +356,11 @@ function RequestToolbar(props) {
         <SnackbarSubmitRequest
           open={open.snackbarSubmit}
           handleClose={() => handleClickClose('snackbarSubmit')}
+        />
+        {/* WithdraW request snackbar */}
+        <SnackbarWithdrawRequest
+          open={open.snackbarWithdraw}
+          handleClose={() => handleClickClose('snackbarWithdraw')}
         />
       </Toolbar>
     </AppBar>

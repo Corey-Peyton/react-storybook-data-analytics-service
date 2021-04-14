@@ -1,5 +1,6 @@
 import React from 'react';
 import {makeStyles} from '@material-ui/core/styles';
+import clsx from 'clsx';
 import PropTypes from 'prop-types';
 import {
   Typography,
@@ -7,6 +8,7 @@ import {
   DialogTitle,
   DialogContent,
   DialogActions,
+  Grid,
 } from '@material-ui/core';
 import {Button} from './Button';
 import {IconButton} from './IconButton';
@@ -21,21 +23,37 @@ const useStyles = makeStyles((theme) => ({
     borderBottom: '1px solid',
     borderBottomColor: theme.palette.divider,
   },
-  dialogContent: {
-    padding: theme.spacing(3),
-  },
   dialogFooter: {
     padding: theme.spacing(1.75, 3),
     borderTop: '1px solid',
     borderTopColor: theme.palette.divider,
   },
-  secondaryButton: {
-    marginRight: theme.spacing(1),
+  btnGroup: {
+    '& button': {
+      marginLeft: theme.spacing(2),
+    },
   },
 }));
 
 export function Dialog(props) {
   const classes = useStyles();
+  const {
+    toggleDialog,
+    open,
+    id,
+    title,
+    content,
+    primaryButton,
+    secondaryButton,
+    thirdButton,
+    handlePrimaryClick,
+    handleSecondaryClick,
+    handleThirdClick,
+  } = props;
+
+  const handleClick = (e) => {
+    e.stopPropagation();
+  };
 
   return (
     <React.Fragment>
@@ -43,48 +61,103 @@ export function Dialog(props) {
         classes={{
           paper: classes.dialogPaper,
         }}
-        onClose={props.handleClose}
-        aria-labelledby={props.id}
-        open={props.open}
+        onClose={toggleDialog}
+        aria-labelledby={id}
+        open={open}
         maxWidth="sm"
         fullWidth={true}
+        disableBackdropClick
+        onClick={handleClick}
+        onKeyPress={(e) => {
+          if (e.key === 'Enter') {
+            e.preventDefault();
+            e.stopPropagation();
+          }
+        }}
       >
-        <DialogTitle
-          id={props.id}
-          className={classes.dialogTitle}
-          disableTypography
-        >
+        <DialogTitle id={id} className={classes.dialogTitle} disableTypography>
           <Typography variant="h6" component="h2">
-            {props.title}
+            {title}
           </Typography>
-          <IconButton onClick={props.handleClose} edge="end">
+          <IconButton
+            aria-label={`${title} - close`}
+            onClick={toggleDialog}
+            edge="end"
+            onKeyPress={(e) => {
+              e.preventDefault();
+              e.stopPropagation();
+              if (e.key === 'Enter') {
+                toggleDialog(e);
+              }
+            }}
+          >
             <CloseIcon />
           </IconButton>
         </DialogTitle>
-        <DialogContent className={classes.dialogContent}>
-          {props.content}
+        <DialogContent>
+          <div className="dialog-section">{content}</div>
         </DialogContent>
-        {props.secondaryButton || props.primaryButton ? (
+        {secondaryButton || primaryButton ? (
           <DialogActions className={classes.dialogFooter}>
-            {props.secondaryButton && (
-              <Button
-                className={classes.secondaryButton}
-                variant="outlined"
-                color="primary"
-                onClick={props.handleSecondaryClick}
-              >
-                {props.secondaryButton}
-              </Button>
-            )}
-            {props.primaryButton && (
-              <Button
-                variant="contained"
-                color="primary"
-                onClick={props.handlePrimaryClick}
-              >
-                {props.primaryButton}
-              </Button>
-            )}
+            <Grid container justify="space-between">
+              <Grid item>
+                {thirdButton && (
+                  <Button
+                    className={clsx(
+                        classes.thirdButton,
+                        'MuiIconButton-edgeStart',
+                    )}
+                    color="primary"
+                    onKeyPress={(e) => {
+                      e.preventDefault();
+                      e.stopPropagation();
+                      if (e.key === 'Enter') {
+                        handleThirdClick(e);
+                      }
+                    }}
+                    onClick={handleThirdClick}
+                  >
+                    {thirdButton}
+                  </Button>
+                )}
+              </Grid>
+
+              <Grid item className={classes.btnGroup}>
+                {secondaryButton && (
+                  <Button
+                    className={classes.secondaryButton}
+                    variant="outlined"
+                    color="primary"
+                    onKeyPress={(e) => {
+                      e.preventDefault();
+                      e.stopPropagation();
+                      if (e.key === 'Enter') {
+                        handleSecondaryClick(e);
+                      }
+                    }}
+                    onClick={handleSecondaryClick}
+                  >
+                    {secondaryButton}
+                  </Button>
+                )}
+                {primaryButton && (
+                  <Button
+                    variant="contained"
+                    color="primary"
+                    onKeyPress={(e) => {
+                      e.preventDefault();
+                      e.stopPropagation();
+                      if (e.key === 'Enter') {
+                        handlePrimaryClick(e);
+                      }
+                    }}
+                    onClick={handlePrimaryClick}
+                  >
+                    {primaryButton}
+                  </Button>
+                )}
+              </Grid>
+            </Grid>
           </DialogActions>
         ) : (
           ''
@@ -120,9 +193,9 @@ Dialog.propTypes = {
    */
   secondaryButton: PropTypes.string,
   /**
-   Click handler to close dialog
+   Text for third button
    */
-  handleClose: PropTypes.func.isRequired,
+  thirdButton: PropTypes.string,
   /**
    Click handler for primary action
    */
@@ -131,6 +204,10 @@ Dialog.propTypes = {
    Click handler for secondary action
    */
   handleSecondaryClick: PropTypes.func,
+  /**
+   Click handler for third action
+   */
+  handleThirdClick: PropTypes.func,
 };
 
 Dialog.defaultProps = {
