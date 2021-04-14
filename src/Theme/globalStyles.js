@@ -363,7 +363,7 @@ export const useStyles = makeStyles({
       'margin': theme.spacing(1.5, 0),
       'flexFlow': 'row',
       'height': '100%',
-      'justifyContent': 'center',
+      'justifyContent': 'space-between',
       'width': '100%',
       'alignItems': 'center',
       '&:first-child': {

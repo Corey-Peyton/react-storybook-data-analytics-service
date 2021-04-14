@@ -6,6 +6,12 @@ import {
   AccordionDetails,
   AccordionSummary,
   Button,
+  TextField,
+  FormControl,
+  FormLabel,
+  RadioGroup,
+  FormControlLabel,
+  Radio,
 } from '@material-ui/core';
 import {Drawer} from '../../CommonComponents/Drawer';
 import {Dialog} from '../../CommonComponents/Dialog';
@@ -116,9 +122,67 @@ export function HelpDrawer(props) {
 }
 
 export function FeedbackDialog(props) {
-  const classes = useStyles();
+  const [state, setState] = React.useState({
+    feedbackRating: null,
+  });
 
-  const content = () => <>Test</>;
+  const handleRadioChange = (event) => {
+    const name = event.target.name;
+    setState({
+      ...state,
+      [name]: event.target.value,
+    });
+  };
+
+  const content = () => (
+    <>
+      <div className="row">
+        <Typography variant="body2">
+          Required fields are marked with an asterisk *.
+        </Typography>
+      </div>
+      <div className="row">
+        <TextField
+          id="feedback"
+          label="What would you like to tell us?"
+          multiline
+          rows={4}
+          variant="outlined"
+          fullWidth
+          required
+        />
+      </div>
+      <div className="row">
+        <FormControl component="fieldset" required>
+          <FormLabel component="legend">
+            How has your experience been so far?
+          </FormLabel>
+          <RadioGroup
+            id="feedbackRating"
+            value={state.feedbackRating}
+            name="feedbackRating"
+            onChange={handleRadioChange}
+          >
+            <FormControlLabel
+              value="Positive"
+              control={<Radio color="primary" />}
+              label="Positive"
+            />
+            <FormControlLabel
+              value="Neutral"
+              control={<Radio color="primary" />}
+              label="Neutral"
+            />
+            <FormControlLabel
+              value="Negative"
+              control={<Radio color="primary" />}
+              label="Negative"
+            />
+          </RadioGroup>
+        </FormControl>
+      </div>
+    </>
+  );
 
   return (
     <Dialog
