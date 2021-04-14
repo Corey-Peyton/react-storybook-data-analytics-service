@@ -326,7 +326,7 @@ export function ActionsMenu(props) {
     );
   } else {
     // ROLE = RESEARCHER
-    if (status === 'withdrawn') {
+    if (status === 'draft') {
       StyledMenuVar = (
         <StyledMenu
           id={ariaControls}
