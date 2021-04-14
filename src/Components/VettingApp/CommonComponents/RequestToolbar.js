@@ -33,12 +33,7 @@ import {
   SnackbarSubmitRequest,
   SnackbarWithdrawRequest,
 } from './Snackbars';
-import {
-  DialogDenied,
-  DialogUpdate,
-  DialogApprove,
-  DialogWithdraw,
-} from './DialogBox';
+import {DialogDenied, DialogUpdate, DialogApprove} from './DialogBox';
 import {ActionsMenu} from './RequestContextMenu';
 import {loggedInUser} from '../../../Data/fakeData';
 
