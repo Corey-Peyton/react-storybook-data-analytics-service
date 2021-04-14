@@ -15,9 +15,9 @@ import {
   SnackbarAssignLead,
   SnackbarAssignSupport,
   SnackbarUnassign,
+  SnackbarWithdrawRequest,
 } from '../../CommonComponents/Snackbars';
 import {
-  DialogWithdraw,
   DialogUnassign,
   DialogSupport,
   DialogUpdate,
@@ -76,7 +76,7 @@ export function ActionsMenu(props) {
     snackbarAssignLead: false,
     snackbarAssignSupport: false,
     snackbarUnassign: false,
-    dialogWithdraw: false,
+    snackbarWithdrawRequest: false,
     dialogManageTeam: false,
     dialogUnassign: false,
     dialogSupport: false,
@@ -173,11 +173,12 @@ export function ActionsMenu(props) {
     );
   };
 
-  const submitMenuItem = () => {
+  const submitMenuItem = (e) => {
     return (
       <MenuItem
         onClick={(e) => {
           e.stopPropagation();
+          handleClose(e);
           handleSnackbarOpen('snackbarSubmit');
         }}
       >
@@ -188,12 +189,13 @@ export function ActionsMenu(props) {
     );
   };
 
-  const withdrawMenuItem = () => {
+  const withdrawMenuItem = (e) => {
     return (
       <MenuItem
         onClick={(e) => {
           e.stopPropagation();
-          toggleDialog('dialogWithdraw', !open.dialogWithdraw, e);
+          handleClose(e);
+          handleSnackbarOpen('snackbarWithdrawRequest');
         }}
       >
         <ListItemText
@@ -859,11 +861,9 @@ export function ActionsMenu(props) {
         open={open.snackbarUnassign}
         handleClose={() => handleSnackbarClose('snackbarUnassign')}
       />
-      <DialogWithdraw
-        toggleDialog={(e) =>
-          toggleDialog('dialogWithdraw', !open.dialogWithdraw, e)
-        }
-        open={open.dialogWithdraw}
+      <SnackbarWithdrawRequest
+        open={open.snackbarWithdrawRequest}
+        handleClose={() => handleSnackbarClose('snackbarWithdrawRequest')}
       />
       <DialogUnassign
         toggleDialog={(e) =>
