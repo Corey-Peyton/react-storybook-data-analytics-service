@@ -445,7 +445,7 @@ export function ActionsMenu(props) {
   };
 
   const reactivateMenuItem = () => {
-    if (currentUser === request.lead) {
+    if (currentUser === request.lead || role === 'researcher') {
       return (
         <MenuItem
           onClick={(e) => {
@@ -710,13 +710,29 @@ export function ActionsMenu(props) {
           >
             {editMenuItem()}
             {submitMenuItem()}
+            {assigneeDetailsMenuItem()}
+            {requesterDetailsMenuItem()}
+            {summaryMenuItem()}
+            {deleteMenuItem()}
+          </StyledMenu>
+        );
+      } else if (status === 'submitted') {
+        StyledMenuVar = (
+          <StyledMenu
+            id={ariaControls}
+            anchorEl={anchorEl}
+            keepMounted
+            open={Boolean(anchorEl)}
+            onClose={handleClose}
+          >
+            {viewRequestMenuItem()}
             {withdrawMenuItem()}
             {assigneeDetailsMenuItem()}
             {requesterDetailsMenuItem()}
             {summaryMenuItem()}
           </StyledMenu>
         );
-      } else if (status === 'submitted') {
+      } else if (status === 'under review') {
         StyledMenuVar = (
           <StyledMenu
             id={ariaControls}
@@ -764,7 +780,6 @@ export function ActionsMenu(props) {
           {assigneeDetailsMenuItem()}
           {requesterDetailsMenuItem()}
           {summaryMenuItem()}
-          {deleteMenuItem()}
         </StyledMenu>
       );
     } else if (statusHead === 'approved') {
