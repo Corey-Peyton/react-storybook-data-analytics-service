@@ -2,12 +2,8 @@ import React from 'react';
 import {useTranslation} from 'react-i18next';
 import {Button} from '../Components/CommonComponents/Button';
 import {Menu} from '../Components/CommonComponents/Menu';
-import {
-  Typography,
-  MenuItem,
-  ListItemText,
-  IconButton,
-} from '@material-ui/core';
+import {MenuItem} from '../Components/CommonComponents/MenuItem';
+import {Typography, ListItemText, IconButton} from '@material-ui/core';
 import Icon from '@mdi/react';
 import {mdiMenuDown} from '@mdi/js';
 import MoreVertIcon from '@material-ui/icons/MoreVert';
@@ -31,29 +27,10 @@ export const IconButtonMenu = (args) => {
   };
 
   // ////////////////////// MENU ITEMS
-  const primaryMenuItem = () => {
-    return (
-      <MenuItem onClick={handleClose} key="1">
-        <ListItemText
-          primary={<Typography variant="body2">{t('Option 1')}</Typography>}
-        />
-      </MenuItem>
-    );
-  };
-
-  const secondaryMenuItem = () => {
-    return (
-      <MenuItem onClick={handleClose} key="2">
-        <ListItemText
-          primary={<Typography variant="body2">{t('Option 2')}</Typography>}
-        />
-      </MenuItem>
-    );
-  };
-
-  const menuItems = () => {
-    return [primaryMenuItem(), secondaryMenuItem()];
-  };
+  const menuItems = [
+    <MenuItem handleClick={handleClose} key="1" content={t('Option 1')} />,
+    <MenuItem handleClick={handleClose} key="2" content={t('Option 2')} />,
+  ];
 
   return (
     <>
@@ -69,12 +46,8 @@ export const IconButtonMenu = (args) => {
         id="icon-button-menu"
         open={Boolean(anchorEl)}
         anchorEl={anchorEl}
-        content={menuItems()}
+        content={menuItems}
         handleClose={handleClose}
-        anchorVertical="bottom"
-        anchorHorizontal="right"
-        transformVertical="top"
-        transformHorizontal="right"
       />
     </>
   );
@@ -94,29 +67,10 @@ export const ButtonMenu = (args) => {
   };
 
   // ////////////////////// MENU ITEMS
-  const primaryMenuItem = () => {
-    return (
-      <MenuItem onClick={handleClose} key="1">
-        <ListItemText
-          primary={<Typography variant="body2">{t('Option 1')}</Typography>}
-        />
-      </MenuItem>
-    );
-  };
-
-  const secondaryMenuItem = () => {
-    return (
-      <MenuItem onClick={handleClose} key="2">
-        <ListItemText
-          primary={<Typography variant="body2">{t('Option 2')}</Typography>}
-        />
-      </MenuItem>
-    );
-  };
-
-  const menuItems = () => {
-    return [primaryMenuItem(), secondaryMenuItem()];
-  };
+  const menuItems = [
+    <MenuItem handleClick={handleClose} key="1" content={t('Option 1')} />,
+    <MenuItem handleClick={handleClose} key="2" content={t('Option 2')} />,
+  ];
 
   return (
     <>
@@ -135,12 +89,8 @@ export const ButtonMenu = (args) => {
         id="button-menu"
         open={Boolean(anchorEl)}
         anchorEl={anchorEl}
-        content={menuItems()}
+        content={menuItems}
         handleClose={handleClose}
-        anchorVertical="bottom"
-        anchorHorizontal="right"
-        transformVertical="top"
-        transformHorizontal="right"
       />
     </>
   );

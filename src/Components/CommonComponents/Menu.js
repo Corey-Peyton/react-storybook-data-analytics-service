@@ -69,21 +69,25 @@ Menu.propTypes = {
   /**
    The vertical origin point on the button
    */
-  anchorVertical: PropTypes.string.isRequired,
+  anchorVertical: PropTypes.string,
   /**
    The horizontal origin point of the button
    */
-  anchorHorizontal: PropTypes.string.isRequired,
+  anchorHorizontal: PropTypes.string,
   /**
    The vertical origin point of the menu
   */
-  transformVertical: PropTypes.string.isRequired,
+  transformVertical: PropTypes.string,
   /**
    The horizontal origin point of the menu
    */
-  transformHorizontal: PropTypes.string.isRequired,
+  transformHorizontal: PropTypes.string,
 };
 
 Menu.defaultProps = {
   open: false,
+  anchorVertical: 'bottom',
+  anchorHorizontal: 'right',
+  transformVertical: 'top',
+  transformHorizontal: 'right',
 };
