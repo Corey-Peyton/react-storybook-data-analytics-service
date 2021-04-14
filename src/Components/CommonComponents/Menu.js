@@ -17,7 +17,6 @@ const StyledMenu = withStyles({
 ));
 
 export function Menu(props) {
-  // const classes = useStyles();
   const {
     content,
     id,
