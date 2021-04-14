@@ -445,7 +445,7 @@ export function ActionsMenu(props) {
   };
 
   const reactivateMenuItem = () => {
-    if (currentUser === request.lead) {
+    if (currentUser === request.lead || role === 'researcher') {
       return (
         <MenuItem
           onClick={(e) => {
