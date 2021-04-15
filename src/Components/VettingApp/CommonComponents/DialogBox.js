@@ -865,162 +865,9 @@ export function DialogUpdate(props) {
   const {t} = useTranslation();
   const {toggleDialog, open} = props;
   const [snackbar, setSnackbar] = React.useState(false);
-  const initial = {
-    // blank object used to reset state
-    comments: {
-      text: '',
-      errorText: '',
-      invalid: '',
-      commands: '',
-    },
-  };
-  const [state, setState] = React.useState({
-    comments: {
-      text: '',
-      errorText: '',
-      invalid: '',
-      commands: '',
-    },
-  });
-
-  const handleChange = (e, val) => {
-    const comment = e.target.value;
-    setState({
-      ...state,
-      [val]: {
-        // updates state with text from input
-        ...state[val],
-        text: comment,
-      },
-    });
-
-    if (e.target.value && state.comments.errorText) {
-      // if input text is valid, clear error
-      setState({
-        ...state,
-        [val]: {
-          ...state[val],
-          text: comment,
-          errorText: '',
-          invalid: '',
-          commands: '',
-        },
-      });
-    }
-  };
 
   const SnackbarClose = () => {
     setSnackbar(false);
-  };
-
-  const validateForm = () => {
-    let isError = false;
-    if (state.comments.text.trim() === '') {
-      isError = true;
-      state.comments.invalid = t('Enter some comments.');
-      state.comments.errorText = t('Enter some comments.');
-    }
-
-    if (isError) {
-      setState({
-        ...state,
-      });
-    }
-
-    return isError;
-  };
-
-  const submitForm = (e) => {
-    e.stopPropagation();
-    e.preventDefault();
-    const err = validateForm();
-    if (!err) {
-      // if no errors exist, submit the form and reset the inputs
-      toggleDialog(e);
-      setSnackbar(!snackbar);
-      setState({...initial});
-    } else {
-      for (const property in state) {
-        // focus on the first input that has an error on submit
-        if (state[property].invalid) {
-          switch (property) {
-            case 'comments':
-              document.getElementById('comments-input').focus();
-              break;
-            default:
-              break;
-          }
-          break;
-        }
-      }
-    }
-  };
-
-  const disableCutCopyPaste = (e, command, value) => {
-    // display error if user tries to cut/copy/paste
-    let msg;
-    e.preventDefault();
-    switch (command) {
-      case 'cut':
-        msg = t('Cut has been disabled for security purposes.');
-        setState({
-          ...state,
-          [value]: {
-            ...state[value],
-            commands: msg,
-            errorText: msg,
-          },
-        });
-        break;
-      case 'copy':
-        msg = t('Copy has been disabled for security purposes.');
-        setState({
-          ...state,
-          [value]: {
-            ...state[value],
-            commands: msg,
-            errorText: msg,
-          },
-        });
-        break;
-      case 'paste':
-        msg = t('Paste has been disabled for security purposes.');
-        setState({
-          ...state,
-          [value]: {
-            ...state[value],
-            commands: msg,
-            errorText: msg,
-          },
-        });
-        break;
-      default:
-        break;
-    }
-  };
-
-  const toggleHelperText = (value) => {
-    if (state[value].commands === state[value].errorText) {
-      if (Boolean(state[value].invalid)) {
-        // set error text back to invalid error
-        setState({
-          ...state,
-          [value]: {
-            ...state[value],
-            errorText: state[value].invalid,
-          },
-        });
-      } else {
-        // clear error text if no invalid error exists
-        setState({
-          ...state,
-          [value]: {
-            ...state[value],
-            errorText: '',
-          },
-        });
-      }
-    }
   };
 
   const handleClick = (e) => {
@@ -1031,7 +878,6 @@ export function DialogUpdate(props) {
     <React.Fragment>
       <Dialog
         onClose={(e) => {
-          setState({...initial});
           toggleDialog(e);
         }}
         aria-labelledby="dashboard-dialog-title"
@@ -1069,43 +915,33 @@ export function DialogUpdate(props) {
         </DialogTitle>
         <Divider />
         <DialogContent>
-          <form onSubmit={submitForm} noValidate id="update-form">
-            <div className={classes.vettingSection}>
-              <div className={classes.vettingRow}>
-                <div className={classes.vettingColumn}>
-                  <Alert severity="warning" className={classes.alert}>
-                    {t('Do not include any confidential information.')}
-                  </Alert>
-                </div>
-              </div>
-              <div className={classes.vettingRow}>
-                <div className={classes.vettingColumn}>
-                  <FormControl variant="outlined" className={classes.textField}>
-                    <TextField
-                      id="comments-input"
-                      label={t('Comments')}
-                      aria-label={t('Comments')}
-                      value={state.comments.text}
-                      variant="outlined"
-                      multiline
-                      required
-                      error={Boolean(state.comments.errorText)}
-                      helperText={state.comments.errorText}
-                      onCut={(e) => disableCutCopyPaste(e, 'cut', 'comments')}
-                      onCopy={(e) => disableCutCopyPaste(e, 'copy', 'comments')}
-                      onPaste={(e) =>
-                        disableCutCopyPaste(e, 'paste', 'comments')
-                      }
-                      onChange={(e) => handleChange(e, 'comments')}
-                      onClick={() => toggleHelperText('comments')}
-                      onBlur={() => toggleHelperText('comments')}
-                      onFocus={() => toggleHelperText('comments')}
-                    />
-                  </FormControl>
-                </div>
+          <div className={classes.vettingSection}>
+            <div className={classes.vettingRow}>
+              <div className={classes.vettingColumn}>
+                <Typography variant="subtitle1">
+                  What you need to do...
+                </Typography>
               </div>
             </div>
-          </form>
+            <div className={classes.vettingRow}>
+              <div className={classes.vettingColumn}>
+                <ul>
+                  <li>
+                    <Typography variant="body2">
+                      Click the "Request changes" button to notify the requester
+                      that changes will need to be made to the request.
+                    </Typography>
+                  </li>
+                  <li>
+                    <Typography variant="body2">
+                      Contact the requester on a secure communication channel
+                      indicating what changes need to be made.
+                    </Typography>
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </div>
         </DialogContent>
         <Divider />
         <DialogActions>
@@ -1113,7 +949,6 @@ export function DialogUpdate(props) {
             variant="outlined"
             color="primary"
             onClick={(e) => {
-              setState({...initial});
               toggleDialog(e);
             }}
             className={classes.footerBtns}
@@ -1121,7 +956,6 @@ export function DialogUpdate(props) {
               e.preventDefault();
               e.stopPropagation();
               if (e.key === 'Enter') {
-                setState({...initial});
                 toggleDialog(e);
               }
             }}
@@ -1133,15 +967,19 @@ export function DialogUpdate(props) {
             variant="contained"
             color="primary"
             className={classes.footerBtns}
-            form="update-form"
+            onClick={(e) => {
+              toggleDialog(e);
+              setSnackbar(true);
+            }}
             onKeyPress={(e) => {
               e.stopPropagation();
               if (e.key === 'Enter') {
-                submitForm(e);
+                toggleDialog(e);
+                setSnackbar(true);
               }
             }}
           >
-            {t('Send')}
+            {t('Request changes')}
           </Button>
         </DialogActions>
       </Dialog>
@@ -1156,162 +994,9 @@ export function DialogGetSupportFab(props) {
   const {t} = useTranslation();
   const {toggleDialog, open} = props;
   const [snackbar, setSnackbar] = React.useState(false);
-  const initial = {
-    // blank object used to reset state
-    comments: {
-      text: '',
-      errorText: '',
-      invalid: '',
-      commands: '',
-    },
-  };
-  const [state, setState] = React.useState({
-    comments: {
-      text: '',
-      errorText: '',
-      invalid: '',
-      commands: '',
-    },
-  });
-
-  const handleChange = (e, val) => {
-    const comment = e.target.value;
-    setState({
-      ...state,
-      [val]: {
-        // updates state with text from input
-        ...state[val],
-        text: comment,
-      },
-    });
-
-    if (e.target.value && state.comments.errorText) {
-      // if input text is valid, clear error
-      setState({
-        ...state,
-        [val]: {
-          ...state[val],
-          text: comment,
-          errorText: '',
-          invalid: '',
-          commands: '',
-        },
-      });
-    }
-  };
 
   const SnackbarClose = () => {
     setSnackbar(false);
-  };
-
-  const validateForm = () => {
-    let isError = false;
-    if (state.comments.text.trim() === '') {
-      isError = true;
-      state.comments.invalid = t('Enter some comments.');
-      state.comments.errorText = t('Enter some comments.');
-    }
-
-    if (isError) {
-      setState({
-        ...state,
-      });
-    }
-
-    return isError;
-  };
-
-  const submitForm = (e) => {
-    e.stopPropagation();
-    e.preventDefault();
-    const err = validateForm();
-    if (!err) {
-      // if no errors exist, submit the form and reset the inputs
-      toggleDialog(e);
-      setSnackbar(!snackbar);
-      setState({...initial});
-    } else {
-      for (const property in state) {
-        // focus on the first input that has an error on submit
-        if (state[property].invalid) {
-          switch (property) {
-            case 'comments':
-              document.getElementById('comments-input').focus();
-              break;
-            default:
-              break;
-          }
-          break;
-        }
-      }
-    }
-  };
-
-  const disableCutCopyPaste = (e, command, value) => {
-    // display error if user tries to cut/copy/paste
-    let msg;
-    e.preventDefault();
-    switch (command) {
-      case 'cut':
-        msg = t('Cut has been disabled for security purposes.');
-        setState({
-          ...state,
-          [value]: {
-            ...state[value],
-            commands: msg,
-            errorText: msg,
-          },
-        });
-        break;
-      case 'copy':
-        msg = t('Copy has been disabled for security purposes.');
-        setState({
-          ...state,
-          [value]: {
-            ...state[value],
-            commands: msg,
-            errorText: msg,
-          },
-        });
-        break;
-      case 'paste':
-        msg = t('Paste has been disabled for security purposes.');
-        setState({
-          ...state,
-          [value]: {
-            ...state[value],
-            commands: msg,
-            errorText: msg,
-          },
-        });
-        break;
-      default:
-        break;
-    }
-  };
-
-  const toggleHelperText = (value) => {
-    if (state[value].commands === state[value].errorText) {
-      if (Boolean(state[value].invalid)) {
-        // set error text back to invalid error
-        setState({
-          ...state,
-          [value]: {
-            ...state[value],
-            errorText: state[value].invalid,
-          },
-        });
-      } else {
-        // clear error text if no invalid error exists
-        setState({
-          ...state,
-          [value]: {
-            ...state[value],
-            errorText: '',
-          },
-        });
-      }
-    }
   };
 
   const handleClick = (e) => {
@@ -1322,7 +1007,6 @@ export function DialogGetSupportFab(props) {
     <React.Fragment>
       <Dialog
         onClose={(e) => {
-          setState({...initial});
           toggleDialog(e);
         }}
         aria-labelledby="get-support-dialog-title"
@@ -1360,43 +1044,24 @@ export function DialogGetSupportFab(props) {
         </DialogTitle>
         <Divider />
         <DialogContent>
-          <form onSubmit={submitForm} noValidate id="update-form">
-            <div className={classes.vettingSection}>
-              <div className={classes.vettingRow}>
-                <div className={classes.vettingColumn}>
-                  <Alert severity="warning" className={classes.alert}>
-                    {t('Do not include any confidential information.')}
-                  </Alert>
-                </div>
-              </div>
-              <div className={classes.vettingRow}>
-                <div className={classes.vettingColumn}>
-                  <FormControl variant="outlined" className={classes.textField}>
-                    <TextField
-                      id="comments-input"
-                      label={t('Comments')}
-                      aria-label={t('Comments')}
-                      value={state.comments.text}
-                      variant="outlined"
-                      multiline
-                      required
-                      error={Boolean(state.comments.errorText)}
-                      helperText={state.comments.errorText}
-                      onCut={(e) => disableCutCopyPaste(e, 'cut', 'comments')}
-                      onCopy={(e) => disableCutCopyPaste(e, 'copy', 'comments')}
-                      onPaste={(e) =>
-                        disableCutCopyPaste(e, 'paste', 'comments')
-                      }
-                      onChange={(e) => handleChange(e, 'comments')}
-                      onClick={() => toggleHelperText('comments')}
-                      onBlur={() => toggleHelperText('comments')}
-                      onFocus={() => toggleHelperText('comments')}
-                    />
-                  </FormControl>
-                </div>
+          <div className={classes.vettingSection}>
+            <div className={classes.vettingRow}>
+              <div className={classes.vettingColumn}>
+                <Typography variant="subtitle1">
+                  Do you need help with something?
+                </Typography>
               </div>
             </div>
-          </form>
+            <div className={classes.vettingRow}>
+              <div className={classes.vettingColumn}>
+                <Typography variant="body2">
+                  Click the "Get support" button and one of our support agents
+                  will contact you to resolve the issue. We aim to make contact
+                  within 1 to 2 business days.
+                </Typography>
+              </div>
+            </div>
+          </div>
         </DialogContent>
         <Divider />
         <DialogActions>
@@ -1404,7 +1069,6 @@ export function DialogGetSupportFab(props) {
             variant="outlined"
             color="primary"
             onClick={(e) => {
-              setState({...initial});
               toggleDialog(e);
             }}
             className={classes.footerBtns}
@@ -1412,7 +1076,6 @@ export function DialogGetSupportFab(props) {
               e.preventDefault();
               e.stopPropagation();
               if (e.key === 'Enter') {
-                setState({...initial});
                 toggleDialog(e);
               }
             }}
@@ -1424,15 +1087,19 @@ export function DialogGetSupportFab(props) {
             variant="contained"
             color="primary"
             className={classes.footerBtns}
-            form="update-form"
+            onClick={(e) => {
+              toggleDialog(e);
+              setSnackbar(true);
+            }}
             onKeyPress={(e) => {
               e.stopPropagation();
               if (e.key === 'Enter') {
-                submitForm(e);
+                toggleDialog(e);
+                setSnackbar(true);
               }
             }}
           >
-            {t('Send')}
+            {t('Get support')}
           </Button>
         </DialogActions>
       </Dialog>
@@ -1467,12 +1134,6 @@ export function DialogDenied(props) {
       invalid: '',
       commands: '',
     },
-    comments: {
-      text: '',
-      errorText: '',
-      invalid: '',
-      commands: '',
-    },
   };
   const [state, setState] = React.useState({
     hours: {
@@ -1488,12 +1149,6 @@ export function DialogDenied(props) {
       commands: '',
     },
     reason: {
-      text: '',
-      errorText: '',
-      invalid: '',
-      commands: '',
-    },
-    comments: {
       text: '',
       errorText: '',
       invalid: '',
@@ -1547,13 +1202,6 @@ export function DialogDenied(props) {
       isError = true;
       state.reason.invalid = t('Select a reason.');
       state.reason.errorText = t('Select a reason.');
-    }
-    if (state.reason.text === 'Other') {
-      if (state.comments.text.trim() === '') {
-        isError = true;
-        state.comments.invalid = t('Enter some comments.');
-        state.comments.errorText = t('Enter some comments.');
-      }
     }
 
     if (isError) {
@@ -1717,13 +1365,6 @@ export function DialogDenied(props) {
             <div className={classes.vettingSection}>
               <div className={classes.vettingRow}>
                 <div className={classes.vettingColumn}>
-                  <Alert severity="warning" className={classes.alert}>
-                    {t('Do not include any confidential information.')}
-                  </Alert>
-                </div>
-              </div>
-              <div className={classes.vettingRow}>
-                <div className={classes.vettingColumn}>
                   <Typography variant="subtitle2">
                     {t('Billable hours')}
                   </Typography>
@@ -1837,65 +1478,6 @@ export function DialogDenied(props) {
                     </InputLabel>
                     <FormHelperText>{state.reason.errorText}</FormHelperText>
                   </FormControl>
-                </div>
-              </div>
-
-              <div className={classes.vettingRow}>
-                <div className={classes.vettingColumn}>
-                  {state.reason.text !== 'Other' ? (
-                    <div className={classes.dialogRow}>
-                      <FormControl variant="outlined">
-                        <TextField
-                          id="comments-input"
-                          label={t('Comments')}
-                          aria-label={t('Comments')}
-                          value={state.comments.text}
-                          variant="outlined"
-                          multiline
-                          error={Boolean(state.comments.errorText)}
-                          helperText={state.comments.errorText}
-                          onCut={(e) =>
-                            disableCutCopyPaste(e, 'cut', 'comments')
-                          }
-                          onCopy={(e) =>
-                            disableCutCopyPaste(e, 'copy', 'comments')
-                          }
-                          onPaste={(e) =>
-                            disableCutCopyPaste(e, 'paste', 'comments')
-                          }
-                          onChange={(e) => handleChange(e, 'comments')}
-                          onClick={() => toggleHelperText('comments')}
-                          onBlur={() => toggleHelperText('comments')}
-                          onFocus={() => toggleHelperText('comments')}
-                        />
-                      </FormControl>
-                    </div>
-                  ) : (
-                    <FormControl variant="outlined">
-                      <TextField
-                        id="comments-input"
-                        label={t('Comments')}
-                        aria-label={t('Comments')}
-                        value={state.comments.text}
-                        variant="outlined"
-                        multiline
-                        required
-                        error={Boolean(state.comments.errorText)}
-                        helperText={state.comments.errorText}
-                        onCut={(e) => disableCutCopyPaste(e, 'cut', 'comments')}
-                        onCopy={(e) =>
-                          disableCutCopyPaste(e, 'copy', 'comments')
-                        }
-                        onPaste={(e) =>
-                          disableCutCopyPaste(e, 'paste', 'comments')
-                        }
-                        onChange={(e) => handleChange(e, 'comments')}
-                        onClick={() => toggleHelperText('comments')}
-                        onBlur={() => toggleHelperText('comments')}
-                        onFocus={() => toggleHelperText('comments')}
-                      />
-                    </FormControl>
-                  )}
                 </div>
               </div>
             </div>
