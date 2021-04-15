@@ -3,7 +3,7 @@ import {useTranslation} from 'react-i18next';
 import {Button} from '../Components/CommonComponents/Button';
 import {Menu} from '../Components/CommonComponents/Menu';
 import {MenuItem} from '../Components/CommonComponents/MenuItem';
-import {Typography, ListItemText, IconButton} from '@material-ui/core';
+import {IconButton} from '@material-ui/core';
 import Icon from '@mdi/react';
 import {mdiMenuDown} from '@mdi/js';
 import MoreVertIcon from '@material-ui/icons/MoreVert';
