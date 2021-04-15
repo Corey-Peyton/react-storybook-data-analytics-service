@@ -8,6 +8,9 @@ import {
   Divider,
   Breadcrumbs,
   Link,
+  MenuItem,
+  ListItemText,
+  Typography,
 } from '@material-ui/core';
 import {SM_SCREEN} from '../../../Theme/constants';
 import BrandingStatCan from './BrandingStatCan';
@@ -20,15 +23,12 @@ import {
   mdiAccountCircle,
   mdiMenuDown,
 } from '@mdi/js';
+import {Menu} from '../../CommonComponents/Menu';
 
 const useStyles = makeStyles((theme) => ({
   appBar: {
-    margin: theme.spacing(0, -3),
-    width: 'auto',
+    zIndex: 1200,
     backgroundColor: theme.palette.common.white,
-    boxShadow: 'none',
-    borderBottom: '1px solid',
-    borderBottomColor: theme.palette.divider,
   },
   branding: {
     '& img': {
@@ -55,7 +55,10 @@ function AppBar(props) {
   const [open, setOpen] = React.useState({
     helpDrawer: false,
     feedbackDialog: false,
+    accountMenuAnchor: null,
   });
+
+  const [anchorEl, setAnchorEl] = React.useState(null);
 
   const toggleDialog = (state, value) => {
     setOpen({...open, [state]: value});
@@ -70,6 +73,15 @@ function AppBar(props) {
   };
   const isSmScreen = state.windowWidth < SM_SCREEN;
 
+  const closeMenu = (element) => {
+    setOpen({...open, [element]: null});
+  };
+
+  const openMenu = (event) => {
+    // setOpen({...open, [element]: event.currentTarget});
+    setAnchorEl(event.currentTarget);
+  };
+
   React.useEffect(() => {
     // Detect screen size
     const handleResize = () =>
@@ -82,9 +94,20 @@ function AppBar(props) {
     };
   }, [state]);
 
+  const accountMenuItems = () => {
+    return [
+      <MenuItem key="1" onClick={() => closeMenu('accountMenuAnchor')}>
+        <ListItemText primary={<Typography>Profile</Typography>} />
+      </MenuItem>,
+      <MenuItem key="2" onClick={() => closeMenu('accountMenuAnchor')}>
+        <ListItemText primary={<Typography>Sign out</Typography>} />
+      </MenuItem>,
+    ];
+  };
+
   return (
     <>
-      <MUIAppBar position="static" className={classes.appBar} color="default">
+      <MUIAppBar className={classes.appBar} color="default">
         <Toolbar>
           <Grid container justify="space-between" alignItems="center">
             <Grid item className={classes.branding}>
@@ -161,14 +184,30 @@ function AppBar(props) {
                   Français
                 </Button>
                 {props.auth ? (
-                  <Button
-                    variant="text"
-                    color="primary"
-                    endIcon={<Icon path={mdiMenuDown} size={1} />}
-                    // onClick={() => handleClickOpen('snackbarReactivate')}
-                  >
-                    {props.username}
-                  </Button>
+                  <>
+                    <Button
+                      variant="text"
+                      color="primary"
+                      aria-controls="account-menu"
+                      aria-haspopup="true"
+                      aria-label="Account menu"
+                      endIcon={<Icon path={mdiMenuDown} size={1} />}
+                      onClick={openMenu}
+                    >
+                      {props.username}
+                    </Button>
+                    <Menu
+                      id="account-menu"
+                      open={Boolean(anchorEl)}
+                      anchorEl={anchorEl}
+                      content={accountMenuItems()}
+                      handleClose={() => closeMenu('accountMenuAnchor')}
+                      anchorVertical="bottom"
+                      anchorHorizontal="right"
+                      transformVertical="top"
+                      transformHorizontal="right"
+                    />
+                  </>
                 ) : (
                   <Button
                     variant="outlined"
