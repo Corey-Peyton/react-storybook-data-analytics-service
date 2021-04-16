@@ -1,6 +1,5 @@
 import React from 'react';
 import {makeStyles} from '@material-ui/core/styles';
-import clsx from 'clsx';
 import {
   Container,
   Typography,
@@ -13,6 +12,7 @@ import {
 } from '@material-ui/core';
 import AppBar from './CommonComponents/AppBar';
 import Footer from './CommonComponents/Footer';
+import Banner from './Banner';
 import Icon from '@mdi/react';
 import {mdiChevronDown} from '@mdi/js';
 
@@ -26,17 +26,6 @@ const useStyles = makeStyles((theme) => ({
   bannerBtn: {
     width: '320px',
     padding: theme.spacing(1.5),
-  },
-  banner: {
-    textAlign: 'left',
-    boxSizing: 'border-box',
-    backgroundColor: '#19334D', // put this in theme??
-    color: theme.palette.common.white,
-    padding: theme.spacing(6, 12),
-    margin: theme.spacing(0, -3, 6, -3),
-  },
-  logo: {
-    marginRight: theme.spacing(3),
   },
   paper: {
     padding: theme.spacing(6, 3),
@@ -60,49 +49,8 @@ function LandingPage(props) {
     <>
       <AppBar />
       <main tabIndex="-1">
-        <Container maxWidth="xl" className={classes.pageContainer}>
-          <div className={classes.banner}>
-            <Grid container>
-              <Grid item>
-                <img
-                  className={classes.logo}
-                  src={process.env.PUBLIC_URL + '/images/DAaaS_logo_1_EN.png'}
-                  alt=""
-                />
-              </Grid>
-              <Grid item>
-                <Typography variant="h3" component="h1">
-                  Data Analytics as a Service
-                </Typography>
-                <Typography variant="h5" component="h2">
-                  Harness the power of your data
-                </Typography>
-              </Grid>
-            </Grid>
-            <Typography className="mt-3 mb-6">
-              Our platforms provide virtual access to Statistics Canada data.
-              From these platforms, choose from a variety of tools to help
-              prepare and transform datasets. Use the Collaborative Analytics
-              Environment (CAE) and the Advanced Analytics Workspace (AAW) to
-              analyze and present data to help share compelling data stories.
-            </Typography>
-            <Grid container direction="column">
-              <Grid item>
-                <Button
-                  className={clsx(classes.bannerBtn, 'mb-3')}
-                  variant="contained"
-                  color="primary"
-                >
-                  Get started
-                </Button>
-              </Grid>
-              <Grid item>
-                <Button className={classes.bannerBtn} variant="outlined">
-                  Sign in
-                </Button>
-              </Grid>
-            </Grid>
-          </div>
+        <Container maxWidth="false" className={classes.pageContainer}>
+          <Banner />
           <Typography variant="h3" component="h2" className="mb-6">
             Check out our analytics platforms
           </Typography>

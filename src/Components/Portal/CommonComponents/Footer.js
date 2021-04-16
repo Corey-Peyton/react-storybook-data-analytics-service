@@ -15,7 +15,7 @@ const useStyles = makeStyles((theme) => ({
     margin: theme.spacing(0, 0.5, 0, 0),
   },
   canadaLogo: {
-    height: '24px',
+    height: '40px',
   },
 }));
 
@@ -113,14 +113,13 @@ const Footer = React.forwardRef((props, ref) => {
           </Grid>
         </Toolbar>
         <Toolbar>
-          <Grid container justify="flex-end" alignItems="center">
+          <Grid container justify="flex-start" alignItems="center">
             <Grid item>
-              <div className={classes.canadaLogo}>
-                <img
-                  src={process.env.PUBLIC_URL + '/images/wmms.svg'}
-                  alt={t('Symbol of the Government of Canada')}
-                />
-              </div>
+              <img
+                className={classes.canadaLogo}
+                src={process.env.PUBLIC_URL + '/images/wmms.svg'}
+                alt={t('Symbol of the Government of Canada')}
+              />
             </Grid>
           </Grid>
         </Toolbar>
