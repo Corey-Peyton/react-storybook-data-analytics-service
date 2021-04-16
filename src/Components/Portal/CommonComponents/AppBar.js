@@ -8,9 +8,6 @@ import {
   Divider,
   Breadcrumbs,
   Link,
-  MenuItem,
-  ListItemText,
-  Typography,
 } from '@material-ui/core';
 import {SM_SCREEN} from '../../../Theme/constants';
 import BrandingStatCan from './BrandingStatCan';
@@ -24,6 +21,7 @@ import {
   mdiMenuDown,
 } from '@mdi/js';
 import {Menu} from '../../CommonComponents/Menu';
+import {MenuItem} from '../../CommonComponents/MenuItem';
 
 const useStyles = makeStyles((theme) => ({
   appBar: {
@@ -55,10 +53,10 @@ function AppBar(props) {
   const [open, setOpen] = React.useState({
     helpDrawer: false,
     feedbackDialog: false,
-    accountMenuAnchor: null,
+    menuAnchor: null,
   });
 
-  const [anchorEl, setAnchorEl] = React.useState(null);
+  // const [anchorEl, setAnchorEl] = React.useState(null);
 
   const toggleDialog = (state, value) => {
     setOpen({...open, [state]: value});
@@ -77,9 +75,8 @@ function AppBar(props) {
     setOpen({...open, [element]: null});
   };
 
-  const openMenu = (event) => {
-    // setOpen({...open, [element]: event.currentTarget});
-    setAnchorEl(event.currentTarget);
+  const openMenu = (event, element) => {
+    setOpen({...open, [element]: event.currentTarget});
   };
 
   React.useEffect(() => {
@@ -96,12 +93,46 @@ function AppBar(props) {
 
   const accountMenuItems = () => {
     return [
-      <MenuItem key="1" onClick={() => closeMenu('accountMenuAnchor')}>
-        <ListItemText primary={<Typography>Profile</Typography>} />
-      </MenuItem>,
-      <MenuItem key="2" onClick={() => closeMenu('accountMenuAnchor')}>
-        <ListItemText primary={<Typography>Sign out</Typography>} />
-      </MenuItem>,
+      <MenuItem
+        handleClick={() => closeMenu('menuAnchor')}
+        key="7"
+        content={'Profile'}
+      />,
+      <MenuItem
+        handleClick={() => closeMenu('menuAnchor')}
+        key="8"
+        content={'Sign out'}
+      />,
+    ];
+  };
+
+  const mobileMenuItems = () => {
+    return [
+      <MenuItem
+        handleClick={() => closeMenu('menuAnchor')}
+        key="1"
+        content={'AAW Dashboard'}
+      />,
+      <MenuItem
+        handleClick={() => closeMenu('menuAnchor')}
+        key="2"
+        content={'CAE Dashboard'}
+      />,
+      <MenuItem
+        handleClick={() => closeMenu('menuAnchor')}
+        key="3"
+        content={'Help'}
+      />,
+      <MenuItem
+        handleClick={() => closeMenu('menuAnchor')}
+        key="4"
+        content={'Feedback'}
+      />,
+      <MenuItem
+        handleClick={() => closeMenu('menuAnchor')}
+        key="5"
+        content={'Français'}
+      />,
     ];
   };
 
@@ -149,14 +180,25 @@ function AppBar(props) {
               </Breadcrumbs>
             </Grid>
             {isSmScreen ? (
-              <Button
-                className={classes.textBtn}
-                variant="outlined"
-                color="primary"
-                // onClick={() => handleClickOpen('snackbarReactivate')}
-              >
-                Menu
-              </Button>
+              <>
+                <Button
+                  variant="outlined"
+                  color="primary"
+                  aria-controls="mobile-menu"
+                  aria-haspopup="true"
+                  endIcon={<Icon path={mdiMenuDown} size={1} />}
+                  onClick={(e) => openMenu(e, 'menuAnchor')}
+                >
+                  Menu
+                </Button>
+                <Menu
+                  id="mobile-menu"
+                  open={Boolean(open.menuAnchor)}
+                  anchorEl={open.menuAnchor}
+                  content={[mobileMenuItems(), accountMenuItems()]}
+                  handleClose={() => closeMenu('menuAnchor')}
+                />
+              </>
             ) : (
               <Grid item className={classes.actions}>
                 <Button
@@ -192,20 +234,16 @@ function AppBar(props) {
                       aria-haspopup="true"
                       aria-label="Account menu"
                       endIcon={<Icon path={mdiMenuDown} size={1} />}
-                      onClick={openMenu}
+                      onClick={(e) => openMenu(e, 'menuAnchor')}
                     >
                       {props.username}
                     </Button>
                     <Menu
                       id="account-menu"
-                      open={Boolean(anchorEl)}
-                      anchorEl={anchorEl}
+                      open={Boolean(open.menuAnchor)}
+                      anchorEl={open.menuAnchor}
                       content={accountMenuItems()}
-                      handleClose={() => closeMenu('accountMenuAnchor')}
-                      anchorVertical="bottom"
-                      anchorHorizontal="right"
-                      transformVertical="top"
-                      transformHorizontal="right"
+                      handleClose={() => closeMenu('menuAnchor')}
                     />
                   </>
                 ) : (
