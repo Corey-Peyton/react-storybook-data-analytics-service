@@ -199,7 +199,7 @@ function VettingRequestAnalyst(props) {
     <>
       <Header />
       <main className={classes.main} tabIndex="-1">
-        <Container maxWidth="xl" className={classes.pageContainer}>
+        <Container maxWidth={false} className={classes.pageContainer}>
           <ManageTeamDrawer
             open={open.manageTeamDrawer}
             clickHandler={toggleManageTeamDrawer}
