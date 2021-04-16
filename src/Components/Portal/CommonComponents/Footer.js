@@ -2,7 +2,14 @@ import React from 'react';
 import {useTranslation} from 'react-i18next';
 import clsx from 'clsx';
 import {SM_SCREEN} from '../../../Theme/constants';
-import {Button, Grid, Toolbar, Typography, Paper} from '@material-ui/core';
+import {
+  Button,
+  Grid,
+  Toolbar,
+  Typography,
+  Paper,
+  Divider,
+} from '@material-ui/core';
 import {makeStyles, ThemeProvider} from '@material-ui/core/styles';
 import {HelpDrawer, FeedbackDialog} from './Dialogs';
 import {darkTheme} from '../../../Theme/theme';
@@ -17,6 +24,10 @@ const useStyles = makeStyles((theme) => ({
   },
   canadaLogo: {
     height: '40px',
+  },
+  actions: {
+    display: 'flex',
+    alignItems: 'center',
   },
 }));
 
@@ -63,7 +74,9 @@ const Footer = React.forwardRef((props, ref) => {
           <footer>
             <Toolbar>
               <Grid container justify="space-between" alignItems="center">
-                <Grid item>
+                <Grid item className={classes.actions}>
+                  <Button className="mr-2">{t('Français')}</Button>
+                  <Divider orientation="vertical" flexItem className="mr-2" />
                   <ul
                     className={clsx({
                       'list-horizontal': !isSmScreen,
