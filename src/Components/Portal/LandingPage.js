@@ -49,7 +49,7 @@ function LandingPage(props) {
     <>
       <AppBar />
       <main tabIndex="-1">
-        <Container maxWidth="false" className={classes.pageContainer}>
+        <Container maxWidth={false} className={classes.pageContainer}>
           <Banner />
           <Typography variant="h3" component="h2" className="mb-6">
             Check out our analytics platforms

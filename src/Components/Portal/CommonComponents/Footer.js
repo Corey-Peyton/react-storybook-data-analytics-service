@@ -2,16 +2,17 @@ import React from 'react';
 import {useTranslation} from 'react-i18next';
 import clsx from 'clsx';
 import {SM_SCREEN} from '../../../Theme/constants';
-import {Button, Grid, Toolbar, Typography} from '@material-ui/core';
-import {makeStyles} from '@material-ui/core/styles';
+import {Button, Grid, Toolbar, Typography, Paper} from '@material-ui/core';
+import {makeStyles, ThemeProvider} from '@material-ui/core/styles';
 import {HelpDrawer, FeedbackDialog} from './Dialogs';
+import {darkTheme} from '../../../Theme/theme';
 
 const useStyles = makeStyles((theme) => ({
   footer: {
-    margin: theme.spacing(3, 0, 3, 0),
+    borderRadius: 0,
+    // margin: theme.spacing(3, 0, 3, 0),
   },
   footerBtn: {
-    color: theme.palette.text.secondary,
     margin: theme.spacing(0, 0.5, 0, 0),
   },
   canadaLogo: {
@@ -57,73 +58,79 @@ const Footer = React.forwardRef((props, ref) => {
 
   return (
     <>
-      <footer className={classes.footer} ref={ref} tabIndex="-1">
-        <Toolbar>
-          <Grid container justify="space-between" alignItems="center">
-            <Grid item>
-              <ul
-                className={clsx({
-                  'list-horizontal': !isSmScreen,
-                })}
-              >
-                <li>
-                  <Button className={classes.footerBtn}>{t('About')}</Button>
-                </li>
-                <li>
-                  <Button
-                    href="https://www.statcan.gc.ca/eng/reference/terms-conditions"
-                    className={classes.footerBtn}
+      <ThemeProvider theme={darkTheme}>
+        <Paper className={classes.footer} ref={ref} tabIndex="-1">
+          <footer>
+            <Toolbar>
+              <Grid container justify="space-between" alignItems="center">
+                <Grid item>
+                  <ul
+                    className={clsx({
+                      'list-horizontal': !isSmScreen,
+                    })}
                   >
-                    {t('Terms and conditions')}
-                  </Button>
-                </li>
-                <li>
-                  <Button
-                    href="https://www.statcan.gc.ca/eng/reference/privacy"
-                    className={classes.footerBtn}
-                  >
-                    {t('Privacy')}
-                  </Button>
-                </li>
-                <li>
-                  <Button
-                    className={classes.footerBtn}
-                    onClick={() => openDrawer('helpDrawer')}
-                  >
-                    {t('Help')}
-                  </Button>
-                </li>
-                <li>
-                  <Button
-                    className={classes.footerBtn}
-                    onClick={() =>
-                      toggleDialog('feedbackDialog', !open.feedbackDialog)
-                    }
-                  >
-                    {t('Feedback')}
-                  </Button>
-                </li>
-              </ul>
-            </Grid>
-            <Grid item>
-              <Typography variant="body2">
-                Last modified on Feb 24, 2021
-              </Typography>
-            </Grid>
-          </Grid>
-        </Toolbar>
-        <Toolbar>
-          <Grid container justify="flex-start" alignItems="center">
-            <Grid item>
-              <img
-                className={classes.canadaLogo}
-                src={process.env.PUBLIC_URL + '/images/wmms.svg'}
-                alt={t('Symbol of the Government of Canada')}
-              />
-            </Grid>
-          </Grid>
-        </Toolbar>
-      </footer>
+                    <li>
+                      <Button className={classes.footerBtn}>
+                        {t('About')}
+                      </Button>
+                    </li>
+                    <li>
+                      <Button
+                        href="https://www.statcan.gc.ca/eng/reference/terms-conditions"
+                        className={classes.footerBtn}
+                      >
+                        {t('Terms and conditions')}
+                      </Button>
+                    </li>
+                    <li>
+                      <Button
+                        href="https://www.statcan.gc.ca/eng/reference/privacy"
+                        className={classes.footerBtn}
+                      >
+                        {t('Privacy')}
+                      </Button>
+                    </li>
+                    <li>
+                      <Button
+                        className={classes.footerBtn}
+                        onClick={() => openDrawer('helpDrawer')}
+                      >
+                        {t('Help')}
+                      </Button>
+                    </li>
+                    <li>
+                      <Button
+                        className={classes.footerBtn}
+                        onClick={() =>
+                          toggleDialog('feedbackDialog', !open.feedbackDialog)
+                        }
+                      >
+                        {t('Feedback')}
+                      </Button>
+                    </li>
+                  </ul>
+                </Grid>
+                <Grid item>
+                  <Typography variant="body2">
+                    Last modified on Feb 24, 2021
+                  </Typography>
+                </Grid>
+              </Grid>
+            </Toolbar>
+            <Toolbar>
+              <Grid container justify="flex-start" alignItems="center">
+                <Grid item>
+                  <img
+                    className={classes.canadaLogo}
+                    src={process.env.PUBLIC_URL + '/images/wmms-white.svg'}
+                    alt={t('Symbol of the Government of Canada')}
+                  />
+                </Grid>
+              </Grid>
+            </Toolbar>
+          </footer>
+        </Paper>
+      </ThemeProvider>
 
       {/* Help drawer */}
       <HelpDrawer

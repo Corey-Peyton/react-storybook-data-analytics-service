@@ -26,12 +26,6 @@ export const theme = createMuiTheme({
       selectedOpacity: 0.12,
     },
   },
-  props: {
-    MuiButtonBase: {
-      disableFocusRipple: true,
-      disableRipple: true,
-    },
-  },
   shadows: [
     'none',
     '0px 2px 1px -1px rgba(117,117,117,0.2),0px 1px 1px 0px rgba(117,117,117,0.14),0px 1px 3px 0px rgba(117,117,117,0.12)',
@@ -82,12 +76,6 @@ export const darkTheme = createMuiTheme({
     },
     background: {
       paper: '#19334D',
-    },
-  },
-  props: {
-    MuiButtonBase: {
-      disableFocusRipple: true,
-      disableRipple: true,
     },
   },
   overrides: {
