@@ -927,7 +927,7 @@ export function DialogUpdate(props) {
               <div className={classes.vettingColumn}>
                 <ul>
                   <li>
-                    <Typography variant="body2">
+                    <Typography variant="body2" gutterBottom>
                       Click the "Request changes" button to notify the requester
                       that changes will need to be made to the request.
                     </Typography>
