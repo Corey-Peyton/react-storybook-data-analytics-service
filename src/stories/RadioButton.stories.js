@@ -68,11 +68,7 @@ export default {
 };
 
 export const RadioButtons = (args) => (
-  <RadioGroup {...args}>
-    <FormControlLabel value="1" control={<Radio />} label="1" />
-    <FormControlLabel value="2" control={<Radio />} label="2" />
-    <FormControlLabel value="3" control={<Radio />} label="3" />
-  </RadioGroup>
+  <Radio {...args} />
 );
 RadioButtons.args = {
   checked: false,
@@ -82,6 +78,7 @@ RadioButtons.args = {
   id: '',
   required: false,
   size: '',
+  value: '',
 };
 
 export const AllRadioButtons = (args) => {
