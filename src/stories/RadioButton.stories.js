@@ -1,21 +1,32 @@
 import React from 'react';
-import {Radio} from '@material-ui/core';
+import {makeStyles, Radio} from '@material-ui/core';
 import RadioGroup from '@material-ui/core/RadioGroup';
 import FormControl from '@material-ui/core/FormControl';
 import FormLabel from '@material-ui/core/FormLabel';
+// import {makeStyles} from '@material-ui/core/styles';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
+
+
+const useStyles = makeStyles((theme) => ({
+  fontFamily: {
+    fontFamily: 'roboto',
+    fontSize: '0.875rem',
+  },
+}));
 
 export default {
   title: 'Molecules/RadioButtons',
   component: Radio,
   argTypes: {
     checked: {
-      description:
-        'If true, the component is checked.',
+      table: {
+        defaultValue: {summary: 'false'},
+      },
+      description: 'If true, the component is checked.',
     },
     checkedIcon: {
-      description:
-        'If true, the input element will be focused during the first mount.',
+      type: {name: 'node'},
+      description: 'The icon to display when the component is checked.',
     },
     color: {
       table: {
@@ -32,57 +43,62 @@ export default {
       table: {
         defaultValue: {summary: 'false'},
       },
-      description: 'If true, the textfield will be disabled.',
+      description: 'If true, the component is disabled.',
     },
     id: {description: 'Textfield id used for a11y'},
     required: {
       table: {
         defaultValue: {summary: 'false'},
       },
-      description: 'If true, the textfield will be disabled.',
+      description: 'If true, the input element is required.',
     },
     size: {
       control: {
         type: 'radio',
         options: ['small', 'medium'],
       },
-      description: 'The size of the textfield',
+      description:
+        'The size of the component. small is equivalent to the dense radio styling.',
     },
     value: {
       description:
-        'The value of the input element, required for a controlled component.',
+        'The value of the component. The DOM API casts this to a string.',
     },
   },
 };
 
 export const RadioButtons = (args) => (
-  <Radio {...args} />
+  <RadioGroup {...args}>
+    <FormControlLabel value="1" control={<Radio />} label="1" />
+    <FormControlLabel value="2" control={<Radio />} label="2" />
+    <FormControlLabel value="3" control={<Radio />} label="3" />
+  </RadioGroup>
 );
 RadioButtons.args = {
-  checked: '',
+  checked: false,
   checkedIcon: '',
-  color: 'secondary',
-  disabled: 'false',
+  color: 'primary',
+  disabled: false,
   id: '',
-  required: 'false',
-  size: 'medium',
-  type: '',
-  value: '',
+  required: false,
+  size: '',
 };
 
-
 export const AllRadioButtons = (args) => {
+  const classes = useStyles();
   return (
     <>
       <FormControl component="fieldset" className="m-1">
         <FormLabel component="legend">Vertical radiogroup</FormLabel>
-        <RadioGroup
-          aria-label="numbers"
-          name="radio-buttons-group"
-        >
-          <FormControlLabel value="1" control={<Radio />} label="1" checked/>
+        <RadioGroup aria-label="numbers" name="radio-buttons-group">
+          <FormControlLabel value="1" control={<Radio />} label="1" />
           <FormControlLabel value="2" control={<Radio />} label="2" />
-          <FormControlLabel value="3" control={<Radio />} label="3" />
+          <FormControlLabel
+            value="3"
+            disabled
+            control={<Radio />}
+            label="disabled"
+          />
         </RadioGroup>
       </FormControl>
       <FormControl component="fieldset" className="m-1">
@@ -93,11 +109,32 @@ export const AllRadioButtons = (args) => {
           name="radio-buttons-group"
           row
         >
-          <FormControlLabel value="1" control={<Radio />} label="1" />
-          <FormControlLabel value="2" control={<Radio />} label="2" checked/>
-          <FormControlLabel value="3" control={<Radio />} label="3" />
+          <FormControlLabel
+            className="mr-2 mt-1"
+            control={<Radio />}
+            label="top"
+            labelPlacement="top"
+            value="1"
+          />
+          <FormControlLabel
+            className="mr-2"
+            control={<Radio />}
+            label="start"
+            labelPlacement="start"
+            value="2"
+          />
+          <FormControlLabel
+            className="mr-2"
+            control={<Radio />}
+            label="bottom"
+            labelPlacement="bottom"
+            value="3"
+          />
         </RadioGroup>
       </FormControl>
+      <Radio size="small" color="secondary" checked /><span className={classes.fontFamily}>Small size, secondary colour</span>
+      <Radio size="medium" color="primary" checked /><span className={classes.fontFamily}>Medium, primary colour</span>
+      <Radio size="medium" color="default" checked /><span className={classes.fontFamily}>Medium, default colour</span>
     </>
   );
 };
