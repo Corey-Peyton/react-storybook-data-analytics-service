@@ -36,7 +36,7 @@ function Banner(props) {
   const [open, setOpen] = React.useState({
     accountDetailsDialog: false,
     dataUseDialog: false,
-    tasksToolsDialog: true,
+    tasksToolsDialog: false,
   });
 
   const toggleDialog = (element, value) => {
