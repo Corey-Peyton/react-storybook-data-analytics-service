@@ -89,11 +89,26 @@ export const useStyles = makeStyles({
       paddingTop: '13px',
       paddingBottom: '13px',
     },
-    '.MuiFormControl-marginDense': {
-      margin: 0,
-    },
     '.MuiFormControlLabel-root': {
       marginLeft: theme.spacing(-1),
+    },
+    '.input-margin': {
+      'margin': theme.spacing(1.5, 0),
+      '&:first-child': {
+        marginTop: 0,
+      },
+      '&:last-child': {
+        marginBottom: 0,
+      },
+    },
+    '.radio-margin': {
+      'margin': theme.spacing(1, 0),
+      '&:first-child': {
+        marginTop: 0,
+      },
+      '&:last-child': {
+        marginBottom: 0,
+      },
     },
     '.emphasisBox': {
       background: theme.palette.grey[200],
@@ -152,9 +167,9 @@ export const useStyles = makeStyles({
     // Dialogs
     '.MuiDialog-paperWidthSm': {
       'width': 'calc(100% - 64px)',
-      '& .MuiTextField-root': {
-        width: '100%',
-      },
+      // '& .MuiTextField-root': {
+      //   width: '100%',
+      // },
       '& .MuiDialogContent-root': {
         padding: 0,
       },

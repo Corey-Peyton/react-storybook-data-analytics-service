@@ -3,7 +3,10 @@ import {makeStyles, ThemeProvider} from '@material-ui/core/styles';
 import clsx from 'clsx';
 import {Typography, Button, Grid, Paper} from '@material-ui/core';
 import {darkTheme} from '../../Theme/theme';
-import {AccountDetailsDialog} from './CommonComponents/Dialogs';
+import {
+  AccountDetailsDialog,
+  DataUseDialog,
+} from './CommonComponents/Dialogs';
 
 const useStyles = makeStyles((theme) => ({
   banner: {
@@ -31,10 +34,19 @@ function Banner(props) {
   const classes = useStyles();
   const [open, setOpen] = React.useState({
     accountDetailsDialog: false,
+    dataUseDialog: true,
   });
 
-  const toggleDialog = (state, value) => {
-    setOpen({...open, [state]: value});
+  const toggleDialog = (element, value) => {
+    setOpen({...open, [element]: value});
+  };
+
+  const handleNext = (current, next) => {
+    setOpen({...open, [current]: false, [next]: true});
+  };
+
+  const handleBack = (prev, current) => {
+    setOpen({...open, [prev]: true, [current]: false});
   };
 
   return (
@@ -106,7 +118,14 @@ function Banner(props) {
         toggleDialog={() =>
           toggleDialog('accountDetailsDialog', !open.accountDetailsDialog)
         }
-        // handlePrimaryClick={handleNext}
+        handleNext={() => handleNext('accountDetailsDialog', 'dataUseDialog')}
+      />
+      {/* Data use details dialog */}
+      <DataUseDialog
+        open={open.dataUseDialog}
+        toggleDialog={() => toggleDialog('dataUseDialog', !open.dataUseDialog)}
+        handleNext={() => handleNext('dataUseDialog', '')}
+        handleBack={() => handleBack('accountDetailsDialog', 'dataUseDialog')}
       />
     </>
   );
