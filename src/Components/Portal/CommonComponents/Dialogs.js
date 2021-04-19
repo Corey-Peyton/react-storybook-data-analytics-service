@@ -211,7 +211,6 @@ export function FeedbackDialog(props) {
 }
 
 export function AccountDetailsDialog(props) {
-  const classes = useStyles();
   const [state, setState] = React.useState({
     accountIssuer: null,
   });
@@ -549,7 +548,6 @@ export function DataUseDialog(props) {
 }
 
 export function TasksToolsDialog(props) {
-  const classes = useStyles();
   const [state, setState] = React.useState({
     sql: false,
     python: false,
