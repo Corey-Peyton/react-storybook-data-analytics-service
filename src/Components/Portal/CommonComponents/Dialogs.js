@@ -39,7 +39,9 @@ export function HelpDrawer(props) {
           aria-controls="support-content"
           id="support-header"
         >
-          <Typography component="h2">Contact the support team</Typography>
+          <Typography component="h2" variant="subtitle1">
+            Contact the support team
+          </Typography>
         </AccordionSummary>
         <AccordionDetails className={classes.helpDetails}>
           <Typography variant="body2" className="mb-3">
@@ -62,7 +64,7 @@ export function HelpDrawer(props) {
           aria-controls="aaw-content"
           id="aaw-header"
         >
-          <Typography component="h2">
+          <Typography component="h2" variant="subtitle1">
             Advanced Analytics Workspace (AAW)
           </Typography>
         </AccordionSummary>
@@ -89,7 +91,7 @@ export function HelpDrawer(props) {
           aria-controls="cae-content"
           id="cae-header"
         >
-          <Typography component="h2">
+          <Typography component="h2" variant="subtitle1">
             Collaborative Analytics Environment (CAE)
           </Typography>
         </AccordionSummary>

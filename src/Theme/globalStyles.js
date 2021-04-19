@@ -35,24 +35,26 @@ export const useStyles = makeStyles({
       marginRight: theme.spacing(-1),
     },
 
-    // Expansion Panels
-    '.MuiExpansionPanel-root': {
+    // Accordions
+    '.MuiAccordion-root': {
       '&::before': {
         display: 'none',
       },
       'boxShadow': 'none',
-      'padding': theme.spacing(0.5, 0),
-      'margin': [0, '!important'],
-      'borderBottomWidth': '1px',
-      'borderBottomStyle': 'solid',
-      'borderBottomColor': theme.palette.divider,
+      '&:not(:last-child)': {
+        borderBottom: '1px solid',
+        borderBottomColor: theme.palette.divider,
+      },
+      // '&:last-child': {
+      //   borderBottom: 'none',
+      // },
+      '&:only-child': {
+        borderBottom: 'none',
+      },
     },
-    '.MuiExpansionPanelSummary-content': {
-      margin: '0 !important',
-    },
-    '.MuiExpansionPanelSummary-root': {
-      minHeight: [0, '!important'],
-      padding: theme.spacing(0, 1),
+    '.MuiAccordionSummary-root, .MuiAccordionDetails-root': {
+      paddingLeft: 0,
+      paddingRight: 0,
     },
 
     // Forms
