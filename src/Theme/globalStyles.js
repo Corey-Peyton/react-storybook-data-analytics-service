@@ -376,7 +376,6 @@ export const useStyles = makeStyles({
       display: 'flex',
       flexFlow: 'column',
       padding: theme.spacing(3),
-      overflowY: 'auto',
     },
     '.row': {
       'display': 'flex',

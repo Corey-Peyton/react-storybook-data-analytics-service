@@ -6,6 +6,7 @@ import {darkTheme} from '../../Theme/theme';
 import {
   AccountDetailsDialog,
   DataUseDialog,
+  TasksToolsDialog,
 } from './CommonComponents/Dialogs';
 
 const useStyles = makeStyles((theme) => ({
@@ -34,7 +35,8 @@ function Banner(props) {
   const classes = useStyles();
   const [open, setOpen] = React.useState({
     accountDetailsDialog: false,
-    dataUseDialog: true,
+    dataUseDialog: false,
+    tasksToolsDialog: true,
   });
 
   const toggleDialog = (element, value) => {
@@ -124,8 +126,17 @@ function Banner(props) {
       <DataUseDialog
         open={open.dataUseDialog}
         toggleDialog={() => toggleDialog('dataUseDialog', !open.dataUseDialog)}
-        handleNext={() => handleNext('dataUseDialog', '')}
+        handleNext={() => handleNext('dataUseDialog', 'tasksToolsDialog')}
         handleBack={() => handleBack('accountDetailsDialog', 'dataUseDialog')}
+      />
+      {/* Tasks and tools dialog */}
+      <TasksToolsDialog
+        open={open.tasksToolsDialog}
+        toggleDialog={() =>
+          toggleDialog('tasksToolsDialog', !open.tasksToolsDialog)
+        }
+        handleNext={() => handleNext('tasksToolsDialog', '')}
+        handleBack={() => handleBack('dataUseDialog', 'tasksToolsDialog')}
       />
     </>
   );
