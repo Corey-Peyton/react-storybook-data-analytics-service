@@ -12,6 +12,7 @@ import {
   RadioGroup,
   FormControlLabel,
   Radio,
+  Divider,
 } from '@material-ui/core';
 import {Drawer} from '../../CommonComponents/Drawer';
 import {Dialog} from '../../CommonComponents/Dialog';
@@ -21,6 +22,9 @@ import {mdiChevronDown, mdiEmail, mdiBookOpenPageVariant} from '@mdi/js';
 const useStyles = makeStyles((theme) => ({
   helpDetails: {
     display: 'block',
+  },
+  divider: {
+    margin: theme.spacing(1.5, 0),
   },
 }));
 
@@ -193,6 +197,120 @@ export function FeedbackDialog(props) {
       primaryButton="Submit"
       secondaryButton="Cancel"
       handlePrimaryClick={props.toggleDialog}
+      handleSecondaryClick={props.toggleDialog}
+      toggleDialog={props.toggleDialog}
+    />
+  );
+}
+
+export function AccountDetailsDialog(props) {
+  const classes = useStyles();
+  const [state, setState] = React.useState({
+    cloudAccount: null,
+  });
+
+  const handleRadioChange = (event) => {
+    const name = event.target.name;
+    setState({
+      ...state,
+      [name]: event.target.value,
+    });
+  };
+
+  const content = () => (
+    <>
+      <div className="row">
+        <TextField
+          id="fname"
+          label="First name"
+          variant="outlined"
+          fullWidth
+          margin="dense"
+          required
+        />
+      </div>
+      <div className="row">
+        <TextField
+          id="lname"
+          label="Last name"
+          variant="outlined"
+          fullWidth
+          margin="dense"
+          required
+        />
+      </div>
+      <div className="row">
+        <TextField
+          id="organization"
+          label="Organization"
+          variant="outlined"
+          fullWidth
+          margin="dense"
+          required
+        />
+      </div>
+      <div className="row">
+        <TextField
+          id="job-title"
+          label="Job title"
+          variant="outlined"
+          fullWidth
+          margin="dense"
+          required
+        />
+      </div>
+      <div className="row">
+        <TextField
+          id="work-email"
+          label="Work email"
+          variant="outlined"
+          fullWidth
+          margin="dense"
+          required
+        />
+      </div>
+      <Divider className={classes.divider} />
+      <div className="row">
+        <FormControl component="fieldset" required>
+          <FormLabel component="legend">
+            Who issued your Azure cloud account?
+          </FormLabel>
+          <RadioGroup
+            id="accountIssuer"
+            value={state.accountIssuer}
+            name="accountIssuer"
+            onChange={handleRadioChange}
+          >
+            <FormControlLabel
+              value="Statistics Canada"
+              control={<Radio color="primary" />}
+              label="Statistics Canada"
+            />
+            <FormControlLabel
+              value="Other organization"
+              control={<Radio color="primary" />}
+              label="Other organization"
+            />
+            <FormControlLabel
+              value="I don't have an Azure cloud account"
+              control={<Radio color="primary" />}
+              label="I don't have an Azure cloud account"
+            />
+          </RadioGroup>
+        </FormControl>
+      </div>
+    </>
+  );
+
+  return (
+    <Dialog
+      id="account-details-dialog"
+      open={props.open}
+      title="Account details"
+      content={content()}
+      primaryButton="Next"
+      secondaryButton="Cancel"
+      handlePrimaryClick={props.handlePrimaryClick}
       handleSecondaryClick={props.toggleDialog}
       toggleDialog={props.toggleDialog}
     />

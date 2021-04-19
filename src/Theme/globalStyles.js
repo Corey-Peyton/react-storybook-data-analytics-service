@@ -87,6 +87,9 @@ export const useStyles = makeStyles({
       paddingTop: '13px',
       paddingBottom: '13px',
     },
+    '.MuiFormControl-marginDense': {
+      margin: 0,
+    },
     '.MuiFormControlLabel-root': {
       marginLeft: theme.spacing(-1),
     },

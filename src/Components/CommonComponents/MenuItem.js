@@ -7,10 +7,10 @@ import {
 } from '@material-ui/core';
 
 export function MenuItem(props) {
-  const {content, handleClick, key} = props;
+  const {content, handleClick} = props;
 
   return (
-    <MUIMenuItem onClick={handleClick} key={key}>
+    <MUIMenuItem onClick={handleClick} key={content}>
       <ListItemText
         primary={<Typography variant="body2">{content}</Typography>}
       />
@@ -27,8 +27,8 @@ MenuItem.propTypes = {
     The primary function of the menu item, when clicked.
    */
   handleClick: PropTypes.func,
-  /**
-    The key to establish the identifier of this particular item in the list.
-   */
-  key: PropTypes.number,
+  // /**
+  //   The key to establish the identifier of this particular item in the list.
+  //  */
+  // key: PropTypes.number,
 };
