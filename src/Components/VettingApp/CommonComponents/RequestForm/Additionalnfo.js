@@ -17,13 +17,12 @@ function AdditionalInfo(props) {
   const {t} = useTranslation();
 
   const [state, setState] = React.useState({
-    info: {
-      text: '',
-      errorText: '',
-      invalid: '',
-      commands: '',
-      helperText: '',
-    },
+    info: '',
+    text: '',
+    errorText: '',
+    invalid: '',
+    commands: '',
+    helperText: '',
   });
 
   const initial = {
@@ -124,7 +123,6 @@ function AdditionalInfo(props) {
         id="additionalInfo"
         label="Additional information"
         multiline
-        rows={2}
         variant="outlined"
         fullWidth
         onCut={(e) => disableCutCopyPaste(e, 'cut', 'info')}

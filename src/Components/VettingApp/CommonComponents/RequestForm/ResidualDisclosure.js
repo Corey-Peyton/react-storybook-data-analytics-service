@@ -445,7 +445,6 @@ function ResidualDisclosure(props) {
                 id="subsetChanges"
                 label="Explanation of changes"
                 multiline
-                rows={2}
                 variant="outlined"
                 fullWidth
                 required
@@ -538,7 +537,6 @@ function ResidualDisclosure(props) {
                 id="subsetNotes1"
                 label="Notes"
                 multiline
-                rows={2}
                 variant="outlined"
                 fullWidth
                 onCut={(e) => disableCutCopyPaste(e, 'cut', 'subsetNotes')}
@@ -606,7 +604,6 @@ function ResidualDisclosure(props) {
                 id="subsetNotes2"
                 label="Notes"
                 multiline
-                rows={2}
                 variant="outlined"
                 fullWidth
                 onCut={(e) => disableCutCopyPaste(e, 'cut', 'subsetNotes2')}
@@ -688,7 +685,6 @@ function ResidualDisclosure(props) {
                     id="subsetNotes3"
                     label="Notes"
                     multiline
-                    rows={2}
                     variant="outlined"
                     fullWidth
                     onCut={(e) => disableCutCopyPaste(e, 'cut', 'subsetNotes3')}
@@ -838,7 +834,6 @@ function ResidualDisclosure(props) {
                 id="changes"
                 label="Explanation of changes"
                 multiline
-                rows={2}
                 variant="outlined"
                 fullWidth
                 required
@@ -957,7 +952,6 @@ function ResidualDisclosure(props) {
                 id="notes1"
                 label="Notes"
                 multiline
-                rows={2}
                 variant="outlined"
                 fullWidth
                 onCut={(e) => disableCutCopyPaste(e, 'cut', 'notes')}
@@ -1023,7 +1017,6 @@ function ResidualDisclosure(props) {
                 id="notes2"
                 label="Notes"
                 multiline
-                rows={2}
                 variant="outlined"
                 fullWidth
                 onCut={(e) => disableCutCopyPaste(e, 'cut', 'notes2')}
@@ -1103,7 +1096,6 @@ function ResidualDisclosure(props) {
                     id="notes3"
                     label="Notes"
                     multiline
-                    rows={2}
                     variant="outlined"
                     fullWidth
                     onCut={(e) => disableCutCopyPaste(e, 'cut', 'notes3')}
