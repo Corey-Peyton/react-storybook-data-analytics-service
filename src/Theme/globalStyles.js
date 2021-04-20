@@ -90,6 +90,24 @@ export const useStyles = makeStyles({
     '.MuiFormControlLabel-root': {
       marginLeft: theme.spacing(-1),
     },
+    '.input-margin': {
+      'margin': theme.spacing(1.5, 0),
+      '&:first-child': {
+        marginTop: 0,
+      },
+      '&:last-child': {
+        marginBottom: 0,
+      },
+    },
+    '.radio-margin': {
+      'margin': theme.spacing(1, 0),
+      '&:first-child': {
+        marginTop: 0,
+      },
+      '&:last-child': {
+        marginBottom: 0,
+      },
+    },
     '.emphasisBox': {
       background: theme.palette.grey[200],
       padding: theme.spacing(2),

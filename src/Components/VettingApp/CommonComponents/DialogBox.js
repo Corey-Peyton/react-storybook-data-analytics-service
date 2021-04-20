@@ -88,10 +88,7 @@ const useStyles = makeStyles((theme) => ({
     justifyContent: 'space-between',
   },
   vettingSection: {
-    display: 'flex',
-    flexFlow: 'column',
     padding: theme.spacing(3),
-    overflowY: 'auto',
   },
   vettingRow: {
     'display': 'flex',
@@ -1179,94 +1176,78 @@ export function DialogFormGetSupportFab(props) {
         <Divider />
         <DialogContent>
           <div className={classes.vettingSection}>
-            <div className={classes.vettingRow}>
-              <div className={classes.vettingColumn}>
-                <Typography variant="subtitle1">
-                  Do you need help with something?
-                </Typography>
-              </div>
-            </div>
-            <div className={classes.vettingRow}>
-              <div className={classes.vettingColumn}>
-                <FormControl
-                  component="fieldset"
-                  className="radio-margin"
-                  required
-                >
-                  <FormLabel component="legend">
-                    Select the steps you need help with.
-                  </FormLabel>
-                  <FormHelperText>Select all that apply</FormHelperText>
-                  <FormGroup>
-                    <FormControlLabel
-                      control={
-                        <Checkbox
-                          checked={state.step1}
-                          onChange={handleChbxChange}
-                          name="step1"
-                          color="primary"
-                        />
-                      }
-                      label="Step 1 - Requester details"
+            <Typography variant="subtitle1" className="input-margin">
+              Do you need help with something?
+            </Typography>
+            <FormControl component="fieldset" className="radio-margin" required>
+              <FormLabel component="legend">
+                Select the steps you need help with.
+              </FormLabel>
+              <FormHelperText>Select all that apply</FormHelperText>
+              <FormGroup>
+                <FormControlLabel
+                  control={
+                    <Checkbox
+                      checked={state.step1}
+                      onChange={handleChbxChange}
+                      name="step1"
+                      color="primary"
                     />
-                    <FormControlLabel
-                      control={
-                        <Checkbox
-                          checked={state.step2}
-                          onChange={handleChbxChange}
-                          name="step2"
-                          color="primary"
-                        />
-                      }
-                      label="Step 2 - Output details"
+                  }
+                  label="Step 1 - Requester details"
+                />
+                <FormControlLabel
+                  control={
+                    <Checkbox
+                      checked={state.step2}
+                      onChange={handleChbxChange}
+                      name="step2"
+                      color="primary"
                     />
-                    <FormControlLabel
-                      control={
-                        <Checkbox
-                          checked={state.step3}
-                          onChange={handleChbxChange}
-                          name="step3"
-                          color="primary"
-                        />
-                      }
-                      label="Step 3 - Residual disclosure"
+                  }
+                  label="Step 2 - Output details"
+                />
+                <FormControlLabel
+                  control={
+                    <Checkbox
+                      checked={state.step3}
+                      onChange={handleChbxChange}
+                      name="step3"
+                      color="primary"
                     />
-                    <FormControlLabel
-                      control={
-                        <Checkbox
-                          checked={state.step4}
-                          onChange={handleChbxChange}
-                          name="step4"
-                          color="primary"
-                        />
-                      }
-                      label="Step 4 - Additional information"
+                  }
+                  label="Step 3 - Residual disclosure"
+                />
+                <FormControlLabel
+                  control={
+                    <Checkbox
+                      checked={state.step4}
+                      onChange={handleChbxChange}
+                      name="step4"
+                      color="primary"
                     />
-                    <Divider className="mt-1 mb-1" />
-                    <FormControlLabel
-                      control={
-                        <Checkbox
-                          checked={state.other}
-                          onChange={handleChbxChange}
-                          name="other"
-                          color="primary"
-                        />
-                      }
-                      label="I need help with something else"
+                  }
+                  label="Step 4 - Additional information"
+                />
+                <Divider className="mt-1 mb-1" />
+                <FormControlLabel
+                  control={
+                    <Checkbox
+                      checked={state.other}
+                      onChange={handleChbxChange}
+                      name="other"
+                      color="primary"
                     />
-                  </FormGroup>
-                </FormControl>
-              </div>
-            </div>
-            <div className={classes.vettingRow}>
-              <div className={classes.vettingColumn}>
-                <Typography variant="body2">
-                  Click the "Get support" button and one of our support agents
-                  will contact you to resolve the issue. We aim to make contact
-                  within 1 to 2 business days.
-                </Typography>
-              </div>
-            </div>
+                  }
+                  label="I need help with something else"
+                />
+              </FormGroup>
+            </FormControl>
+            <Typography variant="body2" className="radio-margin">
+              Click the "Get support" button and one of our support agents will
+              contact you to resolve the issue. We aim to make contact within 1
+              to 2 business days.
+            </Typography>
           </div>
         </DialogContent>
         <Divider />
