@@ -1,6 +1,5 @@
 import React from 'react';
 import {makeStyles} from '@material-ui/core/styles';
-import {SnackbarSupportFab} from '../CommonComponents/Snackbars';
 import Fab from '@material-ui/core/Fab';
 import Email from '@material-ui/icons/Email';
 import {
