@@ -312,6 +312,7 @@ export function DialogWithdraw(props) {
   const content = () => (
     <>
       <FormControl
+        className="m-0"
         variant="outlined"
         error={Boolean(state.withdrawReason.errorText)}
         margin="dense"
@@ -327,11 +328,15 @@ export function DialogWithdraw(props) {
           value={state.withdrawReason.text}
         >
           <MenuItem value="makeChanges">Need to make changes</MenuItem>
-          <MenuItem value="notNeeded">No longer needed</MenuItem>
+          <MenuItem value="notNeeded">No longer required</MenuItem>
           <MenuItem value="other">Other</MenuItem>
         </Select>
       </FormControl>
-      <FormHelperText error={Boolean(state.withdrawReason.errorText)}>
+      <FormHelperText
+        error={Boolean(state.withdrawReason.errorText)}
+        variant="outlined"
+        margin="dense"
+      >
         {state.withdrawReason.helperText}
       </FormHelperText>
     </>
