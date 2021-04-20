@@ -15,7 +15,6 @@ import {
   SnackbarAssignLead,
   SnackbarAssignSupport,
   SnackbarUnassign,
-  SnackbarWithdrawRequest,
 } from '../../CommonComponents/Snackbars';
 import {
   DialogUnassign,
@@ -28,6 +27,7 @@ import {
   DialogAssignAsLead,
   DialogAssignAsSupport,
   DialogDelete,
+  DialogWithdraw,
 } from '../../CommonComponents/DialogBox';
 import {loggedInUser} from '../../../../Data/fakeData';
 
@@ -76,7 +76,6 @@ export function ActionsMenu(props) {
     snackbarAssignLead: false,
     snackbarAssignSupport: false,
     snackbarUnassign: false,
-    snackbarWithdrawRequest: false,
     dialogManageTeam: false,
     dialogUnassign: false,
     dialogSupport: false,
@@ -90,6 +89,7 @@ export function ActionsMenu(props) {
     dialogAssignAsLead: false,
     dialogAssignAsSupport: false,
     dialogDelete: false,
+    dialogWithdraw: false,
     role: '',
     action: '',
   });
@@ -195,7 +195,7 @@ export function ActionsMenu(props) {
         onClick={(e) => {
           e.stopPropagation();
           handleClose(e);
-          handleSnackbarOpen('snackbarWithdrawRequest');
+          toggleDialog('dialogWithdraw', !open.dialogWithdraw, e);
         }}
       >
         <ListItemText
@@ -861,10 +861,6 @@ export function ActionsMenu(props) {
         open={open.snackbarUnassign}
         handleClose={() => handleSnackbarClose('snackbarUnassign')}
       />
-      <SnackbarWithdrawRequest
-        open={open.snackbarWithdrawRequest}
-        handleClose={() => handleSnackbarClose('snackbarWithdrawRequest')}
-      />
       <DialogUnassign
         toggleDialog={(e) =>
           toggleDialog('dialogUnassign', !open.dialogUnassign, e)
@@ -900,6 +896,12 @@ export function ActionsMenu(props) {
           toggleDialog('dialogApprove', !open.dialogApprove, e)
         }
         open={open.dialogApprove}
+      />
+      <DialogWithdraw
+        toggleDialog={(e) =>
+          toggleDialog('dialogWithdraw', !open.dialogWithdraw, e)
+        }
+        open={open.dialogWithdraw}
       />
       <DialogInfo
         toggleDialog={(e) => toggleDialog('dialogInfo', !open.dialogInfo, e)}
