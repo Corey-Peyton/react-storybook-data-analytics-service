@@ -21,9 +21,11 @@ import {
   IconButton,
   InputLabel,
   Select,
+  MenuItem,
   FormControlLabel,
   FormHelperText,
 } from '@material-ui/core';
+import {Dialog as CustomDialog} from '../../CommonComponents/Dialog';
 import NumberFormat from 'react-number-format';
 import Alert from '@material-ui/lab/Alert';
 
@@ -225,68 +227,51 @@ export function DialogInfo(props) {
 
 // ////////////////////////////////////////// WITHDRAW REQUEST
 export function DialogWithdraw(props) {
-  const classes = useStyles();
   const {t} = useTranslation();
-  const {toggleDialog, open} = props;
   const [snackbar, setSnackbar] = React.useState(false);
-  const initial = {
-    // blank object used to reset state
-    comments: {
-      text: '',
-      errorText: '',
-      helperText: 'Please fill out some comment.',
-      invalid: '',
-      commands: '',
-    },
-  };
   const [state, setState] = React.useState({
-    comments: {
+    withdrawReason: {
       text: '',
       errorText: '',
-      helperText: 'Please fill out some comment.',
+      helperText: '',
       invalid: '',
-      commands: '',
     },
   });
 
-  const handleChange = (e, val) => {
-    const comment = e.target.value;
-    setState({
-      ...state,
-      [val]: {
-        // updates state with text from input
-        ...state[val],
-        text: comment,
-      },
-    });
-
-    if (e.target.value && state[val].errorText) {
-      // if input text is valid, clear error
-      setState({
-        ...state,
-        [val]: {
-          ...state[val],
-          text: comment,
-          errorText: '',
-          helperText: initial[val].helperText,
-          invalid: '',
-          commands: '',
-        },
-      });
-    }
+  const initial = {
+    // blank object used to reset state
+    withdrawReason: {
+      text: '',
+      errorText: '',
+      helperText: '',
+      invalid: '',
+    },
   };
 
-  const SnackbarClose = () => {
+  const handleSelectChange = (event) => {
+    const name = event.target.name;
+    setState({
+      ...state,
+      [name]: {
+        text: event.target.value,
+        errorText: '',
+        helperText: '',
+        invalid: '',
+      },
+    });
+  };
+
+  const snackbarClose = () => {
     setSnackbar(false);
   };
 
   const validateForm = () => {
     let isError = false;
-    if (state.comments.text.trim() === '') {
+    if (state.withdrawReason.text.trim() === '') {
       isError = true;
-      state.comments.invalid = t('Enter some comments.');
-      state.comments.errorText = t('Enter some comments.');
-      state.comments.helperText = t('Enter some comments.');
+      state.withdrawReason.invalid = t('Select a withdraw reason.');
+      state.withdrawReason.errorText = t('Select a withdraw reason.');
+      state.withdrawReason.helperText = t('Select a withdraw reason.');
     }
 
     if (isError) {
@@ -304,7 +289,7 @@ export function DialogWithdraw(props) {
     const err = validateForm();
     if (!err) {
       // if no errors exist, submit the form and reset the inputs
-      toggleDialog(e);
+      props.toggleDialog(e);
       setSnackbar(!snackbar);
       setState({...initial});
     } else {
@@ -324,197 +309,56 @@ export function DialogWithdraw(props) {
     }
   };
 
-  const disableCutCopyPaste = (e, command, value) => {
-    // display error if user tries to cut/copy/paste
-    let msg;
-    e.preventDefault();
-    switch (command) {
-      case 'cut':
-        msg = t('Cut has been disabled for security purposes.');
-        setState({
-          ...state,
-          [value]: {
-            ...state[value],
-            commands: msg,
-            errorText: msg,
-            helperText: msg,
-          },
-        });
-        break;
-      case 'copy':
-        msg = t('Copy has been disabled for security purposes.');
-        setState({
-          ...state,
-          [value]: {
-            ...state[value],
-            commands: msg,
-            errorText: msg,
-            helperText: msg,
-          },
-        });
-        break;
-      case 'paste':
-        msg = t('Paste has been disabled for security purposes.');
-        setState({
-          ...state,
-          [value]: {
-            ...state[value],
-            commands: msg,
-            errorText: msg,
-            helperText: msg,
-          },
-        });
-        break;
-      default:
-        break;
-    }
-  };
-
-  const toggleHelperText = (value) => {
-    if (state[value].commands === state[value].errorText) {
-      if (Boolean(state[value].invalid)) {
-        // set error text back to invalid error
-        setState({
-          ...state,
-          [value]: {
-            ...state[value],
-            helperText: state[value].invalid,
-          },
-        });
-      } else {
-        // clear error text if no invalid error exists
-        setState({
-          ...state,
-          [value]: {
-            ...state[value],
-            helperText: initial[value].helperText,
-            errorText: initial[value].errorText,
-          },
-        });
-      }
-    }
-  };
-
-  const handleClick = (e) => {
-    e.stopPropagation();
-  };
+  const content = () => (
+    <>
+      <FormControl
+        className="m-0"
+        variant="outlined"
+        error={Boolean(state.withdrawReason.errorText)}
+        margin="dense"
+        required
+      >
+        <InputLabel htmlFor="withdrawReason">{t('Withdraw reason')}</InputLabel>
+        <Select
+          id="withdrawReason"
+          name="withdrawReason"
+          label={t('Withdraw reason')}
+          labelId="withdrawReason-label"
+          onChange={handleSelectChange}
+          value={state.withdrawReason.text}
+        >
+          <MenuItem value="makeChanges">Need to make changes</MenuItem>
+          <MenuItem value="notNeeded">No longer required</MenuItem>
+          <MenuItem value="other">Other</MenuItem>
+        </Select>
+      </FormControl>
+      {Boolean(state.withdrawReason.errorText) && (
+        <FormHelperText
+          error={Boolean(state.withdrawReason.errorText)}
+          variant="outlined"
+          margin="dense"
+        >
+          {state.withdrawReason.helperText}
+        </FormHelperText>
+      )}
+    </>
+  );
 
   return (
-    <React.Fragment>
-      <Dialog
-        onClose={(e) => {
-          setState({...initial});
-          toggleDialog(e);
-        }}
-        aria-labelledby="dashboard-dialog-title"
-        open={open}
-        className={classes.root}
-        disableBackdropClick
-        scroll="paper"
-        onClick={handleClick}
-        onKeyPress={(e) => {
-          if (e.key === 'Enter') {
-            e.preventDefault();
-            e.stopPropagation();
-          }
-        }}
-      >
-        <DialogTitle id="dashboard-dialog-title">
-          <div className={classes.vettingContainerTitle}>
-            <Typography variant="h6">{t('Withdraw request')}</Typography>
-            <IconButton
-              id="dialog-close"
-              onClick={toggleDialog}
-              edge="end"
-              aria-label="Withdraw request - close"
-              onKeyPress={(e) => {
-                e.preventDefault();
-                e.stopPropagation();
-                if (e.key === 'Enter') {
-                  toggleDialog(e);
-                }
-              }}
-            >
-              <CloseIcon />
-            </IconButton>
-          </div>
-        </DialogTitle>
-        <Divider />
-        <DialogContent>
-          <form onSubmit={submitForm} noValidate id="withdraw-form">
-            <div className={classes.vettingSection}>
-              <div className={classes.vettingRow}>
-                <div className={classes.vettingColumn}>
-                  <FormControl variant="outlined" className={classes.textField}>
-                    <TextField
-                      id="comments-input"
-                      label={t('Comments')}
-                      aria-label={t('Comments')}
-                      value={state.comments.text}
-                      variant="outlined"
-                      placeholder={t(
-                          'Please provite us with a withdrawal reason',
-                      )}
-                      multiline
-                      required
-                      error={Boolean(state.comments.errorText)}
-                      helperText={state.comments.helperText}
-                      onCut={(e) => disableCutCopyPaste(e, 'cut', 'comments')}
-                      onCopy={(e) => disableCutCopyPaste(e, 'copy', 'comments')}
-                      onPaste={(e) =>
-                        disableCutCopyPaste(e, 'paste', 'comments')
-                      }
-                      onChange={(e) => handleChange(e, 'comments')}
-                      onClick={() => toggleHelperText('comments')}
-                      onBlur={() => toggleHelperText('comments')}
-                      onFocus={() => toggleHelperText('comments')}
-                    />
-                  </FormControl>
-                </div>
-              </div>
-            </div>
-          </form>
-        </DialogContent>
-        <Divider />
-        <DialogActions>
-          <Button
-            variant="outlined"
-            color="primary"
-            onClick={(e) => {
-              setState({...initial});
-              toggleDialog(e);
-            }}
-            className={classes.footerBtns}
-            onKeyPress={(e) => {
-              e.preventDefault();
-              e.stopPropagation();
-              if (e.key === 'Enter') {
-                setState({...initial});
-                toggleDialog(e);
-              }
-            }}
-          >
-            {t('Cancel')}
-          </Button>
-          <Button
-            variant="contained"
-            color="primary"
-            className={classes.footerBtns}
-            type="submit"
-            form="withdraw-form"
-            onKeyPress={(e) => {
-              e.stopPropagation();
-              if (e.key === 'Enter') {
-                submitForm(e);
-              }
-            }}
-          >
-            {t('Withdraw')}
-          </Button>
-        </DialogActions>
-      </Dialog>
-      <SnackbarWithdrawRequest open={snackbar} handleClose={SnackbarClose} />
-    </React.Fragment>
+    <>
+      <CustomDialog
+        id="withdraw-dialog"
+        open={props.open}
+        title={t('Withdraw request')}
+        content={content()}
+        primaryButton={t('Withdraw')}
+        secondaryButton={t('Cancel')}
+        handlePrimaryClick={submitForm}
+        handleSecondaryClick={(e) => props.toggleDialog(e)}
+        toggleDialog={(e) => props.toggleDialog(e)}
+      />
+      <SnackbarWithdrawRequest open={snackbar} handleClose={snackbarClose} />
+    </>
   );
 }
 
