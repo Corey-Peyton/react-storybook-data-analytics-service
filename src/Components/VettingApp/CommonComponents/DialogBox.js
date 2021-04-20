@@ -332,13 +332,15 @@ export function DialogWithdraw(props) {
           <MenuItem value="other">Other</MenuItem>
         </Select>
       </FormControl>
-      <FormHelperText
-        error={Boolean(state.withdrawReason.errorText)}
-        variant="outlined"
-        margin="dense"
-      >
-        {state.withdrawReason.helperText}
-      </FormHelperText>
+      {Boolean(state.withdrawReason.errorText) && (
+        <FormHelperText
+          error={Boolean(state.withdrawReason.errorText)}
+          variant="outlined"
+          margin="dense"
+        >
+          {state.withdrawReason.helperText}
+        </FormHelperText>
+      )}
     </>
   );
 
