@@ -20,6 +20,9 @@ import {
   DialogActions,
   IconButton,
   InputLabel,
+  FormLabel,
+  FormGroup,
+  Checkbox,
   Select,
   FormControlLabel,
   FormHelperText,
@@ -1022,7 +1025,7 @@ export function DialogGetSupportFab(props) {
           }
         }}
       >
-        <DialogTitle id="dashboard-dialog-title">
+        <DialogTitle id="get-support-dialog-title">
           <div className={classes.vettingContainerTitle}>
             <Typography variant="h6">{t('Get support')}</Typography>
             <IconButton
@@ -1050,6 +1053,209 @@ export function DialogGetSupportFab(props) {
                 <Typography variant="subtitle1">
                   Do you need help with something?
                 </Typography>
+              </div>
+            </div>
+            <div className={classes.vettingRow}>
+              <div className={classes.vettingColumn}>
+                <Typography variant="body2">
+                  Click the "Get support" button and one of our support agents
+                  will contact you to resolve the issue. We aim to make contact
+                  within 1 to 2 business days.
+                </Typography>
+              </div>
+            </div>
+          </div>
+        </DialogContent>
+        <Divider />
+        <DialogActions>
+          <Button
+            variant="outlined"
+            color="primary"
+            onClick={(e) => {
+              toggleDialog(e);
+            }}
+            className={classes.footerBtns}
+            onKeyPress={(e) => {
+              e.preventDefault();
+              e.stopPropagation();
+              if (e.key === 'Enter') {
+                toggleDialog(e);
+              }
+            }}
+          >
+            {t('Cancel')}
+          </Button>
+          <Button
+            type="submit"
+            variant="contained"
+            color="primary"
+            className={classes.footerBtns}
+            onClick={(e) => {
+              toggleDialog(e);
+              setSnackbar(true);
+            }}
+            onKeyPress={(e) => {
+              e.stopPropagation();
+              if (e.key === 'Enter') {
+                toggleDialog(e);
+                setSnackbar(true);
+              }
+            }}
+          >
+            {t('Get support')}
+          </Button>
+        </DialogActions>
+      </Dialog>
+      <SnackbarSupportFab open={snackbar} handleClose={SnackbarClose} />
+    </React.Fragment>
+  );
+}
+
+// ////////////////////////////////////////// GET SUPPORT (FORM ONLY)
+export function DialogFormGetSupportFab(props) {
+  const classes = useStyles();
+  const {t} = useTranslation();
+  const {toggleDialog, open} = props;
+  const [snackbar, setSnackbar] = React.useState(false);
+  const [state, setState] = React.useState({
+    step1: false,
+    step2: false,
+    step3: false,
+    step4: false,
+    other: false,
+  });
+
+  const SnackbarClose = () => {
+    setSnackbar(false);
+  };
+
+  const handleChbxChange = (event) => {
+    setState({...state, [event.target.name]: event.target.checked});
+  };
+
+  const handleClick = (e) => {
+    e.stopPropagation();
+  };
+
+  return (
+    <React.Fragment>
+      <Dialog
+        onClose={(e) => {
+          toggleDialog(e);
+        }}
+        aria-labelledby="get-support-form-dialog-title"
+        open={open}
+        className={classes.root}
+        scroll="paper"
+        disableBackdropClick
+        onClick={handleClick}
+        onKeyPress={(e) => {
+          if (e.key === 'Enter') {
+            e.preventDefault();
+            e.stopPropagation();
+          }
+        }}
+      >
+        <DialogTitle id="get-support-form-dialog-title">
+          <div className={classes.vettingContainerTitle}>
+            <Typography variant="h6">{t('Get support')}</Typography>
+            <IconButton
+              id="dialog-close"
+              onClick={toggleDialog}
+              edge="end"
+              aria-label="Get support - close"
+              onKeyPress={(e) => {
+                e.preventDefault();
+                e.stopPropagation();
+                if (e.key === 'Enter') {
+                  toggleDialog(e);
+                }
+              }}
+            >
+              <CloseIcon />
+            </IconButton>
+          </div>
+        </DialogTitle>
+        <Divider />
+        <DialogContent>
+          <div className={classes.vettingSection}>
+            <div className={classes.vettingRow}>
+              <div className={classes.vettingColumn}>
+                <Typography variant="subtitle1">
+                  Do you need help with something?
+                </Typography>
+              </div>
+            </div>
+            <div className={classes.vettingRow}>
+              <div className={classes.vettingColumn}>
+                <FormControl
+                  component="fieldset"
+                  className="radio-margin"
+                  required
+                >
+                  <FormLabel component="legend">
+                    Select the steps you need help with.
+                  </FormLabel>
+                  <FormHelperText>Select all that apply</FormHelperText>
+                  <FormGroup>
+                    <FormControlLabel
+                      control={
+                        <Checkbox
+                          checked={state.step1}
+                          onChange={handleChbxChange}
+                          name="step1"
+                          color="primary"
+                        />
+                      }
+                      label="Step 1 - Requester details"
+                    />
+                    <FormControlLabel
+                      control={
+                        <Checkbox
+                          checked={state.step2}
+                          onChange={handleChbxChange}
+                          name="step2"
+                          color="primary"
+                        />
+                      }
+                      label="Step 2 - Output details"
+                    />
+                    <FormControlLabel
+                      control={
+                        <Checkbox
+                          checked={state.step3}
+                          onChange={handleChbxChange}
+                          name="step3"
+                          color="primary"
+                        />
+                      }
+                      label="Step 3 - Residual disclosure"
+                    />
+                    <FormControlLabel
+                      control={
+                        <Checkbox
+                          checked={state.step4}
+                          onChange={handleChbxChange}
+                          name="step4"
+                          color="primary"
+                        />
+                      }
+                      label="Step 4 - Additional information"
+                    />
+                    <Divider className="mt-1 mb-1" />
+                    <FormControlLabel
+                      control={
+                        <Checkbox
+                          checked={state.other}
+                          onChange={handleChbxChange}
+                          name="other"
+                          color="primary"
+                        />
+                      }
+                      label="I need help with something else"
+                    />
+                  </FormGroup>
+                </FormControl>
               </div>
             </div>
             <div className={classes.vettingRow}>

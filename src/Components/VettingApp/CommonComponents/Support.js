@@ -3,7 +3,10 @@ import {makeStyles} from '@material-ui/core/styles';
 import {SnackbarSupportFab} from '../CommonComponents/Snackbars';
 import Fab from '@material-ui/core/Fab';
 import Email from '@material-ui/icons/Email';
-import {DialogGetSupportFab} from '../CommonComponents/DialogBox';
+import {
+  DialogFormGetSupportFab,
+  DialogGetSupportFab,
+} from '../CommonComponents/DialogBox';
 
 const useStyles = makeStyles((theme) => ({
   fab: {
@@ -16,10 +19,11 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function FloatingSupportButton() {
+export default function FloatingSupportButton(props) {
   const classes = useStyles();
   const [open, setOpen] = React.useState({
     dialogSupportFab: false,
+    dialogFormSupport: false,
   });
 
   const handleClickOpen = (state) => {
@@ -36,7 +40,11 @@ export default function FloatingSupportButton() {
         color="primary"
         variant="extended"
         aria-label="support"
-        onClick={() => handleClickOpen('dialogSupportFab')}
+        onClick={
+          props.form ?
+            () => handleClickOpen('dialogFormSupport') :
+            () => handleClickOpen('dialogSupportFab')
+        }
         className={classes.fab}
       >
         <Email className={classes.extendedIcon} />
@@ -46,9 +54,9 @@ export default function FloatingSupportButton() {
         toggleDialog={() => handleClickClose('dialogSupportFab')}
         open={open.dialogSupportFab}
       />
-      <SnackbarSupportFab
-        open={open.snackbarSupportFab}
-        handleClose={() => handleClickClose('snackbarSupportFab')}
+      <DialogFormGetSupportFab
+        toggleDialog={() => handleClickClose('dialogFormSupport')}
+        open={open.dialogFormSupport}
       />
     </div>
   );
