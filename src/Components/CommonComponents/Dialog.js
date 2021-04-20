@@ -23,6 +23,9 @@ const useStyles = makeStyles((theme) => ({
     borderBottom: '1px solid',
     borderBottomColor: theme.palette.divider,
   },
+  dialogContent: {
+    padding: theme.spacing(3),
+  },
   dialogFooter: {
     padding: theme.spacing(1.75, 3),
     borderTop: '1px solid',
@@ -95,7 +98,7 @@ export function Dialog(props) {
           </IconButton>
         </DialogTitle>
         <DialogContent>
-          <div className="dialog-section">{content}</div>
+          <div className={classes.dialogContent}>{content}</div>
         </DialogContent>
         {secondaryButton || primaryButton ? (
           <DialogActions className={classes.dialogFooter}>

@@ -372,11 +372,6 @@ export const useStyles = makeStyles({
       paddingLeft: '14px',
       color: [theme.palette.common.black, '!important'],
     },
-    '.dialog-section': {
-      display: 'flex',
-      flexFlow: 'column',
-      padding: theme.spacing(3),
-    },
     '.row': {
       'display': 'flex',
       'margin': theme.spacing(1.5, 0),

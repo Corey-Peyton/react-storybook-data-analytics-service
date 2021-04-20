@@ -152,46 +152,53 @@ export function FeedbackDialog(props) {
 
   const content = () => (
     <>
-      <Typography variant="body2" className="input-margin">
-        Required fields are marked with an asterisk *.
-      </Typography>
-      <TextField
-        className="input-margin"
-        id="feedback"
-        label="What would you like to tell us?"
-        multiline
-        rows={4}
-        variant="outlined"
-        fullWidth
-        required
-      />
-      <FormControl component="fieldset" className="input-margin" required>
-        <FormLabel component="legend">
-          How has your experience been so far?
-        </FormLabel>
-        <RadioGroup
-          id="feedbackRating"
-          value={state.feedbackRating}
-          name="feedbackRating"
-          onChange={handleRadioChange}
-        >
-          <FormControlLabel
-            value="Positive"
-            control={<Radio color="primary" />}
-            label="Positive"
+      <Grid container direction="column">
+        <Grid item className="input-margin">
+          <Typography variant="body2">
+            Required fields are marked with an asterisk *.
+          </Typography>
+        </Grid>
+        <Grid item className="input-margin">
+          <TextField
+            id="feedback"
+            label="What would you like to tell us?"
+            multiline
+            rows={4}
+            variant="outlined"
+            fullWidth
+            required
           />
-          <FormControlLabel
-            value="Neutral"
-            control={<Radio color="primary" />}
-            label="Neutral"
-          />
-          <FormControlLabel
-            value="Negative"
-            control={<Radio color="primary" />}
-            label="Negative"
-          />
-        </RadioGroup>
-      </FormControl>
+        </Grid>
+        <Grid item className="input-margin">
+          <FormControl component="fieldset" required>
+            <FormLabel component="legend">
+              How has your experience been so far?
+            </FormLabel>
+            <RadioGroup
+              id="feedbackRating"
+              value={state.feedbackRating}
+              name="feedbackRating"
+              onChange={handleRadioChange}
+            >
+              <FormControlLabel
+                value="Positive"
+                control={<Radio color="primary" />}
+                label="Positive"
+              />
+              <FormControlLabel
+                value="Neutral"
+                control={<Radio color="primary" />}
+                label="Neutral"
+              />
+              <FormControlLabel
+                value="Negative"
+                control={<Radio color="primary" />}
+                label="Negative"
+              />
+            </RadioGroup>
+          </FormControl>
+        </Grid>
+      </Grid>
     </>
   );
 
@@ -225,89 +232,95 @@ export function AccountDetailsDialog(props) {
 
   const content = () => (
     <>
-      <TextField
-        className="input-margin"
-        id="fname"
-        label="First name"
-        variant="outlined"
-        fullWidth
-        margin="dense"
-        required
-      />
-      <TextField
-        className="input-margin"
-        id="lname"
-        label="Last name"
-        variant="outlined"
-        fullWidth
-        margin="dense"
-        required
-      />
-      <TextField
-        className="input-margin"
-        id="organization"
-        label="Organization"
-        variant="outlined"
-        fullWidth
-        margin="dense"
-        required
-      />
-      <TextField
-        className="input-margin"
-        id="job-title"
-        label="Job title"
-        variant="outlined"
-        fullWidth
-        margin="dense"
-        required
-      />
-      <TextField
-        className="input-margin"
-        id="work-email"
-        label="Work email"
-        variant="outlined"
-        fullWidth
-        margin="dense"
-        required
-      />
-      <Divider className="input-margin" />
-      <FormControl component="fieldset" className="input-margin" required>
-        <FormLabel component="legend">
-          Who issued your Azure cloud account?
-        </FormLabel>
-        <RadioGroup
-          id="accountIssuer"
-          value={state.accountIssuer}
-          name="accountIssuer"
-          onChange={handleRadioChange}
-        >
-          <FormControlLabel
-            value="Statistics Canada"
-            control={<Radio color="primary" />}
-            label="Statistics Canada"
+      <Grid container direction="column">
+        <Grid item className="input-margin">
+          <TextField
+            className="input-margin"
+            id="fname"
+            label="First name"
+            variant="outlined"
+            fullWidth
+            margin="dense"
+            required
           />
-          <FormControlLabel
-            value="Other organization"
-            control={<Radio color="primary" />}
-            label="Other organization"
+          <TextField
+            className="input-margin"
+            id="lname"
+            label="Last name"
+            variant="outlined"
+            fullWidth
+            margin="dense"
+            required
           />
-          {state.accountIssuer === 'Other organization' && (
-            <TextField
-              className="input-margin ml-4"
-              id="organization"
-              label="Organization"
-              variant="outlined"
-              margin="dense"
-              required
-            />
-          )}
-          <FormControlLabel
-            value="I don't have an Azure cloud account"
-            control={<Radio color="primary" />}
-            label="I don't have an Azure cloud account"
+          <TextField
+            className="input-margin"
+            id="organization"
+            label="Organization"
+            variant="outlined"
+            fullWidth
+            margin="dense"
+            required
           />
-        </RadioGroup>
-      </FormControl>
+          <TextField
+            className="input-margin"
+            id="job-title"
+            label="Job title"
+            variant="outlined"
+            fullWidth
+            margin="dense"
+            required
+          />
+          <TextField
+            className="input-margin"
+            id="work-email"
+            label="Work email"
+            variant="outlined"
+            fullWidth
+            margin="dense"
+            required
+          />
+        </Grid>
+        <Divider className="input-margin" />
+        <Grid item className="input-margin">
+          <FormControl component="fieldset" fullWidth required>
+            <FormLabel component="legend">
+              Who issued your Azure cloud account?
+            </FormLabel>
+            <RadioGroup
+              id="accountIssuer"
+              value={state.accountIssuer}
+              name="accountIssuer"
+              onChange={handleRadioChange}
+            >
+              <FormControlLabel
+                value="Statistics Canada"
+                control={<Radio color="primary" />}
+                label="Statistics Canada"
+              />
+              <FormControlLabel
+                value="Other organization"
+                control={<Radio color="primary" />}
+                label="Other organization"
+              />
+              {state.accountIssuer === 'Other organization' && (
+                <TextField
+                  className="input-margin ml-4"
+                  id="organization"
+                  label="Organization"
+                  variant="outlined"
+                  margin="dense"
+                  required
+                />
+              )}
+              <FormControlLabel
+                value="I don't have an Azure cloud account"
+                control={<Radio color="primary" />}
+                label="I don't have an Azure cloud account"
+              />
+            </RadioGroup>
+          </FormControl>
+        </Grid>
+      </Grid>
     </>
   );
 
@@ -353,164 +366,189 @@ export function DataUseDialog(props) {
 
   const content = () => (
     <>
-      <FormControl className="radio-margin" component="fieldset" required>
-        <FormLabel component="legend">
-          Do you require access to Statistics Canada non-public data?
-        </FormLabel>
-        <RadioGroup
-          id="nonPublicData"
-          value={state.nonPublicData}
-          name="nonPublicData"
-          onChange={handleRadioChange}
-        >
-          <FormControlLabel
-            value="Yes"
-            control={<Radio color="primary" />}
-            label="Yes"
-          />
-          {state.nonPublicData === 'Yes' && (
-            <div>
-              <Accordion defaultExpanded className={classes.additionalStepsAcc}>
-                <AccordionSummary
-                  expandIcon={<Icon path={mdiChevronDown} size={1} />}
-                  aria-controls="additional-steps-content"
-                  id="additional-steps-header"
-                >
-                  <Typography variant="subtitle1">
-                    Additional steps will be required after registration
-                  </Typography>
-                </AccordionSummary>
-                <AccordionDetails>
-                  <Typography variant="body2">
-                    For confidential microdata access, applicants will be asked
-                    to submit a Project Application after submitting this
-                    registration form. Once the Application is approved, they
-                    will be asked to complete the Guidelines for data access.
-                    Requests for this type of access will be assessed on a case
-                    by case basis. Confidential microdata access may still be
-                    accessed in a Research Data Centre or Federal Research Data
-                    Centre. Please visit the Research Data Centre website for
-                    more information.
-                  </Typography>
-                </AccordionDetails>
-              </Accordion>
-            </div>
-          )}
-          <FormControlLabel
-            value="No"
-            control={<Radio color="primary" />}
-            label="No"
-          />
-        </RadioGroup>
-      </FormControl>
-      {state.nonPublicData === 'No' && (
-        <FormControl component="fieldset" className="radio-margin" required>
-          <FormLabel component="legend">
-            What type of data do you need access to?
-          </FormLabel>
-          <FormHelperText>Select all that apply</FormHelperText>
-          <FormGroup>
-            <FormControlLabel
-              control={
-                <Checkbox
-                  checked={state.publicMicrodata}
-                  onChange={handleChbxChange}
-                  name="publicMicrodata"
-                  color="primary"
+      <Grid container direction="column">
+        <Grid item className="radio-margin">
+          <FormControl component="fieldset" required>
+            <FormLabel component="legend">
+              Do you require access to Statistics Canada non-public data?
+            </FormLabel>
+            <RadioGroup
+              id="nonPublicData"
+              value={state.nonPublicData}
+              name="nonPublicData"
+              onChange={handleRadioChange}
+            >
+              <FormControlLabel
+                value="Yes"
+                control={<Radio color="primary" />}
+                label="Yes"
+              />
+              {state.nonPublicData === 'Yes' && (
+                <div>
+                  <Accordion
+                    defaultExpanded
+                    className={classes.additionalStepsAcc}
+                  >
+                    <AccordionSummary
+                      expandIcon={<Icon path={mdiChevronDown} size={1} />}
+                      aria-controls="additional-steps-content"
+                      id="additional-steps-header"
+                    >
+                      <Typography variant="subtitle1">
+                        Additional steps will be required after registration
+                      </Typography>
+                    </AccordionSummary>
+                    <AccordionDetails>
+                      <Typography variant="body2">
+                        For confidential microdata access, applicants will be
+                        asked to submit a Project Application after submitting
+                        this registration form. Once the Application is
+                        approved, they will be asked to complete the Guidelines
+                        for data access. Requests for this type of access will
+                        be assessed on a case by case basis. Confidential
+                        microdata access may still be accessed in a Research
+                        Data Centre or Federal Research Data Centre. Please
+                        visit the Research Data Centre website for more
+                        information.
+                      </Typography>
+                    </AccordionDetails>
+                  </Accordion>
+                </div>
+              )}
+              <FormControlLabel
+                value="No"
+                control={<Radio color="primary" />}
+                label="No"
+              />
+            </RadioGroup>
+          </FormControl>
+        </Grid>
+        {state.nonPublicData === 'No' && (
+          <Grid item className="radio-margin">
+            <FormControl component="fieldset" fullWidth required>
+              <FormLabel component="legend">
+                What type of data do you need access to?
+              </FormLabel>
+              <FormHelperText>Select all that apply</FormHelperText>
+              <FormGroup>
+                <FormControlLabel
+                  control={
+                    <Checkbox
+                      checked={state.publicMicrodata}
+                      onChange={handleChbxChange}
+                      name="publicMicrodata"
+                      color="primary"
+                    />
+                  }
+                  label="Public microdata"
                 />
-              }
-              label="Public microdata"
-            />
-            <FormControlLabel
-              control={
-                <Checkbox
-                  checked={state.summaryTables}
-                  onChange={handleChbxChange}
-                  name="summaryTables"
-                  color="primary"
+                <FormControlLabel
+                  control={
+                    <Checkbox
+                      checked={state.summaryTables}
+                      onChange={handleChbxChange}
+                      name="summaryTables"
+                      color="primary"
+                    />
+                  }
+                  label="Summary tables"
                 />
-              }
-              label="Summary tables"
-            />
-            <FormControlLabel
-              control={
-                <Checkbox
-                  checked={state.customTabulations}
-                  onChange={handleChbxChange}
-                  name="customTabulations"
-                  color="primary"
+                <FormControlLabel
+                  control={
+                    <Checkbox
+                      checked={state.customTabulations}
+                      onChange={handleChbxChange}
+                      name="customTabulations"
+                      color="primary"
+                    />
+                  }
+                  label="Custom tabulations"
                 />
-              }
-              label="Custom tabulations"
-            />
-            <FormControlLabel
-              control={
-                <Checkbox
-                  checked={state.other}
-                  onChange={handleChbxChange}
-                  name="other"
-                  color="primary"
+                <FormControlLabel
+                  control={
+                    <Checkbox
+                      checked={state.other}
+                      onChange={handleChbxChange}
+                      name="other"
+                      color="primary"
+                    />
+                  }
+                  label="Other"
                 />
-              }
-              label="Other"
-            />
-          </FormGroup>
-        </FormControl>
-      )}
-      <FormControl className="radio-margin" component="fieldset" required>
-        <FormLabel component="legend">
-          Are you planning on using your own data?
-        </FormLabel>
-        <RadioGroup
-          id="useOwnData"
-          value={state.useOwnData}
-          name="useOwnData"
-          onChange={handleRadioChange}
-        >
-          <FormControlLabel
-            value="Yes"
-            control={<Radio color="primary" />}
-            label="Yes"
-          />
-          <FormControlLabel
-            value="No"
-            control={<Radio color="primary" />}
-            label="No"
-          />
-        </RadioGroup>
-      </FormControl>
-      {state.useOwnData === 'Yes' && (
-        <FormControl component="fieldset" className="radio-margin" required>
-          <FormLabel component="legend">
-            What type of data are you planning to use?
-          </FormLabel>
-          <FormHelperText>Select all that apply</FormHelperText>
-          <FormGroup>
-            <FormControlLabel
-              control={
-                <Checkbox
-                  checked={state.confidential}
-                  onChange={handleChbxChange}
-                  name="confidential"
-                  color="primary"
+              </FormGroup>
+              {state.other === true && (
+                <TextField
+                  className="input-margin ml-4"
+                  id="other-input"
+                  label="Please specify"
+                  variant="outlined"
+                  margin="dense"
+                  required
                 />
-              }
-              label="Confidential"
-            />
-            <FormControlLabel
-              control={
-                <Checkbox
-                  checked={state.public}
-                  onChange={handleChbxChange}
-                  name="public"
-                  color="primary"
+              )}
+            </FormControl>
+          </Grid>
+        )}
+
+        <Grid item className="radio-margin">
+          <FormControl component="fieldset" required>
+            <FormLabel component="legend">
+              Are you planning on using your own data?
+            </FormLabel>
+            <RadioGroup
+              id="useOwnData"
+              value={state.useOwnData}
+              name="useOwnData"
+              onChange={handleRadioChange}
+            >
+              <FormControlLabel
+                value="Yes"
+                control={<Radio color="primary" />}
+                label="Yes"
+              />
+              <FormControlLabel
+                value="No"
+                control={<Radio color="primary" />}
+                label="No"
+              />
+            </RadioGroup>
+          </FormControl>
+        </Grid>
+        {state.useOwnData === 'Yes' && (
+          <Grid item className="radio-margin">
+            <FormControl component="fieldset" required>
+              <FormLabel component="legend">
+                What type of data are you planning to use?
+              </FormLabel>
+              <FormHelperText>Select all that apply</FormHelperText>
+              <FormGroup>
+                <FormControlLabel
+                  control={
+                    <Checkbox
+                      checked={state.confidential}
+                      onChange={handleChbxChange}
+                      name="confidential"
+                      color="primary"
+                    />
+                  }
+                  label="Confidential"
                 />
-              }
-              label="Public"
-            />
-          </FormGroup>
-        </FormControl>
-      )}
+                <FormControlLabel
+                  control={
+                    <Checkbox
+                      checked={state.public}
+                      onChange={handleChbxChange}
+                      name="public"
+                      color="primary"
+                    />
+                  }
+                  label="Public"
+                />
+              </FormGroup>
+            </FormControl>
+          </Grid>
+        )}
+      </Grid>
     </>
   );
 
@@ -574,339 +612,348 @@ export function TasksToolsDialog(props) {
 
   const content = () => (
     <>
-      <FormControl component="fieldset" className="radio-margin" required>
-        <FormLabel component="legend">
-          What tasks do you plan to perform?
-        </FormLabel>
-        <FormHelperText>Select all that apply</FormHelperText>
-        <FormGroup>
-          <FormControlLabel
-            control={
-              <Checkbox
-                checked={state.sql}
-                onChange={handleChbxChange}
-                name="sql"
-                color="primary"
+      <Grid container direction="column">
+        <Grid item className="radio-margin">
+          <FormControl component="fieldset" required>
+            <FormLabel component="legend">
+              What tasks do you plan to perform?
+            </FormLabel>
+            <FormHelperText>Select all that apply</FormHelperText>
+            <FormGroup>
+              <FormControlLabel
+                control={
+                  <Checkbox
+                    checked={state.sql}
+                    onChange={handleChbxChange}
+                    name="sql"
+                    color="primary"
+                  />
+                }
+                label={
+                  <>
+                    <Typography>R, SQL</Typography>
+                    <Typography variant="caption">
+                      Provided tools: Azure Databricks, RShiny, RStudio
+                    </Typography>
+                  </>
+                }
               />
-            }
-            label={
-              <>
-                <Typography>R, SQL</Typography>
-                <Typography variant="caption">
-                  Provided tools: Azure Databricks, RShiny, RStudio
-                </Typography>
-              </>
-            }
-          />
-          <FormControlLabel
-            control={
-              <Checkbox
-                checked={state.python}
-                onChange={handleChbxChange}
-                name="python"
-                color="primary"
+              <FormControlLabel
+                control={
+                  <Checkbox
+                    checked={state.python}
+                    onChange={handleChbxChange}
+                    name="python"
+                    color="primary"
+                  />
+                }
+                label={
+                  <>
+                    <Typography>R, Python</Typography>
+                    <Typography variant="caption">
+                      Provided tools: Azure Databricks, JupyterLab, VS Code
+                    </Typography>
+                  </>
+                }
               />
-            }
-            label={
-              <>
-                <Typography>R, Python</Typography>
-                <Typography variant="caption">
-                  Provided tools: Azure Databricks, JupyterLab, VS Code
-                </Typography>
-              </>
-            }
-          />
-          <FormControlLabel
-            control={
-              <Checkbox
-                checked={state.scala}
-                onChange={handleChbxChange}
-                name="scala"
-                color="primary"
+              <FormControlLabel
+                control={
+                  <Checkbox
+                    checked={state.scala}
+                    onChange={handleChbxChange}
+                    name="scala"
+                    color="primary"
+                  />
+                }
+                label={
+                  <>
+                    <Typography>Scala</Typography>
+                    <Typography variant="caption">
+                      Provided tools: Azure Databricks, JupyterLab (Scala can be
+                      added on request)
+                    </Typography>
+                  </>
+                }
               />
-            }
-            label={
-              <>
-                <Typography>Scala</Typography>
-                <Typography variant="caption">
-                  Provided tools: Azure Databricks, JupyterLab (Scala can be
-                  added on request)
-                </Typography>
-              </>
-            }
-          />
-          <FormControlLabel
-            control={
-              <Checkbox
-                checked={state.sas}
-                onChange={handleChbxChange}
-                name="sas"
-                color="primary"
+              <FormControlLabel
+                control={
+                  <Checkbox
+                    checked={state.sas}
+                    onChange={handleChbxChange}
+                    name="sas"
+                    color="primary"
+                  />
+                }
+                label={
+                  <>
+                    <Typography>SAS, SPSS, Stata</Typography>
+                    <Typography variant="caption">
+                      Provided tools: Virtual Machine (Bastion) - DataScience VM
+                      - Windows or Linux
+                    </Typography>
+                  </>
+                }
               />
-            }
-            label={
-              <>
-                <Typography>SAS, SPSS, Stata</Typography>
-                <Typography variant="caption">
-                  Provided tools: Virtual Machine (Bastion) - DataScience VM -
-                  Windows or Linux
-                </Typography>
-              </>
-            }
-          />
-          <FormControlLabel
-            control={
-              <Checkbox
-                checked={state.desktop}
-                onChange={handleChbxChange}
-                name="desktop"
-                color="primary"
+              <FormControlLabel
+                control={
+                  <Checkbox
+                    checked={state.desktop}
+                    onChange={handleChbxChange}
+                    name="desktop"
+                    color="primary"
+                  />
+                }
+                label={
+                  <>
+                    <Typography>Desktop (All languages)</Typography>
+                    <Typography variant="caption">
+                      Provided tools: DataScience Linux Desktop (Open Source
+                      only), Virtual Machine (Bastion) - DataScience VM -
+                      Windows or Linux
+                    </Typography>
+                  </>
+                }
               />
-            }
-            label={
-              <>
-                <Typography>Desktop (All languages)</Typography>
-                <Typography variant="caption">
-                  Provided tools: DataScience Linux Desktop (Open Source only),
-                  Virtual Machine (Bastion) - DataScience VM - Windows or Linux
-                </Typography>
-              </>
-            }
-          />
-          <FormControlLabel
-            control={
-              <Checkbox
-                checked={state.vis}
-                onChange={handleChbxChange}
-                name="vis"
-                color="primary"
+              <FormControlLabel
+                control={
+                  <Checkbox
+                    checked={state.vis}
+                    onChange={handleChbxChange}
+                    name="vis"
+                    color="primary"
+                  />
+                }
+                label={
+                  <>
+                    <Typography>Public Visualizations / Dashboards</Typography>
+                    <Typography variant="caption">
+                      Provided tools: Azure Databricks (R-Shiny -isolated
+                      environment), Dash, JupyterLab (Matplotlib & More),
+                      Kibana, PowerBI, RShiny
+                    </Typography>
+                  </>
+                }
               />
-            }
-            label={
-              <>
-                <Typography>Public Visualizations / Dashboards</Typography>
-                <Typography variant="caption">
-                  Provided tools: Azure Databricks (R-Shiny -isolated
-                  environment), Dash, JupyterLab (Matplotlib & More), Kibana,
-                  PowerBI, RShiny
-                </Typography>
-              </>
-            }
-          />
-          <FormControlLabel
-            control={
-              <Checkbox
-                checked={state.machineLearning}
-                onChange={handleChbxChange}
-                name="machineLearning"
-                color="primary"
+              <FormControlLabel
+                control={
+                  <Checkbox
+                    checked={state.machineLearning}
+                    onChange={handleChbxChange}
+                    name="machineLearning"
+                    color="primary"
+                  />
+                }
+                label={
+                  <>
+                    <Typography>Public Machine Learning API serving</Typography>
+                    <Typography variant="caption">
+                      Provided tools: Kubeflow Serving, Seldon Core
+                    </Typography>
+                  </>
+                }
               />
-            }
-            label={
-              <>
-                <Typography>Public Machine Learning API serving</Typography>
-                <Typography variant="caption">
-                  Provided tools: Kubeflow Serving, Seldon Core
-                </Typography>
-              </>
-            }
-          />
-          <FormControlLabel
-            control={
-              <Checkbox
-                checked={state.geomatics}
-                onChange={handleChbxChange}
-                name="geomatics"
-                color="primary"
+              <FormControlLabel
+                control={
+                  <Checkbox
+                    checked={state.geomatics}
+                    onChange={handleChbxChange}
+                    name="geomatics"
+                    color="primary"
+                  />
+                }
+                label={
+                  <>
+                    <Typography>Geomatics</Typography>
+                    <Typography variant="caption">
+                      Provided tools: DataScience Linux Desktop, Gdal, QGIS
+                    </Typography>
+                  </>
+                }
               />
-            }
-            label={
-              <>
-                <Typography>Geomatics</Typography>
-                <Typography variant="caption">
-                  Provided tools: DataScience Linux Desktop, Gdal, QGIS
-                </Typography>
-              </>
-            }
-          />
-          <FormControlLabel
-            control={
-              <Checkbox
-                checked={state.pipelines}
-                onChange={handleChbxChange}
-                name="pipelines"
-                color="primary"
+              <FormControlLabel
+                control={
+                  <Checkbox
+                    checked={state.pipelines}
+                    onChange={handleChbxChange}
+                    name="pipelines"
+                    color="primary"
+                  />
+                }
+                label={
+                  <>
+                    <Typography>Pipelines</Typography>
+                    <Typography variant="caption">
+                      Provided tools: Azure Data Factory, Kubeflow Pipelines
+                    </Typography>
+                  </>
+                }
               />
-            }
-            label={
-              <>
-                <Typography>Pipelines</Typography>
-                <Typography variant="caption">
-                  Provided tools: Azure Data Factory, Kubeflow Pipelines
-                </Typography>
-              </>
-            }
-          />
-          <FormControlLabel
-            control={
-              <Checkbox
-                checked={state.management}
-                onChange={handleChbxChange}
-                name="management"
-                color="primary"
+              <FormControlLabel
+                control={
+                  <Checkbox
+                    checked={state.management}
+                    onChange={handleChbxChange}
+                    name="management"
+                    color="primary"
+                  />
+                }
+                label={
+                  <>
+                    <Typography>Management</Typography>
+                    <Typography variant="caption">
+                      Provided tools: Azure Portal, Kubeflow
+                    </Typography>
+                  </>
+                }
               />
-            }
-            label={
-              <>
-                <Typography>Management</Typography>
-                <Typography variant="caption">
-                  Provided tools: Azure Portal, Kubeflow
-                </Typography>
-              </>
-            }
-          />
-          <FormControlLabel
-            control={
-              <Checkbox
-                checked={state.metrics}
-                onChange={handleChbxChange}
-                name="metrics"
-                color="primary"
+              <FormControlLabel
+                control={
+                  <Checkbox
+                    checked={state.metrics}
+                    onChange={handleChbxChange}
+                    name="metrics"
+                    color="primary"
+                  />
+                }
+                label={
+                  <>
+                    <Typography>Metrics Monitoring</Typography>
+                    <Typography variant="caption">
+                      Grafana Azure Portal - Azure Log Analyitics (Cloud Team)
+                    </Typography>
+                  </>
+                }
               />
-            }
-            label={
-              <>
-                <Typography>Metrics Monitoring</Typography>
-                <Typography variant="caption">
-                  Grafana Azure Portal - Azure Log Analyitics (Cloud Team)
-                </Typography>
-              </>
-            }
-          />
-          <FormControlLabel
-            control={
-              <Checkbox
-                checked={state.cost}
-                onChange={handleChbxChange}
-                name="cost"
-                color="primary"
+              <FormControlLabel
+                control={
+                  <Checkbox
+                    checked={state.cost}
+                    onChange={handleChbxChange}
+                    name="cost"
+                    color="primary"
+                  />
+                }
+                label={
+                  <>
+                    <Typography>Cost Monitoring and Reporting</Typography>
+                    <Typography variant="caption">
+                      Azure Portal - Azure Cost Management (Cloud team),
+                      Kubecost
+                    </Typography>
+                  </>
+                }
               />
-            }
-            label={
-              <>
-                <Typography>Cost Monitoring and Reporting</Typography>
-                <Typography variant="caption">
-                  Azure Portal - Azure Cost Management (Cloud team), Kubecost
-                </Typography>
-              </>
-            }
-          />
-          <FormControlLabel
-            control={
-              <Checkbox
-                checked={state.storage}
-                onChange={handleChbxChange}
-                name="storage"
-                color="primary"
+              <FormControlLabel
+                control={
+                  <Checkbox
+                    checked={state.storage}
+                    onChange={handleChbxChange}
+                    name="storage"
+                    color="primary"
+                  />
+                }
+                label={
+                  <>
+                    <Typography>Storage</Typography>
+                    <Typography variant="caption">
+                      Azure Blob Storage, Azure Datalake Gen 2, Azure SQL
+                      Database, Boathouse (for Azure Datalakes), MinIO
+                    </Typography>
+                  </>
+                }
               />
-            }
-            label={
-              <>
-                <Typography>Storage</Typography>
-                <Typography variant="caption">
-                  Azure Blob Storage, Azure Datalake Gen 2, Azure SQL Database,
-                  Boathouse (for Azure Datalakes), MinIO
-                </Typography>
-              </>
-            }
-          />
-          <FormControlLabel
-            control={
-              <Checkbox
-                checked={state.model}
-                onChange={handleChbxChange}
-                name="model"
-                color="primary"
+              <FormControlLabel
+                control={
+                  <Checkbox
+                    checked={state.model}
+                    onChange={handleChbxChange}
+                    name="model"
+                    color="primary"
+                  />
+                }
+                label={
+                  <>
+                    <Typography>Model Management</Typography>
+                    <Typography variant="caption">Azure ML, ML Flow</Typography>
+                  </>
+                }
               />
-            }
-            label={
-              <>
-                <Typography>Model Management</Typography>
-                <Typography variant="caption">Azure ML, ML Flow</Typography>
-              </>
-            }
-          />
-          <FormControlLabel
-            control={
-              <Checkbox
-                checked={state.versionCtrl}
-                onChange={handleChbxChange}
-                name="versionCtrl"
-                color="primary"
+              <FormControlLabel
+                control={
+                  <Checkbox
+                    checked={state.versionCtrl}
+                    onChange={handleChbxChange}
+                    name="versionCtrl"
+                    color="primary"
+                  />
+                }
+                label={
+                  <>
+                    <Typography>Version Control and CI/CD</Typography>
+                    <Typography variant="caption">GitHub</Typography>
+                  </>
+                }
               />
-            }
-            label={
-              <>
-                <Typography>Version Control and CI/CD</Typography>
-                <Typography variant="caption">GitHub</Typography>
-              </>
-            }
-          />
-          <FormControlLabel
-            control={
-              <Checkbox
-                checked={state.platform}
-                onChange={handleChbxChange}
-                name="platform"
-                color="primary"
+              <FormControlLabel
+                control={
+                  <Checkbox
+                    checked={state.platform}
+                    onChange={handleChbxChange}
+                    name="platform"
+                    color="primary"
+                  />
+                }
+                label={
+                  <>
+                    <Typography>Platform</Typography>
+                    <Typography variant="caption">
+                      Azure PaaS Offerings, Kubernetes Service
+                    </Typography>
+                  </>
+                }
               />
-            }
-            label={
-              <>
-                <Typography>Platform</Typography>
-                <Typography variant="caption">
-                  Azure PaaS Offerings, Kubernetes Service
-                </Typography>
-              </>
-            }
-          />
 
-          <FormControlLabel
-            control={
-              <Checkbox
-                checked={state.other}
-                onChange={handleChbxChange}
-                name="other"
-                color="primary"
+              <FormControlLabel
+                control={
+                  <Checkbox
+                    checked={state.other}
+                    onChange={handleChbxChange}
+                    name="other"
+                    color="primary"
+                  />
+                }
+                label={
+                  <>
+                    <Typography>Other</Typography>
+                  </>
+                }
               />
-            }
-            label={
-              <>
-                <Typography>Other</Typography>
-              </>
-            }
+              {state.other === true && (
+                <TextField
+                  className="input-margin ml-4"
+                  id="other-input"
+                  label="Please specify"
+                  variant="outlined"
+                  margin="dense"
+                  required
+                />
+              )}
+            </FormGroup>
+          </FormControl>
+        </Grid>
+        <Divider className="input-margin" />
+        <Grid item className="input-margin">
+          <TextField
+            className="input-margin"
+            id="other-tools"
+            label="Do you require additional tools to perform your tasks?"
+            variant="outlined"
+            margin="dense"
+            helperText="List all the additional tools you require"
+            fullWidth
           />
-          {state.other === true && (
-            <TextField
-              className="input-margin ml-4"
-              id="other-input"
-              label="Please specify"
-              variant="outlined"
-              margin="dense"
-              required
-            />
-          )}
-        </FormGroup>
-      </FormControl>
-      <Divider className="input-margin" />
-      <TextField
-        className="input-margin"
-        id="other-tools"
-        label="Do you require additional tools to perform your tasks?"
-        variant="outlined"
-        margin="dense"
-        helperText="List all the additional tools you require"
-      />
+        </Grid>
+      </Grid>
     </>
   );
 
