@@ -124,6 +124,11 @@ export const useStyles = makeStyles({
       borderRadius: '2px',
     },
 
+    // Lists
+    'li::marker': {
+      fontFamily: ['"Roboto"', 'sans-serif'],
+    },
+
     // Datepickers
     '.MuiPickersToolbarText-toolbarTxt': {
       color: theme.palette.common.white,
