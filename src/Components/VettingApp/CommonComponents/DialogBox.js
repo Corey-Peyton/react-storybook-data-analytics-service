@@ -1055,8 +1055,8 @@ export function DialogGetSupportFab(props) {
             <div className={classes.vettingRow}>
               <div className={classes.vettingColumn}>
                 <Typography variant="body2">
-                  Click the "Get support" button and one of our support agents
-                  will contact you to resolve the issue. We aim to make contact
+                  Click the "Get support" button and one of our Analysts will
+                  contact you to resolve the issue. We aim to make contact
                   within 1 to 2 business days.
                 </Typography>
               </div>
@@ -1219,6 +1219,7 @@ export function DialogFormGetSupportFab(props) {
                   label="Step 3 - Residual disclosure"
                 />
                 <FormControlLabel
+                  className="radio-margin"
                   control={
                     <Checkbox
                       checked={state.step4}
@@ -1229,7 +1230,7 @@ export function DialogFormGetSupportFab(props) {
                   }
                   label="Step 4 - Additional information"
                 />
-                <Divider className="mt-1 mb-1" />
+                <Divider className="radio-margin" />
                 <FormControlLabel
                   control={
                     <Checkbox
@@ -1244,7 +1245,7 @@ export function DialogFormGetSupportFab(props) {
               </FormGroup>
             </FormControl>
             <Typography variant="body2" className="radio-margin">
-              Click the "Get support" button and one of our support agents will
+              Click the "Get support" button and one of our Analysts will
               contact you to resolve the issue. We aim to make contact within 1
               to 2 business days.
             </Typography>

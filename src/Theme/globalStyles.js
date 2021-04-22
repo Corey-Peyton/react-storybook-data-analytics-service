@@ -91,19 +91,13 @@ export const useStyles = makeStyles({
       marginLeft: theme.spacing(-1),
     },
     '.input-margin': {
-      'margin': theme.spacing(1.5, 0),
-      '&:first-child': {
-        marginTop: 0,
-      },
+      'marginBottom': theme.spacing(3),
       '&:last-child': {
         marginBottom: 0,
       },
     },
     '.radio-margin': {
-      'margin': theme.spacing(1, 0),
-      '&:first-child': {
-        marginTop: 0,
-      },
+      'marginBottom': theme.spacing(2),
       '&:last-child': {
         marginBottom: 0,
       },
