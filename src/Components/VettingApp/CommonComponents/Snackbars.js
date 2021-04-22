@@ -285,3 +285,16 @@ export function SnackbarStartReview(props) {
     />
   );
 }
+
+export function SnackbarAddResearcher(props) {
+  const {t} = useTranslation();
+
+  return (
+    <Snackbar
+      message={t('Researcher added')}
+      severity="success"
+      open={props.open}
+      handleClose={props.handleClose}
+    />
+  );
+}

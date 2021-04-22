@@ -39,6 +39,9 @@ function Index() {
           <Link to="/sign-in/verify-identity">Forgot password</Link>
         </li>
         <li>
+          <Link to="/PowerShell/">PowerShell</Link>
+        </li>
+        <li>
           <strong>Vetting app</strong>
         </li>
         <ul>
