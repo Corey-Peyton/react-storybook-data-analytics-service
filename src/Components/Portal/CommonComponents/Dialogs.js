@@ -601,8 +601,6 @@ export function DataUseDialog(props) {
 }
 
 export function AdditionalInfoDialog(props) {
-  const classes = useStyles();
-
   const content = () => (
     <>
       <Grid container direction="column">
@@ -1056,7 +1054,6 @@ export function TasksToolsDialog(props) {
 }
 
 export function RegisterDialog(props) {
-  const classes = useStyles();
   const [state, setState] = React.useState({
     terms: false,
     research: false,
