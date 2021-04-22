@@ -6,7 +6,9 @@ import {darkTheme} from '../../Theme/theme';
 import {
   AccountDetailsDialog,
   DataUseDialog,
+  AdditionalInfoDialog,
   TasksToolsDialog,
+  RegisterDialog,
 } from './CommonComponents/Dialogs';
 
 const useStyles = makeStyles((theme) => ({
@@ -36,7 +38,9 @@ function Banner(props) {
   const [open, setOpen] = React.useState({
     accountDetailsDialog: false,
     dataUseDialog: false,
+    additionalInfoDialog: false,
     tasksToolsDialog: false,
+    registerDialog: true,
   });
 
   const toggleDialog = (element, value) => {
@@ -128,6 +132,16 @@ function Banner(props) {
         toggleDialog={() => toggleDialog('dataUseDialog', !open.dataUseDialog)}
         handleNext={() => handleNext('dataUseDialog', 'tasksToolsDialog')}
         handleBack={() => handleBack('accountDetailsDialog', 'dataUseDialog')}
+        additionalInfo={() =>
+          toggleDialog('additionalInfoDialog', !open.additionalInfoDialog)
+        }
+      />
+      {/* Additional info dialog */}
+      <AdditionalInfoDialog
+        open={open.additionalInfoDialog}
+        toggleDialog={() =>
+          toggleDialog('additionalInfoDialog', !open.additionalInfoDialog)
+        }
       />
       {/* Tasks and tools dialog */}
       <TasksToolsDialog
@@ -135,8 +149,17 @@ function Banner(props) {
         toggleDialog={() =>
           toggleDialog('tasksToolsDialog', !open.tasksToolsDialog)
         }
-        handleNext={() => handleNext('tasksToolsDialog', '')}
+        handleNext={() => handleNext('tasksToolsDialog', 'registerDialog')}
         handleBack={() => handleBack('dataUseDialog', 'tasksToolsDialog')}
+      />
+      {/* Register dialog */}
+      <RegisterDialog
+        open={open.registerDialog}
+        toggleDialog={() =>
+          toggleDialog('registerDialog', !open.registerDialog)
+        }
+        // submitRegistration={}
+        handleBack={() => handleBack('tasksToolsDialog', 'registerDialog')}
       />
     </>
   );

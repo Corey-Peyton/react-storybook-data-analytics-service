@@ -18,6 +18,7 @@ import {
   Divider,
   IconButton,
   Grid,
+  Link,
 } from '@material-ui/core';
 import {Drawer} from '../../CommonComponents/Drawer';
 import {Dialog} from '../../CommonComponents/Dialog';
@@ -27,6 +28,7 @@ import {
   mdiEmail,
   mdiBookOpenPageVariant,
   mdiArrowLeft,
+  mdiInformationOutline,
 } from '@mdi/js';
 
 const useStyles = makeStyles((theme) => ({
@@ -368,10 +370,23 @@ export function DataUseDialog(props) {
     <>
       <Grid container direction="column">
         <Grid item className="radio-margin">
-          <FormControl component="fieldset" required>
-            <FormLabel component="legend">
-              Do you require access to Statistics Canada non-public data?
-            </FormLabel>
+          <FormControl component="fieldset" fullWidth required>
+            <Grid container justify="space-between" alignItems="center">
+              <Grid item>
+                <FormLabel component="legend">
+                  Do you require access to Statistics Canada non-public data?
+                </FormLabel>
+              </Grid>
+              <Grid item>
+                <IconButton
+                  aria-label="Additional information"
+                  onClick={props.additionalInfo}
+                  edge="end"
+                >
+                  <Icon path={mdiInformationOutline} size={1} />
+                </IconButton>
+              </Grid>
+            </Grid>
             <RadioGroup
               id="nonPublicData"
               value={state.nonPublicData}
@@ -580,6 +595,56 @@ export function DataUseDialog(props) {
       secondaryButton="Cancel"
       handlePrimaryClick={props.handleNext}
       handleSecondaryClick={props.toggleDialog}
+      toggleDialog={props.toggleDialog}
+    />
+  );
+}
+
+export function AdditionalInfoDialog(props) {
+  const classes = useStyles();
+
+  const content = () => (
+    <>
+      <Grid container direction="column">
+        <Grid item className="input-margin">
+          <Typography variant="h5" component="h3">
+            Definition
+          </Typography>
+        </Grid>
+        <Grid item>
+          <Typography className="input-margin">
+            Statistics Canada confidential data:
+          </Typography>
+          <ol>
+            <li>
+              <Typography>
+                Data obtained directly from respondents or from third parties in
+                identifiable mode, under the authority of the Statistics Act or
+                of the Corporations Returns Act;
+              </Typography>
+            </li>
+            <li>
+              <Typography>
+                Data holdings stripped of identifiers but held in a detail or
+                geographical structure or format which could permit a direct
+                relation to be established between such data holdings and
+                specific respondents;
+              </Typography>
+            </li>
+          </ol>
+        </Grid>
+      </Grid>
+    </>
+  );
+
+  return (
+    <Dialog
+      id="additional-info-dialog"
+      open={props.open}
+      title="Additional information"
+      content={content()}
+      primaryButton="Done"
+      handlePrimaryClick={props.toggleDialog}
       toggleDialog={props.toggleDialog}
     />
   );
@@ -984,6 +1049,101 @@ export function TasksToolsDialog(props) {
       primaryButton="Next"
       secondaryButton="Cancel"
       handlePrimaryClick={props.handleNext}
+      handleSecondaryClick={props.toggleDialog}
+      toggleDialog={props.toggleDialog}
+    />
+  );
+}
+
+export function RegisterDialog(props) {
+  const classes = useStyles();
+  const [state, setState] = React.useState({
+    terms: false,
+    research: false,
+  });
+
+  const handleChbxChange = (event) => {
+    setState({...state, [event.target.name]: event.target.checked});
+  };
+
+  const content = () => (
+    <>
+      <Grid container direction="column">
+        <Grid item className="input-margin">
+          <FormControl component="fieldset">
+            <FormLabel component="legend" className="screen-reader-text">
+              Select if you agree
+            </FormLabel>
+            <FormGroup>
+              <FormControlLabel
+                control={
+                  <Checkbox
+                    checked={state.terms}
+                    onChange={handleChbxChange}
+                    name="terms"
+                    color="primary"
+                    required
+                  />
+                }
+                label={
+                  <Typography>
+                    I agree to the{' '}
+                    <Link href="https://www.statcan.gc.ca/eng/reference/terms-conditions">
+                      Terms and conditions
+                    </Link>{' '}
+                    and{' '}
+                    <Link href="https://www.statcan.gc.ca/eng/reference/privacy">
+                      Privacy policy
+                    </Link>
+                    . *
+                  </Typography>
+                }
+              />
+              <FormControlLabel
+                control={
+                  <Checkbox
+                    checked={state.research}
+                    onChange={handleChbxChange}
+                    name="research"
+                    color="primary"
+                  />
+                }
+                label="I would like to participate in future research activities to help Statistics Canada improve their tools and services."
+              />
+            </FormGroup>
+          </FormControl>
+        </Grid>
+      </Grid>
+    </>
+  );
+
+  return (
+    <Dialog
+      id="register-dialog"
+      open={props.open}
+      title={
+        <Grid container alignItems="center">
+          <Grid item>
+            <IconButton
+              className="mr-1"
+              aria-label="Back to tasks and tools"
+              edge="start"
+              onClick={props.handleBack}
+            >
+              <Icon path={mdiArrowLeft} size={1} />
+            </IconButton>
+          </Grid>
+          <Grid item>
+            <Typography component="h2" variant="h6">
+              Accept and register
+            </Typography>
+          </Grid>
+        </Grid>
+      }
+      content={content()}
+      primaryButton="Register"
+      secondaryButton="Cancel"
+      handlePrimaryClick={props.submitRegistration}
       handleSecondaryClick={props.toggleDialog}
       toggleDialog={props.toggleDialog}
     />
