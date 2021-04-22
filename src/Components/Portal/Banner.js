@@ -9,6 +9,7 @@ import {
   AdditionalInfoDialog,
   TasksToolsDialog,
   RegisterDialog,
+  SuccessDialog,
 } from './CommonComponents/Dialogs';
 
 const useStyles = makeStyles((theme) => ({
@@ -40,7 +41,8 @@ function Banner(props) {
     dataUseDialog: false,
     additionalInfoDialog: false,
     tasksToolsDialog: false,
-    registerDialog: true,
+    registerDialog: false,
+    successDialog: false,
   });
 
   const toggleDialog = (element, value) => {
@@ -158,8 +160,13 @@ function Banner(props) {
         toggleDialog={() =>
           toggleDialog('registerDialog', !open.registerDialog)
         }
-        // submitRegistration={}
+        submitRegistration={() => handleNext('registerDialog', 'successDialog')}
         handleBack={() => handleBack('tasksToolsDialog', 'registerDialog')}
+      />
+      {/* Register dialog */}
+      <SuccessDialog
+        open={open.successDialog}
+        toggleDialog={() => toggleDialog('successDialog', !open.successDialog)}
       />
     </>
   );

@@ -1146,3 +1146,23 @@ export function RegisterDialog(props) {
     />
   );
 }
+
+export function SuccessDialog(props) {
+  return (
+    <Dialog
+      id="success-dialog"
+      open={props.open}
+      title="Thank you!"
+      content={
+        <Typography>
+          The information provided has been sent to the Statistics Canada
+          Analytical Platform team and they will contact you within 2 business
+          days.
+        </Typography>
+      }
+      primaryButton="Close"
+      handlePrimaryClick={props.toggleDialog}
+      toggleDialog={props.toggleDialog}
+    />
+  );
+}
