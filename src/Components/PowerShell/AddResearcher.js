@@ -91,7 +91,7 @@ export function AddResearcher(props) {
       <AppBar position="static" className={classes.appBar} color="default">
         <Toolbar>
           <Typography variant="h6" component="h2" className={classes.title}>
-            Add researcher
+            Add virtual machine details
           </Typography>
           <IconButton
             aria-label="Close add researcher"
@@ -120,7 +120,7 @@ export function AddResearcher(props) {
           color="primary"
           onClick={props.addResearcher}
         >
-          Add researcher
+          Add virtual machine details
         </Button>
       </div>
     </React.Fragment>
@@ -612,7 +612,7 @@ function OutputFileForm(props) {
         <AppBar position="static" className={classes.appBar} color="default">
           <Toolbar>
             <Typography variant="h6" component="h2" className={classes.title}>
-              Add researcher
+              Add virtual machine details
             </Typography>
             <IconButton
               aria-label="Close add researcher"
@@ -638,7 +638,7 @@ function OutputFileForm(props) {
             color="primary"
             onClick={props.addResearcher}
           >
-            Add researcher
+            Add virtual machine details
           </Button>
         </div>
       </React.Fragment>

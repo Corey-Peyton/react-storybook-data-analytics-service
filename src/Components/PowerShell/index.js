@@ -99,9 +99,9 @@ const useStyles = makeStyles((theme) => ({
 
 function getSteps() {
   return [
-    'Security group selection',
-    'Project information',
-    'Researcher vDL information',
+    'Security group',
+    'Project details',
+    'Virtual machine details',
   ];
 }
 

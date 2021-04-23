@@ -66,7 +66,7 @@ function ResearcherInformation(props) {
         color="primary"
         onClick={(e) => toggleDrawer(e, 'addResearcher', true)}
       >
-        Add researcher
+        Add virtual machine details
       </Button>
       <Drawer
         anchor="right"

@@ -291,7 +291,7 @@ export function SnackbarAddResearcher(props) {
 
   return (
     <Snackbar
-      message={t('Researcher added')}
+      message={t('Virtual machine details added')}
       severity="success"
       open={props.open}
       handleClose={props.handleClose}

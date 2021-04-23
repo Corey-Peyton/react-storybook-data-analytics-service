@@ -1,9 +1,26 @@
 import React from 'react';
-import DialogDeletePowershell from '../VettingApp/CommonComponents/DialogBox';
+import CloseIcon from '@material-ui/icons/Close';
+import Radio from '@material-ui/core/Radio';
+import RadioGroup from '@material-ui/core/RadioGroup';
+import FormControlLabel from '@material-ui/core/FormControlLabel';
+import FormControl from '@material-ui/core/FormControl';
+import FormLabel from '@material-ui/core/FormLabel';
+// import DialogDeletePowershell from '../VettingApp/CommonComponents/DialogBox';
 import {makeStyles} from '@material-ui/core/styles';
 import Autocomplete from '@material-ui/lab/Autocomplete';
-import {TextField, Grid, Typography, Divider} from '@material-ui/core';
+import Alert from '@material-ui/lab/Alert';
+import {
+  TextField,
+  Grid,
+  Typography,
+  Divider,
+  Dialog,
+  DialogTitle,
+  DialogContent,
+  DialogActions,
+} from '@material-ui/core';
 import Icon from '@mdi/react';
+import {useTranslation} from 'react-i18next';
 import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
 import Collapse from '@material-ui/core/Collapse';
@@ -23,7 +40,6 @@ import {
   mdiMonitor,
   mdiTranslate,
   mdiHammerScrewdriver,
-  mdiCardPlus,
 } from '@mdi/js';
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -36,22 +52,90 @@ const useStyles = makeStyles((theme) => ({
   },
   avatar: {
     backgroundColor: red[500],
+    color: theme.palette.grey[100],
   },
   card: {
     marginTop: theme.spacing(2),
+    paddingBottom: theme.spacing(1),
   },
   cardActions: {
     borderTop: '1px solid',
     borderTopColor: theme.palette.divider,
   },
   icon: {
-    marginRight: theme.spacing(1.5),
+    paddingLeft: theme.spacing(1),
+  },
+  vettingSection: {
+    display: 'flex',
+    flexFlow: 'column',
+    padding: theme.spacing(3),
+    overflowY: 'auto',
+  },
+  vettingRow: {
+    'display': 'flex',
+    'margin': theme.spacing(1.5, 0),
+    'flexFlow': 'row',
+    'height': '100%',
+    'justifyContent': 'center',
+    'width': '100%',
+    'alignItems': 'center',
+    '&:first-child': {
+      marginTop: 0,
+    },
+    '&:last-child': {
+      marginBottom: 0,
+    },
+  },
+  vettingColumn: {
+    'display': 'flex',
+    'flexDirection': 'column',
+    'width': '100%',
+    'justifyContent': 'center',
+    'marginRight': theme.spacing(1),
+    'height': '100%',
+    '&:last-child': {
+      marginRight: 0,
+    },
+  },
+  widthAuto: {
+    width: 'auto !important',
+  },
+  vettingText: {
+    paddingLeft: theme.spacing(1),
+  },
+  expand: {
+    transform: 'rotate(0deg)',
+    marginLeft: 'auto',
+    transition: theme.transitions.create('transform', {
+      duration: theme.transitions.duration.shortest,
+    }),
+  },
+  expandOpen: {
+    transform: 'rotate(180deg)',
+  },
+  divider: {
+    margin: theme.spacing(1, 0),
   },
 }));
 
 function SecurityGroup(props) {
+  const [open, setOpen] = React.useState({
+    dialogAddResearcher: false,
+    snackbarAddResearcher: false,
+  });
+
+  const addvirtualmachine = () => {
+    setOpen({
+      ...open,
+      dialogAddVirtualMachine: false,
+      snackbarVirtualMachine: true,
+    });
+  };
+
+  const handleClickClose = (state) => {
+    setOpen({...open, [state]: false});
+  };
   const classes = useStyles();
-  const security = [{label: 'VDL Project1'}, {label: 'VDL Project2'}];
   const [expanded, setExpanded] = React.useState(false);
 
   const handleExpandClick = () => {
@@ -61,173 +145,169 @@ function SecurityGroup(props) {
   return (
     <React.Fragment>
       <Grid item xs={8}>
-        <Typography required variant="body2">
-          Security group name
-        </Typography>
-        <Autocomplete
-          id="combo-box-demo"
-          options={security}
-          getOptionLabel={(option) => option.label}
-          renderInput={(params) => (
-            <TextField
-              {...params}
-              label="VDL projects"
-              className={classes.inputMargin}
-              error
-              variant="outlined"
-              helperText="This field is required"
+        <FormControl component="fieldset">
+          <FormLabel component="legend">Environment</FormLabel>
+          <RadioGroup
+            aria-label="environment"
+            name="radio-buttons-group"
+          >
+            <FormControlLabel
+              value="female"
+              control={<Radio />}
+              label="VDL"
             />
-          )}
-        />
+            <FormControlLabel value="Prerelease" control={<Radio />} label="Prerelease" />
+          </RadioGroup>
+        </FormControl>
       </Grid>
       <Card className={classes.card} variant="outlined">
-        <CardHeader title="Some email" subheader="some.email@email.com">
-          avatar=
-          {
+        <CardHeader
+          avatar={
             <Avatar aria-label="recipe" className={classes.avatar}>
               R
             </Avatar>
           }
-          action=
-          {
+          action={
             <IconButton
+              aria-label="settings"
               className={clsx(classes.expand, {
                 [classes.expandOpen]: expanded,
               })}
               onClick={handleExpandClick}
               aria-expanded={expanded}
-              aria-label="show more"
             >
               <ExpandMoreIcon />
             </IconButton>
           }
-        </CardHeader>
-        <Divider />
-        <CardContent>
-          <Typography>Personal information</Typography>
-          <Grid container alignItems="flex-start">
-            <Grid item xs={2}>
-              <Icon path={mdiDomain} size={1} className={classes.icon} />
-            </Grid>
-            <Grid item xs={5} direction="column">
-              <Typography variant="subtitle2" component="h3">
-                Security clearance expiry date
-              </Typography>
-            </Grid>
-            <Grid item xs={5} direction="column">
-              <Typography variant="subtitle2" component="h3">
-               Test date
-              </Typography>
-            </Grid>
-            <Grid item xs={1}>
-              <Icon
-                path={mdiAccountOutline}
-                size={1}
-                className={classes.icon}
-              />
-            </Grid>
-            <Grid item xs={11}>
-              <Typography variant="subtitle2" component="h3">
-                Researcher ID
-              </Typography>
-            </Grid>
-            <Grid item xs={1}>
-              <Icon path={mdiCardPlus} size={1} className={classes.icon} />
-            </Grid>
-            <Grid item xs={11}>
-              <Typography variant="subtitle2" component="h3">
-                Organization
-              </Typography>
-            </Grid>
-            <Grid item xs={1}>
-              <Icon path={mdiEmailOutline} size={1} className={classes.icon} />
-            </Grid>
-            <Grid item xs={11}>
-              <Typography variant="subtitle2" component="h3">
-                Security clearance expiry date
-              </Typography>
-            </Grid>
-            <Grid item xs={1}>
-              <Icon path={mdiMonitor} size={1} className={classes.icon} />
-            </Grid>
-            <Grid item xs={11}>
-              <Typography variant="subtitle2" component="h3">
-                Security clearance expiry date
-              </Typography>
-            </Grid>
-            <Grid item xs={1}>
-              <Icon path={mdiTranslate} size={1} className={classes.icon} />
-            </Grid>
-            <Grid item xs={11}>
-              <Typography variant="subtitle2" component="h3">
-                Security clearance expiry date
-              </Typography>
-            </Grid>
-            <Grid item xs={1}>
-              <Icon
-                path={mdiHammerScrewdriver}
-                size={1}
-                className={classes.icon}
-              />
-            </Grid>
-            <Grid item xs={11}>
-              <Typography variant="subtitle2" component="h3">
-                Security clearance expiry date
-              </Typography>
-            </Grid>
-          </Grid>
-        </CardContent>
-        <CardActions disableSpacing>
-          <IconButton
-            className={clsx(classes.expand, {
-              [classes.expandOpen]: expanded,
-            })}
-            onClick={handleExpandClick}
-            aria-expanded={expanded}
-            aria-label="show more"
-          >
-            <ExpandMoreIcon />
-          </IconButton>
-        </CardActions>
+          title="Some email"
+          subheader="email@email.com"
+        />
+        <Divider className={classes.divider} />
         <Collapse in={expanded} timeout="auto" unmountOnExit>
           <CardContent>
-            <Icon path={mdiCardPlus} size={1} />
-            <Icon path={mdiDomain} size={1} />
-            <Icon path={mdiAccountOutline} size={1} />
-            <Icon path={mdiPhone} size={1} />
-            <Icon path={mdiEmailOutline} size={1} />
-            <Icon path={mdiMonitor} size={1} />
-            <Icon path={mdiTranslate} size={1} />
-            <Icon path={mdiHammerScrewdriver} size={1} />
-            <Typography paragraph>Method:</Typography>
-            <Typography paragraph>
-              Heat 1/2 cup of the broth in a pot until simmering, add saffron
-              and set aside for 10 minutes.
-            </Typography>
-            <Typography paragraph>
-              Heat oil in a (14- to 16-inch) paella pan or a large, deep skillet
-              over medium-high heat. Add chicken, shrimp and chorizo, and cook,
-              stirring occasionally until lightly browned, 6 to 8 minutes.
-              Transfer shrimp to a large plate and set aside, leaving chicken
-              and chorizo in the pan. Add pimentón, bay leaves, garlic,
-              tomatoes, onion, salt and pepper, and cook, stirring often until
-              thickened and fragrant, about 10 minutes. Add saffron broth and
-              remaining 4 1/2 cups chicken broth; bring to a boil.
-            </Typography>
-            <Typography paragraph>
-              Add rice and stir very gently to distribute. Top with artichokes
-              and peppers, and cook without stirring, until most of the liquid
-              is absorbed, 15 to 18 minutes. Reduce heat to medium-low, add
-              reserved shrimp and mussels, tucking them down into the rice, and
-              cook again without stirring, until mussels have opened and rice is
-              just tender, 5 to 7 minutes more. (Discard any mussels that don’t
-              open.)
-            </Typography>
-            <Typography>
-              Set aside off of the heat to let rest for 10 minutes, and then
-              serve.
-            </Typography>
+            <Typography variant="body1">Personal information</Typography>
+
+            <div className={classes.vettingRow}>
+              <div className={clsx(classes.vettingColumn, classes.widthAuto)}>
+                <Icon path={mdiDomain} size={1} />
+              </div>
+              <div className={classes.vettingColumn}>
+                <Typography className={classes.vettingText} variant="body2">
+                  Security clearance expiry date
+                </Typography>
+                <Typography className={classes.vettingText} variant="body2">
+                  02/23/2021
+                </Typography>
+              </div>
+            </div>
+            <div className={classes.vettingRow}>
+              <div className={clsx(classes.vettingColumn, classes.widthAuto)}>
+                <Icon path={mdiDomain} size={1} />
+              </div>
+              <div className={classes.vettingColumn}>
+                <Typography className={classes.vettingText} variant="body2">
+                  Researcher ID
+                </Typography>
+                <Typography className={classes.vettingText} variant="body2">
+                  54674
+                </Typography>
+              </div>
+            </div>
+            <div className={classes.vettingRow}>
+              <div className={clsx(classes.vettingColumn, classes.widthAuto)}>
+                <Icon path={mdiDomain} size={1} />
+              </div>
+              <div className={classes.vettingColumn}>
+                <Typography className={classes.vettingText} variant="body2">
+                  Organization
+                </Typography>
+                <Typography className={classes.vettingText} variant="body2">
+                  Statistics Canada
+                </Typography>
+              </div>
+            </div>
+            <div className={classes.vettingRow}>
+              <div className={clsx(classes.vettingColumn, classes.widthAuto)}>
+                <Icon path={mdiAccountOutline} size={1} />
+              </div>
+              <div className={classes.vettingColumn}>
+                <Typography className={classes.vettingText} variant="body2">
+                  Username
+                </Typography>
+                <Typography className={classes.vettingText} variant="body2">
+                  some.email
+                </Typography>
+              </div>
+            </div>
+            <Typography variant="body1">Contact information</Typography>
+            <div className={classes.vettingRow}>
+              <div className={clsx(classes.vettingColumn, classes.widthAuto)}>
+                <Icon path={mdiPhone} size={1} />
+              </div>
+              <div className={classes.vettingColumn}>
+                <Typography className={classes.vettingText} variant="body2">
+                  Phone number
+                </Typography>
+                <Typography className={classes.vettingText} variant="body2">
+                  555-867-5309
+                </Typography>
+              </div>
+            </div>
+            <div className={classes.vettingRow}>
+              <div className={clsx(classes.vettingColumn, classes.widthAuto)}>
+                <Icon path={mdiEmailOutline} size={1} />
+              </div>
+              <div className={classes.vettingColumn}>
+                <Typography className={classes.vettingText} variant="body2">
+                  Email
+                </Typography>
+                <Typography className={classes.vettingText} variant="body2">
+                  email@email.com
+                </Typography>
+              </div>
+            </div>
+            <Typography variant="body1">vDL information</Typography>
+            <div className={classes.vettingRow}>
+              <div className={clsx(classes.vettingColumn, classes.widthAuto)}>
+                <Icon path={mdiMonitor} size={1} />
+              </div>
+              <div className={classes.vettingColumn}>
+                <Typography className={classes.vettingText} variant="body2">
+                  Virtual machine name
+                </Typography>
+                <Typography className={classes.vettingText} variant="body2">
+                  STC-0412-ST
+                </Typography>
+              </div>
+            </div>
+            <div className={classes.vettingRow}>
+              <div className={clsx(classes.vettingColumn, classes.widthAuto)}>
+                <Icon path={mdiTranslate} size={1} />
+              </div>
+              <div className={classes.vettingColumn}>
+                <Typography className={classes.vettingText} variant="body2">
+                  Virtual machine language
+                </Typography>
+                <Typography className={classes.vettingText} variant="body2">
+                  English
+                </Typography>
+              </div>
+            </div>
+            <div className={classes.vettingRow}>
+              <div className={clsx(classes.vettingColumn, classes.widthAuto)}>
+                <Icon path={mdiHammerScrewdriver} size={1} />
+              </div>
+              <div className={classes.vettingColumn}>
+                <Typography className={classes.vettingText} variant="body2">
+                  Required tools
+                </Typography>
+                <Typography className={classes.vettingText} variant="body2">
+                  02/23/2021
+                </Typography>
+              </div>
+            </div>
           </CardContent>
+          <Divider className={classes.divider} />
         </Collapse>
         <CardActions>
           <Button color="primary" variant="contained">
@@ -238,6 +318,48 @@ function SecurityGroup(props) {
           </Button>
         </CardActions>
       </Card>
+      <Dialog
+        open={open.dialogAddSupporting}
+        aria-labelledby="form-dialog-title"
+        fullWidth
+        className={classes.root}
+        scroll="paper"
+      >
+        <DialogTitle
+          id="form-dialog-title"
+          className={classes.vettingContainerTitle}
+          disableTypography
+        >
+          <Typography variant="h6" component="h2">
+            Add supporting file
+          </Typography>
+          <IconButton
+            onClick={() => handleClickClose('dialogAddSupporting')}
+            edge="end"
+            aria-label="Close add supporting file"
+          >
+            <CloseIcon />
+          </IconButton>
+        </DialogTitle>
+        <Divider />
+        <DialogActions className={classes.dialogFooter}>
+          <Button
+            color="primary"
+            variant="outlined"
+            onClick={() => handleClickClose('dialogdeletevirtualmachine')}
+          >
+            Cancel
+          </Button>
+          <Button
+            color="primary"
+            variant="contained"
+            onClick={addvirtualmachine}
+            className={classes.footerBtns}
+          >
+            Delete
+          </Button>
+        </DialogActions>
+      </Dialog>
     </React.Fragment>
   );
 }
