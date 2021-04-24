@@ -17,14 +17,14 @@ import {
 import ArrowForwardIosIcon from '@material-ui/icons/ArrowForwardIos';
 // import RequestToolbar from '../VettingApp/CommonComponents/RequestToolbar';
 import ArrowBackIosIcon from '@material-ui/icons/ArrowBackIos';
-import CutCopyPasteAlert from '../VettingApp/CommonComponents/CutCopyPasteAlert';
+/* import CutCopyPasteAlert from '../VettingApp/CommonComponents/CutCopyPasteAlert'; */
 import {SnackbarSubmitRequest} from '../VettingApp/CommonComponents/Snackbars';
 import Icon from '@mdi/react';
 import SecurityGroup from './SecurityGroup';
 import Header from '../VettingApp/CommonComponents/Header';
 import Footer from '../VettingApp/CommonComponents/Footer';
-import ProjectInformation from './ProjectInformation';
-import ResearcherInformation from './ResearcherInformation';
+import ProjectInformation from './ProjecDetails';
+import ResearcherInformation from './VirtualMachineDetails';
 
 const useStyles = makeStyles((theme) => ({
   pageContainer: {
@@ -118,7 +118,7 @@ function PowerShell(props) {
     completed: {},
     open: false,
     errors: [1, 0, 0, 0],
-    title: 'vDL requirements PowerShell form',
+    title: 'VDL requirements PowerShell form',
   });
   const steps = getSteps();
 
@@ -334,7 +334,7 @@ function PowerShell(props) {
               )}
             </div>
             <Divider className={classes.dividercutcopypaste} />
-            <CutCopyPasteAlert />
+            {/* <CutCopyPasteAlert /> */}
             <div>
               {allStepsCompleted() ? (
                 <div>

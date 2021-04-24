@@ -286,12 +286,38 @@ export function SnackbarStartReview(props) {
   );
 }
 
-export function SnackbarAddResearcher(props) {
+export function SnackbarAddVirtualMachine(props) {
   const {t} = useTranslation();
 
   return (
     <Snackbar
       message={t('Virtual machine details added')}
+      severity="success"
+      open={props.open}
+      handleClose={props.handleClose}
+    />
+  );
+}
+
+export function SnackbarEditVirtualMachine(props) {
+  const {t} = useTranslation();
+
+  return (
+    <Snackbar
+      message={t('Virtual machine details updated')}
+      severity="success"
+      open={props.open}
+      handleClose={props.handleClose}
+    />
+  );
+}
+
+export function SnackbarDeleteVirtualMachine(props) {
+  const {t} = useTranslation();
+
+  return (
+    <Snackbar
+      message={t('Virtual machine details deleted')}
       severity="success"
       open={props.open}
       handleClose={props.handleClose}

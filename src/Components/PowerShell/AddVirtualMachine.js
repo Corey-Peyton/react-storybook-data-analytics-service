@@ -83,7 +83,51 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export function AddResearcher(props) {
+export function EditVirtualMachine(props) {
+  const classes = useStyles();
+
+  return (
+    <React.Fragment>
+      <AppBar position="static" className={classes.appBar} color="default">
+        <Toolbar>
+          <Typography variant="h6" component="h2" className={classes.title}>
+            Edit virtual machine details
+          </Typography>
+          <IconButton
+            aria-label="Close edit researcher"
+            className={classes.margin}
+            edge="end"
+            onClick={(e) => props.toggleDrawer(e, 'editVirtualMachine', false)}
+          >
+            <CloseIcon />
+          </IconButton>
+        </Toolbar>
+      </AppBar>
+      <div className={classes.body}>
+        <VirtualMachineDetails {...props} />
+      </div>
+      <div className={classes.footer}>
+        <Button
+          className="mr-2"
+          variant="outlined"
+          color="primary"
+          onClick={(e) => props.toggleDrawer(e, 'editVirtualMachine', false)}
+        >
+          Cancel
+        </Button>
+        <Button
+          variant="contained"
+          color="primary"
+          onClick={props.editVirtualMachine}
+        >
+          Edit virtual machine details
+        </Button>
+      </div>
+    </React.Fragment>
+  );
+}
+
+export function AddVirtualMachine(props) {
   const classes = useStyles();
 
   return (
@@ -94,31 +138,31 @@ export function AddResearcher(props) {
             Add virtual machine details
           </Typography>
           <IconButton
-            aria-label="Close add researcher"
+            aria-label="Close add virtual machine"
             className={classes.margin}
             edge="end"
-            onClick={(e) => props.toggleDrawer(e, 'addResearcher', false)}
+            onClick={(e) => props.toggleDrawer(e, 'addVirtualMachine', false)}
           >
             <CloseIcon />
           </IconButton>
         </Toolbar>
       </AppBar>
       <div className={classes.body}>
-        <OutputFileForm {...props} />
+        <VirtualMachineDetails {...props} />
       </div>
       <div className={classes.footer}>
         <Button
           className="mr-2"
           variant="outlined"
           color="primary"
-          onClick={(e) => props.toggleDrawer(e, 'addResearcher', false)}
+          onClick={(e) => props.toggleDrawer(e, 'addVirtualMachine', false)}
         >
           Cancel
         </Button>
         <Button
           variant="contained"
           color="primary"
-          onClick={props.addResearcher}
+          onClick={props.addVirtualMachine}
         >
           Add virtual machine details
         </Button>
@@ -127,7 +171,7 @@ export function AddResearcher(props) {
   );
 }
 
-function OutputFileForm(props) {
+function VirtualMachineDetails(props) {
   const classes = useStyles();
   const {t} = useTranslation();
   const [state, setState] = React.useState({
@@ -355,7 +399,7 @@ function OutputFileForm(props) {
     }
   };
 
-  const handleClickOpen = (element) => {
+  /*  const handleClickOpen = (element) => {
     setState({...state, [element]: true});
   };
 
@@ -373,7 +417,7 @@ function OutputFileForm(props) {
 
   const handleDeleteFile = () => {
     setState({...state, dialogDelete: false, snackbarDelete: true});
-  };
+  }; */
 
   return (
     <>
@@ -458,9 +502,15 @@ function OutputFileForm(props) {
         fullWidth
         required
         type="date"
-        onCut={(e) => disableCutCopyPaste(e, 'cut', 'securityClearanceExpiryDate')}
-        onCopy={(e) => disableCutCopyPaste(e, 'copy', 'securityClearanceExpiryDate')}
-        onPaste={(e) => disableCutCopyPaste(e, 'paste', 'securityClearanceExpiryDate')}
+        onCut={(e) =>
+          disableCutCopyPaste(e, 'cut', 'securityClearanceExpiryDate')
+        }
+        onCopy={(e) =>
+          disableCutCopyPaste(e, 'copy', 'securityClearanceExpiryDate')
+        }
+        onPaste={(e) =>
+          disableCutCopyPaste(e, 'paste', 'securityClearanceExpiryDate')
+        }
         onClick={() => toggleHelperText('securityClearanceExpiryDate')}
         onBlur={() => toggleHelperText('securityClearanceExpiryDate')}
         onFocus={() => toggleHelperText('securityClearanceExpiryDate')}
