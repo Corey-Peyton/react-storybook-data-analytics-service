@@ -1,6 +1,5 @@
 import React from 'react';
 import {makeStyles} from '@material-ui/core/styles';
-import FloatingSupportButton from '../VettingApp/CommonComponents/Support';
 import {mdiInboxArrowDown} from '@mdi/js';
 import {
   Paper,
@@ -98,11 +97,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 function getSteps() {
-  return [
-    'Security group',
-    'Project details',
-    'Virtual machine details',
-  ];
+  return ['Security group', 'Project details', 'Virtual machine details'];
 }
 
 function PowerShell(props) {
@@ -117,7 +112,7 @@ function PowerShell(props) {
     activeStep: 0,
     completed: {},
     open: false,
-    errors: [1, 0, 0, 0],
+    errors: [0, 1, 0, 0],
     title: 'VDL requirements PowerShell form',
   });
   const steps = getSteps();
@@ -399,7 +394,6 @@ function PowerShell(props) {
               )}
             </Grid>
           </Paper>
-          <FloatingSupportButton />
         </Container>
       </main>
       <Footer />

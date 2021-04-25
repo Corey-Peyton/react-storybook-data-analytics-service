@@ -1,11 +1,11 @@
 import React from 'react';
 import Radio from '@material-ui/core/Radio';
+
 import RadioGroup from '@material-ui/core/RadioGroup';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import FormControl from '@material-ui/core/FormControl';
 import FormLabel from '@material-ui/core/FormLabel';
 import {makeStyles} from '@material-ui/core/styles';
-import Alert from '@material-ui/lab/Alert';
 import {Grid} from '@material-ui/core';
 
 const useStyles = makeStyles((theme) => ({
@@ -26,9 +26,6 @@ function SecurityGroup(props) {
   const classes = useStyles();
   return (
     <React.Fragment>
-      <Alert className="mb-2" severity="error">
-        This field is requred
-      </Alert>
       <Grid item xs={8}>
         <FormControl component="fieldset" className={classes.inputMargin}>
           <FormLabel component="legend">Environment</FormLabel>

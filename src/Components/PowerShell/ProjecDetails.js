@@ -10,6 +10,7 @@ import {
   Grid,
   Tooltip,
 } from '@material-ui/core';
+import Alert from '@material-ui/lab/Alert';
 import Autocomplete from '@material-ui/lab/Autocomplete';
 import InfoIcon from '@material-ui/icons/Info';
 import {useTranslation} from 'react-i18next';
@@ -222,6 +223,9 @@ function ProjectInformation(props) {
           error={Boolean(state.primaryinvestigator.errorText)}
           helperText={state.primaryinvestigator.helperText}
         />
+        <Alert severity="error">
+          Complete all required fields to advance to the next step
+        </Alert>
         <TextField
           variant="outlined"
           id="contractnumber"
@@ -229,16 +233,7 @@ function ProjectInformation(props) {
           className={classes.inputMargin}
           margin="dense"
           label="Contract number"
-          required
-          onCut={(e) => disableCutCopyPaste(e, 'cut', 'contractnumber')}
-          onCopy={(e) => disableCutCopyPaste(e, 'copy', 'contractnumber')}
-          onPaste={(e) => disableCutCopyPaste(e, 'paste', 'contractnumber')}
-          onClick={() => toggleHelperText('contractnumber')}
-          onBlur={() => toggleHelperText('contractnumber')}
-          onFocus={() => toggleHelperText('contractnumber')}
-          value={state.contractnumber.text}
-          error={Boolean(state.contractnumber.errorText)}
-          helperText={state.contractnumber.helperText}
+          error
         />
         <TextField
           variant="outlined"
@@ -295,7 +290,6 @@ function ProjectInformation(props) {
             <Grid>
               <FormControlLabel control={<Checkbox />} label="SAS" />
             </Grid>
-            <Grid item></Grid>
             <BootstrapTooltip title="Includes SAS 9.4 and SAS Enterprise Guide">
               <InfoIcon />
             </BootstrapTooltip>

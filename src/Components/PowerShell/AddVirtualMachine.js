@@ -14,7 +14,11 @@ import {
   Toolbar,
   IconButton,
   Checkbox,
+  Grid,
+  Tooltip,
+  FormGroup,
 } from '@material-ui/core';
+import InfoIcon from '@material-ui/icons/Info';
 import CloseIcon from '@material-ui/icons/Close';
 
 const useStyles = makeStyles((theme) => ({
@@ -82,6 +86,21 @@ const useStyles = makeStyles((theme) => ({
     marginBottom: theme.spacing(3),
   },
 }));
+
+const useStylesBootstrap = makeStyles((theme) => ({
+  arrow: {
+    color: theme.palette.common.black,
+  },
+  tooltip: {
+    backgroundColor: theme.palette.common.black,
+  },
+}));
+
+function BootstrapTooltip(props) {
+  const classes = useStylesBootstrap();
+
+  return <Tooltip arrow classes={classes} {...props} />;
+}
 
 export function EditVirtualMachine(props) {
   const classes = useStyles();
@@ -591,7 +610,7 @@ function VirtualMachineDetails(props) {
         helperText={state.email.helperText}
         error={Boolean(state.email.errorText)}
       />
-      <Typography variant="subtitle1">vDL information</Typography>
+      <Typography variant="subtitle1">VDL information</Typography>
       <TextField
         className={classes.inputMargin}
         margin="dense"
@@ -610,54 +629,55 @@ function VirtualMachineDetails(props) {
         error={Boolean(state.virtualmachinename.errorText)}
         helperText={state.virtualmachinename.helperText}
       />
-      <FormControl
-        component="fieldset"
-        className={classes.inputMargin}
-        required
-      >
-        <RadioGroup id="virtualmachinename" name="virtualmachinename">
-          <FormLabel component="legend">Virtual machine name</FormLabel>
-          <FormControlLabel
-            control={<Radio color="primary" />}
-            value="English"
-            label="English"
-          />
-          <FormControlLabel
-            control={<Radio color="primary" />}
-            value="French"
-            label="French"
-          />
-        </RadioGroup>
-      </FormControl>
-      <FormControl
-        component="fieldset"
-        className={classes.inputMargin}
-        required
-      >
-        <RadioGroup id="requiredtools" name="requiredtools">
-          <FormLabel component="legend">Required tools</FormLabel>
-          <FormControlLabel
-            control={<Checkbox color="primary" />}
-            value="Default tools"
-            label="Default tools"
-          />
-          <FormControlLabel
-            control={<Checkbox color="primary" />}
-            value="SAS"
-            label="SAS"
-          />
-          <FormControlLabel
-            control={<Checkbox color="primary" />}
-            value="SPSS"
-            label="SPSS"
-          />
-          <FormControlLabel
-            control={<Checkbox color="primary" />}
-            value="STATA"
-            label="STATA"
-          />
-        </RadioGroup>
-      </FormControl>
+      <Grid container>
+        <FormControl
+          component="fieldset"
+          className={classes.inputMargin}
+          required
+        >
+          <RadioGroup id="virtualmachinename" name="virtualmachinename">
+            <FormLabel component="legend">Virtual machine name</FormLabel>
+            <FormControlLabel
+              control={<Radio color="primary" />}
+              value="English"
+              label="English"
+            />
+            <FormControlLabel
+              control={<Radio color="primary" />}
+              value="French"
+              label="French"
+            />
+          </RadioGroup>
+        </FormControl>
+      </Grid>
+      <FormLabel component="legend" required>
+        Required tools
+      </FormLabel>
+      <FormGroup>
+        <Grid container>
+          <Grid>
+            <FormControlLabel control={<Checkbox />} label="Default tools" />
+          </Grid>
+          <Grid item>
+            <BootstrapTooltip
+              className={classes.tooltipLabel}
+              title="Default tools (Adobe Reader DC, Java, LibreOffice, Office 2019, Power BI, ProjectLibre, Python, R, RStudio, RTools, VSCode"
+            >
+              <InfoIcon />
+            </BootstrapTooltip>
+          </Grid>
+        </Grid>
+        <Grid container>
+          <Grid>
+            <FormControlLabel control={<Checkbox />} label="SAS" />
+          </Grid>
+          <BootstrapTooltip title="Includes SAS 9.4 and SAS Enterprise Guide">
+            <InfoIcon />
+          </BootstrapTooltip>
+        </Grid>
+        <FormControlLabel control={<Checkbox />} label="SPSS" />
+        <FormControlLabel control={<Checkbox />} label="STATA" />
+      </FormGroup>
       <React.Fragment>
         <AppBar position="static" className={classes.appBar} color="default">
           <Toolbar>
