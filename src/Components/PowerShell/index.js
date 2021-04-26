@@ -101,6 +101,7 @@ function getSteps() {
 }
 
 function PowerShell(props) {
+  window.onbeforeunload = () => '';
   const classes = useStyles();
   /* const [open, setOpen] = React.useState({
     manageTeamDrawer: false,
