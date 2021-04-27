@@ -622,40 +622,6 @@ function VirtualMachineDetails(props) {
           label="STATA"
         />
       </FormGroup>
-      <React.Fragment>
-        <AppBar position="static" className={classes.appBar} color="default">
-          <Toolbar>
-            <Typography variant="h6" component="h2" className={classes.title}>
-              Add virtual machine details
-            </Typography>
-            <IconButton
-              aria-label="Close add researcher"
-              className={classes.margin}
-              edge="end"
-              onClick={(e) => props.toggleDrawer(e, 'addResearcher', false)}
-            >
-              <CloseIcon />
-            </IconButton>
-          </Toolbar>
-        </AppBar>
-        <div className={classes.footer}>
-          <Button
-            className="mr-2"
-            variant="outlined"
-            color="primary"
-            onClick={(e) => props.toggleDrawer(e, 'addResearcher', false)}
-          >
-            Cancel
-          </Button>
-          <Button
-            variant="contained"
-            color="primary"
-            onClick={props.addResearcher}
-          >
-            Add virtual machine details
-          </Button>
-        </div>
-      </React.Fragment>
     </>
   );
 }

@@ -44,9 +44,19 @@ const useStyles = makeStyles((theme) => ({
       duration: theme.transitions.duration.shortest,
     }),
   },
+  cardHeader: {
+    borderBottom: '1px solid rgba(0, 0, 0, 0.12)',
+    display: 'flex',
+    padding: theme.spacing(2),
+    flexDirection: 'column',
+    backgroundColor: '#DDDDDD',
+  },
   avatar: {
     backgroundColor: green[500],
     color: theme.palette.grey[100],
+  },
+  hiddenCard: {
+    display: 'none',
   },
   expandOpen: {
     transform: 'rotate(180deg)',
@@ -187,6 +197,14 @@ function VirtualMachine(props) {
         successfully
       </Typography>
       <Card className={classes.card} variant="outlined">
+        <div className={classes.cardHeader}>
+          <Typography className={classes.powershellColumn}>
+            STC-0412-ST
+          </Typography>
+          <Typography className={classes.powershellColumn}>
+            Virtual machine name
+          </Typography>
+        </div>
         <CardHeader
           avatar={
             <Avatar aria-label="recipe" className={classes.avatar}>
