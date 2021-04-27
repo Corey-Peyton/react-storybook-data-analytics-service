@@ -3,6 +3,11 @@ import {makeStyles} from '@material-ui/core/styles';
 import FormGroup from '@material-ui/core/FormGroup';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Checkbox from '@material-ui/core/Checkbox';
+import DateFnsUtils from '@date-io/date-fns';
+import {
+  KeyboardDatePicker,
+  MuiPickersUtilsProvider,
+} from '@material-ui/pickers';
 import {
   Typography,
   TextField,
@@ -22,6 +27,9 @@ const useStyles = makeStyles((theme) => ({
   divider: {
     margin: theme.spacing(3, 0),
   },
+  datePicker: {
+    marginRight: theme.spacing(4.75),
+  },
   tooltipLabel: {
     '& svg': {
       verticalAlign: 'middle',
@@ -39,6 +47,9 @@ const useStylesBootstrap = makeStyles((theme) => ({
 }));
 
 function ProjectInformation(props) {
+  const handleFromDateChange = (date) => {
+    setState({...state, selectedFromDate: date});
+  };
   const security = [{label: 'vDL'}, {label: 'Prerelease'}];
   const classes = useStyles();
   const {t} = useTranslation();
@@ -185,7 +196,7 @@ function ProjectInformation(props) {
 
   return (
     <React.Fragment>
-      <Grid item xs={8}>
+      <Grid item xs={10}>
         <Typography variant="body2" required>
           Environment
         </Typography>
@@ -207,7 +218,7 @@ function ProjectInformation(props) {
           variant="outlined"
           id="primaryinvestigator"
           fullWidth
-          className={classes.inputMargin}
+          className="mb-2"
           margin="dense"
           label="Primary investigator"
           required
@@ -223,7 +234,7 @@ function ProjectInformation(props) {
           error={Boolean(state.primaryinvestigator.errorText)}
           helperText={state.primaryinvestigator.helperText}
         />
-        <Alert severity="error">
+        <Alert severity="error" className="mb-1">
           Complete all required fields to advance to the next step
         </Alert>
         <TextField
@@ -235,47 +246,59 @@ function ProjectInformation(props) {
           label="Contract number"
           error
         />
-        <TextField
-          variant="outlined"
-          fullWidth
-          className={classes.inputMargin}
-          margin="dense"
-          type="date"
-          required
-          id="contractstartdate"
-          onCut={(e) => disableCutCopyPaste(e, 'cut', 'contractstartdate')}
-          onCopy={(e) => disableCutCopyPaste(e, 'copy', 'contractstartdate')}
-          onPaste={(e) => disableCutCopyPaste(e, 'paste', 'contractstartdate')}
-          onClick={() => toggleHelperText('contractstartdate')}
-          onBlur={() => toggleHelperText('contractstartdate')}
-          onFocus={() => toggleHelperText('contractstartdate')}
-          error={Boolean(state.contractstartdate.errorText)}
-          helperText={state.contractstartdate.helperText}
-        />
-        <TextField
-          variant="outlined"
-          fullWidth
-          className={classes.inputMargin}
-          margin="dense"
-          type="date"
-          required
-          id="contractenddate"
-          onCut={(e) => disableCutCopyPaste(e, 'cut', 'contractenddate')}
-          onCopy={(e) => disableCutCopyPaste(e, 'copy', 'contractenddate')}
-          onPaste={(e) => disableCutCopyPaste(e, 'paste', 'contractenddate')}
-          onClick={() => toggleHelperText('contractenddate')}
-          onBlur={() => toggleHelperText('contractenddate')}
-          onFocus={() => toggleHelperText('contractenddate')}
-          error={Boolean(state.contractenddate.errorText)}
-          helperText={state.contractenddate.helperText}
-        />
-        <FormLabel component="legend" required>
+        <Grid container>
+          <Grid item>
+            <MuiPickersUtilsProvider utils={DateFnsUtils}>
+              <KeyboardDatePicker
+                id="contract-start-date"
+                className={classes.datePicker}
+                variant="inline"
+                label={'Contract start date'}
+                InputProps={{readOnly: true}}
+                autoOk
+                margin="dense"
+                format="mm/dd/yyyy"
+                value={state.selectedFromDate}
+                inputVariant="outlined"
+                onChange={handleFromDateChange}
+                PopoverProps={{
+                  'aria-modal': 'true',
+                }}
+                KeyboardButtonProps={{
+                  'aria-label': 'Select contract start date',
+                }}
+              />
+              <KeyboardDatePicker
+                id="contract-end-date"
+                variant="inline"
+                InputProps={{readOnly: true}}
+                autoOk
+                margin="dense"
+                format="mm/dd/yyyy"
+                label={'Contract end date'}
+                value={state.selectedFromDate}
+                inputVariant="outlined"
+                onChange={handleFromDateChange}
+                PopoverProps={{
+                  'aria-modal': 'true',
+                }}
+                KeyboardButtonProps={{
+                  'aria-label': 'Select contract start date',
+                }}
+              />
+            </MuiPickersUtilsProvider>
+          </Grid>
+        </Grid>
+        <FormLabel component="legend" className="mt-2" required>
           Required tools
         </FormLabel>
         <FormGroup>
           <Grid container>
             <Grid>
-              <FormControlLabel control={<Checkbox />} label="Default tools" />
+              <FormControlLabel
+                control={<Checkbox color="primary" />}
+                label="Default tools"
+              />
             </Grid>
             <Grid item>
               <BootstrapTooltip
@@ -288,14 +311,24 @@ function ProjectInformation(props) {
           </Grid>
           <Grid container>
             <Grid>
-              <FormControlLabel control={<Checkbox />} label="SAS" />
+              <FormControlLabel
+                control={<Checkbox color="primary" />}
+                label="SAS"
+              />
             </Grid>
             <BootstrapTooltip title="Includes SAS 9.4 and SAS Enterprise Guide">
               <InfoIcon />
             </BootstrapTooltip>
           </Grid>
-          <FormControlLabel control={<Checkbox />} label="SPSS" />
-          <FormControlLabel control={<Checkbox />} label="STATA" />
+          <FormControlLabel
+            control={<Checkbox color="primary" />}
+            label="SPSS"
+            color="primary"
+          />
+          <FormControlLabel
+            control={<Checkbox color="primary" />}
+            label="STATA"
+          />
         </FormGroup>
       </Grid>
     </React.Fragment>

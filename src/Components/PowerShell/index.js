@@ -23,7 +23,7 @@ import SecurityGroup from './SecurityGroup';
 import Header from '../VettingApp/CommonComponents/Header';
 import Footer from '../VettingApp/CommonComponents/Footer';
 import ProjectInformation from './ProjecDetails';
-import ResearcherInformation from './VirtualMachineDetails';
+import VirtualMachine from './VirtualMachineDetails';
 
 const useStyles = makeStyles((theme) => ({
   pageContainer: {
@@ -101,7 +101,7 @@ function getSteps() {
 }
 
 function PowerShell(props) {
-  window.onbeforeunload = () => '';
+  // window.onbeforeunload = () => '';
   const classes = useStyles();
   /* const [open, setOpen] = React.useState({
     manageTeamDrawer: false,
@@ -183,7 +183,7 @@ function PowerShell(props) {
       case 1:
         return <ProjectInformation />;
       case 2:
-        return <ResearcherInformation />;
+        return <VirtualMachine />;
       default:
         return 'Unknown step';
     }
@@ -374,7 +374,7 @@ function PowerShell(props) {
                     className={classes.button}
                     onClick={handleClick}
                   >
-                    Submit request
+                    Submit
                   </Button>
                   <SnackbarSubmitRequest
                     open={openSnackbar}

@@ -5,7 +5,7 @@ import {
 import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
 import {DialogDelete} from '../VettingApp/CommonComponents/DialogBox';
-import {red} from '@material-ui/core/colors';
+import {green} from '@material-ui/core/colors';
 import {SnackbarEditVirtualMachine} from '../VettingApp/CommonComponents/Snackbars';
 import {EditVirtualMachine, AddVirtualMachine} from './AddVirtualMachine';
 import Collapse from '@material-ui/core/Collapse';
@@ -43,7 +43,7 @@ const useStyles = makeStyles((theme) => ({
     }),
   },
   avatar: {
-    backgroundColor: red[500],
+    backgroundColor: green[500],
     color: theme.palette.grey[100],
   },
   expandOpen: {
@@ -59,13 +59,13 @@ const useStyles = makeStyles((theme) => ({
       boxSizing: 'border-box',
     },
   },
-  vettingSection: {
+  powershellSection: {
     display: 'flex',
     flexFlow: 'column',
     padding: theme.spacing(3),
     overflowY: 'auto',
   },
-  vettingRow: {
+  powershellRow: {
     'display': 'flex',
     'margin': theme.spacing(1.5, 0),
     'flexFlow': 'row',
@@ -80,7 +80,7 @@ const useStyles = makeStyles((theme) => ({
       marginBottom: 0,
     },
   },
-  vettingColumn: {
+  powershellColumn: {
     'display': 'flex',
     'flexDirection': 'column',
     'width': '100%',
@@ -94,7 +94,7 @@ const useStyles = makeStyles((theme) => ({
   widthAuto: {
     width: 'auto !important',
   },
-  vettingText: {
+  powershellText: {
     paddingLeft: theme.spacing(1),
   },
   card: {
@@ -110,7 +110,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-function ResearcherInformation(props) {
+function VirtualMachine(props) {
   const classes = useStyles();
 
   const [open, setOpen] = React.useState({
@@ -173,7 +173,7 @@ function ResearcherInformation(props) {
         <CardHeader
           avatar={
             <Avatar aria-label="recipe" className={classes.avatar}>
-              KM
+              BB
             </Avatar>
           }
           action={
@@ -196,121 +196,121 @@ function ResearcherInformation(props) {
           <CardContent>
             <Typography variant="body1">Personal information</Typography>
 
-            <div className={classes.vettingRow}>
-              <div className={clsx(classes.vettingColumn, classes.widthAuto)}>
+            <div className={classes.powershellRow}>
+              <div className={clsx(classes.powershellColumn, classes.widthAuto)}>
                 <Icon path={mdiDomain} size={1} />
               </div>
-              <div className={classes.vettingColumn}>
-                <Typography className={classes.vettingText} variant="body2">
+              <div className={classes.powershellColumn}>
+                <Typography className={classes.powershellText} variant="body2">
                   Security clearance expiry date
                 </Typography>
-                <Typography className={classes.vettingText} variant="body2">
+                <Typography className={classes.powershellText} variant="body2">
                   02/23/2021
                 </Typography>
               </div>
             </div>
-            <div className={classes.vettingRow}>
-              <div className={clsx(classes.vettingColumn, classes.widthAuto)}>
+            <div className={classes.powershellRow}>
+              <div className={clsx(classes.powershellColumn, classes.widthAuto)}>
                 <Icon path={mdiDomain} size={1} />
               </div>
-              <div className={classes.vettingColumn}>
-                <Typography className={classes.vettingText} variant="body2">
+              <div className={classes.powershellColumn}>
+                <Typography className={classes.powershellText} variant="body2">
                   Researcher ID
                 </Typography>
-                <Typography className={classes.vettingText} variant="body2">
+                <Typography className={classes.powershellText} variant="body2">
                   54674
                 </Typography>
               </div>
             </div>
-            <div className={classes.vettingRow}>
-              <div className={clsx(classes.vettingColumn, classes.widthAuto)}>
+            <div className={classes.powershellRow}>
+              <div className={clsx(classes.powershellColumn, classes.widthAuto)}>
                 <Icon path={mdiDomain} size={1} />
               </div>
-              <div className={classes.vettingColumn}>
-                <Typography className={classes.vettingText} variant="body2">
+              <div className={classes.powershellColumn}>
+                <Typography className={classes.powershellText} variant="body2">
                   Organization
                 </Typography>
-                <Typography className={classes.vettingText} variant="body2">
+                <Typography className={classes.powershellText} variant="body2">
                   Statistics Canada
                 </Typography>
               </div>
             </div>
-            <div className={classes.vettingRow}>
-              <div className={clsx(classes.vettingColumn, classes.widthAuto)}>
+            <div className={classes.powershellRow}>
+              <div className={clsx(classes.powershellColumn, classes.widthAuto)}>
                 <Icon path={mdiAccountOutline} size={1} />
               </div>
-              <div className={classes.vettingColumn}>
-                <Typography className={classes.vettingText} variant="body2">
+              <div className={classes.powershellColumn}>
+                <Typography className={classes.powershellText} variant="body2">
                   Username
                 </Typography>
-                <Typography className={classes.vettingText} variant="body2">
+                <Typography className={classes.powershellText} variant="body2">
                   some.email
                 </Typography>
               </div>
             </div>
             <Typography variant="body1">Contact information</Typography>
-            <div className={classes.vettingRow}>
-              <div className={clsx(classes.vettingColumn, classes.widthAuto)}>
+            <div className={classes.powershellRow}>
+              <div className={clsx(classes.powershellColumn, classes.widthAuto)}>
                 <Icon path={mdiPhone} size={1} />
               </div>
-              <div className={classes.vettingColumn}>
-                <Typography className={classes.vettingText} variant="body2">
+              <div className={classes.powershellColumn}>
+                <Typography className={classes.powershellText} variant="body2">
                   Phone number
                 </Typography>
-                <Typography className={classes.vettingText} variant="body2">
+                <Typography className={classes.powershellText} variant="body2">
                   555-867-5309
                 </Typography>
               </div>
             </div>
-            <div className={classes.vettingRow}>
-              <div className={clsx(classes.vettingColumn, classes.widthAuto)}>
+            <div className={classes.powershellRow}>
+              <div className={clsx(classes.powershellColumn, classes.widthAuto)}>
                 <Icon path={mdiEmailOutline} size={1} />
               </div>
-              <div className={classes.vettingColumn}>
-                <Typography className={classes.vettingText} variant="body2">
+              <div className={classes.powershellColumn}>
+                <Typography className={classes.powershellText} variant="body2">
                   Email
                 </Typography>
-                <Typography className={classes.vettingText} variant="body2">
+                <Typography className={classes.powershellText} variant="body2">
                   email@email.com
                 </Typography>
               </div>
             </div>
             <Typography variant="body1">VDL information</Typography>
-            <div className={classes.vettingRow}>
-              <div className={clsx(classes.vettingColumn, classes.widthAuto)}>
+            <div className={classes.powershellRow}>
+              <div className={clsx(classes.powershellColumn, classes.widthAuto)}>
                 <Icon path={mdiMonitor} size={1} />
               </div>
-              <div className={classes.vettingColumn}>
-                <Typography className={classes.vettingText} variant="body2">
+              <div className={classes.powershellColumn}>
+                <Typography className={classes.powershellText} variant="body2">
                   Virtual machine name
                 </Typography>
-                <Typography className={classes.vettingText} variant="body2">
+                <Typography className={classes.powershellText} variant="body2">
                   STC-0412-ST
                 </Typography>
               </div>
             </div>
-            <div className={classes.vettingRow}>
-              <div className={clsx(classes.vettingColumn, classes.widthAuto)}>
+            <div className={classes.powershellRow}>
+              <div className={clsx(classes.powershellColumn, classes.widthAuto)}>
                 <Icon path={mdiTranslate} size={1} />
               </div>
-              <div className={classes.vettingColumn}>
-                <Typography className={classes.vettingText} variant="body2">
+              <div className={classes.powershellColumn}>
+                <Typography className={classes.powershellText} variant="body2">
                   Virtual machine language
                 </Typography>
-                <Typography className={classes.vettingText} variant="body2">
+                <Typography className={classes.powershellText} variant="body2">
                   English
                 </Typography>
               </div>
             </div>
-            <div className={classes.vettingRow}>
-              <div className={clsx(classes.vettingColumn, classes.widthAuto)}>
+            <div className={classes.powershellRow}>
+              <div className={clsx(classes.powershellColumn, classes.widthAuto)}>
                 <Icon path={mdiHammerScrewdriver} size={1} />
               </div>
-              <div className={classes.vettingColumn}>
-                <Typography className={classes.vettingText} variant="body2">
+              <div className={classes.powershellColumn}>
+                <Typography className={classes.powershellText} variant="body2">
                   Required tools
                 </Typography>
-                <Typography className={classes.vettingText} variant="body2">
+                <Typography className={classes.powershellText} variant="body2">
                   02/23/2021
                 </Typography>
               </div>
@@ -321,14 +321,14 @@ function ResearcherInformation(props) {
         <CardActions>
           <Button
             color="primary"
-            variant="contained"
+            variant="text"
             onClick={(e) => toggleDrawer(e, 'editVirtualMachine', true)}
           >
             Edit
           </Button>
           <Button
             color="primary"
-            variant="contained"
+            variant="text"
             onClick={() => handleClickOpen('dialogDelete')}
           >
             Delete
@@ -384,4 +384,4 @@ function ResearcherInformation(props) {
     </React.Fragment>
   );
 }
-export default ResearcherInformation;
+export default VirtualMachine;

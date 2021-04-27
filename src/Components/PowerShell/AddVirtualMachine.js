@@ -1,4 +1,9 @@
 import React from 'react';
+import DateFnsUtils from '@date-io/date-fns';
+import {
+  KeyboardDatePicker,
+  MuiPickersUtilsProvider,
+} from '@material-ui/pickers';
 import {useTranslation} from 'react-i18next';
 import {makeStyles} from '@material-ui/core/styles';
 import {
@@ -20,24 +25,12 @@ import {
 } from '@material-ui/core';
 import InfoIcon from '@material-ui/icons/Info';
 import CloseIcon from '@material-ui/icons/Close';
+import Autocomplete from '@material-ui/lab/Autocomplete';
 
 const useStyles = makeStyles((theme) => ({
   inputMargin: {
     marginTop: theme.spacing(0),
     marginBottom: theme.spacing(3),
-  },
-  radioMargin: {
-    marginTop: theme.spacing(0),
-    marginBottom: theme.spacing(2),
-  },
-  lineHeight: {
-    lineHeight: 'normal',
-  },
-  divider: {
-    margin: theme.spacing(3, 0),
-  },
-  hiddenRow: {
-    display: 'none',
   },
   appBar: {
     'backgroundColor': theme.palette.common.white,
@@ -80,11 +73,6 @@ const useStyles = makeStyles((theme) => ({
       verticalAlign: 'middle',
     },
   },
-  buttonTooltip: {
-    display: 'flex',
-    alignItems: 'center',
-    marginBottom: theme.spacing(3),
-  },
 }));
 
 const useStylesBootstrap = makeStyles((theme) => ({
@@ -113,7 +101,7 @@ export function EditVirtualMachine(props) {
             Edit virtual machine details
           </Typography>
           <IconButton
-            aria-label="Close edit researcher"
+            aria-label="Close edit virtual machine"
             className={classes.margin}
             edge="end"
             onClick={(e) => props.toggleDrawer(e, 'editVirtualMachine', false)}
@@ -191,14 +179,12 @@ export function AddVirtualMachine(props) {
 }
 
 function VirtualMachineDetails(props) {
+  const handleFromDateChange = (date) => {
+    setState({...state, selectedFromDate: date});
+  };
   const classes = useStyles();
   const {t} = useTranslation();
   const [state, setState] = React.useState({
-    includeWeightVariable: null,
-    linkedData: null,
-    descriptiveStats: null,
-    modifiedWeights: null,
-    covariance: null,
     snackbarDelete: false,
     dialogDelete: false,
     cloudemail: {
@@ -229,21 +215,7 @@ function VirtualMachineDetails(props) {
       commands: '',
       helperText: '',
     },
-    securityClearanceExpiryDate: {
-      text: '',
-      errorText: '',
-      invalid: '',
-      commands: '',
-      helperText: '',
-    },
     researcherID: {
-      text: '',
-      errorText: '',
-      invalid: '',
-      commands: '',
-      helperText: '',
-    },
-    organization: {
       text: '',
       errorText: '',
       invalid: '',
@@ -303,21 +275,7 @@ function VirtualMachineDetails(props) {
       commands: '',
       helperText: '',
     },
-    securityClearanceExpiryDate: {
-      text: '',
-      errorText: '',
-      invalid: '',
-      commands: '',
-      helperText: ')',
-    },
     researcherID: {
-      text: '',
-      errorText: '',
-      invalid: '',
-      commands: '',
-      helperText: '',
-    },
-    organization: {
       text: '',
       errorText: '',
       invalid: '',
@@ -418,29 +376,14 @@ function VirtualMachineDetails(props) {
     }
   };
 
-  /*  const handleClickOpen = (element) => {
-    setState({...state, [element]: true});
-  };
-
-  const handleClickClose = (element) => {
-    setState({...state, [element]: false});
-  };
-
-  const handleRadioChange = (event) => {
-    const name = event.target.name;
-    setState({
-      ...state,
-      [name]: event.target.value,
-    });
-  };
-
-  const handleDeleteFile = () => {
-    setState({...state, dialogDelete: false, snackbarDelete: true});
-  }; */
+  const security = [
+    {label: 'Statistics Canada'},
+    {label: 'Canada Revenue Agency'},
+  ];
 
   return (
     <>
-      <Typography variant="subtitle1">Personal information</Typography>
+      <Typography variant="subtitle1">User details</Typography>
       <TextField
         className={classes.inputMargin}
         margin="dense"
@@ -512,31 +455,28 @@ function VirtualMachineDetails(props) {
         error={Boolean(state.lastName.errorText)}
         helperText={state.lastName.helperText}
       />
-      <TextField
-        className={classes.inputMargin}
-        margin="dense"
-        id="securityClearanceExpiryDate"
-        // label="Security clearance expiry date"
-        variant="outlined"
-        fullWidth
-        required
-        type="date"
-        onCut={(e) =>
-          disableCutCopyPaste(e, 'cut', 'securityClearanceExpiryDate')
-        }
-        onCopy={(e) =>
-          disableCutCopyPaste(e, 'copy', 'securityClearanceExpiryDate')
-        }
-        onPaste={(e) =>
-          disableCutCopyPaste(e, 'paste', 'securityClearanceExpiryDate')
-        }
-        onClick={() => toggleHelperText('securityClearanceExpiryDate')}
-        onBlur={() => toggleHelperText('securityClearanceExpiryDate')}
-        onFocus={() => toggleHelperText('securityClearanceExpiryDate')}
-        defaultValue={state.securityClearanceExpiryDate.text}
-        error={Boolean(state.securityClearanceExpiryDate.errorText)}
-        helperText={state.securityClearanceExpiryDate.helperText}
-      />
+      <MuiPickersUtilsProvider utils={DateFnsUtils}>
+        <KeyboardDatePicker
+          id="contract-start-date"
+          className={classes.inputMargin}
+          variant="inline"
+          label={'Contract expiry date'}
+          InputProps={{readOnly: true}}
+          autoOk
+          fullWidth
+          margin="dense"
+          format="mm/dd/yyyy"
+          value={state.selectedFromDate}
+          inputVariant="outlined"
+          onChange={handleFromDateChange}
+          PopoverProps={{
+            'aria-modal': 'true',
+          }}
+          KeyboardButtonProps={{
+            'aria-label': 'Select contract expiry date',
+          }}
+        />
+      </MuiPickersUtilsProvider>
       <TextField
         className={classes.inputMargin}
         margin="dense"
@@ -555,23 +495,18 @@ function VirtualMachineDetails(props) {
         error={Boolean(state.researcherID.errorText)}
         helperText={state.researcherID.helperText}
       />
-      <TextField
-        className={classes.inputMargin}
-        margin="dense"
-        id="organization"
-        label="Organization"
-        variant="outlined"
-        fullWidth
-        required
-        onCut={(e) => disableCutCopyPaste(e, 'cut', 'organization')}
-        onCopy={(e) => disableCutCopyPaste(e, 'copy', 'organization')}
-        onPaste={(e) => disableCutCopyPaste(e, 'paste', 'organization')}
-        onClick={() => toggleHelperText('organization')}
-        onBlur={() => toggleHelperText('organization')}
-        onFocus={() => toggleHelperText('organization')}
-        defaultValue={state.organization.text}
-        error={Boolean(state.organization.errorText)}
-        helperText={state.organization.helperText}
+      <Autocomplete
+        id="combo-box-demo"
+        options={security}
+        getOptionLabel={(option) => option.label}
+        renderInput={(params) => (
+          <TextField
+            {...params}
+            label="Organization"
+            className={classes.inputMargin}
+            variant="outlined"
+          />
+        )}
       />
       <Typography variant="subtitle1">Contact information</Typography>
       <TextField
@@ -610,7 +545,7 @@ function VirtualMachineDetails(props) {
         helperText={state.email.helperText}
         error={Boolean(state.email.errorText)}
       />
-      <Typography variant="subtitle1">VDL information</Typography>
+      <Typography variant="subtitle1">Virtual machine details</Typography>
       <TextField
         className={classes.inputMargin}
         margin="dense"
@@ -636,7 +571,7 @@ function VirtualMachineDetails(props) {
           required
         >
           <RadioGroup id="virtualmachinename" name="virtualmachinename">
-            <FormLabel component="legend">Virtual machine name</FormLabel>
+            <FormLabel component="legend">Virtual machine language</FormLabel>
             <FormControlLabel
               control={<Radio color="primary" />}
               value="English"
@@ -656,7 +591,10 @@ function VirtualMachineDetails(props) {
       <FormGroup>
         <Grid container>
           <Grid>
-            <FormControlLabel control={<Checkbox />} label="Default tools" />
+            <FormControlLabel
+              control={<Checkbox color="primary" />}
+              label="Default tools"
+            />
           </Grid>
           <Grid item>
             <BootstrapTooltip
@@ -669,14 +607,20 @@ function VirtualMachineDetails(props) {
         </Grid>
         <Grid container>
           <Grid>
-            <FormControlLabel control={<Checkbox />} label="SAS" />
+            <FormControlLabel
+              control={<Checkbox color="primary" />}
+              label="SAS"
+            />
           </Grid>
           <BootstrapTooltip title="Includes SAS 9.4 and SAS Enterprise Guide">
             <InfoIcon />
           </BootstrapTooltip>
         </Grid>
-        <FormControlLabel control={<Checkbox />} label="SPSS" />
-        <FormControlLabel control={<Checkbox />} label="STATA" />
+        <FormControlLabel control={<Checkbox color="primary" />} label="SPSS" />
+        <FormControlLabel
+          control={<Checkbox color="primary" />}
+          label="STATA"
+        />
       </FormGroup>
       <React.Fragment>
         <AppBar position="static" className={classes.appBar} color="default">
