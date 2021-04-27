@@ -14,7 +14,7 @@ import AppBar from './CommonComponents/AppBar';
 import Footer from './CommonComponents/Footer';
 import Banner from './Banner';
 import Icon from '@mdi/react';
-import {mdiChevronDown} from '@mdi/js';
+import {mdiChevronDown, mdiArrowRight} from '@mdi/js';
 
 const useStyles = makeStyles((theme) => ({
   pageContainer: {
@@ -23,16 +23,13 @@ const useStyles = makeStyles((theme) => ({
     textAlign: 'center',
     background: theme.palette.grey[100],
   },
-  bannerBtn: {
-    width: '320px',
-    padding: theme.spacing(1.5),
-  },
   paper: {
-    padding: theme.spacing(6, 3),
+    padding: theme.spacing(6),
+    textAlign: 'left',
   },
-  toolsDetails: {
-    display: 'flex',
-    justifyContent: 'center',
+  accordion: {
+    borderTop: '1px solid',
+    borderTopColor: theme.palette.divider,
   },
   toolsList: {
     paddingLeft: 0,
@@ -61,9 +58,9 @@ function LandingPage(props) {
                   Advanced Analytics Workspace (AAW)
                 </Typography>
                 <Button
-                  className={classes.bannerBtn}
-                  variant="contained"
+                  className="edge-start"
                   color="primary"
+                  endIcon={<Icon path={mdiArrowRight} size={1} />}
                 >
                   Go to the AAW dashboard
                 </Button>
@@ -76,58 +73,54 @@ function LandingPage(props) {
                   pipelines and integration with Azure services, including
                   Databricks and AzureML. The AAW is entirely self-serve.
                 </Typography>
-                <div>
-                  <Accordion>
-                    <AccordionSummary
-                      expandIcon={<Icon path={mdiChevronDown} size={1} />}
-                      aria-controls="aaw-tools-content"
-                      id="aaw-tools-header"
-                    >
-                      <Typography component="h2" variant="subtitle1">
-                        Available tools
-                      </Typography>
-                    </AccordionSummary>
-                    <AccordionDetails className={classes.toolsDetails}>
-                      <ul className={classes.toolsList}>
-                        <li>
-                          <Typography>R - RStudio, RShiny</Typography>
-                        </li>
-                        <li>
-                          <Typography>
-                            Python Development - JupyterLab
-                          </Typography>
-                        </li>
-                        <li>
-                          <Typography>
-                            Geomatics Desktop - Linux Desktop (VDI) with VS Code
-                            and QGIS
-                          </Typography>
-                        </li>
-                        <li>
-                          <Typography>
-                            Management Portal - Kubeflow & Kubeflow Pipelines
-                          </Typography>
-                        </li>
-                        <li>
-                          <Typography>
-                            Cost Monitoring & Reporting - Kubecost
-                          </Typography>
-                        </li>
-                        <li>
-                          <Typography>Storage - MinIO</Typography>
-                        </li>
-                        <li>
-                          <Typography>Model Management - MLflow</Typography>
-                        </li>
-                        <li>
-                          <Typography>
-                            Version Control & CI/CD - Github
-                          </Typography>
-                        </li>
-                      </ul>
-                    </AccordionDetails>
-                  </Accordion>
-                </div>
+                <Accordion className={classes.accordion}>
+                  <AccordionSummary
+                    expandIcon={<Icon path={mdiChevronDown} size={1} />}
+                    aria-controls="aaw-tools-content"
+                    id="aaw-tools-header"
+                  >
+                    <Typography component="h2" variant="subtitle1">
+                      Available tools
+                    </Typography>
+                  </AccordionSummary>
+                  <AccordionDetails>
+                    <ul className={classes.toolsList}>
+                      <li>
+                        <Typography>R - RStudio, RShiny</Typography>
+                      </li>
+                      <li>
+                        <Typography>Python Development - JupyterLab</Typography>
+                      </li>
+                      <li>
+                        <Typography>
+                          Geomatics Desktop - Linux Desktop (VDI) with VS Code
+                          and QGIS
+                        </Typography>
+                      </li>
+                      <li>
+                        <Typography>
+                          Management Portal - Kubeflow & Kubeflow Pipelines
+                        </Typography>
+                      </li>
+                      <li>
+                        <Typography>
+                          Cost Monitoring & Reporting - Kubecost
+                        </Typography>
+                      </li>
+                      <li>
+                        <Typography>Storage - MinIO</Typography>
+                      </li>
+                      <li>
+                        <Typography>Model Management - MLflow</Typography>
+                      </li>
+                      <li>
+                        <Typography>
+                          Version Control & CI/CD - Github
+                        </Typography>
+                      </li>
+                    </ul>
+                  </AccordionDetails>
+                </Accordion>
                 <Typography className="mt-3 mb-3">
                   At this time, the AAW is designed to improve collaboration
                   using non-Sensitive Statistical Information (SSI), such as
@@ -145,9 +138,9 @@ function LandingPage(props) {
                   Collaborative Analytics Environment (CAE)
                 </Typography>
                 <Button
-                  className={classes.bannerBtn}
-                  variant="contained"
+                  className="edge-start"
                   color="primary"
+                  endIcon={<Icon path={mdiArrowRight} size={1} />}
                 >
                   Go to the CAE dashboard
                 </Button>
@@ -159,65 +152,63 @@ function LandingPage(props) {
                   data visualization capabilities, this environment is suitable
                   for a variety of statistical software.
                 </Typography>
-                <div>
-                  <Accordion>
-                    <AccordionSummary
-                      expandIcon={<Icon path={mdiChevronDown} size={1} />}
-                      aria-controls="cae-tools-content"
-                      id="cae-tools-header"
-                    >
-                      <Typography component="h2" variant="subtitle1">
-                        Available tools
-                      </Typography>
-                    </AccordionSummary>
-                    <AccordionDetails className={classes.toolsDetails}>
-                      <ul className={classes.toolsList}>
-                        <li>
-                          <Typography>Azure Blob Storage</Typography>
-                        </li>
-                        <li>
-                          <Typography>Azure Data Lake Storage</Typography>
-                        </li>
-                        <li>
-                          <Typography>Azure SQL Database</Typography>
-                        </li>
-                        <li>
-                          <Typography>Azure Databricks</Typography>
-                        </li>
-                        <li>
-                          <Typography>Azure Data Factory</Typography>
-                        </li>
-                        <li>
-                          <Typography>Azure Machine Learning</Typography>
-                        </li>
-                        <li>
-                          <Typography>Azure Virtual Machines</Typography>
-                        </li>
-                        <li>
-                          <Typography>R</Typography>
-                        </li>
-                        <li>
-                          <Typography>R Studio</Typography>
-                        </li>
-                        <li>
-                          <Typography>Python</Typography>
-                        </li>
-                        <li>
-                          <Typography>PowerBI</Typography>
-                        </li>
-                        <li>
-                          <Typography>STATA</Typography>
-                        </li>
-                        <li>
-                          <Typography>SPSS</Typography>
-                        </li>
-                        <li>
-                          <Typography>SAS</Typography>
-                        </li>
-                      </ul>
-                    </AccordionDetails>
-                  </Accordion>
-                </div>
+                <Accordion className={classes.accordion}>
+                  <AccordionSummary
+                    expandIcon={<Icon path={mdiChevronDown} size={1} />}
+                    aria-controls="cae-tools-content"
+                    id="cae-tools-header"
+                  >
+                    <Typography component="h2" variant="subtitle1">
+                      Available tools
+                    </Typography>
+                  </AccordionSummary>
+                  <AccordionDetails className={classes.toolsDetails}>
+                    <ul className={classes.toolsList}>
+                      <li>
+                        <Typography>Azure Blob Storage</Typography>
+                      </li>
+                      <li>
+                        <Typography>Azure Data Lake Storage</Typography>
+                      </li>
+                      <li>
+                        <Typography>Azure SQL Database</Typography>
+                      </li>
+                      <li>
+                        <Typography>Azure Databricks</Typography>
+                      </li>
+                      <li>
+                        <Typography>Azure Data Factory</Typography>
+                      </li>
+                      <li>
+                        <Typography>Azure Machine Learning</Typography>
+                      </li>
+                      <li>
+                        <Typography>Azure Virtual Machines</Typography>
+                      </li>
+                      <li>
+                        <Typography>R</Typography>
+                      </li>
+                      <li>
+                        <Typography>R Studio</Typography>
+                      </li>
+                      <li>
+                        <Typography>Python</Typography>
+                      </li>
+                      <li>
+                        <Typography>PowerBI</Typography>
+                      </li>
+                      <li>
+                        <Typography>STATA</Typography>
+                      </li>
+                      <li>
+                        <Typography>SPSS</Typography>
+                      </li>
+                      <li>
+                        <Typography>SAS</Typography>
+                      </li>
+                    </ul>
+                  </AccordionDetails>
+                </Accordion>
                 <Typography className="mt-3">
                   At this time, the CAE is securely designed to safely grant
                   access to both Sensitive Statistical Information (SSI) (for

@@ -34,27 +34,37 @@ export const useStyles = makeStyles({
     '.MuiIconButton-edgeEnd': {
       marginRight: theme.spacing(-1),
     },
+    '.MuiButton-text.edge-start': {
+      marginLeft: theme.spacing(-1),
+    },
+    '.MuiButton-text.edge-end': {
+      marginRight: theme.spacing(-1),
+    },
 
     // Accordions
     '.MuiAccordion-root': {
+      'borderRadius': [0, '!important'],
       '&::before': {
         display: 'none',
       },
-      'boxShadow': 'none',
-      '&:not(:last-child)': {
-        borderBottom: '1px solid',
-        borderBottomColor: theme.palette.divider,
+      '&.MuiAccordion-root.Mui-expanded': {
+        margin: 0,
       },
-      // '&:last-child': {
-      //   borderBottom: 'none',
-      // },
-      '&:only-child': {
+      'boxShadow': 'none',
+      'borderBottom': '1px solid',
+      'borderBottomColor': theme.palette.divider,
+      '&:last-child': {
         borderBottom: 'none',
       },
     },
-    '.MuiAccordionSummary-root, .MuiAccordionDetails-root': {
-      paddingLeft: 0,
-      paddingRight: 0,
+    '.MuiAccordionSummary-root': {
+      padding: 0,
+    },
+    '.MuiAccordionSummary-content, .MuiAccordionSummary-content.Mui-expanded': {
+      margin: theme.spacing(3, 0),
+    },
+    '.MuiAccordionDetails-root': {
+      padding: theme.spacing(0, 0, 3, 0),
     },
 
     // Forms
