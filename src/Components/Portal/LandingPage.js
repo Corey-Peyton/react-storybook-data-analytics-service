@@ -63,7 +63,7 @@ function LandingPage(props) {
             Check out our analytics platforms
           </Typography>
           <Grid container spacing={6}>
-            <Grid item xs={6}>
+            <Grid item xs={12} lg={6}>
               <Paper className={classes.card} variant="outlined">
                 <Grid container alignItems="center" wrap="nowrap">
                   <Grid item className={classes.cardContent}>
@@ -159,7 +159,7 @@ function LandingPage(props) {
                 </Grid>
               </Paper>
             </Grid>
-            <Grid item xs={6}>
+            <Grid item xs={12} lg={6}>
               <Paper className={classes.card} variant="outlined">
                 <Grid container alignItems="center" wrap="nowrap">
                   <Grid item className={classes.cardContent}>
