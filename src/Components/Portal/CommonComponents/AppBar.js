@@ -7,7 +7,8 @@ import {
   Button,
   Divider,
   Breadcrumbs,
-  Link,
+  Typography,
+  // Link,
 } from '@material-ui/core';
 import {SM_SCREEN} from '../../../Theme/constants';
 import BrandingStatCan from './BrandingStatCan';
@@ -171,12 +172,13 @@ function AppBar(props) {
           <Grid container justify="space-between" alignItems="center">
             <Grid item>
               <Breadcrumbs aria-label="breadcrumb" className="mb-0">
-                <Link
+                {/* <Link
                   color="inherit"
                   href="https://www.statcan.gc.ca/eng/start"
                 >
                   Statistics Canada
-                </Link>
+                </Link> */}
+                <Typography>About Data Analytics as a Service</Typography>
               </Breadcrumbs>
             </Grid>
             {isSmScreen ? (

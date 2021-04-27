@@ -17,10 +17,10 @@ const useStyles = makeStyles((theme) => ({
     textAlign: 'left',
     boxSizing: 'border-box',
     borderRadius: 0,
-    margin: theme.spacing(0, -3, 6, -3),
+    margin: theme.spacing(0, -6, 6, -6),
   },
   bannerContent: {
-    paddingLeft: theme.spacing(12),
+    paddingLeft: theme.spacing(6),
   },
   bannerBtn: {
     width: '320px',

@@ -9,6 +9,7 @@ import {
   Typography,
   Paper,
   Divider,
+  Link,
 } from '@material-ui/core';
 import {makeStyles, ThemeProvider} from '@material-ui/core/styles';
 import {HelpDrawer, FeedbackDialog} from './Dialogs';
@@ -17,13 +18,12 @@ import {darkTheme} from '../../../Theme/theme';
 const useStyles = makeStyles((theme) => ({
   footer: {
     borderRadius: 0,
-    // margin: theme.spacing(3, 0, 3, 0),
   },
   footerBtn: {
     margin: theme.spacing(0, 0.5, 0, 0),
   },
   canadaLogo: {
-    height: '40px',
+    height: theme.spacing(4),
   },
   actions: {
     display: 'flex',
@@ -124,14 +124,26 @@ const Footer = React.forwardRef((props, ref) => {
                   </ul>
                 </Grid>
                 <Grid item>
-                  <Typography variant="body2">
-                    Last modified on Feb 24, 2021
-                  </Typography>
+                  <Grid container spacing={4}>
+                    <Grid item>
+                      <Typography variant="body2">
+                        Updated Fed 24, 2021 (v2.0)
+                      </Typography>
+                    </Grid>
+                    <Grid item>
+                      <Typography variant="body2">
+                        Illustrations by{' '}
+                        <Link color="inherit" href="https://www.freepik.com/">
+                          Freepik
+                        </Link>
+                      </Typography>
+                    </Grid>
+                  </Grid>
                 </Grid>
               </Grid>
             </Toolbar>
             <Toolbar>
-              <Grid container justify="flex-start" alignItems="center">
+              <Grid container justify="flex-end" alignItems="center">
                 <Grid item>
                   <img
                     className={classes.canadaLogo}
