@@ -17,7 +17,6 @@ import {
   SnackbarUnassign,
 } from '../../CommonComponents/Snackbars';
 import {
-  DialogWithdraw,
   DialogUnassign,
   DialogSupport,
   DialogUpdate,
@@ -28,6 +27,7 @@ import {
   DialogAssignAsLead,
   DialogAssignAsSupport,
   DialogDelete,
+  DialogWithdraw,
 } from '../../CommonComponents/DialogBox';
 import {loggedInUser} from '../../../../Data/fakeData';
 
@@ -76,7 +76,6 @@ export function ActionsMenu(props) {
     snackbarAssignLead: false,
     snackbarAssignSupport: false,
     snackbarUnassign: false,
-    dialogWithdraw: false,
     dialogManageTeam: false,
     dialogUnassign: false,
     dialogSupport: false,
@@ -90,6 +89,7 @@ export function ActionsMenu(props) {
     dialogAssignAsLead: false,
     dialogAssignAsSupport: false,
     dialogDelete: false,
+    dialogWithdraw: false,
     role: '',
     action: '',
   });
@@ -173,11 +173,12 @@ export function ActionsMenu(props) {
     );
   };
 
-  const submitMenuItem = () => {
+  const submitMenuItem = (e) => {
     return (
       <MenuItem
         onClick={(e) => {
           e.stopPropagation();
+          handleClose(e);
           handleSnackbarOpen('snackbarSubmit');
         }}
       >
@@ -188,11 +189,12 @@ export function ActionsMenu(props) {
     );
   };
 
-  const withdrawMenuItem = () => {
+  const withdrawMenuItem = (e) => {
     return (
       <MenuItem
         onClick={(e) => {
           e.stopPropagation();
+          handleClose(e);
           toggleDialog('dialogWithdraw', !open.dialogWithdraw, e);
         }}
       >
@@ -859,12 +861,6 @@ export function ActionsMenu(props) {
         open={open.snackbarUnassign}
         handleClose={() => handleSnackbarClose('snackbarUnassign')}
       />
-      <DialogWithdraw
-        toggleDialog={(e) =>
-          toggleDialog('dialogWithdraw', !open.dialogWithdraw, e)
-        }
-        open={open.dialogWithdraw}
-      />
       <DialogUnassign
         toggleDialog={(e) =>
           toggleDialog('dialogUnassign', !open.dialogUnassign, e)
@@ -900,6 +896,12 @@ export function ActionsMenu(props) {
           toggleDialog('dialogApprove', !open.dialogApprove, e)
         }
         open={open.dialogApprove}
+      />
+      <DialogWithdraw
+        toggleDialog={(e) =>
+          toggleDialog('dialogWithdraw', !open.dialogWithdraw, e)
+        }
+        open={open.dialogWithdraw}
       />
       <DialogInfo
         toggleDialog={(e) => toggleDialog('dialogInfo', !open.dialogInfo, e)}

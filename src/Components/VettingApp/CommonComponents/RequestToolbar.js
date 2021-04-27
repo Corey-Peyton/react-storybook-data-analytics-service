@@ -1,6 +1,9 @@
 import React from 'react';
 import {makeStyles, withStyles} from '@material-ui/core/styles';
-import {DialogSaveBeforeLeaving} from '../CommonComponents/DialogBox';
+import {
+  DialogSaveBeforeLeaving,
+  DialogWithdraw,
+} from '../CommonComponents/DialogBox';
 import {
   AppBar,
   Button,
@@ -31,7 +34,6 @@ import {
   SnackbarSaveRequest,
   SnackbarStartReview,
   SnackbarSubmitRequest,
-  SnackbarWithdrawRequest,
 } from './Snackbars';
 import {DialogDenied, DialogUpdate, DialogApprove} from './DialogBox';
 import {ActionsMenu} from './RequestContextMenu';
@@ -90,6 +92,8 @@ function RequestToolbar(props) {
     dialogApprove: false,
     dialogUpdate: false,
     dialogDenied: false,
+    dialogWithdraw: false,
+    dialogSave: false,
     snackbarReactivate: false,
     snackbarSubmit: false,
     snackbarSave: false,
@@ -247,7 +251,7 @@ function RequestToolbar(props) {
           variant="text"
           color="primary"
           startIcon={<Icon path={mdiUndo} size={1} />}
-          onClick={() => handleClickOpen('snackbarWithdraw')}
+          onClick={() => handleClickOpen('dialogWithdraw')}
         >
           Withdraw
         </Button>
@@ -264,7 +268,7 @@ function RequestToolbar(props) {
               edge="start"
               className={classes.menuButton}
               aria-label="Back to dashboard"
-              onClick={() => handleClickOpen('DialogSaveBeforeLeaving')}
+              onClick={() => handleClickOpen('dialogSave')}
             >
               <ArrowBackIcon />
             </IconButton>
@@ -276,10 +280,6 @@ function RequestToolbar(props) {
               Dashboard
             </Typography>
           </Grid>
-          <DialogSaveBeforeLeaving
-            toggleDialog={() => handleClickClose('DialogSaveBeforeLeaving')}
-            open={open.DialogSaveBeforeLeaving}
-          />
 
           <Grid item className={classes.actions}>
             {role === 'analyst' && (
@@ -326,6 +326,16 @@ function RequestToolbar(props) {
           toggleDialog={() => handleClickClose('dialogDenied')}
           open={open.dialogDenied}
         />
+        {/* Withdraw request dialog */}
+        <DialogWithdraw
+          toggleDialog={() => handleClickClose('dialogWithdraw')}
+          open={open.dialogWithdraw}
+        />
+        {/* Save before leaving dialog */}
+        <DialogSaveBeforeLeaving
+          toggleDialog={() => handleClickClose('dialogSave')}
+          open={open.dialogSave}
+        />
 
         {/* Approve request snackbar */}
         <SnackbarApproveRequest
@@ -356,11 +366,6 @@ function RequestToolbar(props) {
         <SnackbarSubmitRequest
           open={open.snackbarSubmit}
           handleClose={() => handleClickClose('snackbarSubmit')}
-        />
-        {/* WithdraW request snackbar */}
-        <SnackbarWithdrawRequest
-          open={open.snackbarWithdraw}
-          handleClose={() => handleClickClose('snackbarWithdraw')}
         />
       </Toolbar>
     </AppBar>
