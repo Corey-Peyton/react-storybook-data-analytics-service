@@ -9,14 +9,15 @@ import {
   MuiPickersUtilsProvider,
 } from '@material-ui/pickers';
 import {
-  Typography,
   TextField,
   FormLabel,
   Grid,
   Tooltip,
+  FormControl,
+  RadioGroup,
+  Radio,
 } from '@material-ui/core';
 import Alert from '@material-ui/lab/Alert';
-import Autocomplete from '@material-ui/lab/Autocomplete';
 import InfoIcon from '@material-ui/icons/Info';
 import {useTranslation} from 'react-i18next';
 
@@ -29,6 +30,10 @@ const useStyles = makeStyles((theme) => ({
   },
   datePicker: {
     marginRight: theme.spacing(4.75),
+  },
+  fullWidth: {
+    width: '100%',
+    marginBottom: theme.spacing(1),
   },
   tooltipLabel: {
     '& svg': {
@@ -50,7 +55,6 @@ function ProjectInformation(props) {
   const handleFromDateChange = (date) => {
     setState({...state, selectedFromDate: date});
   };
-  const security = [{label: 'vDL'}, {label: 'Prerelease'}];
   const classes = useStyles();
   const {t} = useTranslation();
 
@@ -196,24 +200,26 @@ function ProjectInformation(props) {
 
   return (
     <React.Fragment>
-      <Grid item xs={10}>
-        <Typography variant="body2" required>
-          Environment
-        </Typography>
-        <Autocomplete
-          id="combo-box-demo"
-          options={security}
-          getOptionLabel={(option) => option.label}
-          renderInput={(params) => (
-            <TextField
-              {...params}
-              label="Select an environment"
-              className={classes.inputMargin}
-              required
-              variant="outlined"
+      <Grid container xs={10}>
+        <FormControl component="fieldset" className={classes.inputMargin}>
+          <FormLabel component="legend">Environment</FormLabel>
+          <RadioGroup
+            aria-label="environment"
+            name="radio-buttons-group"
+            color="primary"
+          >
+            <FormControlLabel
+              value="female"
+              control={<Radio color="primary" />}
+              label="VDL"
             />
-          )}
-        />
+            <FormControlLabel
+              value="Prerelease"
+              control={<Radio color="primary" />}
+              label="Prerelease"
+            />
+          </RadioGroup>
+        </FormControl>
         <TextField
           variant="outlined"
           id="primaryinvestigator"
@@ -234,7 +240,7 @@ function ProjectInformation(props) {
           error={Boolean(state.primaryinvestigator.errorText)}
           helperText={state.primaryinvestigator.helperText}
         />
-        <Alert severity="error" className="mb-1">
+        <Alert severity="error" className={classes.fullWidth}>
           Complete all required fields to advance to the next step
         </Alert>
         <TextField
@@ -246,90 +252,91 @@ function ProjectInformation(props) {
           label="Contract number"
           error
         />
-        <Grid container>
-          <Grid item>
-            <MuiPickersUtilsProvider utils={DateFnsUtils}>
-              <KeyboardDatePicker
-                id="contract-start-date"
-                className={classes.datePicker}
-                variant="inline"
-                label={'Contract start date'}
-                InputProps={{readOnly: true}}
-                autoOk
-                margin="dense"
-                format="mm/dd/yyyy"
-                value={state.selectedFromDate}
-                inputVariant="outlined"
-                onChange={handleFromDateChange}
-                PopoverProps={{
-                  'aria-modal': 'true',
-                }}
-                KeyboardButtonProps={{
-                  'aria-label': 'Select contract start date',
-                }}
-              />
-              <KeyboardDatePicker
-                id="contract-end-date"
-                variant="inline"
-                InputProps={{readOnly: true}}
-                autoOk
-                margin="dense"
-                format="mm/dd/yyyy"
-                label={'Contract end date'}
-                value={state.selectedFromDate}
-                inputVariant="outlined"
-                onChange={handleFromDateChange}
-                PopoverProps={{
-                  'aria-modal': 'true',
-                }}
-                KeyboardButtonProps={{
-                  'aria-label': 'Select contract start date',
-                }}
-              />
-            </MuiPickersUtilsProvider>
-          </Grid>
+
+        <Grid item>
+          <MuiPickersUtilsProvider utils={DateFnsUtils}>
+            <KeyboardDatePicker
+              id="contract-start-date"
+              className={classes.datePicker}
+              variant="inline"
+              label={'Contract start date'}
+              InputProps={{readOnly: true}}
+              autoOk
+              margin="dense"
+              format="mm/dd/yyyy"
+              value={state.selectedFromDate}
+              inputVariant="outlined"
+              onChange={handleFromDateChange}
+              PopoverProps={{
+                'aria-modal': 'true',
+              }}
+              KeyboardButtonProps={{
+                'aria-label': 'Select contract start date',
+              }}
+            />
+            <KeyboardDatePicker
+              id="contract-end-date"
+              variant="inline"
+              InputProps={{readOnly: true}}
+              autoOk
+              margin="dense"
+              format="mm/dd/yyyy"
+              label={'Contract end date'}
+              value={state.selectedFromDate}
+              inputVariant="outlined"
+              onChange={handleFromDateChange}
+              PopoverProps={{
+                'aria-modal': 'true',
+              }}
+              KeyboardButtonProps={{
+                'aria-label': 'Select contract start date',
+              }}
+            />
+          </MuiPickersUtilsProvider>
         </Grid>
-        <FormLabel component="legend" className="mt-2" required>
-          Required tools
-        </FormLabel>
-        <FormGroup>
-          <Grid container>
-            <Grid>
-              <FormControlLabel
-                control={<Checkbox color="primary" />}
-                label="Default tools"
-              />
+        <Grid item>
+          <FormLabel component="legend" className="mt-2" required>
+            Required tools
+          </FormLabel>
+          <FormGroup>
+            <Grid container>
+              <Grid>
+                <FormControlLabel
+                  control={<Checkbox color="primary" />}
+                  label="Default tools"
+                />
+              </Grid>
+              <Grid item>
+                <BootstrapTooltip
+                  className={classes.tooltipLabel}
+                  title="Default tools (Adobe Reader DC, Java, LibreOffice, Office 2019, Power BI, ProjectLibre, Python, R, RStudio, RTools, VSCode"
+                >
+                  <InfoIcon />
+                </BootstrapTooltip>
+              </Grid>
             </Grid>
-            <Grid item>
-              <BootstrapTooltip
-                className={classes.tooltipLabel}
-                title="Default tools (Adobe Reader DC, Java, LibreOffice, Office 2019, Power BI, ProjectLibre, Python, R, RStudio, RTools, VSCode"
-              >
+            <Grid container>
+              <Grid>
+                <FormControlLabel
+                  control={<Checkbox color="primary" />}
+                  label="SAS"
+                />
+              </Grid>
+              <BootstrapTooltip title="Includes SAS 9.4 and SAS Enterprise Guide">
                 <InfoIcon />
               </BootstrapTooltip>
             </Grid>
-          </Grid>
-          <Grid container>
-            <Grid>
-              <FormControlLabel
-                control={<Checkbox color="primary" />}
-                label="SAS"
-              />
-            </Grid>
-            <BootstrapTooltip title="Includes SAS 9.4 and SAS Enterprise Guide">
-              <InfoIcon />
-            </BootstrapTooltip>
-          </Grid>
-          <FormControlLabel
-            control={<Checkbox color="primary" />}
-            label="SPSS"
-            color="primary"
-          />
-          <FormControlLabel
-            control={<Checkbox color="primary" />}
-            label="STATA"
-          />
-        </FormGroup>
+            <FormControlLabel
+              control={<Checkbox color="primary" />}
+              label="SPSS"
+              color="primary"
+            />
+            <FormControlLabel
+              control={<Checkbox color="primary" />}
+              label="STATA"
+            />
+          </FormGroup>
+        </Grid>
       </Grid>
     </React.Fragment>
   );

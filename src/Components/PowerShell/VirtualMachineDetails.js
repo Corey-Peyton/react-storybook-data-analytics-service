@@ -1,7 +1,6 @@
 import React from 'react';
-import {
-  SnackbarDeleteVirtualMachine,
-} from '../VettingApp/CommonComponents/Snackbars';
+import {Icon} from '@mdi/react';
+import {SnackbarDeleteVirtualMachine} from '../VettingApp/CommonComponents/Snackbars';
 import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
 import {DialogDelete} from '../VettingApp/CommonComponents/DialogBox';
@@ -18,8 +17,11 @@ import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import Button from '@material-ui/core/Button';
 import {makeStyles} from '@material-ui/core/styles';
 import {SnackbarAddVirtualMachine} from '../VettingApp/CommonComponents/Snackbars';
-import {Typography, Drawer, Icon, Divider} from '@material-ui/core';
+import {Typography, Drawer, Divider, Tooltip} from '@material-ui/core';
+import InfoIcon from '@material-ui/icons/Info';
 import {
+  mdiSmartCardOutline,
+  mdiFileDocumentOutline,
   mdiDomain,
   mdiAccountOutline,
   mdiPhone,
@@ -110,6 +112,21 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
+const useStylesBootstrap = makeStyles((theme) => ({
+  arrow: {
+    color: theme.palette.common.black,
+  },
+  tooltip: {
+    backgroundColor: theme.palette.common.black,
+  },
+}));
+
+function BootstrapTooltip(props) {
+  const classes = useStylesBootstrap();
+
+  return <Tooltip arrow classes={classes} {...props} />;
+}
+
 function VirtualMachine(props) {
   const classes = useStyles();
 
@@ -194,14 +211,16 @@ function VirtualMachine(props) {
         <Divider className={classes.divider} />
         <Collapse in={expanded} timeout="auto" unmountOnExit>
           <CardContent>
-            <Typography variant="body1">Personal information</Typography>
+            <Typography variant="h6">Personal information</Typography>
 
             <div className={classes.powershellRow}>
-              <div className={clsx(classes.powershellColumn, classes.widthAuto)}>
-                <Icon path={mdiDomain} size={1} />
+              <div
+                className={clsx(classes.powershellColumn, classes.widthAuto)}
+              >
+                <Icon path={mdiFileDocumentOutline} size={1} />
               </div>
               <div className={classes.powershellColumn}>
-                <Typography className={classes.powershellText} variant="body2">
+                <Typography className={classes.powershellText} variant="body1">
                   Security clearance expiry date
                 </Typography>
                 <Typography className={classes.powershellText} variant="body2">
@@ -210,11 +229,13 @@ function VirtualMachine(props) {
               </div>
             </div>
             <div className={classes.powershellRow}>
-              <div className={clsx(classes.powershellColumn, classes.widthAuto)}>
-                <Icon path={mdiDomain} size={1} />
+              <div
+                className={clsx(classes.powershellColumn, classes.widthAuto)}
+              >
+                <Icon path={mdiSmartCardOutline} size={1} />
               </div>
               <div className={classes.powershellColumn}>
-                <Typography className={classes.powershellText} variant="body2">
+                <Typography className={classes.powershellText} variant="body1">
                   Researcher ID
                 </Typography>
                 <Typography className={classes.powershellText} variant="body2">
@@ -223,11 +244,13 @@ function VirtualMachine(props) {
               </div>
             </div>
             <div className={classes.powershellRow}>
-              <div className={clsx(classes.powershellColumn, classes.widthAuto)}>
+              <div
+                className={clsx(classes.powershellColumn, classes.widthAuto)}
+              >
                 <Icon path={mdiDomain} size={1} />
               </div>
               <div className={classes.powershellColumn}>
-                <Typography className={classes.powershellText} variant="body2">
+                <Typography className={classes.powershellText} variant="body1">
                   Organization
                 </Typography>
                 <Typography className={classes.powershellText} variant="body2">
@@ -236,11 +259,13 @@ function VirtualMachine(props) {
               </div>
             </div>
             <div className={classes.powershellRow}>
-              <div className={clsx(classes.powershellColumn, classes.widthAuto)}>
+              <div
+                className={clsx(classes.powershellColumn, classes.widthAuto)}
+              >
                 <Icon path={mdiAccountOutline} size={1} />
               </div>
               <div className={classes.powershellColumn}>
-                <Typography className={classes.powershellText} variant="body2">
+                <Typography className={classes.powershellText} variant="body1">
                   Username
                 </Typography>
                 <Typography className={classes.powershellText} variant="body2">
@@ -248,13 +273,15 @@ function VirtualMachine(props) {
                 </Typography>
               </div>
             </div>
-            <Typography variant="body1">Contact information</Typography>
+            <Typography variant="h6">Contact information</Typography>
             <div className={classes.powershellRow}>
-              <div className={clsx(classes.powershellColumn, classes.widthAuto)}>
+              <div
+                className={clsx(classes.powershellColumn, classes.widthAuto)}
+              >
                 <Icon path={mdiPhone} size={1} />
               </div>
               <div className={classes.powershellColumn}>
-                <Typography className={classes.powershellText} variant="body2">
+                <Typography className={classes.powershellText} variant="body1">
                   Phone number
                 </Typography>
                 <Typography className={classes.powershellText} variant="body2">
@@ -263,11 +290,13 @@ function VirtualMachine(props) {
               </div>
             </div>
             <div className={classes.powershellRow}>
-              <div className={clsx(classes.powershellColumn, classes.widthAuto)}>
+              <div
+                className={clsx(classes.powershellColumn, classes.widthAuto)}
+              >
                 <Icon path={mdiEmailOutline} size={1} />
               </div>
               <div className={classes.powershellColumn}>
-                <Typography className={classes.powershellText} variant="body2">
+                <Typography className={classes.powershellText} variant="body1">
                   Email
                 </Typography>
                 <Typography className={classes.powershellText} variant="body2">
@@ -275,13 +304,15 @@ function VirtualMachine(props) {
                 </Typography>
               </div>
             </div>
-            <Typography variant="body1">VDL information</Typography>
+            <Typography variant="h6">VDL information</Typography>
             <div className={classes.powershellRow}>
-              <div className={clsx(classes.powershellColumn, classes.widthAuto)}>
+              <div
+                className={clsx(classes.powershellColumn, classes.widthAuto)}
+              >
                 <Icon path={mdiMonitor} size={1} />
               </div>
               <div className={classes.powershellColumn}>
-                <Typography className={classes.powershellText} variant="body2">
+                <Typography className={classes.powershellText} variant="body1">
                   Virtual machine name
                 </Typography>
                 <Typography className={classes.powershellText} variant="body2">
@@ -290,11 +321,13 @@ function VirtualMachine(props) {
               </div>
             </div>
             <div className={classes.powershellRow}>
-              <div className={clsx(classes.powershellColumn, classes.widthAuto)}>
+              <div
+                className={clsx(classes.powershellColumn, classes.widthAuto)}
+              >
                 <Icon path={mdiTranslate} size={1} />
               </div>
               <div className={classes.powershellColumn}>
-                <Typography className={classes.powershellText} variant="body2">
+                <Typography className={classes.powershellText} variant="body1">
                   Virtual machine language
                 </Typography>
                 <Typography className={classes.powershellText} variant="body2">
@@ -303,15 +336,32 @@ function VirtualMachine(props) {
               </div>
             </div>
             <div className={classes.powershellRow}>
-              <div className={clsx(classes.powershellColumn, classes.widthAuto)}>
+              <div
+                className={clsx(classes.powershellColumn, classes.widthAuto)}
+              >
                 <Icon path={mdiHammerScrewdriver} size={1} />
               </div>
               <div className={classes.powershellColumn}>
-                <Typography className={classes.powershellText} variant="body2">
+                <Typography className={classes.powershellText} variant="body1">
                   Required tools
                 </Typography>
                 <Typography className={classes.powershellText} variant="body2">
-                  02/23/2021
+                  Default tools
+                  <BootstrapTooltip
+                    className={classes.tooltipLabel}
+                    title="Default tools (Adobe Reader DC, Java, LibreOffice, Office 2019, Power BI, ProjectLibre, Python, R, RStudio, RTools, VSCode"
+                  >
+                    <InfoIcon />
+                  </BootstrapTooltip>
+                </Typography>
+                <Typography className={classes.powershellText} variant="body2">
+                  SAS
+                  <BootstrapTooltip
+                    className={classes.tooltipLabel}
+                    title="Includes SAS 9.4 and SAS Enterprise Guide"
+                  >
+                    <InfoIcon />
+                  </BootstrapTooltip>
                 </Typography>
               </div>
             </div>
