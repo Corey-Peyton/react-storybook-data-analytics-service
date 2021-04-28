@@ -10,6 +10,7 @@ import {
   AccordionSummary,
   AccordionDetails,
 } from '@material-ui/core';
+import BypassBlocks from '../CommonComponents/BypassBlocks';
 import AppBar from './CommonComponents/AppBar';
 import Footer from './CommonComponents/Footer';
 import Banner from './Banner';
@@ -51,12 +52,16 @@ const useStyles = makeStyles((theme) => ({
 function LandingPage(props) {
   const classes = useStyles();
 
+  const mainRef = React.createRef();
+  const aboutRef = React.createRef();
+
   // const [state, setState] = React.useState({});
 
   return (
     <>
+      <BypassBlocks ref={{main: mainRef, about: aboutRef}} />
       <AppBar />
-      <main tabIndex="-1">
+      <main ref={mainRef} tabIndex="-1">
         <Container maxWidth={false} className={classes.pageContainer}>
           <Banner />
           <Typography variant="h3" component="h2" className="mb-6">
@@ -261,7 +266,7 @@ function LandingPage(props) {
           </Grid>
         </Container>
       </main>
-      <Footer />
+      <Footer ref={aboutRef} />
     </>
   );
 }

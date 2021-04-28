@@ -70,8 +70,8 @@ const Footer = React.forwardRef((props, ref) => {
   return (
     <>
       <ThemeProvider theme={darkTheme}>
-        <Paper className={classes.footer} tabIndex="-1">
-          <footer>
+        <Paper className={classes.footer}>
+          <footer ref={ref} tabIndex="-1">
             <Toolbar>
               <Grid container justify="space-between" alignItems="center">
                 <Grid item className={classes.actions}>

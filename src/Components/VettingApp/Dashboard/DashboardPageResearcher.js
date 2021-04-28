@@ -14,7 +14,7 @@ import Header from '../CommonComponents/Header';
 import Footer from '../CommonComponents/Footer';
 import SummaryDrawer from '../CommonComponents/SummaryDrawer';
 import ProjectsDrawer from './Common/ProjectsDrawer';
-import BypassBlocks from '../../BypassBlocks';
+import BypassBlocks from '../../CommonComponents/BypassBlocks';
 import {requestListResearchers} from '../../../Data/fakeData';
 import {DRAWER_WIDTH} from './Common/ProjectsDrawer';
 import {FOOT_H} from '../../../Theme/constants';
