@@ -1,7 +1,5 @@
 import React from 'react';
 import {useTranslation} from 'react-i18next';
-import clsx from 'clsx';
-import {SM_SCREEN} from '../../../Theme/constants';
 import {
   Button,
   Grid,
@@ -34,9 +32,6 @@ const useStyles = makeStyles((theme) => ({
 const Footer = React.forwardRef((props, ref) => {
   const {t} = useTranslation();
   const classes = useStyles();
-  const [state, setState] = React.useState({
-    windowWidth: window.innerWidth,
-  });
   const [open, setOpen] = React.useState({
     helpDrawer: false,
     feedbackDialog: false,
@@ -53,19 +48,6 @@ const Footer = React.forwardRef((props, ref) => {
   const closeDrawer = (element) => {
     setOpen({...open, [element]: false});
   };
-  const isSmScreen = state.windowWidth < SM_SCREEN;
-
-  React.useEffect(() => {
-    // Detect screen size
-    const handleResize = () =>
-      setState({...state, windowWidth: window.innerWidth});
-    window.addEventListener('resize', handleResize);
-    window.addEventListener('orientationchange', handleResize);
-    return () => {
-      window.removeEventListener('resize', handleResize);
-      window.removeEventListener('orientationchange', handleResize);
-    };
-  }, [state]);
 
   return (
     <>
@@ -77,11 +59,7 @@ const Footer = React.forwardRef((props, ref) => {
                 <Grid item className={classes.actions}>
                   <Button className="mr-2">{t('Français')}</Button>
                   <Divider orientation="vertical" flexItem className="mr-2" />
-                  <ul
-                    className={clsx({
-                      'list-horizontal': !isSmScreen,
-                    })}
-                  >
+                  <ul className="list-horizontal">
                     <li>
                       <Button className={classes.footerBtn}>
                         {t('About')}

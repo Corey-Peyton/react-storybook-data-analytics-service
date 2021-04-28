@@ -62,7 +62,7 @@ function Banner(props) {
       <ThemeProvider theme={darkTheme}>
         <Paper className={classes.banner}>
           <Grid container justify="space-between" alignItems="center">
-            <Grid item xs={6} className={classes.bannerContent}>
+            <Grid item xs={8} lg={6} className={classes.bannerContent}>
               <Grid container alignItems="center">
                 <Grid item>
                   <img
@@ -110,7 +110,7 @@ function Banner(props) {
                 </Grid>
               </Grid>
             </Grid>
-            <Grid item xs={6} className={classes.triangles}>
+            <Grid item xs={4} lg={6} className={classes.triangles}>
               <img
                 src={process.env.PUBLIC_URL + '/images/daaas-triangles.svg'}
                 alt=""
