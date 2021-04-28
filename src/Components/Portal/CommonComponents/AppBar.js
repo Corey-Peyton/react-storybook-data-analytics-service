@@ -53,7 +53,7 @@ function AppBar(props) {
     windowWidth: window.innerWidth,
   });
   const [open, setOpen] = React.useState({
-    helpDrawer: true,
+    helpDrawer: false,
     feedbackDialog: false,
     menuAnchor: null,
   });

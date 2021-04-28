@@ -43,7 +43,7 @@ const useStyles = makeStyles((theme) => ({
 export function HelpDrawer(props) {
   const classes = useStyles();
   const [open, setOpen] = React.useState({
-    supportDialog: true,
+    supportDialog: false,
   });
 
   const toggleDialog = (element, value) => {
@@ -98,7 +98,7 @@ export function HelpDrawer(props) {
             variant="text"
             color="primary"
             startIcon={<Icon path={mdiBookOpenPageVariant} size={1} />}
-            // onClick={() => handleClickOpen('snackbarReactivate')}
+            href="https://statcan.github.io/daaas/en/"
           >
             User guide
           </Button>
@@ -125,7 +125,7 @@ export function HelpDrawer(props) {
             variant="text"
             color="primary"
             startIcon={<Icon path={mdiBookOpenPageVariant} size={1} />}
-            // onClick={() => handleClickOpen('snackbarReactivate')}
+            href="https://statcan.github.io/cae-eac/"
           >
             User guide
           </Button>
