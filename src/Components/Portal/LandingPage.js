@@ -20,7 +20,7 @@ import {mdiChevronDown, mdiArrowRight} from '@mdi/js';
 const useStyles = makeStyles((theme) => ({
   pageContainer: {
     marginTop: theme.spacing(16),
-    paddingBottom: theme.spacing(18),
+    paddingBottom: theme.spacing(6),
     paddingLeft: theme.spacing(6),
     paddingRight: theme.spacing(6),
     textAlign: 'center',

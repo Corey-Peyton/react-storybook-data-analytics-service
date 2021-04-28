@@ -53,15 +53,15 @@ function AppBar(props) {
     windowWidth: window.innerWidth,
   });
   const [open, setOpen] = React.useState({
-    helpDrawer: false,
+    helpDrawer: true,
     feedbackDialog: false,
     menuAnchor: null,
   });
 
   // const [anchorEl, setAnchorEl] = React.useState(null);
 
-  const toggleDialog = (state, value) => {
-    setOpen({...open, [state]: value});
+  const toggleDialog = (element, value) => {
+    setOpen({...open, [element]: value});
   };
 
   const openDrawer = (element) => {

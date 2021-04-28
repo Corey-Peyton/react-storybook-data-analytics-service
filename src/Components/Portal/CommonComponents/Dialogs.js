@@ -42,6 +42,13 @@ const useStyles = makeStyles((theme) => ({
 
 export function HelpDrawer(props) {
   const classes = useStyles();
+  const [open, setOpen] = React.useState({
+    supportDialog: true,
+  });
+
+  const toggleDialog = (element, value) => {
+    setOpen({...open, [element]: value});
+  };
 
   const content = () => (
     <>
@@ -64,7 +71,7 @@ export function HelpDrawer(props) {
             variant="text"
             color="primary"
             startIcon={<Icon path={mdiEmail} size={1} />}
-            // onClick={() => handleClickOpen('snackbarReactivate')}
+            onClick={() => toggleDialog('supportDialog', !open.supportDialog)}
           >
             Contact the support team
           </Button>
@@ -124,6 +131,11 @@ export function HelpDrawer(props) {
           </Button>
         </AccordionDetails>
       </Accordion>
+      {/* Support dialog */}
+      <SupportDialog
+        open={open.supportDialog}
+        toggleDialog={() => toggleDialog('supportDialog', !open.supportDialog)}
+      />
     </>
   );
 
@@ -135,6 +147,114 @@ export function HelpDrawer(props) {
       primaryButton="Close"
       handlePrimaryClick={props.closeDrawer}
       toggleDrawer={props.closeDrawer}
+    />
+  );
+}
+
+export function SupportDialog(props) {
+  const [state, setState] = React.useState({
+    supportCategory: null,
+  });
+
+  const handleRadioChange = (event) => {
+    const name = event.target.name;
+    setState({
+      ...state,
+      [name]: event.target.value,
+    });
+  };
+
+  const content = () => (
+    <>
+      <Grid container direction="column">
+        <Grid item className="input-margin">
+          <Typography variant="body2">
+            Required fields are marked with an asterisk *.
+          </Typography>
+        </Grid>
+        <Grid item className="input-margin">
+          <TextField
+            className="input-margin"
+            id="work-email"
+            label="Work email"
+            variant="outlined"
+            fullWidth
+            margin="dense"
+            required
+          />
+        </Grid>
+        <Divider className="input-margin" />
+        <Grid item className="radio-margin">
+          <FormControl component="fieldset" required>
+            <FormLabel component="legend">
+              Help us direct your support request to the right people. Select
+              the category that best fits your support request.
+            </FormLabel>
+            <RadioGroup
+              id="supportCategory"
+              value={state.supportCategory}
+              name="supportCategory"
+              onChange={handleRadioChange}
+            >
+              <FormControlLabel
+                value="account"
+                control={<Radio color="primary" />}
+                label="Sign in / Register for an account"
+              />
+              <FormControlLabel
+                value="aaw"
+                control={<Radio color="primary" />}
+                label="AAW dashboard or tools"
+              />
+              <FormControlLabel
+                value="cae"
+                control={<Radio color="primary" />}
+                label="CAE dashboard or tools"
+              />
+              <FormControlLabel
+                value="other"
+                control={<Radio color="primary" />}
+                label="Other"
+              />
+              {state.supportCategory === 'other' && (
+                <TextField
+                  className="ml-4 mb-1"
+                  id="other-specify"
+                  label="Please specify"
+                  variant="outlined"
+                  margin="dense"
+                  required
+                />
+              )}
+            </RadioGroup>
+          </FormControl>
+        </Grid>
+        <Grid item className="input-margin">
+          <TextField
+            id="help"
+            label="What do you need help with?"
+            multiline
+            rows={4}
+            variant="outlined"
+            fullWidth
+            required
+          />
+        </Grid>
+      </Grid>
+    </>
+  );
+
+  return (
+    <Dialog
+      id="support-dialog"
+      open={props.open}
+      title="Contact the support team"
+      content={content()}
+      primaryButton="Submit"
+      secondaryButton="Cancel"
+      handlePrimaryClick={props.toggleDialog}
+      handleSecondaryClick={props.toggleDialog}
+      toggleDialog={props.toggleDialog}
     />
   );
 }
