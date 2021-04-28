@@ -8,6 +8,8 @@ import {
   Divider,
   Breadcrumbs,
   Typography,
+  MenuItem,
+  ListItemText,
   // Link,
 } from '@material-ui/core';
 import {SM_SCREEN} from '../../../Theme/constants';
@@ -22,7 +24,6 @@ import {
   mdiMenuDown,
 } from '@mdi/js';
 import {Menu} from '../../CommonComponents/Menu';
-import {MenuItem} from '../../CommonComponents/MenuItem';
 
 const useStyles = makeStyles((theme) => ({
   appBar: {
@@ -94,46 +95,44 @@ function AppBar(props) {
 
   const accountMenuItems = () => {
     return [
-      <MenuItem
-        handleClick={() => closeMenu('menuAnchor')}
-        key="7"
-        content={'Profile'}
-      />,
-      <MenuItem
-        handleClick={() => closeMenu('menuAnchor')}
-        key="8"
-        content={'Sign out'}
-      />,
+      <MenuItem onClick={() => closeMenu('menuAnchor')} key="1">
+        <ListItemText
+          primary={<Typography variant="body2">Profile</Typography>}
+        />
+      </MenuItem>,
+      <MenuItem onClick={() => closeMenu('menuAnchor')} key="2">
+        <ListItemText
+          primary={<Typography variant="body2">Sign out</Typography>}
+        />
+      </MenuItem>,
     ];
   };
 
   const mobileMenuItems = () => {
     return [
-      <MenuItem
-        handleClick={() => closeMenu('menuAnchor')}
-        key="1"
-        content={'AAW Dashboard'}
-      />,
-      <MenuItem
-        handleClick={() => closeMenu('menuAnchor')}
-        key="2"
-        content={'CAE Dashboard'}
-      />,
-      <MenuItem
-        handleClick={() => closeMenu('menuAnchor')}
-        key="3"
-        content={'Help'}
-      />,
-      <MenuItem
-        handleClick={() => closeMenu('menuAnchor')}
-        key="4"
-        content={'Feedback'}
-      />,
-      <MenuItem
-        handleClick={() => closeMenu('menuAnchor')}
-        key="5"
-        content={'Français'}
-      />,
+      <MenuItem onClick={() => closeMenu('menuAnchor')} key="3">
+        <ListItemText
+          primary={<Typography variant="body2">AAW Dashboard</Typography>}
+        />
+      </MenuItem>,
+      <MenuItem onClick={() => closeMenu('menuAnchor')} key="4">
+        <ListItemText
+          primary={<Typography variant="body2">CAE Dashboard</Typography>}
+        />
+      </MenuItem>,
+      <MenuItem onClick={() => closeMenu('menuAnchor')} key="5">
+        <ListItemText primary={<Typography variant="body2">Help</Typography>} />
+      </MenuItem>,
+      <MenuItem onClick={() => closeMenu('menuAnchor')} key="6">
+        <ListItemText
+          primary={<Typography variant="body2">Feedback</Typography>}
+        />
+      </MenuItem>,
+      <MenuItem onClick={() => closeMenu('menuAnchor')} key="7">
+        <ListItemText
+          primary={<Typography variant="body2">Français</Typography>}
+        />
+      </MenuItem>,
     ];
   };
 

@@ -307,7 +307,7 @@ export function AccountDetailsDialog(props) {
               {state.accountIssuer === 'Other organization' && (
                 <TextField
                   className="input-margin ml-4"
-                  id="organization"
+                  id="issuer-organization"
                   label="Organization"
                   variant="outlined"
                   margin="dense"
@@ -399,36 +399,33 @@ export function DataUseDialog(props) {
                 label="Yes"
               />
               {state.nonPublicData === 'Yes' && (
-                <div>
-                  <Accordion
-                    defaultExpanded
-                    className={classes.additionalStepsAcc}
+                <Accordion
+                  defaultExpanded
+                  className={classes.additionalStepsAcc}
+                >
+                  <AccordionSummary
+                    expandIcon={<Icon path={mdiChevronDown} size={1} />}
+                    aria-controls="additional-steps-content"
+                    id="additional-steps-header"
                   >
-                    <AccordionSummary
-                      expandIcon={<Icon path={mdiChevronDown} size={1} />}
-                      aria-controls="additional-steps-content"
-                      id="additional-steps-header"
-                    >
-                      <Typography variant="subtitle1">
-                        Additional steps will be required after registration
-                      </Typography>
-                    </AccordionSummary>
-                    <AccordionDetails>
-                      <Typography variant="body2">
-                        For confidential microdata access, applicants will be
-                        asked to submit a Project Application after submitting
-                        this registration form. Once the Application is
-                        approved, they will be asked to complete the Guidelines
-                        for data access. Requests for this type of access will
-                        be assessed on a case by case basis. Confidential
-                        microdata access may still be accessed in a Research
-                        Data Centre or Federal Research Data Centre. Please
-                        visit the Research Data Centre website for more
-                        information.
-                      </Typography>
-                    </AccordionDetails>
-                  </Accordion>
-                </div>
+                    <Typography variant="subtitle1" component="h3">
+                      Additional steps will be required after registration
+                    </Typography>
+                  </AccordionSummary>
+                  <AccordionDetails>
+                    <Typography variant="body2">
+                      For confidential microdata access, applicants will be
+                      asked to submit a Project Application after submitting
+                      this registration form. Once the Application is approved,
+                      they will be asked to complete the Guidelines for data
+                      access. Requests for this type of access will be assessed
+                      on a case by case basis. Confidential microdata access may
+                      still be accessed in a Research Data Centre or Federal
+                      Research Data Centre. Please visit the Research Data
+                      Centre website for more information.
+                    </Typography>
+                  </AccordionDetails>
+                </Accordion>
               )}
               <FormControlLabel
                 value="No"
