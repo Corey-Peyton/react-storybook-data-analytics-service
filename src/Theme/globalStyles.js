@@ -409,6 +409,14 @@ export const useStyles = makeStyles({
         marginRight: 0,
       },
     },
+    '.border-top': {
+      borderTop: '1px solid',
+      borderTopColor: theme.palette.divider,
+    },
+    '.border-bottom': {
+      borderBottom: '1px solid',
+      borderBottomColor: theme.palette.divider,
+    },
     '.mb-6': {
       marginBottom: theme.spacing(6),
     },

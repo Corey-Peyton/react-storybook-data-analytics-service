@@ -36,7 +36,7 @@ const useStyles = makeStyles((theme) => ({
     display: 'block',
   },
   additionalStepsAcc: {
-    margin: [theme.spacing(0, 0, 0, 4), '!important'],
+    margin: [theme.spacing(2, 0, 2, 4), '!important'],
   },
 }));
 
@@ -401,7 +401,7 @@ export function DataUseDialog(props) {
               {state.nonPublicData === 'Yes' && (
                 <Accordion
                   defaultExpanded
-                  className={classes.additionalStepsAcc}
+                  className={`${classes.additionalStepsAcc} border-top`}
                 >
                   <AccordionSummary
                     expandIcon={<Icon path={mdiChevronDown} size={1} />}

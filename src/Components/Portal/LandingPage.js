@@ -32,10 +32,6 @@ const useStyles = makeStyles((theme) => ({
     height: '100%',
     boxSizing: 'border-box',
   },
-  accordion: {
-    borderTop: '1px solid',
-    borderTopColor: theme.palette.divider,
-  },
   cardContent: {
     marginRight: theme.spacing(-4),
   },
@@ -92,7 +88,7 @@ function LandingPage(props) {
                       Azure services, including Databricks and AzureML. The AAW
                       is entirely self-serve.
                     </Typography>
-                    <Accordion className={classes.accordion}>
+                    <Accordion className="border-top">
                       <AccordionSummary
                         expandIcon={<Icon path={mdiChevronDown} size={1} />}
                         aria-controls="aaw-tools-content"
@@ -186,7 +182,7 @@ function LandingPage(props) {
                       and data visualization capabilities, this environment is
                       suitable for a variety of statistical software.
                     </Typography>
-                    <Accordion className={classes.accordion}>
+                    <Accordion className="border-top">
                       <AccordionSummary
                         expandIcon={<Icon path={mdiChevronDown} size={1} />}
                         aria-controls="cae-tools-content"
