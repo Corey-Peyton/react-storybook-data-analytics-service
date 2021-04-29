@@ -266,7 +266,7 @@ export default function DashboardPageResearcher() {
           </AppBar>
           <TabPanel value={value} index={0} className={classes.tabPanel}>
             <TableContainerComponent
-              status="active"
+              statusHead="active"
               filteredRows={filteredRows}
               headCells={headCells}
               contextSummaryClick={toggleSummaryDrawer}
@@ -276,7 +276,7 @@ export default function DashboardPageResearcher() {
           </TabPanel>
           <TabPanel value={value} index={1} className={classes.tabPanel}>
             <TableContainerComponent
-              status="withdrawn"
+              statusHead="withdrawn"
               filteredRows={filteredRows}
               headCells={headCells}
               contextSummaryClick={toggleSummaryDrawer}
@@ -286,7 +286,7 @@ export default function DashboardPageResearcher() {
           </TabPanel>
           <TabPanel value={value} index={2} className={classes.tabPanel}>
             <TableContainerComponent
-              status="approved"
+              statusHead="approved"
               filteredRows={filteredRows}
               headCells={headCells}
               contextSummaryClick={toggleSummaryDrawer}
@@ -296,7 +296,7 @@ export default function DashboardPageResearcher() {
           </TabPanel>
           <TabPanel value={value} index={3} className={classes.tabPanel}>
             <TableContainerComponent
-              status="denied"
+              statusHead="denied"
               filteredRows={filteredRows}
               headCells={headCells}
               contextSummaryClick={toggleSummaryDrawer}

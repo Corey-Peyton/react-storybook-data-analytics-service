@@ -24,8 +24,8 @@ import {
 } from '@mdi/js';
 
 import {
-  DialogAssigneeDetails,
   DialogRequesterDetails,
+  DialogAssigneeDetails,
 } from '../../CommonComponents/DialogBox';
 import {ActionsMenu} from './ContextMenu';
 import DashboardTableHead from './DashboardTableHead';
@@ -101,15 +101,15 @@ export default function TableContainerComponent(props) {
     contextSummaryClick,
     contextStatusClick,
     toggleManageTeamDrawer,
+    statusHead,
   } = props;
   const [order, setOrder] = React.useState('asc');
   const [orderBy, setOrderBy] = React.useState('calories');
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(10);
   const [open, setOpen] = React.useState({
-    dialogAssigneeDetails: false,
     dialogRequesterDetails: false,
-    role: '',
+    dialogAssigneeDetails: false,
   });
   const {t} = useTranslation();
   const classes = useStyles();
@@ -346,15 +346,15 @@ export default function TableContainerComponent(props) {
                       lead={row.lead}
                       support={row.support}
                       role={role}
-                      toggleDialog={(e) => {
-                        e.stopPropagation();
+                      statusHead={row.statusHead}
+                      toggleManageTeamDrawer={toggleManageTeamDrawer}
+                      clickHandler={(e) => {
                         toggleDialog(
                             'dialogAssigneeDetails',
                             !open.dialogAssigneeDetails,
                             e,
                         );
                       }}
-                      toggleManageTeamDrawer={toggleManageTeamDrawer}
                     />
                     <TableCell>
                       <Typography variant="body2" noWrap={true}>
@@ -399,12 +399,6 @@ export default function TableContainerComponent(props) {
         onChangePage={handleChangePage}
         onChangeRowsPerPage={handleChangeRowsPerPage}
       />
-      <DialogAssigneeDetails
-        open={open.dialogAssigneeDetails}
-        toggleDialog={(e) =>
-          toggleDialog('dialogAssigneeDetails', !open.dialogAssigneeDetails, e)
-        }
-      />
       <DialogRequesterDetails
         open={open.dialogRequesterDetails}
         toggleDialog={(e) =>
@@ -414,6 +408,14 @@ export default function TableContainerComponent(props) {
               e,
           )
         }
+      />
+      <DialogAssigneeDetails
+        open={open.dialogAssigneeDetails}
+        toggleDialog={(e) => {
+          toggleDialog('dialogAssigneeDetails', !open.dialogAssigneeDetails, e);
+        }}
+        role={role}
+        statusHead={statusHead}
       />
     </TableContainer>
   );

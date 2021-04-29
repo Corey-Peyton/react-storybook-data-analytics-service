@@ -94,17 +94,17 @@ const useStyles = makeStyles((theme) => ({
   },
   vettingRow: {
     'display': 'flex',
-    'margin': theme.spacing(1.5, 0),
+    'padding': theme.spacing(1.5, 0),
     'flexFlow': 'row',
     'height': '100%',
     'justifyContent': 'center',
     'width': '100%',
     'alignItems': 'center',
     '&:first-child': {
-      marginTop: 0,
+      paddingTop: 0,
     },
     '&:last-child': {
-      marginBottom: 0,
+      paddingBottom: 0,
     },
   },
   vettingColumn: {
@@ -227,12 +227,22 @@ export function DialogRequesterDetails(props) {
 
 // ////////////////////////////////////////// ASSIGNEE DETAILS
 export function DialogAssigneeDetails(props) {
-  const {open, toggleDialog, role} = props;
+  const {open, toggleDialog, role, statusHead} = props;
   const {t} = useTranslation();
   const classes = useStyles();
 
   const handleClick = (e) => {
     e.stopPropagation();
+  };
+
+  const resolved = () => {
+    if (role === 'analyst') {
+      if (statusHead === 'approved' || statusHead === 'denied') {
+        return true;
+      }
+    } else {
+      return false;
+    }
   };
 
   return (
@@ -261,24 +271,93 @@ export function DialogAssigneeDetails(props) {
         </DialogTitle>
         <Divider />
         <DialogContent>
-          <div className={classes.vettingSection}>
-            <div className={classes.vettingRow}>
-              <div className={clsx(classes.vettingColumn, classes.widthAuto)}>
-                <Avatar className={classes.avatar}>BB</Avatar>
-              </div>
-              <div className={classes.vettingColumn}>
-                <Typography className={classes.vettingText} variant="body2">
-                  Bill Brian
-                </Typography>
-                <Typography className={classes.vettingText} variant="body2">
-                  brian.bill@cloud.statcan.ca
-                </Typography>
-                <Typography className={classes.vettingText} variant="body2">
-                  +1 (999) 999 9999
-                </Typography>
+          {!resolved() && (
+            <div className={classes.vettingSection}>
+              <div className={classes.vettingRow}>
+                <div className={clsx(classes.vettingColumn, classes.widthAuto)}>
+                  <Avatar className={classes.avatar}>AA</Avatar>
+                </div>
+                <div className={classes.vettingColumn}>
+                  <Typography className={classes.vettingText} variant="body2">
+                    Alfie Allen
+                  </Typography>
+                  <Typography className={classes.vettingText} variant="body2">
+                    alfie.allen@cloud.statcan.ca
+                  </Typography>
+                  <Typography className={classes.vettingText} variant="body2">
+                    +1 (999) 999 9999
+                  </Typography>
+                </div>
               </div>
             </div>
-          </div>
+          )}
+          {resolved() && (
+            <div className={classes.vettingSection}>
+              <div className={classes.vettingRow}>
+                <div className={classes.vettingColumn}>
+                  <Typography variant="subtitle1">{t('Assignees')}</Typography>
+                </div>
+              </div>
+              <div className={classes.vettingRow}>
+                <div className={classes.vettingColumn}>
+                  <Typography variant="subtitle2">{t('Lead')}</Typography>
+                </div>
+              </div>
+              <div className={classes.vettingRow}>
+                <div className={clsx(classes.vettingColumn, classes.widthAuto)}>
+                  <Avatar className={classes.avatar}>BB</Avatar>
+                </div>
+                <div className={classes.vettingColumn}>
+                  <Typography className={classes.vettingText} variant="body2">
+                    Bill Brian
+                  </Typography>
+                  <Typography className={classes.vettingText} variant="body2">
+                    brian.bill@cloud.statcan.ca
+                  </Typography>
+                  <Typography className={classes.vettingText} variant="body2">
+                    +1 (999) 999 9999
+                  </Typography>
+                </div>
+              </div>
+              <div className={classes.vettingRow}>
+                <div className={classes.vettingColumn}>
+                  <Typography variant="subtitle2">{t('Support')}</Typography>
+                </div>
+              </div>
+              <div className={classes.vettingRow}>
+                <div className={clsx(classes.vettingColumn, classes.widthAuto)}>
+                  <Avatar className={classes.avatar}>CC</Avatar>
+                </div>
+                <div className={classes.vettingColumn}>
+                  <Typography className={classes.vettingText} variant="body2">
+                    Charlie Cox
+                  </Typography>
+                  <Typography className={classes.vettingText} variant="body2">
+                    charlie.cox@cloud.statcan.ca
+                  </Typography>
+                  <Typography className={classes.vettingText} variant="body2">
+                    +1 (999) 999 9999
+                  </Typography>
+                </div>
+              </div>
+              <div className={classes.vettingRow}>
+                <div className={clsx(classes.vettingColumn, classes.widthAuto)}>
+                  <Avatar className={classes.avatar}>DD</Avatar>
+                </div>
+                <div className={classes.vettingColumn}>
+                  <Typography className={classes.vettingText} variant="body2">
+                    Darren Darrelson
+                  </Typography>
+                  <Typography className={classes.vettingText} variant="body2">
+                    darren.darrelson@cloud.statcan.ca
+                  </Typography>
+                  <Typography className={classes.vettingText} variant="body2">
+                    +1 (999) 999 9999
+                  </Typography>
+                </div>
+              </div>
+            </div>
+          )}
         </DialogContent>
         <Divider />
         <DialogActions>

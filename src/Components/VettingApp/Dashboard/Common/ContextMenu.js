@@ -92,8 +92,6 @@ export function ActionsMenu(props) {
     dialogAssignAsSupport: false,
     dialogDelete: false,
     dialogWithdraw: false,
-    role: '',
-    action: '',
   });
 
   const ariaControls = `actions-menu-${controls}`;
@@ -128,9 +126,9 @@ export function ActionsMenu(props) {
     toggleManageTeamDrawer(e);
   };
 
-  const toggleDialog = (state, value, e, action) => {
+  const toggleDialog = (state, value, e) => {
     e.stopPropagation();
-    setOpen({...open, [state]: value, action: action});
+    setOpen({...open, [state]: value});
     handleClose(e);
   };
 
@@ -916,6 +914,8 @@ export function ActionsMenu(props) {
           toggleDialog('dialogAssigneeDetails', !open.dialogAssigneeDetails, e)
         }
         open={open.dialogAssigneeDetails}
+        role={role}
+        statusHead={statusHead}
       />
       <DialogNoLead
         toggleDialog={(e) =>
