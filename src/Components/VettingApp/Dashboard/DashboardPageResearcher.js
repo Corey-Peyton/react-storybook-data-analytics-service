@@ -18,7 +18,7 @@ import BypassBlocks from '../../BypassBlocks';
 import {requestListResearchers} from '../../../Data/fakeData';
 import {DRAWER_WIDTH} from './Common/ProjectsDrawer';
 import {FOOT_H} from '../../../Theme/constants';
-import {DialognNewRequestTitle} from '../CommonComponents/DialogBox';
+import {DialogNewRequestTitle} from '../CommonComponents/DialogBox';
 import FloatingSupportButton from '../CommonComponents/Support';
 
 const useStyles = makeStyles((theme) => ({
@@ -306,7 +306,7 @@ export default function DashboardPageResearcher() {
           </TabPanel>
         </Paper>
         <Footer open={open.projectsDrawer} />
-        <DialognNewRequestTitle
+        <DialogNewRequestTitle
           open={open.newRequest}
           role="researcher"
           toggleDialog={() => toggleDialog('newRequest', !open.newRequest)}

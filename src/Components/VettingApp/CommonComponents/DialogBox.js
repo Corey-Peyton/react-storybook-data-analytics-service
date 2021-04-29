@@ -2056,7 +2056,7 @@ export function DialogApprove(props) {
 }
 
 // ////////////////////////////////////////// NEW REQUEST TITLE
-export function DialognNewRequestTitle(props) {
+export function DialogNewRequestTitle(props) {
   const classes = useStyles();
   const {t} = useTranslation();
   const history = useHistory();
