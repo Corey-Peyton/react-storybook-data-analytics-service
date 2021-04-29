@@ -1,5 +1,7 @@
 import React from 'react';
 import DateFnsUtils from '@date-io/date-fns';
+import {analystList} from '../../Data/fakeData';
+import FormHelperText from '@material-ui/core/FormHelperText';
 import {
   KeyboardDatePicker,
   MuiPickersUtilsProvider,
@@ -20,10 +22,8 @@ import {
   IconButton,
   Checkbox,
   Grid,
-  Tooltip,
   FormGroup,
 } from '@material-ui/core';
-import InfoIcon from '@material-ui/icons/Info';
 import CloseIcon from '@material-ui/icons/Close';
 import Autocomplete from '@material-ui/lab/Autocomplete';
 
@@ -75,20 +75,6 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const useStylesBootstrap = makeStyles((theme) => ({
-  arrow: {
-    color: theme.palette.common.black,
-  },
-  tooltip: {
-    backgroundColor: theme.palette.common.black,
-  },
-}));
-
-function BootstrapTooltip(props) {
-  const classes = useStylesBootstrap();
-
-  return <Tooltip arrow classes={classes} {...props} />;
-}
 
 export function EditVirtualMachine(props) {
   const classes = useStyles();
@@ -98,7 +84,7 @@ export function EditVirtualMachine(props) {
       <AppBar position="static" className={classes.appBar} color="default">
         <Toolbar>
           <Typography variant="h6" component="h2" className={classes.title}>
-            Edit virtual machine details
+            Update virtual machine details
           </Typography>
           <IconButton
             aria-label="Close edit virtual machine"
@@ -127,7 +113,7 @@ export function EditVirtualMachine(props) {
           color="primary"
           onClick={props.editVirtualMachine}
         >
-          Edit virtual machine details
+          Update
         </Button>
       </div>
     </React.Fragment>
@@ -171,7 +157,7 @@ export function AddVirtualMachine(props) {
           color="primary"
           onClick={props.addVirtualMachine}
         >
-          Add virtual machine details
+          Add
         </Button>
       </div>
     </React.Fragment>
@@ -383,23 +369,25 @@ function VirtualMachineDetails(props) {
 
   return (
     <>
-      <Typography variant="subtitle1">User details</Typography>
-      <TextField
-        className={classes.inputMargin}
-        margin="dense"
-        id="cloudemail"
-        label="Cloud account email"
-        variant="outlined"
-        fullWidth
-        onCut={(e) => disableCutCopyPaste(e, 'cut', 'cloudemail')}
-        onCopy={(e) => disableCutCopyPaste(e, 'copy', 'cloudemail')}
-        onPaste={(e) => disableCutCopyPaste(e, 'paste', 'cloudemail')}
-        onClick={() => toggleHelperText('cloudemail')}
-        onBlur={() => toggleHelperText('cloudemail')}
-        onFocus={() => toggleHelperText('cloudemail')}
-        defaultValue={state.email.text}
-        error={Boolean(state.cloudemail.errorText)}
-        helperText={state.cloudemail.helperText}
+      <Typography variant="subtitle1" className="mb-2">
+        User details
+      </Typography>
+      <Typography variant="body2" className="mb-2">
+        If the cloud account email cannot be found it means it does not exist in
+        Azure Active Directory. Submit a Jira ticket to the Cloud Jira project
+        for assistance.
+      </Typography>
+      <Autocomplete
+        id="combo-box-demo"
+        options={analystList.map((option) => option.email)}
+        renderInput={(params) => (
+          <TextField
+            {...params}
+            label="Cloud email"
+            className={classes.inputMargin}
+            variant="outlined"
+          />
+        )}
       />
       <TextField
         className={classes.inputMargin}
@@ -469,6 +457,7 @@ function VirtualMachineDetails(props) {
           value={state.selectedFromDate}
           inputVariant="outlined"
           onChange={handleFromDateChange}
+          disablePast
           PopoverProps={{
             'aria-modal': 'true',
           }}
@@ -595,14 +584,7 @@ function VirtualMachineDetails(props) {
               control={<Checkbox color="primary" />}
               label="Default tools"
             />
-          </Grid>
-          <Grid item>
-            <BootstrapTooltip
-              className={classes.tooltipLabel}
-              title="Default tools (Adobe Reader DC, Java, LibreOffice, Office 2019, Power BI, ProjectLibre, Python, R, RStudio, RTools, VSCode"
-            >
-              <InfoIcon />
-            </BootstrapTooltip>
+            <FormHelperText>Default tools (Adobe Reader DC, Java, LibreOffice, Office 2019, Power BI, ProjectLibre, Python, R, RStudio, RTools, VSCode</FormHelperText>
           </Grid>
         </Grid>
         <Grid container>
@@ -611,10 +593,8 @@ function VirtualMachineDetails(props) {
               control={<Checkbox color="primary" />}
               label="SAS"
             />
+            <FormHelperText>Includes SAS 9.4 and SAS Enterprise Guide</FormHelperText>
           </Grid>
-          <BootstrapTooltip title="Includes SAS 9.4 and SAS Enterprise Guide">
-            <InfoIcon />
-          </BootstrapTooltip>
         </Grid>
         <FormControlLabel control={<Checkbox color="primary" />} label="SPSS" />
         <FormControlLabel

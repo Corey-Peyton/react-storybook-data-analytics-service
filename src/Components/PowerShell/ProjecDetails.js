@@ -2,6 +2,7 @@ import React from 'react';
 import {makeStyles} from '@material-ui/core/styles';
 import FormGroup from '@material-ui/core/FormGroup';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
+import FormHelperText from '@material-ui/core/FormHelperText';
 import Checkbox from '@material-ui/core/Checkbox';
 import DateFnsUtils from '@date-io/date-fns';
 import {
@@ -12,13 +13,11 @@ import {
   TextField,
   FormLabel,
   Grid,
-  Tooltip,
   FormControl,
   RadioGroup,
   Radio,
 } from '@material-ui/core';
 import Alert from '@material-ui/lab/Alert';
-import InfoIcon from '@material-ui/icons/Info';
 import {useTranslation} from 'react-i18next';
 
 const useStyles = makeStyles((theme) => ({
@@ -42,23 +41,20 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const useStylesBootstrap = makeStyles((theme) => ({
-  arrow: {
-    color: theme.palette.common.black,
-  },
-  tooltip: {
-    backgroundColor: theme.palette.common.black,
-  },
-}));
-
 function ProjectInformation(props) {
   const handleFromDateChange = (date) => {
     setState({...state, selectedFromDate: date});
+  };
+  const handleToDateChange = (date) => {
+    setState({...state, selectedToDate: date});
   };
   const classes = useStyles();
   const {t} = useTranslation();
 
   const [state, setState] = React.useState({
+    selectedFromDate: null,
+    selectedToDate: null,
+    selectedDateType: 10,
     primaryinvestigator: {
       text: '',
       errorText: '',
@@ -192,12 +188,6 @@ function ProjectInformation(props) {
     }
   };
 
-  function BootstrapTooltip(props) {
-    const classes = useStylesBootstrap();
-
-    return <Tooltip arrow classes={classes} {...props} />;
-  }
-
   return (
     <React.Fragment>
       <Grid container xs={10}>
@@ -256,40 +246,38 @@ function ProjectInformation(props) {
         <Grid item>
           <MuiPickersUtilsProvider utils={DateFnsUtils}>
             <KeyboardDatePicker
-              id="contract-start-date"
-              className={classes.datePicker}
+              id="start-date"
               variant="inline"
-              label={'Contract start date'}
-              InputProps={{readOnly: true}}
-              autoOk
               margin="dense"
-              format="mm/dd/yyyy"
+              className={classes.datePicker}
+              format="MM/dd/yyyy"
+              label={t('Contract start date')}
               value={state.selectedFromDate}
-              inputVariant="outlined"
+              maxDate={state.selectedToDate}
+              autoOk
+              disablePast
               onChange={handleFromDateChange}
+              inputVariant="outlined"
               PopoverProps={{
                 'aria-modal': 'true',
               }}
               KeyboardButtonProps={{
-                'aria-label': 'Select contract start date',
+                'aria-label': t('Select start date'),
               }}
             />
             <KeyboardDatePicker
-              id="contract-end-date"
+              id="end-date"
               variant="inline"
-              InputProps={{readOnly: true}}
-              autoOk
               margin="dense"
-              format="mm/dd/yyyy"
-              label={'Contract end date'}
-              value={state.selectedFromDate}
+              format="MM/dd/yyyy"
+              label={t('Contract end date')}
+              value={state.selectedToDate}
+              minDate={state.selectedFromDate}
+              onChange={handleToDateChange}
+              autoOk
               inputVariant="outlined"
-              onChange={handleFromDateChange}
-              PopoverProps={{
-                'aria-modal': 'true',
-              }}
               KeyboardButtonProps={{
-                'aria-label': 'Select contract start date',
+                'aria-label': t('Select end date'),
               }}
             />
           </MuiPickersUtilsProvider>
@@ -305,15 +293,13 @@ function ProjectInformation(props) {
                   control={<Checkbox color="primary" />}
                   label="Default tools"
                 />
+                <FormHelperText>
+                  Default tools (Adobe Reader DC, Java, LibreOffice, Office
+                  2019, Power BI, ProjectLibre, Python, R, RStudio, RTools,
+                  VSCode
+                </FormHelperText>
               </Grid>
-              <Grid item>
-                <BootstrapTooltip
-                  className={classes.tooltipLabel}
-                  title="Default tools (Adobe Reader DC, Java, LibreOffice, Office 2019, Power BI, ProjectLibre, Python, R, RStudio, RTools, VSCode"
-                >
-                  <InfoIcon />
-                </BootstrapTooltip>
-              </Grid>
+              <Grid item></Grid>
             </Grid>
             <Grid container>
               <Grid>
@@ -321,10 +307,10 @@ function ProjectInformation(props) {
                   control={<Checkbox color="primary" />}
                   label="SAS"
                 />
+                <FormHelperText>
+                  Includes SAS 9.4 and SAS Enterprise Guide
+                </FormHelperText>
               </Grid>
-              <BootstrapTooltip title="Includes SAS 9.4 and SAS Enterprise Guide">
-                <InfoIcon />
-              </BootstrapTooltip>
             </Grid>
             <FormControlLabel
               control={<Checkbox color="primary" />}

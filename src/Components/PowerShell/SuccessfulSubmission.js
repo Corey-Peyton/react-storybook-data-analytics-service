@@ -74,15 +74,15 @@ function SuccessfulSubmission(props) {
               </Alert>
             </Collapse>
             <div>
-              <Typography variant="body2" className="mb-2">
+              <Typography variant="body2" className="mb-2  mt-2">
                 Your request to create a vDL workspace has been submitted and is
                 being processed. You will receive an email once the vDL
                 workspace is ready.
               </Typography>
               <Typography variant="body2" className="mb-2">
-                Your Virtual Machine will appear in the DevTest Lab named as
+                Your Virtual Machine will appear in the 'DevTest Lab' named as
                 'STC-0412-ST'. Please be patient when waiting for your Virtual
-                Machine to be ready. Although they may be visible to you with
+                Machine to be ready. They may be visible to you with
                 the status of 'Running', this does not mean they are ready.
               </Typography>
               <Typography variant="body2" className="mb-2">
