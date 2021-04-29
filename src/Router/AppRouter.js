@@ -20,7 +20,7 @@ import VettingRequestResearcher from '../Components/VettingApp/VettingRequestRes
 import DashboardPageResearcher from '../Components/VettingApp/Dashboard/DashboardPageResearcher';
 import DashboardPageAnalyst from '../Components/VettingApp/Dashboard/DashboardPageAnalyst';
 import PowerShell from '../Components/PowerShell';
-
+import SuccessfulSubmission from '../Components/PowerShell/SuccessfulSubmission';
 import {useStyles} from '../Theme/globalStyles';
 import {theme} from '../Theme/theme';
 import Index from './Index';
@@ -42,7 +42,8 @@ export default function AppRouter() {
           <Route path="/sign-in/create-account" component={CreateAccountPage} />
           <Route path="/projects" component={ProjectsPage} />
           <Route path="/results" component={ResultsPage} exact={true} />
-          <Route path="/Powershell" component={PowerShell}/>
+          <Route path="/Powershell" component={PowerShell} exact={true} />
+          <Route path="/Powershell/SuccessfulSubmission" component={SuccessfulSubmission} exact={true} />
           <Route
             path="/vetting-app/dashboard-researcher"
             component={DashboardPageResearcher}

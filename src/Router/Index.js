@@ -42,6 +42,9 @@ function Index() {
           <Link to="/PowerShell/">PowerShell</Link>
         </li>
         <li>
+          <Link to="/PowerShell/Success">PowerShell success</Link>
+        </li>
+        <li>
           <strong>Vetting app</strong>
         </li>
         <ul>
