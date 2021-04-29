@@ -23,7 +23,10 @@ import {
   mdiEmailEditOutline,
 } from '@mdi/js';
 
-import {DialogInfo} from '../../CommonComponents/DialogBox';
+import {
+  DialogAssigneeDetails,
+  DialogRequesterDetails,
+} from '../../CommonComponents/DialogBox';
 import {ActionsMenu} from './ContextMenu';
 import DashboardTableHead from './DashboardTableHead';
 import AnalystCell from './AnalystCell';
@@ -104,7 +107,8 @@ export default function TableContainerComponent(props) {
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(10);
   const [open, setOpen] = React.useState({
-    info: false,
+    dialogAssigneeDetails: false,
+    dialogRequesterDetails: false,
     role: '',
   });
   const {t} = useTranslation();
@@ -126,12 +130,10 @@ export default function TableContainerComponent(props) {
     setPage(0);
   };
 
-  function toggleDialog(value, e, role) {
+  const toggleDialog = (state, value, e) => {
     e.stopPropagation();
-    if (value === 'info') {
-      setOpen({...open, info: !open.info, role: role});
-    }
-  }
+    setOpen({...open, [state]: value});
+  };
 
   const navigateToRequest = () => {
     history.push({
@@ -332,7 +334,11 @@ export default function TableContainerComponent(props) {
                         label={row.researcher}
                         onClick={(e) => {
                           e.stopPropagation();
-                          toggleDialog('info', e, 'requester');
+                          toggleDialog(
+                              'dialogRequesterDetails',
+                              !open.dialogRequesterDetails,
+                              e,
+                          );
                         }}
                       />
                     </TableCell>
@@ -342,7 +348,11 @@ export default function TableContainerComponent(props) {
                       role={role}
                       toggleDialog={(e) => {
                         e.stopPropagation();
-                        toggleDialog('info', e, 'assignee');
+                        toggleDialog(
+                            'dialogAssigneeDetails',
+                            !open.dialogAssigneeDetails,
+                            e,
+                        );
                       }}
                       toggleManageTeamDrawer={toggleManageTeamDrawer}
                     />
@@ -389,11 +399,20 @@ export default function TableContainerComponent(props) {
         onChangePage={handleChangePage}
         onChangeRowsPerPage={handleChangeRowsPerPage}
       />
-      <DialogInfo
-        open={open.info}
-        toggleDialog={(e) => toggleDialog('info', e, open.role)}
-        header={
-          open.role === 'assignee' ? 'Assignee details' : 'Requester details'
+      <DialogAssigneeDetails
+        open={open.dialogAssigneeDetails}
+        toggleDialog={(e) =>
+          toggleDialog('dialogAssigneeDetails', !open.dialogAssigneeDetails, e)
+        }
+      />
+      <DialogRequesterDetails
+        open={open.dialogRequesterDetails}
+        toggleDialog={(e) =>
+          toggleDialog(
+              'dialogRequesterDetails',
+              !open.dialogRequesterDetails,
+              e,
+          )
         }
       />
     </TableContainer>

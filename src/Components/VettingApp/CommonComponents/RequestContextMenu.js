@@ -14,7 +14,8 @@ import {
   SnackbarUnassign,
 } from './Snackbars';
 import {
-  DialogInfo,
+  DialogRequesterDetails,
+  DialogAssigneeDetails,
   DialogAssignAsSupport,
   DialogNoLead,
   DialogAssignAsLead,
@@ -62,8 +63,8 @@ export function ActionsMenu(props) {
     snackbarDelete: false,
     snackbarUnassign: false,
     dialogAssign: false,
-    dialogInfoAssignee: false,
-    dialogInfoRequester: false,
+    dialogAssigneeDetails: false,
+    dialogRequesterDetails: false,
     dialogNoLeadAssignSupport: false,
     dialogAssignAsSupport: false,
     dialogNoLeadUnassign: false,
@@ -134,7 +135,7 @@ export function ActionsMenu(props) {
       <MenuItem
         onClick={(e) => {
           e.stopPropagation();
-          toggleDialog('dialogInfoAssignee', !open.dialogInfo, e);
+          toggleDialog('dialogAssigneeDetails', !open.dialogAssigneeDetails, e);
         }}
       >
         <ListItemText
@@ -151,7 +152,11 @@ export function ActionsMenu(props) {
       <MenuItem
         onClick={(e) => {
           e.stopPropagation();
-          toggleDialog('dialogInfoRequester', !open.dialogInfo, e);
+          toggleDialog(
+              'dialogRequesterDetails',
+              !open.dialogRequesterDetails,
+              e,
+          );
         }}
       >
         <ListItemText
@@ -427,20 +432,22 @@ export function ActionsMenu(props) {
         open={open.dialogAssign}
       />
       {/* Assignee details dialog */}
-      <DialogInfo
+      <DialogAssigneeDetails
         toggleDialog={(e) =>
-          toggleDialog('dialogInfoAssignee', !open.dialogInfoAssignee, e)
+          toggleDialog('dialogAssigneeDetails', !open.dialogAssigneeDetails, e)
         }
-        open={open.dialogInfoAssignee}
-        header={'Assignee details'}
+        open={open.dialogAssigneeDetails}
       />
       {/* Requester details dialog */}
-      <DialogInfo
+      <DialogRequesterDetails
         toggleDialog={(e) =>
-          toggleDialog('dialogInfoRequester', !open.dialogInfoRequester, e)
+          toggleDialog(
+              'dialogRequesterDetails',
+              !open.dialogRequesterDetails,
+              e,
+          )
         }
-        open={open.dialogInfoRequester}
-        header={'Requester details'}
+        open={open.dialogRequesterDetails}
       />
       {/* Delete request dialog */}
       <DialogDelete

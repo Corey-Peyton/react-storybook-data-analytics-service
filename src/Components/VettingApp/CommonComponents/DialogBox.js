@@ -159,9 +159,9 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-// ////////////////////////////////////////// ANALYST INFORMATION
-export function DialogInfo(props) {
-  const {open, toggleDialog, header} = props;
+// ////////////////////////////////////////// REQUESTER DETAILS
+export function DialogRequesterDetails(props) {
+  const {open, toggleDialog} = props;
   const {t} = useTranslation();
   const classes = useStyles();
 
@@ -182,7 +182,73 @@ export function DialogInfo(props) {
       >
         <DialogTitle id="dashboard-dialog-title">
           <div className={classes.vettingContainerTitle}>
-            <Typography variant="h6">{header} </Typography>
+            <Typography variant="h6">Requester details</Typography>
+            <IconButton
+              id="dialog-close"
+              onClick={toggleDialog}
+              edge="end"
+              aria-label="Requester information - close"
+            >
+              <CloseIcon />
+            </IconButton>
+          </div>
+        </DialogTitle>
+        <Divider />
+        <DialogContent>
+          <div className={classes.vettingSection}>
+            <div className={classes.vettingRow}>
+              <div className={clsx(classes.vettingColumn, classes.widthAuto)}>
+                <Avatar className={classes.avatar}>BB</Avatar>
+              </div>
+              <div className={classes.vettingColumn}>
+                <Typography className={classes.vettingText} variant="body2">
+                  Bill Brian
+                </Typography>
+                <Typography className={classes.vettingText} variant="body2">
+                  brian.bill@cloud.statcan.ca
+                </Typography>
+                <Typography className={classes.vettingText} variant="body2">
+                  +1 (999) 999 9999
+                </Typography>
+              </div>
+            </div>
+          </div>
+        </DialogContent>
+        <Divider />
+        <DialogActions>
+          <Button variant="contained" color="primary" onClick={toggleDialog}>
+            {t('Done')}
+          </Button>
+        </DialogActions>
+      </Dialog>
+    </React.Fragment>
+  );
+}
+
+// ////////////////////////////////////////// ASSIGNEE DETAILS
+export function DialogAssigneeDetails(props) {
+  const {open, toggleDialog, role} = props;
+  const {t} = useTranslation();
+  const classes = useStyles();
+
+  const handleClick = (e) => {
+    e.stopPropagation();
+  };
+
+  return (
+    <React.Fragment>
+      <Dialog
+        onClose={toggleDialog}
+        aria-labelledby="dashboard-dialog-title"
+        open={open}
+        className={classes.root}
+        disableBackdropClick
+        scroll="paper"
+        onClick={handleClick}
+      >
+        <DialogTitle id="dashboard-dialog-title">
+          <div className={classes.vettingContainerTitle}>
+            <Typography variant="h6">Assignee Details</Typography>
             <IconButton
               id="dialog-close"
               onClick={toggleDialog}

@@ -22,7 +22,8 @@ import {
   DialogUpdate,
   DialogDenied,
   DialogApprove,
-  DialogInfo,
+  DialogAssigneeDetails,
+  DialogRequesterDetails,
   DialogNoLead,
   DialogAssignAsLead,
   DialogAssignAsSupport,
@@ -83,7 +84,8 @@ export function ActionsMenu(props) {
     dialogUpdate: false,
     dialogDenied: false,
     dialogApprove: false,
-    dialogInfo: false,
+    dialogAssigneeDetails: false,
+    dialogRequesterDetails: false,
     dialogNoLeadUnassign: false,
     dialogNoLeadAssignSupport: false,
     dialogAssignAsLead: false,
@@ -126,9 +128,9 @@ export function ActionsMenu(props) {
     toggleManageTeamDrawer(e);
   };
 
-  const toggleDialog = (state, value, e, role, action) => {
+  const toggleDialog = (state, value, e, action) => {
     e.stopPropagation();
-    setOpen({...open, [state]: value, role: role, action: action});
+    setOpen({...open, [state]: value, action: action});
     handleClose(e);
   };
 
@@ -210,7 +212,7 @@ export function ActionsMenu(props) {
       <MenuItem
         onClick={(e) => {
           e.stopPropagation();
-          toggleDialog('dialogInfo', !open.dialogInfo, e, 'assignee');
+          toggleDialog('dialogAssigneeDetails', !open.dialogAssigneeDetails, e);
         }}
       >
         <ListItemText
@@ -227,7 +229,11 @@ export function ActionsMenu(props) {
       <MenuItem
         onClick={(e) => {
           e.stopPropagation();
-          toggleDialog('dialogInfo', !open.dialogInfo, e, 'requester');
+          toggleDialog(
+              'dialogRequesterDetails',
+              !open.dialogRequesterDetails,
+              e,
+          );
         }}
       >
         <ListItemText
@@ -895,12 +901,21 @@ export function ActionsMenu(props) {
         }
         open={open.dialogWithdraw}
       />
-      <DialogInfo
-        toggleDialog={(e) => toggleDialog('dialogInfo', !open.dialogInfo, e)}
-        open={open.dialogInfo}
-        header={
-          open.role === 'assignee' ? 'Assignee details' : 'Requester details'
+      <DialogRequesterDetails
+        toggleDialog={(e) =>
+          toggleDialog(
+              'dialogRequesterDetails',
+              !open.dialogRequesterDetails,
+              e,
+          )
         }
+        open={open.dialogRequesterDetails}
+      />
+      <DialogAssigneeDetails
+        toggleDialog={(e) =>
+          toggleDialog('dialogAssigneeDetails', !open.dialogAssigneeDetails, e)
+        }
+        open={open.dialogAssigneeDetails}
       />
       <DialogNoLead
         toggleDialog={(e) =>
