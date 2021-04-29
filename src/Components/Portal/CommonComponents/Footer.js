@@ -58,6 +58,7 @@ const Footer = React.forwardRef((props, ref) => {
               <Grid container justify="space-between" alignItems="center">
                 <Grid item className={classes.actions}>
                   <Button className="mr-2">
+                    {/* Needs to be <BrandingStatCanFr /> in french */}
                     <span lang="fr">Français</span>
                   </Button>
                   <Divider orientation="vertical" flexItem className="mr-2" />
@@ -107,18 +108,18 @@ const Footer = React.forwardRef((props, ref) => {
                   <Grid container spacing={4}>
                     <Grid item>
                       <Typography variant="body2">
-                        Updated Fed 24, 2021 (v2.0)
+                        {t('Updated Fed 24, 2021 (v2.0)')}
                       </Typography>
                     </Grid>
                     <Grid item>
                       <Typography variant="body2">
-                        Illustrations by{' '}
+                        {t('Illustrations by')}{' '}
                         <Link
                           underline="always"
                           color="inherit"
                           href="https://www.freepik.com/"
                         >
-                          Freepik
+                          {t('Freepik')}
                         </Link>
                       </Typography>
                     </Grid>

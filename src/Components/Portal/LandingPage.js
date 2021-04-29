@@ -1,4 +1,5 @@
 import React from 'react';
+import {useTranslation} from 'react-i18next';
 import {makeStyles} from '@material-ui/core/styles';
 import {
   Container,
@@ -47,11 +48,10 @@ const useStyles = makeStyles((theme) => ({
 
 function LandingPage(props) {
   const classes = useStyles();
+  const {t} = useTranslation();
 
   const mainRef = React.createRef();
   const aboutRef = React.createRef();
-
-  // const [state, setState] = React.useState({});
 
   return (
     <>
@@ -61,7 +61,7 @@ function LandingPage(props) {
         <Container maxWidth={false} className={classes.pageContainer}>
           <Banner />
           <Typography variant="h3" component="h2" className="mb-6">
-            Check out our analytics platforms
+            {t('Check out our analytics platforms')}
           </Typography>
           <Grid container spacing={6}>
             <Grid item xs={12} lg={6}>
@@ -69,24 +69,24 @@ function LandingPage(props) {
                 <Grid container alignItems="center" wrap="nowrap">
                   <Grid item className={classes.cardContent}>
                     <Typography variant="h5" component="h3" className="mb-3">
-                      Advanced Analytics Workspace (AAW)
+                      {t('Advanced Analytics Workspace (AAW)')}
                     </Typography>
                     <Button
                       className="edge-start"
                       color="primary"
                       endIcon={<Icon path={mdiArrowRight} size={1} />}
                     >
-                      Go to the AAW dashboard
+                      {t('Go to the AAW dashboard')}
                     </Button>
                     <Typography className="mt-3 mb-3">
-                      This platform enables users to analyze, share, publish,
+                      {t(`This platform enables users to analyze, share, publish,
                       and streamline their data analysis and ML problems. Use
                       Kubeflow to create workspaces with RStudio, Jupyter, or a
                       Linux Desktop (VDI) with VS Code. All workspaces provide
                       easy-access storage with MinIO, and all have R-Shiny. The
                       platform also provides pipelines and integration with
                       Azure services, including Databricks and AzureML. The AAW
-                      is entirely self-serve.
+                      is entirely self-serve.`)}
                     </Typography>
                     <Accordion className="border-top">
                       <AccordionSummary
@@ -95,57 +95,63 @@ function LandingPage(props) {
                         id="aaw-tools-header"
                       >
                         <Typography component="h4" variant="subtitle1">
-                          Available tools
+                          {t('Available tools')}
                         </Typography>
                       </AccordionSummary>
                       <AccordionDetails>
                         <ul className={classes.toolsList}>
                           <li>
-                            <Typography>R - RStudio, RShiny</Typography>
+                            <Typography>{t('R - RStudio, RShiny')}</Typography>
                           </li>
                           <li>
                             <Typography>
-                              Python Development - JupyterLab
+                              {t('Python Development - JupyterLab')}
                             </Typography>
                           </li>
                           <li>
                             <Typography>
-                              Geomatics Desktop - Linux Desktop (VDI) with VS
-                              Code and QGIS
+                              {t(`Geomatics Desktop - Linux Desktop (VDI) with VS
+                              Code and QGIS`)}
                             </Typography>
                           </li>
                           <li>
                             <Typography>
-                              Management Portal - Kubeflow & Kubeflow Pipelines
+                              {t(
+                                  'Management Portal - Kubeflow & Kubeflow Pipelines',
+                              )}
                             </Typography>
                           </li>
                           <li>
                             <Typography>
-                              Cost Monitoring & Reporting - Kubecost
+                              {t('Cost Monitoring & Reporting - Kubecost')}
                             </Typography>
                           </li>
                           <li>
-                            <Typography>Storage - MinIO</Typography>
-                          </li>
-                          <li>
-                            <Typography>Model Management - MLflow</Typography>
+                            <Typography>
+                              {t('Storage - MinIO</Typography')}
+                            </Typography>
                           </li>
                           <li>
                             <Typography>
-                              Version Control & CI/CD - Github
+                              {t('Model Management - MLflow')}
+                            </Typography>
+                          </li>
+                          <li>
+                            <Typography>
+                              {t('Version Control & CI/CD - Github')}
                             </Typography>
                           </li>
                         </ul>
                       </AccordionDetails>
                     </Accordion>
                     <Typography className="mt-3 mb-3">
-                      At this time, the AAW is designed to improve collaboration
+                      {t(`At this time, the AAW is designed to improve collaboration
                       using non-Sensitive Statistical Information (SSI), such as
                       Public Use Microdata Files, or a researcher’s own publicly
-                      available data.
+                      available data.`)}
                     </Typography>
                     <Typography>
-                      Create any resource you need with just a click.
+                      {t('Create any resource you need with just a click.')}
                     </Typography>
                   </Grid>
                   <Grid item>
@@ -165,22 +171,22 @@ function LandingPage(props) {
                 <Grid container alignItems="center" wrap="nowrap">
                   <Grid item className={classes.cardContent}>
                     <Typography variant="h5" component="h3" className="mb-3">
-                      Collaborative Analytics Environment (CAE)
+                      {t('Collaborative Analytics Environment (CAE)')}
                     </Typography>
                     <Button
                       className="edge-start"
                       color="primary"
                       endIcon={<Icon path={mdiArrowRight} size={1} />}
                     >
-                      Go to the CAE dashboard
+                      {t('Go to the CAE dashboard')}
                     </Button>
                     <Typography className="mt-3 mb-3">
-                      This platform is designed to provide services for data
+                      {t(`This platform is designed to provide services for data
                       ingestion, transformation and preparation, as well as data
                       exploration and computation. Complete with tools for
                       collaborative analytics, machine learning environments,
                       and data visualization capabilities, this environment is
-                      suitable for a variety of statistical software.
+                      suitable for a variety of statistical software.`)}
                     </Typography>
                     <Accordion className="border-top">
                       <AccordionSummary
@@ -189,62 +195,68 @@ function LandingPage(props) {
                         id="cae-tools-header"
                       >
                         <Typography component="h4" variant="subtitle1">
-                          Available tools
+                          {t('Available tools')}
                         </Typography>
                       </AccordionSummary>
                       <AccordionDetails className={classes.toolsDetails}>
                         <ul className={classes.toolsList}>
                           <li>
-                            <Typography>Azure Blob Storage</Typography>
+                            <Typography>{t('Azure Blob Storage')}</Typography>
                           </li>
                           <li>
-                            <Typography>Azure Data Lake Storage</Typography>
+                            <Typography>
+                              {t('Azure Data Lake Storage')}
+                            </Typography>
                           </li>
                           <li>
-                            <Typography>Azure SQL Database</Typography>
+                            <Typography>{t('Azure SQL Database')}</Typography>
                           </li>
                           <li>
-                            <Typography>Azure Databricks</Typography>
+                            <Typography>{t('Azure Databricks')}</Typography>
                           </li>
                           <li>
-                            <Typography>Azure Data Factory</Typography>
+                            <Typography>{t('Azure Data Factory')}</Typography>
                           </li>
                           <li>
-                            <Typography>Azure Machine Learning</Typography>
+                            <Typography>
+                              {t('Azure Machine Learning')}
+                            </Typography>
                           </li>
                           <li>
-                            <Typography>Azure Virtual Machines</Typography>
+                            <Typography>
+                              {t('Azure Virtual Machines')}
+                            </Typography>
                           </li>
                           <li>
-                            <Typography>R</Typography>
+                            <Typography>{t('R')}</Typography>
                           </li>
                           <li>
-                            <Typography>R Studio</Typography>
+                            <Typography>{t('R Studio')}</Typography>
                           </li>
                           <li>
-                            <Typography>Python</Typography>
+                            <Typography>{t('Python')}</Typography>
                           </li>
                           <li>
-                            <Typography>PowerBI</Typography>
+                            <Typography>{t('PowerBI')}</Typography>
                           </li>
                           <li>
-                            <Typography>STATA</Typography>
+                            <Typography>{t('STATA')}</Typography>
                           </li>
                           <li>
-                            <Typography>SPSS</Typography>
+                            <Typography>{t('SPSS')}</Typography>
                           </li>
                           <li>
-                            <Typography>SAS</Typography>
+                            <Typography>{t('SAS')}</Typography>
                           </li>
                         </ul>
                       </AccordionDetails>
                     </Accordion>
                     <Typography className="mt-3">
-                      At this time, the CAE is securely designed to safely grant
+                      {t(`At this time, the CAE is securely designed to safely grant
                       access to both Sensitive Statistical Information (SSI)
                       (for those users who have met the requirements), such as
                       Statistics Canada data, and public information such as
-                      Public Use Microdata Files (PUMFs).
+                      Public Use Microdata Files (PUMFs).`)}
                     </Typography>
                   </Grid>
                   <Grid item>

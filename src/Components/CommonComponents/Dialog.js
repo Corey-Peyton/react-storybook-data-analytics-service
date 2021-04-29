@@ -1,4 +1,5 @@
 import React from 'react';
+import {useTranslation} from 'react-i18next';
 import {makeStyles} from '@material-ui/core/styles';
 import clsx from 'clsx';
 import PropTypes from 'prop-types';
@@ -42,6 +43,7 @@ const useStyles = makeStyles((theme) => ({
 
 export function Dialog(props) {
   const classes = useStyles();
+  const {t} = useTranslation();
   const {
     toggleDialog,
     open,
@@ -110,7 +112,7 @@ export function Dialog(props) {
             </Grid>
           </Grid>
           <IconButton
-            aria-label={`${title} - close`}
+            aria-label={`${title} - ${t('close')}`}
             onClick={toggleDialog}
             edge="end"
             onKeyPress={(e) => {

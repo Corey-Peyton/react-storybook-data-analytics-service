@@ -1,4 +1,5 @@
 import React from 'react';
+import {useTranslation} from 'react-i18next';
 import {makeStyles} from '@material-ui/core/styles';
 import {
   Accordion,
@@ -41,6 +42,7 @@ const useStyles = makeStyles((theme) => ({
 
 export function HelpDrawer(props) {
   const classes = useStyles();
+  const {t} = useTranslation();
   const [open, setOpen] = React.useState({
     supportDialog: false,
   });
@@ -58,13 +60,13 @@ export function HelpDrawer(props) {
           id="support-header"
         >
           <Typography component="h3" variant="subtitle1">
-            Contact the support team
+            {t('Contact the support team')}
           </Typography>
         </AccordionSummary>
         <AccordionDetails className={classes.helpDetails}>
           <Typography variant="body2" className="mb-3">
-            For general concerns and inquiries, please contact the support team
-            for guidance. A team member will be happy to assist you.
+            {t(`For general concerns and inquiries, please contact the support team
+            for guidance. A team member will be happy to assist you.`)}
           </Typography>
           <Button
             variant="text"
@@ -72,7 +74,7 @@ export function HelpDrawer(props) {
             startIcon={<Icon path={mdiEmail} size={1} />}
             onClick={() => toggleDialog('supportDialog', !open.supportDialog)}
           >
-            Contact the support team
+            {t('Contact the support team')}
           </Button>
         </AccordionDetails>
       </Accordion>
@@ -83,15 +85,15 @@ export function HelpDrawer(props) {
           id="aaw-header"
         >
           <Typography component="h3" variant="subtitle1">
-            Advanced Analytics Workspace (AAW)
+            {t('Advanced Analytics Workspace (AAW)')}
           </Typography>
         </AccordionSummary>
         <AccordionDetails className={classes.helpDetails}>
           <Typography variant="body2" className="mb-3">
-            Please consult the AAW user guide listed below if you encounter
+            {t(`Please consult the AAW user guide listed below if you encounter
             difficulties related to AAW-specific system components or tools. For
             general concerns and inquiries, please contact the support team for
-            further assistance. A DAaaS team member will be happy to help you.
+            further assistance. A DAaaS team member will be happy to help you.`)}
           </Typography>
           <Button
             variant="text"
@@ -99,7 +101,7 @@ export function HelpDrawer(props) {
             startIcon={<Icon path={mdiBookOpenPageVariant} size={1} />}
             href="https://statcan.github.io/daaas/en/"
           >
-            User guide
+            {t('User guide')}
           </Button>
         </AccordionDetails>
       </Accordion>
@@ -110,15 +112,15 @@ export function HelpDrawer(props) {
           id="cae-header"
         >
           <Typography component="h3" variant="subtitle1">
-            Collaborative Analytics Environment (CAE)
+            {t('Collaborative Analytics Environment (CAE)')}
           </Typography>
         </AccordionSummary>
         <AccordionDetails className={classes.helpDetails}>
           <Typography variant="body2" className="mb-3">
-            Please consult the CAE user guide listed below if you encounter
+            {t(`Please consult the CAE user guide listed below if you encounter
             difficulties related to CAE-specific system components or tools. For
             general concerns and inquiries, please contact the support team for
-            further assistance. A DAaaS team member will be happy to help you.
+            further assistance. A DAaaS team member will be happy to help you.`)}
           </Typography>
           <Button
             variant="text"
@@ -126,7 +128,7 @@ export function HelpDrawer(props) {
             startIcon={<Icon path={mdiBookOpenPageVariant} size={1} />}
             href="https://statcan.github.io/cae-eac/"
           >
-            User guide
+            {t('User guide')}
           </Button>
         </AccordionDetails>
       </Accordion>
@@ -141,9 +143,9 @@ export function HelpDrawer(props) {
   return (
     <Drawer
       open={props.open}
-      title="Help"
+      title={t('Help')}
       content={content()}
-      primaryButton="Close"
+      primaryButton={t('Close')}
       handlePrimaryClick={props.closeDrawer}
       toggleDrawer={props.closeDrawer}
     />
@@ -151,6 +153,7 @@ export function HelpDrawer(props) {
 }
 
 export function SupportDialog(props) {
+  const {t} = useTranslation();
   const [state, setState] = React.useState({
     supportCategory: null,
   });
@@ -168,14 +171,14 @@ export function SupportDialog(props) {
       <Grid container direction="column">
         <Grid item className="input-margin">
           <Typography variant="body2">
-            Required fields are marked with an asterisk *.
+            {t('Required fields are marked with an asterisk *.')}
           </Typography>
         </Grid>
         <Grid item className="input-margin">
           <TextField
             className="input-margin"
             id="work-email"
-            label="Work email"
+            label={t('Work email')}
             variant="outlined"
             fullWidth
             margin="dense"
@@ -186,8 +189,8 @@ export function SupportDialog(props) {
         <Grid item className="radio-margin">
           <FormControl component="fieldset" required>
             <FormLabel component="legend">
-              Help us direct your support request to the right people. Select
-              the category that best fits your support request.
+              {t(`Help us direct your support request to the right people. Select
+              the category that best fits your support request.`)}
             </FormLabel>
             <RadioGroup
               id="supportCategory"
@@ -198,28 +201,28 @@ export function SupportDialog(props) {
               <FormControlLabel
                 value="account"
                 control={<Radio color="primary" />}
-                label="Sign in / Register for an account"
+                label={t('Sign in / Register for an account')}
               />
               <FormControlLabel
                 value="aaw"
                 control={<Radio color="primary" />}
-                label="AAW dashboard or tools"
+                label={t('AAW dashboard or tools')}
               />
               <FormControlLabel
                 value="cae"
                 control={<Radio color="primary" />}
-                label="CAE dashboard or tools"
+                label={t('CAE dashboard or tools')}
               />
               <FormControlLabel
                 value="other"
                 control={<Radio color="primary" />}
-                label="Other"
+                label={t('Other')}
               />
               {state.supportCategory === 'other' && (
                 <TextField
                   className="ml-4 mb-1"
                   id="other-specify"
-                  label="Please specify"
+                  label={t('Please specify')}
                   variant="outlined"
                   margin="dense"
                   required
@@ -231,7 +234,7 @@ export function SupportDialog(props) {
         <Grid item className="input-margin">
           <TextField
             id="help"
-            label="What do you need help with?"
+            label={t('What do you need help with?')}
             multiline
             rows={4}
             variant="outlined"
@@ -247,10 +250,10 @@ export function SupportDialog(props) {
     <Dialog
       id="support-dialog"
       open={props.open}
-      title="Contact the support team"
+      title={t('Contact the support team')}
       content={content()}
-      primaryButton="Submit"
-      secondaryButton="Cancel"
+      primaryButton={t('Submit')}
+      secondaryButton={t('Cancel')}
       handlePrimaryClick={props.toggleDialog}
       handleSecondaryClick={props.toggleDialog}
       toggleDialog={props.toggleDialog}
@@ -259,6 +262,7 @@ export function SupportDialog(props) {
 }
 
 export function FeedbackDialog(props) {
+  const {t} = useTranslation();
   const [state, setState] = React.useState({
     feedbackRating: null,
   });
@@ -276,13 +280,13 @@ export function FeedbackDialog(props) {
       <Grid container direction="column">
         <Grid item className="input-margin">
           <Typography variant="body2">
-            Required fields are marked with an asterisk *.
+            {t('Required fields are marked with an asterisk *.')}
           </Typography>
         </Grid>
         <Grid item className="input-margin">
           <TextField
             id="feedback"
-            label="What would you like to tell us?"
+            label={t('What would you like to tell us?')}
             multiline
             rows={4}
             variant="outlined"
@@ -293,7 +297,7 @@ export function FeedbackDialog(props) {
         <Grid item className="input-margin">
           <FormControl component="fieldset" required>
             <FormLabel component="legend">
-              How has your experience been so far?
+              {t('How has your experience been so far?')}
             </FormLabel>
             <RadioGroup
               id="feedbackRating"
@@ -304,17 +308,17 @@ export function FeedbackDialog(props) {
               <FormControlLabel
                 value="Positive"
                 control={<Radio color="primary" />}
-                label="Positive"
+                label={t('Positive')}
               />
               <FormControlLabel
                 value="Neutral"
                 control={<Radio color="primary" />}
-                label="Neutral"
+                label={t('Neutral')}
               />
               <FormControlLabel
                 value="Negative"
                 control={<Radio color="primary" />}
-                label="Negative"
+                label={t('Negative')}
               />
             </RadioGroup>
           </FormControl>
@@ -327,10 +331,10 @@ export function FeedbackDialog(props) {
     <Dialog
       id="feedback-dialog"
       open={props.open}
-      title="Feedback"
+      title={t('Feedback')}
       content={content()}
-      primaryButton="Submit"
-      secondaryButton="Cancel"
+      primaryButton={t('Submit')}
+      secondaryButton={t('Cancel')}
       handlePrimaryClick={props.toggleDialog}
       handleSecondaryClick={props.toggleDialog}
       toggleDialog={props.toggleDialog}
@@ -339,6 +343,7 @@ export function FeedbackDialog(props) {
 }
 
 export function AccountDetailsDialog(props) {
+  const {t} = useTranslation();
   const [state, setState] = React.useState({
     accountIssuer: null,
   });
@@ -358,7 +363,7 @@ export function AccountDetailsDialog(props) {
           <TextField
             className="input-margin"
             id="fname"
-            label="First name"
+            label={t('First name')}
             variant="outlined"
             fullWidth
             margin="dense"
@@ -367,7 +372,7 @@ export function AccountDetailsDialog(props) {
           <TextField
             className="input-margin"
             id="lname"
-            label="Last name"
+            label={t('Last name')}
             variant="outlined"
             fullWidth
             margin="dense"
@@ -376,7 +381,7 @@ export function AccountDetailsDialog(props) {
           <TextField
             className="input-margin"
             id="organization"
-            label="Organization"
+            label={t('Organization')}
             variant="outlined"
             fullWidth
             margin="dense"
@@ -385,7 +390,7 @@ export function AccountDetailsDialog(props) {
           <TextField
             className="input-margin"
             id="job-title"
-            label="Job title"
+            label={t('Job title')}
             variant="outlined"
             fullWidth
             margin="dense"
@@ -394,7 +399,7 @@ export function AccountDetailsDialog(props) {
           <TextField
             className="input-margin"
             id="work-email"
-            label="Work email"
+            label={t('Work email')}
             variant="outlined"
             fullWidth
             margin="dense"
@@ -405,7 +410,7 @@ export function AccountDetailsDialog(props) {
         <Grid item className="input-margin">
           <FormControl component="fieldset" fullWidth required>
             <FormLabel component="legend">
-              Who issued your Azure cloud account?
+              {t('Who issued your Azure cloud account?')}
             </FormLabel>
             <RadioGroup
               id="accountIssuer"
@@ -416,18 +421,18 @@ export function AccountDetailsDialog(props) {
               <FormControlLabel
                 value="Statistics Canada"
                 control={<Radio color="primary" />}
-                label="Statistics Canada"
+                label={t('Statistics Canada')}
               />
               <FormControlLabel
                 value="Other organization"
                 control={<Radio color="primary" />}
-                label="Other organization"
+                label={t('Other organization')}
               />
               {state.accountIssuer === 'Other organization' && (
                 <TextField
                   className="input-margin ml-4"
                   id="issuer-organization"
-                  label="Organization"
+                  label={t('Organization')}
                   variant="outlined"
                   margin="dense"
                   required
@@ -436,7 +441,7 @@ export function AccountDetailsDialog(props) {
               <FormControlLabel
                 value="I don't have an Azure cloud account"
                 control={<Radio color="primary" />}
-                label="I don't have an Azure cloud account"
+                label={t('I don\'t have an Azure cloud account')}
               />
             </RadioGroup>
           </FormControl>
@@ -449,10 +454,10 @@ export function AccountDetailsDialog(props) {
     <Dialog
       id="account-details-dialog"
       open={props.open}
-      title="Account details"
+      title={t('Account details')}
       content={content()}
-      primaryButton="Next"
-      secondaryButton="Cancel"
+      primaryButton={t('Next')}
+      secondaryButton={t('Cancel')}
       handlePrimaryClick={props.handleNext}
       handleSecondaryClick={props.toggleDialog}
       toggleDialog={props.toggleDialog}
@@ -462,6 +467,7 @@ export function AccountDetailsDialog(props) {
 
 export function DataUseDialog(props) {
   const classes = useStyles();
+  const {t} = useTranslation();
   const [state, setState] = React.useState({
     nonPublicData: null,
     useOwnData: null,
@@ -493,12 +499,14 @@ export function DataUseDialog(props) {
             <Grid container justify="space-between" alignItems="center">
               <Grid item>
                 <FormLabel component="legend">
-                  Do you require access to Statistics Canada non-public data?
+                  {t(
+                      'Do you require access to Statistics Canada non-public data?',
+                  )}
                 </FormLabel>
               </Grid>
               <Grid item>
                 <IconButton
-                  aria-label="Additional information"
+                  aria-label={t('Additional information')}
                   onClick={props.additionalInfo}
                   onKeyPress={(e) => {
                     if (e.key === 'Enter') {
@@ -520,7 +528,7 @@ export function DataUseDialog(props) {
               <FormControlLabel
                 value="Yes"
                 control={<Radio color="primary" />}
-                label="Yes"
+                label={t('Yes')}
               />
               {state.nonPublicData === 'Yes' && (
                 <Accordion
@@ -533,12 +541,14 @@ export function DataUseDialog(props) {
                     id="additional-steps-header"
                   >
                     <Typography variant="subtitle1" component="h3">
-                      Additional steps will be required after registration
+                      {t(
+                          'Additional steps will be required after registration',
+                      )}
                     </Typography>
                   </AccordionSummary>
                   <AccordionDetails>
                     <Typography variant="body2">
-                      For confidential microdata access, applicants will be
+                      {t(`For confidential microdata access, applicants will be
                       asked to submit a Project Application after submitting
                       this registration form. Once the Application is approved,
                       they will be asked to complete the Guidelines for data
@@ -546,7 +556,7 @@ export function DataUseDialog(props) {
                       on a case by case basis. Confidential microdata access may
                       still be accessed in a Research Data Centre or Federal
                       Research Data Centre. Please visit the Research Data
-                      Centre website for more information.
+                      Centre website for more information.`)}
                     </Typography>
                   </AccordionDetails>
                 </Accordion>
@@ -554,7 +564,7 @@ export function DataUseDialog(props) {
               <FormControlLabel
                 value="No"
                 control={<Radio color="primary" />}
-                label="No"
+                label={t('No')}
               />
             </RadioGroup>
           </FormControl>
@@ -563,9 +573,9 @@ export function DataUseDialog(props) {
           <Grid item className="radio-margin">
             <FormControl component="fieldset" fullWidth required>
               <FormLabel component="legend">
-                What type of data do you need access to?
+                {t('What type of data do you need access to?')}
               </FormLabel>
-              <FormHelperText>Select all that apply</FormHelperText>
+              <FormHelperText>{t('Select all that apply')}</FormHelperText>
               <FormGroup>
                 <FormControlLabel
                   control={
@@ -576,7 +586,7 @@ export function DataUseDialog(props) {
                       color="primary"
                     />
                   }
-                  label="Public microdata"
+                  label={t('Public microdata')}
                 />
                 <FormControlLabel
                   control={
@@ -587,7 +597,7 @@ export function DataUseDialog(props) {
                       color="primary"
                     />
                   }
-                  label="Summary tables"
+                  label={t('Summary tables')}
                 />
                 <FormControlLabel
                   control={
@@ -598,7 +608,7 @@ export function DataUseDialog(props) {
                       color="primary"
                     />
                   }
-                  label="Custom tabulations"
+                  label={t('Custom tabulations')}
                 />
                 <FormControlLabel
                   control={
@@ -609,14 +619,14 @@ export function DataUseDialog(props) {
                       color="primary"
                     />
                   }
-                  label="Other"
+                  label={t('Other')}
                 />
               </FormGroup>
               {state.other === true && (
                 <TextField
                   className="input-margin ml-4"
                   id="other-input"
-                  label="Please specify"
+                  label={t('Please specify')}
                   variant="outlined"
                   margin="dense"
                   required
@@ -629,7 +639,7 @@ export function DataUseDialog(props) {
         <Grid item className="radio-margin">
           <FormControl component="fieldset" required>
             <FormLabel component="legend">
-              Are you planning on using your own data?
+              {t('Are you planning on using your own data?')}
             </FormLabel>
             <RadioGroup
               id="useOwnData"
@@ -640,12 +650,12 @@ export function DataUseDialog(props) {
               <FormControlLabel
                 value="Yes"
                 control={<Radio color="primary" />}
-                label="Yes"
+                label={t('Yes')}
               />
               <FormControlLabel
                 value="No"
                 control={<Radio color="primary" />}
-                label="No"
+                label={t('No')}
               />
             </RadioGroup>
           </FormControl>
@@ -654,9 +664,9 @@ export function DataUseDialog(props) {
           <Grid item className="radio-margin">
             <FormControl component="fieldset" required>
               <FormLabel component="legend">
-                What type of data are you planning to use?
+                {t('What type of data are you planning to use?')}
               </FormLabel>
-              <FormHelperText>Select all that apply</FormHelperText>
+              <FormHelperText>{t('Select all that apply')}</FormHelperText>
               <FormGroup>
                 <FormControlLabel
                   control={
@@ -667,7 +677,7 @@ export function DataUseDialog(props) {
                       color="primary"
                     />
                   }
-                  label="Confidential"
+                  label={t('Confidential')}
                 />
                 <FormControlLabel
                   control={
@@ -678,7 +688,7 @@ export function DataUseDialog(props) {
                       color="primary"
                     />
                   }
-                  label="Public"
+                  label={t('Public')}
                 />
               </FormGroup>
             </FormControl>
@@ -692,11 +702,11 @@ export function DataUseDialog(props) {
     <Dialog
       id="data-use-dialog"
       open={props.open}
-      title="Data use details"
+      title={t('Data use details')}
       content={content()}
-      primaryButton="Next"
-      secondaryButton="Cancel"
-      backButton="Back to account details"
+      primaryButton={t('Next')}
+      secondaryButton={t('Cancel')}
+      backButton={t('Back to account details')}
       handlePrimaryClick={props.handleNext}
       handleSecondaryClick={props.toggleDialog}
       handleBackClick={props.handleBack}
@@ -706,32 +716,33 @@ export function DataUseDialog(props) {
 }
 
 export function AdditionalInfoDialog(props) {
+  const {t} = useTranslation();
   const content = () => (
     <>
       <Grid container direction="column">
         <Grid item className="input-margin">
           <Typography variant="h5" component="h3">
-            Definition
+            {t('Definition')}
           </Typography>
         </Grid>
         <Grid item>
           <Typography className="input-margin">
-            Statistics Canada confidential data:
+            {t('Statistics Canada confidential data:')}
           </Typography>
           <ol>
             <li>
               <Typography>
-                Data obtained directly from respondents or from third parties in
+                {t(`Data obtained directly from respondents or from third parties in
                 identifiable mode, under the authority of the Statistics Act or
-                of the Corporations Returns Act;
+                of the Corporations Returns Act;`)}
               </Typography>
             </li>
             <li>
               <Typography>
-                Data holdings stripped of identifiers but held in a detail or
+                {t(`Data holdings stripped of identifiers but held in a detail or
                 geographical structure or format which could permit a direct
                 relation to be established between such data holdings and
-                specific respondents;
+                specific respondents;`)}
               </Typography>
             </li>
           </ol>
@@ -744,9 +755,9 @@ export function AdditionalInfoDialog(props) {
     <Dialog
       id="additional-info-dialog"
       open={props.open}
-      title="Additional information"
+      title={t('Additional information')}
       content={content()}
-      primaryButton="Done"
+      primaryButton={t('Done')}
       handlePrimaryClick={props.toggleDialog}
       toggleDialog={props.toggleDialog}
     />
@@ -754,6 +765,7 @@ export function AdditionalInfoDialog(props) {
 }
 
 export function TasksToolsDialog(props) {
+  const {t} = useTranslation();
   const [state, setState] = React.useState({
     sql: false,
     python: false,
@@ -784,9 +796,9 @@ export function TasksToolsDialog(props) {
         <Grid item className="radio-margin">
           <FormControl component="fieldset" required>
             <FormLabel component="legend">
-              What tasks do you plan to perform?
+              {t('What tasks do you plan to perform?')}
             </FormLabel>
-            <FormHelperText>Select all that apply</FormHelperText>
+            <FormHelperText>{t('Select all that apply')}</FormHelperText>
             <FormGroup>
               <FormControlLabel
                 control={
@@ -799,9 +811,9 @@ export function TasksToolsDialog(props) {
                 }
                 label={
                   <>
-                    <Typography>R, SQL</Typography>
+                    <Typography>{t('R, SQL')}</Typography>
                     <Typography variant="caption">
-                      Provided tools: Azure Databricks, RShiny, RStudio
+                      {t('Provided tools: Azure Databricks, RShiny, RStudio')}
                     </Typography>
                   </>
                 }
@@ -817,9 +829,11 @@ export function TasksToolsDialog(props) {
                 }
                 label={
                   <>
-                    <Typography>R, Python</Typography>
+                    <Typography>{t('R, Python')}</Typography>
                     <Typography variant="caption">
-                      Provided tools: Azure Databricks, JupyterLab, VS Code
+                      {t(
+                          'Provided tools: Azure Databricks, JupyterLab, VS Code',
+                      )}
                     </Typography>
                   </>
                 }
@@ -835,10 +849,10 @@ export function TasksToolsDialog(props) {
                 }
                 label={
                   <>
-                    <Typography>Scala</Typography>
+                    <Typography>{t('Scala')}</Typography>
                     <Typography variant="caption">
-                      Provided tools: Azure Databricks, JupyterLab (Scala can be
-                      added on request)
+                      {t(`Provided tools: Azure Databricks, JupyterLab (Scala can be
+                      added on request)`)}
                     </Typography>
                   </>
                 }
@@ -854,10 +868,10 @@ export function TasksToolsDialog(props) {
                 }
                 label={
                   <>
-                    <Typography>SAS, SPSS, Stata</Typography>
+                    <Typography>{t('SAS, SPSS, Stata')}</Typography>
                     <Typography variant="caption">
-                      Provided tools: Virtual Machine (Bastion) - DataScience VM
-                      - Windows or Linux
+                      {t(`Provided tools: Virtual Machine (Bastion) - DataScience VM
+                      - Windows or Linux`)}
                     </Typography>
                   </>
                 }
@@ -873,11 +887,11 @@ export function TasksToolsDialog(props) {
                 }
                 label={
                   <>
-                    <Typography>Desktop (All languages)</Typography>
+                    <Typography>{t('Desktop (All languages)')}</Typography>
                     <Typography variant="caption">
-                      Provided tools: DataScience Linux Desktop (Open Source
+                      {t(`Provided tools: DataScience Linux Desktop (Open Source
                       only), Virtual Machine (Bastion) - DataScience VM -
-                      Windows or Linux
+                      Windows or Linux`)}
                     </Typography>
                   </>
                 }
@@ -893,11 +907,13 @@ export function TasksToolsDialog(props) {
                 }
                 label={
                   <>
-                    <Typography>Public Visualizations / Dashboards</Typography>
+                    <Typography>
+                      {t('Public Visualizations / Dashboards')}
+                    </Typography>
                     <Typography variant="caption">
-                      Provided tools: Azure Databricks (R-Shiny -isolated
+                      {t(`Provided tools: Azure Databricks (R-Shiny -isolated
                       environment), Dash, JupyterLab (Matplotlib & More),
-                      Kibana, PowerBI, RShiny
+                      Kibana, PowerBI, RShiny`)}
                     </Typography>
                   </>
                 }
@@ -913,9 +929,11 @@ export function TasksToolsDialog(props) {
                 }
                 label={
                   <>
-                    <Typography>Public Machine Learning API serving</Typography>
+                    <Typography>
+                      {t('Public Machine Learning API serving')}
+                    </Typography>
                     <Typography variant="caption">
-                      Provided tools: Kubeflow Serving, Seldon Core
+                      {t('Provided tools: Kubeflow Serving, Seldon Core')}
                     </Typography>
                   </>
                 }
@@ -931,9 +949,11 @@ export function TasksToolsDialog(props) {
                 }
                 label={
                   <>
-                    <Typography>Geomatics</Typography>
+                    <Typography>{t('Geomatics')}</Typography>
                     <Typography variant="caption">
-                      Provided tools: DataScience Linux Desktop, Gdal, QGIS
+                      {t(
+                          'Provided tools: DataScience Linux Desktop, Gdal, QGIS',
+                      )}
                     </Typography>
                   </>
                 }
@@ -949,9 +969,11 @@ export function TasksToolsDialog(props) {
                 }
                 label={
                   <>
-                    <Typography>Pipelines</Typography>
+                    <Typography>{t('Pipelines')}</Typography>
                     <Typography variant="caption">
-                      Provided tools: Azure Data Factory, Kubeflow Pipelines
+                      {t(
+                          'Provided tools: Azure Data Factory, Kubeflow Pipelines',
+                      )}
                     </Typography>
                   </>
                 }
@@ -967,9 +989,9 @@ export function TasksToolsDialog(props) {
                 }
                 label={
                   <>
-                    <Typography>Management</Typography>
+                    <Typography>{t('Management')}</Typography>
                     <Typography variant="caption">
-                      Provided tools: Azure Portal, Kubeflow
+                      {t('Provided tools: Azure Portal, Kubeflow')}
                     </Typography>
                   </>
                 }
@@ -985,9 +1007,11 @@ export function TasksToolsDialog(props) {
                 }
                 label={
                   <>
-                    <Typography>Metrics Monitoring</Typography>
+                    <Typography>{t('Metrics Monitoring')}</Typography>
                     <Typography variant="caption">
-                      Grafana Azure Portal - Azure Log Analyitics (Cloud Team)
+                      {t(
+                          'Grafana Azure Portal - Azure Log Analyitics (Cloud Team)',
+                      )}
                     </Typography>
                   </>
                 }
@@ -1003,10 +1027,12 @@ export function TasksToolsDialog(props) {
                 }
                 label={
                   <>
-                    <Typography>Cost Monitoring and Reporting</Typography>
+                    <Typography>
+                      {t('Cost Monitoring and Reporting')}
+                    </Typography>
                     <Typography variant="caption">
-                      Azure Portal - Azure Cost Management (Cloud team),
-                      Kubecost
+                      {t(`Azure Portal - Azure Cost Management (Cloud team),
+                      Kubecost`)}
                     </Typography>
                   </>
                 }
@@ -1022,10 +1048,10 @@ export function TasksToolsDialog(props) {
                 }
                 label={
                   <>
-                    <Typography>Storage</Typography>
+                    <Typography>{t('Storage')}</Typography>
                     <Typography variant="caption">
-                      Azure Blob Storage, Azure Datalake Gen 2, Azure SQL
-                      Database, Boathouse (for Azure Datalakes), MinIO
+                      {t(`Azure Blob Storage, Azure Datalake Gen 2, Azure SQL
+                      Database, Boathouse (for Azure Datalakes), MinIO`)}
                     </Typography>
                   </>
                 }
@@ -1041,8 +1067,10 @@ export function TasksToolsDialog(props) {
                 }
                 label={
                   <>
-                    <Typography>Model Management</Typography>
-                    <Typography variant="caption">Azure ML, ML Flow</Typography>
+                    <Typography>{t('Model Management')}</Typography>
+                    <Typography variant="caption">
+                      {t('Azure ML, ML Flow')}
+                    </Typography>
                   </>
                 }
               />
@@ -1057,8 +1085,8 @@ export function TasksToolsDialog(props) {
                 }
                 label={
                   <>
-                    <Typography>Version Control and CI/CD</Typography>
-                    <Typography variant="caption">GitHub</Typography>
+                    <Typography>{t('Version Control and CI/CD')}</Typography>
+                    <Typography variant="caption">{t('GitHub')}</Typography>
                   </>
                 }
               />
@@ -1073,9 +1101,9 @@ export function TasksToolsDialog(props) {
                 }
                 label={
                   <>
-                    <Typography>Platform</Typography>
+                    <Typography>{t('Platform')}</Typography>
                     <Typography variant="caption">
-                      Azure PaaS Offerings, Kubernetes Service
+                      {t('Azure PaaS Offerings, Kubernetes Service')}
                     </Typography>
                   </>
                 }
@@ -1092,7 +1120,7 @@ export function TasksToolsDialog(props) {
                 }
                 label={
                   <>
-                    <Typography>Other</Typography>
+                    <Typography>{t('Other')}</Typography>
                   </>
                 }
               />
@@ -1100,7 +1128,7 @@ export function TasksToolsDialog(props) {
                 <TextField
                   className="input-margin ml-4"
                   id="other-input"
-                  label="Please specify"
+                  label={t('Please specify')}
                   variant="outlined"
                   margin="dense"
                   required
@@ -1114,10 +1142,10 @@ export function TasksToolsDialog(props) {
           <TextField
             className="input-margin"
             id="other-tools"
-            label="Do you require additional tools to perform your tasks?"
+            label={t('Do you require additional tools to perform your tasks?')}
             variant="outlined"
             margin="dense"
-            helperText="List all the additional tools you require"
+            helperText={t('List all the additional tools you require')}
             fullWidth
           />
         </Grid>
@@ -1129,11 +1157,11 @@ export function TasksToolsDialog(props) {
     <Dialog
       id="tasks-tools-dialog"
       open={props.open}
-      title="Tasks and tools"
+      title={t('Tasks and tools')}
       content={content()}
-      primaryButton="Next"
-      secondaryButton="Cancel"
-      backButton="Back to data use details"
+      primaryButton={t('Next')}
+      secondaryButton={t('Cancel')}
+      backButton={t('Back to data use details')}
       handlePrimaryClick={props.handleNext}
       handleSecondaryClick={props.toggleDialog}
       handleBackClick={props.handleBack}
@@ -1143,6 +1171,7 @@ export function TasksToolsDialog(props) {
 }
 
 export function RegisterDialog(props) {
+  const {t} = useTranslation();
   const [state, setState] = React.useState({
     terms: false,
     research: false,
@@ -1158,7 +1187,7 @@ export function RegisterDialog(props) {
         <Grid item className="input-margin">
           <FormControl component="fieldset">
             <FormLabel component="legend" className="screen-reader-text">
-              Select if you agree
+              {t('Select if you agree')}
             </FormLabel>
             <FormGroup>
               <FormControlLabel
@@ -1173,19 +1202,19 @@ export function RegisterDialog(props) {
                 }
                 label={
                   <Typography>
-                    I agree to the{' '}
+                    {t('I agree to the')}{' '}
                     <Link
                       underline="always"
                       href="https://www.statcan.gc.ca/eng/reference/terms-conditions"
                     >
-                      Terms and conditions
+                      {t('Terms and conditions')}
                     </Link>{' '}
                     and{' '}
                     <Link
                       underline="always"
                       href="https://www.statcan.gc.ca/eng/reference/privacy"
                     >
-                      Privacy policy
+                      {t('Privacy policy')}
                     </Link>
                     . *
                   </Typography>
@@ -1200,7 +1229,9 @@ export function RegisterDialog(props) {
                     color="primary"
                   />
                 }
-                label="I would like to participate in future research activities to help Statistics Canada improve their tools and services."
+                label={t(
+                    'I would like to participate in future research activities to help Statistics Canada improve their tools and services.',
+                )}
               />
             </FormGroup>
           </FormControl>
@@ -1213,11 +1244,11 @@ export function RegisterDialog(props) {
     <Dialog
       id="register-dialog"
       open={props.open}
-      title="Accept and register"
+      title={t('Accept and register')}
       content={content()}
-      primaryButton="Register"
-      secondaryButton="Cancel"
-      backButton="Back to tasks and tools"
+      primaryButton={t('Register')}
+      secondaryButton={t('Cancel')}
+      backButton={t('Back to tasks and tools')}
       handlePrimaryClick={props.submitRegistration}
       handleSecondaryClick={props.toggleDialog}
       handleBackClick={props.handleBack}
@@ -1227,19 +1258,20 @@ export function RegisterDialog(props) {
 }
 
 export function SuccessDialog(props) {
+  const {t} = useTranslation();
   return (
     <Dialog
       id="success-dialog"
       open={props.open}
-      title="Thank you!"
+      title={t('Thank you!')}
       content={
         <Typography>
-          The information provided has been sent to the Statistics Canada
+          {t(`The information provided has been sent to the Statistics Canada
           Analytical Platform team and they will contact you within 2 business
-          days.
+          days.`)}
         </Typography>
       }
-      primaryButton="Close"
+      primaryButton={t('Close')}
       handlePrimaryClick={props.toggleDialog}
       toggleDialog={props.toggleDialog}
     />

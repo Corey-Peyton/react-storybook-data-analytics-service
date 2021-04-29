@@ -1,4 +1,5 @@
 import React from 'react';
+import {useTranslation} from 'react-i18next';
 import {makeStyles} from '@material-ui/core/styles';
 import {
   AppBar as MUIAppBar,
@@ -13,7 +14,7 @@ import {
   // Link,
 } from '@material-ui/core';
 import {SM_SCREEN} from '../../../Theme/constants';
-import BrandingStatCan from './BrandingStatCan';
+import {BrandingStatCanEn, BrandingStatCanFr} from './BrandingStatCan';
 import {HelpDrawer, FeedbackDialog} from './Dialogs';
 import Icon from '@mdi/react';
 import {
@@ -49,6 +50,7 @@ const useStyles = makeStyles((theme) => ({
 
 function AppBar(props) {
   const classes = useStyles();
+  const {t} = useTranslation();
   const [state, setState] = React.useState({
     windowWidth: window.innerWidth,
   });
@@ -95,12 +97,12 @@ function AppBar(props) {
     return [
       <MenuItem onClick={() => closeMenu('menuAnchor')} key="1">
         <ListItemText
-          primary={<Typography variant="body2">Profile</Typography>}
+          primary={<Typography variant="body2">{t('Profile')}</Typography>}
         />
       </MenuItem>,
       <MenuItem onClick={() => closeMenu('menuAnchor')} key="2">
         <ListItemText
-          primary={<Typography variant="body2">Sign out</Typography>}
+          primary={<Typography variant="body2">{t('Sign out')}</Typography>}
         />
       </MenuItem>,
     ];
@@ -110,26 +112,33 @@ function AppBar(props) {
     return [
       <MenuItem onClick={() => closeMenu('menuAnchor')} key="3">
         <ListItemText
-          primary={<Typography variant="body2">AAW Dashboard</Typography>}
+          primary={
+            <Typography variant="body2">{t('AAW Dashboard')}</Typography>
+          }
         />
       </MenuItem>,
       <MenuItem onClick={() => closeMenu('menuAnchor')} key="4">
         <ListItemText
-          primary={<Typography variant="body2">CAE Dashboard</Typography>}
+          primary={
+            <Typography variant="body2">{t('CAE Dashboard')}</Typography>
+          }
         />
       </MenuItem>,
       <MenuItem onClick={() => closeMenu('menuAnchor')} key="5">
-        <ListItemText primary={<Typography variant="body2">Help</Typography>} />
+        <ListItemText
+          primary={<Typography variant="body2">{t('Help')}</Typography>}
+        />
       </MenuItem>,
       <MenuItem onClick={() => closeMenu('menuAnchor')} key="6">
         <ListItemText
-          primary={<Typography variant="body2">Feedback</Typography>}
+          primary={<Typography variant="body2">{t('Feedback')}</Typography>}
         />
       </MenuItem>,
       <MenuItem onClick={() => closeMenu('menuAnchor')} key="7">
         <ListItemText
           primary={
             <Typography variant="body2">
+              {/* Needs to change to <span lang="en">English</span> in french */}
               <span lang="fr">Français</span>
             </Typography>
           }
@@ -144,7 +153,8 @@ function AppBar(props) {
         <Toolbar component="nav">
           <Grid container justify="space-between" alignItems="center">
             <Grid item className={classes.branding}>
-              <BrandingStatCan />
+              {/* Needs to be <BrandingStatCanFr /> in french */}
+              <BrandingStatCanEn />
             </Grid>
             {!isSmScreen && (
               <Grid item className={classes.actions}>
@@ -156,7 +166,7 @@ function AppBar(props) {
                       startIcon={<Icon path={mdiHelpCircle} size={1} />}
                       onClick={() => openDrawer('helpDrawer')}
                     >
-                      Help
+                      {t('Help')}
                     </Button>
                   </li>
                   <li>
@@ -167,7 +177,7 @@ function AppBar(props) {
                         toggleDialog('feedbackDialog', !open.feedbackDialog)
                       }
                     >
-                      Feedback
+                      {t('Feedback')}
                     </Button>
                   </li>
                 </ul>
@@ -185,7 +195,9 @@ function AppBar(props) {
                 >
                   Statistics Canada
                 </Link> */}
-                <Typography>About Data Analytics as a Service</Typography>
+                <Typography>
+                  {t('About Data Analytics as a Service')}
+                </Typography>
               </Breadcrumbs>
             </Grid>
             {isSmScreen ? (
@@ -198,7 +210,7 @@ function AppBar(props) {
                   endIcon={<Icon path={mdiMenuDown} size={1} />}
                   onClick={(e) => openMenu(e, 'menuAnchor')}
                 >
-                  Menu
+                  {t('Menu')}
                 </Button>
                 <Menu
                   id="mobile-menu"
@@ -216,9 +228,8 @@ function AppBar(props) {
                       className={classes.textBtn}
                       variant="text"
                       startIcon={<Icon path={mdiApps} size={1} />}
-                      // onClick={() => handleClickOpen('snackbarReactivate')}
                     >
-                      AAW dashboard
+                      {t('AAW dashboard')}
                     </Button>
                   </li>
                   <li>
@@ -226,19 +237,15 @@ function AppBar(props) {
                       className={classes.headerBtn}
                       variant="text"
                       startIcon={<Icon path={mdiApps} size={1} />}
-                      // onClick={() => handleClickOpen('snackbarReactivate')}
                     >
-                      CAE dashboard
+                      {t('CAE dashboard')}
                     </Button>
                   </li>
                 </ul>
                 <Divider orientation="vertical" flexItem className="mr-2" />
-                <Button
-                  className={classes.headerBtn}
-                  variant="text"
-                  // onClick={() => handleClickOpen('snackbarReactivate')}
-                >
-                  Français
+                <Button className={classes.headerBtn} variant="text">
+                  {/* Needs to change to <span lang="en">English</span> in french */}
+                  <span lang="fr">Français</span>
                 </Button>
                 {props.auth ? (
                   <>
@@ -247,7 +254,7 @@ function AppBar(props) {
                       color="primary"
                       aria-controls="account-menu"
                       aria-haspopup="true"
-                      aria-label="Account menu"
+                      aria-label={t('Account menu')}
                       endIcon={<Icon path={mdiMenuDown} size={1} />}
                       onClick={(e) => openMenu(e, 'menuAnchor')}
                     >
@@ -266,9 +273,8 @@ function AppBar(props) {
                     variant="outlined"
                     color="primary"
                     startIcon={<Icon path={mdiAccountCircle} size={1} />}
-                    // onClick={() => handleClickOpen('snackbarReactivate')}
                   >
-                    Sign in
+                    {t('Sign in')}
                   </Button>
                 )}
               </Grid>

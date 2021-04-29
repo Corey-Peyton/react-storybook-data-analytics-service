@@ -1,4 +1,5 @@
 import React from 'react';
+import {useTranslation} from 'react-i18next';
 import {makeStyles, ThemeProvider} from '@material-ui/core/styles';
 import clsx from 'clsx';
 import {Typography, Button, Grid, Paper} from '@material-ui/core';
@@ -36,6 +37,7 @@ const useStyles = makeStyles((theme) => ({
 
 function Banner(props) {
   const classes = useStyles();
+  const {t} = useTranslation();
   const [open, setOpen] = React.useState({
     accountDetailsDialog: false,
     dataUseDialog: false,
@@ -73,19 +75,19 @@ function Banner(props) {
                 </Grid>
                 <Grid item>
                   <Typography variant="h3" component="h1" color="textPrimary">
-                    Data Analytics as a Service
+                    {t('Data Analytics as a Service')}
                   </Typography>
                   <Typography variant="h5" component="h2" color="textPrimary">
-                    Harness the power of your data
+                    {t('Harness the power of your data')}
                   </Typography>
                 </Grid>
               </Grid>
               <Typography className="mt-3 mb-6" color="textPrimary">
-                Our platforms provide virtual access to Statistics Canada data.
+                {t(`Our platforms provide virtual access to Statistics Canada data.
                 From these platforms, choose from a variety of tools to help
                 prepare and transform datasets. Use the Collaborative Analytics
                 Environment (CAE) and the Advanced Analytics Workspace (AAW) to
-                analyze and present data to help share compelling data stories.
+                analyze and present data to help share compelling data stories.`)}
               </Typography>
               <Grid container direction="column">
                 <Grid item>
@@ -100,12 +102,12 @@ function Banner(props) {
                       )
                     }
                   >
-                    Get started
+                    {t('Get started')}
                   </Button>
                 </Grid>
                 <Grid item>
                   <Button className={classes.bannerBtn} variant="outlined">
-                    Sign in
+                    {t('Sign in')}
                   </Button>
                 </Grid>
               </Grid>
