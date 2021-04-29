@@ -447,21 +447,19 @@ export function ActionsMenu(props) {
   };
 
   const reactivateMenuItem = () => {
-    if (currentUser === request.lead || role === 'researcher') {
-      return (
-        <MenuItem
-          onClick={(e) => {
-            e.stopPropagation();
-            handleSnackbarOpen('snackbarReopen');
-            handleClose(e);
-          }}
-        >
-          <ListItemText
-            primary={<Typography variant="body2">{t('Reactivate')}</Typography>}
-          />
-        </MenuItem>
-      );
-    }
+    return (
+      <MenuItem
+        onClick={(e) => {
+          e.stopPropagation();
+          handleSnackbarOpen('snackbarReopen');
+          handleClose(e);
+        }}
+      >
+        <ListItemText
+          primary={<Typography variant="body2">{t('Reactivate')}</Typography>}
+        />
+      </MenuItem>
+    );
   };
 
   const manageAssigneesMenuItem = () => {
@@ -670,10 +668,7 @@ export function ActionsMenu(props) {
         >
           {viewRequestMenuItem()}
           {reactivateMenuItem()}
-          {assignAsLeadMenuItem()}
-          {assignAsSupportMenuItem()}
-          {unassignMenuItem()}
-          {manageAssigneesMenuItem()}
+          {assigneeDetailsMenuItem()}
           {requesterDetailsMenuItem()}
           {summaryMenuItem()}
         </StyledMenu>
@@ -689,10 +684,7 @@ export function ActionsMenu(props) {
         >
           {viewRequestMenuItem()}
           {reactivateMenuItem()}
-          {assignAsLeadMenuItem()}
-          {assignAsSupportMenuItem()}
-          {unassignMenuItem()}
-          {manageAssigneesMenuItem()}
+          {assigneeDetailsMenuItem()}
           {requesterDetailsMenuItem()}
           {summaryMenuItem()}
         </StyledMenu>
