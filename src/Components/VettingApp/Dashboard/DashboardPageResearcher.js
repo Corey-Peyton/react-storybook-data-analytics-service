@@ -42,7 +42,7 @@ const useStyles = makeStyles((theme) => ({
     top: 0,
     left: 'auto',
     width: '100%',
-    padding: theme.spacing(2, 1, 1),
+    padding: theme.spacing(2, 1, 1, '!important'),
     display: 'flex',
     flexDirection: 'row',
     justifyContent: 'space-between',
