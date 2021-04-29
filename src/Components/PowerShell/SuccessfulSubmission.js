@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React from 'react';
 import Alert from '@material-ui/lab/Alert';
 import {makeStyles} from '@material-ui/core/styles';
 import {Button, Typography, Paper, Container, Grid} from '@material-ui/core';
@@ -40,9 +40,6 @@ const useStyles = makeStyles((theme) => ({
 function SuccessfulSubmission(props) {
   const classes = useStyles();
   const [open, setOpen] = React.useState(true);
-  const [state, setState] = React.useState({
-    title: 'VDL PowerShell Intake Request',
-  });
   return (
     <React.Fragment>
       <Header />
@@ -52,7 +49,7 @@ function SuccessfulSubmission(props) {
             <Grid container alignItems="center">
               <Grid item className={classes.title}>
                 <Typography variant="h6" component="h1">
-                  {state.title}
+                  VDL PowerShell Intake Request
                 </Typography>
               </Grid>
             </Grid>

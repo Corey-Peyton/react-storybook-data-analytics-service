@@ -1,6 +1,6 @@
 import React from 'react';
+import {Link as RouterLink} from 'react-router-dom';
 import {makeStyles} from '@material-ui/core/styles';
-import {mdiInboxArrowDown} from '@mdi/js';
 import {
   Paper,
   Container,
@@ -12,13 +12,13 @@ import {
   StepLabel,
   Typography,
   Divider,
+  Link,
 } from '@material-ui/core';
 import ArrowForwardIosIcon from '@material-ui/icons/ArrowForwardIos';
 // import RequestToolbar from '../VettingApp/CommonComponents/RequestToolbar';
 import ArrowBackIosIcon from '@material-ui/icons/ArrowBackIos';
 /* import CutCopyPasteAlert from '../VettingApp/CommonComponents/CutCopyPasteAlert'; */
 import {SnackbarSubmitRequest} from '../VettingApp/CommonComponents/Snackbars';
-import Icon from '@mdi/react';
 import SecurityGroup from './SecurityGroup';
 import Header from '../VettingApp/CommonComponents/Header';
 import Footer from '../VettingApp/CommonComponents/Footer';
@@ -89,6 +89,7 @@ const useStyles = makeStyles((theme) => ({
   },
   button: {
     marginRight: theme.spacing(1),
+    color: 'white',
   },
   errorMsg: {
     margin: 0,
@@ -227,6 +228,7 @@ function PowerShell(props) {
       <main className={classes.main} tabIndex="-1">
         <Container maxWidth={false} className={classes.pageContainer}>
           <Paper className={classes.paper}>
+            {/* <SuccessfulSubmission /> */}
             {/*  <RequestToolbar
               role="analyst"
               status="submitted"
@@ -238,9 +240,6 @@ function PowerShell(props) {
             /> */}
             <Grid container alignItems="center">
               <Grid item className={classes.title}>
-                {/*  <Typography variant="subtitle1" component="p">
-                  vDL PowerShell intake form
-                </Typography> */}
                 <Typography variant="h6" component="h1">
                   {state.title}
                 </Typography>
@@ -253,9 +252,10 @@ function PowerShell(props) {
                     color="primary"
                     className={classes.button}
                     onClick={handleClick}
-                    startIcon={<Icon path={mdiInboxArrowDown} size={1} />}
                   >
-                    Submit
+                    <Link component={RouterLink} to="SuccessfulSubmission">
+                     Submit
+                    </Link>
                   </Button>
                   <SnackbarSubmitRequest
                     open={openSnackbar}
