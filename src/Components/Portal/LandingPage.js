@@ -94,7 +94,7 @@ function LandingPage(props) {
                         aria-controls="aaw-tools-content"
                         id="aaw-tools-header"
                       >
-                        <Typography component="h2" variant="subtitle1">
+                        <Typography component="h4" variant="subtitle1">
                           Available tools
                         </Typography>
                       </AccordionSummary>
@@ -188,7 +188,7 @@ function LandingPage(props) {
                         aria-controls="cae-tools-content"
                         id="cae-tools-header"
                       >
-                        <Typography component="h2" variant="subtitle1">
+                        <Typography component="h4" variant="subtitle1">
                           Available tools
                         </Typography>
                       </AccordionSummary>

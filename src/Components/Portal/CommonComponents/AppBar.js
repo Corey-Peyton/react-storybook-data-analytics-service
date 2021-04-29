@@ -58,8 +58,6 @@ function AppBar(props) {
     menuAnchor: null,
   });
 
-  // const [anchorEl, setAnchorEl] = React.useState(null);
-
   const toggleDialog = (element, value) => {
     setOpen({...open, [element]: value});
   };
@@ -130,7 +128,11 @@ function AppBar(props) {
       </MenuItem>,
       <MenuItem onClick={() => closeMenu('menuAnchor')} key="7">
         <ListItemText
-          primary={<Typography variant="body2">Français</Typography>}
+          primary={
+            <Typography variant="body2">
+              <span lang="fr">Français</span>
+            </Typography>
+          }
         />
       </MenuItem>,
     ];
@@ -139,35 +141,41 @@ function AppBar(props) {
   return (
     <>
       <MUIAppBar className={classes.appBar} color="default">
-        <Toolbar>
+        <Toolbar component="nav">
           <Grid container justify="space-between" alignItems="center">
             <Grid item className={classes.branding}>
               <BrandingStatCan />
             </Grid>
             {!isSmScreen && (
               <Grid item className={classes.actions}>
-                <Button
-                  className={classes.textBtn}
-                  variant="text"
-                  startIcon={<Icon path={mdiHelpCircle} size={1} />}
-                  onClick={() => openDrawer('helpDrawer')}
-                >
-                  Help
-                </Button>
-                <Button
-                  variant="text"
-                  startIcon={<Icon path={mdiMessageAlert} size={1} />}
-                  onClick={() =>
-                    toggleDialog('feedbackDialog', !open.feedbackDialog)
-                  }
-                >
-                  Feedback
-                </Button>
+                <ul className="list-horizontal">
+                  <li>
+                    <Button
+                      className={classes.textBtn}
+                      variant="text"
+                      startIcon={<Icon path={mdiHelpCircle} size={1} />}
+                      onClick={() => openDrawer('helpDrawer')}
+                    >
+                      Help
+                    </Button>
+                  </li>
+                  <li>
+                    <Button
+                      variant="text"
+                      startIcon={<Icon path={mdiMessageAlert} size={1} />}
+                      onClick={() =>
+                        toggleDialog('feedbackDialog', !open.feedbackDialog)
+                      }
+                    >
+                      Feedback
+                    </Button>
+                  </li>
+                </ul>
               </Grid>
             )}
           </Grid>
         </Toolbar>
-        <Toolbar>
+        <Toolbar component="nav">
           <Grid container justify="space-between" alignItems="center">
             <Grid item>
               <Breadcrumbs aria-label="breadcrumb" className="mb-0">
@@ -202,22 +210,28 @@ function AppBar(props) {
               </>
             ) : (
               <Grid item className={classes.actions}>
-                <Button
-                  className={classes.textBtn}
-                  variant="text"
-                  startIcon={<Icon path={mdiApps} size={1} />}
-                  // onClick={() => handleClickOpen('snackbarReactivate')}
-                >
-                  AAW dashboard
-                </Button>
-                <Button
-                  className={classes.headerBtn}
-                  variant="text"
-                  startIcon={<Icon path={mdiApps} size={1} />}
-                  // onClick={() => handleClickOpen('snackbarReactivate')}
-                >
-                  CAE dashboard
-                </Button>
+                <ul className="list-horizontal">
+                  <li>
+                    <Button
+                      className={classes.textBtn}
+                      variant="text"
+                      startIcon={<Icon path={mdiApps} size={1} />}
+                      // onClick={() => handleClickOpen('snackbarReactivate')}
+                    >
+                      AAW dashboard
+                    </Button>
+                  </li>
+                  <li>
+                    <Button
+                      className={classes.headerBtn}
+                      variant="text"
+                      startIcon={<Icon path={mdiApps} size={1} />}
+                      // onClick={() => handleClickOpen('snackbarReactivate')}
+                    >
+                      CAE dashboard
+                    </Button>
+                  </li>
+                </ul>
                 <Divider orientation="vertical" flexItem className="mr-2" />
                 <Button
                   className={classes.headerBtn}

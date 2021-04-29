@@ -57,7 +57,9 @@ const Footer = React.forwardRef((props, ref) => {
             <Toolbar>
               <Grid container justify="space-between" alignItems="center">
                 <Grid item className={classes.actions}>
-                  <Button className="mr-2">{t('Français')}</Button>
+                  <Button className="mr-2">
+                    <span lang="fr">Français</span>
+                  </Button>
                   <Divider orientation="vertical" flexItem className="mr-2" />
                   <ul className="list-horizontal">
                     <li>
@@ -111,7 +113,11 @@ const Footer = React.forwardRef((props, ref) => {
                     <Grid item>
                       <Typography variant="body2">
                         Illustrations by{' '}
-                        <Link color="inherit" href="https://www.freepik.com/">
+                        <Link
+                          underline="always"
+                          color="inherit"
+                          href="https://www.freepik.com/"
+                        >
                           Freepik
                         </Link>
                       </Typography>

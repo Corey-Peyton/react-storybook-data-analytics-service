@@ -322,7 +322,7 @@ export const useStyles = makeStyles({
           'height': 'auto',
           '&.MuiBadge-colorPrimary': {
             color: '#fff',
-            backgroundColor: '#1473e6',
+            backgroundColor: theme.palette.primary.main,
           },
         },
       },
@@ -387,7 +387,7 @@ export const useStyles = makeStyles({
       'display': 'flex',
       'margin': theme.spacing(1.5, 0),
       'flexFlow': 'row',
-      'height': '100%',
+      'height': 'auto',
       'justifyContent': 'space-between',
       'width': '100%',
       'alignItems': 'center',

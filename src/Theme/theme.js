@@ -4,7 +4,7 @@ export const theme = createMuiTheme({
   palette: {
     type: 'light',
     primary: {
-      main: '#1473e6',
+      main: '#1A73E8',
       light: '#d4e5ff',
       dark: '#0049b3',
     },
@@ -70,12 +70,12 @@ export const darkTheme = createMuiTheme({
   palette: {
     type: 'dark',
     primary: {
-      main: '#1473e6',
+      main: '#1A73E8',
       light: '#d4e5ff',
       dark: '#0049b3',
     },
     background: {
-      paper: '#19334D',
+      paper: '#173048',
     },
   },
   overrides: {

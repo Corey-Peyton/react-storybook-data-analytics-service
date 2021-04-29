@@ -13,6 +13,8 @@ import {
 import {Button} from './Button';
 import {IconButton} from './IconButton';
 import CloseIcon from '@material-ui/icons/Close';
+import Icon from '@mdi/react';
+import {mdiArrowLeft} from '@mdi/js';
 
 const useStyles = makeStyles((theme) => ({
   dialogTitle: {
@@ -49,9 +51,11 @@ export function Dialog(props) {
     primaryButton,
     secondaryButton,
     thirdButton,
+    backButton,
     handlePrimaryClick,
     handleSecondaryClick,
     handleThirdClick,
+    handleBackClick,
   } = props;
 
   const handleClick = (e) => {
@@ -79,9 +83,32 @@ export function Dialog(props) {
         }}
       >
         <DialogTitle id={id} className={classes.dialogTitle} disableTypography>
-          <Typography variant="h6" component="h2">
-            {title}
-          </Typography>
+          <Grid container alignItems="center">
+            {backButton && (
+              <Grid item>
+                <IconButton
+                  className="mr-1"
+                  aria-label={backButton}
+                  edge="start"
+                  onClick={handleBackClick}
+                  onKeyPress={(e) => {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    if (e.key === 'Enter') {
+                      handleBackClick();
+                    }
+                  }}
+                >
+                  <Icon path={mdiArrowLeft} size={1} />
+                </IconButton>
+              </Grid>
+            )}
+            <Grid item>
+              <Typography component="h2" variant="h6">
+                {title}
+              </Typography>
+            </Grid>
+          </Grid>
           <IconButton
             aria-label={`${title} - close`}
             onClick={toggleDialog}
@@ -200,6 +227,10 @@ Dialog.propTypes = {
    */
   thirdButton: PropTypes.string,
   /**
+   Text for back button
+   */
+  backButton: PropTypes.string,
+  /**
    Click handler for primary action
    */
   handlePrimaryClick: PropTypes.func,
@@ -211,6 +242,10 @@ Dialog.propTypes = {
    Click handler for third action
    */
   handleThirdClick: PropTypes.func,
+  /**
+   Click handler for back button
+   */
+  handleBackClick: PropTypes.func,
 };
 
 Dialog.defaultProps = {

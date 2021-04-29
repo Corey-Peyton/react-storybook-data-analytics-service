@@ -27,7 +27,6 @@ import {
   mdiChevronDown,
   mdiEmail,
   mdiBookOpenPageVariant,
-  mdiArrowLeft,
   mdiInformationOutline,
 } from '@mdi/js';
 
@@ -58,7 +57,7 @@ export function HelpDrawer(props) {
           aria-controls="support-content"
           id="support-header"
         >
-          <Typography component="h2" variant="subtitle1">
+          <Typography component="h3" variant="subtitle1">
             Contact the support team
           </Typography>
         </AccordionSummary>
@@ -83,7 +82,7 @@ export function HelpDrawer(props) {
           aria-controls="aaw-content"
           id="aaw-header"
         >
-          <Typography component="h2" variant="subtitle1">
+          <Typography component="h3" variant="subtitle1">
             Advanced Analytics Workspace (AAW)
           </Typography>
         </AccordionSummary>
@@ -110,7 +109,7 @@ export function HelpDrawer(props) {
           aria-controls="cae-content"
           id="cae-header"
         >
-          <Typography component="h2" variant="subtitle1">
+          <Typography component="h3" variant="subtitle1">
             Collaborative Analytics Environment (CAE)
           </Typography>
         </AccordionSummary>
@@ -501,6 +500,11 @@ export function DataUseDialog(props) {
                 <IconButton
                   aria-label="Additional information"
                   onClick={props.additionalInfo}
+                  onKeyPress={(e) => {
+                    if (e.key === 'Enter') {
+                      props.additionalInfo();
+                    }
+                  }}
                   edge="end"
                 >
                   <Icon path={mdiInformationOutline} size={1} />
@@ -688,30 +692,14 @@ export function DataUseDialog(props) {
     <Dialog
       id="data-use-dialog"
       open={props.open}
-      title={
-        <Grid container alignItems="center">
-          <Grid item>
-            <IconButton
-              className="mr-1"
-              aria-label="Back to account details"
-              edge="start"
-              onClick={props.handleBack}
-            >
-              <Icon path={mdiArrowLeft} size={1} />
-            </IconButton>
-          </Grid>
-          <Grid item>
-            <Typography component="h2" variant="h6">
-              Data use details
-            </Typography>
-          </Grid>
-        </Grid>
-      }
+      title="Data use details"
       content={content()}
       primaryButton="Next"
       secondaryButton="Cancel"
+      backButton="Back to account details"
       handlePrimaryClick={props.handleNext}
       handleSecondaryClick={props.toggleDialog}
+      handleBackClick={props.handleBack}
       toggleDialog={props.toggleDialog}
     />
   );
@@ -1141,30 +1129,14 @@ export function TasksToolsDialog(props) {
     <Dialog
       id="tasks-tools-dialog"
       open={props.open}
-      title={
-        <Grid container alignItems="center">
-          <Grid item>
-            <IconButton
-              className="mr-1"
-              aria-label="Back to data use details"
-              edge="start"
-              onClick={props.handleBack}
-            >
-              <Icon path={mdiArrowLeft} size={1} />
-            </IconButton>
-          </Grid>
-          <Grid item>
-            <Typography component="h2" variant="h6">
-              Tasks and tools
-            </Typography>
-          </Grid>
-        </Grid>
-      }
+      title="Tasks and tools"
       content={content()}
       primaryButton="Next"
       secondaryButton="Cancel"
+      backButton="Back to data use details"
       handlePrimaryClick={props.handleNext}
       handleSecondaryClick={props.toggleDialog}
+      handleBackClick={props.handleBack}
       toggleDialog={props.toggleDialog}
     />
   );
@@ -1202,11 +1174,17 @@ export function RegisterDialog(props) {
                 label={
                   <Typography>
                     I agree to the{' '}
-                    <Link href="https://www.statcan.gc.ca/eng/reference/terms-conditions">
+                    <Link
+                      underline="always"
+                      href="https://www.statcan.gc.ca/eng/reference/terms-conditions"
+                    >
                       Terms and conditions
                     </Link>{' '}
                     and{' '}
-                    <Link href="https://www.statcan.gc.ca/eng/reference/privacy">
+                    <Link
+                      underline="always"
+                      href="https://www.statcan.gc.ca/eng/reference/privacy"
+                    >
                       Privacy policy
                     </Link>
                     . *
@@ -1235,30 +1213,14 @@ export function RegisterDialog(props) {
     <Dialog
       id="register-dialog"
       open={props.open}
-      title={
-        <Grid container alignItems="center">
-          <Grid item>
-            <IconButton
-              className="mr-1"
-              aria-label="Back to tasks and tools"
-              edge="start"
-              onClick={props.handleBack}
-            >
-              <Icon path={mdiArrowLeft} size={1} />
-            </IconButton>
-          </Grid>
-          <Grid item>
-            <Typography component="h2" variant="h6">
-              Accept and register
-            </Typography>
-          </Grid>
-        </Grid>
-      }
+      title="Accept and register"
       content={content()}
       primaryButton="Register"
       secondaryButton="Cancel"
+      backButton="Back to tasks and tools"
       handlePrimaryClick={props.submitRegistration}
       handleSecondaryClick={props.toggleDialog}
+      handleBackClick={props.handleBack}
       toggleDialog={props.toggleDialog}
     />
   );

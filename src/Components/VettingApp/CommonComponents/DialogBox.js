@@ -96,7 +96,7 @@ const useStyles = makeStyles((theme) => ({
     'display': 'flex',
     'margin': theme.spacing(1.5, 0),
     'flexFlow': 'row',
-    'height': '100%',
+    'height': 'auto',
     'justifyContent': 'center',
     'width': '100%',
     'alignItems': 'center',
