@@ -7,6 +7,7 @@ import CloseIcon from '@material-ui/icons/Close';
 import Collapse from '@material-ui/core/Collapse';
 import Header from '../VettingApp/CommonComponents/Header';
 import Footer from '../VettingApp/CommonComponents/Footer';
+import {SnackbarAddVirtualMachine} from '../VettingApp/CommonComponents/Snackbars';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -40,7 +41,12 @@ const useStyles = makeStyles((theme) => ({
 
 function SuccessfulSubmission(props) {
   const classes = useStyles();
-  const [open, setOpen] = React.useState(true);
+  const [state, setState] = React.useState({
+    snackbarAddVirtualMachine: false,
+  });
+  const handleClickClose = (state) => {
+    setState({...state, [state]: false});
+  };
   return (
     <React.Fragment>
       <Header />
@@ -55,7 +61,7 @@ function SuccessfulSubmission(props) {
                 </Typography>
               </Grid>
             </Grid>
-            <Collapse in={open}>
+            <Collapse in={state}>
               <Alert
                 severity="success"
                 className={classes.alert}
@@ -65,7 +71,7 @@ function SuccessfulSubmission(props) {
                     color="inherit"
                     className={classes.padding}
                     onClick={() => {
-                      setOpen(false);
+                      setState(false);
                     }}
                   >
                     <CloseIcon />
@@ -97,6 +103,10 @@ function SuccessfulSubmission(props) {
         </Container>
       </main>
       <Footer />
+      <SnackbarAddVirtualMachine
+        open={state.snackbarAddVirtualMachine}
+        handleClose={() => handleClickClose('snackbarAddVirtualMachine')}
+      />
     </React.Fragment>
   );
 }

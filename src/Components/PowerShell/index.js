@@ -12,7 +12,6 @@ import {
   StepLabel,
   Typography,
   Divider,
-  Link,
 } from '@material-ui/core';
 import ArrowForwardIosIcon from '@material-ui/icons/ArrowForwardIos';
 // import RequestToolbar from '../VettingApp/CommonComponents/RequestToolbar';
@@ -252,10 +251,10 @@ function PowerShell(props) {
                     color="primary"
                     className={classes.button}
                     onClick={handleClick}
+                    component={RouterLink}
+                    to="SuccessfulSubmission"
                   >
-                    <Link component={RouterLink} to="SuccessfulSubmission">
-                     Submit
-                    </Link>
+                    Submit
                   </Button>
                   <SnackbarSubmitRequest
                     open={openSnackbar}

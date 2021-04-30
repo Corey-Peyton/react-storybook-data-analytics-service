@@ -140,11 +140,6 @@ function BootstrapTooltip(props) {
 function VirtualMachine(props) {
   const classes = useStyles();
 
-  const [open, setOpen] = React.useState({
-    snackbarAddVirtualMachine: false,
-    addVirtualMachine: false,
-  });
-
   const [state, setState] = React.useState({
     addVirtualMachine: false,
     snackbarAddVirtualMachine: false,
@@ -183,19 +178,19 @@ function VirtualMachine(props) {
     ) {
       return;
     }
-    setOpen({...open, [drawer]: state});
+    setState({...state, [drawer]: state});
   };
 
   const deleteFile = () => {
-    setOpen({...open, snackbarDelete: true, dialogDelete: false});
+    setState({...state, snackbarDelete: true, dialogDelete: false});
   };
 
   const handleClickOpen = (state) => {
-    setOpen({...open, [state]: true});
+    setState({...state, [state]: true});
   };
 
   const handleClickClose = (state) => {
-    setOpen({...open, [state]: false});
+    setState({...state, [state]: false});
   };
 
   return (
@@ -204,218 +199,276 @@ function VirtualMachine(props) {
         You need to add virtual machine details to submit this request
         successfully
       </Typography>
-      {/* <div className={classes.hiddenCard}> */}
-      <Card className={classes.card} variant="outlined">
-        <div className={classes.cardHeader}>
-          <Typography className={classes.powershellColumn}>
-            STC-0412-ST
-          </Typography>
-          <Typography className={classes.powershellColumn}>
-            Virtual machine name
-          </Typography>
-        </div>
-        <CardHeader
-          avatar={
-            <Avatar aria-label="recipe" className={classes.avatar}>
-              BB
-            </Avatar>
-          }
-          action={
-            <IconButton
-              aria-label="settings"
-              className={clsx(classes.expand, {
-                [classes.expandOpen]: expanded,
-              })}
-              onClick={handleExpandClick}
-              aria-expanded={expanded}
-            >
-              <ExpandMoreIcon />
-            </IconButton>
-          }
-          title="Some email"
-          subheader="email@email.com"
-        />
-        <Divider className={classes.divider} />
-        <Collapse in={expanded} timeout="auto" unmountOnExit>
-          <CardContent>
-            <Typography variant="h6">Personal information</Typography>
-
-            <div className={classes.powershellRow}>
-              <div
-                className={clsx(classes.powershellColumn, classes.widthAuto)}
+      {state.showCard === true && (
+        <Card className={classes.card} variant="outlined">
+          <div className={classes.cardHeader}>
+            <Typography className={classes.powershellColumn}>
+              STC-0412-ST
+            </Typography>
+            <Typography className={classes.powershellColumn}>
+              Virtual machine name
+            </Typography>
+          </div>
+          <CardHeader
+            avatar={
+              <Avatar aria-label="recipe" className={classes.avatar}>
+                BB
+              </Avatar>
+            }
+            action={
+              <IconButton
+                aria-label="settings"
+                className={clsx(classes.expand, {
+                  [classes.expandOpen]: expanded,
+                })}
+                onClick={handleExpandClick}
+                aria-expanded={expanded}
               >
-                <Icon path={mdiFileDocumentOutline} size={1} />
-              </div>
-              <div className={classes.powershellColumn}>
-                <Typography className={classes.powershellText} variant="body1">
-                  Security clearance expiry date
-                </Typography>
-                <Typography className={classes.powershellText} variant="body2">
-                  02/23/2021
-                </Typography>
-              </div>
-            </div>
-            <div className={classes.powershellRow}>
-              <div
-                className={clsx(classes.powershellColumn, classes.widthAuto)}
-              >
-                <Icon path={mdiSmartCardOutline} size={1} />
-              </div>
-              <div className={classes.powershellColumn}>
-                <Typography className={classes.powershellText} variant="body1">
-                  Researcher ID
-                </Typography>
-                <Typography className={classes.powershellText} variant="body2">
-                  54674
-                </Typography>
-              </div>
-            </div>
-            <div className={classes.powershellRow}>
-              <div
-                className={clsx(classes.powershellColumn, classes.widthAuto)}
-              >
-                <Icon path={mdiDomain} size={1} />
-              </div>
-              <div className={classes.powershellColumn}>
-                <Typography className={classes.powershellText} variant="body1">
-                  Organization
-                </Typography>
-                <Typography className={classes.powershellText} variant="body2">
-                  Statistics Canada
-                </Typography>
-              </div>
-            </div>
-            <div className={classes.powershellRow}>
-              <div
-                className={clsx(classes.powershellColumn, classes.widthAuto)}
-              >
-                <Icon path={mdiAccountOutline} size={1} />
-              </div>
-              <div className={classes.powershellColumn}>
-                <Typography className={classes.powershellText} variant="body1">
-                  Username
-                </Typography>
-                <Typography className={classes.powershellText} variant="body2">
-                  some.email
-                </Typography>
-              </div>
-            </div>
-            <Typography variant="h6">Contact information</Typography>
-            <div className={classes.powershellRow}>
-              <div
-                className={clsx(classes.powershellColumn, classes.widthAuto)}
-              >
-                <Icon path={mdiPhone} size={1} />
-              </div>
-              <div className={classes.powershellColumn}>
-                <Typography className={classes.powershellText} variant="body1">
-                  Phone number
-                </Typography>
-                <Typography className={classes.powershellText} variant="body2">
-                  555-867-5309
-                </Typography>
-              </div>
-            </div>
-            <div className={classes.powershellRow}>
-              <div
-                className={clsx(classes.powershellColumn, classes.widthAuto)}
-              >
-                <Icon path={mdiEmailOutline} size={1} />
-              </div>
-              <div className={classes.powershellColumn}>
-                <Typography className={classes.powershellText} variant="body1">
-                  Email
-                </Typography>
-                <Typography className={classes.powershellText} variant="body2">
-                  email@email.com
-                </Typography>
-              </div>
-            </div>
-            <Typography variant="h6">VDL information</Typography>
-            <div className={classes.powershellRow}>
-              <div
-                className={clsx(classes.powershellColumn, classes.widthAuto)}
-              >
-                <Icon path={mdiMonitor} size={1} />
-              </div>
-              <div className={classes.powershellColumn}>
-                <Typography className={classes.powershellText} variant="body1">
-                  Virtual machine name
-                </Typography>
-                <Typography className={classes.powershellText} variant="body2">
-                  STC-0412-ST
-                </Typography>
-              </div>
-            </div>
-            <div className={classes.powershellRow}>
-              <div
-                className={clsx(classes.powershellColumn, classes.widthAuto)}
-              >
-                <Icon path={mdiTranslate} size={1} />
-              </div>
-              <div className={classes.powershellColumn}>
-                <Typography className={classes.powershellText} variant="body1">
-                  Virtual machine language
-                </Typography>
-                <Typography className={classes.powershellText} variant="body2">
-                  English
-                </Typography>
-              </div>
-            </div>
-            <div className={classes.powershellRow}>
-              <div
-                className={clsx(classes.powershellColumn, classes.widthAuto)}
-              >
-                <Icon path={mdiHammerScrewdriver} size={1} />
-              </div>
-              <div className={classes.powershellColumn}>
-                <Typography className={classes.powershellText} variant="body1">
-                  Required tools
-                </Typography>
-                <Typography className={classes.powershellText} variant="body2">
-                  Default tools
-                  <BootstrapTooltip
-                    className={classes.tooltipLabel}
-                    title="Default tools (Adobe Reader DC, Java, LibreOffice, Office 2019, Power BI, ProjectLibre, Python, R, RStudio, RTools, VSCode"
-                  >
-                    <InfoIcon />
-                  </BootstrapTooltip>
-                </Typography>
-                <Typography className={classes.powershellText} variant="body2">
-                  SAS
-                  <BootstrapTooltip
-                    className={classes.tooltipLabel}
-                    title="Includes SAS 9.4 and SAS Enterprise Guide"
-                  >
-                    <InfoIcon />
-                  </BootstrapTooltip>
-                </Typography>
-              </div>
-            </div>
-          </CardContent>
+                <ExpandMoreIcon />
+              </IconButton>
+            }
+            title="Some email"
+            subheader="email@email.com"
+          />
           <Divider className={classes.divider} />
-        </Collapse>
-        <CardActions>
-          <Button
-            color="primary"
-            variant="text"
-            onClick={(e) => toggleDrawer(e, 'editVirtualMachine', true)}
-          >
-            Edit
-          </Button>
-          <Button
-            color="primary"
-            variant="text"
-            onClick={() => handleClickOpen('dialogDelete')}
-          >
-            Delete
-          </Button>
-        </CardActions>
-      </Card>
-      {/* </div> */}
+          <Collapse in={expanded} timeout="auto" unmountOnExit>
+            <CardContent>
+              <Typography variant="h6">Personal information</Typography>
+
+              <div className={classes.powershellRow}>
+                <div
+                  className={clsx(classes.powershellColumn, classes.widthAuto)}
+                >
+                  <Icon path={mdiFileDocumentOutline} size={1} />
+                </div>
+                <div className={classes.powershellColumn}>
+                  <Typography
+                    className={classes.powershellText}
+                    variant="body1"
+                  >
+                    Security clearance expiry date
+                  </Typography>
+                  <Typography
+                    className={classes.powershellText}
+                    variant="body2"
+                  >
+                    02/23/2021
+                  </Typography>
+                </div>
+              </div>
+              <div className={classes.powershellRow}>
+                <div
+                  className={clsx(classes.powershellColumn, classes.widthAuto)}
+                >
+                  <Icon path={mdiSmartCardOutline} size={1} />
+                </div>
+                <div className={classes.powershellColumn}>
+                  <Typography
+                    className={classes.powershellText}
+                    variant="body1"
+                  >
+                    Researcher ID
+                  </Typography>
+                  <Typography
+                    className={classes.powershellText}
+                    variant="body2"
+                  >
+                    54674
+                  </Typography>
+                </div>
+              </div>
+              <div className={classes.powershellRow}>
+                <div
+                  className={clsx(classes.powershellColumn, classes.widthAuto)}
+                >
+                  <Icon path={mdiDomain} size={1} />
+                </div>
+                <div className={classes.powershellColumn}>
+                  <Typography
+                    className={classes.powershellText}
+                    variant="body1"
+                  >
+                    Organization
+                  </Typography>
+                  <Typography
+                    className={classes.powershellText}
+                    variant="body2"
+                  >
+                    Statistics Canada
+                  </Typography>
+                </div>
+              </div>
+              <div className={classes.powershellRow}>
+                <div
+                  className={clsx(classes.powershellColumn, classes.widthAuto)}
+                >
+                  <Icon path={mdiAccountOutline} size={1} />
+                </div>
+                <div className={classes.powershellColumn}>
+                  <Typography
+                    className={classes.powershellText}
+                    variant="body1"
+                  >
+                    Username
+                  </Typography>
+                  <Typography
+                    className={classes.powershellText}
+                    variant="body2"
+                  >
+                    some.email
+                  </Typography>
+                </div>
+              </div>
+              <Typography variant="h6">Contact information</Typography>
+              <div className={classes.powershellRow}>
+                <div
+                  className={clsx(classes.powershellColumn, classes.widthAuto)}
+                >
+                  <Icon path={mdiPhone} size={1} />
+                </div>
+                <div className={classes.powershellColumn}>
+                  <Typography
+                    className={classes.powershellText}
+                    variant="body1"
+                  >
+                    Phone number
+                  </Typography>
+                  <Typography
+                    className={classes.powershellText}
+                    variant="body2"
+                  >
+                    555-867-5309
+                  </Typography>
+                </div>
+              </div>
+              <div className={classes.powershellRow}>
+                <div
+                  className={clsx(classes.powershellColumn, classes.widthAuto)}
+                >
+                  <Icon path={mdiEmailOutline} size={1} />
+                </div>
+                <div className={classes.powershellColumn}>
+                  <Typography
+                    className={classes.powershellText}
+                    variant="body1"
+                  >
+                    Email
+                  </Typography>
+                  <Typography
+                    className={classes.powershellText}
+                    variant="body2"
+                  >
+                    email@email.com
+                  </Typography>
+                </div>
+              </div>
+              <Typography variant="h6">VDL information</Typography>
+              <div className={classes.powershellRow}>
+                <div
+                  className={clsx(classes.powershellColumn, classes.widthAuto)}
+                >
+                  <Icon path={mdiMonitor} size={1} />
+                </div>
+                <div className={classes.powershellColumn}>
+                  <Typography
+                    className={classes.powershellText}
+                    variant="body1"
+                  >
+                    Virtual machine name
+                  </Typography>
+                  <Typography
+                    className={classes.powershellText}
+                    variant="body2"
+                  >
+                    STC-0412-ST
+                  </Typography>
+                </div>
+              </div>
+              <div className={classes.powershellRow}>
+                <div
+                  className={clsx(classes.powershellColumn, classes.widthAuto)}
+                >
+                  <Icon path={mdiTranslate} size={1} />
+                </div>
+                <div className={classes.powershellColumn}>
+                  <Typography
+                    className={classes.powershellText}
+                    variant="body1"
+                  >
+                    Virtual machine language
+                  </Typography>
+                  <Typography
+                    className={classes.powershellText}
+                    variant="body2"
+                  >
+                    English
+                  </Typography>
+                </div>
+              </div>
+              <div className={classes.powershellRow}>
+                <div
+                  className={clsx(classes.powershellColumn, classes.widthAuto)}
+                >
+                  <Icon path={mdiHammerScrewdriver} size={1} />
+                </div>
+                <div className={classes.powershellColumn}>
+                  <Typography
+                    className={classes.powershellText}
+                    variant="body1"
+                  >
+                    Required tools
+                  </Typography>
+                  <Typography
+                    className={classes.powershellText}
+                    variant="body2"
+                  >
+                    Default tools
+                    <BootstrapTooltip
+                      className={classes.tooltipLabel}
+                      title="Default tools (Adobe Reader DC, Java, LibreOffice, Office 2019, Power BI, ProjectLibre, Python, R, RStudio, RTools, VSCode"
+                    >
+                      <InfoIcon />
+                    </BootstrapTooltip>
+                  </Typography>
+                  <Typography
+                    className={classes.powershellText}
+                    variant="body2"
+                  >
+                    SAS
+                    <BootstrapTooltip
+                      className={classes.tooltipLabel}
+                      title="Includes SAS 9.4 and SAS Enterprise Guide"
+                    >
+                      <InfoIcon />
+                    </BootstrapTooltip>
+                  </Typography>
+                </div>
+              </div>
+            </CardContent>
+            <Divider className={classes.divider} />
+          </Collapse>
+          <CardActions>
+            <Button
+              color="primary"
+              variant="text"
+              onClick={(e) => toggleDrawer(e, 'editVirtualMachine', true)}
+            >
+              Edit
+            </Button>
+            <Button
+              color="primary"
+              variant="text"
+              onClick={() => handleClickOpen('dialogDelete')}
+            >
+              Delete
+            </Button>
+          </CardActions>
+        </Card>
+      )}
+
       <Drawer
         anchor="right"
-        open={open.editVirtualMachine}
+        open={state.editVirtualMachine}
         className={classes.drawer}
       >
         <EditVirtualMachine
@@ -437,7 +490,7 @@ function VirtualMachine(props) {
       </Button>
       <Drawer
         anchor="right"
-        open={open.addVirtualMachine}
+        open={state.addVirtualMachine}
         className={classes.drawer}
       >
         <AddVirtualMachine
@@ -452,11 +505,11 @@ function VirtualMachine(props) {
       />
       <DialogDelete
         submitDialog={deleteFile}
-        open={open.dialogDelete}
+        open={state.dialogDelete}
         toggleDialog={() => handleClickClose('dialogDelete')}
       />
       <SnackbarDeleteVirtualMachine
-        open={open.snackbarDelete}
+        open={state.snackbarDelete}
         handleClose={() => handleClickClose('snackbarDelete')}
       />
     </React.Fragment>
