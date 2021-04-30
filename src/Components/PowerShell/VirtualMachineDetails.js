@@ -143,16 +143,32 @@ function VirtualMachine(props) {
   const [open, setOpen] = React.useState({
     snackbarAddVirtualMachine: false,
     addVirtualMachine: false,
-    dialogDelete: false,
+  });
+
+  const [state, setState] = React.useState({
+    addVirtualMachine: false,
+    snackbarAddVirtualMachine: false,
+    showCard: false,
+    snackbarEditVirtualMachine: false,
+    editVirtualMachine: false,
   });
 
   const [expanded, setExpanded] = React.useState(false);
 
   const editVirtualMachine = () => {
-    setOpen({
-      ...open,
+    setState({
+      ...state,
       snackbarEditVirtualMachine: true,
       editVirtualMachine: false,
+    });
+  };
+
+  const addVirtualMachine = () => {
+    setState({
+      ...state,
+      snackbarAddVirtualMachine: true,
+      addVirtualMachine: false,
+      showCard: true,
     });
   };
 
@@ -174,14 +190,6 @@ function VirtualMachine(props) {
     setOpen({...open, snackbarDelete: true, dialogDelete: false});
   };
 
-  const addVirtualMachine = () => {
-    setOpen({
-      ...open,
-      snackbarAddVirtualMachine: true,
-      addVirtualMachine: false,
-    });
-  };
-
   const handleClickOpen = (state) => {
     setOpen({...open, [state]: true});
   };
@@ -196,6 +204,7 @@ function VirtualMachine(props) {
         You need to add virtual machine details to submit this request
         successfully
       </Typography>
+      {/* <div className={classes.hiddenCard}> */}
       <Card className={classes.card} variant="outlined">
         <div className={classes.cardHeader}>
           <Typography className={classes.powershellColumn}>
@@ -403,6 +412,7 @@ function VirtualMachine(props) {
           </Button>
         </CardActions>
       </Card>
+      {/* </div> */}
       <Drawer
         anchor="right"
         open={open.editVirtualMachine}
@@ -415,7 +425,7 @@ function VirtualMachine(props) {
         />
       </Drawer>
       <SnackbarEditVirtualMachine
-        open={open.snackbarEditVirtualMachine}
+        open={state.snackbarEditVirtualMachine}
         handleClose={() => handleClickClose('snackbarEditVirtualMachine')}
       />
       <Button
@@ -437,7 +447,7 @@ function VirtualMachine(props) {
         />
       </Drawer>
       <SnackbarAddVirtualMachine
-        open={open.snackbarAddVirtualMachine}
+        open={state.snackbarAddVirtualMachine}
         handleClose={() => handleClickClose('snackbarAddVirtualMachine')}
       />
       <DialogDelete

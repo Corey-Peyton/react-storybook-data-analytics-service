@@ -191,25 +191,48 @@ function ProjectInformation(props) {
   return (
     <React.Fragment>
       <Grid container xs={10}>
-        <FormControl component="fieldset" className={classes.inputMargin}>
-          <FormLabel component="legend">Environment</FormLabel>
-          <RadioGroup
-            aria-label="environment"
-            name="radio-buttons-group"
-            color="primary"
-          >
-            <FormControlLabel
-              value="female"
-              control={<Radio color="primary" />}
-              label="VDL"
-            />
-            <FormControlLabel
-              value="Prerelease"
-              control={<Radio color="primary" />}
-              label="Prerelease"
-            />
-          </RadioGroup>
-        </FormControl>
+        <Grid container>
+          <FormControl component="fieldset" className={classes.inputMargin} required>
+            <FormLabel component="legend">Access location</FormLabel>
+            <RadioGroup
+              aria-label="Access location"
+              name="radio-buttons-group"
+              color="primary"
+            >
+              <FormControlLabel
+                value="Secure room"
+                control={<Radio color="primary" />}
+                label="Secure room"
+              />
+              <FormControlLabel
+                value="Authorized workspace"
+                control={<Radio color="primary" />}
+                label="Authorized workspace"
+              />
+            </RadioGroup>
+          </FormControl>
+        </Grid>
+        <Grid container>
+          <FormControl component="fieldset" className={classes.inputMargin} required>
+            <FormLabel component="legend">Environment</FormLabel>
+            <RadioGroup
+              aria-label="environment"
+              name="radio-buttons-group"
+              color="primary"
+            >
+              <FormControlLabel
+                value="VDL"
+                control={<Radio color="primary" />}
+                label="VDL"
+              />
+              <FormControlLabel
+                value="Prerelease"
+                control={<Radio color="primary" />}
+                label="Prerelease"
+              />
+            </RadioGroup>
+          </FormControl>
+        </Grid>
         <TextField
           variant="outlined"
           id="primaryinvestigator"
