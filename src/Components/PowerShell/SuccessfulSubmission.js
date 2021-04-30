@@ -1,5 +1,6 @@
 import React from 'react';
 import Alert from '@material-ui/lab/Alert';
+import RequestToolbar from './RequestToolbar';
 import {makeStyles} from '@material-ui/core/styles';
 import {Button, Typography, Paper, Container, Grid} from '@material-ui/core';
 import CloseIcon from '@material-ui/icons/Close';
@@ -45,6 +46,7 @@ function SuccessfulSubmission(props) {
       <Header />
       <main className={classes.main} tabIndex="-1">
         <Container maxWidth={false} className={classes.pageContainer}>
+          <RequestToolbar />
           <Paper className={classes.paper}>
             <Grid container alignItems="center">
               <Grid item className={classes.title}>
@@ -82,8 +84,8 @@ function SuccessfulSubmission(props) {
               <Typography variant="body2" className="mb-2">
                 Your Virtual Machine will appear in the 'DevTest Lab' named as
                 'STC-0412-ST'. Please be patient when waiting for your Virtual
-                Machine to be ready. They may be visible to you with
-                the status of 'Running', this does not mean they are ready.
+                Machine to be ready. They may be visible to you with the status
+                of 'Running', this does not mean they are ready.
               </Typography>
               <Typography variant="body2" className="mb-2">
                 If you encounter any errors or issues, please submit a JIRA

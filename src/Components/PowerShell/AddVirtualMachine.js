@@ -453,7 +453,7 @@ function VirtualMachineDetails(props) {
           autoOk
           fullWidth
           margin="dense"
-          format="mm/dd/yyyy"
+          format="MM/dd/yyyy"
           value={state.selectedFromDate}
           inputVariant="outlined"
           onChange={handleFromDateChange}
