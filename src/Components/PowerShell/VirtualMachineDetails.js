@@ -17,8 +17,7 @@ import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import Button from '@material-ui/core/Button';
 import {makeStyles} from '@material-ui/core/styles';
 import {SnackbarAddVirtualMachine} from '../VettingApp/CommonComponents/Snackbars';
-import {Typography, Drawer, Divider, Tooltip} from '@material-ui/core';
-import InfoIcon from '@material-ui/icons/Info';
+import {Typography, Drawer, Divider} from '@material-ui/core';
 import {
   mdiSmartCardOutline,
   mdiFileDocumentOutline,
@@ -109,33 +108,22 @@ const useStyles = makeStyles((theme) => ({
   powershellText: {
     paddingLeft: theme.spacing(1),
   },
+  powershellTextHelperText: {
+    paddingLeft: theme.spacing(1),
+    marginBottom: theme.spacing(1),
+  },
   card: {
     marginTop: theme.spacing(2),
     paddingBottom: theme.spacing(1),
+    marginBottom: theme.spacing(2),
   },
   cardActions: {
-    borderTop: '1px solid',
-    borderTopColor: theme.palette.divider,
+    paddingBottom: theme.spacing(0),
   },
   icon: {
     paddingLeft: theme.spacing(1),
   },
 }));
-
-const useStylesBootstrap = makeStyles((theme) => ({
-  arrow: {
-    color: theme.palette.common.black,
-  },
-  tooltip: {
-    backgroundColor: theme.palette.common.black,
-  },
-}));
-
-function BootstrapTooltip(props) {
-  const classes = useStylesBootstrap();
-
-  return <Tooltip arrow classes={classes} {...props} />;
-}
 
 function VirtualMachine(props) {
   const classes = useStyles();
@@ -185,12 +173,12 @@ function VirtualMachine(props) {
     setState({...state, snackbarDelete: true, dialogDelete: false});
   };
 
-  const handleClickOpen = (state) => {
-    setState({...state, [state]: true});
+  const handleClickOpen = (element) => {
+    setState({...state, [element]: true});
   };
 
-  const handleClickClose = (state) => {
-    setState({...state, [state]: false});
+  const handleClickClose = (element) => {
+    setState({...state, [element]: false});
   };
 
   return (
@@ -413,7 +401,7 @@ function VirtualMachine(props) {
                 </div>
                 <div className={classes.powershellColumn}>
                   <Typography
-                    className={classes.powershellText}
+                    className={classes.powershellTextHelperText}
                     variant="body1"
                   >
                     Required tools
@@ -423,31 +411,31 @@ function VirtualMachine(props) {
                     variant="body2"
                   >
                     Default tools
-                    <BootstrapTooltip
-                      className={classes.tooltipLabel}
-                      title="Default tools (Adobe Reader DC, Java, LibreOffice, Office 2019, Power BI, ProjectLibre, Python, R, RStudio, RTools, VSCode"
-                    >
-                      <InfoIcon />
-                    </BootstrapTooltip>
+                  </Typography>
+                  <Typography
+                    className={classes.powershellTextHelperText}
+                    variant="body2"
+                  >
+                   (Adobe Reader DC, Java, LibreOffice, Office 2019, Power BI, ProjectLibre, Python, R, RStudio, RTools, VSCode)
                   </Typography>
                   <Typography
                     className={classes.powershellText}
                     variant="body2"
                   >
                     SAS
-                    <BootstrapTooltip
-                      className={classes.tooltipLabel}
-                      title="Includes SAS 9.4 and SAS Enterprise Guide"
-                    >
-                      <InfoIcon />
-                    </BootstrapTooltip>
+                  </Typography>
+                  <Typography
+                    className={classes.powershellText}
+                    variant="body2"
+                  >
+                   (Includes SAS 9.4 and SAS Enterprise Guide)
                   </Typography>
                 </div>
               </div>
             </CardContent>
             <Divider className={classes.divider} />
           </Collapse>
-          <CardActions>
+          <CardActions className={classes.cardActions}>
             <Button
               color="primary"
               variant="text"

@@ -23,6 +23,7 @@ import Header from '../VettingApp/CommonComponents/Header';
 import Footer from '../VettingApp/CommonComponents/Footer';
 import ProjectInformation from './ProjecDetails';
 import VirtualMachine from './VirtualMachineDetails';
+import SubmitToolbar from './SubmitToolbar';
 
 const useStyles = makeStyles((theme) => ({
   pageContainer: {
@@ -226,17 +227,8 @@ function PowerShell(props) {
       <Header />
       <main className={classes.main} tabIndex="-1">
         <Container maxWidth={false} className={classes.pageContainer}>
+          <SubmitToolbar />
           <Paper className={classes.paper}>
-            {/* <SuccessfulSubmission /> */}
-            {/*  <RequestToolbar
-              role="analyst"
-              status="submitted"
-              assignees={{
-                lead: state.lead,
-                support: state.support,
-              }}
-              toggleManageTeamDrawer={toggleManageTeamDrawer}
-            /> */}
             <Grid container alignItems="center">
               <Grid item className={classes.title}>
                 <Typography variant="h6" component="h1">
@@ -244,38 +236,6 @@ function PowerShell(props) {
                 </Typography>
               </Grid>
               <Divider />
-              <Grid item>
-                <div className={classes.statusLeft}>
-                  <Button
-                    variant="contained"
-                    color="primary"
-                    className={classes.button}
-                    onClick={handleClick}
-                    component={RouterLink}
-                    to="SuccessfulSubmission"
-                  >
-                    Submit
-                  </Button>
-                  <SnackbarSubmitRequest
-                    open={openSnackbar}
-                    handleClose={snackbarhandleClose}
-                  />
-                </div>
-              </Grid>
-              {/* <Divider
-                className={classes.dividerHeight}
-                orientation="vertical"
-                flexItem
-              />
-              <Grid item>
-                <Typography
-                  variant="body2"
-                  color="textSecondary"
-                  className={classes.statusRight}
-                >
-                  Unassigned
-                </Typography>
-              </Grid> */}
             </Grid>
             <Divider className={classes.divider} />
             <div className={classes.stepperContainer}>
@@ -372,6 +332,8 @@ function PowerShell(props) {
                     color="primary"
                     className={classes.button}
                     onClick={handleClick}
+                    component={RouterLink}
+                    to="SuccessfulSubmission"
                   >
                     Submit
                   </Button>
