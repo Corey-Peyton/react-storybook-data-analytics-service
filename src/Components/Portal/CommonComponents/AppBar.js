@@ -14,7 +14,7 @@ import {
   // Link,
 } from '@material-ui/core';
 import {SM_SCREEN} from '../../../Theme/constants';
-import {BrandingStatCanEn, BrandingStatCanFr} from './BrandingStatCan';
+import {BrandingStatCanEn} from './BrandingStatCan';
 import {HelpDrawer, FeedbackDialog} from './Dialogs';
 import Icon from '@mdi/react';
 import {
