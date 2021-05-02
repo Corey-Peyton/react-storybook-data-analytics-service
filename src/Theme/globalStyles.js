@@ -102,6 +102,14 @@ export const useStyles = makeStyles({
     '.MuiFormControlLabel-root': {
       marginLeft: theme.spacing(-1),
     },
+    // Fix for bug: extra space under text field with long label in dialogs
+    '[class*="PrivateNotchedOutline-legendLabelled"] > span': {
+      display: 'none',
+    },
+    '[class*="PrivateNotchedOutline-legendNotched"] > span': {
+      display: 'inline-block',
+    },
+
     '.input-margin': {
       'marginBottom': theme.spacing(3),
       'marginTop': 0,
