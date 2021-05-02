@@ -211,7 +211,7 @@ Dialog.propTypes = {
   /**
    Dialog header text
    */
-  title: PropTypes.node.isRequired,
+  title: PropTypes.string.isRequired,
   /**
    Dialog content
    */
