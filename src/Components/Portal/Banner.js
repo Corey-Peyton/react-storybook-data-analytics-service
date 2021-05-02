@@ -42,7 +42,7 @@ function Banner(props) {
     accountDetailsDialog: false,
     dataUseDialog: false,
     additionalInfoDialog: false,
-    tasksToolsDialog: true,
+    tasksToolsDialog: false,
     registerDialog: false,
     successDialog: false,
   });
