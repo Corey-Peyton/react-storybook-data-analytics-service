@@ -109,6 +109,10 @@ export const useStyles = makeStyles({
     '.MuiOutlinedInput-root.Mui-focused > fieldset > legend > span': {
       display: 'inline-block',
     },
+    // Fix for bug: fieldset overflowing container in IE11
+    'fieldset.MuiFormControl-root': {
+      maxWidth: '100%',
+    },
 
     '.input-margin': {
       'marginBottom': theme.spacing(3),
