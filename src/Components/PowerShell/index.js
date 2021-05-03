@@ -15,7 +15,6 @@ import {
 } from '@material-ui/core';
 import ArrowForwardIosIcon from '@material-ui/icons/ArrowForwardIos';
 import ArrowBackIosIcon from '@material-ui/icons/ArrowBackIos';
-import {SnackbarSubmitRequest} from '../VettingApp/CommonComponents/Snackbars';
 import SecurityGroup from './SecurityGroup';
 import Header from './Header';
 import Footer from '../VettingApp/CommonComponents/Footer';
@@ -152,16 +151,6 @@ function PowerShell(props) {
     handleNext();
   };
 
-  const snackbarhandleClose = () => {
-    setOpenSnackbar(false);
-  };
-
-  const [openSnackbar, setOpenSnackbar] = React.useState(false);
-
-  const handleClick = () => {
-    setOpenSnackbar(true);
-  };
-
   const getStepContent = (step) => {
     switch (step) {
       case 0:
@@ -296,16 +285,11 @@ function PowerShell(props) {
                     variant="contained"
                     color="primary"
                     className={classes.button}
-                    onClick={handleClick}
                     component={RouterLink}
                     to="SuccessfulSubmission"
                   >
                     Submit
                   </Button>
-                  <SnackbarSubmitRequest
-                    open={openSnackbar}
-                    handleClose={snackbarhandleClose}
-                  />
                 </Grid>
               ) : (
                 <Grid item>

@@ -34,11 +34,6 @@ const useStyles = makeStyles((theme) => ({
     width: '100%',
     marginBottom: theme.spacing(1),
   },
-  tooltipLabel: {
-    '& svg': {
-      verticalAlign: 'middle',
-    },
-  },
 }));
 
 function ProjectDetails(props) {
@@ -69,20 +64,6 @@ function ProjectDetails(props) {
       commands: '',
       helperText: '',
     },
-    contractstartdate: {
-      text: '',
-      errorText: '',
-      invalid: '',
-      commands: '',
-      helperText: '',
-    },
-    contractenddate: {
-      text: '',
-      errorText: '',
-      invalid: '',
-      commands: '',
-      helperText: '',
-    },
   });
 
   const initial = {
@@ -95,20 +76,6 @@ function ProjectDetails(props) {
       commands: '',
     },
     contractnumber: {
-      text: '',
-      errorText: '',
-      helperText: '',
-      invalid: '',
-      commands: '',
-    },
-    contractstartdate: {
-      text: '',
-      errorText: '',
-      helperText: '',
-      invalid: '',
-      commands: '',
-    },
-    contractenddate: {
       text: '',
       errorText: '',
       helperText: '',
@@ -277,6 +244,7 @@ function ProjectDetails(props) {
             margin="dense"
             label="Contract number"
             error
+            required
           />
         </Grid>
         <Grid item>

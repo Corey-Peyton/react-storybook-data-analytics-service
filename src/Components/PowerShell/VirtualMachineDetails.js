@@ -134,6 +134,8 @@ function VirtualMachine(props) {
     showCard: false,
     snackbarEditVirtualMachine: false,
     editVirtualMachine: false,
+    dialogDelete: false,
+    snackbarDelete: false,
   });
 
   const [expanded, setExpanded] = React.useState(false);

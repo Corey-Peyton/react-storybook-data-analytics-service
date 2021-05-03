@@ -3,12 +3,11 @@ import Link from '@material-ui/core/Link';
 import Alert from '@material-ui/lab/Alert';
 import RequestToolbar from './RequestToolbar';
 import {makeStyles} from '@material-ui/core/styles';
-import {Button, Typography, Paper, Container, Grid} from '@material-ui/core';
+import {Button, Typography, Paper, Container} from '@material-ui/core';
 import CloseIcon from '@material-ui/icons/Close';
 import Collapse from '@material-ui/core/Collapse';
 import Header from './Header';
 import Footer from '../VettingApp/CommonComponents/Footer';
-import {SnackbarAddVirtualMachine} from '../VettingApp/CommonComponents/Snackbars';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -42,12 +41,8 @@ const useStyles = makeStyles((theme) => ({
 
 function SuccessfulSubmission(props) {
   const classes = useStyles();
-  const [state, setState] = React.useState({
-    snackbarAddVirtualMachine: false,
-  });
-  const handleClickClose = (state) => {
-    setState({...state, [state]: false});
-  };
+  const [open, setOpen] = React.useState(true);
+
   return (
     <React.Fragment>
       <Header />
@@ -55,31 +50,21 @@ function SuccessfulSubmission(props) {
         <Container maxWidth={false} className={classes.pageContainer}>
           <RequestToolbar />
           <Paper className={classes.paper}>
-            <Grid container alignItems="center">
-              <Grid item className={classes.title}>
-                <Typography variant="h6" component="h1">
-                  New VDL request
-                </Typography>
-              </Grid>
-            </Grid>
-            <Collapse in={state}>
+            <Collapse in={open}>
               <Alert
-                severity="success"
-                className={classes.alert}
                 action={
                   <Button
-                    size="small"
+                    aria-label="close"
                     color="inherit"
-                    className={classes.padding}
                     onClick={() => {
-                      setState(false);
+                      setOpen(false);
                     }}
                   >
-                    <CloseIcon />
+                    <CloseIcon fontSize="inherit" />
                   </Button>
                 }
               >
-                Your VDL request (####) has been submitted.
+                Your VDL request (####) has been sumitted.
               </Alert>
             </Collapse>
             <div>
@@ -96,7 +81,13 @@ function SuccessfulSubmission(props) {
               </Typography>
               <Typography variant="body2" className="mb-2">
                 If you encounter any errors or issues, please submit a JIRA
-                ticket to the <Link href="https://jirab.statcan.ca/projects/DAZSUPP/summary" underline="always">VDL Jira project.</Link>
+                ticket to the{' '}
+                <Link
+                  href="https://jirab.statcan.ca/projects/DAZSUPP/summary"
+                  underline="always"
+                >
+                  VDL Jira project.
+                </Link>
               </Typography>
               <Typography variant="body2">Thank you!</Typography>
             </div>
@@ -104,10 +95,6 @@ function SuccessfulSubmission(props) {
         </Container>
       </main>
       <Footer />
-      <SnackbarAddVirtualMachine
-        open={state.snackbarAddVirtualMachine}
-        handleClose={() => handleClickClose('snackbarAddVirtualMachine')}
-      />
     </React.Fragment>
   );
 }

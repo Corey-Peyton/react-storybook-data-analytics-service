@@ -39,7 +39,7 @@ function RequestToolbar(props) {
             <Button
               variant="contained"
               color="primary"
-              className={classes.button}
+              className={classes.headerBtn}
               onClick={handleClick}
               component={RouterLink}
               to="SuccessfulSubmission"
