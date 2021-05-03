@@ -106,8 +106,10 @@ export const useStyles = makeStyles({
     '.MuiOutlinedInput-root > fieldset > legend > span': {
       display: 'none',
     },
-    '.MuiOutlinedInput-root.Mui-focused > fieldset > legend > span': {
-      display: 'inline-block',
+    '.MuiInputLabel-outlined.MuiInputLabel-shrink + .MuiOutlinedInput-root': {
+      '& > fieldset > legend > span': {
+        display: 'inline-block',
+      },
     },
     // Fix for bug: fieldset overflowing container in IE11
     'fieldset.MuiFormControl-root': {
