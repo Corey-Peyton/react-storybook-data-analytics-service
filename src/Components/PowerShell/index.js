@@ -14,14 +14,12 @@ import {
   Divider,
 } from '@material-ui/core';
 import ArrowForwardIosIcon from '@material-ui/icons/ArrowForwardIos';
-// import RequestToolbar from '../VettingApp/CommonComponents/RequestToolbar';
 import ArrowBackIosIcon from '@material-ui/icons/ArrowBackIos';
-/* import CutCopyPasteAlert from '../VettingApp/CommonComponents/CutCopyPasteAlert'; */
 import {SnackbarSubmitRequest} from '../VettingApp/CommonComponents/Snackbars';
 import SecurityGroup from './SecurityGroup';
 import Header from './Header';
 import Footer from '../VettingApp/CommonComponents/Footer';
-import ProjectInformation from './ProjecDetails';
+import ProjectDetails from './ProjecDetails';
 import VirtualMachine from './VirtualMachineDetails';
 import SubmitToolbar from './SubmitToolbar';
 
@@ -173,7 +171,7 @@ function PowerShell(props) {
           />
         );
       case 1:
-        return <ProjectInformation />;
+        return <ProjectDetails />;
       case 2:
         return <VirtualMachine />;
       default:

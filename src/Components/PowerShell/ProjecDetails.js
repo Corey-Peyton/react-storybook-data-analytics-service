@@ -41,7 +41,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-function ProjectInformation(props) {
+function ProjectDetails(props) {
   const handleFromDateChange = (date) => {
     setState({...state, selectedFromDate: date});
   };
@@ -364,4 +364,4 @@ function ProjectInformation(props) {
   );
 }
 
-export default ProjectInformation;
+export default ProjectDetails;

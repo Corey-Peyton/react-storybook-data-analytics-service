@@ -379,7 +379,7 @@ function VirtualMachineDetails(props) {
         for assistance.
       </Typography>
       <Autocomplete
-        id="combo-box-demo"
+        id="cloudemail"
         options={analystList.map((option) => option.email)}
         renderInput={(params) => (
           <TextField
@@ -486,7 +486,7 @@ function VirtualMachineDetails(props) {
         helperText={state.researcherID.helperText}
       />
       <Autocomplete
-        id="combo-box-demo"
+        id="organization"
         options={security}
         getOptionLabel={(option) => option.label}
         renderInput={(params) => (
