@@ -1,12 +1,18 @@
-
 import React from 'react';
 import {useTranslation} from 'react-i18next';
-import {AppBar, Badge, Tab, Tabs, Toolbar, Typography} from '@material-ui/core';
+import {
+  AppBar,
+  Badge,
+  Tab,
+  Tabs,
+  Toolbar,
+  Typography,
+} from '@material-ui/core';
 import {makeStyles} from '@material-ui/styles';
 import clsx from 'clsx';
 
 import {HEAD_H, HEAD_H_XS} from '../../Theme/constants';
-import BypassBlocks from '../BypassBlocks';
+import BypassBlocks from '../CommonComponents/BypassBlocks';
 import Footer from '../Footers/Footer';
 import DefaultHeader from '../Headers/DefaultHeader';
 import ProjectApps from './ProjectApps';
@@ -82,7 +88,9 @@ export default function ProjectsPage(props) {
   };
 
   if (!Element.prototype.matches) {
-    Element.prototype.matches = Element.prototype.msMatchesSelector || Element.prototype.webkitMatchesSelector;
+    Element.prototype.matches =
+      Element.prototype.msMatchesSelector ||
+      Element.prototype.webkitMatchesSelector;
   }
 
   if (!Element.prototype.closest) {
@@ -100,19 +108,25 @@ export default function ProjectsPage(props) {
   const toggleDetailsDrawer = (event) => {
     setOpen({...open, details: !open.details});
     if (!open.details) {
-      if (document.getElementById('active-btn') != null) { // search the page for existing active-btn ID and remove it
+      if (document.getElementById('active-btn') != null) {
+        // search the page for existing active-btn ID and remove it
         document.getElementById('active-btn').removeAttribute('id');
       }
-      if (event.target !== document.querySelector('button')) { // check if the clicked element is on exactly the <button>
+      if (event.target !== document.querySelector('button')) {
+        // check if the clicked element is on exactly the <button>
         event.target.closest('button').setAttribute('id', 'active-btn'); // traverse to <button>, designate it the active-btn
       } else {
         event.target.setAttribute('id', 'active-btn'); // if <button> element was clicked, designate it active-btn
       }
-      setTimeout(() => { // change focus to close button within details drawer
+      setTimeout(() => {
+        // change focus to close button within details drawer
         document.getElementById('details-close').focus();
       }, 200);
     } else {
-      if (event.target.closest('button').classList.contains('info-btn') && event.target.closest('button').id !== 'active-btn' ) {
+      if (
+        event.target.closest('button').classList.contains('info-btn') &&
+        event.target.closest('button').id !== 'active-btn'
+      ) {
         setOpen({...open, details: false});
         document.getElementById('active-btn').removeAttribute('id');
         event.target.closest('button').setAttribute('id', 'active-btn'); // if <button> element was clicked, designate it active-btn
@@ -122,7 +136,8 @@ export default function ProjectsPage(props) {
           document.getElementById('details-close').focus();
         }, 500);
       } else {
-        setTimeout(() => { // change focus to active-btn
+        setTimeout(() => {
+          // change focus to active-btn
           document.querySelector('#active-btn').focus();
         }, 200);
       }
@@ -132,13 +147,15 @@ export default function ProjectsPage(props) {
   const toggleAppsDrawer = () => {
     if (!open.apps) {
       setOpen({...open, apps: true});
-      setTimeout(() => { // change focus to apps back button
+      setTimeout(() => {
+        // change focus to apps back button
         document.getElementById('apps-back-btn').focus();
         setOpen({...open, details: false, apps: true});
       }, 200);
     } else {
       setOpen({...open, details: true});
-      setTimeout(() => { // change focus to close button within details drawer
+      setTimeout(() => {
+        // change focus to close button within details drawer
         setOpen({...open, details: true, apps: false});
         document.getElementById('apps-btn').focus();
       }, 200);
@@ -148,23 +165,26 @@ export default function ProjectsPage(props) {
   const toggleDatasetsDrawer = () => {
     if (!open.datasets) {
       setOpen({...open, datasets: true});
-      setTimeout(() => { // change focus to datasets back button
+      setTimeout(() => {
+        // change focus to datasets back button
         document.getElementById('datasets-back-btn').focus();
         setOpen({...open, details: false, datasets: true});
       }, 200);
     } else {
       setOpen({...open, details: true});
-      setTimeout(() => { // change focus to close button within details drawer
+      setTimeout(() => {
+        // change focus to close button within details drawer
         setOpen({...open, details: true, datasets: false});
         document.getElementById('datasets-btn').focus();
       }, 200);
     }
   };
 
-  const toggleAllDrawers = () =>{
+  const toggleAllDrawers = () => {
     setOpen({...open, apps: false, datasets: false, details: false});
 
-    setTimeout(() => { // change focus to active-btn
+    setTimeout(() => {
+      // change focus to active-btn
       document.querySelector('#active-btn').focus();
     }, 200);
   };
@@ -176,13 +196,14 @@ export default function ProjectsPage(props) {
   return (
     <React.Fragment>
       <BypassBlocks ref={{main: mainRef, about: aboutRef}} />
-      <DefaultHeader flat={true}/>
+      <DefaultHeader flat={true} />
       <AppBar
         position="fixed"
         component="div"
         elevation={4}
         className={classes.appBar}
-        ref={mainRef} tabIndex="-1"
+        ref={mainRef}
+        tabIndex="-1"
       >
         <Toolbar className={classes.toolbar}>
           <Typography component="h1" variant="h6" gutterBottom>
@@ -245,10 +266,7 @@ export default function ProjectsPage(props) {
           [classes.contentShift]: open.details || open.apps || open.datasets,
         })}
       >
-        <ProjectTabs
-          toggleDetailsDrawer={toggleDetailsDrawer}
-          value={value}
-        />
+        <ProjectTabs toggleDetailsDrawer={toggleDetailsDrawer} value={value} />
         <ProjectDetails
           open={open.details}
           toggleDetailsDrawer={toggleDetailsDrawer}
@@ -265,7 +283,7 @@ export default function ProjectsPage(props) {
           toggleDatasetsDrawer={toggleDatasetsDrawer}
           toggleAllDrawers={toggleAllDrawers}
         />
-        <Footer ref={aboutRef} tabindex="-1"/>
+        <Footer ref={aboutRef} tabindex="-1" />
       </div>
     </React.Fragment>
   );

@@ -1,4 +1,5 @@
 import React from 'react';
+import {useTranslation} from 'react-i18next';
 import {makeStyles} from '@material-ui/core/styles';
 import clsx from 'clsx';
 import PropTypes from 'prop-types';
@@ -13,6 +14,8 @@ import {
 import {Button} from './Button';
 import {IconButton} from './IconButton';
 import CloseIcon from '@material-ui/icons/Close';
+import Icon from '@mdi/react';
+import {mdiArrowLeft} from '@mdi/js';
 
 const useStyles = makeStyles((theme) => ({
   dialogTitle: {
@@ -22,6 +25,9 @@ const useStyles = makeStyles((theme) => ({
     padding: theme.spacing(1.5, 3),
     borderBottom: '1px solid',
     borderBottomColor: theme.palette.divider,
+  },
+  dialogContent: {
+    padding: theme.spacing(3),
   },
   dialogFooter: {
     padding: theme.spacing(1.75, 3),
@@ -37,6 +43,7 @@ const useStyles = makeStyles((theme) => ({
 
 export function Dialog(props) {
   const classes = useStyles();
+  const {t} = useTranslation();
   const {
     toggleDialog,
     open,
@@ -46,9 +53,11 @@ export function Dialog(props) {
     primaryButton,
     secondaryButton,
     thirdButton,
+    backButton,
     handlePrimaryClick,
     handleSecondaryClick,
     handleThirdClick,
+    handleBackClick,
   } = props;
 
   const handleClick = (e) => {
@@ -76,11 +85,34 @@ export function Dialog(props) {
         }}
       >
         <DialogTitle id={id} className={classes.dialogTitle} disableTypography>
-          <Typography variant="h6" component="h2">
-            {title}
-          </Typography>
+          <Grid container alignItems="center">
+            {backButton && (
+              <Grid item>
+                <IconButton
+                  className="mr-1"
+                  aria-label={backButton}
+                  edge="start"
+                  onClick={handleBackClick}
+                  onKeyPress={(e) => {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    if (e.key === 'Enter') {
+                      handleBackClick();
+                    }
+                  }}
+                >
+                  <Icon path={mdiArrowLeft} size={1} />
+                </IconButton>
+              </Grid>
+            )}
+            <Grid item>
+              <Typography component="h2" variant="h6">
+                {title}
+              </Typography>
+            </Grid>
+          </Grid>
           <IconButton
-            aria-label={`${title} - close`}
+            aria-label={`${title} - ${t('close')}`}
             onClick={toggleDialog}
             edge="end"
             onKeyPress={(e) => {
@@ -95,7 +127,7 @@ export function Dialog(props) {
           </IconButton>
         </DialogTitle>
         <DialogContent>
-          <div className="dialog-section">{content}</div>
+          <div className={classes.dialogContent}>{content}</div>
         </DialogContent>
         {secondaryButton || primaryButton ? (
           <DialogActions className={classes.dialogFooter}>
@@ -197,6 +229,10 @@ Dialog.propTypes = {
    */
   thirdButton: PropTypes.string,
   /**
+   Text for back button
+   */
+  backButton: PropTypes.string,
+  /**
    Click handler for primary action
    */
   handlePrimaryClick: PropTypes.func,
@@ -208,6 +244,10 @@ Dialog.propTypes = {
    Click handler for third action
    */
   handleThirdClick: PropTypes.func,
+  /**
+   Click handler for back button
+   */
+  handleBackClick: PropTypes.func,
 };
 
 Dialog.defaultProps = {

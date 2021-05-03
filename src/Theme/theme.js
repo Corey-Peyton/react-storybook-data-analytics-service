@@ -2,8 +2,9 @@ import {createMuiTheme} from '@material-ui/core';
 
 export const theme = createMuiTheme({
   palette: {
+    type: 'light',
     primary: {
-      main: '#1473e6',
+      main: '#1A73E8',
       light: '#d4e5ff',
       dark: '#0049b3',
     },
@@ -25,12 +26,6 @@ export const theme = createMuiTheme({
       selectedOpacity: 0.12,
     },
   },
-  // props: {
-  // MuiButtonBase: {
-  // disableFocusRipple: true,
-  // disableRipple: true,
-  // },
-  // },
   shadows: [
     'none',
     '0px 2px 1px -1px rgba(117,117,117,0.2),0px 1px 1px 0px rgba(117,117,117,0.14),0px 1px 3px 0px rgba(117,117,117,0.12)',
@@ -71,4 +66,23 @@ export const theme = createMuiTheme({
   },
 });
 
-
+export const darkTheme = createMuiTheme({
+  palette: {
+    type: 'dark',
+    primary: {
+      main: '#1A73E8',
+      light: '#d4e5ff',
+      dark: '#0049b3',
+    },
+    background: {
+      paper: '#173048',
+    },
+  },
+  overrides: {
+    MuiButton: {
+      label: {
+        textTransform: 'none',
+      },
+    },
+  },
+});

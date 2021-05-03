@@ -2,19 +2,19 @@ import React from 'react';
 import {useTranslation} from 'react-i18next';
 import {makeStyles} from '@material-ui/styles';
 import {Button} from '@material-ui/core';
-import {withRouterAndRef} from './Utilities/HOCs';
+import {withRouterAndRef} from '../Utilities/HOCs';
 
 const useStyles = makeStyles((theme) => ({
   root: {
     listStyleType: 'none',
   },
   block: {
-    'left': 0,
-    'position': 'absolute',
-    'textAlign': 'center',
-    'top': '10px',
-    'width': '100%',
-    'zIndex': 1300,
+    left: 0,
+    position: 'absolute',
+    textAlign: 'center',
+    top: '10px',
+    width: '100%',
+    zIndex: 1300,
   },
 }));
 
@@ -79,7 +79,7 @@ const BypassBlocks = React.forwardRef((props, ref) => {
               onBlur={handleAboutBlur}
               onClick={handleAboutClick}
             >
-              {t('Skip to "About this site"')}
+              {t('Skip to footer')}
             </Button>
           </li>
         </ul>
