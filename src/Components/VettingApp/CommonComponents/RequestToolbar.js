@@ -47,6 +47,12 @@ const useStyles = makeStyles((theme) => ({
     boxShadow: 'none',
     borderBottom: '1px solid',
     borderBottomColor: theme.palette.divider,
+    top: theme.spacing(8),
+    left: 0,
+  },
+  gridContainer: {
+    paddingLeft: theme.spacing(3),
+    paddingRight: theme.spacing(3),
   },
   title: {
     paddingLeft: theme.spacing(1),
@@ -260,9 +266,13 @@ function RequestToolbar(props) {
   };
 
   return (
-    <AppBar position="static" className={classes.appBar} color="default">
+    <AppBar position="fixed" className={classes.appBar} color="default">
       <Toolbar>
-        <Grid container justify="space-between">
+        <Grid
+          container
+          justify="space-between"
+          className={classes.gridContainer}
+        >
           <Grid item>
             <IconButton
               edge="start"
