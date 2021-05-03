@@ -103,10 +103,10 @@ export const useStyles = makeStyles({
       marginLeft: theme.spacing(-1),
     },
     // Fix for bug: extra space under text field with long label in dialogs
-    '[class*="PrivateNotchedOutline-legendLabelled"] > span': {
+    '.MuiOutlinedInput-root > fieldset > legend > span': {
       display: 'none',
     },
-    '[class*="PrivateNotchedOutline-legendNotched"] > span': {
+    '.MuiOutlinedInput-root.Mui-focused > fieldset > legend > span': {
       display: 'inline-block',
     },
 
