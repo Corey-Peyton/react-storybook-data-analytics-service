@@ -57,7 +57,7 @@ function SuccessfulSubmission(props) {
             <Grid container alignItems="center">
               <Grid item className={classes.title}>
                 <Typography variant="h6" component="h1">
-                  VDL PowerShell Intake Request
+                  New VDL request
                 </Typography>
               </Grid>
             </Grid>

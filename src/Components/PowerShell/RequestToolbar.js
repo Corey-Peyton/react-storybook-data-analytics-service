@@ -1,5 +1,6 @@
 import React from 'react';
 import {makeStyles} from '@material-ui/core/styles';
+import {Link as RouterLink} from 'react-router-dom';
 import {AppBar, Toolbar, Grid, Button} from '@material-ui/core';
 
 const useStyles = makeStyles((theme) => ({
@@ -28,6 +29,8 @@ function RequestToolbar(props) {
               className={classes.headerBtn}
               variant="contained"
               color="primary"
+              component={RouterLink}
+              to="/PowerShell/"
             >
               New request
             </Button>

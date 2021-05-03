@@ -1,6 +1,8 @@
 import React from 'react';
 import {makeStyles} from '@material-ui/core/styles';
-import {AppBar, Toolbar, Grid, Button} from '@material-ui/core';
+import {AppBar, Toolbar, Grid, Button, Typography} from '@material-ui/core';
+import {Link as RouterLink} from 'react-router-dom';
+import {SnackbarSubmitRequest} from '../VettingApp/CommonComponents/Snackbars';
 
 const useStyles = makeStyles((theme) => ({
   appBar: {
@@ -18,19 +20,36 @@ const useStyles = makeStyles((theme) => ({
 
 function RequestToolbar(props) {
   const classes = useStyles();
+  const [openSnackbar, setOpenSnackbar] = React.useState(false);
+  const handleClick = () => {
+    setOpenSnackbar(true);
+  };
+  const snackbarhandleClose = () => {
+    setOpenSnackbar(false);
+  };
 
   return (
     <AppBar position="static" className={classes.appBar} color="default">
       <Toolbar>
-        <Grid container justify="flex-end">
+        <Grid container justify="space-between">
+          <Typography className="mt-1">
+            VDL PowerShell Intake Request
+          </Typography>
           <Grid>
             <Button
-              className={classes.headerBtn}
               variant="contained"
               color="primary"
+              className={classes.button}
+              onClick={handleClick}
+              component={RouterLink}
+              to="SuccessfulSubmission"
             >
-             Submit
+              Submit
             </Button>
+            <SnackbarSubmitRequest
+              open={openSnackbar}
+              handleClose={snackbarhandleClose}
+            />
           </Grid>
         </Grid>
       </Toolbar>

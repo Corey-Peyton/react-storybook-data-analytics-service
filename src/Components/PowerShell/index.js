@@ -19,7 +19,7 @@ import ArrowBackIosIcon from '@material-ui/icons/ArrowBackIos';
 /* import CutCopyPasteAlert from '../VettingApp/CommonComponents/CutCopyPasteAlert'; */
 import {SnackbarSubmitRequest} from '../VettingApp/CommonComponents/Snackbars';
 import SecurityGroup from './SecurityGroup';
-import Header from '../VettingApp/CommonComponents/Header';
+import Header from './Header';
 import Footer from '../VettingApp/CommonComponents/Footer';
 import ProjectInformation from './ProjecDetails';
 import VirtualMachine from './VirtualMachineDetails';
@@ -235,7 +235,16 @@ function PowerShell(props) {
                   {state.title}
                 </Typography>
               </Grid>
-              <Divider />
+              {/* <Button
+                variant="contained"
+                color="primary"
+                className={classes.button}
+                onClick={handleClick}
+                component={RouterLink}
+                to="SuccessfulSubmission"
+              >
+                Submit
+              </Button> */}
             </Grid>
             <Divider className={classes.divider} />
             <div className={classes.stepperContainer}>
