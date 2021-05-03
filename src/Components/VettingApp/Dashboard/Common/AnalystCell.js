@@ -31,9 +31,6 @@ export default function AnalystCell(props) {
   } = props;
   const extraAnalysts = support.length;
   const classes = useStyles();
-  const [open, setOpen] = React.useState({
-    dialogAssigneeDetails: false,
-  });
 
   const handleClick = (e) => {
     e.stopPropagation();
@@ -43,19 +40,16 @@ export default function AnalystCell(props) {
       } else {
         toggleManageTeamDrawer(e);
       }
+    } else {
+      clickHandler(e);
     }
-  };
-
-  const toggleDialog = (state, value, e) => {
-    e.stopPropagation();
-    setOpen({...open, [state]: value});
   };
 
   if (role === 'researcher') {
     if (lead !== '') {
       return (
         <TableCell className={classes.tablesCellsFlex}>
-          <Chip label={lead} onClick={toggleDialog} />
+          <Chip label={lead} onClick={handleClick} />
         </TableCell>
       );
     } else {
