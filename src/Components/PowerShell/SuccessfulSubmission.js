@@ -1,11 +1,12 @@
 import React from 'react';
+import Link from '@material-ui/core/Link';
 import Alert from '@material-ui/lab/Alert';
 import RequestToolbar from './RequestToolbar';
 import {makeStyles} from '@material-ui/core/styles';
 import {Button, Typography, Paper, Container, Grid} from '@material-ui/core';
 import CloseIcon from '@material-ui/icons/Close';
 import Collapse from '@material-ui/core/Collapse';
-import Header from '../VettingApp/CommonComponents/Header';
+import Header from './Header';
 import Footer from '../VettingApp/CommonComponents/Footer';
 import {SnackbarAddVirtualMachine} from '../VettingApp/CommonComponents/Snackbars';
 
@@ -95,7 +96,7 @@ function SuccessfulSubmission(props) {
               </Typography>
               <Typography variant="body2" className="mb-2">
                 If you encounter any errors or issues, please submit a JIRA
-                ticket to the vDL Jira project.
+                ticket to the <Link href="https://jirab.statcan.ca/projects/DAZSUPP/summary" underline="always">VDL Jira project.</Link>
               </Typography>
               <Typography variant="body2">Thank you!</Typography>
             </div>

@@ -89,7 +89,6 @@ const useStyles = makeStyles((theme) => ({
   },
   button: {
     marginRight: theme.spacing(1),
-    color: 'white',
   },
   errorMsg: {
     margin: 0,
@@ -102,14 +101,8 @@ function getSteps() {
 }
 
 function PowerShell(props) {
-  // window.onbeforeunload = () => '';
+  window.onbeforeunload = () => '';
   const classes = useStyles();
-  /* const [open, setOpen] = React.useState({
-    manageTeamDrawer: false,
-  });
-  const toggleManageTeamDrawer = () => {
-    setOpen({...open, manageTeamDrawer: !open.manageTeamDrawer});
-  }; */
   const [state, setState] = React.useState({
     activeStep: 0,
     completed: {},
@@ -176,8 +169,6 @@ function PowerShell(props) {
       case 0:
         return (
           <SecurityGroup
-            handleTitleChange={handleTitleChange}
-            handleFieldOnBlur={handleFieldOnBlur}
             title={state.title}
           />
         );
@@ -187,29 +178,6 @@ function PowerShell(props) {
         return <VirtualMachine />;
       default:
         return 'Unknown step';
-    }
-  };
-
-  const handleTitleChange = (e) => {
-    const title = e.target.value;
-    if (title !== '') {
-      setState({...state, title: e.target.value});
-    } else {
-      setState({...state, title: 'Untitled request'});
-    }
-  };
-
-  const handleFieldOnBlur = (e) => {
-    const defaultTitle = 'Untitled request';
-
-    if (e.target.value === '') {
-      // if field is empty, set field to "untitled request"
-      setState({
-        ...state,
-        title: function() {
-          return defaultTitle;
-        },
-      });
     }
   };
 
@@ -235,16 +203,6 @@ function PowerShell(props) {
                   {state.title}
                 </Typography>
               </Grid>
-              {/* <Button
-                variant="contained"
-                color="primary"
-                className={classes.button}
-                onClick={handleClick}
-                component={RouterLink}
-                to="SuccessfulSubmission"
-              >
-                Submit
-              </Button> */}
             </Grid>
             <Divider className={classes.divider} />
             <div className={classes.stepperContainer}>
@@ -325,7 +283,7 @@ function PowerShell(props) {
               {state.activeStep !== 0 && (
                 <Grid item>
                   <Button
-                    variant="contained"
+                    variant="outlined"
                     color="primary"
                     className={classes.button}
                     onClick={handleBack}

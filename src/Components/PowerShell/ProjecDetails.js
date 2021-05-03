@@ -190,9 +190,18 @@ function ProjectInformation(props) {
 
   return (
     <React.Fragment>
-      <Grid container xs={10}>
+      <Grid container>
+        <Grid item xs={9}>
+          <Alert severity="error" className={classes.fullWidth}>
+            Complete all required fields to advance to the next step
+          </Alert>
+        </Grid>
         <Grid container>
-          <FormControl component="fieldset" className={classes.inputMargin} required>
+          <FormControl
+            component="fieldset"
+            className={classes.inputMargin}
+            required
+          >
             <FormLabel component="legend">Access location</FormLabel>
             <RadioGroup
               aria-label="Access location"
@@ -213,7 +222,11 @@ function ProjectInformation(props) {
           </FormControl>
         </Grid>
         <Grid container>
-          <FormControl component="fieldset" className={classes.inputMargin} required>
+          <FormControl
+            component="fieldset"
+            className={classes.inputMargin}
+            required
+          >
             <FormLabel component="legend">Environment</FormLabel>
             <RadioGroup
               aria-label="environment"
@@ -233,39 +246,39 @@ function ProjectInformation(props) {
             </RadioGroup>
           </FormControl>
         </Grid>
-        <TextField
-          variant="outlined"
-          id="primaryinvestigator"
-          fullWidth
-          className="mb-2"
-          margin="dense"
-          label="Primary investigator"
-          required
-          onCut={(e) => disableCutCopyPaste(e, 'cut', 'primaryinvestigator')}
-          onCopy={(e) => disableCutCopyPaste(e, 'copy', 'primaryinvestigator')}
-          onPaste={(e) =>
-            disableCutCopyPaste(e, 'paste', 'primaryinvestigator')
-          }
-          // onChange={(e) => handleChange(e, 'info')}
-          onClick={() => toggleHelperText('primaryinvestigator')}
-          onBlur={() => toggleHelperText('primaryinvestigator')}
-          onFocus={() => toggleHelperText('primaryinvestigator')}
-          error={Boolean(state.primaryinvestigator.errorText)}
-          helperText={state.primaryinvestigator.helperText}
-        />
-        <Alert severity="error" className={classes.fullWidth}>
-          Complete all required fields to advance to the next step
-        </Alert>
-        <TextField
-          variant="outlined"
-          id="contractnumber"
-          fullWidth
-          className={classes.inputMargin}
-          margin="dense"
-          label="Contract number"
-          error
-        />
-
+        <Grid item xs={10}>
+          <TextField
+            variant="outlined"
+            id="primaryinvestigator"
+            fullWidth
+            className="mb-2"
+            margin="dense"
+            label="Primary investigator"
+            required
+            onCut={(e) => disableCutCopyPaste(e, 'cut', 'primaryinvestigator')}
+            onCopy={(e) =>
+              disableCutCopyPaste(e, 'copy', 'primaryinvestigator')
+            }
+            onPaste={(e) =>
+              disableCutCopyPaste(e, 'paste', 'primaryinvestigator')
+            }
+            // onChange={(e) => handleChange(e, 'info')}
+            onClick={() => toggleHelperText('primaryinvestigator')}
+            onBlur={() => toggleHelperText('primaryinvestigator')}
+            onFocus={() => toggleHelperText('primaryinvestigator')}
+            error={Boolean(state.primaryinvestigator.errorText)}
+            helperText={state.primaryinvestigator.helperText}
+          />
+          <TextField
+            variant="outlined"
+            id="contractnumber"
+            fullWidth
+            className={classes.inputMargin}
+            margin="dense"
+            label="Contract number"
+            error
+          />
+        </Grid>
         <Grid item>
           <MuiPickersUtilsProvider utils={DateFnsUtils}>
             <KeyboardDatePicker
@@ -305,7 +318,7 @@ function ProjectInformation(props) {
             />
           </MuiPickersUtilsProvider>
         </Grid>
-        <Grid item>
+        <Grid item xs={10}>
           <FormLabel component="legend" className="mt-2" required>
             Required tools
           </FormLabel>

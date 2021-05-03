@@ -470,7 +470,7 @@ function VirtualMachine(props) {
         handleClose={() => handleClickClose('snackbarEditVirtualMachine')}
       />
       <Button
-        variant="contained"
+        variant="outlined"
         color="primary"
         onClick={(e) => toggleDrawer(e, 'addVirtualMachine', true)}
       >

@@ -1,4 +1,5 @@
 import React from 'react';
+import Link from '@material-ui/core/Link';
 import DateFnsUtils from '@date-io/date-fns';
 import {analystList} from '../../Data/fakeData';
 import FormHelperText from '@material-ui/core/FormHelperText';
@@ -374,7 +375,7 @@ function VirtualMachineDetails(props) {
       </Typography>
       <Typography variant="body2" className="mb-2">
         If the cloud account email cannot be found it means it does not exist in
-        Azure Active Directory. Submit a Jira ticket to the Cloud Jira project
+        Azure Active Directory. Submit a Jira ticket to the <Link href="https://jirab.statcan.ca/projects/DAZSUPP/summary" underline="always">Cloud Jira project</Link>
         for assistance.
       </Typography>
       <Autocomplete
