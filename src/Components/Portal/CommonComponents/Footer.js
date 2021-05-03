@@ -58,7 +58,6 @@ const Footer = React.forwardRef((props, ref) => {
               <Grid container justify="space-between" alignItems="center">
                 <Grid item className={classes.actions}>
                   <Button className="mr-2">
-                    {/* Needs to be <BrandingStatCanFr /> in french */}
                     <span lang="fr">Français</span>
                   </Button>
                   <Divider orientation="vertical" flexItem className="mr-2" />

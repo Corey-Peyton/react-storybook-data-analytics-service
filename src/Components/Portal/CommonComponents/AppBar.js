@@ -138,7 +138,6 @@ function AppBar(props) {
         <ListItemText
           primary={
             <Typography variant="body2">
-              {/* Needs to change to <span lang="en">English</span> in french */}
               <span lang="fr">Français</span>
             </Typography>
           }
@@ -153,7 +152,6 @@ function AppBar(props) {
         <Toolbar component="nav">
           <Grid container justify="space-between" alignItems="center">
             <Grid item className={classes.branding}>
-              {/* Needs to be <BrandingStatCanFr /> in french */}
               <BrandingStatCanEn />
             </Grid>
             {!isSmScreen && (
@@ -244,7 +242,6 @@ function AppBar(props) {
                 </ul>
                 <Divider orientation="vertical" flexItem className="mr-2" />
                 <Button className={classes.headerBtn} variant="text">
-                  {/* Needs to change to <span lang="en">English</span> in french */}
                   <span lang="fr">Français</span>
                 </Button>
                 {props.auth ? (
