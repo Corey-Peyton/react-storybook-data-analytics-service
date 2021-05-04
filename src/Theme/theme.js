@@ -27,8 +27,8 @@ export const theme = createMuiTheme({
     },
   },
   props: {
-    MuiButtonBase: {
-      disableRipple: true,
+    MuiButton: {
+      disableFocusRipple: true,
     },
   },
   shadows: [
