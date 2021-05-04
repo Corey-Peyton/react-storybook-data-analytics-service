@@ -2,7 +2,7 @@ import React from 'react';
 import {makeStyles} from '@material-ui/core/styles';
 
 import {HoursMinsField} from '../Components/CommonComponents/HoursMinsField';
-import {Button} from '../Components/CommonComponents/Button';
+import {Button} from '@material-ui/core';
 
 export default {
   title: 'Molecules/HoursMinsField',

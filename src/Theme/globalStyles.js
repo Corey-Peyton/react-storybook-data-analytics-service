@@ -20,11 +20,80 @@ export const useStyles = makeStyles({
     '.MuiButton-label, .MuiTab-wrapper, .MuiFab-label': {
       textTransform: 'none',
     },
-    '.MuiInputLabel-outlined': {
-      '&.MuiInputLabel-shrink': {
-        transform: 'translate(14px, -6px) scale(0.857)',
+    '.MuiButton-root': {
+      // all buttons
+      '& .MuiButton-startIcon': {
+        marginLeft: theme.spacing(-1),
+      },
+      '& .MuiButton-endIcon': {
+        marginRight: theme.spacing(-1),
+      },
+      // contained
+      '&.MuiButton-contained': {
+        'boxShadow': theme.shadows[0],
+        // contained primary
+        '&.MuiButton-containedPrimary': {
+          '&.Mui-focusVisible': {
+            backgroundColor: theme.palette.primary.dark,
+          },
+        },
+        // contained disabled
+        '&.Mui-disabled': {
+          color: fade(theme.palette.common.black, 0.4),
+          backgroundColor: fade(theme.palette.common.black, 0.08),
+        },
+      },
+      // outlined
+      '&.MuiButton-outlined': {
+        // outlined primary
+        '&.MuiButton-outlinedPrimary': {
+          'borderColor': fade(theme.palette.primary.main, 0.4),
+          '&:hover': {
+            borderColor: fade(theme.palette.primary.main, 0.4),
+            backgroundColor: fade(theme.palette.primary.main, 0.12),
+          },
+          '&.Mui-focusVisible': {
+            backgroundColor: fade(theme.palette.primary.main, 0.12),
+          },
+        },
+        // outlined disabled
+        '&.Mui-disabled': {
+          color: fade(theme.palette.common.black, 0.4),
+          borderColor: fade(theme.palette.common.black, 0.12),
+        },
+      },
+      // text
+      '&.MuiButton-text': {
+        'color': fade(theme.palette.common.black, 0.6),
+        '& .MuiButton-startIcon': {
+          marginLeft: theme.spacing(0),
+        },
+        '& .MuiButton-endIcon': {
+          marginRight: theme.spacing(0),
+        },
+        '&:hover': {
+          backgroundColor: fade(theme.palette.common.black, 0.12),
+        },
+        '&.Mui-focusVisible': {
+          backgroundColor: fade(theme.palette.common.black, 0.12),
+        },
+        // text primary
+        '&.MuiButton-textPrimary': {
+          'color': theme.palette.primary.main,
+          '&:hover': {
+            backgroundColor: fade(theme.palette.primary.main, 0.12),
+          },
+          '&.Mui-focusVisible': {
+            backgroundColor: fade(theme.palette.primary.main, 0.12),
+          },
+        },
+        // text disabled
+        '&.Mui-disabled': {
+          color: fade(theme.palette.common.black, 0.4),
+        },
       },
     },
+
     '.MuiIconButton-root': {
       padding: theme.spacing(1),
     },
@@ -98,6 +167,11 @@ export const useStyles = makeStyles({
     '.MuiOutlinedInput-inputMarginDense': {
       paddingTop: '13px',
       paddingBottom: '13px',
+    },
+    '.MuiInputLabel-outlined': {
+      '&.MuiInputLabel-shrink': {
+        transform: 'translate(14px, -6px) scale(0.857)',
+      },
     },
     '.MuiFormControlLabel-root': {
       marginLeft: theme.spacing(-1),
