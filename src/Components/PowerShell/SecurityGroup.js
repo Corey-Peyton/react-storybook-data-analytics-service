@@ -14,9 +14,6 @@ const useStyles = makeStyles((theme) => ({
   inputMargin: {
     margin: theme.spacing(1, 0),
   },
-  divider: {
-    margin: theme.spacing(1, 0),
-  },
 }));
 
 function SecurityGroup(props) {
@@ -25,7 +22,7 @@ function SecurityGroup(props) {
     <React.Fragment>
       <Grid item xs={6}>
         <Autocomplete
-          id="combo-box-demo"
+          id="securitygroupname"
           options={suggestions.map((option) => option.subject)}
           renderInput={(params) => (
             <TextField
