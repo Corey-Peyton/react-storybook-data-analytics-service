@@ -4,6 +4,7 @@ import {SnackbarDeleteVirtualMachine} from '../VettingApp/CommonComponents/Snack
 import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
 import {DialogDelete} from '../VettingApp/CommonComponents/DialogBox';
+import {useTranslation} from 'react-i18next';
 import {green} from '@material-ui/core/colors';
 import {SnackbarEditVirtualMachine} from '../VettingApp/CommonComponents/Snackbars';
 import {EditVirtualMachine, AddVirtualMachine} from './AddVirtualMachine';
@@ -183,11 +184,14 @@ function VirtualMachine(props) {
     setState({...state, [element]: false});
   };
 
+  const {t} = useTranslation();
+
   return (
     <React.Fragment>
       <Typography variant="body1" className="mt-1 mb-2">
-        You need to add virtual machine details to submit this request
-        successfully.
+        {t(
+            'You need to add virtual machine details to submit this request successfully.',
+        )}
       </Typography>
       {state.showCard === true && (
         <Card className={classes.card} variant="outlined">
@@ -196,7 +200,7 @@ function VirtualMachine(props) {
               STC-0412-ST
             </Typography>
             <Typography className={classes.powershellColumn}>
-              Virtual machine name
+              {t('Virtual machine name')}
             </Typography>
           </div>
           <CardHeader
@@ -223,7 +227,7 @@ function VirtualMachine(props) {
           <Divider className={classes.divider} />
           <Collapse in={expanded} timeout="auto" unmountOnExit>
             <CardContent>
-              <Typography variant="h6">Personal information</Typography>
+              <Typography variant="h6">{t('Personal information')}</Typography>
 
               <div className={classes.powershellRow}>
                 <div
@@ -236,7 +240,7 @@ function VirtualMachine(props) {
                     className={classes.powershellText}
                     variant="body1"
                   >
-                    Security clearance expiry date
+                    {t('Security clearance expiry date')}
                   </Typography>
                   <Typography
                     className={classes.powershellText}
@@ -278,13 +282,13 @@ function VirtualMachine(props) {
                     className={classes.powershellText}
                     variant="body1"
                   >
-                    Organization
+                    {t('Organization')}
                   </Typography>
                   <Typography
                     className={classes.powershellText}
                     variant="body2"
                   >
-                    Statistics Canada
+                    {t('Statistics Canada')}
                   </Typography>
                 </div>
               </div>
@@ -299,17 +303,17 @@ function VirtualMachine(props) {
                     className={classes.powershellText}
                     variant="body1"
                   >
-                    Username
+                    {t('Username')}
                   </Typography>
                   <Typography
                     className={classes.powershellText}
                     variant="body2"
                   >
-                    some.email
+                    {t('some.email')}
                   </Typography>
                 </div>
               </div>
-              <Typography variant="h6">Contact information</Typography>
+              <Typography variant="h6">{t('Contact information')}</Typography>
               <div className={classes.powershellRow}>
                 <div
                   className={clsx(classes.powershellColumn, classes.widthAuto)}
@@ -321,7 +325,7 @@ function VirtualMachine(props) {
                     className={classes.powershellText}
                     variant="body1"
                   >
-                    Phone number
+                    {t('Phone number')}
                   </Typography>
                   <Typography
                     className={classes.powershellText}
@@ -342,13 +346,13 @@ function VirtualMachine(props) {
                     className={classes.powershellText}
                     variant="body1"
                   >
-                    Email
+                    {t('Email')}
                   </Typography>
                   <Typography
                     className={classes.powershellText}
                     variant="body2"
                   >
-                    email@email.com
+                    {t('email@email.com')}
                   </Typography>
                 </div>
               </div>
@@ -364,7 +368,7 @@ function VirtualMachine(props) {
                     className={classes.powershellText}
                     variant="body1"
                   >
-                    Virtual machine name
+                    {t('Virtual machine name')}
                   </Typography>
                   <Typography
                     className={classes.powershellText}
@@ -385,13 +389,13 @@ function VirtualMachine(props) {
                     className={classes.powershellText}
                     variant="body1"
                   >
-                    Virtual machine language
+                    {t('Virtual machine language')}
                   </Typography>
                   <Typography
                     className={classes.powershellText}
                     variant="body2"
                   >
-                    English
+                    {t('English')}
                   </Typography>
                 </div>
               </div>
@@ -406,36 +410,35 @@ function VirtualMachine(props) {
                     className={classes.powershellTextHelperText}
                     variant="body1"
                   >
-                    Required tools
+                    {t('Required tools')}
                   </Typography>
                   <Typography
                     className={classes.powershellText}
                     variant="body2"
                   >
-                    Default tools
+                    {t('Default tools')}
                   </Typography>
                   <Typography
                     className={classes.powershellTextHelperText}
                     variant="body2"
                   >
-                   (Adobe Reader DC, Java, LibreOffice, Office 2019, Power BI, ProjectLibre, Python, R, RStudio, RTools, VSCode)
+                    {t('(Adobe Reader DC, Java, LibreOffice, Office 2019, Power BI, ProjectLibre, Python, R, RStudio, RTools, VSCode)')}'
                   </Typography>
                   <Typography
                     className={classes.powershellText}
                     variant="body2"
                   >
-                    SAS
+                    {t('SAS')}
                   </Typography>
                   <Typography
                     className={classes.powershellText}
                     variant="body2"
                   >
-                   (Includes SAS 9.4 and SAS Enterprise Guide)
+                    {t('(Includes SAS 9.4 and SAS Enterprise Guide)')}
                   </Typography>
                 </div>
               </div>
             </CardContent>
-            <Divider className={classes.divider} />
           </Collapse>
           <CardActions className={classes.cardActions}>
             <Button
@@ -443,14 +446,14 @@ function VirtualMachine(props) {
               variant="text"
               onClick={(e) => toggleDrawer(e, 'editVirtualMachine', true)}
             >
-              Edit
+              {t('Edit')}
             </Button>
             <Button
               color="primary"
               variant="text"
               onClick={() => handleClickOpen('dialogDelete')}
             >
-              Delete
+              {t('Delete')}
             </Button>
           </CardActions>
         </Card>
@@ -474,9 +477,10 @@ function VirtualMachine(props) {
       <Button
         variant="outlined"
         color="primary"
+        className="mb-0"
         onClick={(e) => toggleDrawer(e, 'addVirtualMachine', true)}
       >
-        Add virtual machine details
+        {t('Add virtual machine details')}
       </Button>
       <Drawer
         anchor="right"

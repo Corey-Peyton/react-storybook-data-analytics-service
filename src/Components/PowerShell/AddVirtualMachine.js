@@ -79,6 +79,7 @@ const useStyles = makeStyles((theme) => ({
 
 export function EditVirtualMachine(props) {
   const classes = useStyles();
+  const {t} = useTranslation();
 
   return (
     <React.Fragment>
@@ -88,7 +89,7 @@ export function EditVirtualMachine(props) {
             Update virtual machine details
           </Typography>
           <IconButton
-            aria-label="Close edit virtual machine"
+            aria-label={t('Close edit virtual machine')}
             className={classes.margin}
             edge="end"
             onClick={(e) => props.toggleDrawer(e, 'editVirtualMachine', false)}
@@ -170,198 +171,10 @@ function VirtualMachineDetails(props) {
     setState({...state, selectedFromDate: date});
   };
   const classes = useStyles();
-  const {t} = useTranslation();
   const [state, setState] = React.useState({
     snackbarDelete: false,
     dialogDelete: false,
-    cloudemail: {
-      text: '',
-      errorText: '',
-      invalid: '',
-      commands: '',
-      helperText: '',
-    },
-    username: {
-      text: '',
-      errorText: '',
-      invalid: '',
-      commands: '',
-      helperText: '',
-    },
-    firstname: {
-      text: '',
-      errorText: '',
-      invalid: '',
-      commands: '',
-      helperText: '',
-    },
-    lastName: {
-      text: '',
-      errorText: '',
-      invalid: '',
-      commands: '',
-      helperText: '',
-    },
-    researcherID: {
-      text: '',
-      errorText: '',
-      invalid: '',
-      commands: '',
-      helperText: '',
-    },
-    phoneNumber: {
-      text: '',
-      errorText: '',
-      invalid: '',
-      commands: '',
-      helperText: '',
-    },
-    email: {
-      text: '',
-      errorText: '',
-      invalid: '',
-      commands: '',
-      helperText: '',
-    },
-    virtualmachinename: {
-      text: '',
-      errorText: '',
-      invalid: '',
-      commands: '',
-      helperText: '',
-    },
   });
-
-  const initial = {
-    // blank object used to reset state
-    cloudemail: {
-      text: '',
-      errorText: '',
-      invalid: '',
-      commands: '',
-      helperText: '',
-    },
-    username: {
-      text: '',
-      errorText: '',
-      invalid: '',
-      commands: '',
-      helperText: '',
-    },
-    firstname: {
-      text: '',
-      errorText: '',
-      invalid: '',
-      commands: '',
-      helperText: '',
-    },
-    lastName: {
-      text: '',
-      errorText: '',
-      invalid: '',
-      commands: '',
-      helperText: '',
-    },
-    researcherID: {
-      text: '',
-      errorText: '',
-      invalid: '',
-      commands: '',
-      helperText: '',
-    },
-    phoneNumber: {
-      text: '',
-      errorText: '',
-      invalid: '',
-      commands: '',
-      helperText: '',
-    },
-    email: {
-      text: '',
-      errorText: '',
-      invalid: '',
-      commands: '',
-      helperText: '',
-    },
-    virtualmachinename: {
-      text: '',
-      errorText: '',
-      invalid: '',
-      commands: '',
-      helperText: '',
-    },
-  };
-
-  const disableCutCopyPaste = (e, command, value) => {
-    // display error if user tries to cut/copy/paste
-    let msg;
-    e.preventDefault();
-    switch (command) {
-      case 'cut':
-        msg = t('Cut has been disabled for security purposes.');
-        setState({
-          ...state,
-          [value]: {
-            ...state[value],
-            commands: msg,
-            errorText: msg,
-            helperText: msg,
-          },
-        });
-        break;
-      case 'copy':
-        msg = t('Copy has been disabled for security purposes.');
-        setState({
-          ...state,
-          [value]: {
-            ...state[value],
-            commands: msg,
-            errorText: msg,
-            helperText: msg,
-          },
-        });
-        break;
-      case 'paste':
-        msg = t('Paste has been disabled for security purposes.');
-        setState({
-          ...state,
-          [value]: {
-            ...state[value],
-            commands: msg,
-            errorText: msg,
-            helperText: msg,
-          },
-        });
-        break;
-      default:
-        break;
-    }
-  };
-
-  const toggleHelperText = (value) => {
-    if (state[value].commands === state[value].errorText) {
-      if (Boolean(state[value].invalid)) {
-        // set error text back to invalid error
-        setState({
-          ...state,
-          [value]: {
-            ...state[value],
-            helperText: state[value].invalid,
-          },
-        });
-      } else {
-        // clear error text if no invalid error exists
-        setState({
-          ...state,
-          [value]: {
-            ...state[value],
-            helperText: initial[value].helperText,
-            errorText: initial[value].errorText,
-          },
-        });
-      }
-    }
-  };
 
   const security = [
     {label: 'Statistics Canada'},
@@ -398,15 +211,6 @@ function VirtualMachineDetails(props) {
         variant="outlined"
         fullWidth
         required
-        onCut={(e) => disableCutCopyPaste(e, 'cut', 'username')}
-        onCopy={(e) => disableCutCopyPaste(e, 'copy', 'username')}
-        onPaste={(e) => disableCutCopyPaste(e, 'paste', 'username')}
-        onClick={() => toggleHelperText('username')}
-        onBlur={() => toggleHelperText('username')}
-        onFocus={() => toggleHelperText('username')}
-        defaultValue={state.username.text}
-        error={Boolean(state.username.errorText)}
-        helperText={state.username.helperText}
       />
       <TextField
         className={classes.inputMargin}
@@ -416,15 +220,6 @@ function VirtualMachineDetails(props) {
         variant="outlined"
         fullWidth
         required
-        onCut={(e) => disableCutCopyPaste(e, 'cut', 'firstname')}
-        onCopy={(e) => disableCutCopyPaste(e, 'copy', 'firstname')}
-        onPaste={(e) => disableCutCopyPaste(e, 'paste', 'firstname')}
-        onClick={() => toggleHelperText('firstname')}
-        onBlur={() => toggleHelperText('firstname')}
-        onFocus={() => toggleHelperText('firstname')}
-        defaultValue={state.firstname.text}
-        error={Boolean(state.firstname.errorText)}
-        helperText={state.firstname.helperText}
       />
       <TextField
         className={classes.inputMargin}
@@ -434,15 +229,6 @@ function VirtualMachineDetails(props) {
         variant="outlined"
         fullWidth
         required
-        onCut={(e) => disableCutCopyPaste(e, 'cut', 'lastName')}
-        onCopy={(e) => disableCutCopyPaste(e, 'copy', 'lastName')}
-        onPaste={(e) => disableCutCopyPaste(e, 'paste', 'lastName')}
-        onClick={() => toggleHelperText('lastName')}
-        onBlur={() => toggleHelperText('lastName')}
-        onFocus={() => toggleHelperText('lastName')}
-        defaultValue={state.lastName.text}
-        error={Boolean(state.lastName.errorText)}
-        helperText={state.lastName.helperText}
       />
       <MuiPickersUtilsProvider utils={DateFnsUtils}>
         <KeyboardDatePicker
@@ -475,15 +261,6 @@ function VirtualMachineDetails(props) {
         variant="outlined"
         fullWidth
         required
-        onCut={(e) => disableCutCopyPaste(e, 'cut', 'researcherID')}
-        onCopy={(e) => disableCutCopyPaste(e, 'copy', 'researcherID')}
-        onPaste={(e) => disableCutCopyPaste(e, 'paste', 'researcherID')}
-        onClick={() => toggleHelperText('researcherID')}
-        onBlur={() => toggleHelperText('researcherID')}
-        onFocus={() => toggleHelperText('researcherID')}
-        defaultValue={state.researcherID.text}
-        error={Boolean(state.researcherID.errorText)}
-        helperText={state.researcherID.helperText}
       />
       <Autocomplete
         id="organization"
@@ -507,15 +284,6 @@ function VirtualMachineDetails(props) {
         variant="outlined"
         fullWidth
         required
-        onCut={(e) => disableCutCopyPaste(e, 'cut', 'phoneNumber')}
-        onCopy={(e) => disableCutCopyPaste(e, 'copy', 'phoneNumber')}
-        onPaste={(e) => disableCutCopyPaste(e, 'paste', 'phoneNumber')}
-        onClick={() => toggleHelperText('phoneNumber')}
-        onBlur={() => toggleHelperText('phoneNumber')}
-        onFocus={() => toggleHelperText('phoneNumber')}
-        defaultValue={state.phoneNumber.text}
-        error={Boolean(state.phoneNumber.errorText)}
-        helperText={state.phoneNumber.helperText}
       />
       <TextField
         className={classes.inputMargin}
@@ -525,15 +293,6 @@ function VirtualMachineDetails(props) {
         variant="outlined"
         fullWidth
         required
-        onCut={(e) => disableCutCopyPaste(e, 'cut', 'email')}
-        onCopy={(e) => disableCutCopyPaste(e, 'copy', 'email')}
-        onPaste={(e) => disableCutCopyPaste(e, 'paste', 'email')}
-        onClick={() => toggleHelperText('email')}
-        onBlur={() => toggleHelperText('email')}
-        onFocus={() => toggleHelperText('email')}
-        defaultValue={state.email.text}
-        helperText={state.email.helperText}
-        error={Boolean(state.email.errorText)}
       />
       <Typography variant="subtitle1">Virtual machine details</Typography>
       <TextField
@@ -544,15 +303,6 @@ function VirtualMachineDetails(props) {
         variant="outlined"
         fullWidth
         required
-        onCut={(e) => disableCutCopyPaste(e, 'cut', 'virtualmachinename')}
-        onCopy={(e) => disableCutCopyPaste(e, 'copy', 'virtualmachinename')}
-        onPaste={(e) => disableCutCopyPaste(e, 'paste', 'virtualmachinename')}
-        onClick={() => toggleHelperText('virtualmachinename')}
-        onBlur={() => toggleHelperText('virtualmachinename')}
-        onFocus={() => toggleHelperText('virtualmachinename')}
-        defaultValue={state.virtualmachinename.text}
-        error={Boolean(state.virtualmachinename.errorText)}
-        helperText={state.virtualmachinename.helperText}
       />
       <Grid container>
         <FormControl
