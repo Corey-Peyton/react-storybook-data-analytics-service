@@ -164,3 +164,55 @@ export const ThreeActionDialog = (args) => {
     </>
   );
 };
+
+export const BackButtonDialog = (args) => {
+  const [open, setOpen] = React.useState({
+    dialogBackButton: false,
+  });
+
+  const toggleDialog = (state, value, e) => {
+    e.stopPropagation();
+    setOpen({...open, [state]: value});
+  };
+
+  return (
+    <>
+      <Button
+        variant="contained"
+        color="primary"
+        onClick={(e) => {
+          e.stopPropagation();
+          toggleDialog('dialogBackButton', !open.dialogBackButton, e);
+        }}
+      >
+        Back button dialog
+      </Button>
+      <Dialog
+        id="back-button-dialog"
+        open={open.dialogBackButton}
+        title="Back button dialog"
+        content={
+          <>
+            <Typography variant="body2">
+              This is an example of a dialog with one action and a back button.
+            </Typography>
+          </>
+        }
+        primaryButton="Next"
+        backButton="Back"
+        handlePrimaryClick={(e) => {
+          e.stopPropagation();
+          toggleDialog('dialogBackButton', !open.dialogBackButton, e);
+        }}
+        handleBackClick={(e) => {
+          e.stopPropagation();
+          toggleDialog('dialogBackButton', !open.dialogBackButton, e);
+        }}
+        toggleDialog={(e) => {
+          e.stopPropagation();
+          toggleDialog('dialogBackButton', !open.dialogBackButton, e);
+        }}
+      />
+    </>
+  );
+};

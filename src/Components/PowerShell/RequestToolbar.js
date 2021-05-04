@@ -1,7 +1,7 @@
 import React from 'react';
 import {makeStyles} from '@material-ui/core/styles';
 import {Link as RouterLink} from 'react-router-dom';
-import {AppBar, Toolbar, Grid, Button} from '@material-ui/core';
+import {AppBar, Toolbar, Grid, Button, Typography} from '@material-ui/core';
 
 const useStyles = makeStyles((theme) => ({
   appBar: {
@@ -23,7 +23,10 @@ function RequestToolbar(props) {
   return (
     <AppBar position="static" className={classes.appBar} color="default">
       <Toolbar>
-        <Grid container justify="flex-end">
+        <Grid container justify="space-between">
+          <Typography className="mt-1">
+            VDL PowerShell Intake Request
+          </Typography>
           <Grid>
             <Button
               className={classes.headerBtn}

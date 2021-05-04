@@ -20,7 +20,7 @@ function SecurityGroup(props) {
   const classes = useStyles();
   return (
     <React.Fragment>
-      <Grid item xs={6}>
+      <Grid item xs={9}>
         <Autocomplete
           id="securitygroupname"
           options={suggestions.map((option) => option.subject)}
@@ -30,6 +30,7 @@ function SecurityGroup(props) {
               label="Security group name"
               className={classes.inputMargin}
               variant="outlined"
+              fullWidth
             />
           )}
         />

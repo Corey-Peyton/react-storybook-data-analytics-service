@@ -15,7 +15,6 @@ import {
   SnackbarAssignLead,
   SnackbarAssignSupport,
   SnackbarUnassign,
-  SnackbarWithdrawRequest,
 } from '../../CommonComponents/Snackbars';
 import {
   DialogUnassign,
@@ -23,11 +22,13 @@ import {
   DialogUpdate,
   DialogDenied,
   DialogApprove,
-  DialogInfo,
+  DialogAssigneeDetails,
+  DialogRequesterDetails,
   DialogNoLead,
   DialogAssignAsLead,
   DialogAssignAsSupport,
   DialogDelete,
+  DialogWithdraw,
 } from '../../CommonComponents/DialogBox';
 import {loggedInUser} from '../../../../Data/fakeData';
 
@@ -76,7 +77,6 @@ export function ActionsMenu(props) {
     snackbarAssignLead: false,
     snackbarAssignSupport: false,
     snackbarUnassign: false,
-    snackbarWithdrawRequest: false,
     dialogManageTeam: false,
     dialogUnassign: false,
     dialogSupport: false,
@@ -84,14 +84,14 @@ export function ActionsMenu(props) {
     dialogUpdate: false,
     dialogDenied: false,
     dialogApprove: false,
-    dialogInfo: false,
+    dialogAssigneeDetails: false,
+    dialogRequesterDetails: false,
     dialogNoLeadUnassign: false,
     dialogNoLeadAssignSupport: false,
     dialogAssignAsLead: false,
     dialogAssignAsSupport: false,
     dialogDelete: false,
-    role: '',
-    action: '',
+    dialogWithdraw: false,
   });
 
   const ariaControls = `actions-menu-${controls}`;
@@ -126,9 +126,9 @@ export function ActionsMenu(props) {
     toggleManageTeamDrawer(e);
   };
 
-  const toggleDialog = (state, value, e, role, action) => {
+  const toggleDialog = (state, value, e) => {
     e.stopPropagation();
-    setOpen({...open, [state]: value, role: role, action: action});
+    setOpen({...open, [state]: value});
     handleClose(e);
   };
 
@@ -195,7 +195,7 @@ export function ActionsMenu(props) {
         onClick={(e) => {
           e.stopPropagation();
           handleClose(e);
-          handleSnackbarOpen('snackbarWithdrawRequest');
+          toggleDialog('dialogWithdraw', !open.dialogWithdraw, e);
         }}
       >
         <ListItemText
@@ -210,7 +210,7 @@ export function ActionsMenu(props) {
       <MenuItem
         onClick={(e) => {
           e.stopPropagation();
-          toggleDialog('dialogInfo', !open.dialogInfo, e, 'assignee');
+          toggleDialog('dialogAssigneeDetails', !open.dialogAssigneeDetails, e);
         }}
       >
         <ListItemText
@@ -227,7 +227,11 @@ export function ActionsMenu(props) {
       <MenuItem
         onClick={(e) => {
           e.stopPropagation();
-          toggleDialog('dialogInfo', !open.dialogInfo, e, 'requester');
+          toggleDialog(
+              'dialogRequesterDetails',
+              !open.dialogRequesterDetails,
+              e,
+          );
         }}
       >
         <ListItemText
@@ -447,21 +451,19 @@ export function ActionsMenu(props) {
   };
 
   const reactivateMenuItem = () => {
-    if (currentUser === request.lead || role === 'researcher') {
-      return (
-        <MenuItem
-          onClick={(e) => {
-            e.stopPropagation();
-            handleSnackbarOpen('snackbarReopen');
-            handleClose(e);
-          }}
-        >
-          <ListItemText
-            primary={<Typography variant="body2">{t('Reactivate')}</Typography>}
-          />
-        </MenuItem>
-      );
-    }
+    return (
+      <MenuItem
+        onClick={(e) => {
+          e.stopPropagation();
+          handleSnackbarOpen('snackbarReopen');
+          handleClose(e);
+        }}
+      >
+        <ListItemText
+          primary={<Typography variant="body2">{t('Reactivate')}</Typography>}
+        />
+      </MenuItem>
+    );
   };
 
   const manageAssigneesMenuItem = () => {
@@ -670,10 +672,7 @@ export function ActionsMenu(props) {
         >
           {viewRequestMenuItem()}
           {reactivateMenuItem()}
-          {assignAsLeadMenuItem()}
-          {assignAsSupportMenuItem()}
-          {unassignMenuItem()}
-          {manageAssigneesMenuItem()}
+          {assigneeDetailsMenuItem()}
           {requesterDetailsMenuItem()}
           {summaryMenuItem()}
         </StyledMenu>
@@ -689,10 +688,7 @@ export function ActionsMenu(props) {
         >
           {viewRequestMenuItem()}
           {reactivateMenuItem()}
-          {assignAsLeadMenuItem()}
-          {assignAsSupportMenuItem()}
-          {unassignMenuItem()}
-          {manageAssigneesMenuItem()}
+          {assigneeDetailsMenuItem()}
           {requesterDetailsMenuItem()}
           {summaryMenuItem()}
         </StyledMenu>
@@ -861,10 +857,6 @@ export function ActionsMenu(props) {
         open={open.snackbarUnassign}
         handleClose={() => handleSnackbarClose('snackbarUnassign')}
       />
-      <SnackbarWithdrawRequest
-        open={open.snackbarWithdrawRequest}
-        handleClose={() => handleSnackbarClose('snackbarWithdrawRequest')}
-      />
       <DialogUnassign
         toggleDialog={(e) =>
           toggleDialog('dialogUnassign', !open.dialogUnassign, e)
@@ -901,12 +893,29 @@ export function ActionsMenu(props) {
         }
         open={open.dialogApprove}
       />
-      <DialogInfo
-        toggleDialog={(e) => toggleDialog('dialogInfo', !open.dialogInfo, e)}
-        open={open.dialogInfo}
-        header={
-          open.role === 'assignee' ? 'Assignee details' : 'Requester details'
+      <DialogWithdraw
+        toggleDialog={(e) =>
+          toggleDialog('dialogWithdraw', !open.dialogWithdraw, e)
         }
+        open={open.dialogWithdraw}
+      />
+      <DialogRequesterDetails
+        toggleDialog={(e) =>
+          toggleDialog(
+              'dialogRequesterDetails',
+              !open.dialogRequesterDetails,
+              e,
+          )
+        }
+        open={open.dialogRequesterDetails}
+      />
+      <DialogAssigneeDetails
+        toggleDialog={(e) =>
+          toggleDialog('dialogAssigneeDetails', !open.dialogAssigneeDetails, e)
+        }
+        open={open.dialogAssigneeDetails}
+        role={role}
+        statusHead={statusHead}
       />
       <DialogNoLead
         toggleDialog={(e) =>

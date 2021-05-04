@@ -34,25 +34,37 @@ export const useStyles = makeStyles({
     '.MuiIconButton-edgeEnd': {
       marginRight: theme.spacing(-1),
     },
+    '.MuiButton-text.edge-start': {
+      marginLeft: theme.spacing(-1),
+    },
+    '.MuiButton-text.edge-end': {
+      marginRight: theme.spacing(-1),
+    },
 
-    // Expansion Panels
-    '.MuiExpansionPanel-root': {
+    // Accordions
+    '.MuiAccordion-root': {
+      'borderRadius': [0, '!important'],
       '&::before': {
         display: 'none',
       },
+      '&.MuiAccordion-root.Mui-expanded': {
+        margin: 0,
+      },
       'boxShadow': 'none',
-      'padding': theme.spacing(0.5, 0),
-      'margin': [0, '!important'],
-      'borderBottomWidth': '1px',
-      'borderBottomStyle': 'solid',
+      'borderBottom': '1px solid',
       'borderBottomColor': theme.palette.divider,
+      '&:last-child': {
+        borderBottom: 'none',
+      },
     },
-    '.MuiExpansionPanelSummary-content': {
-      margin: '0 !important',
+    '.MuiAccordionSummary-root': {
+      padding: 0,
     },
-    '.MuiExpansionPanelSummary-root': {
-      minHeight: [0, '!important'],
-      padding: theme.spacing(0, 1),
+    '.MuiAccordionSummary-content, .MuiAccordionSummary-content.Mui-expanded': {
+      margin: theme.spacing(3, 0),
+    },
+    '.MuiAccordionDetails-root': {
+      padding: theme.spacing(0, 0, 3, 0),
     },
 
     // Forms
@@ -90,6 +102,34 @@ export const useStyles = makeStyles({
     '.MuiFormControlLabel-root': {
       marginLeft: theme.spacing(-1),
     },
+    // Fix for bug: extra space under text field with long label in dialogs
+    '.MuiOutlinedInput-root > fieldset > legend > span': {
+      display: 'none',
+    },
+    '.MuiInputLabel-outlined.MuiInputLabel-shrink + .MuiOutlinedInput-root': {
+      '& > fieldset > legend > span': {
+        display: 'inline-block',
+      },
+    },
+    // Fix for bug: fieldset overflowing container in IE11
+    'fieldset.MuiFormControl-root': {
+      maxWidth: '100%',
+    },
+
+    '.input-margin': {
+      'marginBottom': theme.spacing(3),
+      'marginTop': 0,
+      '&:last-child': {
+        marginBottom: 0,
+      },
+    },
+    '.radio-margin': {
+      'marginBottom': theme.spacing(2),
+      'marginTop': 0,
+      '&:last-child': {
+        marginBottom: 0,
+      },
+    },
     '.emphasisBox': {
       background: theme.palette.grey[200],
       padding: theme.spacing(2),
@@ -106,6 +146,11 @@ export const useStyles = makeStyles({
     '.MuiLink-root:focus': {
       border: '2px solid #0049b3',
       borderRadius: '2px',
+    },
+
+    // Lists
+    'li::marker': {
+      fontFamily: ['"Roboto"', 'sans-serif'],
     },
 
     // Datepickers
@@ -147,9 +192,9 @@ export const useStyles = makeStyles({
     // Dialogs
     '.MuiDialog-paperWidthSm': {
       'width': 'calc(100% - 64px)',
-      '& .MuiTextField-root': {
-        width: '100%',
-      },
+      // '& .MuiTextField-root': {
+      //   width: '100%',
+      // },
       '& .MuiDialogContent-root': {
         padding: 0,
       },
@@ -291,7 +336,7 @@ export const useStyles = makeStyles({
           'height': 'auto',
           '&.MuiBadge-colorPrimary': {
             color: '#fff',
-            backgroundColor: '#1473e6',
+            backgroundColor: theme.palette.primary.main,
           },
         },
       },
@@ -352,18 +397,12 @@ export const useStyles = makeStyles({
       paddingLeft: '14px',
       color: [theme.palette.common.black, '!important'],
     },
-    '.dialog-section': {
-      display: 'flex',
-      flexFlow: 'column',
-      padding: theme.spacing(3),
-      overflowY: 'auto',
-    },
     '.row': {
       'display': 'flex',
       'margin': theme.spacing(1.5, 0),
       'flexFlow': 'row',
-      'height': '100%',
-      'justifyContent': 'center',
+      'height': 'auto',
+      'justifyContent': 'space-between',
       'width': '100%',
       'alignItems': 'center',
       '&:first-child': {
@@ -383,6 +422,14 @@ export const useStyles = makeStyles({
       '&:last-child': {
         marginRight: 0,
       },
+    },
+    '.border-top': {
+      borderTop: '1px solid',
+      borderTopColor: theme.palette.divider,
+    },
+    '.border-bottom': {
+      borderBottom: '1px solid',
+      borderBottomColor: theme.palette.divider,
     },
     '.mb-6': {
       marginBottom: theme.spacing(6),

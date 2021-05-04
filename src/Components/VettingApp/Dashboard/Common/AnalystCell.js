@@ -21,15 +21,35 @@ const useStyles = makeStyles((theme) => ({
 
 export default function AnalystCell(props) {
   const {t} = useTranslation();
-  const {role, lead, support, toggleDialog, toggleManageTeamDrawer} = props;
+  const {
+    role,
+    lead,
+    support,
+    toggleManageTeamDrawer,
+    statusHead,
+    clickHandler,
+  } = props;
   const extraAnalysts = support.length;
   const classes = useStyles();
+
+  const handleClick = (e) => {
+    e.stopPropagation();
+    if (role === 'analyst') {
+      if (statusHead === 'approved' || statusHead === 'denied') {
+        clickHandler(e);
+      } else {
+        toggleManageTeamDrawer(e);
+      }
+    } else {
+      clickHandler(e);
+    }
+  };
 
   if (role === 'researcher') {
     if (lead !== '') {
       return (
         <TableCell className={classes.tablesCellsFlex}>
-          <Chip label={lead} onClick={toggleDialog} />
+          <Chip label={lead} onClick={handleClick} />
         </TableCell>
       );
     } else {
@@ -45,33 +65,17 @@ export default function AnalystCell(props) {
     if (lead !== '' && support.length > 0) {
       return (
         <TableCell className={classes.tablesCellsFlex}>
-          <Chip
-            label={lead}
-            onClick={(e) => {
-              e.stopPropagation();
-              toggleManageTeamDrawer(e);
-            }}
-            className="mr-1"
-          />
+          <Chip label={lead} onClick={handleClick} className="mr-1" />
           <Chip
             label={`${extraAnalysts} ${t('support')}`}
-            onClick={(e) => {
-              e.stopPropagation();
-              toggleManageTeamDrawer(e);
-            }}
+            onClick={handleClick}
           />
         </TableCell>
       );
     } else if (lead !== '' && support.length === 0) {
       return (
         <TableCell className={classes.tablesCellsFlex}>
-          <Chip
-            label={lead}
-            onClick={(e) => {
-              e.stopPropagation();
-              toggleManageTeamDrawer(e);
-            }}
-          />
+          <Chip label={lead} onClick={handleClick} />
         </TableCell>
       );
     } else if (lead === '' && support.length > 0) {
@@ -82,10 +86,7 @@ export default function AnalystCell(props) {
           </Typography>
           <Chip
             label={`${extraAnalysts} ${t('support')}`}
-            onClick={(e) => {
-              e.stopPropagation();
-              toggleManageTeamDrawer(e);
-            }}
+            onClick={handleClick}
             className="ml-1"
           />
         </TableCell>

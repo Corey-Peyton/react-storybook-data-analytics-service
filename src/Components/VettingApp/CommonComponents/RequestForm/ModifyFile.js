@@ -636,7 +636,6 @@ function OutputFileForm(props) {
           onCut={(e) => disableCutCopyPaste(e, 'cut', 'outputmethod')}
           onCopy={(e) => disableCutCopyPaste(e, 'copy', 'outputmethod')}
           onPaste={(e) => disableCutCopyPaste(e, 'paste', 'outputmethod')}
-          onChange={(e) => handleChange(e, 'info')}
           onClick={() => toggleHelperText('outputmethod')}
           onBlur={() => toggleHelperText('outputmethod')}
           onFocus={() => toggleHelperText('outputmethod')}
@@ -1157,7 +1156,6 @@ function OutputFileForm(props) {
         id="notes1"
         label="Notes"
         multiline
-        rows={4}
         variant="outlined"
         fullWidth
         required
@@ -1228,7 +1226,6 @@ function OutputFileForm(props) {
         id="notes2"
         label="Notes"
         multiline
-        rows={4}
         variant="outlined"
         fullWidth
         required

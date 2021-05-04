@@ -384,7 +384,7 @@ function VettingRequestResearcher(props) {
               )}
             </Grid>
           </Paper>
-          <FloatingSupportButton />
+          <FloatingSupportButton form />
         </Container>
       </main>
       <Footer />

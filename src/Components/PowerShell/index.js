@@ -33,13 +33,9 @@ const useStyles = makeStyles((theme) => ({
   divider: {
     margin: theme.spacing(3, 0),
   },
-  dividercutcopypaste: {
+  dividerHeight: {
     marginBottom: theme.spacing(2),
     marginTop: theme.spacing(3),
-  },
-  dividerHeight: {
-    height: theme.spacing(5),
-    marginTop: theme.spacing(1.25),
   },
   paper: {
     maxWidth: '1280px',
@@ -56,15 +52,6 @@ const useStyles = makeStyles((theme) => ({
   icongrey: {
     marginLeft: theme.spacing(1),
   },
-  statusRight: {
-    padding: theme.spacing(0.5, 2),
-    paddingRight: theme.spacing(0),
-  },
-  statusLeft: {
-    padding: theme.spacing(0.5, 2),
-    display: 'flex',
-    alignItems: 'center',
-  },
   stepperContainer: {
     'display': 'flex',
     '& .MuiStepper-root': {
@@ -76,7 +63,7 @@ const useStyles = makeStyles((theme) => ({
     marginLeft: theme.spacing(6),
   },
   stepperBackBtn: {
-    marginRight: theme.spacing(6),
+    marginRight: theme.spacing(2),
   },
   navButtons: {
     paddingTop: theme.spacing(3),
@@ -98,7 +85,7 @@ function getSteps() {
 }
 
 function PowerShell(props) {
-  window.onbeforeunload = () => '';
+  // window.onbeforeunload = () => '';
   const classes = useStyles();
   const [state, setState] = React.useState({
     activeStep: 0,
@@ -242,7 +229,7 @@ function PowerShell(props) {
                 </Button>
               )}
             </div>
-            <Divider className={classes.dividercutcopypaste} />
+            <Divider className={classes.dividerHeight} />
             {/* <CutCopyPasteAlert /> */}
             <div>
               {allStepsCompleted() ? (
@@ -272,7 +259,7 @@ function PowerShell(props) {
                   <Button
                     variant="outlined"
                     color="primary"
-                    className={classes.button}
+                    className={classes.stepperBackBtn}
                     onClick={handleBack}
                   >
                     Back

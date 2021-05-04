@@ -20,7 +20,7 @@ import {mdiTune} from '@mdi/js';
 
 import {datasets} from '../../Data/fakeData';
 import {sortByKey, sortByKeyDesc} from '../../Utils/sorting';
-import BypassBlocks from '../BypassBlocks';
+import BypassBlocks from '../CommonComponents/BypassBlocks';
 import Footer from '../Footers/Footer';
 import DefaultHeader from '../Headers/DefaultHeader';
 import FilterPills from './FilterPills';

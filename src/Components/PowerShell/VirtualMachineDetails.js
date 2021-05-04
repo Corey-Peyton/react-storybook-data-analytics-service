@@ -185,9 +185,9 @@ function VirtualMachine(props) {
 
   return (
     <React.Fragment>
-      <Typography variant="body1" className="mb-2">
+      <Typography variant="body1" className="mt-1 mb-2">
         You need to add virtual machine details to submit this request
-        successfully
+        successfully.
       </Typography>
       {state.showCard === true && (
         <Card className={classes.card} variant="outlined">
