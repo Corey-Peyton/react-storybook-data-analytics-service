@@ -1,6 +1,6 @@
 import React from 'react';
 
-import {IconButton} from '../Components/CommonComponents/IconButton';
+import {IconButton} from '@material-ui/core';
 import Icon from '@mdi/react';
 import {mdiPlus} from '@mdi/js';
 

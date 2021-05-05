@@ -6,9 +6,26 @@ export const useStyles = makeStyles({
   '@global': {
     // ************* Overrides **************
 
-    // Disable pulse animation
+    // Button ripple/pulse animation
     '.MuiTouchRipple-childPulsate': {
       animation: 'none',
+    },
+    '.MuiTouchRipple-ripplePulsate': {
+      animationDuration: '200ms !important',
+    },
+    '.MuiTouchRipple-rippleVisible': {
+      opacity: 0.2,
+      animation: `$enter 550ms ${theme.transitions.easing.easeInOut}`,
+    },
+    '@keyframes enter': {
+      '0%': {
+        transform: 'scale(0)',
+        opacity: 0.1,
+      },
+      '100%': {
+        transform: 'scale(1)',
+        opacity: 0.2,
+      },
     },
 
     // Breadcrumbs
@@ -20,8 +37,8 @@ export const useStyles = makeStyles({
     '.MuiButton-label, .MuiTab-wrapper, .MuiFab-label': {
       textTransform: 'none',
     },
+    // all buttons
     '.MuiButton-root': {
-      // all buttons
       '& .MuiButton-startIcon': {
         marginLeft: theme.spacing(-1),
       },
@@ -111,18 +128,41 @@ export const useStyles = makeStyles({
         },
       },
     },
-    '.MuiTouchRipple-rippleVisible': {
-      opacity: 0.2,
-    },
+
+    // all icon buttons
     '.MuiIconButton-root': {
-      padding: theme.spacing(1),
+      'padding': theme.spacing(1),
+      '&.MuiIconButton-edgeStart': {
+        marginLeft: theme.spacing(-1),
+      },
+      '&.MuiIconButton-edgeEnd': {
+        marginRight: theme.spacing(-1),
+      },
+      'color': fade(theme.palette.common.black, 0.56),
+      '&:hover': {
+        backgroundColor: fade(theme.palette.common.black, 0.12),
+      },
+      '&.Mui-focusVisible': {
+        backgroundColor: fade(theme.palette.common.black, 0.12),
+      },
+      // primary icon
+      '&.MuiIconButton-colorPrimary': {
+        'color': theme.palette.primary.main,
+        '&:hover': {
+          color: theme.palette.primary.dark,
+          backgroundColor: fade(theme.palette.primary.main, 0.12),
+        },
+        '&.Mui-focusVisible': {
+          color: theme.palette.primary.dark,
+          backgroundColor: fade(theme.palette.primary.main, 0.12),
+        },
+      },
+      // disabled icon
+      '&.Mui-disabled': {
+        color: fade(theme.palette.common.black, 0.4),
+      },
     },
-    '.MuiIconButton-edgeStart': {
-      marginLeft: theme.spacing(-1),
-    },
-    '.MuiIconButton-edgeEnd': {
-      marginRight: theme.spacing(-1),
-    },
+
     '.MuiButton-text.edge-start': {
       marginLeft: theme.spacing(-1),
     },

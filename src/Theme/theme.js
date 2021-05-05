@@ -30,6 +30,9 @@ export const theme = createMuiTheme({
     MuiButton: {
       disableFocusRipple: true,
     },
+    MuiIconButton: {
+      disableFocusRipple: true,
+    },
   },
   shadows: [
     'none',
