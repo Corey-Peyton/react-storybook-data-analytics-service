@@ -2,7 +2,6 @@ import React from 'react';
 import {makeStyles} from '@material-ui/core/styles';
 import FormGroup from '@material-ui/core/FormGroup';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
-import FormHelperText from '@material-ui/core/FormHelperText';
 import Checkbox from '@material-ui/core/Checkbox';
 import DateFnsUtils from '@date-io/date-fns';
 import {
@@ -16,6 +15,7 @@ import {
   FormControl,
   RadioGroup,
   Radio,
+  Typography,
 } from '@material-ui/core';
 import Alert from '@material-ui/lab/Alert';
 import {useTranslation} from 'react-i18next';
@@ -43,6 +43,7 @@ function ProjectDetails(props) {
   const handleToDateChange = (date) => {
     setState({...state, selectedToDate: date});
   };
+
   const classes = useStyles();
   const {t} = useTranslation();
 
@@ -138,6 +139,7 @@ function ProjectDetails(props) {
               variant="inline"
               margin="dense"
               className={classes.datePicker}
+              InputProps={{readOnly: true}}
               format="MM/dd/yyyy"
               label={t('Contract start date')}
               value={state.selectedFromDate}
@@ -159,6 +161,7 @@ function ProjectDetails(props) {
               margin="dense"
               format="MM/dd/yyyy"
               label={t('Contract end date')}
+              InputProps={{readOnly: true}}
               value={state.selectedToDate}
               minDate={state.selectedFromDate}
               onChange={handleToDateChange}
@@ -178,26 +181,45 @@ function ProjectDetails(props) {
             <Grid container>
               <Grid>
                 <FormControlLabel
-                  control={<Checkbox color="primary" />}
-                  label={t('Default tools')}
+                  control={
+                    <Checkbox
+                      name="Default tools"
+                      color="primary"
+                    />
+                  }
+                  label={
+                    <>
+                      <Typography>{t('Default tools')}</Typography>
+                      <Typography variant="caption">
+                        {t(
+                            'Default tools (Adobe Reader DC, Java, LibreOffice, Office 2019, Power BI, ProjectLibre, Python, R, RStudio, RTools, VSCode',
+                        )}
+                      </Typography>
+                    </>
+                  }
                 />
-                <FormHelperText>
-                  {t(
-                      'Default tools (Adobe Reader DC, Java, LibreOffice, Office 2019, Power BI, ProjectLibre, Python, R, RStudio, RTools, VSCode',
-                  )}
-                </FormHelperText>
               </Grid>
-              <Grid item></Grid>
             </Grid>
             <Grid container>
               <Grid>
                 <FormControlLabel
-                  control={<Checkbox color="primary" />}
-                  label={t('SAS')}
+                  control={
+                    <Checkbox
+                      name="SAS"
+                      color="primary"
+                    />
+                  }
+                  label={
+                    <>
+                      <Typography>{t('SAS')}</Typography>
+                      <Typography variant="caption">
+                        {t(
+                            'Includes SAS 9.4 and SAS Enterprise Guide',
+                        )}
+                      </Typography>
+                    </>
+                  }
                 />
-                <FormHelperText>
-                  {t('Includes SAS 9.4 and SAS Enterprise Guide')}
-                </FormHelperText>
               </Grid>
             </Grid>
             <FormControlLabel

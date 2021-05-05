@@ -2,7 +2,6 @@ import React from 'react';
 import Link from '@material-ui/core/Link';
 import DateFnsUtils from '@date-io/date-fns';
 import {analystList} from '../../Data/fakeData';
-import FormHelperText from '@material-ui/core/FormHelperText';
 import {
   KeyboardDatePicker,
   MuiPickersUtilsProvider,
@@ -75,7 +74,6 @@ const useStyles = makeStyles((theme) => ({
     },
   },
 }));
-
 
 export function EditVirtualMachine(props) {
   const classes = useStyles();
@@ -171,6 +169,7 @@ function VirtualMachineDetails(props) {
     setState({...state, selectedFromDate: date});
   };
   const classes = useStyles();
+  const {t} = useTranslation();
   const [state, setState] = React.useState({
     snackbarDelete: false,
     dialogDelete: false,
@@ -188,7 +187,13 @@ function VirtualMachineDetails(props) {
       </Typography>
       <Typography variant="body2" className="mb-2">
         If the cloud account email cannot be found it means it does not exist in
-        Azure Active Directory. Submit a Jira ticket to the <Link href="https://jirab.statcan.ca/projects/DAZSUPP/summary" underline="always">Cloud Jira project</Link>
+        Azure Active Directory. Submit a Jira ticket to the{' '}
+        <Link
+          href="https://jirab.statcan.ca/projects/DAZSUPP/summary"
+          underline="always"
+        >
+          Cloud Jira project
+        </Link>
         for assistance.
       </Typography>
       <Autocomplete
@@ -332,19 +337,33 @@ function VirtualMachineDetails(props) {
         <Grid container>
           <Grid>
             <FormControlLabel
-              control={<Checkbox color="primary" />}
-              label="Default tools"
+              control={<Checkbox name="Default tools" color="primary" />}
+              label={
+                <>
+                  <Typography>{t('Default tools')}</Typography>
+                  <Typography variant="caption">
+                    {t(
+                        'Default tools (Adobe Reader DC, Java, LibreOffice, Office 2019, Power BI, ProjectLibre, Python, R, RStudio, RTools, VSCode',
+                    )}
+                  </Typography>
+                </>
+              }
             />
-            <FormHelperText>Default tools (Adobe Reader DC, Java, LibreOffice, Office 2019, Power BI, ProjectLibre, Python, R, RStudio, RTools, VSCode</FormHelperText>
           </Grid>
         </Grid>
         <Grid container>
           <Grid>
             <FormControlLabel
-              control={<Checkbox color="primary" />}
-              label="SAS"
+              control={<Checkbox name="SAS" color="primary" />}
+              label={
+                <>
+                  <Typography>{t('SAS')}</Typography>
+                  <Typography variant="caption">
+                    {t('Includes SAS 9.4 and SAS Enterprise Guide')}
+                  </Typography>
+                </>
+              }
             />
-            <FormHelperText>Includes SAS 9.4 and SAS Enterprise Guide</FormHelperText>
           </Grid>
         </Grid>
         <FormControlLabel control={<Checkbox color="primary" />} label="SPSS" />

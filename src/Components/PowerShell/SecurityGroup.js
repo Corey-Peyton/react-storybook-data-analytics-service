@@ -7,13 +7,9 @@ import {makeStyles} from '@material-ui/core/styles';
 import {Grid} from '@material-ui/core';
 
 const useStyles = makeStyles((theme) => ({
-  root: {
-    '& .MuiFormControl-root': {
-      width: '100%',
-    },
-  },
   inputMargin: {
-    margin: theme.spacing(1, 0),
+    marginTop: theme.spacing(1),
+    marginBottom: theme.spacing(0),
   },
 }));
 
