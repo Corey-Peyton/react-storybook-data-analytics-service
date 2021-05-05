@@ -284,9 +284,9 @@ function RequestToolbar(props) {
           <Grid item className={classes.actions}>
             {role === 'analyst' && (
               <>
+                {reactivateButton()}
                 {assignees.lead === currentUser && (
                   <>
-                    {reactivateButton()}
                     {requestChangesButton()}
                     {resolveButton()}
                     {startReviewButton()}
