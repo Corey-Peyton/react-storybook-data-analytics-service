@@ -49,6 +49,9 @@ const useStyles = makeStyles((theme) => ({
     borderBottomColor: theme.palette.divider,
     top: theme.spacing(8),
     left: 0,
+    [theme.breakpoints.down('xs')]: {
+      top: theme.spacing(7),
+    },
   },
   gridContainer: {
     paddingLeft: theme.spacing(3),

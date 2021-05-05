@@ -31,6 +31,10 @@ const useStyles = makeStyles((theme) => ({
   pageContainer: {
     marginTop: theme.spacing(8),
     paddingTop: theme.spacing(8),
+    [theme.breakpoints.down('xs')]: {
+      marginTop: theme.spacing(7),
+      paddingTop: theme.spacing(7),
+    },
   },
   main: {
     background: theme.palette.grey[100],
