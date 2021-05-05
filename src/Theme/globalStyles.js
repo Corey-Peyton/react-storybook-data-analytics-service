@@ -49,10 +49,12 @@ export const useStyles = makeStyles({
         '&.MuiButton-outlinedPrimary': {
           'borderColor': fade(theme.palette.primary.main, 0.4),
           '&:hover': {
+            color: theme.palette.primary.dark,
             borderColor: fade(theme.palette.primary.main, 0.4),
             backgroundColor: fade(theme.palette.primary.main, 0.12),
           },
           '&.Mui-focusVisible': {
+            color: theme.palette.primary.dark,
             backgroundColor: fade(theme.palette.primary.main, 0.12),
           },
         },
@@ -64,11 +66,13 @@ export const useStyles = makeStyles({
       },
       // text
       '&.MuiButton-text': {
-        'color': fade(theme.palette.common.black, 0.6),
+        'color': fade(theme.palette.common.black, 0.72),
         '& .MuiButton-startIcon': {
+          color: fade(theme.palette.common.black, 0.56),
           marginLeft: theme.spacing(0),
         },
         '& .MuiButton-endIcon': {
+          color: fade(theme.palette.common.black, 0.56),
           marginRight: theme.spacing(0),
         },
         '&:hover': {
@@ -81,19 +85,35 @@ export const useStyles = makeStyles({
         '&.MuiButton-textPrimary': {
           'color': theme.palette.primary.main,
           '&:hover': {
+            color: theme.palette.primary.dark,
             backgroundColor: fade(theme.palette.primary.main, 0.12),
           },
           '&.Mui-focusVisible': {
+            color: theme.palette.primary.dark,
             backgroundColor: fade(theme.palette.primary.main, 0.12),
+          },
+          '& .MuiButton-startIcon': {
+            color: theme.palette.primary.main,
+          },
+          '& .MuiButton-endIcon': {
+            color: theme.palette.primary.main,
           },
         },
         // text disabled
         '&.Mui-disabled': {
-          color: fade(theme.palette.common.black, 0.4),
+          'color': fade(theme.palette.common.black, 0.4),
+          '& .MuiButton-startIcon': {
+            color: [fade(theme.palette.common.black, 0.4), '!important'],
+          },
+          '& .MuiButton-endIcon': {
+            color: [fade(theme.palette.common.black, 0.4), '!important'],
+          },
         },
       },
     },
-
+    '.MuiTouchRipple-rippleVisible': {
+      opacity: 0.2,
+    },
     '.MuiIconButton-root': {
       padding: theme.spacing(1),
     },

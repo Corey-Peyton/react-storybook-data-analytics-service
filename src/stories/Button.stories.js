@@ -142,6 +142,12 @@ export const TextButtons = (args) => {
       <Button href="#text-buttons" color="primary" className="m-1">
         Link
       </Button>
+      <Button startIcon={<Icon path={mdiPlus} size={1} />} className="m-1">
+        Start icon
+      </Button>
+      <Button endIcon={<Icon path={mdiPlus} size={1} />} className="m-1">
+        End icon
+      </Button>
       <Button
         startIcon={<Icon path={mdiPlus} size={1} />}
         color="primary"
