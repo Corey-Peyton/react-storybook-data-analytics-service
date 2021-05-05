@@ -58,18 +58,19 @@ export default function FilterPills(props) {
     year: 'numeric',
   }).format(new Date(filters.date.endDate));
 
-  const handleDelete = (e) => {
-    console.log(e);
-  };
-
   return (
     <div className={classes.root}>
       {props.searchTerm && (
         <div className={classes.searchTerm}>
-          <Box component="h1" fontWeight="fontWeightRegular" fontSize="h6.fontSize" fontFamily="fontFamily">
+          <Box
+            component="h1"
+            fontWeight="fontWeightRegular"
+            fontSize="h6.fontSize"
+            fontFamily="fontFamily"
+          >
             {t('Search results for')}&nbsp;
             <Typography variant="h6" component="span">
-            "{props.searchTerm}"
+              "{props.searchTerm}"
             </Typography>
           </Box>
         </div>
@@ -83,7 +84,7 @@ export default function FilterPills(props) {
                 className={classes.clear}
                 component="button"
                 aria-label="Clear all filters"
-                onDelete={handleDelete}
+                // onDelete={handleDelete}
                 label={t('Clear all')}
                 variant="outlined"
               />
@@ -101,11 +102,11 @@ export default function FilterPills(props) {
                   aria-label={`${t('Remove topic filter')}: ${subject}`}
                   key={subject}
                   label={
-                      subject.length <= 25 ?
-                        subject :
-                        `${subject.substring(0, 25)}...`
+                    subject.length <= 25 ?
+                      subject :
+                      `${subject.substring(0, 25)}...`
                   }
-                  onDelete={handleDelete}
+                  // onDelete={handleDelete}
                   variant="outlined"
                 />
               );
@@ -123,11 +124,11 @@ export default function FilterPills(props) {
                   aria-label={`${t('Remove survey filter')} ${survey}`}
                   key={survey}
                   label={
-                      survey.length <= 25 ?
-                        survey :
-                        `${survey.substring(0, 25)}...`
+                    survey.length <= 25 ?
+                      survey :
+                      `${survey.substring(0, 25)}...`
                   }
-                  onDelete={handleDelete}
+                  // onDelete={handleDelete}
                   variant="outlined"
                 />
               );
@@ -144,7 +145,7 @@ export default function FilterPills(props) {
                   'Remove date filter',
               )}: ${startDate} - ${endDate}`}
               label={`${startDate} - ${endDate}`}
-              onDelete={handleDelete}
+              // onDelete={handleDelete}
               variant="outlined"
             />
           </React.Fragment>
