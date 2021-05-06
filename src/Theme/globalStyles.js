@@ -157,6 +157,10 @@ export const useStyles = makeStyles({
           backgroundColor: fade(theme.palette.primary.main, 0.12),
         },
       },
+      // inherit icon
+      '&.MuiIconButton-colorInherit': {
+        color: ['inherit', '!important'],
+      },
       // disabled icon
       '&.Mui-disabled': {
         color: fade(theme.palette.common.black, 0.4),
