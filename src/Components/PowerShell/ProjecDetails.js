@@ -11,13 +11,13 @@ import {
 import {
   TextField,
   FormLabel,
-  Grid,
   FormControl,
   RadioGroup,
   Radio,
   Typography,
 } from '@material-ui/core';
 import Alert from '@material-ui/lab/Alert';
+import Box from '@material-ui/core/Box';
 import {useTranslation} from 'react-i18next';
 
 const useStyles = makeStyles((theme) => ({
@@ -55,185 +55,168 @@ function ProjectDetails(props) {
 
   return (
     <React.Fragment>
-      <Grid container>
-        <Grid item xs={9}>
-          <Alert severity="error" className={classes.fullWidth}>
-            {t('Complete all required fields to advance to the next step')}
-          </Alert>
-        </Grid>
-        <Grid container>
-          <FormControl
-            component="fieldset"
-            className={classes.inputMargin}
-            required
+      <Box width={640}>
+        <Alert severity="error">
+          {t('Complete all required fields to advance to the next step')}
+        </Alert>
+
+        <FormControl
+          component="fieldset"
+          className={classes.inputMargin}
+          required
+        >
+          <FormLabel component="legend">{t('Access location')}</FormLabel>
+          <RadioGroup
+            aria-label={t('Access location')}
+            name={t('radio-buttons-group')}
+            color="primary"
           >
-            <FormLabel component="legend">{t('Access location')}</FormLabel>
-            <RadioGroup
-              aria-label={t('Access location')}
-              name={t('radio-buttons-group')}
-              color="primary"
-            >
-              <FormControlLabel
-                value={t('Secure room')}
-                control={<Radio color="primary" />}
-                label={t('Secure room')}
-              />
-              <FormControlLabel
-                value={t('Authorized workspace')}
-                control={<Radio color="primary" />}
-                label={t('Authorized workspace')}
-              />
-            </RadioGroup>
-          </FormControl>
-        </Grid>
-        <Grid container>
-          <FormControl
-            component="fieldset"
-            className={classes.inputMargin}
-            required
+            <FormControlLabel
+              value={t('Secure room')}
+              control={<Radio color="primary" />}
+              label={t('Secure room')}
+              fullWidth
+            />
+            <FormControlLabel
+              value={t('Authorized workspace')}
+              control={<Radio color="primary" />}
+              label={t('Authorized workspace')}
+              fullWidth
+            />
+          </RadioGroup>
+        </FormControl>
+
+        <FormControl
+          component="fieldset"
+          className={classes.inputMargin}
+          required
+        >
+          <FormLabel component="legend">{t('Environment')}</FormLabel>
+          <RadioGroup
+            aria-label={t('environment')}
+            name={t('radio-buttons-group')}
+            color="primary"
           >
-            <FormLabel component="legend">{t('Environment')}</FormLabel>
-            <RadioGroup
-              aria-label={t('environment')}
-              name={t('radio-buttons-group')}
-              color="primary"
-            >
-              <FormControlLabel
-                value={t('VDL')}
-                control={<Radio color="primary" />}
-                label={t('VDL')}
-              />
-              <FormControlLabel
-                value={t('Prerelease')}
-                control={<Radio color="primary" />}
-                label={t('Prerelease')}
-              />
-            </RadioGroup>
-          </FormControl>
-        </Grid>
-        <Grid item xs={10}>
-          <TextField
-            variant="outlined"
-            id={t('primaryinvestigator')}
-            fullWidth
+            <FormControlLabel
+              value={t('VDL')}
+              control={<Radio color="primary" />}
+              label={t('VDL')}
+              fullWidth
+            />
+            <FormControlLabel
+              value={t('Prerelease')}
+              control={<Radio color="primary" />}
+              label={t('Prerelease')}
+              fullWidth
+            />
+          </RadioGroup>
+        </FormControl>
+
+        <TextField
+          variant="outlined"
+          id={t('primaryinvestigator')}
+          fullWidth
+          className="mb-2"
+          margin="dense"
+          label={t('Primary investigator')}
+          required
+        />
+        <TextField
+          variant="outlined"
+          id="contractnumber"
+          fullWidth
+          className="mb-2"
+          margin="dense"
+          label={t('Contract number')}
+          error
+          required
+        />
+
+        <MuiPickersUtilsProvider utils={DateFnsUtils}>
+          <KeyboardDatePicker
+            id={t('start-date')}
+            variant="inline"
+            margin="dense"
             className="mb-2"
-            margin="dense"
-            label={t('Primary investigator')}
-            required
-          />
-          <TextField
-            variant="outlined"
-            id="contractnumber"
+            InputProps={{readOnly: true}}
+            format="MM/dd/yyyy"
+            label={t('Contract start date')}
+            value={state.selectedFromDate}
+            maxDate={state.selectedToDate}
             fullWidth
-            className={classes.inputMargin}
-            margin="dense"
-            label={t('Contract number')}
-            error
-            required
+            autoOk
+            disablePast
+            onChange={handleFromDateChange}
+            inputVariant="outlined"
+            PopoverProps={{
+              'aria-modal': t('true'),
+            }}
+            KeyboardButtonProps={{
+              'aria-label': t('Select start date'),
+            }}
           />
-        </Grid>
-        <Grid item>
-          <MuiPickersUtilsProvider utils={DateFnsUtils}>
-            <KeyboardDatePicker
-              id={t('start-date')}
-              variant="inline"
-              margin="dense"
-              className={classes.datePicker}
-              InputProps={{readOnly: true}}
-              format="MM/dd/yyyy"
-              label={t('Contract start date')}
-              value={state.selectedFromDate}
-              maxDate={state.selectedToDate}
-              autoOk
-              disablePast
-              onChange={handleFromDateChange}
-              inputVariant="outlined"
-              PopoverProps={{
-                'aria-modal': t('true'),
-              }}
-              KeyboardButtonProps={{
-                'aria-label': t('Select start date'),
-              }}
-            />
-            <KeyboardDatePicker
-              id={t('end-date')}
-              variant="inline"
-              margin="dense"
-              format="MM/dd/yyyy"
-              label={t('Contract end date')}
-              InputProps={{readOnly: true}}
-              value={state.selectedToDate}
-              minDate={state.selectedFromDate}
-              onChange={handleToDateChange}
-              autoOk
-              inputVariant="outlined"
-              KeyboardButtonProps={{
-                'aria-label': t('Select end date'),
-              }}
-            />
-          </MuiPickersUtilsProvider>
-        </Grid>
-        <Grid item xs={10}>
-          <FormLabel component="legend" className="mt-2" required>
-            {t('Required tools')}
-          </FormLabel>
-          <FormGroup>
-            <Grid container>
-              <Grid>
-                <FormControlLabel
-                  control={
-                    <Checkbox
-                      name="Default tools"
-                      color="primary"
-                    />
-                  }
-                  label={
-                    <>
-                      <Typography>{t('Default tools')}</Typography>
-                      <Typography variant="caption">
-                        {t(
-                            'Default tools (Adobe Reader DC, Java, LibreOffice, Office 2019, Power BI, ProjectLibre, Python, R, RStudio, RTools, VSCode',
-                        )}
-                      </Typography>
-                    </>
-                  }
-                />
-              </Grid>
-            </Grid>
-            <Grid container>
-              <Grid>
-                <FormControlLabel
-                  control={
-                    <Checkbox
-                      name="SAS"
-                      color="primary"
-                    />
-                  }
-                  label={
-                    <>
-                      <Typography>{t('SAS')}</Typography>
-                      <Typography variant="caption">
-                        {t(
-                            'Includes SAS 9.4 and SAS Enterprise Guide',
-                        )}
-                      </Typography>
-                    </>
-                  }
-                />
-              </Grid>
-            </Grid>
-            <FormControlLabel
-              control={<Checkbox color="primary" />}
-              label={t('SPSS')}
-              color="primary"
-            />
-            <FormControlLabel
-              control={<Checkbox color="primary" />}
-              label={t('STATA')}
-            />
-          </FormGroup>
-        </Grid>
-      </Grid>
+          <KeyboardDatePicker
+            id={t('end-date')}
+            variant="inline"
+            margin="dense"
+            format="MM/dd/yyyy"
+            label={t('Contract end date')}
+            InputProps={{readOnly: true}}
+            value={state.selectedToDate}
+            minDate={state.selectedFromDate}
+            onChange={handleToDateChange}
+            autoOk
+            inputVariant="outlined"
+            fullWidth
+            KeyboardButtonProps={{
+              'aria-label': t('Select end date'),
+            }}
+          />
+        </MuiPickersUtilsProvider>
+
+        <FormLabel component="legend" className="mt-2" required>
+          {t('Required tools')}
+        </FormLabel>
+        <FormGroup>
+          <FormControlLabel
+            control={<Checkbox name="Default tools" color="primary" fullWidth />}
+            label={
+              <>
+                <Typography>{t('Default tools')}</Typography>
+                <Typography variant="caption">
+                  {t(
+                      'Default tools (Adobe Reader DC, Java, LibreOffice, Office 2019, Power BI, ProjectLibre, Python, R, RStudio, RTools, VSCode',
+                  )}
+                </Typography>
+              </>
+            }
+          />
+
+          <FormControlLabel
+            control={<Checkbox name="SAS" color="primary" fullWidth />}
+            label={
+              <>
+                <Typography>{t('SAS')}</Typography>
+                <Typography variant="caption">
+                  {t('Includes SAS 9.4 and SAS Enterprise Guide')}
+                </Typography>
+              </>
+            }
+          />
+
+          <FormControlLabel
+            control={<Checkbox color="primary" />}
+            label={t('SPSS')}
+            color="primary"
+            fullWidth
+          />
+          <FormControlLabel
+            control={<Checkbox color="primary" />}
+            label={t('STATA')}
+            fullWidth
+          />
+        </FormGroup>
+      </Box>
     </React.Fragment>
   );
 }

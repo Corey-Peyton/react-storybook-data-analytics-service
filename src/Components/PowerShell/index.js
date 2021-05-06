@@ -74,10 +74,6 @@ const useStyles = makeStyles((theme) => ({
   button: {
     marginRight: theme.spacing(1),
   },
-  errorMsg: {
-    margin: 0,
-    textAlign: 'left',
-  },
 }));
 
 function getSteps() {
@@ -230,7 +226,6 @@ function PowerShell(props) {
               )}
             </div>
             <Divider className={classes.dividerHeight} />
-            {/* <CutCopyPasteAlert /> */}
             <div>
               {allStepsCompleted() ? (
                 <div>
@@ -241,7 +236,7 @@ function PowerShell(props) {
                 </div>
               ) : (
                 <div>
-                  <Grid container justify="flex-start" className="mb-4">
+                  <Grid container justify="center" className="mb-4">
                     <Grid item xs={6}>
                       {getStepContent(state.activeStep)}
                     </Grid>
@@ -251,7 +246,7 @@ function PowerShell(props) {
             </div>
             <Grid
               container
-              justify={state.activeStep === 0 ? 'flex-start' : 'flex-start'}
+              justify={state.activeStep === 0 ? 'flex-end' : 'flex-end'}
               className={classes.navButtons}
             >
               {state.activeStep !== 0 && (

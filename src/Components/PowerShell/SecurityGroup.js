@@ -4,7 +4,7 @@ import Autocomplete from '@material-ui/lab/Autocomplete';
 import {useTranslation} from 'react-i18next';
 import {TextField} from '@material-ui/core';
 import {makeStyles} from '@material-ui/core/styles';
-import {Grid} from '@material-ui/core';
+import Box from '@material-ui/core/Box';
 
 const useStyles = makeStyles((theme) => ({
   inputMargin: {
@@ -18,7 +18,7 @@ function SecurityGroup(props) {
   const {t} = useTranslation();
   return (
     <React.Fragment>
-      <Grid item xs={9}>
+      <Box width={640}>
         <Autocomplete
           id="securitygroupname"
           options={suggestions.map((option) => option.subject)}
@@ -32,7 +32,7 @@ function SecurityGroup(props) {
             />
           )}
         />
-      </Grid>
+      </Box>
     </React.Fragment>
   );
 }
