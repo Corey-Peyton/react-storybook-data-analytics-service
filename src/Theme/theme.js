@@ -209,4 +209,68 @@ export const darkTheme = createMuiTheme({
       paper: '#173048',
     },
   },
+  overrides: {
+    ...theme.overrides,
+    MuiButton: {
+      ...theme.overrides.MuiButton,
+      contained: {
+        ...theme.overrides.MuiButton.contained,
+        // contained disabled
+        '&$disabled': {
+          color: fade(theme.palette.common.white, 0.4),
+          backgroundColor: fade(theme.palette.common.white, 0.08),
+        },
+      },
+      // outlined
+      outlined: {
+        ...theme.overrides.MuiButton.outlined,
+        'color': theme.palette.common.white,
+        'borderColor': fade(theme.palette.common.white, 0.4),
+        '&:hover': {
+          backgroundColor: fade(theme.palette.common.white, 0.12),
+        },
+        '&$focusVisible': {
+          backgroundColor: fade(theme.palette.common.white, 0.12),
+        },
+        // outlined disabled
+        '&$disabled': {
+          color: fade(theme.palette.common.white, 0.4),
+          borderColor: fade(theme.palette.common.white, 0.12),
+        },
+      },
+      // text
+      text: {
+        ...theme.overrides.MuiButton.text,
+        'color': theme.palette.common.white,
+        '& $startIcon': {
+          color: theme.palette.common.white,
+          marginLeft: theme.spacing(0),
+        },
+        '& $endIcon': {
+          color: theme.palette.common.white,
+          marginRight: theme.spacing(0),
+        },
+        '&:hover': {
+          backgroundColor: fade(theme.palette.common.white, 0.12),
+        },
+        '&$focusVisible': {
+          backgroundColor: fade(theme.palette.common.white, 0.12),
+        },
+        // text disabled
+        '&$disabled': {
+          'color': fade(theme.palette.common.white, 0.4),
+          '& $startIcon': {
+            color: [fade(theme.palette.common.white, 0.4), '!important'],
+          },
+          '& $endIcon': {
+            color: [fade(theme.palette.common.white, 0.4), '!important'],
+          },
+        },
+      },
+      startIcon: {},
+      endIcon: {},
+      disabled: {},
+      focusVisible: {},
+    },
+  },
 });

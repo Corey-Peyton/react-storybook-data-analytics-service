@@ -247,16 +247,78 @@ export const DarkThemeButtons = (args) => {
           <Button variant="contained" color="primary" className="m-1">
             Primary
           </Button>
+          <Button
+            variant="contained"
+            color="primary"
+            startIcon={<Icon path={mdiPlus} size={1} />}
+            className="m-1"
+          >
+            Start icon
+          </Button>
+          <Button
+            variant="contained"
+            color="primary"
+            endIcon={<Icon path={mdiPlus} size={1} />}
+            className="m-1"
+          >
+            End icon
+          </Button>
+          <Button
+            variant="contained"
+            color="primary"
+            startIcon={<Icon path={mdiPlus} size={1} />}
+            disabled
+            className="m-1"
+          >
+            Disabled icon
+          </Button>
           <Button variant="contained" disabled className="m-1">
             Disabled
           </Button>
+          <br />
           <Button variant="outlined" className="m-1">
             Default
+          </Button>
+          <Button
+            variant="outlined"
+            startIcon={<Icon path={mdiPlus} size={1} />}
+            className="m-1"
+          >
+            Start icon
+          </Button>
+          <Button
+            variant="outlined"
+            endIcon={<Icon path={mdiPlus} size={1} />}
+            className="m-1"
+          >
+            End icon
+          </Button>
+          <Button
+            variant="outlined"
+            startIcon={<Icon path={mdiPlus} size={1} />}
+            disabled
+            className="m-1"
+          >
+            Disabled icon
           </Button>
           <Button variant="outlined" disabled className="m-1">
             Disabled
           </Button>
+          <br />
           <Button className="m-1">Default</Button>
+          <Button startIcon={<Icon path={mdiPlus} size={1} />} className="m-1">
+            Start icon
+          </Button>
+          <Button endIcon={<Icon path={mdiPlus} size={1} />} className="m-1">
+            End icon
+          </Button>
+          <Button
+            startIcon={<Icon path={mdiPlus} size={1} />}
+            disabled
+            className="m-1"
+          >
+            Disabled icon
+          </Button>
           <Button disabled className="m-1">
             Disabled
           </Button>
