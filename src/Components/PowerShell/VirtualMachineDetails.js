@@ -189,7 +189,6 @@ function VirtualMachine(props) {
 
   return (
     <React.Fragment>
-      {' '}
       <Box width={640}>
         <Typography variant="body1" className="mt-1 mb-2">
           {t(

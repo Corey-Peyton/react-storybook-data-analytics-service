@@ -75,13 +75,11 @@ function ProjectDetails(props) {
               value={t('Secure room')}
               control={<Radio color="primary" />}
               label={t('Secure room')}
-              fullWidth
             />
             <FormControlLabel
               value={t('Authorized workspace')}
               control={<Radio color="primary" />}
               label={t('Authorized workspace')}
-              fullWidth
             />
           </RadioGroup>
         </FormControl>
@@ -101,13 +99,11 @@ function ProjectDetails(props) {
               value={t('VDL')}
               control={<Radio color="primary" />}
               label={t('VDL')}
-              fullWidth
             />
             <FormControlLabel
               value={t('Prerelease')}
               control={<Radio color="primary" />}
               label={t('Prerelease')}
-              fullWidth
             />
           </RadioGroup>
         </FormControl>
@@ -179,7 +175,9 @@ function ProjectDetails(props) {
         </FormLabel>
         <FormGroup>
           <FormControlLabel
-            control={<Checkbox name="Default tools" color="primary" fullWidth />}
+            control={
+              <Checkbox name="Default tools" color="primary" fullWidth />
+            }
             label={
               <>
                 <Typography>{t('Default tools')}</Typography>
