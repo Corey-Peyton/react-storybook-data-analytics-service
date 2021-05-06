@@ -176,7 +176,7 @@ function ProjectDetails(props) {
         <FormGroup>
           <FormControlLabel
             control={
-              <Checkbox name="Default tools" color="primary" fullWidth />
+              <Checkbox name="Default tools" color="primary" />
             }
             label={
               <>
@@ -191,7 +191,7 @@ function ProjectDetails(props) {
           />
 
           <FormControlLabel
-            control={<Checkbox name="SAS" color="primary" fullWidth />}
+            control={<Checkbox name="SAS" color="primary" />}
             label={
               <>
                 <Typography>{t('SAS')}</Typography>
@@ -206,12 +206,10 @@ function ProjectDetails(props) {
             control={<Checkbox color="primary" />}
             label={t('SPSS')}
             color="primary"
-            fullWidth
           />
           <FormControlLabel
             control={<Checkbox color="primary" />}
             label={t('STATA')}
-            fullWidth
           />
         </FormGroup>
       </Box>
