@@ -48,7 +48,7 @@ export default {
 export const Default = (args) => {
   return (
     <>
-      <IconButton {...args} aria-label="default" className="m-1">
+      <IconButton {...args} aria-label="default">
         <Icon path={mdiPlus} size={1} />
       </IconButton>
     </>

@@ -1,8 +1,10 @@
 import React from 'react';
 
-import {Button} from '@material-ui/core';
+import {Button, Paper} from '@material-ui/core';
 import Icon from '@mdi/react';
 import {mdiPlus} from '@mdi/js';
+import {ThemeProvider} from '@material-ui/core/styles';
+import {darkTheme} from '../Theme/theme';
 
 export default {
   title: 'Atoms/Buttons/Button',
@@ -233,6 +235,33 @@ export const TextButtons = (args) => {
       >
         Icon disabled
       </Button>
+    </>
+  );
+};
+
+export const DarkThemeButtons = (args) => {
+  return (
+    <>
+      <ThemeProvider theme={darkTheme}>
+        <Paper className="p-3">
+          <Button variant="contained" color="primary" className="m-1">
+            Primary
+          </Button>
+          <Button variant="contained" disabled className="m-1">
+            Disabled
+          </Button>
+          <Button variant="outlined" className="m-1">
+            Default
+          </Button>
+          <Button variant="outlined" disabled className="m-1">
+            Disabled
+          </Button>
+          <Button className="m-1">Default</Button>
+          <Button disabled className="m-1">
+            Disabled
+          </Button>
+        </Paper>
+      </ThemeProvider>
     </>
   );
 };
