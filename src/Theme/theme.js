@@ -82,6 +82,10 @@ theme.overrides = {
     },
     // contained primary
     containedPrimary: {
+      '&:hover': {
+        backgroundColor: theme.palette.primary.dark,
+        boxShadow: theme.shadows[0],
+      },
       '&$focusVisible': {
         backgroundColor: theme.palette.primary.dark,
         boxShadow: theme.shadows[0],
@@ -191,6 +195,22 @@ theme.overrides = {
     },
     disabled: {},
     focusVisible: {},
+  },
+  MuiTouchRipple: {
+    'rippleVisible': {
+      opacity: 0.2,
+      animation: `$enter 550ms ${theme.transitions.easing.easeInOut}`,
+    },
+    '@keyframes enter': {
+      '0%': {
+        transform: 'scale(0)',
+        opacity: 0.1,
+      },
+      '100%': {
+        transform: 'scale(1)',
+        opacity: 0.2,
+      },
+    },
   },
   MuiTooltip: {
     tooltip: {

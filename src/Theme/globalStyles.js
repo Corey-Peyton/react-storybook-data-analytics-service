@@ -6,28 +6,6 @@ export const useStyles = makeStyles({
   '@global': {
     // ************* Overrides **************
 
-    // Button ripple/pulse animation
-    '.MuiTouchRipple-childPulsate': {
-      animation: 'none',
-    },
-    '.MuiTouchRipple-ripplePulsate': {
-      animationDuration: '200ms !important',
-    },
-    '.MuiTouchRipple-rippleVisible': {
-      opacity: 0.2,
-      animation: `$enter 550ms ${theme.transitions.easing.easeInOut}`,
-    },
-    '@keyframes enter': {
-      '0%': {
-        transform: 'scale(0)',
-        opacity: 0.1,
-      },
-      '100%': {
-        transform: 'scale(1)',
-        opacity: 0.2,
-      },
-    },
-
     // Breadcrumbs
     '.MuiBreadcrumbs-root': {
       marginBottom: theme.spacing(2),
