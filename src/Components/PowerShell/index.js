@@ -137,11 +137,7 @@ function PowerShell(props) {
   const getStepContent = (step) => {
     switch (step) {
       case 0:
-        return (
-          <SecurityGroup
-            title={state.title}
-          />
-        );
+        return <SecurityGroup title={state.title} />;
       case 1:
         return <ProjectDetails />;
       case 2:
@@ -237,16 +233,14 @@ function PowerShell(props) {
               ) : (
                 <div>
                   <Grid container justify="center" className="mb-4">
-                    <Grid item xs={6}>
-                      {getStepContent(state.activeStep)}
-                    </Grid>
+                    {getStepContent(state.activeStep)}
                   </Grid>
                 </div>
               )}
             </div>
             <Grid
               container
-              justify={state.activeStep === 0 ? 'flex-end' : 'flex-end'}
+              justify='flex-end'
               className={classes.navButtons}
             >
               {state.activeStep !== 0 && (
