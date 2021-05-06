@@ -59,20 +59,31 @@ const useStyles = makeStyles((theme) => ({
       padding: 0,
     },
   },
+  stepContent: {
+    display: 'flex',
+    justifyContent: 'center',
+  },
+  content: {
+    width: '100%',
+    maxWidth: theme.spacing(80),
+  },
   stepperNextBtn: {
     marginLeft: theme.spacing(6),
   },
   stepperBackBtn: {
     marginRight: theme.spacing(2),
   },
-  navButtons: {
+  navFooter: {
     paddingTop: theme.spacing(3),
     borderTopStyle: 'solid',
     borderTopWidth: '1px',
     borderTopColor: theme.palette.divider,
   },
-  button: {
-    marginRight: theme.spacing(1),
+  footerBtns: {
+    width: '100%',
+    maxWidth: theme.spacing(80),
+    display: 'flex',
+    justifyContent: 'flex-end',
   },
 }));
 
@@ -137,11 +148,7 @@ function PowerShell(props) {
   const getStepContent = (step) => {
     switch (step) {
       case 0:
-        return (
-          <SecurityGroup
-            title={state.title}
-          />
-        );
+        return <SecurityGroup title={state.title} />;
       case 1:
         return <ProjectDetails />;
       case 2:
@@ -235,56 +242,54 @@ function PowerShell(props) {
                   <Button onClick={handleReset}>Reset</Button>
                 </div>
               ) : (
-                <div>
+                <div className={classes.stepContent}>
                   <Grid container justify="center" className="mb-4">
-                    <Grid item xs={6}>
+                    <Grid className={classes.content}>
                       {getStepContent(state.activeStep)}
                     </Grid>
                   </Grid>
                 </div>
               )}
             </div>
-            <Grid
-              container
-              justify={state.activeStep === 0 ? 'flex-end' : 'flex-end'}
-              className={classes.navButtons}
-            >
-              {state.activeStep !== 0 && (
-                <Grid item>
-                  <Button
-                    variant="outlined"
-                    color="primary"
-                    className={classes.stepperBackBtn}
-                    onClick={handleBack}
-                  >
-                    Back
-                  </Button>
-                </Grid>
-              )}
-              {state.activeStep === getSteps().length - 1 ? (
-                <Grid item>
-                  <Button
-                    variant="contained"
-                    color="primary"
-                    className={classes.button}
-                    component={RouterLink}
-                    to="SuccessfulSubmission"
-                  >
-                    Submit
-                  </Button>
-                </Grid>
-              ) : (
-                <Grid item>
-                  <Button
-                    variant="contained"
-                    color="primary"
-                    className={classes.button}
-                    onClick={handleComplete}
-                  >
-                    Next
-                  </Button>
-                </Grid>
-              )}
+            <Grid container justify="center" className={classes.navFooter}>
+              <Grid className={classes.footerBtns} item>
+                {state.activeStep !== 0 && (
+                  <Grid item>
+                    <Button
+                      variant="outlined"
+                      color="primary"
+                      className={classes.stepperBackBtn}
+                      onClick={handleBack}
+                    >
+                      Back
+                    </Button>
+                  </Grid>
+                )}
+                {state.activeStep === getSteps().length - 1 ? (
+                  <Grid item>
+                    <Button
+                      variant="contained"
+                      color="primary"
+                      className={classes.button}
+                      component={RouterLink}
+                      to="SuccessfulSubmission"
+                    >
+                      Submit
+                    </Button>
+                  </Grid>
+                ) : (
+                  <Grid item>
+                    <Button
+                      variant="contained"
+                      color="primary"
+                      className={classes.button}
+                      onClick={handleComplete}
+                    >
+                      Next
+                    </Button>
+                  </Grid>
+                )}
+              </Grid>
             </Grid>
           </Paper>
         </Container>

@@ -189,7 +189,7 @@ function VirtualMachine(props) {
 
   return (
     <React.Fragment>
-      <Box width={640}>
+      <Box>
         <Typography variant="body1" className="mt-1 mb-2">
           {t(
               'You need to add virtual machine details to submit this request successfully.',

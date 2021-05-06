@@ -18,7 +18,7 @@ function SecurityGroup(props) {
   const {t} = useTranslation();
   return (
     <React.Fragment>
-      <Box width={640}>
+      <Box>
         <Autocomplete
           id="securitygroupname"
           options={suggestions.map((option) => option.subject)}

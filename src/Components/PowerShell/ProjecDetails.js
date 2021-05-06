@@ -55,7 +55,7 @@ function ProjectDetails(props) {
 
   return (
     <React.Fragment>
-      <Box width={640}>
+      <Box>
         <Alert severity="error">
           {t('Complete all required fields to advance to the next step')}
         </Alert>
