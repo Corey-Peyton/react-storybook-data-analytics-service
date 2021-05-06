@@ -143,10 +143,10 @@ theme.overrides = {
     // text primary
     textPrimary: {
       '& $startIcon': {
-        color: theme.palette.primary.main,
+        color: theme.palette.primary.dark,
       },
       '& $endIcon': {
-        color: theme.palette.primary.main,
+        color: theme.palette.primary.dark,
       },
       '&:hover': {
         color: theme.palette.primary.dark,
