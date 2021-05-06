@@ -228,6 +228,10 @@ export const darkTheme = createMuiTheme({
     background: {
       paper: '#173048',
     },
+    text: {
+      primary: '#FFFFFF',
+      secondary: fade('#FFFFFF', 0.7),
+    },
   },
   overrides: {
     ...theme.overrides,
