@@ -78,7 +78,7 @@ export function EditVirtualMachine(props) {
     <React.Fragment>
       <AppBar position="static" className={classes.appBar} color="default">
         <Toolbar>
-          <Typography variant="h6" component="h2" className="input-margin">
+          <Typography variant="h6" component="h2" className={classes.title}>
             Update virtual machine details
           </Typography>
           <IconButton
