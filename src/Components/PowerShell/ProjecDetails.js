@@ -15,6 +15,7 @@ import {
   RadioGroup,
   Radio,
   Typography,
+  Grid,
 } from '@material-ui/core';
 import Alert from '@material-ui/lab/Alert';
 import Box from '@material-ui/core/Box';
@@ -23,6 +24,7 @@ import {useTranslation} from 'react-i18next';
 const useStyles = makeStyles((theme) => ({
   inputMargin: {
     margin: theme.spacing(1, 0),
+    display: 'block',
   },
   divider: {
     margin: theme.spacing(3, 0),
@@ -56,58 +58,63 @@ function ProjectDetails(props) {
   return (
     <React.Fragment>
       <Box>
-        <Alert severity="error">
+        <Alert severity="error" className="mt-1 mb-2">
           {t('Complete all required fields to advance to the next step')}
         </Alert>
-
-        <FormControl
-          component="fieldset"
-          className={classes.inputMargin}
-          required
-        >
-          <FormLabel component="legend">{t('Access location')}</FormLabel>
-          <RadioGroup
-            aria-label={t('Access location')}
-            name={t('radio-buttons-group')}
-            color="primary"
-          >
-            <FormControlLabel
-              value={t('Secure room')}
-              control={<Radio color="primary" />}
-              label={t('Secure room')}
-            />
-            <FormControlLabel
-              value={t('Authorized workspace')}
-              control={<Radio color="primary" />}
-              label={t('Authorized workspace')}
-            />
-          </RadioGroup>
-        </FormControl>
-
-        <FormControl
-          component="fieldset"
-          className={classes.inputMargin}
-          required
-        >
-          <FormLabel component="legend">{t('Environment')}</FormLabel>
-          <RadioGroup
-            aria-label={t('environment')}
-            name={t('radio-buttons-group')}
-            color="primary"
-          >
-            <FormControlLabel
-              value={t('VDL')}
-              control={<Radio color="primary" />}
-              label={t('VDL')}
-            />
-            <FormControlLabel
-              value={t('Prerelease')}
-              control={<Radio color="primary" />}
-              label={t('Prerelease')}
-            />
-          </RadioGroup>
-        </FormControl>
-
+        <Grid item className="input-margin">
+          <FormControl component="fieldset">
+            <FormControl
+              component="fieldset"
+              className={classes.inputMargin}
+              required
+            >
+              <FormLabel component="legend">{t('Access location')}</FormLabel>
+              <RadioGroup
+                aria-label={t('Access location')}
+                name={t('radio-buttons-group')}
+                color="primary"
+              >
+                <FormControlLabel
+                  value={t('Secure room')}
+                  control={<Radio color="primary" />}
+                  label={t('Secure room')}
+                />
+                <FormControlLabel
+                  value={t('Authorized workspace')}
+                  control={<Radio color="primary" />}
+                  label={t('Authorized workspace')}
+                />
+              </RadioGroup>
+            </FormControl>
+          </FormControl>
+        </Grid>
+        <Grid item className="input-margin">
+          <FormControl component="fieldset" className={classes.inputMargin}>
+            <FormControl
+              component="fieldset"
+              className={classes.inputMargin}
+              required
+            >
+              <FormLabel component="legend">{t('Environment')}</FormLabel>
+              <RadioGroup
+                aria-label={t('environment')}
+                name={t('radio-buttons-group')}
+                color="primary"
+              >
+                <FormControlLabel
+                  value={t('VDL')}
+                  control={<Radio color="primary" />}
+                  label={t('VDL')}
+                />
+                <FormControlLabel
+                  value={t('Prerelease')}
+                  control={<Radio color="primary" />}
+                  label={t('Prerelease')}
+                />
+              </RadioGroup>
+            </FormControl>
+          </FormControl>
+        </Grid>
         <TextField
           variant="outlined"
           id={t('primaryinvestigator')}
@@ -169,49 +176,52 @@ function ProjectDetails(props) {
             }}
           />
         </MuiPickersUtilsProvider>
+        <FormControl
+          component="fieldset"
+          className={classes.inputMargin}
+          required
+        >
+          <FormLabel component="legend" className="mt-2" required>
+            {t('Required tools')}
+          </FormLabel>
+          <FormGroup>
+            <FormControlLabel
+              control={<Checkbox name="Default tools" color="primary" />}
+              label={
+                <>
+                  <Typography>{t('Default tools')}</Typography>
+                  <Typography variant="caption">
+                    {t(
+                        'Default tools (Adobe Reader DC, Java, LibreOffice, Office 2019, Power BI, ProjectLibre, Python, R, RStudio, RTools, VSCode',
+                    )}
+                  </Typography>
+                </>
+              }
+            />
 
-        <FormLabel component="legend" className="mt-2" required>
-          {t('Required tools')}
-        </FormLabel>
-        <FormGroup>
-          <FormControlLabel
-            control={
-              <Checkbox name="Default tools" color="primary" />
-            }
-            label={
-              <>
-                <Typography>{t('Default tools')}</Typography>
-                <Typography variant="caption">
-                  {t(
-                      'Default tools (Adobe Reader DC, Java, LibreOffice, Office 2019, Power BI, ProjectLibre, Python, R, RStudio, RTools, VSCode',
-                  )}
-                </Typography>
-              </>
-            }
-          />
+            <FormControlLabel
+              control={<Checkbox name="SAS" color="primary" />}
+              label={
+                <>
+                  <Typography>{t('SAS')}</Typography>
+                  <Typography variant="caption">
+                    {t('Includes SAS 9.4 and SAS Enterprise Guide')}
+                  </Typography>
+                </>
+              }
+            />
 
-          <FormControlLabel
-            control={<Checkbox name="SAS" color="primary" />}
-            label={
-              <>
-                <Typography>{t('SAS')}</Typography>
-                <Typography variant="caption">
-                  {t('Includes SAS 9.4 and SAS Enterprise Guide')}
-                </Typography>
-              </>
-            }
-          />
-
-          <FormControlLabel
-            control={<Checkbox color="primary" />}
-            label={t('SPSS')}
-            color="primary"
-          />
-          <FormControlLabel
-            control={<Checkbox color="primary" />}
-            label={t('STATA')}
-          />
-        </FormGroup>
+            <FormControlLabel
+              control={<Checkbox color="primary" />}
+              label={t('SPSS')}
+              color="primary"
+            />
+            <FormControlLabel
+              control={<Checkbox color="primary" />}
+              label={t('STATA')}
+            />
+          </FormGroup>
+        </FormControl>
       </Box>
     </React.Fragment>
   );
