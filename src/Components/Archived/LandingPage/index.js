@@ -1,6 +1,6 @@
 import React from 'react';
 
-import BypassBlocks from '../../BypassBlocks';
+import BypassBlocks from '../../CommonComponents/BypassBlocks';
 import Footer from '../../Footers/Footer';
 import Articles from './Articles';
 import BrowseCollection from './BrowseCollection';
@@ -23,13 +23,13 @@ export default function LandingPage() {
     <React.Fragment>
       <BypassBlocks ref={{main: mainRef, about: aboutRef}} />
       <HomePageHeader />
-      <main ref={mainRef} tabIndex="-1" >
+      <main ref={mainRef} tabIndex="-1">
         <Search />
         <BrowseCollection />
         <Introduction />
         <BrowseSubjects />
-        <Visualizations ref={articlesRef}/>
-        <Articles ref={articlesRef}/>
+        <Visualizations ref={articlesRef} />
+        <Articles ref={articlesRef} />
       </main>
       <Footer ref={aboutRef} />
     </React.Fragment>

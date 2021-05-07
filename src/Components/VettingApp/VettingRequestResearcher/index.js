@@ -30,6 +30,7 @@ import RequestToolbar from '../CommonComponents/RequestToolbar';
 const useStyles = makeStyles((theme) => ({
   pageContainer: {
     marginTop: theme.spacing(8),
+    paddingTop: theme.spacing(8),
   },
   main: {
     background: theme.palette.grey[100],
