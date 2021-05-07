@@ -20,7 +20,6 @@ import Alert from '@material-ui/lab/Alert';
 import Box from '@material-ui/core/Box';
 import {useTranslation} from 'react-i18next';
 
-
 function ProjectDetails(props) {
   const handleFromDateChange = (date) => {
     setState({...state, selectedFromDate: date});
@@ -66,25 +65,25 @@ function ProjectDetails(props) {
         </Grid>
         <Grid item className="input-margin">
           <FormControl component="fieldset">
-            <FormControl component="fieldset" required>
-              <FormLabel component="legend">{t('Environment')}</FormLabel>
-              <RadioGroup
-                aria-label={t('environment')}
-                name={t('radio-buttons-group')}
-                color="primary"
-              >
-                <FormControlLabel
-                  value={t('VDL')}
-                  control={<Radio color="primary" />}
-                  label={t('VDL')}
-                />
-                <FormControlLabel
-                  value={t('Prerelease')}
-                  control={<Radio color="primary" />}
-                  label={t('Prerelease')}
-                />
-              </RadioGroup>
-            </FormControl>
+            <FormLabel component="legend" required>
+              {t('Environment')}
+            </FormLabel>
+            <RadioGroup
+              aria-label={t('environment')}
+              name={t('radio-buttons-group')}
+              color="primary"
+            >
+              <FormControlLabel
+                value={t('VDL')}
+                control={<Radio color="primary" />}
+                label={t('VDL')}
+              />
+              <FormControlLabel
+                value={t('Prerelease')}
+                control={<Radio color="primary" />}
+                label={t('Prerelease')}
+              />
+            </RadioGroup>
           </FormControl>
         </Grid>
         <TextField
@@ -150,7 +149,7 @@ function ProjectDetails(props) {
           </MuiPickersUtilsProvider>
         </Grid>
         <Grid item className="input-margin">
-          <FormControl component="fieldset" required>
+          <FormControl component="fieldset">
             <FormLabel component="legend" required>
               {t('Required tools')}
             </FormLabel>

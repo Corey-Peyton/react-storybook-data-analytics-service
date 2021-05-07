@@ -300,9 +300,9 @@ function VirtualMachineDetails(props) {
         required
       />
       <Grid item className="radio-margin">
-        <FormControl component="fieldset" required>
+        <FormControl component="fieldset">
           <RadioGroup id="virtualmachinename" name="virtualmachinename">
-            <FormLabel component="legend">Virtual machine language</FormLabel>
+            <FormLabel required component="legend">Virtual machine language</FormLabel>
             <FormControlLabel
               control={<Radio color="primary" />}
               value="English"
@@ -316,52 +316,54 @@ function VirtualMachineDetails(props) {
           </RadioGroup>
         </FormControl>
       </Grid>
-      <Grid item className="input-margin">
-        <FormLabel component="legend" required>
-          Required tools
-        </FormLabel>
-        <FormGroup>
-          <Grid container>
-            <Grid>
-              <FormControlLabel
-                control={<Checkbox name="Default tools" color="primary" />}
-                label={
-                  <>
-                    <Typography>{t('Default tools')}</Typography>
-                    <Typography variant="caption">
-                      {t(
-                          'Default tools (Adobe Reader DC, Java, LibreOffice, Office 2019, Power BI, ProjectLibre, Python, R, RStudio, RTools, VSCode',
-                      )}
-                    </Typography>
-                  </>
-                }
-              />
+      <Grid item className="mb-2 mt-3">
+        <FormControl component="fieldset">
+          <FormLabel component="legend" required>
+            Required tools
+          </FormLabel>
+          <FormGroup>
+            <Grid container>
+              <Grid>
+                <FormControlLabel
+                  control={<Checkbox name="Default tools" color="primary" />}
+                  label={
+                    <>
+                      <Typography>{t('Default tools')}</Typography>
+                      <Typography variant="caption">
+                        {t(
+                            'Default tools (Adobe Reader DC, Java, LibreOffice, Office 2019, Power BI, ProjectLibre, Python, R, RStudio, RTools, VSCode',
+                        )}
+                      </Typography>
+                    </>
+                  }
+                />
+              </Grid>
             </Grid>
-          </Grid>
-          <Grid container>
-            <Grid>
-              <FormControlLabel
-                control={<Checkbox name="SAS" color="primary" />}
-                label={
-                  <>
-                    <Typography>{t('SAS')}</Typography>
-                    <Typography variant="caption">
-                      {t('Includes SAS 9.4 and SAS Enterprise Guide')}
-                    </Typography>
-                  </>
-                }
-              />
+            <Grid container>
+              <Grid>
+                <FormControlLabel
+                  control={<Checkbox name="SAS" color="primary" />}
+                  label={
+                    <>
+                      <Typography>{t('SAS')}</Typography>
+                      <Typography variant="caption">
+                        {t('Includes SAS 9.4 and SAS Enterprise Guide')}
+                      </Typography>
+                    </>
+                  }
+                />
+              </Grid>
             </Grid>
-          </Grid>
-          <FormControlLabel
-            control={<Checkbox color="primary" />}
-            label="SPSS"
-          />
-          <FormControlLabel
-            control={<Checkbox color="primary" />}
-            label="STATA"
-          />
-        </FormGroup>
+            <FormControlLabel
+              control={<Checkbox color="primary" />}
+              label="SPSS"
+            />
+            <FormControlLabel
+              control={<Checkbox color="primary" />}
+              label="STATA"
+            />
+          </FormGroup>
+        </FormControl>
       </Grid>
     </>
   );
