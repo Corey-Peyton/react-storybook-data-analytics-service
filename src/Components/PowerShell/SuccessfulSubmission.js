@@ -69,8 +69,8 @@ function SuccessfulSubmission(props) {
             </Collapse>
             <div>
               <Typography variant="body2" className="mb-2  mt-2">
-                Your request to create a vDL workspace has been submitted and is
-                being processed. You will receive an email once the vDL
+                Your request to create a VDL workspace has been submitted and is
+                being processed. You will receive an email once the VDL
                 workspace is ready.
               </Typography>
               <Typography variant="body2" className="mb-2">
