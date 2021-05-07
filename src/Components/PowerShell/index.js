@@ -85,6 +85,10 @@ const useStyles = makeStyles((theme) => ({
     display: 'flex',
     justifyContent: 'flex-end',
   },
+  errorMsg: {
+    margin: 0,
+    textAlign: 'left',
+  },
 }));
 
 function getSteps() {
@@ -92,14 +96,14 @@ function getSteps() {
 }
 
 function PowerShell(props) {
-  window.onbeforeunload = () => '';
+  // window.onbeforeunload = () => '';
   const classes = useStyles();
   const [state, setState] = React.useState({
     activeStep: 0,
     completed: {},
     open: false,
     errors: [0, 1, 0, 0],
-    title: 'VDL PowerShell Intake Request',
+    title: 'New Request',
   });
   const steps = getSteps();
 
@@ -204,7 +208,7 @@ function PowerShell(props) {
                         variant="body2"
                         color="error"
                       >
-                        {state.errors[index]}{' '}
+                        {state.errors[index]}
                         {state.errors[index] === 1 ? 'error' : 'errors'}
                       </Typography>
                     );

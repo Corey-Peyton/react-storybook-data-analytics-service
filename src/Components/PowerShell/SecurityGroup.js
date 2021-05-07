@@ -24,6 +24,7 @@ function SecurityGroup(props) {
           options={suggestions.map((option) => option.subject)}
           renderInput={(params) => (
             <TextField
+              required
               {...params}
               label={t('Security group name')}
               className={classes.inputMargin}

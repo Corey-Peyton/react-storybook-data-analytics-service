@@ -192,7 +192,7 @@ function VirtualMachine(props) {
       <Box>
         <Typography variant="body1" className="mt-2 mb-3">
           {t(
-              'You need to add virtual machine details to submit this request successfully.',
+              'Virtual machine details are required to successfully submit this request.',
           )}
         </Typography>
         {state.showCard === true && (

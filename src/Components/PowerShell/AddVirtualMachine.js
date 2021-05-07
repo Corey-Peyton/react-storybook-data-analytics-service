@@ -181,7 +181,7 @@ function VirtualMachineDetails(props) {
       </Typography>
       <Typography variant="body2" className="input-margin">
         If the cloud account email cannot be found it means it does not exist in
-        Azure Active Directory. Submit a Jira ticket to the{' '}
+        Azure Active Directory. Submit a Jira ticket to the
         <Link
           href="https://jirab.statcan.ca/projects/DAZSUPP/summary"
           underline="always"
@@ -195,19 +195,15 @@ function VirtualMachineDetails(props) {
           id="cloudemail"
           options={analystList.map((option) => option.email)}
           renderInput={(params) => (
-            <TextField {...params} label="Cloud email" variant="outlined" />
+            <TextField
+              required
+              {...params}
+              label="Cloud account email"
+              variant="outlined"
+            />
           )}
         />
       </Grid>
-      <TextField
-        className="input-margin"
-        margin="dense"
-        id="username"
-        label="Username"
-        variant="outlined"
-        fullWidth
-        required
-      />
       <TextField
         className="input-margin"
         margin="dense"
@@ -226,30 +222,29 @@ function VirtualMachineDetails(props) {
         fullWidth
         required
       />
+      <TextField
+        className="input-margin"
+        margin="dense"
+        id="username"
+        label="Username"
+        variant="outlined"
+        fullWidth
+        required
+      />
       <Grid item className="input-margin">
-        <MuiPickersUtilsProvider utils={DateFnsUtils}>
-          <KeyboardDatePicker
-            id="contract-start-date"
-            className="input-margin"
-            variant="inline"
-            label={'Security clearance expiry'}
-            InputProps={{readOnly: true}}
-            autoOk
-            fullWidth
-            // margin="dense"
-            format="MM/dd/yyyy"
-            value={state.selectedFromDate}
-            inputVariant="outlined"
-            onChange={handleFromDateChange}
-            disablePast
-            PopoverProps={{
-              'aria-modal': 'true',
-            }}
-            KeyboardButtonProps={{
-              'aria-label': 'Security clearance expiry',
-            }}
-          />
-        </MuiPickersUtilsProvider>
+        <Autocomplete
+          id="organization"
+          options={security}
+          getOptionLabel={(option) => option.label}
+          renderInput={(params) => (
+            <TextField
+              required
+              {...params}
+              label="Organization"
+              variant="outlined"
+            />
+          )}
+        />
       </Grid>
       <TextField
         className="input-margin"
@@ -261,16 +256,34 @@ function VirtualMachineDetails(props) {
         required
       />
       <Grid item className="input-margin">
-        <Autocomplete
-          id="organization"
-          options={security}
-          getOptionLabel={(option) => option.label}
-          renderInput={(params) => (
-            <TextField {...params} label="Organization" variant="outlined" />
-          )}
-        />
+        <MuiPickersUtilsProvider utils={DateFnsUtils}>
+          <KeyboardDatePicker
+            id="contract-start-date"
+            className="input-margin"
+            variant="inline"
+            label={'Security clearance expiry'}
+            InputProps={{readOnly: true}}
+            autoOk
+            fullWidth
+            required
+            format="MM/dd/yyyy"
+            value={state.selectedFromDate}
+            inputVariant="outlined"
+            margin="dense"
+            onChange={handleFromDateChange}
+            disablePast
+            PopoverProps={{
+              'aria-modal': 'true',
+            }}
+            KeyboardButtonProps={{
+              'aria-label': 'Security clearance expiry',
+            }}
+          />
+        </MuiPickersUtilsProvider>
       </Grid>
-      <Typography variant="subtitle1">Contact information</Typography>
+      <Typography variant="subtitle1" className="mb-3">
+        Contact information
+      </Typography>
       <TextField
         className="input-margin"
         margin="dense"
@@ -289,7 +302,9 @@ function VirtualMachineDetails(props) {
         fullWidth
         required
       />
-      <Typography variant="subtitle1">Virtual machine details</Typography>
+      <Typography variant="subtitle1" className="mb-3">
+        Virtual machine details
+      </Typography>
       <TextField
         className="input-margin"
         margin="dense"
@@ -302,7 +317,9 @@ function VirtualMachineDetails(props) {
       <Grid item className="radio-margin">
         <FormControl component="fieldset">
           <RadioGroup id="virtualmachinename" name="virtualmachinename">
-            <FormLabel required component="legend">Virtual machine language</FormLabel>
+            <FormLabel required component="legend">
+              Virtual machine language
+            </FormLabel>
             <FormControlLabel
               control={<Radio color="primary" />}
               value="English"

@@ -64,7 +64,7 @@ function SuccessfulSubmission(props) {
                   </Button>
                 }
               >
-                Your VDL request (####) has been sumitted.
+                VDL PowerShell intake request ID-1234 submitted
               </Alert>
             </Collapse>
             <div>
@@ -74,22 +74,24 @@ function SuccessfulSubmission(props) {
                 workspace is ready.
               </Typography>
               <Typography variant="body2" className="mb-3">
-                Your Virtual Machine will appear in the 'DevTest Lab' named as
-                'STC-0412-ST'. Please be patient when waiting for your Virtual
-                Machine to be ready. They may be visible to you with the status
-                of 'Running', this does not mean they are ready.
+                Your virtual machines will appear in the "DevTest Lab" named as
+                "STC-0412-ST". Please be patient while waiting for your virtual
+                machines to be ready. They may be visible with the status of
+                "Running" but this does not mean they are ready for use.
               </Typography>
               <Typography variant="body2" className="mb-3">
-                If you encounter any errors or issues, please submit a JIRA
-                ticket to the{' '}
+                If you encounter any issues, submit a JIRA ticket to the
                 <Link
                   href="https://jirab.statcan.ca/projects/DAZSUPP/summary"
                   underline="always"
                 >
                   VDL Jira project.
-                </Link>
+                </Link>{' '}
+                for assistance.
               </Typography>
-              <Typography variant="body2" className="mb-1">Thank you!</Typography>
+              <Typography variant="body2" className="mb-1">
+                Thank you!
+              </Typography>
             </div>
           </Paper>
         </Container>

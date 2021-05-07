@@ -2,6 +2,7 @@ import React from 'react';
 import FormGroup from '@material-ui/core/FormGroup';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Checkbox from '@material-ui/core/Checkbox';
+import {makeStyles} from '@material-ui/core/styles';
 import DateFnsUtils from '@date-io/date-fns';
 import {
   KeyboardDatePicker,
@@ -20,6 +21,12 @@ import Alert from '@material-ui/lab/Alert';
 import Box from '@material-ui/core/Box';
 import {useTranslation} from 'react-i18next';
 
+const useStyles = makeStyles((theme) => ({
+  fullWidth: {
+    width: '100%',
+  },
+}));
+
 function ProjectDetails(props) {
   const handleFromDateChange = (date) => {
     setState({...state, selectedFromDate: date});
@@ -36,64 +43,14 @@ function ProjectDetails(props) {
     selectedDateType: 10,
   });
 
+  const classes = useStyles();
+
   return (
     <React.Fragment>
       <Box>
         <Alert severity="error" className="mt-2 mb-4">
           {t('Complete all required fields to advance to the next step')}
         </Alert>
-        <Grid item className="input-margin">
-          <FormControl component="fieldset">
-            <FormLabel component="legend">{t('Access location')}</FormLabel>
-            <RadioGroup
-              aria-label={t('Access location')}
-              name={t('radio-buttons-group')}
-              color="primary"
-            >
-              <FormControlLabel
-                value={t('Secure room')}
-                control={<Radio color="primary" />}
-                label={t('Secure room')}
-              />
-              <FormControlLabel
-                value={t('Authorized workspace')}
-                control={<Radio color="primary" />}
-                label={t('Authorized workspace')}
-              />
-            </RadioGroup>
-          </FormControl>
-        </Grid>
-        <Grid item className="input-margin">
-          <FormControl component="fieldset">
-            <FormLabel component="legend" required>
-              {t('Environment')}
-            </FormLabel>
-            <RadioGroup
-              aria-label={t('environment')}
-              name={t('radio-buttons-group')}
-              color="primary"
-            >
-              <FormControlLabel
-                value={t('VDL')}
-                control={<Radio color="primary" />}
-                label={t('VDL')}
-              />
-              <FormControlLabel
-                value={t('Prerelease')}
-                control={<Radio color="primary" />}
-                label={t('Prerelease')}
-              />
-            </RadioGroup>
-          </FormControl>
-        </Grid>
-        <TextField
-          variant="outlined"
-          id={t('primaryinvestigator')}
-          fullWidth
-          className="input-margin"
-          label={t('Primary investigator')}
-          required
-        />
         <TextField
           variant="outlined"
           id="contractnumber"
@@ -101,7 +58,6 @@ function ProjectDetails(props) {
           className="input-margin"
           margin="dense"
           label={t('Contract number')}
-          error
           required
         />
         <Grid item className="input-margin">
@@ -118,6 +74,7 @@ function ProjectDetails(props) {
               fullWidth
               autoOk
               disablePast
+              required
               className="input-margin"
               onChange={handleFromDateChange}
               inputVariant="outlined"
@@ -139,6 +96,7 @@ function ProjectDetails(props) {
               minDate={state.selectedFromDate}
               onChange={handleToDateChange}
               autoOk
+              required
               className="input-margin"
               inputVariant="outlined"
               fullWidth
@@ -148,8 +106,65 @@ function ProjectDetails(props) {
             />
           </MuiPickersUtilsProvider>
         </Grid>
+        <TextField
+          variant="outlined"
+          id={t('primaryinvestigator')}
+          fullWidth
+          className="input-margin"
+          label={t('Primary investigator')}
+          required
+          margin="dense"
+          error
+          helperText="This field is reqired."
+        />
         <Grid item className="input-margin">
-          <FormControl component="fieldset">
+          <FormControl component="fieldset" className={classes.fullWidth}>
+            <FormLabel component="legend" required>
+              {t('Environment')}
+            </FormLabel>
+            <RadioGroup
+              aria-label={t('environment')}
+              name={t('radio-buttons-group')}
+              color="primary"
+            >
+              <FormControlLabel
+                value={t('VDL')}
+                control={<Radio color="primary" />}
+                label={t('VDL')}
+              />
+              <FormControlLabel
+                value={t('Prerelease')}
+                control={<Radio color="primary" />}
+                label={t('Prerelease')}
+              />
+            </RadioGroup>
+          </FormControl>
+        </Grid>
+        <Grid item className="input-margin">
+          <FormControl component="fieldset" className={classes.fullWidth}>
+            <FormLabel component="legend" required>
+              {t('Access location')}
+            </FormLabel>
+            <RadioGroup
+              aria-label={t('Access location')}
+              name={t('radio-buttons-group')}
+              color="primary"
+            >
+              <FormControlLabel
+                value={t('Secure room')}
+                control={<Radio color="primary" />}
+                label={t('Secure room')}
+              />
+              <FormControlLabel
+                value={t('Authorized workspace')}
+                control={<Radio color="primary" />}
+                label={t('Authorized workspace')}
+              />
+            </RadioGroup>
+          </FormControl>
+        </Grid>
+        <Grid item className="input-margin">
+          <FormControl component="fieldset" className={classes.fullWidth}>
             <FormLabel component="legend" required>
               {t('Required tools')}
             </FormLabel>
@@ -184,6 +199,7 @@ function ProjectDetails(props) {
                 control={<Checkbox color="primary" />}
                 label={t('SPSS')}
                 color="primary"
+                className={classes.fullWidth}
               />
               <FormControlLabel
                 control={<Checkbox color="primary" />}
