@@ -65,7 +65,6 @@ function ProjectDetails(props) {
           <FormControl component="fieldset">
             <FormControl
               component="fieldset"
-              className={classes.inputMargin}
               required
             >
               <FormLabel component="legend">{t('Access location')}</FormLabel>
@@ -89,10 +88,9 @@ function ProjectDetails(props) {
           </FormControl>
         </Grid>
         <Grid item className="input-margin">
-          <FormControl component="fieldset" className={classes.inputMargin}>
+          <FormControl component="fieldset">
             <FormControl
               component="fieldset"
-              className={classes.inputMargin}
               required
             >
               <FormLabel component="legend">{t('Environment')}</FormLabel>
@@ -119,7 +117,7 @@ function ProjectDetails(props) {
           variant="outlined"
           id={t('primaryinvestigator')}
           fullWidth
-          className="mb-2"
+          className="mb-2 mt-0"
           margin="dense"
           label={t('Primary investigator')}
           required
@@ -164,6 +162,7 @@ function ProjectDetails(props) {
             margin="dense"
             format="MM/dd/yyyy"
             label={t('Contract end date')}
+            className="mb-2"
             InputProps={{readOnly: true}}
             value={state.selectedToDate}
             minDate={state.selectedFromDate}
