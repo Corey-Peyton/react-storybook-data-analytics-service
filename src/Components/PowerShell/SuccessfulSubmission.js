@@ -68,18 +68,18 @@ function SuccessfulSubmission(props) {
               </Alert>
             </Collapse>
             <div>
-              <Typography variant="body2" className="mb-2  mt-2">
+              <Typography variant="body2" className="mb-3 mt-3">
                 Your request to create a VDL workspace has been submitted and is
                 being processed. You will receive an email once the VDL
                 workspace is ready.
               </Typography>
-              <Typography variant="body2" className="mb-2">
+              <Typography variant="body2" className="mb-3">
                 Your Virtual Machine will appear in the 'DevTest Lab' named as
                 'STC-0412-ST'. Please be patient when waiting for your Virtual
                 Machine to be ready. They may be visible to you with the status
                 of 'Running', this does not mean they are ready.
               </Typography>
-              <Typography variant="body2" className="mb-2">
+              <Typography variant="body2" className="mb-3">
                 If you encounter any errors or issues, please submit a JIRA
                 ticket to the{' '}
                 <Link
@@ -89,7 +89,7 @@ function SuccessfulSubmission(props) {
                   VDL Jira project.
                 </Link>
               </Typography>
-              <Typography variant="body2">Thank you!</Typography>
+              <Typography variant="body2" className="mb-1">Thank you!</Typography>
             </div>
           </Paper>
         </Container>
