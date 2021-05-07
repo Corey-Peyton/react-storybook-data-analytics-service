@@ -143,18 +143,30 @@ theme.overrides = {
     // text primary
     textPrimary: {
       '& $startIcon': {
-        color: theme.palette.primary.dark,
+        color: theme.palette.primary.main,
       },
       '& $endIcon': {
-        color: theme.palette.primary.dark,
+        color: theme.palette.primary.main,
       },
       '&:hover': {
-        color: theme.palette.primary.dark,
-        backgroundColor: fade(theme.palette.primary.main, 0.12),
+        'color': theme.palette.primary.dark,
+        'backgroundColor': fade(theme.palette.primary.main, 0.12),
+        '& $startIcon': {
+          color: theme.palette.primary.dark,
+        },
+        '& $endIcon': {
+          color: theme.palette.primary.dark,
+        },
       },
       '&$focusVisible': {
-        color: theme.palette.primary.dark,
-        backgroundColor: fade(theme.palette.primary.main, 0.12),
+        'color': theme.palette.primary.dark,
+        'backgroundColor': fade(theme.palette.primary.main, 0.12),
+        '& $startIcon': {
+          color: theme.palette.primary.dark,
+        },
+        '& $endIcon': {
+          color: theme.palette.primary.dark,
+        },
       },
     },
     disabled: {},
