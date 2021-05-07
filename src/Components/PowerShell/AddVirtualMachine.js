@@ -232,7 +232,7 @@ function VirtualMachineDetails(props) {
             id="contract-start-date"
             className="input-margin"
             variant="inline"
-            label={'Contract expiry date'}
+            label={'Security clearance expiry'}
             InputProps={{readOnly: true}}
             autoOk
             fullWidth
@@ -246,7 +246,7 @@ function VirtualMachineDetails(props) {
               'aria-modal': 'true',
             }}
             KeyboardButtonProps={{
-              'aria-label': 'Select contract expiry date',
+              'aria-label': 'Security clearance expiry',
             }}
           />
         </MuiPickersUtilsProvider>

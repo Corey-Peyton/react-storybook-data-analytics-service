@@ -8,8 +8,8 @@ import Box from '@material-ui/core/Box';
 
 const useStyles = makeStyles((theme) => ({
   inputMargin: {
-    marginTop: theme.spacing(1),
-    marginBottom: theme.spacing(0),
+    marginTop: theme.spacing(2),
+    marginBottom: theme.spacing(1),
   },
 }));
 
