@@ -25,7 +25,7 @@ const useStyles = makeStyles((theme) => ({
     justifyContent: 'center',
   },
   bannerContent: {
-    padding: theme.spacing(12, 0, 12, 9),
+    padding: theme.spacing(12, 0, 12, 6),
   },
   bannerBtn: {
     width: '320px',
