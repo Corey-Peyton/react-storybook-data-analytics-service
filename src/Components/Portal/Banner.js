@@ -39,7 +39,7 @@ const useStyles = makeStyles((theme) => ({
     alignItems: 'center',
     backgroundImage: `url(${process.env.PUBLIC_URL +
       '/images/daaas-triangles.svg'})`,
-    backgroundPosition: 'center',
+    backgroundPosition: 'left',
     backgroundRepeat: 'repeat',
     width: '100%',
   },
