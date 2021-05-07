@@ -58,41 +58,33 @@ function ProjectDetails(props) {
   return (
     <React.Fragment>
       <Box>
-        <Alert severity="error" className="mt-1 mb-2">
+        <Alert severity="error" className="mt-1 mb-3">
           {t('Complete all required fields to advance to the next step')}
         </Alert>
         <Grid item className="input-margin">
           <FormControl component="fieldset">
-            <FormControl
-              component="fieldset"
-              required
+            <FormLabel component="legend">{t('Access location')}</FormLabel>
+            <RadioGroup
+              aria-label={t('Access location')}
+              name={t('radio-buttons-group')}
+              color="primary"
             >
-              <FormLabel component="legend">{t('Access location')}</FormLabel>
-              <RadioGroup
-                aria-label={t('Access location')}
-                name={t('radio-buttons-group')}
-                color="primary"
-              >
-                <FormControlLabel
-                  value={t('Secure room')}
-                  control={<Radio color="primary" />}
-                  label={t('Secure room')}
-                />
-                <FormControlLabel
-                  value={t('Authorized workspace')}
-                  control={<Radio color="primary" />}
-                  label={t('Authorized workspace')}
-                />
-              </RadioGroup>
-            </FormControl>
+              <FormControlLabel
+                value={t('Secure room')}
+                control={<Radio color="primary" />}
+                label={t('Secure room')}
+              />
+              <FormControlLabel
+                value={t('Authorized workspace')}
+                control={<Radio color="primary" />}
+                label={t('Authorized workspace')}
+              />
+            </RadioGroup>
           </FormControl>
         </Grid>
         <Grid item className="input-margin">
           <FormControl component="fieldset">
-            <FormControl
-              component="fieldset"
-              required
-            >
+            <FormControl component="fieldset" required>
               <FormLabel component="legend">{t('Environment')}</FormLabel>
               <RadioGroup
                 aria-label={t('environment')}
