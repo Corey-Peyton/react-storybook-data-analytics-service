@@ -68,11 +68,6 @@ const useStyles = makeStyles((theme) => ({
     backgroundColor: theme.palette.common.white,
     zIndex: 500,
   },
-  tooltipLabel: {
-    '& svg': {
-      verticalAlign: 'middle',
-    },
-  },
 }));
 
 export function EditVirtualMachine(props) {
@@ -83,7 +78,7 @@ export function EditVirtualMachine(props) {
     <React.Fragment>
       <AppBar position="static" className={classes.appBar} color="default">
         <Toolbar>
-          <Typography variant="h6" component="h2" className={classes.title}>
+          <Typography variant="h6" component="h2" className="input-margin">
             Update virtual machine details
           </Typography>
           <IconButton
@@ -168,7 +163,6 @@ function VirtualMachineDetails(props) {
   const handleFromDateChange = (date) => {
     setState({...state, selectedFromDate: date});
   };
-  const classes = useStyles();
   const {t} = useTranslation();
   const [state, setState] = React.useState({
     snackbarDelete: false,
@@ -182,10 +176,10 @@ function VirtualMachineDetails(props) {
 
   return (
     <>
-      <Typography variant="subtitle1" className="mb-2">
+      <Typography variant="subtitle1" className="input-margin">
         User details
       </Typography>
-      <Typography variant="body2" className="mb-2">
+      <Typography variant="body2" className="input-margin">
         If the cloud account email cannot be found it means it does not exist in
         Azure Active Directory. Submit a Jira ticket to the{' '}
         <Link
@@ -196,20 +190,17 @@ function VirtualMachineDetails(props) {
         </Link>
         for assistance.
       </Typography>
-      <Autocomplete
-        id="cloudemail"
-        options={analystList.map((option) => option.email)}
-        renderInput={(params) => (
-          <TextField
-            {...params}
-            label="Cloud email"
-            className={classes.inputMargin}
-            variant="outlined"
-          />
-        )}
-      />
+      <Grid item className="input-margin">
+        <Autocomplete
+          id="cloudemail"
+          options={analystList.map((option) => option.email)}
+          renderInput={(params) => (
+            <TextField {...params} label="Cloud email" variant="outlined" />
+          )}
+        />
+      </Grid>
       <TextField
-        className={classes.inputMargin}
+        className="input-margin"
         margin="dense"
         id="username"
         label="Username"
@@ -218,7 +209,7 @@ function VirtualMachineDetails(props) {
         required
       />
       <TextField
-        className={classes.inputMargin}
+        className="input-margin"
         margin="dense"
         id="firstname"
         label="First name"
@@ -227,7 +218,7 @@ function VirtualMachineDetails(props) {
         required
       />
       <TextField
-        className={classes.inputMargin}
+        className="input-margin"
         margin="dense"
         id="lastName"
         label="Last name"
@@ -235,31 +226,33 @@ function VirtualMachineDetails(props) {
         fullWidth
         required
       />
-      <MuiPickersUtilsProvider utils={DateFnsUtils}>
-        <KeyboardDatePicker
-          id="contract-start-date"
-          className={classes.inputMargin}
-          variant="inline"
-          label={'Contract expiry date'}
-          InputProps={{readOnly: true}}
-          autoOk
-          fullWidth
-          margin="dense"
-          format="MM/dd/yyyy"
-          value={state.selectedFromDate}
-          inputVariant="outlined"
-          onChange={handleFromDateChange}
-          disablePast
-          PopoverProps={{
-            'aria-modal': 'true',
-          }}
-          KeyboardButtonProps={{
-            'aria-label': 'Select contract expiry date',
-          }}
-        />
-      </MuiPickersUtilsProvider>
+      <Grid item className="input-margin">
+        <MuiPickersUtilsProvider utils={DateFnsUtils}>
+          <KeyboardDatePicker
+            id="contract-start-date"
+            className="input-margin"
+            variant="inline"
+            label={'Contract expiry date'}
+            InputProps={{readOnly: true}}
+            autoOk
+            fullWidth
+            // margin="dense"
+            format="MM/dd/yyyy"
+            value={state.selectedFromDate}
+            inputVariant="outlined"
+            onChange={handleFromDateChange}
+            disablePast
+            PopoverProps={{
+              'aria-modal': 'true',
+            }}
+            KeyboardButtonProps={{
+              'aria-label': 'Select contract expiry date',
+            }}
+          />
+        </MuiPickersUtilsProvider>
+      </Grid>
       <TextField
-        className={classes.inputMargin}
+        className="input-margin"
         margin="dense"
         id="researcherID"
         label="Researcher ID"
@@ -267,22 +260,19 @@ function VirtualMachineDetails(props) {
         fullWidth
         required
       />
-      <Autocomplete
-        id="organization"
-        options={security}
-        getOptionLabel={(option) => option.label}
-        renderInput={(params) => (
-          <TextField
-            {...params}
-            label="Organization"
-            className={classes.inputMargin}
-            variant="outlined"
-          />
-        )}
-      />
+      <Grid item className="input-margin">
+        <Autocomplete
+          id="organization"
+          options={security}
+          getOptionLabel={(option) => option.label}
+          renderInput={(params) => (
+            <TextField {...params} label="Organization" variant="outlined" />
+          )}
+        />
+      </Grid>
       <Typography variant="subtitle1">Contact information</Typography>
       <TextField
-        className={classes.inputMargin}
+        className="input-margin"
         margin="dense"
         id="phoneNumber"
         label="Phone number"
@@ -291,7 +281,7 @@ function VirtualMachineDetails(props) {
         required
       />
       <TextField
-        className={classes.inputMargin}
+        className="input-margin"
         margin="dense"
         id="email"
         label="Email"
@@ -301,7 +291,7 @@ function VirtualMachineDetails(props) {
       />
       <Typography variant="subtitle1">Virtual machine details</Typography>
       <TextField
-        className={classes.inputMargin}
+        className="input-margin"
         margin="dense"
         id="virtualmachinename"
         label="Virtual machine name"
@@ -309,12 +299,8 @@ function VirtualMachineDetails(props) {
         fullWidth
         required
       />
-      <Grid container>
-        <FormControl
-          component="fieldset"
-          className={classes.inputMargin}
-          required
-        >
+      <Grid item className="radio-margin">
+        <FormControl component="fieldset" required>
           <RadioGroup id="virtualmachinename" name="virtualmachinename">
             <FormLabel component="legend">Virtual machine language</FormLabel>
             <FormControlLabel
@@ -330,48 +316,53 @@ function VirtualMachineDetails(props) {
           </RadioGroup>
         </FormControl>
       </Grid>
-      <FormLabel component="legend" required>
-        Required tools
-      </FormLabel>
-      <FormGroup>
-        <Grid container>
-          <Grid>
-            <FormControlLabel
-              control={<Checkbox name="Default tools" color="primary" />}
-              label={
-                <>
-                  <Typography>{t('Default tools')}</Typography>
-                  <Typography variant="caption">
-                    {t(
-                        'Default tools (Adobe Reader DC, Java, LibreOffice, Office 2019, Power BI, ProjectLibre, Python, R, RStudio, RTools, VSCode',
-                    )}
-                  </Typography>
-                </>
-              }
-            />
+      <Grid item className="input-margin">
+        <FormLabel component="legend" required>
+          Required tools
+        </FormLabel>
+        <FormGroup>
+          <Grid container>
+            <Grid>
+              <FormControlLabel
+                control={<Checkbox name="Default tools" color="primary" />}
+                label={
+                  <>
+                    <Typography>{t('Default tools')}</Typography>
+                    <Typography variant="caption">
+                      {t(
+                          'Default tools (Adobe Reader DC, Java, LibreOffice, Office 2019, Power BI, ProjectLibre, Python, R, RStudio, RTools, VSCode',
+                      )}
+                    </Typography>
+                  </>
+                }
+              />
+            </Grid>
           </Grid>
-        </Grid>
-        <Grid container>
-          <Grid>
-            <FormControlLabel
-              control={<Checkbox name="SAS" color="primary" />}
-              label={
-                <>
-                  <Typography>{t('SAS')}</Typography>
-                  <Typography variant="caption">
-                    {t('Includes SAS 9.4 and SAS Enterprise Guide')}
-                  </Typography>
-                </>
-              }
-            />
+          <Grid container>
+            <Grid>
+              <FormControlLabel
+                control={<Checkbox name="SAS" color="primary" />}
+                label={
+                  <>
+                    <Typography>{t('SAS')}</Typography>
+                    <Typography variant="caption">
+                      {t('Includes SAS 9.4 and SAS Enterprise Guide')}
+                    </Typography>
+                  </>
+                }
+              />
+            </Grid>
           </Grid>
-        </Grid>
-        <FormControlLabel control={<Checkbox color="primary" />} label="SPSS" />
-        <FormControlLabel
-          control={<Checkbox color="primary" />}
-          label="STATA"
-        />
-      </FormGroup>
+          <FormControlLabel
+            control={<Checkbox color="primary" />}
+            label="SPSS"
+          />
+          <FormControlLabel
+            control={<Checkbox color="primary" />}
+            label="STATA"
+          />
+        </FormGroup>
+      </Grid>
     </>
   );
 }

@@ -190,7 +190,7 @@ function VirtualMachine(props) {
   return (
     <React.Fragment>
       <Box>
-        <Typography variant="body1" className="mt-1 mb-2">
+        <Typography variant="body1" className="mt-2 mb-3">
           {t(
               'You need to add virtual machine details to submit this request successfully.',
           )}
@@ -511,7 +511,7 @@ function VirtualMachine(props) {
         <Button
           variant="outlined"
           color="primary"
-          className="mb-0"
+          className="mb-2"
           onClick={(e) => toggleDrawer(e, 'addVirtualMachine', true)}
         >
           {t('Add virtual machine details')}
