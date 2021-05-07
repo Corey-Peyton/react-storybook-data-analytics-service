@@ -511,7 +511,7 @@ function VirtualMachine(props) {
         <Button
           variant="outlined"
           color="primary"
-          className="mb-2"
+          className="mb-0"
           onClick={(e) => toggleDrawer(e, 'addVirtualMachine', true)}
         >
           {t('Add virtual machine details')}
