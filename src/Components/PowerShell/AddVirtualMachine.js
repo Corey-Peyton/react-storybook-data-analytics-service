@@ -68,6 +68,9 @@ const useStyles = makeStyles((theme) => ({
     backgroundColor: theme.palette.common.white,
     zIndex: 500,
   },
+  fullWidth: {
+    width: '100%',
+  },
 }));
 
 export function EditVirtualMachine(props) {
@@ -173,6 +176,8 @@ function VirtualMachineDetails(props) {
     {label: 'Statistics Canada'},
     {label: 'Canada Revenue Agency'},
   ];
+
+  const classes = useStyles();
 
   return (
     <>
@@ -315,7 +320,7 @@ function VirtualMachineDetails(props) {
         required
       />
       <Grid item className="radio-margin">
-        <FormControl component="fieldset">
+        <FormControl component="fieldset" className={classes.fullWidth}>
           <RadioGroup id="virtualmachinename" name="virtualmachinename">
             <FormLabel required component="legend">
               Virtual machine language
@@ -334,7 +339,7 @@ function VirtualMachineDetails(props) {
         </FormControl>
       </Grid>
       <Grid item className="mb-2 mt-3">
-        <FormControl component="fieldset">
+        <FormControl component="fieldset" className={classes.fullWidth}>
           <FormLabel component="legend" required>
             Required tools
           </FormLabel>
