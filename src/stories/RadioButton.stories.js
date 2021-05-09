@@ -16,10 +16,6 @@ export default {
   argTypes: {},
 };
 
-// TODO: other versions:
-// With helper text on entire group
-// With helper text on each option
-
 export const Default = (args) => {
   // const classes = useStyles();
   const [state, setState] = React.useState({

@@ -5,10 +5,9 @@ import {
   FormControl,
   FormLabel,
   FormControlLabel,
+  FormHelperText,
+  Typography,
 } from '@material-ui/core';
-// import {makeStyles} from '@material-ui/core/styles';
-
-// const useStyles = makeStyles((theme) => ({}));
 
 export default {
   title: 'Molecules/Checkboxes',
@@ -16,12 +15,7 @@ export default {
   argTypes: {},
 };
 
-// TODO: other versions:
-// With helper text on entire group
-// With helper text on each option
-
 export const Default = (args) => {
-  // const classes = useStyles();
   const [state, setState] = React.useState({
     gilad: true,
     jason: false,
@@ -46,7 +40,7 @@ export const Default = (args) => {
                 name="gilad"
               />
             }
-            label="Gilad Gray Gilad Gray Gilad Gray Gilad Gray Gilad Gray Gilad Gray Gilad Gray"
+            label="Gilad Gray"
           />
           <FormControlLabel
             control={
@@ -69,6 +63,77 @@ export const Default = (args) => {
               />
             }
             label="Antoine Llorca"
+          />
+        </FormGroup>
+      </FormControl>
+    </>
+  );
+};
+
+export const HelperText = (args) => {
+  const [state, setState] = React.useState({
+    gilad: true,
+    jason: false,
+    antoine: false,
+  });
+
+  const handleChbxChange = (event) => {
+    setState({...state, [event.target.name]: event.target.checked});
+  };
+
+  return (
+    <>
+      <FormControl component="fieldset">
+        <FormLabel component="legend">Assign responsibility</FormLabel>
+        <FormHelperText>Select all that apply</FormHelperText>
+        <FormGroup>
+          <FormControlLabel
+            control={
+              <Checkbox
+                color="primary"
+                checked={state.gilad}
+                onChange={handleChbxChange}
+                name="gilad"
+              />
+            }
+            label={
+              <>
+                <Typography variant="body2">Gilad Gray</Typography>
+                <Typography variant="caption">Description text</Typography>
+              </>
+            }
+          />
+          <FormControlLabel
+            control={
+              <Checkbox
+                color="primary"
+                checked={state.jason}
+                onChange={handleChbxChange}
+                name="jason"
+              />
+            }
+            label={
+              <>
+                <Typography variant="body2">Jason Killian</Typography>
+                <Typography variant="caption">Description text</Typography>
+              </>
+            }
+          />
+          <FormControlLabel
+            control={
+              <Checkbox
+                color="primary"
+                checked={state.antoine}
+                onChange={handleChbxChange}
+                name="antoine"
+              />
+            }
+            label={
+              <>
+                <Typography variant="body2">Antoine Llorca</Typography>
+                <Typography variant="caption">Description text</Typography>
+              </>
+            }
           />
         </FormGroup>
       </FormControl>
