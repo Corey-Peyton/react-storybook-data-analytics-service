@@ -6,9 +6,6 @@ import {
   FormLabel,
   FormControlLabel,
 } from '@material-ui/core';
-// import {makeStyles} from '@material-ui/core/styles';
-
-// const useStyles = makeStyles((theme) => ({}));
 
 export default {
   title: 'Molecules/RadioButtons',
@@ -17,7 +14,6 @@ export default {
 };
 
 export const Default = (args) => {
-  // const classes = useStyles();
   const [state, setState] = React.useState({
     gender: null,
   });
@@ -43,7 +39,7 @@ export const Default = (args) => {
           <FormControlLabel
             value="female"
             control={<Radio color="primary" />}
-            label="Female Female Female Female Female Female Female Female Female Female Female Female Female Female Female Female"
+            label="Female"
           />
           <FormControlLabel
             value="male"
