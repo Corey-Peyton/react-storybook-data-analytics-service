@@ -55,6 +55,45 @@ export const theme = createMuiTheme({
   ],
   typography: {
     fontFamily: ['"Roboto"', 'sans-serif'],
+    h1: {
+      letterSpacing: '-0.01562em',
+    },
+    h2: {
+      letterSpacing: '-0.00833em',
+    },
+    h3: {
+      letterSpacing: '0em',
+    },
+    h4: {
+      letterSpacing: '0.00735em',
+    },
+    h5: {
+      letterSpacing: '0em',
+    },
+    h6: {
+      letterSpacing: '0.0075em',
+    },
+    subtitle1: {
+      letterSpacing: '0.01071em',
+    },
+    subtitle2: {
+      letterSpacing: '0.00714em',
+    },
+    body1: {
+      letterSpacing: '0.00938em',
+    },
+    body2: {
+      letterSpacing: '0.01071em',
+    },
+    button: {
+      letterSpacing: '0.02857em',
+    },
+    caption: {
+      letterSpacing: '0.03333em',
+    },
+    overline: {
+      letterSpacing: '0.08333em',
+    },
   },
   overrides: {
     MuiTooltip: {

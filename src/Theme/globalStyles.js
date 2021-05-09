@@ -105,6 +105,7 @@ export const useStyles = makeStyles({
     // Forms - radio buttons & checkboxes
     'legend.MuiFormLabel-root': {
       lineHeight: theme.typography.body2.lineHeight,
+      letterSpacing: theme.typography.body2.letterSpacing,
       marginBottom: theme.spacing(2),
     },
     'legend.MuiFormLabel-root.Mui-focused': {
@@ -116,6 +117,7 @@ export const useStyles = makeStyles({
       },
       '& .MuiFormControlLabel-label': {
         fontSize: theme.typography.body2.fontSize,
+        letterSpacing: theme.typography.body2.letterSpacing,
         padding: theme.spacing(1.25, 0, 1, 1),
       },
     },
