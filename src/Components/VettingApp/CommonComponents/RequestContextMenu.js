@@ -131,20 +131,27 @@ export function ActionsMenu(props) {
   };
 
   const assigneeDetailsMenuItem = () => {
-    return (
-      <MenuItem
-        onClick={(e) => {
-          e.stopPropagation();
-          toggleDialog('dialogAssigneeDetails', !open.dialogAssigneeDetails, e);
-        }}
-      >
-        <ListItemText
-          primary={
-            <Typography variant="body2">{t('Assignee details')}</Typography>
-          }
-        />
-      </MenuItem>
-    );
+    if (status === 'approved' || status === 'denied' || role === 'researcher') {
+      // if the request is in a resolved state, or user is a researcher
+      return (
+        <MenuItem
+          onClick={(e) => {
+            e.stopPropagation();
+            toggleDialog(
+                'dialogAssigneeDetails',
+                !open.dialogAssigneeDetails,
+                e,
+            );
+          }}
+        >
+          <ListItemText
+            primary={
+              <Typography variant="body2">{t('Assignee details')}</Typography>
+            }
+          />
+        </MenuItem>
+      );
+    }
   };
 
   const requesterDetailsMenuItem = () => {
@@ -186,120 +193,117 @@ export function ActionsMenu(props) {
 
   const assignAsLeadMenuItem = () => {
     if (request.lead !== currentUser) {
-      return (
-        <MenuItem
-          onClick={(e) => {
-            e.stopPropagation();
-            toggleDialog('dialogAssign', !open.dialogAssign, e);
-          }}
-          open={open.dialogAssign}
-        >
-          <ListItemText
-            primary={
-              <Typography variant="body2">{t('Assign me as lead')}</Typography>
-            }
-          />
-        </MenuItem>
-      );
+      if (status !== 'approved' && status !== 'denied') {
+        // if the request is NOT in a resolved state
+        return (
+          <MenuItem
+            onClick={(e) => {
+              e.stopPropagation();
+              toggleDialog('dialogAssign', !open.dialogAssign, e);
+            }}
+            open={open.dialogAssign}
+          >
+            <ListItemText
+              primary={
+                <Typography variant="body2">
+                  {t('Assign me as lead')}
+                </Typography>
+              }
+            />
+          </MenuItem>
+        );
+      }
     }
   };
 
   const assignAsSupportMenuItem = () => {
     const supports = request.support.includes(currentUser);
 
-    if (currentUser === request.lead) {
+    if (currentUser === request.lead || !supports) {
       // if logged in user IS assigned as lead
-      return (
-        <MenuItem
-          onClick={(e) => {
-            e.stopPropagation();
-            toggleDialog(
-                'dialogNoLeadAssignSupport',
-                !open.dialogNoLeadAssignSupport,
-                e,
-            );
-          }}
-        >
-          <ListItemText
-            primary={
-              <Typography variant="body2">
-                {t('Assign me as support')}
-              </Typography>
-            }
-          />
-        </MenuItem>
-      );
-    } else if (!supports) {
+      // OR
       // if logged in user is NOT assigned as lead OR support
-      return (
-        <MenuItem
-          onClick={(e) => {
-            e.stopPropagation();
-            toggleDialog(
-                'dialogAssignAsSupport',
-                !open.dialogAssignAsSupport,
-                e,
-            );
-          }}
-        >
-          <ListItemText
-            primary={
-              <Typography variant="body2">
-                {t('Assign me as support')}
-              </Typography>
-            }
-          />
-        </MenuItem>
-      );
+      if (status !== 'approved' && status !== 'denied') {
+        // if the request is NOT in a resolved state
+        return (
+          <MenuItem
+            onClick={(e) => {
+              e.stopPropagation();
+              toggleDialog(
+                  'dialogAssignAsSupport',
+                  !open.dialogAssignAsSupport,
+                  e,
+              );
+            }}
+          >
+            <ListItemText
+              primary={
+                <Typography variant="body2">
+                  {t('Assign me as support')}
+                </Typography>
+              }
+            />
+          </MenuItem>
+        );
+      }
     }
   };
 
   const unassignMenuItem = () => {
     const supports = request.support.includes(currentUser);
+    if (status !== 'approved' && status !== 'denied') {
+      // if the request is NOT in a resolved state
+      if (currentUser === request.lead) {
+        return (
+          <MenuItem
+            onClick={(e) => {
+              e.stopPropagation();
+              toggleDialog(
+                  'dialogNoLeadUnassign',
+                  !open.dialogNoLeadUnassign,
+                  e,
+              );
+            }}
+          >
+            <ListItemText
+              primary={
+                <Typography variant="body2">{t('Unassign myself')}</Typography>
+              }
+            />
+          </MenuItem>
+        );
+      } else if (supports) {
+        return (
+          <MenuItem
+            onClick={(e) => {
+              handleClose(e);
+              handleSnackbarOpen('snackbarUnassign');
+            }}
+          >
+            <ListItemText
+              primary={
+                <Typography variant="body2">{t('Unassign myself')}</Typography>
+              }
+            />
+          </MenuItem>
+        );
+      }
+    }
+  };
 
-    if (currentUser === request.lead) {
+  const manageAssigneesMenuItem = () => {
+    if (status !== 'approved' && status !== 'denied') {
+      // if the request is NOT in a resolved state
       return (
-        <MenuItem
-          onClick={(e) => {
-            e.stopPropagation();
-            toggleDialog('dialogNoLeadUnassign', !open.dialogNoLeadUnassign, e);
-          }}
-        >
+        <MenuItem onClick={contextManageTeam}>
           <ListItemText
             primary={
-              <Typography variant="body2">{t('Unassign myself')}</Typography>
-            }
-          />
-        </MenuItem>
-      );
-    } else if (supports) {
-      return (
-        <MenuItem
-          onClick={(e) => {
-            handleClose(e);
-            handleSnackbarOpen('snackbarUnassign');
-          }}
-        >
-          <ListItemText
-            primary={
-              <Typography variant="body2">{t('Unassign myself')}</Typography>
+              <Typography variant="body2">{t('Manage assignees')}</Typography>
             }
           />
         </MenuItem>
       );
     }
-  };
-
-  const manageAssigneesMenuItem = () => {
-    return (
-      <MenuItem onClick={contextManageTeam}>
-        <ListItemText
-          primary={
-            <Typography variant="body2">{t('Manage assignees')}</Typography>
-          }
-        />
-      </MenuItem>
-    );
   };
 
   const summaryMenuItem = () => {
@@ -325,6 +329,7 @@ export function ActionsMenu(props) {
         {assignAsSupportMenuItem()}
         {unassignMenuItem()}
         {manageAssigneesMenuItem()}
+        {assigneeDetailsMenuItem()}
         {requesterDetailsMenuItem()}
         {summaryMenuItem()}
       </StyledMenu>
@@ -437,6 +442,8 @@ export function ActionsMenu(props) {
           toggleDialog('dialogAssigneeDetails', !open.dialogAssigneeDetails, e)
         }
         open={open.dialogAssigneeDetails}
+        role={role}
+        statusHead={status}
       />
       {/* Requester details dialog */}
       <DialogRequesterDetails

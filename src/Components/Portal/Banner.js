@@ -20,8 +20,12 @@ const useStyles = makeStyles((theme) => ({
     borderRadius: 0,
     margin: theme.spacing(0, -6, 6, -6),
   },
+  bannerWrapper: {
+    alignItems: 'stretch',
+    justifyContent: 'center',
+  },
   bannerContent: {
-    paddingLeft: theme.spacing(6),
+    padding: theme.spacing(12, 0, 12, 6),
   },
   bannerBtn: {
     width: '320px',
@@ -31,7 +35,13 @@ const useStyles = makeStyles((theme) => ({
     marginRight: theme.spacing(3),
   },
   triangles: {
-    overflow: 'hidden',
+    display: 'flex',
+    alignItems: 'center',
+    backgroundImage: `url(${process.env.PUBLIC_URL +
+      '/images/daaas-triangles.svg'})`,
+    backgroundPosition: 'left',
+    backgroundRepeat: 'repeat',
+    width: '100%',
   },
 }));
 
@@ -63,7 +73,11 @@ function Banner(props) {
     <>
       <ThemeProvider theme={darkTheme}>
         <Paper className={classes.banner}>
-          <Grid container justify="space-between" alignItems="center">
+          <Grid
+            container
+            justify="space-between"
+            className={classes.bannerWrapper}
+          >
             <Grid item xs={8} lg={6} className={classes.bannerContent}>
               <Grid container alignItems="center">
                 <Grid item>
@@ -112,12 +126,7 @@ function Banner(props) {
                 </Grid>
               </Grid>
             </Grid>
-            <Grid item xs={4} lg={6} className={classes.triangles}>
-              <img
-                src={process.env.PUBLIC_URL + '/images/daaas-triangles.svg'}
-                alt=""
-              />
-            </Grid>
+            <Grid item xs={4} lg={6} className={classes.triangles} />
           </Grid>
         </Paper>
       </ThemeProvider>

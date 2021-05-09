@@ -1,4 +1,15 @@
-import {Box, Breadcrumbs, Button, Container, Grid, Link, Paper, Tab, Tabs, Typography} from '@material-ui/core';
+import {
+  Box,
+  Breadcrumbs,
+  Button,
+  Container,
+  Grid,
+  Link,
+  Paper,
+  Tab,
+  Tabs,
+  Typography,
+} from '@material-ui/core';
 import {makeStyles} from '@material-ui/core/styles';
 import GetAppIcon from '@material-ui/icons/GetApp';
 import HelpIcon from '@material-ui/icons/Help';
@@ -109,8 +120,6 @@ export default function PublicTablePage(props) {
   const [value, setValue] = React.useState(0);
   const data = datasets[0];
 
-  console.log(data.related);
-
   const handleChange = (event, newValue) => {
     setValue(newValue);
   };
@@ -121,10 +130,10 @@ export default function PublicTablePage(props) {
       <Container maxWidth="xl" className="page-container">
         <Breadcrumbs aria-label="breadcrumb">
           <Link component={RouterLink} to="/">
-          Home
+            Home
           </Link>
           <Link component={RouterLink} to="/results">
-          Search results
+            Search results
           </Link>
           <Typography>{data.title}</Typography>
         </Breadcrumbs>
@@ -152,9 +161,7 @@ export default function PublicTablePage(props) {
               </Tabs>
               <TabPanel value={value} index={0}>
                 <section className={classes.content}>
-                  <Typography>
-                    {data.abstract}
-                  </Typography>
+                  <Typography>{data.abstract}</Typography>
                   <table>
                     <tbody>
                       <tr>
@@ -209,7 +216,7 @@ export default function PublicTablePage(props) {
                 className="heading-underline"
                 gutterBottom
               >
-              Supplementary information
+                Supplementary information
               </Typography>
               <ul>
                 <li>
@@ -237,14 +244,14 @@ export default function PublicTablePage(props) {
               color="primary"
               startIcon={<GetAppIcon />}
             >
-            Download options
+              Download options
             </Button>
             <Paper className={classes.card}>
               <div className={classes.cardContent}>
                 <HelpIcon />
                 <div>
                   <Typography variant="h3" component="p">
-                  5
+                    5
                   </Typography>
                   <Typography component="span"> Data Provider Q&As</Typography>
                 </div>
@@ -258,6 +265,6 @@ export default function PublicTablePage(props) {
         {/* <RelatedInfoList relatedInfo={data.related}/> */}
         <Footer />
       </Container>
-    </ React.Fragment>
+    </React.Fragment>
   );
 }
