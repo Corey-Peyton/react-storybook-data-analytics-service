@@ -115,7 +115,7 @@ function ProjectDetails(props) {
           required
           margin="dense"
           error
-          helperText="This field is reqired."
+          helperText="This field is required."
         />
         <Grid item className="input-margin">
           <FormControl component="fieldset" className={classes.fullWidth}>
