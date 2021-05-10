@@ -170,7 +170,7 @@ function ProjectDetails(props) {
             </FormLabel>
             <FormGroup>
               <FormControlLabel
-                control={<Checkbox name="Default tools" color="primary" />}
+                control={<Checkbox name="Default tools" color="primary" checked disabled />}
                 label={
                   <>
                     <Typography>{t('Default tools')}</Typography>

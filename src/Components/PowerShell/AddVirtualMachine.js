@@ -347,7 +347,7 @@ function VirtualMachineDetails(props) {
             <Grid container>
               <Grid>
                 <FormControlLabel
-                  control={<Checkbox name="Default tools" color="primary" />}
+                  control={<Checkbox name="Default tools" color="primary" checked disabled />}
                   label={
                     <>
                       <Typography>{t('Default tools')}</Typography>
