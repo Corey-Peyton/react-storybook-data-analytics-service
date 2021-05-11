@@ -54,6 +54,10 @@ export const theme = createMuiTheme({
     error: {
       main: '#E91B0C',
     },
+    buttons: {
+      default: '#5F6368',
+      defaultHover: '#54575C',
+    },
   },
   props: props,
   shadows: shadows,
@@ -114,20 +118,34 @@ theme.overrides = {
     },
     // text
     text: {
-      'color': fade(theme.palette.common.black, 0.72),
+      'color': theme.palette.buttons.default,
       '& $startIcon': {
-        color: fade(theme.palette.common.black, 0.56),
+        color: theme.palette.buttons.default,
         marginLeft: theme.spacing(0),
       },
       '& $endIcon': {
-        color: fade(theme.palette.common.black, 0.56),
+        color: theme.palette.buttons.default,
         marginRight: theme.spacing(0),
       },
       '&:hover': {
-        backgroundColor: fade(theme.palette.common.black, 0.12),
+        'backgroundColor': fade(theme.palette.buttons.default, 0.12),
+        'color': theme.palette.buttons.defaultHover,
+        '& $startIcon': {
+          color: theme.palette.buttons.defaultHover,
+        },
+        '& $endIcon': {
+          color: theme.palette.buttons.defaultHover,
+        },
       },
       '&$focusVisible': {
-        backgroundColor: fade(theme.palette.common.black, 0.12),
+        'backgroundColor': fade(theme.palette.buttons.default, 0.12),
+        'color': theme.palette.buttons.defaultHover,
+        '& $startIcon': {
+          color: theme.palette.buttons.defaultHover,
+        },
+        '& $endIcon': {
+          color: theme.palette.buttons.defaultHover,
+        },
       },
       // text disabled
       '&$disabled': {
@@ -181,13 +199,15 @@ theme.overrides = {
       marginRight: theme.spacing(-1),
     },
     root: {
-      'color': fade(theme.palette.common.black, 0.56),
+      'color': theme.palette.buttons.default,
       'padding': theme.spacing(1),
       '&:hover': {
-        backgroundColor: fade(theme.palette.common.black, 0.12),
+        backgroundColor: fade(theme.palette.buttons.default, 0.12),
+        color: theme.palette.buttons.defaultHover,
       },
       '&$focusVisible': {
-        backgroundColor: fade(theme.palette.common.black, 0.12),
+        backgroundColor: fade(theme.palette.buttons.default, 0.12),
+        color: theme.palette.buttons.defaultHover,
       },
       // disabled icon
       '&$disabled': {
