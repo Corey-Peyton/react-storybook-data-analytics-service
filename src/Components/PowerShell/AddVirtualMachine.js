@@ -32,6 +32,10 @@ const useStyles = makeStyles((theme) => ({
     marginTop: theme.spacing(0),
     marginBottom: theme.spacing(3),
   },
+  paddingTopBottom: {
+    paddingBottom: theme.spacing(3),
+    paddingTop: theme.spacing(3),
+  },
   appBar: {
     'backgroundColor': theme.palette.common.white,
     'margin': theme.spacing(0, -3, 3, 0),
@@ -49,8 +53,8 @@ const useStyles = makeStyles((theme) => ({
   },
   body: {
     marginTop: theme.spacing(8),
-    marginBottom: theme.spacing(8),
-    padding: theme.spacing(2, 3, 2, 3),
+    marginBottom: theme.spacing(10),
+    padding: theme.spacing(3, 3, 3, 3),
     overflowY: 'auto',
     overflowX: 'hidden',
   },
@@ -58,7 +62,7 @@ const useStyles = makeStyles((theme) => ({
     display: 'flex',
     justifyContent: 'flex-end',
     marginRight: theme.spacing(-3),
-    padding: theme.spacing(1.75, 3),
+    padding: theme.spacing(3, 3),
     borderTop: '1px solid',
     borderTopColor: theme.palette.divider,
     position: 'fixed',
@@ -67,9 +71,6 @@ const useStyles = makeStyles((theme) => ({
     boxSizing: 'border-box',
     backgroundColor: theme.palette.common.white,
     zIndex: 500,
-  },
-  fullWidth: {
-    width: '100%',
   },
 }));
 
@@ -178,6 +179,12 @@ function VirtualMachineDetails(props) {
     {label: 'Statistics Canada'},
     {label: 'Canada Revenue Agency'},
   ];
+
+  const useStyles = makeStyles((theme) => ({
+    fullWidth: {
+      width: '100%',
+    },
+  }));
 
   const classes = useStyles();
 
@@ -292,7 +299,7 @@ function VirtualMachineDetails(props) {
           />
         </MuiPickersUtilsProvider>
       </Grid>
-      <Typography variant="subtitle1" className="mb-3">
+      <Typography variant="subtitle1" className="input-margin">
         Contact information
       </Typography>
       <TextField
@@ -313,7 +320,7 @@ function VirtualMachineDetails(props) {
         fullWidth
         required
       />
-      <Typography variant="subtitle1" className="mb-3">
+      <Typography variant="subtitle1" className="input-margin">
         Virtual machine details
       </Typography>
       <TextField
@@ -325,7 +332,7 @@ function VirtualMachineDetails(props) {
         fullWidth
         required
       />
-      <Grid item className="radio-margin">
+      <Grid item className="input-margin">
         <FormControl component="fieldset" className={classes.fullWidth}>
           <RadioGroup id="virtualmachinename" name="virtualmachinename">
             <FormLabel required component="legend">
@@ -344,7 +351,7 @@ function VirtualMachineDetails(props) {
           </RadioGroup>
         </FormControl>
       </Grid>
-      <Grid item className="mb-2 mt-3">
+      <Grid item className="input-margin">
         <FormControl component="fieldset" className={classes.fullWidth}>
           <FormLabel component="legend" required>
             Required tools
@@ -353,7 +360,14 @@ function VirtualMachineDetails(props) {
             <Grid container>
               <Grid>
                 <FormControlLabel
-                  control={<Checkbox name="Default tools" color="primary" checked disabled />}
+                  control={
+                    <Checkbox
+                      name="Default tools"
+                      color="primary"
+                      checked
+                      disabled
+                    />
+                  }
                   label={
                     <>
                       <Typography>{t('Default tools')}</Typography>

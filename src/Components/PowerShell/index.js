@@ -34,7 +34,6 @@ const useStyles = makeStyles((theme) => ({
     margin: theme.spacing(3, 0),
   },
   dividerHeight: {
-    marginBottom: theme.spacing(2),
     marginTop: theme.spacing(2),
   },
   paper: {
@@ -74,7 +73,7 @@ const useStyles = makeStyles((theme) => ({
     marginRight: theme.spacing(2),
   },
   navFooter: {
-    paddingTop: theme.spacing(2),
+    paddingTop: theme.spacing(3),
     borderTopStyle: 'solid',
     borderTopWidth: '1px',
     borderTopColor: theme.palette.divider,
@@ -247,7 +246,7 @@ function PowerShell(props) {
                 </div>
               ) : (
                 <div className={classes.stepContent}>
-                  <Grid container justify="center" className="mb-3">
+                  <Grid container justify="center">
                     <Grid className={classes.content}>
                       {getStepContent(state.activeStep)}
                     </Grid>

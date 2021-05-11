@@ -7,9 +7,9 @@ import {makeStyles} from '@material-ui/core/styles';
 import Box from '@material-ui/core/Box';
 
 const useStyles = makeStyles((theme) => ({
-  inputMargin: {
-    marginTop: theme.spacing(2),
-    marginBottom: theme.spacing(1),
+  paddingTopBottom: {
+    paddingBottom: theme.spacing(3),
+    paddingTop: theme.spacing(3),
   },
 }));
 
@@ -18,22 +18,24 @@ function SecurityGroup(props) {
   const {t} = useTranslation();
   return (
     <React.Fragment>
-      <Box>
-        <Autocomplete
-          id="securitygroupname"
-          options={suggestions.map((option) => option.subject)}
-          renderInput={(params) => (
-            <TextField
-              required
-              {...params}
-              label={t('Security group name')}
-              className={classes.inputMargin}
-              variant="outlined"
-              fullWidth
-            />
-          )}
-        />
-      </Box>
+      <div className={classes.paddingTopBottom}>
+        <Box>
+          <Autocomplete
+            id="securitygroupname"
+            options={suggestions.map((option) => option.subject)}
+            renderInput={(params) => (
+              <TextField
+                required
+                {...params}
+                label={t('Security group name')}
+                variant="outlined"
+                fullWidth
+                className="input-margin"
+              />
+            )}
+          />
+        </Box>
+      </div>
     </React.Fragment>
   );
 }
