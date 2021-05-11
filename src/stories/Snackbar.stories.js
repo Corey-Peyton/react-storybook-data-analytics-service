@@ -1,7 +1,7 @@
 import React from 'react';
 
 import {Snackbar} from '../Components/CommonComponents/Snackbar';
-import {Button} from '../Components/CommonComponents/Button';
+import {Button} from '@material-ui/core';
 
 export default {
   title: 'Molecules/Snackbar',
