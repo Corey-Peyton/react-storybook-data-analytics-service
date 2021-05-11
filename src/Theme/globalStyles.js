@@ -108,6 +108,10 @@ export const useStyles = makeStyles({
       letterSpacing: theme.typography.body2.letterSpacing,
       marginBottom: theme.spacing(2),
     },
+    'legend.MuiFormLabel-root + .MuiFormHelperText-root': {
+      marginTop: theme.spacing(-2),
+      marginBottom: theme.spacing(2),
+    },
     'legend.MuiFormLabel-root.Mui-focused': {
       color: theme.palette.text.primary,
     },
