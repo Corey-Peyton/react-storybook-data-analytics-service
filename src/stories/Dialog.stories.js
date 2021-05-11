@@ -1,8 +1,7 @@
 import React from 'react';
 
-import {Button} from '../Components/CommonComponents/Button';
 import {Dialog} from '../Components/CommonComponents/Dialog';
-import {Typography} from '@material-ui/core';
+import {Typography, Button} from '@material-ui/core';
 
 export default {
   title: 'Molecules/Dialog',
