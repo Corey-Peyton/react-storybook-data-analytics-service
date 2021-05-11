@@ -92,23 +92,32 @@ export const useStyles = makeStyles({
     'legend.MuiFormLabel-root': {
       lineHeight: theme.typography.body2.lineHeight,
       letterSpacing: theme.typography.body2.letterSpacing,
-      marginBottom: theme.spacing(2),
+      marginBottom: theme.spacing(1),
     },
     'legend.MuiFormLabel-root + .MuiFormHelperText-root': {
-      marginTop: theme.spacing(-2),
-      marginBottom: theme.spacing(2),
+      marginTop: theme.spacing(-1),
+      marginBottom: theme.spacing(1),
     },
     'legend.MuiFormLabel-root.Mui-focused': {
       color: theme.palette.text.primary,
+    },
+    'legend.MuiFormLabel-root.Mui-error': {
+      color: theme.palette.error.main,
     },
     '.MuiFormGroup-root': {
       '& .MuiFormControlLabel-root': {
         alignItems: 'start',
       },
       '& .MuiFormControlLabel-label': {
-        fontSize: theme.typography.body2.fontSize,
-        letterSpacing: theme.typography.body2.letterSpacing,
-        padding: theme.spacing(1.25, 0, 1, 1),
+        'fontSize': theme.typography.body2.fontSize,
+        'letterSpacing': theme.typography.body2.letterSpacing,
+        'padding': theme.spacing(1.25, 0, 1, 1),
+        '& .MuiFormHelperText-root': {
+          marginTop: theme.spacing(0),
+        },
+        '& .MuiTypography-caption': {
+          color: theme.palette.text.secondary,
+        },
       },
     },
 

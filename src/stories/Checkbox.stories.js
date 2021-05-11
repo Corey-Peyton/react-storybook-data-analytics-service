@@ -15,9 +15,9 @@ export default {
   argTypes: {},
 };
 
-export const Default = (args) => {
+export const Group = (args) => {
   const [state, setState] = React.useState({
-    gilad: true,
+    gilad: false,
     jason: false,
     antoine: false,
   });
@@ -28,62 +28,7 @@ export const Default = (args) => {
 
   return (
     <>
-      <FormControl component="fieldset">
-        <FormLabel component="legend">Assign responsibility</FormLabel>
-        <FormGroup>
-          <FormControlLabel
-            control={
-              <Checkbox
-                color="primary"
-                checked={state.gilad}
-                onChange={handleChbxChange}
-                name="gilad"
-              />
-            }
-            label="Gilad Gray"
-          />
-          <FormControlLabel
-            control={
-              <Checkbox
-                color="primary"
-                checked={state.jason}
-                onChange={handleChbxChange}
-                name="jason"
-              />
-            }
-            label="Jason Killian"
-          />
-          <FormControlLabel
-            control={
-              <Checkbox
-                color="primary"
-                checked={state.antoine}
-                onChange={handleChbxChange}
-                name="antoine"
-              />
-            }
-            label="Antoine Llorca"
-          />
-        </FormGroup>
-      </FormControl>
-    </>
-  );
-};
-
-export const HelperText = (args) => {
-  const [state, setState] = React.useState({
-    gilad: true,
-    jason: false,
-    antoine: false,
-  });
-
-  const handleChbxChange = (event) => {
-    setState({...state, [event.target.name]: event.target.checked});
-  };
-
-  return (
-    <>
-      <FormControl component="fieldset">
+      <FormControl component="fieldset" fullWidth={true}>
         <FormLabel component="legend">Assign responsibility</FormLabel>
         <FormHelperText>Select all that apply</FormHelperText>
         <FormGroup>
@@ -99,7 +44,7 @@ export const HelperText = (args) => {
             label={
               <>
                 <Typography variant="body2">Gilad Gray</Typography>
-                <Typography variant="caption">Description text</Typography>
+                <Typography variant="caption">Helper text</Typography>
               </>
             }
           />
@@ -115,7 +60,7 @@ export const HelperText = (args) => {
             label={
               <>
                 <Typography variant="body2">Jason Killian</Typography>
-                <Typography variant="caption">Description text</Typography>
+                <Typography variant="caption">Helper text</Typography>
               </>
             }
           />
@@ -131,7 +76,7 @@ export const HelperText = (args) => {
             label={
               <>
                 <Typography variant="body2">Antoine Llorca</Typography>
-                <Typography variant="caption">Description text</Typography>
+                <Typography variant="caption">Helper text</Typography>
               </>
             }
           />
@@ -141,12 +86,15 @@ export const HelperText = (args) => {
   );
 };
 
-export const Error = (args) => {
+export const GroupError = (args) => {
   const [state, setState] = React.useState({
-    gilad: true,
+    gilad: false,
     jason: false,
     antoine: false,
   });
+
+  const {gilad, jason, antoine} = state;
+  const error = [gilad, jason, antoine].filter((v) => v).length === 0;
 
   const handleChbxChange = (event) => {
     setState({...state, [event.target.name]: event.target.checked});
@@ -154,7 +102,7 @@ export const Error = (args) => {
 
   return (
     <>
-      <FormControl component="fieldset" error={true}>
+      <FormControl component="fieldset" error={error} fullWidth={true}>
         <FormLabel component="legend">Assign responsibility</FormLabel>
         <FormHelperText>Error text</FormHelperText>
         <FormGroup>
@@ -167,7 +115,12 @@ export const Error = (args) => {
                 name="gilad"
               />
             }
-            label="Gilad Gray"
+            label={
+              <>
+                <Typography variant="body2">Gilad Gray</Typography>
+                <Typography variant="caption">Helper text</Typography>
+              </>
+            }
           />
           <FormControlLabel
             control={
@@ -178,7 +131,12 @@ export const Error = (args) => {
                 name="jason"
               />
             }
-            label="Jason Killian"
+            label={
+              <>
+                <Typography variant="body2">Jason Killian</Typography>
+                <Typography variant="caption">Helper text</Typography>
+              </>
+            }
           />
           <FormControlLabel
             control={
@@ -189,13 +147,19 @@ export const Error = (args) => {
                 name="antoine"
               />
             }
-            label="Antoine Llorca"
+            label={
+              <>
+                <Typography variant="body2">Antoine Llorca</Typography>
+                <Typography variant="caption">Helper text</Typography>
+              </>
+            }
           />
         </FormGroup>
       </FormControl>
     </>
   );
 };
+GroupError.storyName = 'Group - Error';
 
 export const Individual = (args) => {
   const [state, setState] = React.useState({
@@ -207,7 +171,7 @@ export const Individual = (args) => {
   };
   return (
     <>
-      <FormControl component="fieldset">
+      <FormControl component="fieldset" fullWidth={true}>
         <FormLabel component="legend" className="screen-reader-text">
           Select if you agree
         </FormLabel>
@@ -222,7 +186,14 @@ export const Individual = (args) => {
                 required
               />
             }
-            label="I agree to the Terms and conditions and Privacy policy"
+            label={
+              <>
+                <Typography variant="body2">
+                  I agree to the Terms and conditions and Privacy policy
+                </Typography>
+                <Typography variant="caption">Helper text</Typography>
+              </>
+            }
           />
         </FormGroup>
       </FormControl>
@@ -238,9 +209,10 @@ export const IndividualError = (args) => {
   const handleChbxChange = (event) => {
     setState({...state, [event.target.name]: event.target.checked});
   };
+
   return (
     <>
-      <FormControl component="fieldset" error={true}>
+      <FormControl component="fieldset" error={!state.terms} fullWidth={true}>
         <FormLabel component="legend" className="screen-reader-text">
           Select if you agree
         </FormLabel>
@@ -270,3 +242,4 @@ export const IndividualError = (args) => {
     </>
   );
 };
+IndividualError.storyName = 'Individual - Error';
