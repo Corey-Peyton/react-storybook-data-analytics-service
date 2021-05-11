@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import Link from '@material-ui/core/Link';
 import DateFnsUtils from '@date-io/date-fns';
 import {analystList} from '../../Data/fakeData';
@@ -172,6 +172,8 @@ function VirtualMachineDetails(props) {
     dialogDelete: false,
   });
 
+  const [isOpen, setIsOpen] = useState(false);
+
   const security = [
     {label: 'Statistics Canada'},
     {label: 'Canada Revenue Agency'},
@@ -267,6 +269,10 @@ function VirtualMachineDetails(props) {
             className="input-margin"
             variant="inline"
             label={'Security clearance expiry'}
+            open={isOpen}
+            onClick={() => setIsOpen(true)}
+            onOpen={() => setIsOpen(true)}
+            onClose={() => setIsOpen(false)}
             InputProps={{readOnly: true}}
             autoOk
             fullWidth

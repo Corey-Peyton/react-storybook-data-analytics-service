@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import FormGroup from '@material-ui/core/FormGroup';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Checkbox from '@material-ui/core/Checkbox';
@@ -35,12 +35,14 @@ function ProjectDetails(props) {
     setState({...state, selectedToDate: date});
   };
 
+  const [isOpenStartDate, setIsOpenStartDate] = useState(false);
+  const [isOpenEndDate, setIsOpenEndDate] = useState(false);
+
   const {t} = useTranslation();
 
   const [state, setState] = React.useState({
     selectedFromDate: null,
     selectedToDate: null,
-    selectedDateType: 10,
   });
 
   const classes = useStyles();
@@ -73,6 +75,10 @@ function ProjectDetails(props) {
               maxDate={state.selectedToDate}
               fullWidth
               autoOk
+              open={isOpenStartDate}
+              onClick={() => setIsOpenStartDate(true)}
+              onOpen={() => setIsOpenStartDate(true)}
+              onClose={() => setIsOpenStartDate(false)}
               disablePast
               required
               className="input-margin"
@@ -86,6 +92,10 @@ function ProjectDetails(props) {
               }}
             />
             <KeyboardDatePicker
+              open={isOpenEndDate}
+              onClick={() => setIsOpenEndDate(true)}
+              onOpen={() => setIsOpenEndDate(true)}
+              onClose={() => setIsOpenEndDate(false)}
               id={t('end-date')}
               variant="inline"
               margin="dense"
@@ -170,7 +180,14 @@ function ProjectDetails(props) {
             </FormLabel>
             <FormGroup>
               <FormControlLabel
-                control={<Checkbox name="Default tools" color="primary" checked disabled />}
+                control={
+                  <Checkbox
+                    name="Default tools"
+                    color="primary"
+                    checked
+                    disabled
+                  />
+                }
                 label={
                   <>
                     <Typography>{t('Default tools')}</Typography>
