@@ -23,7 +23,10 @@ import {
   mdiEmailEditOutline,
 } from '@mdi/js';
 
-import {DialogInfo} from '../../CommonComponents/DialogBox';
+import {
+  DialogRequesterDetails,
+  DialogAssigneeDetails,
+} from '../../CommonComponents/DialogBox';
 import {ActionsMenu} from './ContextMenu';
 import DashboardTableHead from './DashboardTableHead';
 import AnalystCell from './AnalystCell';
@@ -98,14 +101,15 @@ export default function TableContainerComponent(props) {
     contextSummaryClick,
     contextStatusClick,
     toggleManageTeamDrawer,
+    statusHead,
   } = props;
   const [order, setOrder] = React.useState('asc');
   const [orderBy, setOrderBy] = React.useState('calories');
   const [page, setPage] = React.useState(0);
-  const [rowsPerPage, setRowsPerPage] = React.useState(5);
+  const [rowsPerPage, setRowsPerPage] = React.useState(10);
   const [open, setOpen] = React.useState({
-    info: false,
-    role: '',
+    dialogRequesterDetails: false,
+    dialogAssigneeDetails: false,
   });
   const {t} = useTranslation();
   const classes = useStyles();
@@ -126,12 +130,10 @@ export default function TableContainerComponent(props) {
     setPage(0);
   };
 
-  function toggleDialog(value, e, role) {
+  const toggleDialog = (state, value, e) => {
     e.stopPropagation();
-    if (value === 'info') {
-      setOpen({...open, info: !open.info, role: role});
-    }
-  }
+    setOpen({...open, [state]: value});
+  };
 
   const navigateToRequest = () => {
     history.push({
@@ -332,7 +334,11 @@ export default function TableContainerComponent(props) {
                         label={row.researcher}
                         onClick={(e) => {
                           e.stopPropagation();
-                          toggleDialog('info', e, 'requester');
+                          toggleDialog(
+                              'dialogRequesterDetails',
+                              !open.dialogRequesterDetails,
+                              e,
+                          );
                         }}
                       />
                     </TableCell>
@@ -340,11 +346,15 @@ export default function TableContainerComponent(props) {
                       lead={row.lead}
                       support={row.support}
                       role={role}
-                      toggleDialog={(e) => {
-                        e.stopPropagation();
-                        toggleDialog('info', e, 'assignee');
-                      }}
+                      statusHead={row.statusHead}
                       toggleManageTeamDrawer={toggleManageTeamDrawer}
+                      clickHandler={(e) => {
+                        toggleDialog(
+                            'dialogAssigneeDetails',
+                            !open.dialogAssigneeDetails,
+                            e,
+                        );
+                      }}
                     />
                     <TableCell>
                       <Typography variant="body2" noWrap={true}>
@@ -389,12 +399,23 @@ export default function TableContainerComponent(props) {
         onChangePage={handleChangePage}
         onChangeRowsPerPage={handleChangeRowsPerPage}
       />
-      <DialogInfo
-        open={open.info}
-        toggleDialog={(e) => toggleDialog('info', e, open.role)}
-        header={
-          open.role === 'assignee' ? 'Assignee details' : 'Requester details'
+      <DialogRequesterDetails
+        open={open.dialogRequesterDetails}
+        toggleDialog={(e) =>
+          toggleDialog(
+              'dialogRequesterDetails',
+              !open.dialogRequesterDetails,
+              e,
+          )
         }
+      />
+      <DialogAssigneeDetails
+        open={open.dialogAssigneeDetails}
+        toggleDialog={(e) => {
+          toggleDialog('dialogAssigneeDetails', !open.dialogAssigneeDetails, e);
+        }}
+        role={role}
+        statusHead={statusHead}
       />
     </TableContainer>
   );

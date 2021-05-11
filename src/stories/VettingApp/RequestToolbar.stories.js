@@ -2,6 +2,7 @@ import React from 'react';
 
 import RequestToolbar from '../../Components/VettingApp/CommonComponents/RequestToolbar';
 import ManageTeamDrawer from '../../Components/VettingApp/CommonComponents/ManageTeamDrawer';
+import DialogAssigneeDetails from '../../Components/VettingApp/CommonComponents/DialogBox';
 
 export default {
   title: 'Organisms/Vetting/RequestToolbar',

@@ -13,7 +13,7 @@ import Header from '../CommonComponents/Header';
 import Footer from '../CommonComponents/Footer';
 import SummaryDrawer from '../CommonComponents/SummaryDrawer';
 import ProjectsDrawer from './Common/ProjectsDrawer';
-import BypassBlocks from '../../BypassBlocks';
+import BypassBlocks from '../../CommonComponents/BypassBlocks';
 import {requestListResearchers} from '../../../Data/fakeData';
 import {DRAWER_WIDTH} from './Common/ProjectsDrawer';
 import ManageTeamDrawer from '../CommonComponents/ManageTeamDrawer';
@@ -41,7 +41,7 @@ const useStyles = makeStyles((theme) => ({
     top: 0,
     left: 'auto',
     width: '100%',
-    padding: theme.spacing(2, 1, 1),
+    padding: theme.spacing(2, 1, 1, '!important'),
     display: 'flex',
     flexDirection: 'row',
     justifyContent: 'space-between',
@@ -298,7 +298,7 @@ export default function DashboardPageAnalyst() {
           </AppBar>
           <TabPanel value={value} index={0} className={classes.tabPanel}>
             <TableContainerComponent
-              status="assigned to me"
+              statusHead="assigned to me"
               filteredRows={filteredRows}
               headCells={headCells}
               contextSummaryClick={toggleSummaryDrawer}
@@ -309,7 +309,7 @@ export default function DashboardPageAnalyst() {
           </TabPanel>
           <TabPanel value={value} index={1} className={classes.tabPanel}>
             <TableContainerComponent
-              status="unassigned"
+              statusHead="unassigned"
               filteredRows={filteredRows}
               headCells={headCells}
               contextSummaryClick={toggleSummaryDrawer}
@@ -320,7 +320,7 @@ export default function DashboardPageAnalyst() {
           </TabPanel>
           <TabPanel value={value} index={2} className={classes.tabPanel}>
             <TableContainerComponent
-              status="active"
+              statusHead="active"
               filteredRows={filteredRows}
               headCells={headCells}
               contextSummaryClick={toggleSummaryDrawer}
@@ -331,7 +331,7 @@ export default function DashboardPageAnalyst() {
           </TabPanel>
           <TabPanel value={value} index={3} className={classes.tabPanel}>
             <TableContainerComponent
-              status="approved"
+              statusHead="approved"
               filteredRows={filteredRows}
               headCells={headCells}
               contextSummaryClick={toggleSummaryDrawer}
@@ -342,7 +342,7 @@ export default function DashboardPageAnalyst() {
           </TabPanel>
           <TabPanel value={value} index={4} className={classes.tabPanel}>
             <TableContainerComponent
-              status="denied"
+              statusHead="denied"
               filteredRows={filteredRows}
               headCells={headCells}
               contextSummaryClick={toggleSummaryDrawer}

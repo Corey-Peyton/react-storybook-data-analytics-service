@@ -1,6 +1,9 @@
 import React from 'react';
 import {makeStyles, withStyles} from '@material-ui/core/styles';
-import {DialogSaveBeforeLeaving} from '../CommonComponents/DialogBox';
+import {
+  DialogSaveBeforeLeaving,
+  DialogWithdraw,
+} from '../CommonComponents/DialogBox';
 import {
   AppBar,
   Button,
@@ -32,12 +35,7 @@ import {
   SnackbarStartReview,
   SnackbarSubmitRequest,
 } from './Snackbars';
-import {
-  DialogDenied,
-  DialogUpdate,
-  DialogApprove,
-  DialogWithdraw,
-} from './DialogBox';
+import {DialogDenied, DialogUpdate, DialogApprove} from './DialogBox';
 import {ActionsMenu} from './RequestContextMenu';
 import {loggedInUser} from '../../../Data/fakeData';
 
@@ -49,6 +47,15 @@ const useStyles = makeStyles((theme) => ({
     boxShadow: 'none',
     borderBottom: '1px solid',
     borderBottomColor: theme.palette.divider,
+    top: theme.spacing(8),
+    left: 0,
+    [theme.breakpoints.down('xs')]: {
+      top: theme.spacing(7),
+    },
+  },
+  gridContainer: {
+    paddingLeft: theme.spacing(3),
+    paddingRight: theme.spacing(3),
   },
   title: {
     paddingLeft: theme.spacing(1),
@@ -95,12 +102,14 @@ function RequestToolbar(props) {
     dialogUpdate: false,
     dialogDenied: false,
     dialogWithdraw: false,
+    dialogSave: false,
     snackbarReactivate: false,
     snackbarSubmit: false,
     snackbarSave: false,
     snackbarDeny: false,
     snackbarApprove: false,
     snackbarStart: false,
+    snackbarWithdraw: false,
   });
 
   const handleClickOpen = (state) => {
@@ -242,7 +251,8 @@ function RequestToolbar(props) {
     if (
       status !== 'withdrawn' &&
       status !== 'approved' &&
-      status !== 'denied'
+      status !== 'denied' &&
+      status !== 'draft'
     ) {
       return (
         <Button
@@ -259,15 +269,19 @@ function RequestToolbar(props) {
   };
 
   return (
-    <AppBar position="static" className={classes.appBar} color="default">
+    <AppBar position="fixed" className={classes.appBar} color="default">
       <Toolbar>
-        <Grid container justify="space-between">
+        <Grid
+          container
+          justify="space-between"
+          className={classes.gridContainer}
+        >
           <Grid item>
             <IconButton
               edge="start"
               className={classes.menuButton}
               aria-label="Back to dashboard"
-              onClick={() => handleClickOpen('DialogSaveBeforeLeaving')}
+              onClick={() => handleClickOpen('dialogSave')}
             >
               <ArrowBackIcon />
             </IconButton>
@@ -279,17 +293,13 @@ function RequestToolbar(props) {
               Dashboard
             </Typography>
           </Grid>
-          <DialogSaveBeforeLeaving
-            toggleDialog={() => handleClickClose('DialogSaveBeforeLeaving')}
-            open={open.DialogSaveBeforeLeaving}
-          />
 
           <Grid item className={classes.actions}>
             {role === 'analyst' && (
               <>
+                {reactivateButton()}
                 {assignees.lead === currentUser && (
                   <>
-                    {reactivateButton()}
                     {requestChangesButton()}
                     {resolveButton()}
                     {startReviewButton()}
@@ -329,12 +339,17 @@ function RequestToolbar(props) {
           toggleDialog={() => handleClickClose('dialogDenied')}
           open={open.dialogDenied}
         />
-
         {/* Withdraw request dialog */}
         <DialogWithdraw
           toggleDialog={() => handleClickClose('dialogWithdraw')}
           open={open.dialogWithdraw}
         />
+        {/* Save before leaving dialog */}
+        <DialogSaveBeforeLeaving
+          toggleDialog={() => handleClickClose('dialogSave')}
+          open={open.dialogSave}
+        />
+
         {/* Approve request snackbar */}
         <SnackbarApproveRequest
           open={open.snackbarApprove}

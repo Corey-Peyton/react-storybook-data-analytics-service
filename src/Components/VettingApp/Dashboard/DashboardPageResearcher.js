@@ -14,11 +14,11 @@ import Header from '../CommonComponents/Header';
 import Footer from '../CommonComponents/Footer';
 import SummaryDrawer from '../CommonComponents/SummaryDrawer';
 import ProjectsDrawer from './Common/ProjectsDrawer';
-import BypassBlocks from '../../BypassBlocks';
+import BypassBlocks from '../../CommonComponents/BypassBlocks';
 import {requestListResearchers} from '../../../Data/fakeData';
 import {DRAWER_WIDTH} from './Common/ProjectsDrawer';
 import {FOOT_H} from '../../../Theme/constants';
-import {DialognNewRequestTitle} from '../CommonComponents/DialogBox';
+import {DialogNewRequestTitle} from '../CommonComponents/DialogBox';
 import FloatingSupportButton from '../CommonComponents/Support';
 
 const useStyles = makeStyles((theme) => ({
@@ -42,7 +42,7 @@ const useStyles = makeStyles((theme) => ({
     top: 0,
     left: 'auto',
     width: '100%',
-    padding: theme.spacing(2, 1, 1),
+    padding: theme.spacing(2, 1, 1, '!important'),
     display: 'flex',
     flexDirection: 'row',
     justifyContent: 'space-between',
@@ -266,7 +266,7 @@ export default function DashboardPageResearcher() {
           </AppBar>
           <TabPanel value={value} index={0} className={classes.tabPanel}>
             <TableContainerComponent
-              status="active"
+              statusHead="active"
               filteredRows={filteredRows}
               headCells={headCells}
               contextSummaryClick={toggleSummaryDrawer}
@@ -276,7 +276,7 @@ export default function DashboardPageResearcher() {
           </TabPanel>
           <TabPanel value={value} index={1} className={classes.tabPanel}>
             <TableContainerComponent
-              status="withdrawn"
+              statusHead="withdrawn"
               filteredRows={filteredRows}
               headCells={headCells}
               contextSummaryClick={toggleSummaryDrawer}
@@ -286,7 +286,7 @@ export default function DashboardPageResearcher() {
           </TabPanel>
           <TabPanel value={value} index={2} className={classes.tabPanel}>
             <TableContainerComponent
-              status="approved"
+              statusHead="approved"
               filteredRows={filteredRows}
               headCells={headCells}
               contextSummaryClick={toggleSummaryDrawer}
@@ -296,7 +296,7 @@ export default function DashboardPageResearcher() {
           </TabPanel>
           <TabPanel value={value} index={3} className={classes.tabPanel}>
             <TableContainerComponent
-              status="denied"
+              statusHead="denied"
               filteredRows={filteredRows}
               headCells={headCells}
               contextSummaryClick={toggleSummaryDrawer}
@@ -306,7 +306,7 @@ export default function DashboardPageResearcher() {
           </TabPanel>
         </Paper>
         <Footer open={open.projectsDrawer} />
-        <DialognNewRequestTitle
+        <DialogNewRequestTitle
           open={open.newRequest}
           role="researcher"
           toggleDialog={() => toggleDialog('newRequest', !open.newRequest)}

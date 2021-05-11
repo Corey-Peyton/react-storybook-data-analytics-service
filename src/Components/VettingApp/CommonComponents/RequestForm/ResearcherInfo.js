@@ -511,7 +511,7 @@ function ResearchInfo(props) {
           <TextField
             id="Createdon"
             name="Createdon"
-            label="Created on"
+            label="Created"
             variant="outlined"
             required
             fullWidth
@@ -532,7 +532,7 @@ function ResearchInfo(props) {
           <TextField
             id="Updatedon"
             name="Updatedon"
-            label="Updated on"
+            label="Updated"
             variant="outlined"
             required
             fullWidth

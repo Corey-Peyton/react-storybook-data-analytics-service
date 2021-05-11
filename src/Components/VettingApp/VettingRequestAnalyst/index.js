@@ -30,6 +30,11 @@ import ManageTeamDrawer from '../CommonComponents/ManageTeamDrawer';
 const useStyles = makeStyles((theme) => ({
   pageContainer: {
     marginTop: theme.spacing(8),
+    paddingTop: theme.spacing(8),
+    [theme.breakpoints.down('xs')]: {
+      marginTop: theme.spacing(7),
+      paddingTop: theme.spacing(7),
+    },
   },
   main: {
     background: theme.palette.grey[100],
@@ -95,6 +100,7 @@ function VettingRequestAnalyst(props) {
     setOpen({...open, manageTeamDrawer: !open.manageTeamDrawer});
   };
   const classes = useStyles();
+
   const [state, setState] = React.useState({
     activeStep: 0,
     completed: {},
@@ -124,6 +130,7 @@ function VettingRequestAnalyst(props) {
   };
 
   const handleNext = () => {
+    window.scrollTo(0, 0);
     const newActiveStep =
       isLastStep() && !allStepsCompleted() ?
         steps.findIndex((step, i) => !(i in state.completed)) :
@@ -132,6 +139,7 @@ function VettingRequestAnalyst(props) {
   };
 
   const handleBack = () => {
+    window.scrollTo(0, 0);
     const prevActiveStep = state.activeStep;
     setState({...state, activeStep: prevActiveStep - 1});
   };
@@ -196,7 +204,7 @@ function VettingRequestAnalyst(props) {
     <>
       <Header />
       <main className={classes.main} tabIndex="-1">
-        <Container maxWidth="xl" className={classes.pageContainer}>
+        <Container maxWidth={false} className={classes.pageContainer}>
           <ManageTeamDrawer
             open={open.manageTeamDrawer}
             clickHandler={toggleManageTeamDrawer}
@@ -337,7 +345,7 @@ function VettingRequestAnalyst(props) {
               )}
             </Grid>
           </Paper>
-          <FloatingSupportButton />
+          <FloatingSupportButton form />
         </Container>
       </main>
       <Footer />

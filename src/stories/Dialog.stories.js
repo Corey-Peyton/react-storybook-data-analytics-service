@@ -1,113 +1,216 @@
 import React from 'react';
 
-import {Button} from '../Components/CommonComponents/Button';
 import {Dialog} from '../Components/CommonComponents/Dialog';
-import {Typography, TextField} from '@material-ui/core';
+import {Typography, Button} from '@material-ui/core';
 
 export default {
   title: 'Molecules/Dialog',
   component: Dialog,
 };
 
-export const PassiveDialog = (args) => {
-  const [open, setOpen] = React.useState(false);
-  const handleOpen = () => {
-    setOpen(true);
-  };
-  const handleClose = () => {
-    setOpen(false);
-  };
-  return (
-    <>
-      <Button variant="contained" color="primary" onClick={handleOpen}>
-        Passive dialog
-      </Button>
-      <Dialog
-        id="passive-dialog"
-        open={open}
-        title="Passive dialog title"
-        content={
-          <Typography>
-            Passive dialog notification should only appear if there’s an action
-            the user needs to address immediately. Passive dialog notifications
-            are persistent on screen.
-          </Typography>
-        }
-        primaryButton="I got it"
-        handleClose={handleClose}
-      />
-    </>
-  );
-};
+export const SingleActionDialog = (args) => {
+  const [open, setOpen] = React.useState({
+    dialogSingleAction: false,
+  });
 
-export const TransactionalDialog = (args) => {
-  const [open, setOpen] = React.useState(false);
-  const handleOpen = () => {
-    setOpen(true);
+  const toggleDialog = (state, value, e) => {
+    e.stopPropagation();
+    setOpen({...open, [state]: value});
   };
-  const handleClose = () => {
-    setOpen(false);
-  };
-  return (
-    <>
-      <Button variant="contained" color="primary" onClick={handleOpen}>
-        Transactional dialog
-      </Button>
-      <Dialog
-        id="trans-dialog"
-        open={open}
-        title="Delete vetting request"
-        content={
-          <Typography>
-            Are you sure you want to delete the Vetting disclosure request
-            “Canadian Community Health Survey - Annual Component”?
-          </Typography>
-        }
-        primaryButton="Delete request"
-        secondaryButton="Cancel"
-        handleSecondaryClick={handleClose}
-        handleClose={handleClose}
-      />
-    </>
-  );
-};
 
-export const InputDialog = (args) => {
-  const [open, setOpen] = React.useState(false);
-  const handleOpen = () => {
-    setOpen(true);
-  };
-  const handleClose = () => {
-    setOpen(false);
-  };
   return (
     <>
-      <Button variant="contained" color="primary" onClick={handleOpen}>
-        Input dialog
+      <Button
+        variant="contained"
+        color="primary"
+        onClick={(e) => {
+          e.stopPropagation();
+          toggleDialog('dialogSingleAction', !open.dialogSingleAction, e);
+        }}
+      >
+        Single action dialog
       </Button>
       <Dialog
-        id="input-dialog"
-        open={open}
-        title="Assign to me"
+        id="single-action-dialog"
+        open={open.dialogSingleAction}
+        title="Single action dialog"
         content={
           <>
-            <Typography variant="subtitle2" className="mb-2">
-              Provide a phone number
+            <Typography variant="body2">
+              This is an example of a dialog with one action.
             </Typography>
-            <TextField
-              className="m-0 w-50"
-              id="phone-num"
-              label="Phone number"
-              required
-              variant="outlined"
-              margin="dense"
-            />
           </>
         }
-        primaryButton="Assign to me"
+        primaryButton="Close"
+        handlePrimaryClick={(e) => {
+          e.stopPropagation();
+          toggleDialog('dialogSingleAction', !open.dialogSingleAction, e);
+        }}
+        toggleDialog={(e) => {
+          e.stopPropagation();
+          toggleDialog('dialogSingleAction', !open.dialogSingleAction, e);
+        }}
+      />
+    </>
+  );
+};
+
+export const TwoActionDialog = (args) => {
+  const [open, setOpen] = React.useState({
+    dialogTwoAction: false,
+  });
+
+  const toggleDialog = (state, value, e) => {
+    e.stopPropagation();
+    setOpen({...open, [state]: value});
+  };
+
+  return (
+    <>
+      <Button
+        variant="contained"
+        color="primary"
+        onClick={(e) => {
+          e.stopPropagation();
+          toggleDialog('dialogTwoAction', !open.dialogTwoAction, e);
+        }}
+      >
+        Two action dialog
+      </Button>
+      <Dialog
+        id="two-action-dialog"
+        open={open.dialogTwoAction}
+        title="Two action dialog"
+        content={
+          <>
+            <Typography variant="body2">
+              This is an example of a dialog with two actions.
+            </Typography>
+          </>
+        }
+        primaryButton="Submit"
         secondaryButton="Cancel"
-        handleSecondaryClick={handleClose}
-        handleClose={handleClose}
+        handlePrimaryClick={(e) => {
+          e.stopPropagation();
+          toggleDialog('dialogTwoAction', !open.dialogTwoAction, e);
+        }}
+        handleSecondaryClick={(e) => {
+          e.stopPropagation();
+          toggleDialog('dialogTwoAction', !open.dialogTwoAction, e);
+        }}
+        toggleDialog={(e) => {
+          e.stopPropagation();
+          toggleDialog('dialogTwoAction', !open.dialogTwoAction, e);
+        }}
+      />
+    </>
+  );
+};
+
+export const ThreeActionDialog = (args) => {
+  const [open, setOpen] = React.useState({
+    dialogThreeAction: false,
+  });
+
+  const toggleDialog = (state, value, e) => {
+    e.stopPropagation();
+    setOpen({...open, [state]: value});
+  };
+
+  return (
+    <>
+      <Button
+        variant="contained"
+        color="primary"
+        onClick={(e) => {
+          e.stopPropagation();
+          toggleDialog('dialogThreeAction', !open.dialogThreeAction, e);
+        }}
+      >
+        Three action dialog
+      </Button>
+      <Dialog
+        id="three-action-dialog"
+        open={open.dialogThreeAction}
+        title="Three action dialog"
+        content={
+          <>
+            <Typography variant="body2">
+              This is an example of a dialog with three actions.
+            </Typography>
+          </>
+        }
+        primaryButton="Submit"
+        secondaryButton="Cancel"
+        thirdButton="Other action"
+        handlePrimaryClick={(e) => {
+          e.stopPropagation();
+          toggleDialog('dialogThreeAction', !open.dialogThreeAction, e);
+        }}
+        handleSecondaryClick={(e) => {
+          e.stopPropagation();
+          toggleDialog('dialogThreeAction', !open.dialogThreeAction, e);
+        }}
+        handleThirdClick={(e) => {
+          e.stopPropagation();
+          toggleDialog('dialogThreeAction', !open.dialogThreeAction, e);
+        }}
+        toggleDialog={(e) => {
+          e.stopPropagation();
+          toggleDialog('dialogThreeAction', !open.dialogThreeAction, e);
+        }}
+      />
+    </>
+  );
+};
+
+export const BackButtonDialog = (args) => {
+  const [open, setOpen] = React.useState({
+    dialogBackButton: false,
+  });
+
+  const toggleDialog = (state, value, e) => {
+    e.stopPropagation();
+    setOpen({...open, [state]: value});
+  };
+
+  return (
+    <>
+      <Button
+        variant="contained"
+        color="primary"
+        onClick={(e) => {
+          e.stopPropagation();
+          toggleDialog('dialogBackButton', !open.dialogBackButton, e);
+        }}
+      >
+        Back button dialog
+      </Button>
+      <Dialog
+        id="back-button-dialog"
+        open={open.dialogBackButton}
+        title="Back button dialog"
+        content={
+          <>
+            <Typography variant="body2">
+              This is an example of a dialog with one action and a back button.
+            </Typography>
+          </>
+        }
+        primaryButton="Next"
+        backButton="Back"
+        handlePrimaryClick={(e) => {
+          e.stopPropagation();
+          toggleDialog('dialogBackButton', !open.dialogBackButton, e);
+        }}
+        handleBackClick={(e) => {
+          e.stopPropagation();
+          toggleDialog('dialogBackButton', !open.dialogBackButton, e);
+        }}
+        toggleDialog={(e) => {
+          e.stopPropagation();
+          toggleDialog('dialogBackButton', !open.dialogBackButton, e);
+        }}
       />
     </>
   );

@@ -30,6 +30,7 @@ import RequestToolbar from '../CommonComponents/RequestToolbar';
 const useStyles = makeStyles((theme) => ({
   pageContainer: {
     marginTop: theme.spacing(8),
+    paddingTop: theme.spacing(8),
   },
   main: {
     background: theme.palette.grey[100],
@@ -132,6 +133,7 @@ function VettingRequestResearcher(props) {
   };
 
   const handleNext = () => {
+    window.scrollTo(0, 0);
     const newActiveStep =
       isLastStep() && !allStepsCompleted() ?
         steps.findIndex((step, i) => !(i in state.completed)) :
@@ -140,6 +142,7 @@ function VettingRequestResearcher(props) {
   };
 
   const handleBack = () => {
+    window.scrollTo(0, 0);
     const prevActiveStep = state.activeStep;
     setState({...state, activeStep: prevActiveStep - 1});
   };
@@ -382,7 +385,7 @@ function VettingRequestResearcher(props) {
               )}
             </Grid>
           </Paper>
-          <FloatingSupportButton />
+          <FloatingSupportButton form />
         </Container>
       </main>
       <Footer />

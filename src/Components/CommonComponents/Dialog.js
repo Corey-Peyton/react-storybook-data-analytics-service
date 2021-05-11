@@ -1,5 +1,7 @@
 import React from 'react';
+import {useTranslation} from 'react-i18next';
 import {makeStyles} from '@material-ui/core/styles';
+import clsx from 'clsx';
 import PropTypes from 'prop-types';
 import {
   Typography,
@@ -7,10 +9,13 @@ import {
   DialogTitle,
   DialogContent,
   DialogActions,
+  Grid,
+  Button,
+  IconButton,
 } from '@material-ui/core';
-import {Button} from './Button';
-import {IconButton} from './IconButton';
 import CloseIcon from '@material-ui/icons/Close';
+import Icon from '@mdi/react';
+import {mdiArrowLeft} from '@mdi/js';
 
 const useStyles = makeStyles((theme) => ({
   dialogTitle: {
@@ -29,13 +34,35 @@ const useStyles = makeStyles((theme) => ({
     borderTop: '1px solid',
     borderTopColor: theme.palette.divider,
   },
-  secondaryButton: {
-    marginRight: theme.spacing(1),
+  btnGroup: {
+    '& button': {
+      marginLeft: theme.spacing(2),
+    },
   },
 }));
 
 export function Dialog(props) {
   const classes = useStyles();
+  const {t} = useTranslation();
+  const {
+    toggleDialog,
+    open,
+    id,
+    title,
+    content,
+    primaryButton,
+    secondaryButton,
+    thirdButton,
+    backButton,
+    handlePrimaryClick,
+    handleSecondaryClick,
+    handleThirdClick,
+    handleBackClick,
+  } = props;
+
+  const handleClick = (e) => {
+    e.stopPropagation();
+  };
 
   return (
     <React.Fragment>
@@ -43,48 +70,126 @@ export function Dialog(props) {
         classes={{
           paper: classes.dialogPaper,
         }}
-        onClose={props.handleClose}
-        aria-labelledby={props.id}
-        open={props.open}
+        onClose={toggleDialog}
+        aria-labelledby={id}
+        open={open}
         maxWidth="sm"
         fullWidth={true}
+        disableBackdropClick
+        onClick={handleClick}
+        onKeyPress={(e) => {
+          if (e.key === 'Enter') {
+            e.preventDefault();
+            e.stopPropagation();
+          }
+        }}
       >
-        <DialogTitle
-          id={props.id}
-          className={classes.dialogTitle}
-          disableTypography
-        >
-          <Typography variant="h6" component="h2">
-            {props.title}
-          </Typography>
-          <IconButton onClick={props.handleClose} edge="end">
+        <DialogTitle id={id} className={classes.dialogTitle} disableTypography>
+          <Grid container alignItems="center">
+            {backButton && (
+              <Grid item>
+                <IconButton
+                  className="mr-1"
+                  aria-label={backButton}
+                  edge="start"
+                  onClick={handleBackClick}
+                  onKeyPress={(e) => {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    if (e.key === 'Enter') {
+                      handleBackClick();
+                    }
+                  }}
+                >
+                  <Icon path={mdiArrowLeft} size={1} />
+                </IconButton>
+              </Grid>
+            )}
+            <Grid item>
+              <Typography component="h2" variant="h6">
+                {title}
+              </Typography>
+            </Grid>
+          </Grid>
+          <IconButton
+            aria-label={`${title} - ${t('close')}`}
+            onClick={toggleDialog}
+            edge="end"
+            onKeyPress={(e) => {
+              e.preventDefault();
+              e.stopPropagation();
+              if (e.key === 'Enter') {
+                toggleDialog(e);
+              }
+            }}
+          >
             <CloseIcon />
           </IconButton>
         </DialogTitle>
-        <DialogContent className={classes.dialogContent}>
-          {props.content}
+        <DialogContent>
+          <div className={classes.dialogContent}>{content}</div>
         </DialogContent>
-        {props.secondaryButton || props.primaryButton ? (
+        {secondaryButton || primaryButton ? (
           <DialogActions className={classes.dialogFooter}>
-            {props.secondaryButton && (
-              <Button
-                className={classes.secondaryButton}
-                variant="outlined"
-                color="primary"
-                onClick={props.handleSecondaryClick}
-              >
-                {props.secondaryButton}
-              </Button>
-            )}
-            {props.primaryButton && (
-              <Button
-                variant="contained"
-                color="primary"
-                onClick={props.handlePrimaryClick}
-              >
-                {props.primaryButton}
-              </Button>
-            )}
+            <Grid container justify="space-between">
+              <Grid item>
+                {thirdButton && (
+                  <Button
+                    className={clsx(
+                        classes.thirdButton,
+                        'MuiIconButton-edgeStart',
+                    )}
+                    color="primary"
+                    onKeyPress={(e) => {
+                      e.preventDefault();
+                      e.stopPropagation();
+                      if (e.key === 'Enter') {
+                        handleThirdClick(e);
+                      }
+                    }}
+                    onClick={handleThirdClick}
+                  >
+                    {thirdButton}
+                  </Button>
+                )}
+              </Grid>
+
+              <Grid item className={classes.btnGroup}>
+                {secondaryButton && (
+                  <Button
+                    className={classes.secondaryButton}
+                    variant="outlined"
+                    color="primary"
+                    onKeyPress={(e) => {
+                      e.preventDefault();
+                      e.stopPropagation();
+                      if (e.key === 'Enter') {
+                        handleSecondaryClick(e);
+                      }
+                    }}
+                    onClick={handleSecondaryClick}
+                  >
+                    {secondaryButton}
+                  </Button>
+                )}
+                {primaryButton && (
+                  <Button
+                    variant="contained"
+                    color="primary"
+                    onKeyPress={(e) => {
+                      e.preventDefault();
+                      e.stopPropagation();
+                      if (e.key === 'Enter') {
+                        handlePrimaryClick(e);
+                      }
+                    }}
+                    onClick={handlePrimaryClick}
+                  >
+                    {primaryButton}
+                  </Button>
+                )}
+              </Grid>
+            </Grid>
           </DialogActions>
         ) : (
           ''
@@ -120,9 +225,13 @@ Dialog.propTypes = {
    */
   secondaryButton: PropTypes.string,
   /**
-   Click handler to close dialog
+   Text for third button
    */
-  handleClose: PropTypes.func.isRequired,
+  thirdButton: PropTypes.string,
+  /**
+   Text for back button
+   */
+  backButton: PropTypes.string,
   /**
    Click handler for primary action
    */
@@ -131,6 +240,14 @@ Dialog.propTypes = {
    Click handler for secondary action
    */
   handleSecondaryClick: PropTypes.func,
+  /**
+   Click handler for third action
+   */
+  handleThirdClick: PropTypes.func,
+  /**
+   Click handler for back button
+   */
+  handleBackClick: PropTypes.func,
 };
 
 Dialog.defaultProps = {

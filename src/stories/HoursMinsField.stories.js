@@ -2,7 +2,7 @@ import React from 'react';
 import {makeStyles} from '@material-ui/core/styles';
 
 import {HoursMinsField} from '../Components/CommonComponents/HoursMinsField';
-import {Button} from '../Components/CommonComponents/Button';
+import {Button} from '@material-ui/core';
 
 export default {
   title: 'Molecules/HoursMinsField',
@@ -35,7 +35,6 @@ export const BasicField = (args) => {
   const handleValidation = (event) => {
     const hours = parseInt(state.hours, 10);
     const mins = parseInt(state.minutes, 10);
-    console.log(hours, mins);
     if (hours === 0 && mins === 0) {
       setState({...state, error: 'The minimum accepted value is 1 minute.'});
     } else if (!hours && !mins) {
