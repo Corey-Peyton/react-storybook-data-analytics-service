@@ -34,7 +34,7 @@ const useStyles = makeStyles((theme) => ({
     margin: theme.spacing(3, 0),
   },
   dividerHeight: {
-    marginTop: theme.spacing(2),
+    marginTop: theme.spacing(3),
   },
   paper: {
     maxWidth: '1280px',
@@ -95,7 +95,7 @@ function getSteps() {
 }
 
 function PowerShell(props) {
-  window.onbeforeunload = () => '';
+  // window.onbeforeunload = () => '';
   const classes = useStyles();
   const [state, setState] = React.useState({
     activeStep: 0,
