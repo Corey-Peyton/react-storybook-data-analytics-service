@@ -6,33 +6,14 @@ export const useStyles = makeStyles({
   '@global': {
     // ************* Overrides **************
 
-    // Disable pulse animation
-    '.MuiTouchRipple-childPulsate': {
-      animation: 'none',
-    },
-
     // Breadcrumbs
     '.MuiBreadcrumbs-root': {
       marginBottom: theme.spacing(2),
     },
 
     // Buttons
-    '.MuiButton-label, .MuiTab-wrapper, .MuiFab-label': {
+    '.MuiTab-wrapper, .MuiFab-label': {
       textTransform: 'none',
-    },
-    '.MuiInputLabel-outlined': {
-      '&.MuiInputLabel-shrink': {
-        transform: 'translate(14px, -6px) scale(0.857)',
-      },
-    },
-    '.MuiIconButton-root': {
-      padding: theme.spacing(1),
-    },
-    '.MuiIconButton-edgeStart': {
-      marginLeft: theme.spacing(-1),
-    },
-    '.MuiIconButton-edgeEnd': {
-      marginRight: theme.spacing(-1),
     },
     '.MuiButton-text.edge-start': {
       marginLeft: theme.spacing(-1),
@@ -98,6 +79,11 @@ export const useStyles = makeStyles({
     '.MuiOutlinedInput-inputMarginDense': {
       paddingTop: '13px',
       paddingBottom: '13px',
+    },
+    '.MuiInputLabel-outlined': {
+      '&.MuiInputLabel-shrink': {
+        transform: 'translate(14px, -6px) scale(0.857)',
+      },
     },
     '.MuiFormControlLabel-root': {
       marginLeft: theme.spacing(-1),

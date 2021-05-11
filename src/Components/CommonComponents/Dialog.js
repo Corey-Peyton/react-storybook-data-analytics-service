@@ -10,9 +10,9 @@ import {
   DialogContent,
   DialogActions,
   Grid,
+  Button,
+  IconButton,
 } from '@material-ui/core';
-import {Button} from './Button';
-import {IconButton} from './IconButton';
 import CloseIcon from '@material-ui/icons/Close';
 import Icon from '@mdi/react';
 import {mdiArrowLeft} from '@mdi/js';
