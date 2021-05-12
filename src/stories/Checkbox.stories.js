@@ -28,7 +28,7 @@ export const Group = (args) => {
 
   return (
     <>
-      <FormControl component="fieldset" fullWidth={true}>
+      <FormControl component="fieldset">
         <FormLabel component="legend">Assign responsibility</FormLabel>
         <FormHelperText>Select all that apply</FormHelperText>
         <FormGroup>
@@ -102,7 +102,7 @@ export const GroupError = (args) => {
 
   return (
     <>
-      <FormControl component="fieldset" error={error} fullWidth={true}>
+      <FormControl component="fieldset" error={error}>
         <FormLabel component="legend">Assign responsibility</FormLabel>
         <FormHelperText>Error text</FormHelperText>
         <FormGroup>
@@ -171,7 +171,7 @@ export const Individual = (args) => {
   };
   return (
     <>
-      <FormControl component="fieldset" fullWidth={true}>
+      <FormControl component="fieldset">
         <FormLabel component="legend" className="screen-reader-text">
           Select if you agree
         </FormLabel>
@@ -212,7 +212,7 @@ export const IndividualError = (args) => {
 
   return (
     <>
-      <FormControl component="fieldset" error={!state.terms} fullWidth={true}>
+      <FormControl component="fieldset" error={!state.terms}>
         <FormLabel component="legend" className="screen-reader-text">
           Select if you agree
         </FormLabel>

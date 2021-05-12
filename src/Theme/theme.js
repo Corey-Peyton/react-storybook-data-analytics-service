@@ -8,6 +8,9 @@ const props = {
   MuiIconButton: {
     disableFocusRipple: true,
   },
+  MuiFormControl: {
+    fullWidth: true,
+  },
 };
 
 const shadows = [
