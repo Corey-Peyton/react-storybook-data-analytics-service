@@ -111,6 +111,8 @@ function VettingRequestAnalyst(props) {
     lead: props.lead,
     support: props.support,
   });
+  const prevStep = React.useRef(null);
+  const nextStep = React.useRef(null);
   const steps = getSteps();
 
   const totalSteps = () => {
@@ -129,6 +131,17 @@ function VettingRequestAnalyst(props) {
     return completedSteps() === totalSteps();
   };
 
+  const getStepRef = (step) => {
+    const activeStep = state.activeStep;
+    if (activeStep === step + 1) {
+      return prevStep;
+    } else if (activeStep === step - 1) {
+      return nextStep;
+    } else {
+      return null;
+    }
+  };
+
   const handleNext = () => {
     window.scrollTo(0, 0);
     const newActiveStep =
@@ -136,12 +149,14 @@ function VettingRequestAnalyst(props) {
         steps.findIndex((step, i) => !(i in state.completed)) :
         state.activeStep + 1;
     setState({...state, activeStep: newActiveStep});
+    nextStep.current.focus();
   };
 
   const handleBack = () => {
     window.scrollTo(0, 0);
     const prevActiveStep = state.activeStep;
     setState({...state, activeStep: prevActiveStep - 1});
+    prevStep.current.focus();
   };
 
   const handleStep = (step) => () => {
@@ -257,13 +272,17 @@ function VettingRequestAnalyst(props) {
                     );
                   }
                   return (
-                    <Step key={label}>
+                    <Step key={label} ref={getStepRef(index)} tabIndex="-1">
                       <StepButton
                         {...buttonProps}
                         onClick={handleStep(index)}
                         completed={state.completed[index]}
                       >
-                        <StepLabel {...labelProps}>{label}</StepLabel>
+                        <StepLabel {...labelProps}>
+                          <span className="screen-reader-text">{`Step ${index +
+                            1}: `}</span>
+                          {label}
+                        </StepLabel>
                       </StepButton>
                     </Step>
                   );

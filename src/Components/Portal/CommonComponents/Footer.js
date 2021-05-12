@@ -27,6 +27,9 @@ const useStyles = makeStyles((theme) => ({
     display: 'flex',
     alignItems: 'center',
   },
+  nowrap: {
+    whiteSpace: 'nowrap',
+  },
 }));
 
 const Footer = React.forwardRef((props, ref) => {
@@ -104,14 +107,14 @@ const Footer = React.forwardRef((props, ref) => {
                   </ul>
                 </Grid>
                 <Grid item>
-                  <Grid container spacing={4}>
+                  <Grid container spacing={4} wrap="nowrap">
                     <Grid item>
-                      <Typography variant="body2">
+                      <Typography variant="body2" className={classes.nowrap}>
                         {t('Updated Fed 24, 2021 (v2.0)')}
                       </Typography>
                     </Grid>
                     <Grid item>
-                      <Typography variant="body2">
+                      <Typography variant="body2" className={classes.nowrap}>
                         {t('Illustrations by')}{' '}
                         <Link
                           underline="always"
