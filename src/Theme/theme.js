@@ -11,6 +11,10 @@ const props = {
   MuiFormControl: {
     fullWidth: true,
   },
+  MuiTextField: {
+    margin: 'dense',
+    variant: 'outlined',
+  },
 };
 
 const shadows = [

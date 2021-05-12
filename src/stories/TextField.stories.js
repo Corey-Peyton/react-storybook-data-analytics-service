@@ -1,6 +1,15 @@
 import React from 'react';
 import {InputAdornment, TextField} from '@material-ui/core';
 import AccountCircle from '@material-ui/icons/AccountCircle';
+import {makeStyles} from '@material-ui/core/styles';
+
+const useStyles = makeStyles((theme) => ({
+  container: {
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'flex-start',
+  },
+}));
 
 export default {
   title: 'Molecules/TextFields',
@@ -8,7 +17,7 @@ export default {
   argTypes: {
     autoComplete: {
       description:
-        'This prop helps users to fill forms faster, especially on mobile devices. The name can be confusing, as its more like an autofill.',
+        'This prop helps users to fill forms faster, especially on mobile devices.',
     },
     autoFocus: {
       table: {
@@ -130,95 +139,58 @@ export default {
   },
 };
 
-export const TextFields = (args) => (
-  <TextField variant="outlined" label="Outlined" margin="dense" {...args} />
-);
-TextFields.args = {
-  autoComplete: '',
-  autoFocus: false,
-  color: '',
-  defaultValue: '',
-  disabled: false,
-  endAdornment: '',
-  error: false,
-  fullWidth: false,
-  helpertext: '',
-  id: '',
-  label: 'Outlined',
-  margin: 'dense',
-  multiline: false,
-  placeholder: '',
-  required: false,
-  rows: '',
-  rowsmax: '',
-  startAdornment: '',
-  select: false,
-  size: '',
-  type: '',
-  value: '',
-  variant: 'outlined',
-};
+export const TextFields = (args) => <TextField {...args} />;
+TextFields.args = {};
 
 export const OutlinedTextField = (args) => {
+  const classes = useStyles();
+
   return (
-    <>
+    <div className={classes.container}>
       <TextField
-        id="standard-basic"
+        className="input-margin"
+        id="full-width"
         label="Full width"
-        variant="outlined"
         fullWidth
-        margin="dense"
       />
       <TextField
+        className="input-margin"
         id="outlined-basic"
         label="Required"
-        variant="outlined"
         required
-        margin="dense"
-        className="mr-2 mt-2"
       />
       <TextField
-        id="outlined-basic"
+        className="input-margin"
+        id="disabled"
         label="Disabled"
-        variant="outlined"
         disabled
-        margin="dense"
-        className="mr-2 mt-2"
       />
       <TextField
-        id="outlined-basic"
-        label="Type"
-        variant="outlined"
+        className="input-margin"
+        id="number"
+        label="Number"
         type="number"
         InputLabelProps={{
           shrink: true,
         }}
-        margin="dense"
-        className="mr-2 mt-2"
       />
       <TextField
-        id="outlined-basic"
+        className="input-margin"
+        id="help-text"
         label="Helper text"
-        variant="outlined"
         defaultValue="Default Value"
         helperText="Some important text"
-        margin="dense"
-        className="mr-2 mt-2"
       />
       <TextField
+        className="input-margin"
         label="Error"
-        id="standard-start-adornment"
-        variant="outlined"
-        InputProps={{
-          error: true,
-        }}
-        margin="dense"
-        className="mr-2"
+        id="error"
+        error={true}
       />
       <TextField
+        className="input-margin"
         label="Adornment"
         id="standard-start-adornment"
-        variant="outlined"
         InputProps={{
           startAdornment: (
             <InputAdornment position="start">
@@ -226,26 +198,14 @@ export const OutlinedTextField = (args) => {
             </InputAdornment>
           ),
         }}
-        margin="dense"
-        className="mr-2"
       />
-
       <TextField
-        id="standard-basic"
+        className="input-margin"
+        id="multiline"
         label="Multiline"
-        variant="outlined"
         multiline
         rows={2}
-        margin="dense"
-        className="mr-2"
       />
-      <TextField
-        id="standard-basic"
-        variant="outlined"
-        label="Size medium"
-        size="medium"
-        margin="dense"
-      />
-    </>
+    </div>
   );
 };

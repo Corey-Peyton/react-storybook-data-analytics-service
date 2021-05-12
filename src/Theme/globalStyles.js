@@ -82,7 +82,7 @@ export const useStyles = makeStyles({
     },
     '.MuiInputLabel-outlined': {
       '&.MuiInputLabel-shrink': {
-        transform: 'translate(14px, -6px) scale(0.857)',
+        transform: 'translate(14px, -5px) scale(0.857)',
       },
     },
     '.MuiFormControlLabel-root': {
