@@ -100,10 +100,9 @@ export const GroupError = (args) => {
 
   return (
     <>
-      <FormControl component="fieldset" error={true} fullWidth={true}>
+      <FormControl component="fieldset" error={!state.gender} fullWidth={true}>
         <FormLabel component="legend">Gender</FormLabel>
         <FormHelperText>Error text</FormHelperText>
-
         <RadioGroup
           aria-label="gender"
           name="gender"

@@ -102,7 +102,19 @@ export const useStyles = makeStyles({
       color: theme.palette.text.primary,
     },
     'legend.MuiFormLabel-root.Mui-error': {
-      color: theme.palette.error.main,
+      'color': theme.palette.error.main,
+      '& +.MuiFormGroup-root': {
+        '& .MuiRadio-root, & .MuiCheckbox-root': {
+          color: theme.palette.error.main,
+        },
+      },
+    },
+    '.MuiFormHelperText-root.Mui-error': {
+      '& +.MuiFormGroup-root': {
+        '& .MuiRadio-root, & .MuiCheckbox-root': {
+          color: theme.palette.error.main,
+        },
+      },
     },
     '.MuiFormGroup-root': {
       '& .MuiFormControlLabel-root': {
