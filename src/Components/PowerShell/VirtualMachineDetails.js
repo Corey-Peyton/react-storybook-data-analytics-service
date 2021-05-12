@@ -5,6 +5,7 @@ import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
 import {DialogDelete} from '../VettingApp/CommonComponents/DialogBox';
 import {useTranslation} from 'react-i18next';
+import {MachineDetailsDrawer} from './MachineDetailsDrawer';
 import {green} from '@material-ui/core/colors';
 import {SnackbarEditVirtualMachine} from '../VettingApp/CommonComponents/Snackbars';
 import {EditVirtualMachine, AddVirtualMachine} from './AddVirtualMachine';
@@ -16,9 +17,10 @@ import CardActions from '@material-ui/core/CardActions';
 import IconButton from '@material-ui/core/IconButton';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import Button from '@material-ui/core/Button';
+import {Drawer} from '../CommonComponents/Drawer';
 import {makeStyles} from '@material-ui/core/styles';
 import {SnackbarAddVirtualMachine} from '../VettingApp/CommonComponents/Snackbars';
-import {Typography, Drawer, Divider, Grid} from '@material-ui/core';
+import {Typography, Divider, Grid} from '@material-ui/core';
 import Box from '@material-ui/core/Box';
 import {
   mdiSmartCardOutline,
@@ -187,6 +189,18 @@ function VirtualMachine(props) {
 
   const handleClickClose = (element) => {
     setState({...state, [element]: false});
+  };
+
+  const [open, setOpen] = React.useState({
+    MachineDetailsDrawer: false,
+  });
+
+  const openDrawer = (element) => {
+    setOpen({...open, [element]: true});
+  };
+
+  const closeDrawer = (element) => {
+    setOpen({...open, [element]: false});
   };
 
   const {t} = useTranslation();
@@ -500,25 +514,19 @@ function VirtualMachine(props) {
             </Card>
           )}
 
-          <Drawer
-            anchor="right"
-            open={state.editVirtualMachine}
-            className={classes.drawer}
+          <MachineDetailsDrawer
+            open={open.MachineDetailsDrawer}
+            closeDrawer={() => closeDrawer('MachineDetailsDrawer')}
           >
-            <EditVirtualMachine
-              toggleDrawer={toggleDrawer}
-              editVirtualMachine={editVirtualMachine}
-              handleClickOpen={handleClickOpen}
+            <SnackbarEditVirtualMachine
+              open={state.snackbarEditVirtualMachine}
+              handleClose={() => handleClickClose('snackbarEditVirtualMachine')}
             />
-          </Drawer>
-          <SnackbarEditVirtualMachine
-            open={state.snackbarEditVirtualMachine}
-            handleClose={() => handleClickClose('snackbarEditVirtualMachine')}
-          />
+          </MachineDetailsDrawer>
           <Button
             variant="outlined"
             color="primary"
-            onClick={(e) => toggleDrawer(e, 'addVirtualMachine', true)}
+            onClick={() => openDrawer('MachineDetailsDrawer')}
           >
             {t('Add virtual machine details')}
           </Button>

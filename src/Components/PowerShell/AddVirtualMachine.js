@@ -28,49 +28,9 @@ import CloseIcon from '@material-ui/icons/Close';
 import Autocomplete from '@material-ui/lab/Autocomplete';
 
 const useStyles = makeStyles((theme) => ({
-  inputMargin: {
-    marginTop: theme.spacing(0),
-    marginBottom: theme.spacing(3),
-  },
   paddingTopBottom: {
     paddingBottom: theme.spacing(3),
     paddingTop: theme.spacing(3),
-  },
-  appBar: {
-    'backgroundColor': theme.palette.common.white,
-    'margin': theme.spacing(0, -3, 3, 0),
-    'boxShadow': theme.shadows[0],
-    'borderBottom': '1px solid',
-    'borderBottomColor': theme.palette.divider,
-    'position': 'fixed',
-    'top': 0,
-    'zIndex': 500,
-    'width': '400px',
-    '& .MuiToolbar-root': {
-      justifyContent: 'space-between',
-      padding: theme.spacing(0, 3),
-    },
-  },
-  body: {
-    marginTop: theme.spacing(8),
-    marginBottom: theme.spacing(10),
-    padding: theme.spacing(3, 3, 3, 3),
-    overflowY: 'auto',
-    overflowX: 'hidden',
-  },
-  footer: {
-    display: 'flex',
-    justifyContent: 'flex-end',
-    marginRight: theme.spacing(-3),
-    padding: theme.spacing(3, 3),
-    borderTop: '1px solid',
-    borderTopColor: theme.palette.divider,
-    position: 'fixed',
-    bottom: 0,
-    width: '400px',
-    boxSizing: 'border-box',
-    backgroundColor: theme.palette.common.white,
-    zIndex: 500,
   },
 }));
 
