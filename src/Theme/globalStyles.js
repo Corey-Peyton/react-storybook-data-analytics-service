@@ -236,7 +236,7 @@ export const useStyles = makeStyles({
         },
       },
       '& .MuiFormLabel-root': {
-        'line-height': 1,
+        // 'line-height': 1,
         'background-color': 'white',
       },
       '& .MuiOutlinedInput-multiline': {
