@@ -5,6 +5,7 @@ import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
 import {DialogDelete} from '../VettingApp/CommonComponents/DialogBox';
 import {useTranslation} from 'react-i18next';
+import {MachineDetailsDrawer} from './MachineDetailsDrawer';
 import {green} from '@material-ui/core/colors';
 import {SnackbarEditVirtualMachine} from '../VettingApp/CommonComponents/Snackbars';
 import {EditVirtualMachine, AddVirtualMachine} from './AddVirtualMachine';
@@ -16,9 +17,10 @@ import CardActions from '@material-ui/core/CardActions';
 import IconButton from '@material-ui/core/IconButton';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import Button from '@material-ui/core/Button';
+import {Drawer} from '../CommonComponents/Drawer';
 import {makeStyles} from '@material-ui/core/styles';
 import {SnackbarAddVirtualMachine} from '../VettingApp/CommonComponents/Snackbars';
-import {Typography, Drawer, Divider, Grid} from '@material-ui/core';
+import {Typography, Divider, Grid} from '@material-ui/core';
 import Box from '@material-ui/core/Box';
 import {
   mdiSmartCardOutline,
@@ -60,21 +62,12 @@ const useStyles = makeStyles((theme) => ({
     backgroundColor: green[500],
     color: theme.palette.grey[100],
   },
-  hiddenCard: {
-    display: 'none',
-  },
   expandOpen: {
     transform: 'rotate(180deg)',
   },
   inputMargin: {
     marginTop: theme.spacing(0),
     marginBottom: theme.spacing(3),
-  },
-  drawer: {
-    '& .MuiDrawer-paper': {
-      maxWidth: '400px',
-      boxSizing: 'border-box',
-    },
   },
   powershellSection: {
     display: 'flex',
@@ -189,6 +182,18 @@ function VirtualMachine(props) {
     setState({...state, [element]: false});
   };
 
+  const [open, setOpen] = React.useState({
+    MachineDetailsDrawer: false,
+  });
+
+  const openDrawer = (element) => {
+    setOpen({...open, [element]: true});
+  };
+
+  const closeDrawer = (element) => {
+    setOpen({...open, [element]: false});
+  };
+
   const {t} = useTranslation();
 
   return (
@@ -238,7 +243,7 @@ function VirtualMachine(props) {
                     {t('Personal information')}
                   </Typography>
 
-                  <div className={classes.powershellRow}>
+                  <div className="classes.powershellRow">
                     <div
                       className={clsx(
                           classes.powershellColumn,
@@ -500,25 +505,20 @@ function VirtualMachine(props) {
             </Card>
           )}
 
-          <Drawer
-            anchor="right"
-            open={state.editVirtualMachine}
-            className={classes.drawer}
+          <MachineDetailsDrawer
+            open={open.MachineDetailsDrawer}
+            closeDrawer={() => closeDrawer('MachineDetailsDrawer')}
           >
             <EditVirtualMachine
               toggleDrawer={toggleDrawer}
               editVirtualMachine={editVirtualMachine}
               handleClickOpen={handleClickOpen}
             />
-          </Drawer>
-          <SnackbarEditVirtualMachine
-            open={state.snackbarEditVirtualMachine}
-            handleClose={() => handleClickClose('snackbarEditVirtualMachine')}
-          />
+          </MachineDetailsDrawer>
           <Button
             variant="outlined"
             color="primary"
-            onClick={(e) => toggleDrawer(e, 'addVirtualMachine', true)}
+            onClick={() => openDrawer('MachineDetailsDrawer')}
           >
             {t('Add virtual machine details')}
           </Button>
@@ -536,6 +536,10 @@ function VirtualMachine(props) {
           <SnackbarAddVirtualMachine
             open={state.snackbarAddVirtualMachine}
             handleClose={() => handleClickClose('snackbarAddVirtualMachine')}
+          />
+          <SnackbarEditVirtualMachine
+            open={state.snackbarEditVirtualMachine}
+            handleClose={() => handleClickClose('snackbarVirtualMachine')}
           />
           <DialogDelete
             submitDialog={deleteFile}
