@@ -509,10 +509,9 @@ function VirtualMachine(props) {
             open={open.MachineDetailsDrawer}
             closeDrawer={() => closeDrawer('MachineDetailsDrawer')}
           >
-            <EditVirtualMachine
-              toggleDrawer={toggleDrawer}
-              editVirtualMachine={editVirtualMachine}
-              handleClickOpen={handleClickOpen}
+            <SnackbarEditVirtualMachine
+              open={state.snackbarEditVirtualMachine}
+              handleClose={() => handleClickClose('snackbarEditVirtualMachine')}
             />
           </MachineDetailsDrawer>
           <Button
