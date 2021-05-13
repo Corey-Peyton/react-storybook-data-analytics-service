@@ -18,129 +18,196 @@ export default {
     autoComplete: {
       description:
         'This prop helps users to fill forms faster, especially on mobile devices.',
+      control: {
+        type: 'text',
+      },
+      table: {
+        type: {summary: 'string'},
+      },
     },
     autoFocus: {
-      table: {
-        defaultValue: {summary: 'false'},
-      },
       description:
         'If true, the input element will be focused during the first mount.',
+      control: {
+        type: 'boolean',
+      },
+      table: {
+        type: {summary: 'boolean'},
+        defaultValue: {summary: false},
+      },
     },
     color: {
-      table: {
-        defaultValue: {summary: 'primary'},
-      },
+      description:
+        'The color of the component. It supports those theme colors that make sense for this component.',
       control: {
         type: 'radio',
         options: ['primary', 'secondary'],
       },
-      description:
-        'The color of the component. It supports those theme colors that make sense for this component.',
-    },
-    defaultValue: {description: 'The default value of the input element.'},
-    disabled: {
       table: {
-        defaultValue: {summary: 'false'},
+        type: {summary: 'string'},
+        defaultValue: {summary: 'primary'},
       },
-      description: 'If true, the textfield will be disabled.',
     },
-    endAdornment: {
-      description:
-        'End InputAdornment for this component, applies to filled and outlined textfields only.',
+    defaultValue: {
+      description: 'The default value of the input element.',
+      control: {
+        type: 'text',
+      },
+      table: {
+        type: {summary: 'string'},
+      },
+    },
+    disabled: {
+      description: 'If true, the input element will be disabled.',
+      control: {
+        type: 'boolean',
+      },
+      table: {
+        type: {summary: 'boolean'},
+        defaultValue: {summary: false},
+      },
     },
     error: {
-      table: {
-        defaultValue: {summary: 'false'},
-      },
       description: 'If true, the label will be displayed in an error state.',
+      control: {
+        type: 'boolean',
+      },
+      table: {
+        type: {summary: 'boolean'},
+        defaultValue: {summary: false},
+      },
     },
     fullWidth: {
-      table: {
-        defaultValue: {summary: 'false'},
-      },
       description:
-        'If true, the textfield will take up the full width of its container.',
+        'If true, the input will take up the full width of its container.',
+      control: {
+        type: 'boolean',
+      },
+      table: {
+        type: {summary: 'boolean'},
+        defaultValue: {summary: false},
+      },
     },
-    helpertext: {
-      type: {name: 'node'},
+    helperText: {
       description: 'The helper text content.',
+      control: {
+        type: 'text',
+      },
+      table: {
+        type: {summary: 'string'},
+      },
     },
-    id: {description: 'Textfield id used for a11y'},
-    label: {type: {name: 'node'}, description: 'The label content.'},
+    id: {
+      description:
+        'The id of the input element. Use this prop to make label and helperText accessible for screen readers.',
+      control: {
+        type: 'text',
+      },
+      table: {
+        type: {summary: 'string'},
+      },
+    },
+    label: {
+      description: 'The label content.',
+      control: {
+        type: 'text',
+      },
+      table: {
+        type: {summary: 'string'},
+      },
+    },
     margin: {
+      description:
+        'If dense or normal, will adjust vertical spacing of this and contained components.',
       control: {
         type: 'radio',
         options: ['dense', 'none', 'normal'],
       },
-      description:
-        'If dense or normal, will adjust vertical spacing of this and contained components.',
+      table: {
+        type: {summary: 'string'},
+        defaultValue: {summary: 'dense'},
+      },
     },
     multiline: {
-      table: {
-        defaultValue: {summary: 'false'},
-      },
       description:
         'If true, a textarea element will be rendered instead of an input.',
+      control: {
+        type: 'boolean',
+      },
+      table: {
+        type: {summary: 'boolean'},
+        defaultValue: {summary: false},
+      },
+    },
+    name: {
+      description: 'Name attribute of the input element.',
+      control: {
+        type: 'text',
+      },
+      table: {
+        type: {summary: 'string'},
+      },
     },
     placeholder: {
       description:
         'The short hint displayed in the input before the user enters a value.',
+      control: {
+        type: 'text',
+      },
+      table: {
+        type: {summary: 'string'},
+      },
     },
     required: {
-      table: {
-        defaultValue: {summary: 'false'},
+      description:
+        'If true, the label is displayed as required and the input element` will be required.',
+      control: {
+        type: 'boolean',
       },
-      description: 'If true, the textfield will be disabled.',
+      table: {
+        type: {summary: 'boolean'},
+        defaultValue: {summary: false},
+      },
     },
     rows: {
       description:
         'Number of rows to display when multiline option is set to true.',
+      control: {
+        type: 'number',
+      },
+      table: {
+        type: {summary: 'number'},
+      },
     },
-    rowsmax: {
+    rowsMax: {
       description:
         'Maximum number of rows to display when multiline option is set to true.',
-    },
-    startAdornment: {
-      description:
-        'If true, the textfield will take up the full width of its container.',
-    },
-    select: {
-      table: {
-        defaultValue: {summary: 'false'},
-      },
-      description:
-        'Render a Select element while passing the Input element to Select as input parameter. If this option is set you must pass the options of the select as children.',
-    },
-    size: {
       control: {
-        type: 'radio',
-        options: ['small', 'medium'],
+        type: 'number',
       },
-      description: 'The size of the textfield',
-    },
-    type: {
-      description:
-        'Type of the input element. It should be a valid HTML5 input type.',
-    },
-    value: {
-      description:
-        'The value of the input element, required for a controlled component.',
+      table: {
+        type: {summary: 'number'},
+      },
     },
     variant: {
-      table: {
-        defaultValue: {summary: 'standard'},
-      },
+      description: 'The variant to use.',
       control: {
         type: 'radio',
         options: ['filled', 'outlined', 'standard'],
       },
-      description: 'The variant to use.',
+      table: {
+        type: {summary: 'string'},
+        defaultValue: {summary: 'outlined'},
+      },
     },
   },
 };
 
-export const TextFields = (args) => <TextField {...args} />;
-TextFields.args = {};
+export const Default = (args) => <TextField {...args} />;
+Default.args = {
+  id: 'default',
+  label: 'Default',
+};
 
 export const OutlinedTextField = (args) => {
   const classes = useStyles();
@@ -175,14 +242,20 @@ export const OutlinedTextField = (args) => {
         className="input-margin"
         id="help-text"
         label="Helper text"
-        defaultValue="Default Value"
-        helperText="Some important text"
+        helperText="Helper text"
+      />
+      <TextField
+        className="input-margin"
+        id="default-val"
+        label="Default value"
+        defaultValue="Default value"
       />
       <TextField
         className="input-margin"
         label="Error"
         id="error"
         error={true}
+        helperText="Error text"
       />
       <TextField
         className="input-margin"
