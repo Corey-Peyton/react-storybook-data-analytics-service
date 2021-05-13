@@ -3,7 +3,6 @@ import Link from '@material-ui/core/Link';
 import DateFnsUtils from '@date-io/date-fns';
 import {analystList} from '../../Data/fakeData';
 import {Drawer} from '../CommonComponents/Drawer';
-import {SnackbarAddVirtualMachine} from '../VettingApp/CommonComponents/Snackbars';
 import {
   KeyboardDatePicker,
   MuiPickersUtilsProvider,
@@ -39,19 +38,6 @@ export function MachineDetailsDrawer(props) {
     addVirtualMachine: false,
     showCard: false,
   });
-
-  const handleClickClose = (element) => {
-    setState({...state, [element]: false});
-  };
-
-  const addVirtualMachine = () => {
-    setState({
-      ...state,
-      snackbarAddVirtualMachine: true,
-      addVirtualMachine: false,
-      showCard: true,
-    });
-  };
 
   const security = [
     {label: 'Statistics Canada'},
@@ -284,10 +270,6 @@ export function MachineDetailsDrawer(props) {
             </FormGroup>
           </FormControl>
         </Grid>
-        <SnackbarAddVirtualMachine
-          open={state.snackbarAddVirtualMachine}
-          handleClose={() => handleClickClose('snackbarAddVirtualMachine')}
-        />
       </div>
     </>
   );
@@ -299,7 +281,7 @@ export function MachineDetailsDrawer(props) {
         content={content()}
         primaryButton={t('Add')}
         secondaryButton={t('Cancel')}
-        handlePrimaryClick={addVirtualMachine}
+        handlePrimaryClick={props.addVirtualMachine}
         handleSecondaryClick={props.closeDrawer}
         toggleDrawer={props.closeDrawer}
       />

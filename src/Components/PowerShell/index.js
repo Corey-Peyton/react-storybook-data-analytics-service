@@ -95,7 +95,7 @@ function getSteps() {
 }
 
 function PowerShell(props) {
-  window.onbeforeunload = () => '';
+  // window.onbeforeunload = () => '';
   const classes = useStyles();
   const [state, setState] = React.useState({
     activeStep: 0,

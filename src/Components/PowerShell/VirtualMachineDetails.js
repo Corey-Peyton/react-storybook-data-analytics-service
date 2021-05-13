@@ -8,7 +8,6 @@ import {useTranslation} from 'react-i18next';
 import {MachineDetailsDrawer} from './MachineDetailsDrawer';
 import {green} from '@material-ui/core/colors';
 import {SnackbarEditVirtualMachine} from '../VettingApp/CommonComponents/Snackbars';
-import {EditVirtualMachine, AddVirtualMachine} from './AddVirtualMachine';
 import Collapse from '@material-ui/core/Collapse';
 import Avatar from '@material-ui/core/Avatar';
 import clsx from 'clsx';
@@ -17,7 +16,6 @@ import CardActions from '@material-ui/core/CardActions';
 import IconButton from '@material-ui/core/IconButton';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import Button from '@material-ui/core/Button';
-import {Drawer} from '../CommonComponents/Drawer';
 import {makeStyles} from '@material-ui/core/styles';
 import {SnackbarAddVirtualMachine} from '../VettingApp/CommonComponents/Snackbars';
 import {Typography, Divider, Grid} from '@material-ui/core';
@@ -128,24 +126,24 @@ function VirtualMachine(props) {
   const classes = useStyles();
 
   const [state, setState] = React.useState({
-    addVirtualMachine: false,
     snackbarAddVirtualMachine: false,
-    showCard: false,
     snackbarEditVirtualMachine: false,
+    snackbarDelete: false,
+    addVirtualMachine: false,
     editVirtualMachine: false,
     dialogDelete: false,
-    snackbarDelete: false,
+    showCard: false,
   });
 
   const [expanded, setExpanded] = React.useState(false);
 
-  const editVirtualMachine = () => {
-    setState({
-      ...state,
-      snackbarEditVirtualMachine: true,
-      editVirtualMachine: false,
-    });
-  };
+  // const editVirtualMachine = () => {
+  //   setState({
+  //     ...state,
+  //     snackbarEditVirtualMachine: true,
+  //     editVirtualMachine: false,
+  //   });
+  // };
 
   const addVirtualMachine = () => {
     setState({
@@ -180,18 +178,6 @@ function VirtualMachine(props) {
 
   const handleClickClose = (element) => {
     setState({...state, [element]: false});
-  };
-
-  const [open, setOpen] = React.useState({
-    MachineDetailsDrawer: false,
-  });
-
-  const openDrawer = (element) => {
-    setOpen({...open, [element]: true});
-  };
-
-  const closeDrawer = (element) => {
-    setOpen({...open, [element]: false});
   };
 
   const {t} = useTranslation();
@@ -506,22 +492,26 @@ function VirtualMachine(props) {
           )}
 
           <MachineDetailsDrawer
-            open={open.MachineDetailsDrawer}
-            closeDrawer={() => closeDrawer('MachineDetailsDrawer')}
-          >
-            <SnackbarEditVirtualMachine
-              open={state.snackbarEditVirtualMachine}
-              handleClose={() => handleClickClose('snackbarEditVirtualMachine')}
-            />
-          </MachineDetailsDrawer>
+            open={state.addVirtualMachine}
+            closeDrawer={() => handleClickClose('addVirtualMachine')}
+            addVirtualMachine={addVirtualMachine}
+          />
+          <SnackbarAddVirtualMachine
+            open={state.snackbarAddVirtualMachine}
+            handleClose={() => handleClickClose('snackbarAddVirtualMachine')}
+          />
+          <SnackbarEditVirtualMachine
+            open={state.snackbarEditVirtualMachine}
+            handleClose={() => handleClickClose('snackbarEditVirtualMachine')}
+          />
           <Button
             variant="outlined"
             color="primary"
-            onClick={() => openDrawer('MachineDetailsDrawer')}
+            onClick={() => handleClickOpen('addVirtualMachine')}
           >
             {t('Add virtual machine details')}
           </Button>
-          <Drawer
+          {/* <Drawer
             anchor="right"
             open={state.addVirtualMachine}
             className={classes.drawer}
@@ -539,7 +529,7 @@ function VirtualMachine(props) {
           <SnackbarEditVirtualMachine
             open={state.snackbarEditVirtualMachine}
             handleClose={() => handleClickClose('snackbarVirtualMachine')}
-          />
+          /> */}
           <DialogDelete
             submitDialog={deleteFile}
             open={state.dialogDelete}
