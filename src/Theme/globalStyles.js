@@ -50,7 +50,11 @@ export const useStyles = makeStyles({
 
     // Forms
     '.MuiInputAdornment-root': {
-      color: theme.palette.grey[500],
+      'color': theme.palette.grey[500],
+      '& .MuiTypography-root': {
+        fontSize: theme.typography.body2.fontSize,
+        letterSpacing: theme.typography.body2.letterSpacing,
+      },
     },
     '.MuiInputBase-input::placeholder': {
       fontSize: theme.typography.body2.fontSize,

@@ -271,6 +271,14 @@ export const OutlinedTextField = (args) => {
       />
       <TextField
         className="input-margin"
+        label="Text adornment"
+        id="text-start-adornment"
+        InputProps={{
+          startAdornment: <InputAdornment position="start">Kg</InputAdornment>,
+        }}
+      />
+      <TextField
+        className="input-margin"
         id="multiline"
         label="Multiline"
         multiline
