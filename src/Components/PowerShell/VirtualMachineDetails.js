@@ -33,15 +33,6 @@ import {
 } from '@mdi/js';
 
 const useStyles = makeStyles((theme) => ({
-  inputMarginBlock: {
-    marginTop: theme.spacing(0),
-    marginBottom: theme.spacing(3),
-    display: 'block',
-  },
-  paddingTopBottom: {
-    paddingBottom: theme.spacing(3),
-    paddingTop: theme.spacing(3),
-  },
   expand: {
     transform: 'rotate(0deg)',
     marginLeft: 'auto',
@@ -62,10 +53,6 @@ const useStyles = makeStyles((theme) => ({
   },
   expandOpen: {
     transform: 'rotate(180deg)',
-  },
-  inputMargin: {
-    marginTop: theme.spacing(0),
-    marginBottom: theme.spacing(3),
   },
   powershellSection: {
     display: 'flex',
@@ -101,24 +88,6 @@ const useStyles = makeStyles((theme) => ({
   },
   widthAuto: {
     width: 'auto !important',
-  },
-  powershellText: {
-    paddingLeft: theme.spacing(1),
-  },
-  powershellTextHelperText: {
-    paddingLeft: theme.spacing(1),
-    marginBottom: theme.spacing(1),
-  },
-  card: {
-    marginTop: theme.spacing(2),
-    paddingBottom: theme.spacing(1),
-    marginBottom: theme.spacing(2),
-  },
-  cardActions: {
-    paddingBottom: theme.spacing(0),
-  },
-  icon: {
-    paddingLeft: theme.spacing(1),
   },
 }));
 
@@ -179,7 +148,7 @@ function VirtualMachine(props) {
 
   return (
     <React.Fragment>
-      <Grid container className={classes.paddingTopBottom}>
+      <Grid container className="pt-3 pb-3">
         <Box>
           <Typography variant="body1" className="input-margin">
             {t(
@@ -187,7 +156,7 @@ function VirtualMachine(props) {
             )}
           </Typography>
           {state.showCard === true && (
-            <Card className={classes.card} variant="outlined">
+            <Card className="mt-2 pb-1 mb-2" variant="outlined">
               <div className={classes.cardHeader}>
                 <Typography className={classes.powershellColumn}>
                   STC-0412-ST
@@ -234,16 +203,10 @@ function VirtualMachine(props) {
                       <Icon path={mdiFileDocumentOutline} size={1} />
                     </div>
                     <div className={classes.powershellColumn}>
-                      <Typography
-                        className={classes.powershellText}
-                        variant="body1"
-                      >
+                      <Typography className="pl-1" variant="body1">
                         {t('Security clearance expiry date')}
                       </Typography>
-                      <Typography
-                        className={classes.powershellText}
-                        variant="body2"
-                      >
+                      <Typography className="pl-1" variant="body2">
                         02/23/2021
                       </Typography>
                     </div>
@@ -258,16 +221,10 @@ function VirtualMachine(props) {
                       <Icon path={mdiSmartCardOutline} size={1} />
                     </div>
                     <div className={classes.powershellColumn}>
-                      <Typography
-                        className={classes.powershellText}
-                        variant="body1"
-                      >
+                      <Typography className="pl-1" variant="body1">
                         Researcher ID
                       </Typography>
-                      <Typography
-                        className={classes.powershellText}
-                        variant="body2"
-                      >
+                      <Typography className="pl-1" variant="body2">
                         54674
                       </Typography>
                     </div>
@@ -282,16 +239,10 @@ function VirtualMachine(props) {
                       <Icon path={mdiDomain} size={1} />
                     </div>
                     <div className={classes.powershellColumn}>
-                      <Typography
-                        className={classes.powershellText}
-                        variant="body1"
-                      >
+                      <Typography className="pl-1" variant="body1">
                         {t('Organization')}
                       </Typography>
-                      <Typography
-                        className={classes.powershellText}
-                        variant="body2"
-                      >
+                      <Typography className="pl-1" variant="body2">
                         {t('Statistics Canada')}
                       </Typography>
                     </div>
@@ -306,16 +257,10 @@ function VirtualMachine(props) {
                       <Icon path={mdiAccountOutline} size={1} />
                     </div>
                     <div className={classes.powershellColumn}>
-                      <Typography
-                        className={classes.powershellText}
-                        variant="body1"
-                      >
+                      <Typography className="pl-1" variant="body1">
                         {t('Username')}
                       </Typography>
-                      <Typography
-                        className={classes.powershellText}
-                        variant="body2"
-                      >
+                      <Typography className="pl-1" variant="body2">
                         {t('some.email')}
                       </Typography>
                     </div>
@@ -333,16 +278,10 @@ function VirtualMachine(props) {
                       <Icon path={mdiPhone} size={1} />
                     </div>
                     <div className={classes.powershellColumn}>
-                      <Typography
-                        className={classes.powershellText}
-                        variant="body1"
-                      >
+                      <Typography className="pl-1" variant="body1">
                         {t('Phone number')}
                       </Typography>
-                      <Typography
-                        className={classes.powershellText}
-                        variant="body2"
-                      >
+                      <Typography className="pl-1" variant="body2">
                         555-867-5309
                       </Typography>
                     </div>
@@ -357,16 +296,10 @@ function VirtualMachine(props) {
                       <Icon path={mdiEmailOutline} size={1} />
                     </div>
                     <div className={classes.powershellColumn}>
-                      <Typography
-                        className={classes.powershellText}
-                        variant="body1"
-                      >
+                      <Typography className="pl-1" variant="body1">
                         {t('Email')}
                       </Typography>
-                      <Typography
-                        className={classes.powershellText}
-                        variant="body2"
-                      >
+                      <Typography className="pl-1" variant="body2">
                         {t('email@email.com')}
                       </Typography>
                     </div>
@@ -382,16 +315,10 @@ function VirtualMachine(props) {
                       <Icon path={mdiMonitor} size={1} />
                     </div>
                     <div className={classes.powershellColumn}>
-                      <Typography
-                        className={classes.powershellText}
-                        variant="body1"
-                      >
+                      <Typography className="pl-1" variant="body1">
                         {t('Virtual machine name')}
                       </Typography>
-                      <Typography
-                        className={classes.powershellText}
-                        variant="body2"
-                      >
+                      <Typography className="pl-1" variant="body2">
                         STC-0412-ST
                       </Typography>
                     </div>
@@ -406,16 +333,10 @@ function VirtualMachine(props) {
                       <Icon path={mdiTranslate} size={1} />
                     </div>
                     <div className={classes.powershellColumn}>
-                      <Typography
-                        className={classes.powershellText}
-                        variant="body1"
-                      >
+                      <Typography className="pl-1" variant="body1">
                         {t('Virtual machine language')}
                       </Typography>
-                      <Typography
-                        className={classes.powershellText}
-                        variant="body2"
-                      >
+                      <Typography className="pl-1" variant="body2">
                         {t('English')}
                       </Typography>
                     </div>
@@ -430,44 +351,28 @@ function VirtualMachine(props) {
                       <Icon path={mdiHammerScrewdriver} size={1} />
                     </div>
                     <div className={classes.powershellColumn}>
-                      <Typography
-                        className={classes.powershellTextHelperText}
-                        variant="body1"
-                      >
+                      <Typography className="pl-1 mb-1" variant="body1">
                         {t('Required tools')}
                       </Typography>
-                      <Typography
-                        className={classes.powershellText}
-                        variant="body2"
-                      >
+                      <Typography className="pl-1" variant="body2">
                         {t('Default tools')}
                       </Typography>
-                      <Typography
-                        className={classes.powershellTextHelperText}
-                        variant="body2"
-                      >
+                      <Typography className="pl-1 mb-1" variant="body2">
                         {t(
                             '(Adobe Reader DC, Java, LibreOffice, Office 2019, Power BI, ProjectLibre, Python, R, RStudio, RTools, VSCode)',
                         )}
-                        '
                       </Typography>
-                      <Typography
-                        className={classes.powershellText}
-                        variant="body2"
-                      >
+                      <Typography className="pl-1" variant="body2">
                         {t('SAS')}
                       </Typography>
-                      <Typography
-                        className={classes.powershellText}
-                        variant="body2"
-                      >
+                      <Typography className="pl-1" variant="body2">
                         {t('(Includes SAS 9.4 and SAS Enterprise Guide)')}
                       </Typography>
                     </div>
                   </div>
                 </CardContent>
               </Collapse>
-              <CardActions className={classes.cardActions}>
+              <CardActions className="pb-0">
                 <Button
                   color="primary"
                   variant="text"

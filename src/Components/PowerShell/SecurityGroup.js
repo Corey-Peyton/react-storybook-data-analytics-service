@@ -3,22 +3,13 @@ import {suggestions} from '../../Data/fakeData';
 import Autocomplete from '@material-ui/lab/Autocomplete';
 import {useTranslation} from 'react-i18next';
 import {TextField} from '@material-ui/core';
-import {makeStyles} from '@material-ui/core/styles';
 import Box from '@material-ui/core/Box';
 
-const useStyles = makeStyles((theme) => ({
-  paddingTopBottom: {
-    paddingBottom: theme.spacing(3),
-    paddingTop: theme.spacing(3),
-  },
-}));
-
 function SecurityGroup(props) {
-  const classes = useStyles();
   const {t} = useTranslation();
   return (
     <React.Fragment>
-      <div className={classes.paddingTopBottom}>
+      <div className="pt-3 pb-3">
         <Box>
           <Autocomplete
             id="securitygroupname"

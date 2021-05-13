@@ -25,10 +25,6 @@ const useStyles = makeStyles((theme) => ({
   fullWidth: {
     width: '100%',
   },
-  paddingTopBottom: {
-    paddingBottom: theme.spacing(3),
-    paddingTop: theme.spacing(3),
-  },
 }));
 
 function ProjectDetails(props) {
@@ -53,7 +49,7 @@ function ProjectDetails(props) {
 
   return (
     <React.Fragment>
-      <Grid container className={classes.paddingTopBottom}>
+      <Grid container className="pb-3 pt-3">
         <Box>
           <Alert severity="error" className="input-margin">
             {t('Complete all required fields to advance to the next step')}
