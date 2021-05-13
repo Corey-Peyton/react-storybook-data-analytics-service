@@ -158,16 +158,6 @@ function VirtualMachine(props) {
     setExpanded(!expanded);
   };
 
-  const toggleDrawer = (event, drawer, state) => {
-    if (
-      event.type === 'keydown' &&
-      (event.key === 'Tab' || event.key === 'Shift')
-    ) {
-      return;
-    }
-    setState({...state, [drawer]: state});
-  };
-
   const deleteFile = () => {
     setState({...state, snackbarDelete: true, dialogDelete: false});
   };
@@ -476,7 +466,7 @@ function VirtualMachine(props) {
                 <Button
                   color="primary"
                   variant="text"
-                  onClick={(e) => toggleDrawer(e, 'editVirtualMachine', true)}
+                  onClick={() => handleClickOpen('editVirtualMachine')}
                 >
                   {t('Edit')}
                 </Button>
