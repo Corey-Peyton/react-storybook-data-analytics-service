@@ -29,7 +29,45 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export function MachineDetailsDrawer(props) {
+export function AddVirtualMachine(props) {
+  const {t} = useTranslation();
+
+  return (
+    <>
+      <Drawer
+        open={props.open}
+        title={t('Add virtual machine')}
+        content={<MachineDetailsContent />}
+        primaryButton={t('Add')}
+        secondaryButton={t('Cancel')}
+        handlePrimaryClick={props.addVirtualMachine}
+        handleSecondaryClick={props.closeDrawer}
+        toggleDrawer={props.closeDrawer}
+      />
+    </>
+  );
+}
+
+export function EditVirtualMachine(props) {
+  const {t} = useTranslation();
+
+  return (
+    <>
+      <Drawer
+        open={props.open}
+        title={t('Edit virtual machine')}
+        content={<MachineDetailsContent />}
+        primaryButton={t('Update')}
+        secondaryButton={t('Cancel')}
+        handlePrimaryClick={props.editVirtualMachine}
+        handleSecondaryClick={props.closeDrawer}
+        toggleDrawer={props.closeDrawer}
+      />
+    </>
+  );
+}
+
+function MachineDetailsContent(props) {
   const classes = useStyles();
   const {t} = useTranslation();
 
@@ -49,8 +87,7 @@ export function MachineDetailsDrawer(props) {
   };
 
   const [isOpen, setIsOpen] = useState(false);
-
-  const content = () => (
+  return (
     <>
       <div className={classes.paddingTopBottom}>
         <Typography variant="subtitle1" className="input-margin">
@@ -271,20 +308,6 @@ export function MachineDetailsDrawer(props) {
           </FormControl>
         </Grid>
       </div>
-    </>
-  );
-  return (
-    <>
-      <Drawer
-        open={props.open}
-        title={t('Add virtual machine')}
-        content={content()}
-        primaryButton={t('Add')}
-        secondaryButton={t('Cancel')}
-        handlePrimaryClick={props.addVirtualMachine}
-        handleSecondaryClick={props.closeDrawer}
-        toggleDrawer={props.closeDrawer}
-      />
     </>
   );
 }

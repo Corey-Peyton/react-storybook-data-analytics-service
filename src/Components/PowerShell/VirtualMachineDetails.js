@@ -5,7 +5,7 @@ import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
 import {DialogDelete} from '../VettingApp/CommonComponents/DialogBox';
 import {useTranslation} from 'react-i18next';
-import {MachineDetailsDrawer} from './MachineDetailsDrawer';
+import {AddVirtualMachine, EditVirtualMachine} from './MachineDetailsDrawer';
 import {green} from '@material-ui/core/colors';
 import {SnackbarEditVirtualMachine} from '../VettingApp/CommonComponents/Snackbars';
 import Collapse from '@material-ui/core/Collapse';
@@ -137,13 +137,13 @@ function VirtualMachine(props) {
 
   const [expanded, setExpanded] = React.useState(false);
 
-  // const editVirtualMachine = () => {
-  //   setState({
-  //     ...state,
-  //     snackbarEditVirtualMachine: true,
-  //     editVirtualMachine: false,
-  //   });
-  // };
+  const editVirtualMachine = () => {
+    setState({
+      ...state,
+      snackbarEditVirtualMachine: true,
+      editVirtualMachine: false,
+    });
+  };
 
   const addVirtualMachine = () => {
     setState({
@@ -490,11 +490,15 @@ function VirtualMachine(props) {
               </CardActions>
             </Card>
           )}
-
-          <MachineDetailsDrawer
+          <AddVirtualMachine
             open={state.addVirtualMachine}
             closeDrawer={() => handleClickClose('addVirtualMachine')}
             addVirtualMachine={addVirtualMachine}
+          />
+          <EditVirtualMachine
+            open={state.editVirtualMachine}
+            closeDrawer={() => handleClickClose('editVirtualMachine')}
+            editVirtualMachine={editVirtualMachine}
           />
           <SnackbarAddVirtualMachine
             open={state.snackbarAddVirtualMachine}
