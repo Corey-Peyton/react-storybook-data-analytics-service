@@ -167,12 +167,9 @@ export const OutlinedTextField = (args) => {
       />
       <TextField
         className="input-margin"
-        id="number"
-        label="Number"
-        type="number"
-        InputLabelProps={{
-          shrink: true,
-        }}
+        id="placeholder"
+        label="Placeholder"
+        placeholder="Placeholder text"
       />
       <TextField
         className="input-margin"

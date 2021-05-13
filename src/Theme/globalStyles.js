@@ -52,10 +52,6 @@ export const useStyles = makeStyles({
     '.MuiInputAdornment-root': {
       color: theme.palette.grey[500],
     },
-    '.MuiInputBase-input::placeholder': {
-      color: theme.palette.grey[600],
-      opacity: 1,
-    },
     '.MuiOutlinedInput-notchedOutline': {
       borderColor: 'rgba(0, 0, 0, 0.42)',
     },
@@ -66,12 +62,14 @@ export const useStyles = makeStyles({
       marginTop: theme.spacing(0),
     },
     '.MuiFormLabel-root': {
-      fontSize: '0.875rem',
+      fontSize: theme.typography.body2.fontSize,
+      letterSpacing: theme.typography.body2.letterSpacing,
       marginTop: '1px',
       color: theme.palette.text.primary,
     },
     '.MuiInputBase-input': {
-      'fontSize': '0.875rem',
+      'fontSize': theme.typography.body2.fontSize,
+      'letterSpacing': theme.typography.body2.letterSpacing,
       '&:not(.MuiInputBase-inputMultiline)': {
         height: '1em',
       },
