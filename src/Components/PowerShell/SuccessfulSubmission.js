@@ -50,7 +50,7 @@ function SuccessfulSubmission(props) {
         <Container maxWidth={false} className={classes.pageContainer}>
           <RequestToolbar />
           <Paper className={classes.paper}>
-            <Collapse in={open}>
+            <Collapse in={open} className="input-margin">
               <Alert
                 action={
                   <Button
@@ -68,18 +68,18 @@ function SuccessfulSubmission(props) {
               </Alert>
             </Collapse>
             <div>
-              <Typography variant="body2" className="mb-3 mt-3">
+              <Typography variant="body2" className="input-margin">
                 Your request to create a VDL workspace has been submitted and is
                 being processed. You will receive an email once the VDL
                 workspace is ready.
               </Typography>
-              <Typography variant="body2" className="mb-3">
+              <Typography variant="body2" className="input-margin">
                 Your virtual machines will appear in the "DevTest Lab" named as
                 "STC-0412-ST". Please be patient while waiting for your virtual
                 machines to be ready. They may be visible with the status of
                 "Running" but this does not mean they are ready for use.
               </Typography>
-              <Typography variant="body2" className="mb-3">
+              <Typography variant="body2" className="input-margin">
                 If you encounter any issues, submit a JIRA ticket to the
                 <Link
                   href="https://jirab.statcan.ca/projects/DAZSUPP/summary"
@@ -89,7 +89,7 @@ function SuccessfulSubmission(props) {
                 </Link>{' '}
                 for assistance.
               </Typography>
-              <Typography variant="body2" className="mb-1">
+              <Typography variant="body2" className="input-margin">
                 Thank you!
               </Typography>
             </div>

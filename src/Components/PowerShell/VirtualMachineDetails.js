@@ -159,7 +159,12 @@ function VirtualMachine(props) {
   };
 
   const deleteFile = () => {
-    setState({...state, snackbarDelete: true, dialogDelete: false});
+    setState({
+      ...state,
+      snackbarDelete: true,
+      dialogDelete: false,
+      showCard: false,
+    });
   };
 
   const handleClickOpen = (element) => {
@@ -219,7 +224,7 @@ function VirtualMachine(props) {
                     {t('Personal information')}
                   </Typography>
 
-                  <div className="classes.powershellRow">
+                  <div className={classes.powershellRow}>
                     <div
                       className={clsx(
                           classes.powershellColumn,
@@ -505,25 +510,6 @@ function VirtualMachine(props) {
           >
             {t('Add virtual machine details')}
           </Button>
-          {/* <Drawer
-            anchor="right"
-            open={state.addVirtualMachine}
-            className={classes.drawer}
-          >
-            <AddVirtualMachine
-              toggleDrawer={toggleDrawer}
-              addVirtualMachine={addVirtualMachine}
-              handleClickOpen={handleClickOpen}
-            />
-          </Drawer>
-          <SnackbarAddVirtualMachine
-            open={state.snackbarAddVirtualMachine}
-            handleClose={() => handleClickClose('snackbarAddVirtualMachine')}
-          />
-          <SnackbarEditVirtualMachine
-            open={state.snackbarEditVirtualMachine}
-            handleClose={() => handleClickClose('snackbarVirtualMachine')}
-          /> */}
           <DialogDelete
             submitDialog={deleteFile}
             open={state.dialogDelete}
