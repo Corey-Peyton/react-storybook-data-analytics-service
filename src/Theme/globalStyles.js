@@ -94,6 +94,7 @@ export const useStyles = makeStyles({
     'legend.MuiFormLabel-root': {
       lineHeight: theme.typography.body2.lineHeight,
       letterSpacing: theme.typography.body2.letterSpacing,
+      color: theme.palette.text.primary,
       marginBottom: theme.spacing(1),
     },
     'legend.MuiFormLabel-root + .MuiFormHelperText-root': {
