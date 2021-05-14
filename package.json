@@ -27,7 +27,8 @@
     "react-number-format": "^4.4.1",
     "react-player": "^1.15.3",
     "react-router-dom": "^5.2.0",
-    "react-scripts": "^3.4.3"
+    "react-scripts": "^3.4.3",
+    "react-window": "^1.8.6"
   },
   "devDependencies": {
     "@storybook/addon-actions": "^6.1.21",
