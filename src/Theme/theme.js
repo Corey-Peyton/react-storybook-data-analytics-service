@@ -14,6 +14,8 @@ const props = {
   MuiTextField: {
     margin: 'dense',
     variant: 'outlined',
+    rows: 3,
+    rowsMax: 100,
   },
 };
 

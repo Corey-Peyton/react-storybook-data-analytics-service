@@ -279,10 +279,16 @@ export const OutlinedTextField = (args) => {
       />
       <TextField
         className="input-margin"
-        id="multiline"
+        id="multiline-1"
         label="Multiline"
         multiline
-        rows={2}
+      />
+      <TextField
+        className="input-margin"
+        id="multiline-2"
+        label="Multiline"
+        multiline
+        rows={-1}
       />
     </div>
   );
