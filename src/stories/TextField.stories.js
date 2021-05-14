@@ -288,7 +288,7 @@ export const OutlinedTextField = (args) => {
         id="multiline-2"
         label="Multiline"
         multiline
-        rows={-1}
+        rows={1}
       />
     </div>
   );
