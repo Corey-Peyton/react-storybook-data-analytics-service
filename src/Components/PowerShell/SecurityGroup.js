@@ -128,7 +128,7 @@ export default function Virtualize() {
 
   return (
     <>
-      <div className="pb-3  pt-3">
+      <div className="pb-3 pt-3">
         <Autocomplete
           id="securitygrouup"
           disableListWrap
