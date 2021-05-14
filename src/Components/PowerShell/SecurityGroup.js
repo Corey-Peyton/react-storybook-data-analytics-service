@@ -112,7 +112,7 @@ const useStyles = makeStyles({
   },
 });
 
-const OPTIONS = Array.from(new Array(100000))
+const OPTIONS = Array.from(new Array(10000))
     .map(() => random(10 + Math.ceil(Math.random() * 20)))
     .sort((a, b) => a.toUpperCase().localeCompare(b.toUpperCase()));
 
