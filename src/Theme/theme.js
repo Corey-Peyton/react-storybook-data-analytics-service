@@ -253,7 +253,7 @@ theme.overrides = {
     },
     root: {
       'color': theme.palette.buttons.default,
-      'padding': theme.spacing(1),
+      'padding': [theme.spacing(1), '!important'],
       '&:hover': {
         backgroundColor: fade(theme.palette.buttons.default, 0.12),
         color: theme.palette.buttons.defaultHover,

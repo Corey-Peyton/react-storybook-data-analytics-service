@@ -104,6 +104,7 @@ export const useStyles = makeStyles({
     // Forms - radio buttons & checkboxes
     'legend.MuiFormLabel-root': {
       lineHeight: theme.typography.body2.lineHeight,
+      fontSize: theme.typography.body2.fontSize,
       letterSpacing: theme.typography.body2.letterSpacing,
       color: theme.palette.text.primary,
       marginBottom: theme.spacing(1),
@@ -145,6 +146,9 @@ export const useStyles = makeStyles({
           color: theme.palette.text.secondary,
         },
       },
+    },
+    '.MuiRadio-root, .MuiCheckbox-root': {
+      color: theme.palette.buttons.default,
     },
 
     // Fix for bug: extra space under text field with long label in dialogs
