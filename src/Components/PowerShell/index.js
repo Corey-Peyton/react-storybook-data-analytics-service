@@ -80,6 +80,7 @@ const useStyles = makeStyles((theme) => ({
     borderTopStyle: 'solid',
     borderTopWidth: '1px',
     borderTopColor: theme.palette.divider,
+    paddingTop: theme.spacing(3),
   },
   errorMsg: {
     margin: 0,
@@ -254,7 +255,7 @@ function PowerShell(props) {
             <Grid container justify="center">
               <Grid className={classes.footerBtns} item>
                 {state.activeStep !== 0 && (
-                  <Grid item className="pt-3">
+                  <Grid item>
                     <Button
                       variant="outlined"
                       color="primary"
@@ -266,7 +267,7 @@ function PowerShell(props) {
                   </Grid>
                 )}
                 {state.activeStep === getSteps().length - 1 ? (
-                  <Grid item className="pt-3">
+                  <Grid item>
                     <Button
                       variant="contained"
                       color="primary"
@@ -277,7 +278,7 @@ function PowerShell(props) {
                     </Button>
                   </Grid>
                 ) : (
-                  <Grid item className="pt-3">
+                  <Grid item>
                     <Button
                       variant="contained"
                       color="primary"
