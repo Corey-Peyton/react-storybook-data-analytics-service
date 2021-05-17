@@ -8,6 +8,15 @@ const props = {
   MuiIconButton: {
     disableFocusRipple: true,
   },
+  MuiFormControl: {
+    fullWidth: true,
+  },
+  MuiTextField: {
+    margin: 'dense',
+    variant: 'outlined',
+    rows: 3,
+    rowsMax: 100,
+  },
 };
 
 const shadows = [
