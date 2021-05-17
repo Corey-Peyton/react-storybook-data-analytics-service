@@ -560,7 +560,7 @@ function FilesList(props) {
                   color="primary"
                   onClick={(e) => toggleDrawer(e, 'viewFile', true)}
                 >
-                  View
+                  View details
                 </Button>
               )}
             </CardActions>

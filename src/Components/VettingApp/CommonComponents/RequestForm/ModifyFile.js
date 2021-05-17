@@ -260,7 +260,6 @@ export function ViewFile(props) {
       </div>
       <div className={classes.footer}>
         <Button
-          className="mr-2"
           variant="contained"
           color="primary"
           onClick={(e) => props.toggleDrawer(e, 'viewFile', false)}
