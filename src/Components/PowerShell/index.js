@@ -69,6 +69,9 @@ const useStyles = makeStyles((theme) => ({
   stepperNextBtn: {
     marginLeft: theme.spacing(6),
   },
+  buttonMarginTop: {
+    marginTop: theme.spacing(3),
+  },
   stepperBackBtn: {
     marginRight: theme.spacing(2),
   },
@@ -92,7 +95,7 @@ function getSteps() {
 }
 
 function PowerShell(props) {
-  window.onbeforeunload = () => '';
+  // window.onbeforeunload = () => '';
   const classes = useStyles();
   const [state, setState] = React.useState({
     activeStep: 0,
@@ -251,7 +254,7 @@ function PowerShell(props) {
                 </div>
               )}
             </div>
-            <Grid container justify="center" className={classes.navFooter}>
+            <Grid container justify="center">
               <Grid className={classes.footerBtns} item>
                 {state.activeStep !== 0 && (
                   <Grid item className="pt-3">
@@ -281,7 +284,7 @@ function PowerShell(props) {
                     <Button
                       variant="contained"
                       color="primary"
-                      className={classes.button}
+                      className={classes.buttonMarginTop}
                       onClick={handleComplete}
                     >
                       Next
