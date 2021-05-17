@@ -123,7 +123,7 @@ const renderGroup = (params) => [
   params.children,
 ];
 
-export default function Virtualize() {
+export default function SecurityGroup() {
   const classes = useStyles();
 
   return (
@@ -136,7 +136,6 @@ export default function Virtualize() {
           ListboxComponent={ListboxComponent}
           renderGroup={renderGroup}
           options={OPTIONS}
-          fullWidth
           groupBy={(option) => option[0].toUpperCase()}
           renderInput={(params) => (
             <TextField {...params} variant="outlined" label="Security group" />
