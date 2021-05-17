@@ -69,20 +69,21 @@ const useStyles = makeStyles((theme) => ({
   stepperNextBtn: {
     marginLeft: theme.spacing(6),
   },
+  buttonMarginTop: {
+    marginTop: theme.spacing(3),
+  },
   stepperBackBtn: {
     marginRight: theme.spacing(2),
-  },
-  navFooter: {
-    paddingTop: theme.spacing(3),
-    borderTopStyle: 'solid',
-    borderTopWidth: '1px',
-    borderTopColor: theme.palette.divider,
+    marginTop: theme.spacing(3),
   },
   footerBtns: {
     width: '100%',
     maxWidth: theme.spacing(80),
     display: 'flex',
     justifyContent: 'flex-end',
+    borderTopStyle: 'solid',
+    borderTopWidth: '1px',
+    borderTopColor: theme.palette.divider,
   },
   errorMsg: {
     margin: 0,
@@ -95,7 +96,7 @@ function getSteps() {
 }
 
 function PowerShell(props) {
-  window.onbeforeunload = () => '';
+  // window.onbeforeunload = () => '';
   const classes = useStyles();
   const [state, setState] = React.useState({
     activeStep: 0,
@@ -254,7 +255,7 @@ function PowerShell(props) {
                 </div>
               )}
             </div>
-            <Grid container justify="center" className={classes.navFooter}>
+            <Grid container justify="center">
               <Grid className={classes.footerBtns} item>
                 {state.activeStep !== 0 && (
                   <Grid item>
@@ -273,7 +274,7 @@ function PowerShell(props) {
                     <Button
                       variant="contained"
                       color="primary"
-                      className={classes.button}
+                      className={classes.buttonMarginTop}
                       component={RouterLink}
                       to="SuccessfulSubmission"
                     >
@@ -285,7 +286,7 @@ function PowerShell(props) {
                     <Button
                       variant="contained"
                       color="primary"
-                      className={classes.button}
+                      className={classes.buttonMarginTop}
                       onClick={handleComplete}
                     >
                       Next
