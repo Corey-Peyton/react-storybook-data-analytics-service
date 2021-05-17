@@ -102,7 +102,7 @@ function VettingRequestAnalyst(props) {
   const classes = useStyles();
 
   const [state, setState] = React.useState({
-    activeStep: 0,
+    activeStep: 1,
     completed: {},
     title: 'Untitled request',
     open: false,
@@ -187,7 +187,7 @@ function VettingRequestAnalyst(props) {
       case 0:
         return <ResearcherInfo handleTitleChange={handleTitleChange} />;
       case 1:
-        return <FilesList />;
+        return <FilesList role="analyst" />;
       case 2:
         return <ResidualDisclosure />;
       case 3:

@@ -108,7 +108,7 @@ function getSteps() {
 function VettingRequestResearcher(props) {
   const classes = useStyles();
   const [state, setState] = React.useState({
-    activeStep: 0,
+    activeStep: 1,
     completed: {},
     open: false,
     errors: [0, 4, 0, 0],
@@ -194,7 +194,7 @@ function VettingRequestResearcher(props) {
           />
         );
       case 1:
-        return <FilesList />;
+        return <FilesList role="researcher" />;
       case 2:
         return <ResidualDisclosure />;
       case 3:
