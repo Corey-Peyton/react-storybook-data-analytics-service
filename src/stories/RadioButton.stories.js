@@ -30,7 +30,7 @@ export const Group = (args) => {
 
   return (
     <>
-      <FormControl component="fieldset" fullWidth={true}>
+      <FormControl component="fieldset">
         <FormLabel component="legend">Gender</FormLabel>
         <FormHelperText>Helper text</FormHelperText>
         <RadioGroup
@@ -100,7 +100,7 @@ export const GroupError = (args) => {
 
   return (
     <>
-      <FormControl component="fieldset" error={!state.gender} fullWidth={true}>
+      <FormControl component="fieldset" error={!state.gender}>
         <FormLabel component="legend">Gender</FormLabel>
         <FormHelperText>Error text</FormHelperText>
         <RadioGroup
