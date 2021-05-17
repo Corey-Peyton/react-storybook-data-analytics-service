@@ -102,7 +102,7 @@ function VettingRequestAnalyst(props) {
   const classes = useStyles();
 
   const [state, setState] = React.useState({
-    activeStep: 1,
+    activeStep: 0,
     completed: {},
     title: 'Untitled request',
     open: false,
