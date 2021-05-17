@@ -1207,7 +1207,7 @@ export function RegisterDialog(props) {
                   />
                 }
                 label={
-                  <Typography>
+                  <Typography variant="body2">
                     {t('I agree to the')}{' '}
                     <Link
                       underline="always"
