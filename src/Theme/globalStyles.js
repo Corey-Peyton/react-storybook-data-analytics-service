@@ -75,8 +75,8 @@ export const useStyles = makeStyles({
         'fontSize': theme.typography.body2.fontSize,
         'letterSpacing': theme.typography.body2.letterSpacing,
         '& input.MuiOutlinedInput-inputMarginDense': {
-          'paddingTop': '13px',
-          'paddingBottom': '13px',
+          'paddingTop': theme.spacing(1.625),
+          'paddingBottom': theme.spacing(1.625),
           '&:not(.MuiInputBase-inputMultiline)': {
             height: '1em',
           },
@@ -97,8 +97,8 @@ export const useStyles = makeStyles({
       },
       // Outlined multiline input
       '& .MuiOutlinedInput-multiline': {
-        paddingTop: '13px',
-        paddingBottom: '13px',
+        paddingTop: theme.spacing(1.625),
+        paddingBottom: theme.spacing(1.625),
       },
     },
     // Forms - radio buttons & checkboxes
