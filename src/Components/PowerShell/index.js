@@ -72,17 +72,14 @@ const useStyles = makeStyles((theme) => ({
   stepperBackBtn: {
     marginRight: theme.spacing(2),
   },
-  navFooter: {
-    paddingTop: theme.spacing(3),
-    borderTopStyle: 'solid',
-    borderTopWidth: '1px',
-    borderTopColor: theme.palette.divider,
-  },
   footerBtns: {
     width: '100%',
     maxWidth: theme.spacing(80),
     display: 'flex',
     justifyContent: 'flex-end',
+    borderTopStyle: 'solid',
+    borderTopWidth: '1px',
+    borderTopColor: theme.palette.divider,
   },
   errorMsg: {
     margin: 0,
@@ -257,7 +254,7 @@ function PowerShell(props) {
             <Grid container justify="center" className={classes.navFooter}>
               <Grid className={classes.footerBtns} item>
                 {state.activeStep !== 0 && (
-                  <Grid item>
+                  <Grid item className="pt-3">
                     <Button
                       variant="outlined"
                       color="primary"
@@ -269,11 +266,10 @@ function PowerShell(props) {
                   </Grid>
                 )}
                 {state.activeStep === getSteps().length - 1 ? (
-                  <Grid item>
+                  <Grid item className="pt-3">
                     <Button
                       variant="contained"
                       color="primary"
-                      className={classes.button}
                       component={RouterLink}
                       to="SuccessfulSubmission"
                     >
@@ -281,7 +277,7 @@ function PowerShell(props) {
                     </Button>
                   </Grid>
                 ) : (
-                  <Grid item>
+                  <Grid item className="pt-3">
                     <Button
                       variant="contained"
                       color="primary"
