@@ -69,9 +69,6 @@ const useStyles = makeStyles((theme) => ({
   stepperNextBtn: {
     marginLeft: theme.spacing(6),
   },
-  buttonMarginTop: {
-    marginTop: theme.spacing(3),
-  },
   stepperBackBtn: {
     marginRight: theme.spacing(2),
   },
@@ -284,7 +281,6 @@ function PowerShell(props) {
                     <Button
                       variant="contained"
                       color="primary"
-                      className={classes.buttonMarginTop}
                       onClick={handleComplete}
                     >
                       Next
