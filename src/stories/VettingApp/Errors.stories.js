@@ -125,12 +125,12 @@ const files = [
   {
     name:
       'Another file with even a longer name for users who likes to be really descriptive. Yes, believe it happens!',
-    emptyFields: 4,
-    error: false,
+    emptyFields: 2,
+    error: true,
   },
   {
     name: 'Example output file card name',
-    emptyFields: 4,
+    emptyFields: 3,
     error: true,
   },
 ];
@@ -231,7 +231,12 @@ export const StepperErrors = (args) => {
   };
 
   const updateFile = () => {
-    setState({...state, snackbarUpdate: true, editFile: false});
+    setState({
+      ...state,
+      snackbarUpdate: true,
+      editFile: false,
+      stepperErrors: [3, 1, 5, 0],
+    });
   };
 
   const handleClickClose = () => {
@@ -365,22 +370,21 @@ export const StepperErrors = (args) => {
               </Grid>
               <Grid item xs={6} className="row">
                 <FormControl
-                  className={classes.inputMargin}
                   variant="outlined"
                   fullWidth
                   required
+                  margin="none"
                 >
                   <TextField
                     id="name"
                     name="name"
                     variant="outlined"
                     fullWidth
-                    className={classes.inputMargin}
                     label="Name"
                     required
                     error={Boolean(state.name.errorText)}
                     helperText={state.name.errorText}
-                    // inputProps={{readOnly: true}}
+                    margin="none"
                   />
                 </FormControl>
               </Grid>
@@ -390,10 +394,7 @@ export const StepperErrors = (args) => {
                 </Typography>
               </Grid>
               <Grid item xs={12} className="row">
-                <FormControl
-                  component="fieldset"
-                  className={classes.inputMargin}
-                >
+                <FormControl component="fieldset">
                   <FormLabel
                     id="variables-label"
                     component="legend"
@@ -424,10 +425,7 @@ export const StepperErrors = (args) => {
                 </FormControl>
               </Grid>
               <Grid item xs={12} className="row">
-                <FormControl
-                  component="fieldset"
-                  className={classes.inputMargin}
-                >
+                <FormControl component="fieldset">
                   <FormLabel
                     id="version-label"
                     component="legend"
