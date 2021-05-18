@@ -812,7 +812,7 @@ export function TasksToolsDialog(props) {
                 label={
                   <>
                     <Typography variant="body2">{t('R, SQL')}</Typography>
-                    <Typography variant="caption">
+                    <Typography variant="caption" component="p">
                       {t('Provided tools: Azure Databricks, RShiny, RStudio')}
                     </Typography>
                   </>
@@ -830,7 +830,7 @@ export function TasksToolsDialog(props) {
                 label={
                   <>
                     <Typography variant="body2">{t('R, Python')}</Typography>
-                    <Typography variant="caption">
+                    <Typography variant="caption" component="p">
                       {t(
                           'Provided tools: Azure Databricks, JupyterLab, VS Code',
                       )}
@@ -850,7 +850,7 @@ export function TasksToolsDialog(props) {
                 label={
                   <>
                     <Typography variant="body2">{t('Scala')}</Typography>
-                    <Typography variant="caption">
+                    <Typography variant="caption" component="p">
                       {t(`Provided tools: Azure Databricks, JupyterLab (Scala can be
                       added on request)`)}
                     </Typography>
@@ -871,7 +871,7 @@ export function TasksToolsDialog(props) {
                     <Typography variant="body2">
                       {t('SAS, SPSS, Stata')}
                     </Typography>
-                    <Typography variant="caption">
+                    <Typography variant="caption" component="p">
                       {t(`Provided tools: Virtual Machine (Bastion) - DataScience VM
                       - Windows or Linux`)}
                     </Typography>
@@ -892,7 +892,7 @@ export function TasksToolsDialog(props) {
                     <Typography variant="body2">
                       {t('Desktop (All languages)')}
                     </Typography>
-                    <Typography variant="caption">
+                    <Typography variant="caption" component="p">
                       {t(`Provided tools: DataScience Linux Desktop (Open Source
                       only), Virtual Machine (Bastion) - DataScience VM -
                       Windows or Linux`)}
@@ -914,7 +914,7 @@ export function TasksToolsDialog(props) {
                     <Typography variant="body2">
                       {t('Public Visualizations / Dashboards')}
                     </Typography>
-                    <Typography variant="caption">
+                    <Typography variant="caption" component="p">
                       {t(`Provided tools: Azure Databricks (R-Shiny -isolated
                       environment), Dash, JupyterLab (Matplotlib & More),
                       Kibana, PowerBI, RShiny`)}
@@ -936,7 +936,7 @@ export function TasksToolsDialog(props) {
                     <Typography variant="body2">
                       {t('Public Machine Learning API serving')}
                     </Typography>
-                    <Typography variant="caption">
+                    <Typography variant="caption" component="p">
                       {t('Provided tools: Kubeflow Serving, Seldon Core')}
                     </Typography>
                   </>
@@ -954,7 +954,7 @@ export function TasksToolsDialog(props) {
                 label={
                   <>
                     <Typography variant="body2">{t('Geomatics')}</Typography>
-                    <Typography variant="caption">
+                    <Typography variant="caption" component="p">
                       {t(
                           'Provided tools: DataScience Linux Desktop, Gdal, QGIS',
                       )}
@@ -974,7 +974,7 @@ export function TasksToolsDialog(props) {
                 label={
                   <>
                     <Typography variant="body2">{t('Pipelines')}</Typography>
-                    <Typography variant="caption">
+                    <Typography variant="caption" component="p">
                       {t(
                           'Provided tools: Azure Data Factory, Kubeflow Pipelines',
                       )}
@@ -994,7 +994,7 @@ export function TasksToolsDialog(props) {
                 label={
                   <>
                     <Typography variant="body2">{t('Management')}</Typography>
-                    <Typography variant="caption">
+                    <Typography variant="caption" component="p">
                       {t('Provided tools: Azure Portal, Kubeflow')}
                     </Typography>
                   </>
@@ -1014,7 +1014,7 @@ export function TasksToolsDialog(props) {
                     <Typography variant="body2">
                       {t('Metrics Monitoring')}
                     </Typography>
-                    <Typography variant="caption">
+                    <Typography variant="caption" component="p">
                       {t(
                           'Grafana Azure Portal - Azure Log Analyitics (Cloud Team)',
                       )}
@@ -1036,7 +1036,7 @@ export function TasksToolsDialog(props) {
                     <Typography variant="body2">
                       {t('Cost Monitoring and Reporting')}
                     </Typography>
-                    <Typography variant="caption">
+                    <Typography variant="caption" component="p">
                       {t(`Azure Portal - Azure Cost Management (Cloud team),
                       Kubecost`)}
                     </Typography>
@@ -1055,7 +1055,7 @@ export function TasksToolsDialog(props) {
                 label={
                   <>
                     <Typography variant="body2">{t('Storage')}</Typography>
-                    <Typography variant="caption">
+                    <Typography variant="caption" component="p">
                       {t(`Azure Blob Storage, Azure Datalake Gen 2, Azure SQL
                       Database, Boathouse (for Azure Datalakes), MinIO`)}
                     </Typography>
@@ -1076,7 +1076,7 @@ export function TasksToolsDialog(props) {
                     <Typography variant="body2">
                       {t('Model Management')}
                     </Typography>
-                    <Typography variant="caption">
+                    <Typography variant="caption" component="p">
                       {t('Azure ML, ML Flow')}
                     </Typography>
                   </>
@@ -1096,7 +1096,9 @@ export function TasksToolsDialog(props) {
                     <Typography variant="body2">
                       {t('Version Control and CI/CD')}
                     </Typography>
-                    <Typography variant="caption">{t('GitHub')}</Typography>
+                    <Typography variant="caption" component="p">
+                      {t('GitHub')}
+                    </Typography>
                   </>
                 }
               />
@@ -1112,7 +1114,7 @@ export function TasksToolsDialog(props) {
                 label={
                   <>
                     <Typography variant="body2">{t('Platform')}</Typography>
-                    <Typography variant="caption">
+                    <Typography variant="caption" component="p">
                       {t('Azure PaaS Offerings, Kubernetes Service')}
                     </Typography>
                   </>

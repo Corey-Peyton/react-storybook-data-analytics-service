@@ -44,7 +44,9 @@ export const Group = (args) => {
             label={
               <>
                 <Typography variant="body2">Gilad Gray</Typography>
-                <Typography variant="caption">Helper text</Typography>
+                <Typography variant="caption" component="p">
+                  Helper text
+                </Typography>
               </>
             }
           />
@@ -60,7 +62,9 @@ export const Group = (args) => {
             label={
               <>
                 <Typography variant="body2">Jason Killian</Typography>
-                <Typography variant="caption">Helper text</Typography>
+                <Typography variant="caption" component="p">
+                  Helper text
+                </Typography>
               </>
             }
           />
@@ -76,7 +80,9 @@ export const Group = (args) => {
             label={
               <>
                 <Typography variant="body2">Antoine Llorca</Typography>
-                <Typography variant="caption">Helper text</Typography>
+                <Typography variant="caption" component="p">
+                  Helper text
+                </Typography>
               </>
             }
           />
@@ -123,7 +129,9 @@ export const GroupError = (args) => {
             label={
               <>
                 <Typography variant="body2">Gilad Gray</Typography>
-                <Typography variant="caption">Helper text</Typography>
+                <Typography variant="caption" component="p">
+                  Helper text
+                </Typography>
               </>
             }
           />
@@ -139,7 +147,9 @@ export const GroupError = (args) => {
             label={
               <>
                 <Typography variant="body2">Jason Killian</Typography>
-                <Typography variant="caption">Helper text</Typography>
+                <Typography variant="caption" component="p">
+                  Helper text
+                </Typography>
               </>
             }
           />
@@ -155,7 +165,9 @@ export const GroupError = (args) => {
             label={
               <>
                 <Typography variant="body2">Antoine Llorca</Typography>
-                <Typography variant="caption">Helper text</Typography>
+                <Typography variant="caption" component="p">
+                  Helper text
+                </Typography>
               </>
             }
           />
@@ -201,7 +213,9 @@ export const Individual = (args) => {
                 <Typography variant="body2">
                   I agree to the Terms and conditions and Privacy policy
                 </Typography>
-                <Typography variant="caption">Helper text</Typography>
+                <Typography variant="caption" component="p">
+                  Helper text
+                </Typography>
               </>
             }
           />
