@@ -82,6 +82,9 @@ const useStyles = makeStyles((theme) => ({
     borderTop: 'solid 1px',
     borderTopColor: theme.palette.divider,
   },
+  alert: {
+    width: '100%',
+  },
   errorText: {
     'color': theme.palette.error.main,
     '&.MuiLink-root': {
@@ -231,8 +234,8 @@ export const StepperErrors = (args) => {
     setState({...state, snackbarUpdate: true, editFile: false});
   };
 
-  const handleClickClose = (state) => {
-    setState({...state, [state]: false});
+  const handleClickClose = () => {
+    setState({...state, snackbarUpdate: false});
   };
 
   const triggerErrors = (step) => {
@@ -303,58 +306,63 @@ export const StepperErrors = (args) => {
       case 0:
         return (
           <>
-            {Boolean(state.stepperErrors[0]) && (
-              <Alert severity="error" className={classes.errorText}>
-                Please correct the following errors...
-                <ul className={classes.errorList}>
-                  <li>
-                    <Link
-                      className={classes.errorText}
-                      onClick={() => {
-                        document.getElementById('name').focus();
-                      }}
-                    >
-                      {`{Textfield} is required`}
-                    </Link>
-                  </li>
-                  <li>
-                    <Link
-                      className={classes.errorText}
-                      onClick={() => {
-                        document
-                            .getElementById('variables-label')
-                            .scrollIntoView({
-                              block: 'center',
-                            });
-                      }}
-                    >
-                      {`{Radio 1} is required`}
-                    </Link>
-                  </li>
-                  <li>
-                    <Link
-                      className={classes.errorText}
-                      onClick={() => {
-                        document
-                            .getElementById('version-label')
-                            .scrollIntoView({
-                              block: 'center',
-                            });
-                      }}
-                    >
-                      {`{Radio 2} is required`}
-                    </Link>
-                  </li>
-                </ul>
-              </Alert>
-            )}
-            <div className="row">
-              <Typography>
-                Please provide some information about this request as well as
-                your output and supporting files.
-              </Typography>
-            </div>
             <Grid container>
+              {Boolean(state.stepperErrors[0]) && (
+                <Grid item className="row">
+                  <Alert
+                    severity="error"
+                    className={clsx(classes.errorText, classes.alert)}
+                  >
+                    Please correct the following errors...
+                    <ul className={classes.errorList}>
+                      <li>
+                        <Link
+                          className={classes.errorText}
+                          onClick={() => {
+                            document.getElementById('name').focus();
+                          }}
+                        >
+                          {`{Textfield} is required`}
+                        </Link>
+                      </li>
+                      <li>
+                        <Link
+                          className={classes.errorText}
+                          onClick={() => {
+                            document
+                                .getElementById('variables-label')
+                                .scrollIntoView({
+                                  block: 'center',
+                                });
+                          }}
+                        >
+                          {`{Radio 1} is required`}
+                        </Link>
+                      </li>
+                      <li>
+                        <Link
+                          className={classes.errorText}
+                          onClick={() => {
+                            document
+                                .getElementById('version-label')
+                                .scrollIntoView({
+                                  block: 'center',
+                                });
+                          }}
+                        >
+                          {`{Radio 2} is required`}
+                        </Link>
+                      </li>
+                    </ul>
+                  </Alert>
+                </Grid>
+              )}
+              <Grid item className="row">
+                <Typography>
+                  Please provide some information about this request as well as
+                  your output and supporting files.
+                </Typography>
+              </Grid>
               <Grid item xs={6} className="row">
                 <FormControl
                   className={classes.inputMargin}
@@ -376,7 +384,7 @@ export const StepperErrors = (args) => {
                   />
                 </FormControl>
               </Grid>
-              <Grid xs={12}>
+              <Grid item xs={12}>
                 <Typography component="h2" variant="h6" className="mb-2">
                   Residual disclosure
                 </Typography>
@@ -457,29 +465,33 @@ export const StepperErrors = (args) => {
       case 1:
         return (
           <>
-            {Boolean(state.stepperErrors[1]) && (
-              <Alert severity="error" className={classes.errorText}>
-                Please correct the following errors...
-                <ul className={classes.errorList}>
-                  <li>
-                    <Link
-                      className={classes.errorText}
-                      onClick={() => {
-                        document
-                            .getElementById('output-file-label')
-                            .scrollIntoView({
-                              block: 'center',
-                            });
-                      }}
-                    >
-                      At least one output file must be added
-                    </Link>
-                  </li>
-                </ul>
-              </Alert>
-            )}
-
             <Grid container alignItems="center" justify="space-between">
+              {Boolean(state.stepperErrors[1]) && (
+                <Grid item className="row">
+                  <Alert
+                    severity="error"
+                    className={clsx(classes.errorText, classes.alert)}
+                  >
+                    Please correct the following errors...
+                    <ul className={classes.errorList}>
+                      <li>
+                        <Link
+                          className={classes.errorText}
+                          onClick={() => {
+                            document
+                                .getElementById('output-file-label')
+                                .scrollIntoView({
+                                  block: 'center',
+                                });
+                          }}
+                        >
+                          At least one output file must be added
+                        </Link>
+                      </li>
+                    </ul>
+                  </Alert>
+                </Grid>
+              )}
               <Grid item className="row">
                 <Typography>
                   Please provide some information about this request as well as
@@ -491,7 +503,7 @@ export const StepperErrors = (args) => {
                   <Typography
                     variant="body1"
                     className={clsx({
-                      [classes.errorText]: Boolean(state.name.errorText),
+                      [classes.errorText]: Boolean(state.stepperErrors[1]),
                     })}
                     id="output-file-label"
                   >
@@ -500,7 +512,7 @@ export const StepperErrors = (args) => {
                   <Typography
                     variant="body2"
                     className={clsx({
-                      [classes.errorText]: Boolean(state.name.errorText),
+                      [classes.errorText]: Boolean(state.stepperErrors[1]),
                     })}
                   >
                     At least one file must be added
@@ -527,38 +539,43 @@ export const StepperErrors = (args) => {
       case 2:
         return (
           <>
-            {Boolean(state.stepperErrors[2]) && (
-              <Alert severity="error" className={classes.errorText}>
-                Please correct the following errors...
-                <ul className={classes.errorList}>
-                  <li>
-                    <Link
-                      className={classes.errorText}
-                      onClick={() => {
-                        document.getElementById('card1').scrollIntoView({
-                          block: 'center',
-                        });
-                      }}
-                    >
-                      {`{Cardname 1} has 2 errors`}
-                    </Link>
-                  </li>
-                  <li>
-                    <Link
-                      className={classes.errorText}
-                      onClick={() => {
-                        document.getElementById('card2').scrollIntoView({
-                          block: 'center',
-                        });
-                      }}
-                    >
-                      {`{Cardname 2} has 3 errors`}
-                    </Link>
-                  </li>
-                </ul>
-              </Alert>
-            )}
-            <Grid container alignItems="center" justify="space-between">
+            <Grid container>
+              {Boolean(state.stepperErrors[2]) && (
+                <Grid item className="row">
+                  <Alert
+                    severity="error"
+                    className={clsx(classes.errorText, classes.alert)}
+                  >
+                    Please correct the following errors...
+                    <ul className={classes.errorList}>
+                      <li>
+                        <Link
+                          className={classes.errorText}
+                          onClick={() => {
+                            document.getElementById('card1').scrollIntoView({
+                              block: 'center',
+                            });
+                          }}
+                        >
+                          {`{Cardname 1} has 2 errors`}
+                        </Link>
+                      </li>
+                      <li>
+                        <Link
+                          className={classes.errorText}
+                          onClick={() => {
+                            document.getElementById('card2').scrollIntoView({
+                              block: 'center',
+                            });
+                          }}
+                        >
+                          {`{Cardname 2} has 3 errors`}
+                        </Link>
+                      </li>
+                    </ul>
+                  </Alert>
+                </Grid>
+              )}
               <Grid item className="row">
                 <Typography>
                   Please provide some information about this request as well as
@@ -578,9 +595,8 @@ export const StepperErrors = (args) => {
               {files.map((file, index) => {
                 const num = index + 1;
                 return (
-                  <Grid item className="row">
+                  <Grid item className="row" key={file.name}>
                     <Card
-                      key={file.name}
                       id={`card` + num}
                       className={clsx(classes.card, {
                         [classes.cardError]: file.error,
@@ -813,12 +829,13 @@ export const StepperErrors = (args) => {
           toggleDrawer={toggleDrawer}
           updateFile={updateFile}
           handleClickOpen={handleClickOpen}
+          errors={Boolean(state.stepperErrors[2])}
         />
       </Drawer>
       {/* Update output file snackbar */}
       <SnackbarUpdateOutputFile
         open={state.snackbarUpdate}
-        handleClose={() => handleClickClose('snackbarUpdate')}
+        handleClose={handleClickClose}
       />
     </div>
   );

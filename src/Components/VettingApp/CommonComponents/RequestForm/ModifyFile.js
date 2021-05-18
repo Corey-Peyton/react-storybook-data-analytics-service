@@ -22,7 +22,9 @@ import {
   Toolbar,
   IconButton,
   Grid,
+  Link,
 } from '@material-ui/core';
+import Alert from '@material-ui/lab/Alert';
 import Autocomplete from '@material-ui/lab/Autocomplete';
 import InfoIcon from '@material-ui/icons/Info';
 import CloseIcon from '@material-ui/icons/Close';
@@ -91,6 +93,13 @@ const useStyles = makeStyles((theme) => ({
     display: 'flex',
     alignItems: 'center',
     marginBottom: theme.spacing(3),
+  },
+  errorText: {
+    'color': [theme.palette.error.main, '!important'],
+    '&.MuiLink-root': {
+      textDecoration: 'underline',
+      cursor: 'pointer',
+    },
   },
 }));
 
@@ -242,8 +251,10 @@ function BootstrapTooltip(props) {
 }
 
 function OutputFileForm(props) {
+  const {errors} = props;
   const classes = useStyles();
   const {t} = useTranslation();
+  const required = 'This field is required';
 
   const [state, setState] = React.useState({
     includeWeightVariable: null,
@@ -442,6 +453,11 @@ function OutputFileForm(props) {
     },
   };
 
+  if (errors) {
+    state.sheetname.helperText = required;
+    state.sample.helperText = required;
+  }
+
   const disableCutCopyPaste = (e, command, value) => {
     // display error if user tries to cut/copy/paste
     let msg;
@@ -539,6 +555,46 @@ function OutputFileForm(props) {
 
   return (
     <>
+      {errors && (
+        <Alert severity="error" className={clsx(classes.errorText, 'mb-2')}>
+          Please correct the following errors...
+          <ul className={classes.errorList}>
+            <li>
+              <Link
+                className={classes.errorText}
+                onClick={() => {
+                  document.getElementById('sheetName').focus();
+                }}
+              >
+                {`{Textfield} is required`}
+              </Link>
+            </li>
+            <li>
+              <Link
+                className={classes.errorText}
+                onClick={() => {
+                  document.getElementById('sampleUsed').focus();
+                }}
+              >
+                {`{Radio 1} is required`}
+              </Link>
+            </li>
+            <li>
+              <Link
+                className={classes.errorText}
+                onClick={() => {
+                  document.getElementById('dollarIncluded').scrollIntoView({
+                    block: 'center',
+                  });
+                }}
+              >
+                {`{Radio 2} is required`}
+              </Link>
+            </li>
+          </ul>
+        </Alert>
+      )}
+
       <FormControl
         className={classes.inputMargin}
         margin="dense"
@@ -571,7 +627,7 @@ function OutputFileForm(props) {
         onBlur={() => toggleHelperText('sheetname')}
         onFocus={() => toggleHelperText('sheetname')}
         defaultValue={state.sheetname.text}
-        error={Boolean(state.sheetname.errorText)}
+        error={errors}
         helperText={state.sheetname.helperText}
       />
       <TextField
@@ -687,7 +743,7 @@ function OutputFileForm(props) {
         onBlur={() => toggleHelperText('sample')}
         onFocus={() => toggleHelperText('sample')}
         defaultValue={state.sample.text}
-        error={Boolean(state.sample.errorText)}
+        error={errors}
         helperText={state.sample.helperText}
       />
       <TextField
@@ -833,7 +889,12 @@ function OutputFileForm(props) {
         component="fieldset"
         required
       >
-        <FormLabel component="legend" className={classes.tooltipLabel}>
+        <FormLabel
+          component="legend"
+          className={clsx(classes.tooltipLabel, {
+            [classes.errorText]: errors,
+          })}
+        >
           Are variables related to income, earnings, tax and/or dollar values
           included?{' '}
           <BootstrapTooltip title="If no, future vetting release reuests under this contract may be restricted due to residual disclosure. You are strongly encouraged to consult with your Analyst.">
@@ -1128,8 +1189,8 @@ function OutputFileForm(props) {
           label="Supporting folder *"
           labelId="suppFolder1-label"
         >
-          <MenuItem>Folder 1</MenuItem>
-          <MenuItem>Folder 2</MenuItem>
+          <MenuItem value="Folder 1">Folder 1</MenuItem>
+          <MenuItem value="Folder 2">Folder 2</MenuItem>
         </Select>
       </FormControl>
       <TextField
@@ -1198,8 +1259,8 @@ function OutputFileForm(props) {
           label="Supporting folder *"
           labelId="suppFolder2-label"
         >
-          <MenuItem>Folder 1</MenuItem>
-          <MenuItem>Folder 2</MenuItem>
+          <MenuItem value="Folder 1">Folder 1</MenuItem>
+          <MenuItem value="Folder 2">Folder 2</MenuItem>
         </Select>
       </FormControl>
       <TextField
