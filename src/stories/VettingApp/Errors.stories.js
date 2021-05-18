@@ -22,6 +22,7 @@ import {
   RadioGroup,
   FormControlLabel,
   Radio,
+  Drawer,
 } from '@material-ui/core';
 import Alert from '@material-ui/lab/Alert';
 import Icon from '@mdi/react';
@@ -30,8 +31,8 @@ import ArrowBackIosIcon from '@material-ui/icons/ArrowBackIos';
 import ArrowBackIcon from '@material-ui/icons/ArrowBack';
 import {mdiInboxArrowDown} from '@mdi/js';
 import {mdiFileDocumentOutline} from '@mdi/js';
-import ResearcherInfo from '../../Components/VettingApp/CommonComponents/RequestForm/ResearcherInfo';
-import ResidualDisclosure from '../../Components/VettingApp/CommonComponents/RequestForm/ResidualDisclosure';
+import {ModifyFile} from '../../Components/VettingApp/CommonComponents/RequestForm/ModifyFile';
+import {SnackbarUpdateOutputFile} from '../../Components/VettingApp/CommonComponents/Snackbars';
 import AdditionalInfo from '../../Components/VettingApp/CommonComponents/RequestForm/Additionalnfo';
 import Header from '../../Components/VettingApp/CommonComponents/Header';
 
@@ -91,14 +92,33 @@ const useStyles = makeStyles((theme) => ({
   errorList: {
     paddingTop: theme.spacing(1),
   },
+  card: {
+    width: '100%',
+  },
+  cardActions: {
+    borderTop: '1px solid',
+    borderTopColor: theme.palette.divider,
+  },
+  cardActionsError: {
+    borderTop: '1px solid',
+    borderTopColor: theme.palette.error.light,
+  },
+  cardError: {
+    border: '1px solid',
+    borderColor: theme.palette.error.light,
+  },
+  cardTitle: {
+    marginTop: theme.spacing(0.25),
+  },
+  drawer: {
+    '& .MuiDrawer-paper': {
+      maxWidth: '400px',
+      boxSizing: 'border-box',
+    },
+  },
 }));
 
 const files = [
-  {
-    name: 'Output file example with a very long name.',
-    emptyFields: 0,
-    error: false,
-  },
   {
     name:
       'Another file with even a longer name for users who likes to be really descriptive. Yes, believe it happens!',
@@ -140,6 +160,8 @@ export const StepperErrors = (args) => {
       errorText: '',
       invalid: '',
     },
+    editFile: false,
+    snackbarUpdate: false,
   });
   const prevStep = React.useRef(null);
   const nextStep = React.useRef(null);
@@ -195,6 +217,22 @@ export const StepperErrors = (args) => {
 
   const isStepFailed = (step) => {
     return state.stepperErrors[step] !== 0;
+  };
+
+  const toggleDrawer = (e, drawer, val) => {
+    setState({...state, [drawer]: val});
+  };
+
+  const handleClickOpen = (state) => {
+    setState({...state, [state]: true});
+  };
+
+  const updateFile = () => {
+    setState({...state, snackbarUpdate: true, editFile: false});
+  };
+
+  const handleClickClose = (state) => {
+    setState({...state, [state]: false});
   };
 
   const triggerErrors = (step) => {
@@ -310,15 +348,16 @@ export const StepperErrors = (args) => {
                 </ul>
               </Alert>
             )}
-            <Typography>
-              Please provide some information about this request as well as your
-              output and supporting files.
-            </Typography>
+            <div className="row">
+              <Typography>
+                Please provide some information about this request as well as
+                your output and supporting files.
+              </Typography>
+            </div>
             <Grid container>
-              <Grid item xs={6}>
+              <Grid item xs={6} className="row">
                 <FormControl
                   className={classes.inputMargin}
-                  margin="dense"
                   variant="outlined"
                   fullWidth
                   required
@@ -328,7 +367,6 @@ export const StepperErrors = (args) => {
                     name="name"
                     variant="outlined"
                     fullWidth
-                    margin="dense"
                     className={classes.inputMargin}
                     label="Name"
                     required
@@ -338,10 +376,12 @@ export const StepperErrors = (args) => {
                   />
                 </FormControl>
               </Grid>
-              <Grid item xs={12}>
+              <Grid xs={12}>
                 <Typography component="h2" variant="h6" className="mb-2">
                   Residual disclosure
                 </Typography>
+              </Grid>
+              <Grid item xs={12} className="row">
                 <FormControl
                   component="fieldset"
                   className={classes.inputMargin}
@@ -374,6 +414,8 @@ export const StepperErrors = (args) => {
                     />
                   </RadioGroup>
                 </FormControl>
+              </Grid>
+              <Grid item xs={12} className="row">
                 <FormControl
                   component="fieldset"
                   className={classes.inputMargin}
@@ -436,44 +478,50 @@ export const StepperErrors = (args) => {
                 </ul>
               </Alert>
             )}
-            <Typography>
-              Please provide some information about this request as well as your
-              output and supporting files.
-            </Typography>
-            <Grid
-              container
-              alignItems="center"
-              justify="space-between"
-              className="mb-2"
-            >
-              <Grid item>
-                <Typography
-                  variant="body1"
-                  className={clsx({
-                    [classes.errorText]: Boolean(state.name.errorText),
-                  })}
-                  id="output-file-label"
-                >
-                  Output file*
+
+            <Grid container alignItems="center" justify="space-between">
+              <Grid item className="row">
+                <Typography>
+                  Please provide some information about this request as well as
+                  your output and supporting files.
                 </Typography>
+              </Grid>
+              <Grid item className="row">
+                <Grid item>
+                  <Typography
+                    variant="body1"
+                    className={clsx({
+                      [classes.errorText]: Boolean(state.name.errorText),
+                    })}
+                    id="output-file-label"
+                  >
+                    Output file*
+                  </Typography>
+                  <Typography
+                    variant="body2"
+                    className={clsx({
+                      [classes.errorText]: Boolean(state.name.errorText),
+                    })}
+                  >
+                    At least one file must be added
+                  </Typography>
+                </Grid>
+                <Grid item>
+                  <Button variant="contained" color="primary">
+                    Add file
+                  </Button>
+                </Grid>
+              </Grid>
+              <Grid className="row">
                 <Typography
                   variant="body2"
-                  className={clsx({
-                    [classes.errorText]: Boolean(state.name.errorText),
-                  })}
+                  color="textSecondary"
+                  className="mb-2"
                 >
-                  At least one file must be added
+                  No output files
                 </Typography>
               </Grid>
-              <Grid item>
-                <Button variant="contained" color="primary">
-                  Add file
-                </Button>
-              </Grid>
             </Grid>
-            <Typography variant="body2" color="textSecondary" className="mb-2">
-              No output files
-            </Typography>
           </>
         );
       case 2:
@@ -487,11 +535,9 @@ export const StepperErrors = (args) => {
                     <Link
                       className={classes.errorText}
                       onClick={() => {
-                        document
-                            .getElementById('output-file-label')
-                            .scrollIntoView({
-                              block: 'center',
-                            });
+                        document.getElementById('card1').scrollIntoView({
+                          block: 'center',
+                        });
                       }}
                     >
                       {`{Cardname 1} has 2 errors`}
@@ -501,11 +547,9 @@ export const StepperErrors = (args) => {
                     <Link
                       className={classes.errorText}
                       onClick={() => {
-                        document
-                            .getElementById('output-file-label')
-                            .scrollIntoView({
-                              block: 'center',
-                            });
+                        document.getElementById('card2').scrollIntoView({
+                          block: 'center',
+                        });
                       }}
                     >
                       {`{Cardname 2} has 3 errors`}
@@ -514,71 +558,78 @@ export const StepperErrors = (args) => {
                 </ul>
               </Alert>
             )}
-            <Typography>
-              Please provide some information about this request as well as your
-              output and supporting files.
-            </Typography>
-            <Grid
-              container
-              alignItems="center"
-              justify="space-between"
-              className="mb-2"
-            >
-              <Grid item>
-                <Typography variant="body1" id="output-file-label">
-                  Output file*
-                </Typography>
-                <Typography variant="body2">
-                  At least one file must be added
+            <Grid container alignItems="center" justify="space-between">
+              <Grid item className="row">
+                <Typography>
+                  Please provide some information about this request as well as
+                  your output and supporting files.
                 </Typography>
               </Grid>
-              <Grid item>
-                <Button variant="contained" color="primary">
-                  Add file
-                </Button>
+              <Grid item className="row">
+                <Grid item>
+                  <Typography variant="body1" id="output-file-label">
+                    Output file*
+                  </Typography>
+                  <Typography variant="body2">
+                    At least one file must be added
+                  </Typography>
+                </Grid>
               </Grid>
-            </Grid>
-            {files.map((file) => {
-              return (
-                <Card
-                  key={file.name}
-                  className={clsx(classes.card, {
-                    [classes.cardError]: file.error,
-                  })}
-                  variant="outlined"
-                >
-                  <CardContent>
-                    <Grid container wrap="nowrap" alignItems="flex-start">
-                      <Grid item>
-                        <Icon
-                          className={classes.icon}
-                          path={mdiFileDocumentOutline}
-                          size={1}
+              {files.map((file, index) => {
+                const num = index + 1;
+                return (
+                  <Grid item className="row">
+                    <Card
+                      key={file.name}
+                      id={`card` + num}
+                      className={clsx(classes.card, {
+                        [classes.cardError]: file.error,
+                      })}
+                      variant="outlined"
+                    >
+                      <CardContent>
+                        <Grid container wrap="nowrap" alignItems="flex-start">
+                          <Grid item>
+                            <Icon
+                              className={classes.icon}
+                              path={mdiFileDocumentOutline}
+                              size={1}
+                            />
+                          </Grid>
+                          <Grid item>
+                            <Typography
+                              variant="subtitle2"
+                              component="h3"
+                              className={classes.cardTitle}
+                            >
+                              {file.name}
+                            </Typography>
+                          </Grid>
+                        </Grid>
+                        <FileValidationAlert
+                          emptyFields={file.emptyFields}
+                          error={file.error}
                         />
-                      </Grid>
-                      <Grid item>
-                        <Typography
-                          variant="subtitle2"
-                          component="h3"
-                          className={classes.cardTitle}
+                      </CardContent>
+                      <CardActions
+                        className={clsx({
+                          [classes.cardActions]: file.error === false,
+                          [classes.cardActionsError]: file.error === true,
+                        })}
+                      >
+                        <Button
+                          color="primary"
+                          onClick={(e) => toggleDrawer(e, 'editFile', true)}
                         >
-                          {file.name}
-                        </Typography>
-                      </Grid>
-                    </Grid>
-                  </CardContent>
-                  <CardActions
-                    className={clsx({
-                      [classes.cardActions]: file.error === false,
-                      [classes.cardActionsError]: file.error === true,
-                    })}
-                  >
-                    <Button color="primary">Edit</Button>
-                    <Button color="primary">Delete</Button>
-                  </CardActions>
-                </Card>
-              );
-            })}
+                          Edit
+                        </Button>
+                        <Button color="primary">Delete</Button>
+                      </CardActions>
+                    </Card>
+                  </Grid>
+                );
+              })}
+            </Grid>
           </>
         );
       case 3:
@@ -587,6 +638,27 @@ export const StepperErrors = (args) => {
         return 'Unknown step';
     }
   };
+
+  function FileValidationAlert(props) {
+    const {emptyFields, error} = {...props};
+    if (emptyFields > 0 && error) {
+      return (
+        <Alert className="mt-2" severity="error">
+          {emptyFields} {emptyFields > 1 ? 'errors' : 'error'}
+        </Alert>
+      );
+    } else if (emptyFields > 0 && !error) {
+      return (
+        <Alert severity="warning" className="mt-2">
+          {emptyFields > 1 ?
+            `There are ${emptyFields} remaining fields that must be filled before submitting.` :
+            `There is ${emptyFields} remaining field that must be filled before submitting.`}
+        </Alert>
+      );
+    } else if (emptyFields === 0) {
+      return null;
+    }
+  }
 
   return (
     <div className={classes.root}>
@@ -735,6 +807,19 @@ export const StepperErrors = (args) => {
           </Grid>
         )}
       </Grid>
+      {/* Edit output file drawer */}
+      <Drawer anchor="right" open={state.editFile} className={classes.drawer}>
+        <ModifyFile
+          toggleDrawer={toggleDrawer}
+          updateFile={updateFile}
+          handleClickOpen={handleClickOpen}
+        />
+      </Drawer>
+      {/* Update output file snackbar */}
+      <SnackbarUpdateOutputFile
+        open={state.snackbarUpdate}
+        handleClose={() => handleClickClose('snackbarUpdate')}
+      />
     </div>
   );
 };
