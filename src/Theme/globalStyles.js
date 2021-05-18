@@ -120,7 +120,7 @@ export const useStyles = makeStyles({
       'color': theme.palette.error.main,
       '& +.MuiFormGroup-root': {
         '& .MuiRadio-root, & .MuiCheckbox-root': {
-          color: theme.palette.error.main,
+          color: [theme.palette.error.main, '!important'],
         },
       },
     },
