@@ -101,9 +101,10 @@ export const useStyles = makeStyles({
         paddingBottom: theme.spacing(1.625),
       },
     },
-    // Forms - radio buttons & checkboxes
+    // Radio buttons & checkboxes
     'legend.MuiFormLabel-root': {
       lineHeight: theme.typography.body2.lineHeight,
+      fontSize: theme.typography.body2.fontSize,
       letterSpacing: theme.typography.body2.letterSpacing,
       color: theme.palette.text.primary,
       marginBottom: theme.spacing(1),
@@ -119,20 +120,28 @@ export const useStyles = makeStyles({
       'color': theme.palette.error.main,
       '& +.MuiFormGroup-root': {
         '& .MuiRadio-root, & .MuiCheckbox-root': {
-          color: theme.palette.error.main,
+          color: [theme.palette.error.main, '!important'],
         },
       },
     },
     '.MuiFormHelperText-root.Mui-error': {
       '& +.MuiFormGroup-root': {
         '& .MuiRadio-root, & .MuiCheckbox-root': {
-          color: theme.palette.error.main,
+          color: [theme.palette.error.main, '!important'],
         },
       },
     },
     '.MuiFormGroup-root': {
       '& .MuiFormControlLabel-root': {
-        alignItems: 'start',
+        'alignItems': 'start',
+        '&:not(.Mui-disabled)': {
+          '&:hover': {
+            '& .MuiRadio-colorPrimary, & .MuiCheckbox-colorPrimary': {
+              color: theme.palette.primary.dark,
+              backgroundColor: fade(theme.palette.primary.main, 0.12),
+            },
+          },
+        },
       },
       '& .MuiFormControlLabel-label': {
         'fontSize': theme.typography.body2.fontSize,
@@ -145,6 +154,9 @@ export const useStyles = makeStyles({
           color: theme.palette.text.secondary,
         },
       },
+    },
+    '.MuiRadio-root, .MuiCheckbox-root': {
+      color: theme.palette.buttons.default,
     },
 
     // Fix for bug: extra space under text field with long label in dialogs

@@ -45,7 +45,9 @@ export const Group = (args) => {
             label={
               <>
                 <Typography variant="body2">Female</Typography>
-                <Typography variant="caption">Helper text</Typography>
+                <Typography variant="caption" component="p">
+                  Helper text
+                </Typography>
               </>
             }
           />
@@ -55,7 +57,9 @@ export const Group = (args) => {
             label={
               <>
                 <Typography variant="body2">Male</Typography>
-                <Typography variant="caption">Helper text</Typography>
+                <Typography variant="caption" component="p">
+                  Helper text
+                </Typography>
               </>
             }
           />
@@ -65,14 +69,16 @@ export const Group = (args) => {
             label={
               <>
                 <Typography variant="body2">Other</Typography>
-                <Typography variant="caption">Helper text</Typography>
+                <Typography variant="caption" component="p">
+                  Helper text
+                </Typography>
               </>
             }
           />
           <FormControlLabel
             value="disabled"
             disabled
-            control={<Radio />}
+            control={<Radio color="primary" />}
             label={
               <>
                 <Typography variant="body2">(Disabled option)</Typography>
@@ -115,7 +121,9 @@ export const GroupError = (args) => {
             label={
               <>
                 <Typography variant="body2">Female</Typography>
-                <Typography variant="caption">Helper text</Typography>
+                <Typography variant="caption" component="p">
+                  Helper text
+                </Typography>
               </>
             }
           />
@@ -125,7 +133,9 @@ export const GroupError = (args) => {
             label={
               <>
                 <Typography variant="body2">Male</Typography>
-                <Typography variant="caption">Helper text</Typography>
+                <Typography variant="caption" component="p">
+                  Helper text
+                </Typography>
               </>
             }
           />
@@ -135,14 +145,16 @@ export const GroupError = (args) => {
             label={
               <>
                 <Typography variant="body2">Other</Typography>
-                <Typography variant="caption">Helper text</Typography>
+                <Typography variant="caption" component="p">
+                  Helper text
+                </Typography>
               </>
             }
           />
           <FormControlLabel
             value="disabled"
             disabled
-            control={<Radio />}
+            control={<Radio color="primary" />}
             label={
               <>
                 <Typography variant="body2">(Disabled option)</Typography>

@@ -270,8 +270,10 @@ function MachineDetailsContent(props) {
                     }
                     label={
                       <>
-                        <Typography>{t('Default tools')}</Typography>
-                        <Typography variant="caption">
+                        <Typography variant="body2">
+                          {t('Default tools')}
+                        </Typography>
+                        <Typography variant="caption" component="p">
                           {t(
                               'Default tools (Adobe Reader DC, Java, LibreOffice, Office 2019, Power BI, ProjectLibre, Python, R, RStudio, RTools, VSCode',
                           )}
@@ -287,8 +289,8 @@ function MachineDetailsContent(props) {
                     control={<Checkbox name="SAS" color="primary" />}
                     label={
                       <>
-                        <Typography>{t('SAS')}</Typography>
-                        <Typography variant="caption">
+                        <Typography variant="body2">{t('SAS')}</Typography>
+                        <Typography variant="caption" component="p">
                           {t('Includes SAS 9.4 and SAS Enterprise Guide')}
                         </Typography>
                       </>
