@@ -194,7 +194,7 @@ function VettingRequestResearcher(props) {
           />
         );
       case 1:
-        return <FilesList />;
+        return <FilesList role="researcher" />;
       case 2:
         return <ResidualDisclosure />;
       case 3:

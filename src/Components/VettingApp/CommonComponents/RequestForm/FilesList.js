@@ -28,7 +28,7 @@ import {
   Tooltip,
 } from '@material-ui/core';
 import Alert from '@material-ui/lab/Alert';
-import {AddFile, ModifyFile} from './ModifyFile';
+import {AddFile, ModifyFile, ViewFile} from './ModifyFile';
 import CloseIcon from '@material-ui/icons/Close';
 import InfoIcon from '@material-ui/icons/Info';
 import Icon from '@mdi/react';
@@ -200,6 +200,7 @@ function FilesList(props) {
     snackbarDelete: false,
     addFile: false,
     editFile: false,
+    viewFile: false,
     dialogDelete: false,
   });
 
@@ -481,15 +482,17 @@ function FilesList(props) {
             File details
           </Typography>
         </Grid>
-        <Grid item>
-          <Button
-            variant="contained"
-            color="primary"
-            onClick={(e) => toggleDrawer(e, 'addFile', true)}
-          >
-            Add file
-          </Button>
-        </Grid>
+        {props.role === 'researcher' && (
+          <Grid item>
+            <Button
+              variant="contained"
+              color="primary"
+              onClick={(e) => toggleDrawer(e, 'addFile', true)}
+            >
+              Add file
+            </Button>
+          </Grid>
+        )}
       </Grid>
       <Typography variant="body2" color="textSecondary" className="mb-2">
         No output files
@@ -536,18 +539,30 @@ function FilesList(props) {
                 [classes.cardActionsError]: file.error === true,
               })}
             >
-              <Button
-                color="primary"
-                onClick={(e) => toggleDrawer(e, 'editFile', true)}
-              >
-                Edit
-              </Button>
-              <Button
-                color="primary"
-                onClick={() => handleClickOpen('dialogDelete')}
-              >
-                Delete
-              </Button>
+              {props.role === 'researcher' && (
+                <>
+                  <Button
+                    color="primary"
+                    onClick={(e) => toggleDrawer(e, 'editFile', true)}
+                  >
+                    Edit
+                  </Button>
+                  <Button
+                    color="primary"
+                    onClick={() => handleClickOpen('dialogDelete')}
+                  >
+                    Delete
+                  </Button>{' '}
+                </>
+              )}
+              {props.role === 'analyst' && (
+                <Button
+                  color="primary"
+                  onClick={(e) => toggleDrawer(e, 'viewFile', true)}
+                >
+                  View details
+                </Button>
+              )}
             </CardActions>
           </Card>
         );
@@ -565,6 +580,13 @@ function FilesList(props) {
         <ModifyFile
           toggleDrawer={toggleDrawer}
           updateFile={updateFile}
+          handleClickOpen={handleClickOpen}
+        />
+      </Drawer>
+      {/* View output file drawer */}
+      <Drawer anchor="right" open={open.viewFile} className={classes.drawer}>
+        <ViewFile
+          toggleDrawer={toggleDrawer}
           handleClickOpen={handleClickOpen}
         />
       </Drawer>
