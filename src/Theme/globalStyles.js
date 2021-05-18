@@ -127,13 +127,19 @@ export const useStyles = makeStyles({
     '.MuiFormHelperText-root.Mui-error': {
       '& +.MuiFormGroup-root': {
         '& .MuiRadio-root, & .MuiCheckbox-root': {
-          color: theme.palette.error.main,
+          color: [theme.palette.error.main, '!important'],
         },
       },
     },
     '.MuiFormGroup-root': {
       '& .MuiFormControlLabel-root': {
-        alignItems: 'start',
+        'alignItems': 'start',
+        '&:hover': {
+          '& .MuiRadio-colorPrimary, & .MuiCheckbox-colorPrimary': {
+            color: theme.palette.primary.dark,
+            backgroundColor: fade(theme.palette.primary.main, 0.12),
+          },
+        },
       },
       '& .MuiFormControlLabel-label': {
         'fontSize': theme.typography.body2.fontSize,
