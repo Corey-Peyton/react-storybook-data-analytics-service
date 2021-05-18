@@ -48,50 +48,65 @@ export const useStyles = makeStyles({
       padding: theme.spacing(0, 0, 3, 0),
     },
 
-    // Forms
-    '.MuiInputAdornment-root': {
-      color: theme.palette.grey[500],
-    },
-    '.MuiInputBase-input::placeholder': {
-      color: theme.palette.grey[600],
-      opacity: 1,
-    },
+    // Textfields
     '.MuiOutlinedInput-notchedOutline': {
       borderColor: 'rgba(0, 0, 0, 0.42)',
     },
-    '.MuiFormLabel-root.MuiFormLabel-filled': {
-      marginTop: theme.spacing(0),
-    },
-    '.MuiFormLabel-root.Mui-focused': {
-      marginTop: theme.spacing(0),
-    },
-    '.MuiFormLabel-root': {
-      fontSize: '0.875rem',
-      marginTop: '1px',
-      color: theme.palette.text.primary,
-    },
-    '.MuiInputBase-input': {
-      'fontSize': '0.875rem',
-      '&:not(.MuiInputBase-inputMultiline)': {
-        height: '1em',
+    // Dense
+    '.MuiFormControl-marginDense': {
+      // Outlined label
+      '& .MuiInputLabel-outlined': {
+        'fontSize': theme.typography.body2.fontSize,
+        'letterSpacing': theme.typography.body2.letterSpacing,
+        'transform': 'translate(14px, 14px) scale(1)',
+        '&.MuiInputLabel-shrink': {
+          'transform': 'translate(14px, -5px) scale(0.857)',
+          'letterSpacing': theme.typography.caption.letterSpacing,
+          '&+ .MuiOutlinedInput-root': {
+            '& > fieldset > legend ': {
+              fontSize: theme.typography.caption.fontSize,
+              letterSpacing: theme.typography.caption.letterSpacing,
+            },
+          },
+        },
+      },
+      // Outlined input
+      '& .MuiOutlinedInput-root ': {
+        'fontSize': theme.typography.body2.fontSize,
+        'letterSpacing': theme.typography.body2.letterSpacing,
+        '& input.MuiOutlinedInput-inputMarginDense': {
+          'paddingTop': theme.spacing(1.625),
+          'paddingBottom': theme.spacing(1.625),
+          '&:not(.MuiInputBase-inputMultiline)': {
+            height: '1em',
+          },
+        },
+        // Placeholder
+        '& .MuiInputBase-input::placeholder': {
+          fontSize: theme.typography.body2.fontSize,
+          letterSpacing: theme.typography.body2.letterSpacing,
+        },
+        // Input adornments
+        '& .MuiInputAdornment-root': {
+          'color': theme.palette.grey[500],
+          '& .MuiTypography-root': {
+            fontSize: theme.typography.body2.fontSize,
+            letterSpacing: theme.typography.body2.letterSpacing,
+          },
+        },
+      },
+      // Outlined multiline input
+      '& .MuiOutlinedInput-multiline': {
+        paddingTop: theme.spacing(1.625),
+        paddingBottom: theme.spacing(1.625),
       },
     },
-    '.MuiOutlinedInput-inputMarginDense': {
-      paddingTop: '13px',
-      paddingBottom: '13px',
-    },
-    '.MuiInputLabel-outlined': {
-      '&.MuiInputLabel-shrink': {
-        transform: 'translate(14px, -6px) scale(0.857)',
-      },
-    },
-    '.MuiFormControlLabel-root': {
-      marginLeft: theme.spacing(-1),
-    },
-    // Forms - radio buttons & checkboxes
+    // Radio buttons & checkboxes
     'legend.MuiFormLabel-root': {
       lineHeight: theme.typography.body2.lineHeight,
+      fontSize: theme.typography.body2.fontSize,
       letterSpacing: theme.typography.body2.letterSpacing,
+      color: theme.palette.text.primary,
       marginBottom: theme.spacing(1),
     },
     'legend.MuiFormLabel-root + .MuiFormHelperText-root': {
@@ -105,20 +120,28 @@ export const useStyles = makeStyles({
       'color': theme.palette.error.main,
       '& +.MuiFormGroup-root': {
         '& .MuiRadio-root, & .MuiCheckbox-root': {
-          color: theme.palette.error.main,
+          color: [theme.palette.error.main, '!important'],
         },
       },
     },
     '.MuiFormHelperText-root.Mui-error': {
       '& +.MuiFormGroup-root': {
         '& .MuiRadio-root, & .MuiCheckbox-root': {
-          color: theme.palette.error.main,
+          color: [theme.palette.error.main, '!important'],
         },
       },
     },
     '.MuiFormGroup-root': {
       '& .MuiFormControlLabel-root': {
-        alignItems: 'start',
+        'alignItems': 'start',
+        '&:not(.Mui-disabled)': {
+          '&:hover': {
+            '& .MuiRadio-colorPrimary, & .MuiCheckbox-colorPrimary': {
+              color: theme.palette.primary.dark,
+              backgroundColor: fade(theme.palette.primary.main, 0.12),
+            },
+          },
+        },
       },
       '& .MuiFormControlLabel-label': {
         'fontSize': theme.typography.body2.fontSize,
@@ -131,6 +154,9 @@ export const useStyles = makeStyles({
           color: theme.palette.text.secondary,
         },
       },
+    },
+    '.MuiRadio-root, .MuiCheckbox-root': {
+      color: theme.palette.buttons.default,
     },
 
     // Fix for bug: extra space under text field with long label in dialogs

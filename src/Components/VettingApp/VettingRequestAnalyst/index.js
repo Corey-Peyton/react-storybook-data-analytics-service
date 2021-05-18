@@ -187,7 +187,7 @@ function VettingRequestAnalyst(props) {
       case 0:
         return <ResearcherInfo handleTitleChange={handleTitleChange} />;
       case 1:
-        return <FilesList />;
+        return <FilesList role="analyst" />;
       case 2:
         return <ResidualDisclosure />;
       case 3:
