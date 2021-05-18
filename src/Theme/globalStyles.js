@@ -134,10 +134,12 @@ export const useStyles = makeStyles({
     '.MuiFormGroup-root': {
       '& .MuiFormControlLabel-root': {
         'alignItems': 'start',
-        '&:hover': {
-          '& .MuiRadio-colorPrimary, & .MuiCheckbox-colorPrimary': {
-            color: theme.palette.primary.dark,
-            backgroundColor: fade(theme.palette.primary.main, 0.12),
+        '&:not(.Mui-disabled)': {
+          '&:hover': {
+            '& .MuiRadio-colorPrimary, & .MuiCheckbox-colorPrimary': {
+              color: theme.palette.primary.dark,
+              backgroundColor: fade(theme.palette.primary.main, 0.12),
+            },
           },
         },
       },

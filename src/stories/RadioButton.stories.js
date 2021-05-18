@@ -72,7 +72,7 @@ export const Group = (args) => {
           <FormControlLabel
             value="disabled"
             disabled
-            control={<Radio />}
+            control={<Radio color="primary" />}
             label={
               <>
                 <Typography variant="body2">(Disabled option)</Typography>
@@ -142,7 +142,7 @@ export const GroupError = (args) => {
           <FormControlLabel
             value="disabled"
             disabled
-            control={<Radio />}
+            control={<Radio color="primary" />}
             label={
               <>
                 <Typography variant="body2">(Disabled option)</Typography>

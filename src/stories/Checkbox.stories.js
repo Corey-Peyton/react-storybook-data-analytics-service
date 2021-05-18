@@ -80,6 +80,11 @@ export const Group = (args) => {
               </>
             }
           />
+          <FormControlLabel
+            disabled
+            control={<Checkbox color="primary" name="disabled" />}
+            label="(Disabled option)"
+          />
         </FormGroup>
       </FormControl>
     </>
@@ -153,6 +158,11 @@ export const GroupError = (args) => {
                 <Typography variant="caption">Helper text</Typography>
               </>
             }
+          />
+          <FormControlLabel
+            disabled
+            control={<Checkbox color="primary" name="disabled" />}
+            label="(Disabled option)"
           />
         </FormGroup>
       </FormControl>
