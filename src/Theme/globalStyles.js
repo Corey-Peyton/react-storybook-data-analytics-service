@@ -101,7 +101,7 @@ export const useStyles = makeStyles({
         paddingBottom: theme.spacing(1.625),
       },
     },
-    // Forms - radio buttons & checkboxes
+    // Radio buttons & checkboxes
     'legend.MuiFormLabel-root': {
       lineHeight: theme.typography.body2.lineHeight,
       fontSize: theme.typography.body2.fontSize,
