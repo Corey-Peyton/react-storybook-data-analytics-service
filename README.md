@@ -51,6 +51,7 @@ To initiate login to Surge for future updates of the repository
 
 
 ### `node_modules/.bin/surge ./storybook-static https://uxdc-daaas-storybook.surge.sh`
+### Alternatively - `npx surge ./storybook-static https://uxdc-daaas-storybook.surge.sh`
 
 Deploys the repo to 'https://uxdc-daaas-storybook.surge.sh' for external use
 Change this link to something more specific when deploying a branch for testing (eg. https://uxdc-daaas-storybook-dialog.surge.sh)
