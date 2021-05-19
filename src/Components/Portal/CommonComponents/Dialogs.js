@@ -37,15 +37,16 @@ const useStyles = makeStyles((theme) => ({
       minHeight: 0,
     },
     '& .MuiAccordion-root:first-child': {
-      '& .MuiButtonBase-root': {
-        alignItems: 'flex-start',
+      '& .MuiAccordionSummary-root': {
+        // alignItems: 'flex-start',
+        marginTop: theme.spacing(-3),
       },
-      '& .MuiAccordionSummary-content, & .MuiAccordionSummary-content.Mui-expanded': {
-        marginTop: 0,
-      },
+      '& .MuiAccordionSummary-content, & .MuiAccordionSummary-content.Mui-expanded': {},
     },
     '& .MuiAccordion-root:last-child': {
-      '& .MuiButtonBase-root': {},
+      '& .MuiAccordionSummary-root': {
+        marginBottom: theme.spacing(-3),
+      },
       '& .MuiAccordionSummary-content, & .MuiAccordionSummary-content.Mui-expanded': {
         // marginBottom: 0,
       },
@@ -54,10 +55,10 @@ const useStyles = makeStyles((theme) => ({
         paddingBottom: 0,
       },
     },
-    '& .MuiIconButton-root': {
-      marginTop: theme.spacing(-1),
-      marginBottom: theme.spacing(-1),
-    },
+    // '& .MuiIconButton-root': {
+    //   marginTop: theme.spacing(-1),
+    //   marginBottom: theme.spacing(-1),
+    // },
     '& .MuiButton-text': {
       marginTop: theme.spacing(-0.75),
       marginBottom: theme.spacing(-0.75),
@@ -96,7 +97,7 @@ export function HelpDrawer(props) {
           </Typography>
         </AccordionSummary>
         <AccordionDetails className={classes.helpDetails}>
-          <Typography variant="body2" className="mb-3">
+          <Typography variant="body2" className="pb-3">
             {t(`For general concerns and inquiries, please contact the support team
             for guidance. A team member will be happy to assist you.`)}
           </Typography>
@@ -121,7 +122,7 @@ export function HelpDrawer(props) {
           </Typography>
         </AccordionSummary>
         <AccordionDetails className={classes.helpDetails}>
-          <Typography variant="body2" className="mb-3">
+          <Typography variant="body2" className="pb-3">
             {t(`Please consult the AAW user guide listed below if you encounter
             difficulties related to AAW-specific system components or tools. For
             general concerns and inquiries, please contact the support team for
@@ -148,7 +149,7 @@ export function HelpDrawer(props) {
           </Typography>
         </AccordionSummary>
         <AccordionDetails className={classes.helpDetails}>
-          <Typography variant="body2" className="mb-3">
+          <Typography variant="body2" className="pt-3 pb-3">
             {t(`Please consult the CAE user guide listed below if you encounter
             difficulties related to CAE-specific system components or tools. For
             general concerns and inquiries, please contact the support team for
