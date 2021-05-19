@@ -29,7 +29,7 @@ const useStyles = makeStyles((theme) => ({
   },
   main: {
     background: theme.palette.grey[100],
-    paddingBottom: theme.spacing(2),
+    paddingBottom: theme.spacing(6),
     minHeight: `calc(105vh - ${HEAD_H_XS}px - ${FOOT_H}px)`,
   },
   divider: {
@@ -43,10 +43,9 @@ const useStyles = makeStyles((theme) => ({
     margin: 'auto',
     boxSizing: 'border-box',
     padding: theme.spacing(3),
-    marginTop: theme.spacing(2),
+    marginTop: theme.spacing(3),
     border: '1px solid',
     borderColor: theme.palette.divider,
-    // minHeight: `calc(100vh - ${HEAD_H_XS}px - ${FOOT_H}px)`,
   },
   title: {
     flexGrow: 1,
