@@ -36,7 +36,7 @@ const useStyles = makeStyles((theme) => ({
     margin: theme.spacing(3, 0),
   },
   dividerHeight: {
-    marginTop: theme.spacing(6),
+    marginTop: theme.spacing(3),
   },
   paper: {
     maxWidth: '1280px',
