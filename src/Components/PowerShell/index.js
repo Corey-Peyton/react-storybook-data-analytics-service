@@ -28,7 +28,7 @@ const useStyles = makeStyles((theme) => ({
   },
   main: {
     background: theme.palette.grey[100],
-    paddingBottom: theme.spacing(31),
+    // paddingBottom: theme.spacing(31),
   },
   divider: {
     margin: theme.spacing(3, 0),
