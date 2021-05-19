@@ -4,6 +4,7 @@ import {Link} from '@material-ui/core';
 const useStyles = makeStyles((theme) => ({
   brandLink: {
     display: 'block',
+    height: '100%',
   },
   brandImage: {
     height: '100%',

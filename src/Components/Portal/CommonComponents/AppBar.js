@@ -32,9 +32,7 @@ const useStyles = makeStyles((theme) => ({
     backgroundColor: theme.palette.common.white,
   },
   branding: {
-    '& img': {
-      height: theme.spacing(3),
-    },
+    height: theme.spacing(3),
   },
   textBtn: {
     marginRight: theme.spacing(1),
