@@ -21,6 +21,7 @@ import Footer from '../VettingApp/CommonComponents/Footer';
 import ProjectDetails from './ProjecDetails';
 import VirtualMachine from './VirtualMachineDetails';
 import SubmitToolbar from './SubmitToolbar';
+import {FOOT_H, HEAD_H_XS} from '../../Theme/constants';
 
 const useStyles = makeStyles((theme) => ({
   pageContainer: {
@@ -28,22 +29,23 @@ const useStyles = makeStyles((theme) => ({
   },
   main: {
     background: theme.palette.grey[100],
-    // paddingBottom: theme.spacing(31),
+    paddingBottom: theme.spacing(2),
   },
   divider: {
     margin: theme.spacing(3, 0),
   },
   dividerHeight: {
-    marginTop: theme.spacing(3),
+    marginTop: theme.spacing(6),
   },
   paper: {
     maxWidth: '1280px',
     margin: 'auto',
     boxSizing: 'border-box',
     padding: theme.spacing(3),
-    marginTop: theme.spacing(3),
+    marginTop: theme.spacing(2),
     border: '1px solid',
     borderColor: theme.palette.divider,
+    minHeight: `calc(100vh - ${HEAD_H_XS}px - ${FOOT_H}px)`,
   },
   title: {
     flexGrow: 1,
@@ -93,7 +95,7 @@ function getSteps() {
 }
 
 function PowerShell(props) {
-  window.onbeforeunload = () => '';
+  // window.onbeforeunload = () => '';
   const classes = useStyles();
   const [state, setState] = React.useState({
     activeStep: 0,
