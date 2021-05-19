@@ -1,6 +1,14 @@
 import React from 'react';
-import {Select, FormControl, InputLabel, MenuItem} from '@material-ui/core';
+import {
+  Select,
+  FormControl,
+  InputLabel,
+  MenuItem,
+  TextField,
+} from '@material-ui/core';
+import Autocomplete from '@material-ui/lab/Autocomplete';
 import {makeStyles} from '@material-ui/core/styles';
+import {countries} from '../Data/countries';
 
 const useStyles = makeStyles((theme) => ({
   container: {
@@ -65,6 +73,19 @@ export const OutlinedSelect = (args) => {
           <MenuItem value={30}>Option 3</MenuItem>
         </Select>
       </FormControl>
+      <Autocomplete
+        fullWidth={true}
+        id="autocomplete"
+        options={countries}
+        renderInput={(params) => (
+          <TextField
+            {...params}
+            className="input-margin"
+            name="autocomplete"
+            label="Combo box"
+          />
+        )}
+      />
     </div>
   );
 };
