@@ -33,9 +33,9 @@ const useStyles = makeStyles((theme) => ({
     marginTop: theme.spacing(3),
     border: '1px solid',
     borderColor: theme.palette.divider,
-    minHeight: `calc(100vh - ${HEAD_H_XS}px - ${FOOT_H}px)`,
   },
   main: {
+    minHeight: `calc(105vh - ${HEAD_H_XS}px - ${FOOT_H}px)`,
     background: theme.palette.grey[100],
     paddingBottom: theme.spacing(6),
   },
