@@ -68,7 +68,7 @@ const typography = {
     letterSpacing: '0.0075em',
   },
   subtitle1: {
-    letterSpacing: '0.01071em',
+    letterSpacing: '0.00938em',
   },
   subtitle2: {
     letterSpacing: '0.00714em',
