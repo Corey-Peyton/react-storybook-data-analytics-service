@@ -32,6 +32,38 @@ import {
 } from '@mdi/js';
 
 const useStyles = makeStyles((theme) => ({
+  root: {
+    '& .MuiAccordionSummary-root.Mui-expanded': {
+      minHeight: 0,
+    },
+    '& .MuiAccordion-root:first-child': {
+      '& .MuiButtonBase-root': {
+        alignItems: 'flex-start',
+      },
+      '& .MuiAccordionSummary-content, & .MuiAccordionSummary-content.Mui-expanded': {
+        marginTop: 0,
+      },
+    },
+    '& .MuiAccordion-root:last-child': {
+      '& .MuiButtonBase-root': {},
+      '& .MuiAccordionSummary-content, & .MuiAccordionSummary-content.Mui-expanded': {
+        // marginBottom: 0,
+      },
+      '& .MuiAccordionDetails-root': {
+        paddingTop: 0,
+        paddingBottom: 0,
+      },
+    },
+    '& .MuiIconButton-root': {
+      paddingTop: '0px !important',
+      paddingBottom: '0px !important',
+    },
+    '& .MuiButton-text': {
+      marginTop: theme.spacing(-0.75),
+      marginBottom: theme.spacing(-0.75),
+      marginLeft: theme.spacing(-1),
+    },
+  },
   helpDetails: {
     display: 'block',
   },
@@ -52,7 +84,7 @@ export function HelpDrawer(props) {
   };
 
   const content = () => (
-    <>
+    <div className={classes.root}>
       <Accordion defaultExpanded>
         <AccordionSummary
           expandIcon={<Icon path={mdiChevronDown} size={1} />}
@@ -137,7 +169,7 @@ export function HelpDrawer(props) {
         open={open.supportDialog}
         toggleDialog={() => toggleDialog('supportDialog', !open.supportDialog)}
       />
-    </>
+    </div>
   );
 
   return (
