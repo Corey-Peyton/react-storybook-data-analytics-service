@@ -55,8 +55,8 @@ const useStyles = makeStyles((theme) => ({
       },
     },
     '& .MuiIconButton-root': {
-      paddingTop: '0px !important',
-      paddingBottom: '0px !important',
+      marginTop: theme.spacing(-1),
+      marginBottom: theme.spacing(-1),
     },
     '& .MuiButton-text': {
       marginTop: theme.spacing(-0.75),
