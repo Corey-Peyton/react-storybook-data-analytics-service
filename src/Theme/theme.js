@@ -10,6 +10,8 @@ const props = {
   },
   MuiFormControl: {
     fullWidth: true,
+    margin: 'dense',
+    variant: 'outlined',
   },
   MuiTextField: {
     margin: 'dense',
