@@ -19,7 +19,6 @@ const useStyles = makeStyles((theme) => ({
     '& .MuiDrawer-paper': {
       width: DRAWER_WIDTH,
       boxSizing: 'border-box',
-      paddingLeft: theme.spacing(3),
     },
   },
   drawerHeader: {
@@ -27,7 +26,7 @@ const useStyles = makeStyles((theme) => ({
     alignItems: 'center',
     justifyContent: 'space-between',
     backgroundColor: theme.palette.common.white,
-    margin: theme.spacing(0, -3, 3, -3),
+    margin: theme.spacing(0, -3, 3, 0),
     boxShadow: theme.shadows[0],
     borderBottom: '1px solid',
     borderBottomColor: theme.palette.divider,
@@ -41,7 +40,7 @@ const useStyles = makeStyles((theme) => ({
   drawerContent: {
     marginTop: theme.spacing(8),
     marginBottom: theme.spacing(8),
-    padding: theme.spacing(3, 3, 3, 0),
+    padding: theme.spacing(3),
     overflowY: 'auto',
     overflowX: 'hidden',
     height: '100%',
@@ -53,7 +52,6 @@ const useStyles = makeStyles((theme) => ({
   footer: {
     display: 'flex',
     justifyContent: 'flex-end',
-    marginLeft: theme.spacing(-3),
     marginRight: theme.spacing(-3),
     padding: theme.spacing(1.75, 3),
     borderTop: '1px solid',
