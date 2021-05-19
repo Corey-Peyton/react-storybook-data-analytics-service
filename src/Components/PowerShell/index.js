@@ -30,6 +30,7 @@ const useStyles = makeStyles((theme) => ({
   main: {
     background: theme.palette.grey[100],
     paddingBottom: theme.spacing(2),
+    minHeight: `calc(105vh - ${HEAD_H_XS}px - ${FOOT_H}px)`,
   },
   divider: {
     margin: theme.spacing(3, 0),
@@ -45,7 +46,7 @@ const useStyles = makeStyles((theme) => ({
     marginTop: theme.spacing(2),
     border: '1px solid',
     borderColor: theme.palette.divider,
-    minHeight: `calc(100vh - ${HEAD_H_XS}px - ${FOOT_H}px)`,
+    // minHeight: `calc(100vh - ${HEAD_H_XS}px - ${FOOT_H}px)`,
   },
   title: {
     flexGrow: 1,
@@ -95,7 +96,7 @@ function getSteps() {
 }
 
 function PowerShell(props) {
-  window.onbeforeunload = () => '';
+  // window.onbeforeunload = () => '';
   const classes = useStyles();
   const [state, setState] = React.useState({
     activeStep: 0,
