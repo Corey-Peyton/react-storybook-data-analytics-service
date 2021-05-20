@@ -19,6 +19,15 @@ const props = {
     rows: 3,
     rowsMax: 100,
   },
+  MuiSelect: {
+    MenuProps: {
+      anchorOrigin: {
+        vertical: 'bottom',
+        horizontal: 'left',
+      },
+      getContentAnchorEl: null,
+    },
+  },
 };
 
 const shadows = [

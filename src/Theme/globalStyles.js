@@ -71,7 +71,7 @@ export const useStyles = makeStyles({
         },
       },
       // Outlined input
-      '& .MuiOutlinedInput-root ': {
+      '& .MuiOutlinedInput-root': {
         'fontSize': theme.typography.body2.fontSize,
         'letterSpacing': theme.typography.body2.letterSpacing,
         '& input.MuiOutlinedInput-inputMarginDense': {
@@ -87,6 +87,14 @@ export const useStyles = makeStyles({
           minHeight: 0,
           paddingTop: theme.spacing(1.625),
           paddingBottom: theme.spacing(1.625),
+        },
+        // Autocomplete
+        '&.MuiAutocomplete-inputRoot': {
+          'paddingTop': theme.spacing(1.0625),
+          'paddingBottom': theme.spacing(1.0625),
+          '& .MuiAutocomplete-endAdornment': {
+            top: 0,
+          },
         },
         // Placeholder
         '& .MuiInputBase-input::placeholder': {
