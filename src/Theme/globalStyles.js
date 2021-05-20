@@ -81,6 +81,13 @@ export const useStyles = makeStyles({
             height: '1em',
           },
         },
+        // Select
+        '& .MuiSelect-selectMenu': {
+          height: '1em',
+          minHeight: 0,
+          paddingTop: theme.spacing(1.625),
+          paddingBottom: theme.spacing(1.625),
+        },
         // Placeholder
         '& .MuiInputBase-input::placeholder': {
           fontSize: theme.typography.body2.fontSize,
