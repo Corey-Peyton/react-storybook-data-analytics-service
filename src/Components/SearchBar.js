@@ -45,7 +45,6 @@ function SearchBar(props) {
         // disableOpenOnFocus
         onInputChange={(e, inputValue) => {
           setValue(inputValue);
-          console.log(value);
         }}
         options={suggestions.map((option) => option.subject)}
         defaultValue={searchQuery}

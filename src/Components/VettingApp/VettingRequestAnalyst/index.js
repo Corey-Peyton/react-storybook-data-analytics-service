@@ -30,6 +30,11 @@ import ManageTeamDrawer from '../CommonComponents/ManageTeamDrawer';
 const useStyles = makeStyles((theme) => ({
   pageContainer: {
     marginTop: theme.spacing(8),
+    paddingTop: theme.spacing(8),
+    [theme.breakpoints.down('xs')]: {
+      marginTop: theme.spacing(7),
+      paddingTop: theme.spacing(7),
+    },
   },
   main: {
     background: theme.palette.grey[100],
@@ -95,6 +100,7 @@ function VettingRequestAnalyst(props) {
     setOpen({...open, manageTeamDrawer: !open.manageTeamDrawer});
   };
   const classes = useStyles();
+
   const [state, setState] = React.useState({
     activeStep: 0,
     completed: {},
@@ -105,6 +111,8 @@ function VettingRequestAnalyst(props) {
     lead: props.lead,
     support: props.support,
   });
+  const prevStep = React.useRef(null);
+  const nextStep = React.useRef(null);
   const steps = getSteps();
 
   const totalSteps = () => {
@@ -123,17 +131,32 @@ function VettingRequestAnalyst(props) {
     return completedSteps() === totalSteps();
   };
 
+  const getStepRef = (step) => {
+    const activeStep = state.activeStep;
+    if (activeStep === step + 1) {
+      return prevStep;
+    } else if (activeStep === step - 1) {
+      return nextStep;
+    } else {
+      return null;
+    }
+  };
+
   const handleNext = () => {
+    window.scrollTo(0, 0);
     const newActiveStep =
       isLastStep() && !allStepsCompleted() ?
         steps.findIndex((step, i) => !(i in state.completed)) :
         state.activeStep + 1;
     setState({...state, activeStep: newActiveStep});
+    nextStep.current.focus();
   };
 
   const handleBack = () => {
+    window.scrollTo(0, 0);
     const prevActiveStep = state.activeStep;
     setState({...state, activeStep: prevActiveStep - 1});
+    prevStep.current.focus();
   };
 
   const handleStep = (step) => () => {
@@ -164,7 +187,7 @@ function VettingRequestAnalyst(props) {
       case 0:
         return <ResearcherInfo handleTitleChange={handleTitleChange} />;
       case 1:
-        return <FilesList />;
+        return <FilesList role="analyst" />;
       case 2:
         return <ResidualDisclosure />;
       case 3:
@@ -196,7 +219,7 @@ function VettingRequestAnalyst(props) {
     <>
       <Header />
       <main className={classes.main} tabIndex="-1">
-        <Container maxWidth="xl" className={classes.pageContainer}>
+        <Container maxWidth={false} className={classes.pageContainer}>
           <ManageTeamDrawer
             open={open.manageTeamDrawer}
             clickHandler={toggleManageTeamDrawer}
@@ -249,13 +272,17 @@ function VettingRequestAnalyst(props) {
                     );
                   }
                   return (
-                    <Step key={label}>
+                    <Step key={label} ref={getStepRef(index)} tabIndex="-1">
                       <StepButton
                         {...buttonProps}
                         onClick={handleStep(index)}
                         completed={state.completed[index]}
                       >
-                        <StepLabel {...labelProps}>{label}</StepLabel>
+                        <StepLabel {...labelProps}>
+                          <span className="screen-reader-text">{`Step ${index +
+                            1}: `}</span>
+                          {label}
+                        </StepLabel>
                       </StepButton>
                     </Step>
                   );
@@ -337,7 +364,7 @@ function VettingRequestAnalyst(props) {
               )}
             </Grid>
           </Paper>
-          <FloatingSupportButton />
+          <FloatingSupportButton form />
         </Container>
       </main>
       <Footer />

@@ -30,6 +30,7 @@ import RequestToolbar from '../CommonComponents/RequestToolbar';
 const useStyles = makeStyles((theme) => ({
   pageContainer: {
     marginTop: theme.spacing(8),
+    paddingTop: theme.spacing(8),
   },
   main: {
     background: theme.palette.grey[100],
@@ -89,6 +90,10 @@ const useStyles = makeStyles((theme) => ({
     borderTopWidth: '1px',
     borderTopColor: theme.palette.divider,
   },
+  errorMsg: {
+    margin: 0,
+    textAlign: 'left',
+  },
 }));
 
 function getSteps() {
@@ -109,6 +114,8 @@ function VettingRequestResearcher(props) {
     errors: [0, 4, 0, 0],
     title: 'Untitled request',
   });
+  const prevStep = React.useRef(null);
+  const nextStep = React.useRef(null);
   const steps = getSteps();
 
   const totalSteps = () => {
@@ -127,17 +134,32 @@ function VettingRequestResearcher(props) {
     return completedSteps() === totalSteps();
   };
 
+  const getStepRef = (step) => {
+    const activeStep = state.activeStep;
+    if (activeStep === step + 1) {
+      return prevStep;
+    } else if (activeStep === step - 1) {
+      return nextStep;
+    } else {
+      return null;
+    }
+  };
+
   const handleNext = () => {
+    window.scrollTo(0, 0);
     const newActiveStep =
       isLastStep() && !allStepsCompleted() ?
         steps.findIndex((step, i) => !(i in state.completed)) :
         state.activeStep + 1;
     setState({...state, activeStep: newActiveStep});
+    nextStep.current.focus();
   };
 
   const handleBack = () => {
+    window.scrollTo(0, 0);
     const prevActiveStep = state.activeStep;
     setState({...state, activeStep: prevActiveStep - 1});
+    prevStep.current.focus();
   };
 
   const handleStep = (step) => () => {
@@ -172,7 +194,7 @@ function VettingRequestResearcher(props) {
           />
         );
       case 1:
-        return <FilesList />;
+        return <FilesList role="researcher" />;
       case 2:
         return <ResidualDisclosure />;
       case 3:
@@ -284,18 +306,23 @@ function VettingRequestResearcher(props) {
                         variant="body2"
                         color="error"
                       >
-                        {state.errors[index]} errors
+                        {state.errors[index]}{' '}
+                        {state.errors[index] === 1 ? 'error' : 'errors'}
                       </Typography>
                     );
                   }
                   return (
-                    <Step key={label}>
+                    <Step key={label} ref={getStepRef(index)} tabIndex="-1">
                       <StepButton
                         {...buttonProps}
                         onClick={handleStep(index)}
                         completed={state.completed[index]}
                       >
-                        <StepLabel {...labelProps}>{label}</StepLabel>
+                        <StepLabel {...labelProps}>
+                          <span className="screen-reader-text">{`Step ${index +
+                            1}: `}</span>
+                          {label}
+                        </StepLabel>
                       </StepButton>
                     </Step>
                   );
@@ -377,7 +404,7 @@ function VettingRequestResearcher(props) {
               )}
             </Grid>
           </Paper>
-          <FloatingSupportButton />
+          <FloatingSupportButton form />
         </Container>
       </main>
       <Footer />

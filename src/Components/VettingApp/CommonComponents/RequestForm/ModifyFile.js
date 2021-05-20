@@ -235,6 +235,42 @@ export function ModifyFile(props) {
   );
 }
 
+export function ViewFile(props) {
+  const classes = useStyles();
+
+  return (
+    <React.Fragment>
+      <AppBar position="static" className={classes.appBar} color="default">
+        <Toolbar>
+          <Typography variant="h6" component="h2" className={classes.title}>
+            View output file
+          </Typography>
+          <IconButton
+            aria-label="Close view output file"
+            className={classes.margin}
+            edge="end"
+            onClick={(e) => props.toggleDrawer(e, 'viewFile', false)}
+          >
+            <CloseIcon />
+          </IconButton>
+        </Toolbar>
+      </AppBar>
+      <div className={classes.body}>
+        <OutputFileForm {...props} />
+      </div>
+      <div className={classes.footer}>
+        <Button
+          variant="contained"
+          color="primary"
+          onClick={(e) => props.toggleDrawer(e, 'viewFile', false)}
+        >
+          Close
+        </Button>
+      </div>
+    </React.Fragment>
+  );
+}
+
 function BootstrapTooltip(props) {
   const classes = useStylesBootstrap();
 
@@ -636,7 +672,6 @@ function OutputFileForm(props) {
           onCut={(e) => disableCutCopyPaste(e, 'cut', 'outputmethod')}
           onCopy={(e) => disableCutCopyPaste(e, 'copy', 'outputmethod')}
           onPaste={(e) => disableCutCopyPaste(e, 'paste', 'outputmethod')}
-          onChange={(e) => handleChange(e, 'info')}
           onClick={() => toggleHelperText('outputmethod')}
           onBlur={() => toggleHelperText('outputmethod')}
           onFocus={() => toggleHelperText('outputmethod')}
@@ -1157,7 +1192,6 @@ function OutputFileForm(props) {
         id="notes1"
         label="Notes"
         multiline
-        rows={4}
         variant="outlined"
         fullWidth
         required
@@ -1228,7 +1262,6 @@ function OutputFileForm(props) {
         id="notes2"
         label="Notes"
         multiline
-        rows={4}
         variant="outlined"
         fullWidth
         required

@@ -38,6 +38,21 @@ function Index() {
         <li>
           <Link to="/sign-in/verify-identity">Forgot password</Link>
         </li>
+
+        <li>
+          <strong>Portal</strong>
+        </li>
+        <ul>
+          <li>
+            <Link to="/home">Landing</Link>
+          </li>
+        </ul>
+        <li>
+          <Link to="/PowerShell/">PowerShell</Link>
+        </li>
+        <li>
+          <Link to="/PowerShell/Success">PowerShell success</Link>
+        </li>
         <li>
           <strong>Vetting app</strong>
         </li>
