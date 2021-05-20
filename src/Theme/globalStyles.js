@@ -133,6 +133,8 @@ export const useStyles = makeStyles({
     },
     '.MuiFormGroup-root': {
       '& .MuiFormControlLabel-root': {
+        'marginLeft': theme.spacing(-1),
+        'marginRight': theme.spacing(0),
         'alignItems': 'start',
         '&:not(.Mui-disabled)': {
           '&:hover': {
