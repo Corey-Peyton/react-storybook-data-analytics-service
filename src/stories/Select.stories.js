@@ -74,6 +74,7 @@ export const OutlinedSelect = (args) => {
         </Select>
       </FormControl>
       <Autocomplete
+        className="input-margin"
         fullWidth={true}
         id="autocomplete"
         options={countries}
