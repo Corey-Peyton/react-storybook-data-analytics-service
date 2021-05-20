@@ -21,6 +21,7 @@ import Footer from '../VettingApp/CommonComponents/Footer';
 import ProjectDetails from './ProjecDetails';
 import VirtualMachine from './VirtualMachineDetails';
 import SubmitToolbar from './SubmitToolbar';
+import {FOOT_H, HEAD_H_XS} from '../../Theme/constants';
 
 const useStyles = makeStyles((theme) => ({
   pageContainer: {
@@ -29,6 +30,7 @@ const useStyles = makeStyles((theme) => ({
   main: {
     background: theme.palette.grey[100],
     paddingBottom: theme.spacing(6),
+    minHeight: `calc(105vh - ${HEAD_H_XS}px - ${FOOT_H}px)`,
   },
   divider: {
     margin: theme.spacing(3, 0),
@@ -72,17 +74,15 @@ const useStyles = makeStyles((theme) => ({
   stepperBackBtn: {
     marginRight: theme.spacing(2),
   },
-  navFooter: {
-    paddingTop: theme.spacing(3),
-    borderTopStyle: 'solid',
-    borderTopWidth: '1px',
-    borderTopColor: theme.palette.divider,
-  },
   footerBtns: {
     width: '100%',
     maxWidth: theme.spacing(80),
     display: 'flex',
     justifyContent: 'flex-end',
+    borderTopStyle: 'solid',
+    borderTopWidth: '1px',
+    borderTopColor: theme.palette.divider,
+    paddingTop: theme.spacing(3),
   },
   errorMsg: {
     margin: 0,
@@ -254,7 +254,7 @@ function PowerShell(props) {
                 </div>
               )}
             </div>
-            <Grid container justify="center" className={classes.navFooter}>
+            <Grid container justify="center">
               <Grid className={classes.footerBtns} item>
                 {state.activeStep !== 0 && (
                   <Grid item>
@@ -273,7 +273,6 @@ function PowerShell(props) {
                     <Button
                       variant="contained"
                       color="primary"
-                      className={classes.button}
                       component={RouterLink}
                       to="SuccessfulSubmission"
                     >
@@ -285,7 +284,6 @@ function PowerShell(props) {
                     <Button
                       variant="contained"
                       color="primary"
-                      className={classes.button}
                       onClick={handleComplete}
                     >
                       Next

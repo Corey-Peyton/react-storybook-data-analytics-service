@@ -8,6 +8,7 @@ import CloseIcon from '@material-ui/icons/Close';
 import Collapse from '@material-ui/core/Collapse';
 import Header from './Header';
 import Footer from '../VettingApp/CommonComponents/Footer';
+import {FOOT_H, HEAD_H_XS} from '../../Theme/constants';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -34,6 +35,7 @@ const useStyles = makeStyles((theme) => ({
     borderColor: theme.palette.divider,
   },
   main: {
+    minHeight: `calc(105vh - ${HEAD_H_XS}px - ${FOOT_H}px)`,
     background: theme.palette.grey[100],
     paddingBottom: theme.spacing(6),
   },
