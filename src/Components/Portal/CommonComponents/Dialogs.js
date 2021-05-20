@@ -38,27 +38,18 @@ const useStyles = makeStyles((theme) => ({
     },
     '& .MuiAccordion-root:first-child': {
       '& .MuiAccordionSummary-root': {
-        // alignItems: 'flex-start',
         marginTop: theme.spacing(-3),
       },
-      '& .MuiAccordionSummary-content, & .MuiAccordionSummary-content.Mui-expanded': {},
     },
     '& .MuiAccordion-root:last-child': {
       '& .MuiAccordionSummary-root': {
         marginBottom: theme.spacing(-3),
-      },
-      '& .MuiAccordionSummary-content, & .MuiAccordionSummary-content.Mui-expanded': {
-        // marginBottom: 0,
       },
       '& .MuiAccordionDetails-root': {
         paddingTop: 0,
         paddingBottom: 0,
       },
     },
-    // '& .MuiIconButton-root': {
-    //   marginTop: theme.spacing(-1),
-    //   marginBottom: theme.spacing(-1),
-    // },
     '& .MuiButton-text': {
       marginTop: theme.spacing(-0.75),
       marginBottom: theme.spacing(-0.75),
