@@ -24,7 +24,7 @@ import {
   Grid,
   Link,
 } from '@material-ui/core';
-import Alert from '@material-ui/lab/Alert';
+import {Alert, AlertTitle} from '@material-ui/lab';
 import Autocomplete from '@material-ui/lab/Autocomplete';
 import InfoIcon from '@material-ui/icons/Info';
 import CloseIcon from '@material-ui/icons/Close';
@@ -593,8 +593,8 @@ function OutputFileForm(props) {
     <>
       {errors && (
         <Alert severity="error" className={clsx(classes.errorText, 'mb-2')}>
-          Please correct the following errors...
-          <ul className={classes.errorList}>
+          <AlertTitle>Please correct the following errors...</AlertTitle>
+          <ul>
             <li>
               <Link
                 className={classes.errorText}
@@ -602,7 +602,7 @@ function OutputFileForm(props) {
                   document.getElementById('sheetName').focus();
                 }}
               >
-                {`{Textfield} is required`}
+                {`{Textfield 1} is required`}
               </Link>
             </li>
             <li>
@@ -612,7 +612,7 @@ function OutputFileForm(props) {
                   document.getElementById('sampleUsed').focus();
                 }}
               >
-                {`{Radio 1} is required`}
+                {`{Textfield 2} is required`}
               </Link>
             </li>
             <li>
@@ -624,7 +624,7 @@ function OutputFileForm(props) {
                   });
                 }}
               >
-                {`{Radio 2} is required`}
+                {`{Radio 1} is required`}
               </Link>
             </li>
           </ul>

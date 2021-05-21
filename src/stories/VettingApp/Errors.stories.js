@@ -23,8 +23,9 @@ import {
   FormControlLabel,
   Radio,
   Drawer,
+  FormHelperText,
 } from '@material-ui/core';
-import Alert from '@material-ui/lab/Alert';
+import {Alert, AlertTitle} from '@material-ui/lab';
 import Icon from '@mdi/react';
 import ArrowForwardIosIcon from '@material-ui/icons/ArrowForwardIos';
 import ArrowBackIosIcon from '@material-ui/icons/ArrowBackIos';
@@ -71,6 +72,9 @@ const useStyles = makeStyles((theme) => ({
     'paddingTop': theme.spacing(8),
     'marginTop': theme.spacing(8),
   },
+  stepButton: {
+    textAlign: 'left',
+  },
   stepperNextBtn: {
     marginLeft: theme.spacing(6),
   },
@@ -91,9 +95,6 @@ const useStyles = makeStyles((theme) => ({
       textDecoration: 'underline',
       cursor: 'pointer',
     },
-  },
-  errorList: {
-    paddingTop: theme.spacing(1),
   },
   card: {
     width: '100%',
@@ -120,20 +121,6 @@ const useStyles = makeStyles((theme) => ({
     },
   },
 }));
-
-const files = [
-  {
-    name:
-      'Another file with even a longer name for users who likes to be really descriptive. Yes, believe it happens!',
-    emptyFields: 2,
-    error: true,
-  },
-  {
-    name: 'Example output file card name',
-    emptyFields: 3,
-    error: true,
-  },
-];
 
 function getSteps() {
   return [
@@ -165,6 +152,19 @@ export const StepperErrors = (args) => {
     },
     editFile: false,
     snackbarUpdate: false,
+    files: [
+      {
+        name:
+          'Another file with even a longer name for users who likes to be really descriptive. Yes, believe it happens!',
+        emptyFields: 2,
+        error: true,
+      },
+      {
+        name: 'Example output file card name',
+        emptyFields: 3,
+        error: true,
+      },
+    ],
   });
   const prevStep = React.useRef(null);
   const nextStep = React.useRef(null);
@@ -318,8 +318,10 @@ export const StepperErrors = (args) => {
                     severity="error"
                     className={clsx(classes.errorText, classes.alert)}
                   >
-                    Please correct the following errors...
-                    <ul className={classes.errorList}>
+                    <AlertTitle>
+                      Please correct the following errors...
+                    </AlertTitle>
+                    <ul>
                       <li>
                         <Link
                           className={classes.errorText}
@@ -384,7 +386,8 @@ export const StepperErrors = (args) => {
                     required
                     error={Boolean(state.name.errorText)}
                     helperText={state.name.errorText}
-                    margin="none"
+                    margin="dense"
+                    className="mt-0 mb-0"
                   />
                 </FormControl>
               </Grid>
@@ -394,21 +397,21 @@ export const StepperErrors = (args) => {
                 </Typography>
               </Grid>
               <Grid item xs={12} className="row">
-                <FormControl component="fieldset">
+                <FormControl
+                  component="fieldset"
+                  error={Boolean(state.stepperErrors[0])}
+                >
                   <FormLabel
                     id="variables-label"
                     component="legend"
                     className={classes.tooltipLabel}
                     required
-                    error={Boolean(state.stepperErrors[0])}
                   >
                     For this request, have you subsetted any variables, where
                     one or more variables is a subset of another?
                   </FormLabel>
                   {Boolean(state.stepperErrors[0]) && (
-                    <Typography color="error" variant="caption">
-                      This field is required
-                    </Typography>
+                    <FormHelperText>This field is required</FormHelperText>
                   )}
                   <RadioGroup id="subset" value={state.subset} name="subset">
                     <FormControlLabel
@@ -425,20 +428,16 @@ export const StepperErrors = (args) => {
                 </FormControl>
               </Grid>
               <Grid item xs={12} className="row">
-                <FormControl component="fieldset">
-                  <FormLabel
-                    id="version-label"
-                    component="legend"
-                    required
-                    error={Boolean(state.stepperErrors[0])}
-                  >
+                <FormControl
+                  component="fieldset"
+                  error={Boolean(state.stepperErrors[0])}
+                >
+                  <FormLabel id="version-label" component="legend" required>
                     Has a version of this output, in part or in whole, been
                     previously released for this project?
                   </FormLabel>
                   {Boolean(state.stepperErrors[0]) && (
-                    <Typography color="error" variant="caption">
-                      This field is required
-                    </Typography>
+                    <FormHelperText>This field is required</FormHelperText>
                   )}
                   <RadioGroup
                     id="versionpreviouslyReleased"
@@ -470,8 +469,10 @@ export const StepperErrors = (args) => {
                     severity="error"
                     className={clsx(classes.errorText, classes.alert)}
                   >
-                    Please correct the following errors...
-                    <ul className={classes.errorList}>
+                    <AlertTitle>
+                      Please correct the following errors...
+                    </AlertTitle>
+                    <ul>
                       <li>
                         <Link
                           className={classes.errorText}
@@ -544,8 +545,10 @@ export const StepperErrors = (args) => {
                     severity="error"
                     className={clsx(classes.errorText, classes.alert)}
                   >
-                    Please correct the following errors...
-                    <ul className={classes.errorList}>
+                    <AlertTitle>
+                      Please correct the following errors...
+                    </AlertTitle>
+                    <ul>
                       <li>
                         <Link
                           className={classes.errorText}
@@ -590,14 +593,14 @@ export const StepperErrors = (args) => {
                   </Typography>
                 </Grid>
               </Grid>
-              {files.map((file, index) => {
+              {state.files.map((file, index) => {
                 const num = index + 1;
                 return (
                   <Grid item className="row" key={file.name}>
                     <Card
                       id={`card` + num}
                       className={clsx(classes.card, {
-                        [classes.cardError]: file.error,
+                        [classes.cardError]: state.stepperErrors[2],
                       })}
                       variant="outlined"
                     >
@@ -620,15 +623,17 @@ export const StepperErrors = (args) => {
                             </Typography>
                           </Grid>
                         </Grid>
-                        <FileValidationAlert
-                          emptyFields={file.emptyFields}
-                          error={file.error}
-                        />
+                        {Boolean(state.stepperErrors[2]) && (
+                          <FileValidationAlert
+                            emptyFields={file.emptyFields}
+                            error={file.error}
+                          />
+                        )}
                       </CardContent>
                       <CardActions
                         className={clsx({
-                          [classes.cardActions]: file.error === false,
-                          [classes.cardActionsError]: file.error === true,
+                          [classes.cardActions]: !state.stepperErrors[2],
+                          [classes.cardActionsError]: state.stepperErrors[2],
                         })}
                       >
                         <Button
@@ -752,6 +757,7 @@ export const StepperErrors = (args) => {
                     triggerErrors(index);
                   }}
                   completed={state.completed[index]}
+                  className={classes.stepButton}
                 >
                   <StepLabel {...labelProps}>
                     <span className="screen-reader-text">{`Step ${index +
