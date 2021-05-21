@@ -278,6 +278,13 @@ export const useStyles = makeStyles({
       },
     },
 
+    // Alerts
+    '.MuiAlert-root': {
+      '& ul': {
+        paddingLeft: theme.spacing(1.75),
+      },
+    },
+
     // *********** Custom styles **************
     '.avatar-orange': {
       color: theme.palette.getContrastText(deepOrange[500]),
