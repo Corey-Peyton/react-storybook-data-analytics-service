@@ -94,13 +94,11 @@ const useStyles = makeStyles((theme) => ({
     alignItems: 'center',
     marginBottom: theme.spacing(3),
   },
-  // alertErrorText: {
-  //   'color': [theme.palette.text.primary, '!important'],
-  //   '&.MuiLink-root': {
-  //     textDecoration: 'underline',
-  //     cursor: 'pointer',
-  //   },
-  // },
+  alert: {
+    '& a': {
+      cursor: 'pointer',
+    },
+  },
 }));
 
 const useStylesBootstrap = makeStyles((theme) => ({
@@ -592,10 +590,7 @@ function OutputFileForm(props) {
   return (
     <>
       {errors && (
-        <Alert
-          severity="error"
-          className={clsx(classes.alertErrorText, 'mb-2')}
-        >
+        <Alert severity="error" className={clsx(classes.alert, 'mb-2')}>
           <AlertTitle>Please correct the following errors...</AlertTitle>
           <ul>
             <li>
