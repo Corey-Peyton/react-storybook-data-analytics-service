@@ -87,17 +87,13 @@ const useStyles = makeStyles((theme) => ({
     borderTopColor: theme.palette.divider,
   },
   alert: {
-    width: '100%',
+    'width': '100%',
+    '& a': {
+      cursor: 'pointer',
+    },
   },
   errorText: {
     color: theme.palette.error.main,
-  },
-  alertErrorText: {
-    'color': theme.palette.text.primary,
-    '&.MuiLink-root': {
-      textDecoration: 'underline',
-      cursor: 'pointer',
-    },
   },
   card: {
     width: '100%',
@@ -296,6 +292,17 @@ export const StepperErrors = (args) => {
           setState({...state, activeStep: step});
         }
         break;
+      case 'submit':
+        setState({
+          ...state,
+          activeStep: 0,
+          stepperErrors: [3, 1, 5, 0],
+          name: {
+            ...state.name,
+            errorText: 'This field is required',
+          },
+        });
+        break;
       default:
         setState({
           ...state,
@@ -317,17 +324,14 @@ export const StepperErrors = (args) => {
             <Grid container>
               {Boolean(state.stepperErrors[0]) && (
                 <Grid item className="row">
-                  <Alert
-                    severity="error"
-                    className={clsx(classes.alertErrorText, classes.alert)}
-                  >
+                  <Alert severity="error" className={classes.alert}>
                     <AlertTitle>
                       Please correct the following errors...
                     </AlertTitle>
                     <ul>
                       <li>
                         <Link
-                          className={classes.alertErrorText}
+                          color="inherit"
                           onClick={() => {
                             document.getElementById('name').focus();
                           }}
@@ -337,7 +341,7 @@ export const StepperErrors = (args) => {
                       </li>
                       <li>
                         <Link
-                          className={classes.alertErrorText}
+                          color="inherit"
                           onClick={() => {
                             document
                                 .getElementById('variables-label')
@@ -351,7 +355,7 @@ export const StepperErrors = (args) => {
                       </li>
                       <li>
                         <Link
-                          className={classes.alertErrorText}
+                          color="inherit"
                           onClick={() => {
                             document
                                 .getElementById('version-label')
@@ -468,17 +472,14 @@ export const StepperErrors = (args) => {
             <Grid container alignItems="center" justify="space-between">
               {Boolean(state.stepperErrors[1]) && (
                 <Grid item className="row">
-                  <Alert
-                    severity="error"
-                    className={clsx(classes.alertErrorText, classes.alert)}
-                  >
+                  <Alert severity="error" className={classes.alert}>
                     <AlertTitle>
                       Please correct the following errors...
                     </AlertTitle>
                     <ul>
                       <li>
                         <Link
-                          className={classes.alertErrorText}
+                          color="inherit"
                           onClick={() => {
                             document
                                 .getElementById('output-file-label')
@@ -544,17 +545,14 @@ export const StepperErrors = (args) => {
             <Grid container>
               {Boolean(state.stepperErrors[2]) && (
                 <Grid item className="row">
-                  <Alert
-                    severity="error"
-                    className={clsx(classes.alertErrorText, classes.alert)}
-                  >
+                  <Alert severity="error" className={classes.alert}>
                     <AlertTitle>
                       Please correct the following errors...
                     </AlertTitle>
                     <ul>
                       <li>
                         <Link
-                          className={classes.alertErrorText}
+                          color="inherit"
                           onClick={() => {
                             document.getElementById('card1').scrollIntoView({
                               block: 'center',
@@ -566,7 +564,7 @@ export const StepperErrors = (args) => {
                       </li>
                       <li>
                         <Link
-                          className={classes.alertErrorText}
+                          color="inherit"
                           onClick={() => {
                             document.getElementById('card2').scrollIntoView({
                               block: 'center',
@@ -715,7 +713,9 @@ export const StepperErrors = (args) => {
                 variant="contained"
                 color="primary"
                 startIcon={<Icon path={mdiInboxArrowDown} size={1} />}
-                onClick={() => triggerErrors()}
+                onClick={() => {
+                  triggerErrors('submit');
+                }}
               >
                 Submit
               </Button>
@@ -756,7 +756,6 @@ export const StepperErrors = (args) => {
                 <StepButton
                   {...buttonProps}
                   onClick={() => {
-                    handleStep(index);
                     triggerErrors(index);
                   }}
                   completed={state.completed[index]}
@@ -812,7 +811,7 @@ export const StepperErrors = (args) => {
               variant="contained"
               color="primary"
               className={classes.button}
-              // onClick={handleClick}
+              onClick={() => triggerErrors('submit')}
             >
               Submit request
             </Button>

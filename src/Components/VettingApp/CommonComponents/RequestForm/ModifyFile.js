@@ -94,13 +94,13 @@ const useStyles = makeStyles((theme) => ({
     alignItems: 'center',
     marginBottom: theme.spacing(3),
   },
-  alertErrorText: {
-    'color': [theme.palette.text.primary, '!important'],
-    '&.MuiLink-root': {
-      textDecoration: 'underline',
-      cursor: 'pointer',
-    },
-  },
+  // alertErrorText: {
+  //   'color': [theme.palette.text.primary, '!important'],
+  //   '&.MuiLink-root': {
+  //     textDecoration: 'underline',
+  //     cursor: 'pointer',
+  //   },
+  // },
 }));
 
 const useStylesBootstrap = makeStyles((theme) => ({
@@ -600,7 +600,7 @@ function OutputFileForm(props) {
           <ul>
             <li>
               <Link
-                className={classes.alertErrorText}
+                color="inherit"
                 onClick={() => {
                   document.getElementById('sheetName').focus();
                 }}
@@ -610,7 +610,7 @@ function OutputFileForm(props) {
             </li>
             <li>
               <Link
-                className={classes.alertErrorText}
+                color="inherit"
                 onClick={() => {
                   document.getElementById('sampleUsed').focus();
                 }}
@@ -620,7 +620,7 @@ function OutputFileForm(props) {
             </li>
             <li>
               <Link
-                className={classes.alertErrorText}
+                color="inherit"
                 onClick={() => {
                   document.getElementById('dollarIncluded').scrollIntoView({
                     block: 'center',
