@@ -90,7 +90,10 @@ const useStyles = makeStyles((theme) => ({
     width: '100%',
   },
   errorText: {
-    'color': theme.palette.error.main,
+    color: theme.palette.error.main,
+  },
+  alertErrorText: {
+    'color': theme.palette.text.primary,
     '&.MuiLink-root': {
       textDecoration: 'underline',
       cursor: 'pointer',
@@ -316,7 +319,7 @@ export const StepperErrors = (args) => {
                 <Grid item className="row">
                   <Alert
                     severity="error"
-                    className={clsx(classes.errorText, classes.alert)}
+                    className={clsx(classes.alertErrorText, classes.alert)}
                   >
                     <AlertTitle>
                       Please correct the following errors...
@@ -324,7 +327,7 @@ export const StepperErrors = (args) => {
                     <ul>
                       <li>
                         <Link
-                          className={classes.errorText}
+                          className={classes.alertErrorText}
                           onClick={() => {
                             document.getElementById('name').focus();
                           }}
@@ -334,7 +337,7 @@ export const StepperErrors = (args) => {
                       </li>
                       <li>
                         <Link
-                          className={classes.errorText}
+                          className={classes.alertErrorText}
                           onClick={() => {
                             document
                                 .getElementById('variables-label')
@@ -348,7 +351,7 @@ export const StepperErrors = (args) => {
                       </li>
                       <li>
                         <Link
-                          className={classes.errorText}
+                          className={classes.alertErrorText}
                           onClick={() => {
                             document
                                 .getElementById('version-label')
@@ -467,7 +470,7 @@ export const StepperErrors = (args) => {
                 <Grid item className="row">
                   <Alert
                     severity="error"
-                    className={clsx(classes.errorText, classes.alert)}
+                    className={clsx(classes.alertErrorText, classes.alert)}
                   >
                     <AlertTitle>
                       Please correct the following errors...
@@ -475,7 +478,7 @@ export const StepperErrors = (args) => {
                     <ul>
                       <li>
                         <Link
-                          className={classes.errorText}
+                          className={classes.alertErrorText}
                           onClick={() => {
                             document
                                 .getElementById('output-file-label')
@@ -543,7 +546,7 @@ export const StepperErrors = (args) => {
                 <Grid item className="row">
                   <Alert
                     severity="error"
-                    className={clsx(classes.errorText, classes.alert)}
+                    className={clsx(classes.alertErrorText, classes.alert)}
                   >
                     <AlertTitle>
                       Please correct the following errors...
@@ -551,7 +554,7 @@ export const StepperErrors = (args) => {
                     <ul>
                       <li>
                         <Link
-                          className={classes.errorText}
+                          className={classes.alertErrorText}
                           onClick={() => {
                             document.getElementById('card1').scrollIntoView({
                               block: 'center',
@@ -563,7 +566,7 @@ export const StepperErrors = (args) => {
                       </li>
                       <li>
                         <Link
-                          className={classes.errorText}
+                          className={classes.alertErrorText}
                           onClick={() => {
                             document.getElementById('card2').scrollIntoView({
                               block: 'center',

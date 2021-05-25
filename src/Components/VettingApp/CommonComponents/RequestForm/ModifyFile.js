@@ -94,8 +94,8 @@ const useStyles = makeStyles((theme) => ({
     alignItems: 'center',
     marginBottom: theme.spacing(3),
   },
-  errorText: {
-    'color': [theme.palette.error.main, '!important'],
+  alertErrorText: {
+    'color': [theme.palette.text.primary, '!important'],
     '&.MuiLink-root': {
       textDecoration: 'underline',
       cursor: 'pointer',
@@ -592,12 +592,15 @@ function OutputFileForm(props) {
   return (
     <>
       {errors && (
-        <Alert severity="error" className={clsx(classes.errorText, 'mb-2')}>
+        <Alert
+          severity="error"
+          className={clsx(classes.alertErrorText, 'mb-2')}
+        >
           <AlertTitle>Please correct the following errors...</AlertTitle>
           <ul>
             <li>
               <Link
-                className={classes.errorText}
+                className={classes.alertErrorText}
                 onClick={() => {
                   document.getElementById('sheetName').focus();
                 }}
@@ -607,7 +610,7 @@ function OutputFileForm(props) {
             </li>
             <li>
               <Link
-                className={classes.errorText}
+                className={classes.alertErrorText}
                 onClick={() => {
                   document.getElementById('sampleUsed').focus();
                 }}
@@ -617,7 +620,7 @@ function OutputFileForm(props) {
             </li>
             <li>
               <Link
-                className={classes.errorText}
+                className={classes.alertErrorText}
                 onClick={() => {
                   document.getElementById('dollarIncluded').scrollIntoView({
                     block: 'center',
@@ -924,13 +927,9 @@ function OutputFileForm(props) {
         className={classes.radioMargin}
         component="fieldset"
         required
+        error={Boolean(props.errors)}
       >
-        <FormLabel
-          component="legend"
-          className={clsx(classes.tooltipLabel, {
-            [classes.errorText]: errors,
-          })}
-        >
+        <FormLabel component="legend" className={classes.tooltipLabel}>
           Are variables related to income, earnings, tax and/or dollar values
           included?{' '}
           <BootstrapTooltip title="If no, future vetting release reuests under this contract may be restricted due to residual disclosure. You are strongly encouraged to consult with your Analyst.">
