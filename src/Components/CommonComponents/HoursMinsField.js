@@ -18,7 +18,6 @@ const useStyles = makeStyles((theme) => ({
     borderRight: '1px solid',
     borderRightColor: theme.palette.divider,
     paddingRight: theme.spacing(1),
-    marginRight: theme.spacing(2),
   },
   input: {
     '&::placeholder': {
@@ -39,7 +38,7 @@ const useStyles = makeStyles((theme) => ({
   inputGroup: {
     display: 'flex',
     alignItems: 'center',
-    padding: theme.spacing(1.5),
+    padding: theme.spacing(1.5, 0),
     height: '1em',
   },
   inputGroupText: {
