@@ -26,6 +26,9 @@ const useStyles = makeStyles((theme) => ({
     },
   },
   inputComponent: {
+    '& .MuiOutlinedInput-notchedOutline': {
+      border: 'none',
+    },
     '& .MuiInput-underline:before': {
       borderBottom: 'none !important',
     },
@@ -41,12 +44,21 @@ const useStyles = makeStyles((theme) => ({
   },
   inputGroupText: {
     color: theme.palette.text.secondary,
-    fontSize: '0.875em',
+    fontSize: theme.typography.body2.fontSize,
+    letterSpacing: theme.typography.body2.letterSpacing,
   },
   inputLabel: {
     'marginTop': 0,
+    'fontSize': theme.typography.body2.fontSize,
     '&$shrink': {
-      transform: 'translate(14px, -8px) scale(0.75)',
+      'transform': 'translate(14px, -5px) scale(0.857)',
+      'letterSpacing': theme.typography.caption.letterSpacing,
+      '&+ .MuiOutlinedInput-root': {
+        '& > fieldset > legend ': {
+          fontSize: theme.typography.caption.fontSize,
+          letterSpacing: theme.typography.caption.letterSpacing,
+        },
+      },
     },
   },
   shrink: {},
@@ -75,6 +87,8 @@ export function HoursMinsField(props) {
         component="legend"
         shrink
         required={props.required}
+        variant="outlined"
+        color="primary"
       >
         {props.label}
       </InputLabel>
