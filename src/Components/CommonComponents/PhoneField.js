@@ -3,8 +3,6 @@ import {TextField} from '@material-ui/core';
 import NumberFormat from 'react-number-format';
 
 export default function PhoneField(props) {
-  // const phoneExp = /^[+][1]\s\([0-9]{3}\)\s[0-9]{3}\s[0-9]{4}/;
-
   return (
     <NumberFormat
       id={props.id}
