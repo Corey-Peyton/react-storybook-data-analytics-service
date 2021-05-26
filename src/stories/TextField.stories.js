@@ -296,5 +296,5 @@ export const OutlinedTextField = (args) => {
 };
 
 export const MaskedPhone = (args) => {
-  return <PhoneField />;
+  return <PhoneField label="Phone number" id="phone-input" />;
 };

@@ -1,5 +1,4 @@
 import React from 'react';
-// import PropTypes from 'prop-types';
 import {TextField} from '@material-ui/core';
 import NumberFormat from 'react-number-format';
 
@@ -14,7 +13,7 @@ export default function PhoneField(props) {
       value={props.value}
       customInput={TextField}
       type="text"
-      format="+1 (###) ### ####"
+      format="(###) ### ####"
       variant="outlined"
       mask="_"
       allowEmptyFormatting
@@ -31,26 +30,3 @@ export default function PhoneField(props) {
     />
   );
 }
-
-// PhoneField.propTypes = {
-//   /**
-//    * The message to display.
-//    */
-//   message: PropTypes.node.isRequired,
-//   /**
-//     If true, Snackbar is open.
-//   */
-//   open: PropTypes.bool,
-//   /**
-//     The severity of the alert. This defines the color and icon used.
-//   */
-//   severity: PropTypes.oneOf(Object.values(SEVERITY)).isRequired,
-//   /**
-//     Click handler to close snackbar
-//   */
-//   handleClose: PropTypes.func.isRequired,
-// };
-
-// Snackbar.defaultProps = {
-//   open: false,
-// };
