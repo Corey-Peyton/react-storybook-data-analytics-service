@@ -599,6 +599,7 @@ function OutputFileForm(props) {
                 onClick={() => {
                   document.getElementById('sheetName').focus();
                 }}
+                underline="always"
               >
                 {`{Textfield 1} is required`}
               </Link>
@@ -609,6 +610,7 @@ function OutputFileForm(props) {
                 onClick={() => {
                   document.getElementById('sampleUsed').focus();
                 }}
+                underline="always"
               >
                 {`{Textfield 2} is required`}
               </Link>
@@ -621,6 +623,7 @@ function OutputFileForm(props) {
                     block: 'center',
                   });
                 }}
+                underline="always"
               >
                 {`{Radio 1} is required`}
               </Link>

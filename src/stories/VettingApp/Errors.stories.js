@@ -335,6 +335,7 @@ export const StepperErrors = (args) => {
                           onClick={() => {
                             document.getElementById('name').focus();
                           }}
+                          underline="always"
                         >
                           {`{Textfield} is required`}
                         </Link>
@@ -349,6 +350,7 @@ export const StepperErrors = (args) => {
                                   block: 'center',
                                 });
                           }}
+                          underline="always"
                         >
                           {`{Radio 1} is required`}
                         </Link>
@@ -363,6 +365,7 @@ export const StepperErrors = (args) => {
                                   block: 'center',
                                 });
                           }}
+                          underline="always"
                         >
                           {`{Radio 2} is required`}
                         </Link>
@@ -487,6 +490,7 @@ export const StepperErrors = (args) => {
                                   block: 'center',
                                 });
                           }}
+                          underline="always"
                         >
                           At least one output file must be added
                         </Link>
@@ -558,6 +562,7 @@ export const StepperErrors = (args) => {
                               block: 'center',
                             });
                           }}
+                          underline="always"
                         >
                           {`{Cardname 1} has 2 errors`}
                         </Link>
@@ -570,6 +575,7 @@ export const StepperErrors = (args) => {
                               block: 'center',
                             });
                           }}
+                          underline="always"
                         >
                           {`{Cardname 2} has 3 errors`}
                         </Link>
