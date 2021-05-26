@@ -2,6 +2,7 @@ import React from 'react';
 import {InputAdornment, TextField} from '@material-ui/core';
 import AccountCircle from '@material-ui/icons/AccountCircle';
 import {makeStyles} from '@material-ui/core/styles';
+import PhoneField from '../Components/CommonComponents/PhoneField';
 
 const useStyles = makeStyles((theme) => ({
   container: {
@@ -292,4 +293,8 @@ export const OutlinedTextField = (args) => {
       />
     </div>
   );
+};
+
+export const MaskedPhone = (args) => {
+  return <PhoneField />;
 };

@@ -1,85 +1,56 @@
 import React from 'react';
-import PropTypes from 'prop-types';
-// import {useTranslation} from 'react-i18next';
-import {TextField as MUISnackbar} from '@material-ui/core';
-import {NumberFormat as MUINumberFormat} from 'react-number-format';
+// import PropTypes from 'prop-types';
+import {TextField} from '@material-ui/core';
+import NumberFormat from 'react-number-format';
 
-function Alert(props) {
-  return <MuiAlert elevation={6} variant="filled" {...props} />;
-}
-
-export function Snackbar(props) {
-  const handleClick = (e) => {
-    e.stopPropagation();
-  };
+export default function PhoneField(props) {
+  // const phoneExp = /^[+][1]\s\([0-9]{3}\)\s[0-9]{3}\s[0-9]{4}/;
 
   return (
-    // <MUISnackbar
-    //   open={props.open}
-    //   autoHideDuration={6000}
-    //   onClose={props.handleClose}
-    //   anchorOrigin={{
-    //     vertical: 'bottom',
-    //     horizontal: 'left',
-    //   }}
-    //   onClick={handleClick}
-    // >
-    //   <Alert onClose={props.handleClose} severity={props.severity}>
-    //     {props.message}
-    //   </Alert>
-    // </MUISnackbar>
-    <MUINumberFormat
-      id="hours-input"
-      label={t('Hours')}
-      aria-label={t('Hours')}
-      value={state.hours.text}
+    <NumberFormat
+      id={props.id}
+      label={props.label}
+      aria-label={props.label}
+      value={props.value}
       customInput={TextField}
       type="text"
+      format="+1 (###) ### ####"
       variant="outlined"
-      error={Boolean(state.hours.errorText)}
-      helperText={state.hours.errorText}
-      required
-      onCut={(e) => disableCutCopyPaste(e, 'cut', 'hours')}
-      onCopy={(e) =>
-        disableCutCopyPaste(e, 'copy', 'hours')
-      }
-      onPaste={(e) =>
-        disableCutCopyPaste(e, 'paste', 'hours')
-      }
-      onChange={(e) => handleChange(e, 'hours')}
-      onClick={() => toggleHelperText('hours')}
-      onBlur={() => toggleHelperText('hours')}
-      onFocus={() => toggleHelperText('hours')}
+      mask="_"
+      allowEmptyFormatting
+      autoComplete="phone"
+      error={props.error}
+      helperText={props.helperText}
+      onChange={props.changeHandler}
+      onClick={props.clickHandler}
+      onBlur={props.blurHandler}
+      onFocus={props.focusHandler}
+      onCut={props.cutHandler}
+      onCopy={props.copyHandler}
+      onPaste={props.pasteHandler}
     />
   );
 }
 
-const SEVERITY = {
-  ERROR: 'error',
-  INFO: 'info',
-  SUCCESS: 'success',
-  WARNING: 'warning',
-};
+// PhoneField.propTypes = {
+//   /**
+//    * The message to display.
+//    */
+//   message: PropTypes.node.isRequired,
+//   /**
+//     If true, Snackbar is open.
+//   */
+//   open: PropTypes.bool,
+//   /**
+//     The severity of the alert. This defines the color and icon used.
+//   */
+//   severity: PropTypes.oneOf(Object.values(SEVERITY)).isRequired,
+//   /**
+//     Click handler to close snackbar
+//   */
+//   handleClose: PropTypes.func.isRequired,
+// };
 
-Snackbar.propTypes = {
-  /**
-   * The message to display.
-   */
-  message: PropTypes.node.isRequired,
-  /**
-    If true, Snackbar is open.
-  */
-  open: PropTypes.bool,
-  /**
-    The severity of the alert. This defines the color and icon used.
-  */
-  severity: PropTypes.oneOf(Object.values(SEVERITY)).isRequired,
-  /**
-    Click handler to close snackbar
-  */
-  handleClose: PropTypes.func.isRequired,
-};
-
-Snackbar.defaultProps = {
-  open: false,
-};
+// Snackbar.defaultProps = {
+//   open: false,
+// };
