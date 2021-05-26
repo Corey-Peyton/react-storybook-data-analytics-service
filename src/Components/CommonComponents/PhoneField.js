@@ -13,7 +13,7 @@ export default function PhoneField(props) {
       value={props.value}
       customInput={TextField}
       type="text"
-      format="(###) ### ####"
+      format="(###) ###-####"
       variant="outlined"
       mask="_"
       allowEmptyFormatting
