@@ -1,103 +1,144 @@
 import React from 'react';
-// import PropTypes from 'prop-types';
+import PropTypes from 'prop-types';
+import clsx from 'clsx';
 import {
   Card as MUICard,
   CardContent,
   CardActions,
+  CardHeader,
   Typography,
   Button,
+  Grid,
 } from '@material-ui/core';
+// import Alert from '@material-ui/lab/Alert';
+// import Icon from '@mdi/react';
 import {makeStyles} from '@material-ui/core/styles';
 
-const useStyles = makeStyles((theme) => ({}));
+const useStyles = makeStyles((theme) => ({
+  card: {
+    'marginTop': theme.spacing(2),
+    'flexGrow': 1,
+    '& .MuiCardHeader-root': {
+      paddingBottom: theme.spacing(2),
+    },
+    '& .MuiCardContent-root': {
+      paddingTop: theme.spacing(1),
+    },
+  },
+  cardActions: {
+    borderTop: '1px solid',
+    borderTopColor: theme.palette.divider,
+  },
+  cardActionsError: {
+    borderTop: '1px solid',
+    borderTopColor: theme.palette.error.light,
+  },
+  cardError: {
+    'border': '1px solid',
+    'borderColor': theme.palette.error.light,
+    '& .MuiCardHeader-root': {
+      color: theme.palette.error.main,
+    },
+  },
+}));
 
 export function Card(props) {
   const classes = useStyles();
+  const errorHeaderMsg = function() {
+    if (props.error && props.totalErrors === 1) {
+      return <Typography variant="caption">1 error</Typography>;
+    } else if (props.error && props.totalErrors > 99) {
+      return <Typography variant="caption">99+ errors</Typography>;
+    } else if (
+      props.error &&
+      props.totalErrors > 1 &&
+      props.totalErrors <= 99
+    ) {
+      return (
+        <Typography variant="caption">{props.totalErrors} errors</Typography>
+      );
+    }
+  };
+
   return (
-    <MUICard className={classes.root}>
-      <CardContent>
-        <Typography
-          className={classes.title}
-          color="textSecondary"
-          gutterBottom
-        >
-          Word of the Day
-        </Typography>
-        <Typography variant="h5" component="h2">
-          Blah
-        </Typography>
-        <Typography className={classes.pos} color="textSecondary">
-          adjective
-        </Typography>
-        <Typography variant="body2" component="p">
-          well meaning and kindly.
-          <br />
-          {'"a benevolent smile"'}
-        </Typography>
-      </CardContent>
-      <CardActions>
-        <Button size="small">Learn More</Button>
+    <MUICard
+      className={clsx(classes.card, {
+        [classes.cardError]: props.error,
+      })}
+      variant="outlined"
+    >
+      <CardHeader
+        title={<Typography variant="subtitle2">{props.title}</Typography>}
+        subheader={errorHeaderMsg()}
+      />
+      {props.content && (
+        <CardContent>
+          <Grid container>
+            <Grid item xs={12}>
+              {props.content}
+            </Grid>
+          </Grid>
+        </CardContent>
+      )}
+      <CardActions
+        className={clsx({
+          [classes.cardActions]: props.error === false,
+          [classes.cardActionsError]: props.error === true,
+        })}
+      >
+        <Button color="primary" onClick={props.primaryClick}>
+          {props.primaryButton}
+        </Button>
+        <Button color="primary" onClick={props.secondaryClick}>
+          {props.secondaryButton}
+        </Button>{' '}
       </CardActions>
     </MUICard>
-    // <MUIIconButton
-    //   className={props.className}
-    //   classes={{
-    //     root: classes.iconRoot,
-    //     edgeStart: classes.edgeStart,
-    //     edgeEnd: classes.edgeEnd,
-    //     colorPrimary: classes.colorPrimary,
-    //     disabled: classes.disabled,
-    //     focusVisible: classes.focusVisible,
-    //   }}
-    //   {...props}
-    //   TouchRippleProps={{
-    //     classes: {
-    //       childPulsate: classes.childPulsate,
-    //       ripplePulsate: classes.ripplePulsate,
-    //       rippleVisible: classes.rippleVisible,
-    //     },
-    //   }}
-    // ></MUIIconButton>
   );
 }
 
-// const COLOR = {
-//   DEFAULT: 'default',
-//   INHERIT: 'inherit',
-//   PRIMARY: 'primary',
-//   SECONDARY: 'secondary',
-// };
-
-// const SIZE = {
-//   SMALL: 'small',
-//   MEDIUM: 'medium',
-//   LARGE: 'large',
-// };
-
-// const EDGE = {
-//   NONE: false,
-//   START: 'start',
-//   END: 'end',
-// };
-
-// IconButton.propTypes = {
-//   /**
-//     The color of the button
-//   */
-//   color: PropTypes.oneOf(Object.values(COLOR)),
-//   /**
-//     If true, the button will be disabled.
-//   */
-//   disabled: PropTypes.bool,
-//   /**
-//     The size of the button
-//   */
-//   size: PropTypes.oneOf(Object.values(SIZE)),
-//   /**
-//     If given, uses a negative margin to counteract the padding on one side
-//   */
-//   edge: PropTypes.oneOf(Object.values(EDGE)),
-// };
+Card.propTypes = {
+  /**
+    The title of the card header.
+  */
+  title: PropTypes.string,
+  /**
+    Toggles the error state of the card.
+  */
+  error: PropTypes.bool,
+  /**
+    The amount of errors.
+  */
+  totalErrors: PropTypes.number,
+  /**
+ The content of the card body.
+ */
+  content: PropTypes.element,
+  /**
+    The label text of the primary button.
+  */
+  primaryButton: PropTypes.string.isRequired,
+  /**
+    The label text of the secondary button.
+  */
+  secondaryButton: PropTypes.string,
+  /**
+   The label text of the third button.
+ */
+  thirdButton: PropTypes.string,
+  /**
+  The function of the primary button.
+*/
+  primaryClick: PropTypes.func,
+  /**
+  The function of the secondary button.
+*/
+  secondaryClick: PropTypes.func,
+  /**
+ The function of the third button.
+*/
+  thirdClick: PropTypes.func,
+};
 
 // IconButton.defaultProps = {
 //   color: COLOR.DEFAULT,
