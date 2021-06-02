@@ -1,7 +1,8 @@
 import React from 'react';
-import {InputAdornment, TextField} from '@material-ui/core';
+import {InputAdornment, TextField, Typography} from '@material-ui/core';
 import AccountCircle from '@material-ui/icons/AccountCircle';
 import {makeStyles} from '@material-ui/core/styles';
+import PhoneField from '../Components/CommonComponents/PhoneField';
 
 const useStyles = makeStyles((theme) => ({
   container: {
@@ -271,10 +272,26 @@ export const OutlinedTextField = (args) => {
       />
       <TextField
         className="input-margin"
-        label="Text adornment"
+        label="Text start adornment"
         id="text-start-adornment"
         InputProps={{
-          startAdornment: <InputAdornment position="start">Kg</InputAdornment>,
+          startAdornment: (
+            <InputAdornment position="start">
+              <Typography variant="body2">Kg</Typography>
+            </InputAdornment>
+          ),
+        }}
+      />
+      <TextField
+        className="input-margin"
+        label="Text end adornment"
+        id="text-end-adornment"
+        InputProps={{
+          endAdornment: (
+            <InputAdornment position="end">
+              <Typography variant="body2">Kg</Typography>
+            </InputAdornment>
+          ),
         }}
       />
       <TextField
@@ -292,4 +309,8 @@ export const OutlinedTextField = (args) => {
       />
     </div>
   );
+};
+
+export const MaskedPhone = (args) => {
+  return <PhoneField label="Phone number" id="phone-input" />;
 };
