@@ -1,4 +1,5 @@
 import React from 'react';
+import clsx from 'clsx';
 import {makeStyles} from '@material-ui/core/styles';
 import {
   Paper,
@@ -66,9 +67,10 @@ const useStyles = makeStyles((theme) => ({
     paddingRight: theme.spacing(0),
   },
   statusLeft: {
-    padding: theme.spacing(0.5, 2),
+    padding: theme.spacing(0.5, 2, 0.5, 0),
     display: 'flex',
-    alignItems: 'center',
+    flexDirection: 'column',
+    alignItems: 'flex-start',
     [theme.breakpoints.down('sm')]: {
       paddingLeft: 0,
     },
@@ -104,6 +106,15 @@ const useStyles = makeStyles((theme) => ({
       justifyContent: 'flex-start',
       marginTop: theme.spacing(3),
     },
+  },
+  alignCenter: {
+    display: 'flex',
+    alignItems: 'center',
+  },
+  details: {
+    height: theme.spacing(4),
+    display: 'flex',
+    alignItems: 'center',
   },
 }));
 
@@ -272,26 +283,36 @@ function VettingRequestResearcher(props) {
               </Grid>
               <Divider />
               <Grid item md={7} xs={12} className={classes.gridDetails}>
-                <Grid item>
+                <Grid item className={classes.alignCenter}>
                   <div className={classes.statusLeft}>
-                    <Icon path={mdiFileEditOutline} size={1} />
-                    <Typography variant="body2" className={classes.icongrey}>
-                      Draft
-                    </Typography>
+                    <Typography>Status</Typography>
+                    <Grid
+                      className={clsx(classes.alignCenter, classes.details)}
+                    >
+                      <Icon path={mdiFileEditOutline} size={1} />
+                      <Typography variant="body2" className={classes.icongrey}>
+                        Draft
+                      </Typography>
+                    </Grid>
                   </div>
                 </Grid>
                 <Divider
                   className={classes.dividerHeight}
                   orientation="vertical"
                 />
-                <Grid item>
-                  <Typography
-                    variant="body2"
-                    color="textSecondary"
-                    className={classes.statusRight}
-                  >
-                    Unassigned
-                  </Typography>
+                <Grid item className={classes.assignee}>
+                  <div className={classes.statusRight}>
+                    <Typography>Assignees</Typography>
+                    <div className={classes.details}>
+                      <Typography
+                        variant="body2"
+                        color="textSecondary"
+                        className={classes.details}
+                      >
+                        Unassigned
+                      </Typography>
+                    </div>
+                  </div>
                 </Grid>
               </Grid>
             </Grid>
