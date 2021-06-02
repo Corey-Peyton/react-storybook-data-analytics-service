@@ -93,8 +93,10 @@ export function HoursMinsField(props) {
       </InputLabel>
       <OutlinedInput
         required={props.required}
+        readOnly={props.readOnly}
+        disabled={props.disabled}
         id={props.id}
-        label={props.label}
+        label={props.required ? `${props.label} *` : props.label}
         inputComponent={MultiInput}
         className={clsx({'Mui-focused': state.focused})}
         inputProps={{
@@ -140,6 +142,8 @@ function MultiInput(props) {
         inputProps={{
           size: 6,
           className: classes.input,
+          readOnly: props.readOnly,
+          disabled: props.disabled,
         }}
         onChange={props.handleHoursChange}
         onFocus={props.onFocus}
@@ -172,6 +176,8 @@ function MultiInput(props) {
         inputProps={{
           size: 2,
           className: classes.input,
+          readOnly: props.readOnly,
+          disabled: props.disabled,
         }}
         onChange={props.handleMinsChange}
         onFocus={props.onFocus}
@@ -190,11 +196,6 @@ function MultiInput(props) {
   );
 }
 
-const COLOR = {
-  PRIMARY: 'primary',
-  SECONDARY: 'secondary',
-};
-
 HoursMinsField.propTypes = {
   /**
   The id of the input element.
@@ -204,14 +205,6 @@ HoursMinsField.propTypes = {
    The label of the input.
   */
   label: PropTypes.string.isRequired,
-  /**
-    If true, the input element will be focused during the first mount.
-   */
-  autoFocus: PropTypes.bool,
-  /**
-    The color of the component.
-   */
-  color: PropTypes.oneOf(Object.values(COLOR)),
   /**
    If true, the input elements will be required.
    */
@@ -224,12 +217,23 @@ HoursMinsField.propTypes = {
    It prevents the user from changing the value of the field (not from interacting with the field).
    */
   readOnly: PropTypes.bool,
+  /**
+    If true, the field is in an error state.
+    */
+  error: PropTypes.bool,
+  /**
+   Function used for hours field validation.
+   */
+  handleHoursChange: PropTypes.func,
+  /**
+   Function used for minutes field validation.
+   */
+  handleMinsChange: PropTypes.func,
 };
 
 HoursMinsField.defaultProps = {
-  autoFocus: false,
-  color: COLOR.PRIMARY,
   required: false,
   disabled: false,
   readOnly: false,
+  error: false,
 };

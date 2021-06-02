@@ -47,8 +47,7 @@ export const BasicField = (args) => {
   return (
     <div className={classes.displayFlex}>
       <HoursMinsField
-        id="estimated-time"
-        label="Estimated time"
+        {...args}
         handleHoursChange={handleHoursChange}
         handleMinsChange={handleMinsChange}
         error={state.error}
@@ -63,4 +62,9 @@ export const BasicField = (args) => {
       </Button>
     </div>
   );
+};
+BasicField.args = {
+  id: 'estimated-time',
+  label: 'Estimated time',
+  required: true,
 };
