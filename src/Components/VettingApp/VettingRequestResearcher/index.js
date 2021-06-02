@@ -45,7 +45,6 @@ const useStyles = makeStyles((theme) => ({
   },
   dividerHeight: {
     height: theme.spacing(5),
-    marginTop: theme.spacing(1.25),
   },
   paper: {
     maxWidth: '1280px',
@@ -70,6 +69,9 @@ const useStyles = makeStyles((theme) => ({
     padding: theme.spacing(0.5, 2),
     display: 'flex',
     alignItems: 'center',
+    [theme.breakpoints.down('sm')]: {
+      paddingLeft: 0,
+    },
   },
   stepperContainer: {
     'display': 'flex',
@@ -93,6 +95,15 @@ const useStyles = makeStyles((theme) => ({
   errorMsg: {
     margin: 0,
     textAlign: 'left',
+  },
+  gridDetails: {
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'flex-end',
+    [theme.breakpoints.down('sm')]: {
+      justifyContent: 'flex-start',
+      marginTop: theme.spacing(3),
+    },
   },
 }));
 
@@ -251,36 +262,37 @@ function VettingRequestResearcher(props) {
           />
           <Paper className={classes.paper}>
             <Grid container alignItems="center">
-              <Grid item className={classes.title}>
-                <Typography variant="subtitle1" component="p">
+              <Grid item className={classes.title} md={5} xs={12}>
+                <Typography variant="caption" component="p">
                   Vetting request · ID 0101-000000
                 </Typography>
-                <Typography variant="h6" component="h1">
+                <Typography variant="h5" component="h1">
                   {state.title}
                 </Typography>
               </Grid>
               <Divider />
-              <Grid item>
-                <div className={classes.statusLeft}>
-                  <Icon path={mdiFileEditOutline} size={1} />
-                  <Typography variant="body2" className={classes.icongrey}>
-                    Draft
+              <Grid item md={7} xs={12} className={classes.gridDetails}>
+                <Grid item>
+                  <div className={classes.statusLeft}>
+                    <Icon path={mdiFileEditOutline} size={1} />
+                    <Typography variant="body2" className={classes.icongrey}>
+                      Draft
+                    </Typography>
+                  </div>
+                </Grid>
+                <Divider
+                  className={classes.dividerHeight}
+                  orientation="vertical"
+                />
+                <Grid item>
+                  <Typography
+                    variant="body2"
+                    color="textSecondary"
+                    className={classes.statusRight}
+                  >
+                    Unassigned
                   </Typography>
-                </div>
-              </Grid>
-              <Divider
-                className={classes.dividerHeight}
-                orientation="vertical"
-                flexItem
-              />
-              <Grid item>
-                <Typography
-                  variant="body2"
-                  color="textSecondary"
-                  className={classes.statusRight}
-                >
-                  Unassigned
-                </Typography>
+                </Grid>
               </Grid>
             </Grid>
             <Divider className={classes.divider} />
