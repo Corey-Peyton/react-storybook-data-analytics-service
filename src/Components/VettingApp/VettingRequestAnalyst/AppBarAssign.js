@@ -145,7 +145,7 @@ function AppBarUnAssign(props) {
               <div className={classes.details}>
                 <Chip
                   label="Steve Rogers"
-                  onClick={props.toggleManageTeamDrawer}
+                  onClick={props.toggleRequesterDetails}
                 />
               </div>
             </div>

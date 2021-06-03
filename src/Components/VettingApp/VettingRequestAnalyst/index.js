@@ -26,6 +26,7 @@ import FloatingSupportButton from '../CommonComponents/Support';
 import CutCopyPasteAlert from '../CommonComponents/CutCopyPasteAlert';
 import {SnackbarSubmitRequest} from '../CommonComponents/Snackbars';
 import ManageTeamDrawer from '../CommonComponents/ManageTeamDrawer';
+import {DialogRequesterDetails} from '../CommonComponents/DialogBox';
 
 const useStyles = makeStyles((theme) => ({
   pageContainer: {
@@ -93,13 +94,19 @@ function getSteps() {
 }
 
 function VettingRequestAnalyst(props) {
+  const classes = useStyles();
+
   const [open, setOpen] = React.useState({
     manageTeamDrawer: false,
+    dialogRequesterDetails: false,
   });
   const toggleManageTeamDrawer = () => {
     setOpen({...open, manageTeamDrawer: !open.manageTeamDrawer});
   };
-  const classes = useStyles();
+
+  const toggleRequesterDetails = () => {
+    setOpen({...open, dialogRequesterDetails: !open.dialogRequesterDetails});
+  };
 
   const [state, setState] = React.useState({
     activeStep: 0,
@@ -225,6 +232,10 @@ function VettingRequestAnalyst(props) {
             clickHandler={toggleManageTeamDrawer}
             toggleManageTeamDrawer={toggleManageTeamDrawer}
           />
+          <DialogRequesterDetails
+            open={open.dialogRequesterDetails}
+            toggleDialog={toggleRequesterDetails}
+          />
           <RequestToolbar
             role="analyst"
             status="submitted"
@@ -241,6 +252,7 @@ function VettingRequestAnalyst(props) {
                 lead={state.lead}
                 support={state.support}
                 toggleManageTeamDrawer={toggleManageTeamDrawer}
+                toggleRequesterDetails={toggleRequesterDetails}
               />
             </Grid>
             <Divider className={classes.divider} />
