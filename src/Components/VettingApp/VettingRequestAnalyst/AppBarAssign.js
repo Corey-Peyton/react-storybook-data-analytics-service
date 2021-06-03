@@ -131,7 +131,7 @@ function AppBarUnAssign(props) {
       <Grid item md={7} xs={12} className={classes.gridDetails}>
         <Grid item className={classes.alignCenter}>
           <div className={classes.statusLeft}>
-            <Typography>Status</Typography>
+            <Typography variant="caption">Status</Typography>
             <Grid className={clsx(classes.alignCenter, classes.details)}>
               <Icon path={mdiInboxArrowDown} size={1} />
               <Typography variant="body2" className={classes.icongrey}>
@@ -141,7 +141,7 @@ function AppBarUnAssign(props) {
           </div>
           <Grid item>
             <div className={classes.statusLeft}>
-              <Typography>Requester</Typography>
+              <Typography variant="caption">Requester</Typography>
               <div className={classes.details}>
                 <Chip
                   label="Steve Rogers"
@@ -155,7 +155,7 @@ function AppBarUnAssign(props) {
 
         <Grid item className={classes.assignee}>
           <div className={classes.statusRight}>
-            <Typography>Assignees</Typography>
+            <Typography variant="caption">Assignees</Typography>
             <Assignee {...props} />
           </div>
         </Grid>

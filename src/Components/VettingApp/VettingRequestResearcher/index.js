@@ -285,7 +285,7 @@ function VettingRequestResearcher(props) {
               <Grid item md={7} xs={12} className={classes.gridDetails}>
                 <Grid item className={classes.alignCenter}>
                   <div className={classes.statusLeft}>
-                    <Typography>Status</Typography>
+                    <Typography variant="caption">Status</Typography>
                     <Grid
                       className={clsx(classes.alignCenter, classes.details)}
                     >
@@ -302,7 +302,7 @@ function VettingRequestResearcher(props) {
                 />
                 <Grid item className={classes.assignee}>
                   <div className={classes.statusRight}>
-                    <Typography>Assignees</Typography>
+                    <Typography variant="caption">Assignees</Typography>
                     <div className={classes.details}>
                       <Typography
                         variant="body2"
