@@ -9,9 +9,6 @@ const useStyles = makeStyles((theme) => ({
   title: {
     flexGrow: 1,
   },
-  divider: {
-    height: theme.spacing(5),
-  },
   upperCase: {
     textTransform: 'uppercase',
   },
@@ -22,18 +19,21 @@ const useStyles = makeStyles((theme) => ({
   icongrey: {
     marginLeft: theme.spacing(1),
   },
-  statusRight: {
-    padding: theme.spacing(0.5, 0),
-    paddingLeft: theme.spacing(2),
+  statusContainer: {
+    padding: theme.spacing(0, 2, 0, 0),
+    //What is all this (This can be deleted)
+    //display: 'flex',
+    //flexDirection: 'column',
+    //alignItems: 'flex-start',
+    //[theme.breakpoints.down('sm')]: {
+      //paddingLeft: 0,
+    //},
   },
-  statusLeft: {
-    padding: theme.spacing(0.5, 2, 0.5, 0),
-    display: 'flex',
-    flexDirection: 'column',
-    alignItems: 'flex-start',
-    [theme.breakpoints.down('sm')]: {
-      paddingLeft: 0,
-    },
+  requesterContainer: {
+    padding: theme.spacing(0, 2, 0, 2),
+  },
+  assigneeContainer: {
+    padding: theme.spacing(0, 0, 0, 2),
   },
   headerBtn: {
     marginLeft: theme.spacing(1),
@@ -122,7 +122,7 @@ function AppBarUnAssign(props) {
     <Grid container alignItems="center">
       <Grid item className={classes.title} md={5} xs={12}>
         <Typography variant="caption" component="p">
-          Vetting request · ID 0101-000000
+          Project 20-SSH-UTO-1111 · Request 0101-000000
         </Typography>
         <Typography variant="h5" component="h1">
           {props.title}
@@ -130,18 +130,19 @@ function AppBarUnAssign(props) {
       </Grid>
       <Grid item md={7} xs={12} className={classes.gridDetails}>
         <Grid item className={classes.alignCenter}>
-          <div className={classes.statusLeft}>
-            <Typography variant="caption">Status</Typography>
+          <div className={classes.statusContainer}>
+            <Typography variant="caption" component="p">Status</Typography>
             <Grid className={clsx(classes.alignCenter, classes.details)}>
               <Icon path={mdiInboxArrowDown} size={1} />
-              <Typography variant="body2" className={classes.icongrey}>
+              <Typography variant="body2"  component="p" className={classes.icongrey}>
                 Submitted
               </Typography>
             </Grid>
           </div>
+          <Divider orientation="vertical" flexItem />
           <Grid item>
-            <div className={classes.statusLeft}>
-              <Typography variant="caption">Requester</Typography>
+            <div className={classes.requesterContainer}>
+              <Typography variant="caption"  component="p">Requester</Typography>
               <div className={classes.details}>
                 <Chip
                   label="Steve Rogers"
@@ -151,11 +152,10 @@ function AppBarUnAssign(props) {
             </div>
           </Grid>
         </Grid>
-        <Divider className={classes.divider} orientation="vertical" />
-
+        <Divider orientation="vertical" flexItem />
         <Grid item className={classes.assignee}>
-          <div className={classes.statusRight}>
-            <Typography variant="caption">Assignees</Typography>
+          <div className={classes.assigneeContainer}>
+            <Typography variant="caption" component="p">Assignees</Typography>
             <Assignee {...props} />
           </div>
         </Grid>

@@ -41,20 +41,15 @@ const useStyles = makeStyles((theme) => ({
     margin: theme.spacing(3, 0),
   },
   dividercutcopypaste: {
-    marginBottom: theme.spacing(2),
+    marginBottom: theme.spacing(3),
     marginTop: theme.spacing(3),
-  },
-  dividerHeight: {
-    height: theme.spacing(5),
   },
   paper: {
     maxWidth: '1280px',
     margin: 'auto',
     boxSizing: 'border-box',
-    padding: theme.spacing(3),
+    padding: theme.spacing(6),
     marginTop: theme.spacing(3),
-    border: '1px solid',
-    borderColor: theme.palette.divider,
   },
   title: {
     flexGrow: 1,
@@ -62,18 +57,18 @@ const useStyles = makeStyles((theme) => ({
   icongrey: {
     marginLeft: theme.spacing(1),
   },
-  statusRight: {
-    padding: theme.spacing(0.5, 2),
-    paddingRight: theme.spacing(0),
+  assigneeContainer: {
+    padding: theme.spacing(0, 0, 0, 2),
   },
-  statusLeft: {
-    padding: theme.spacing(0.5, 2, 0.5, 0),
-    display: 'flex',
-    flexDirection: 'column',
-    alignItems: 'flex-start',
-    [theme.breakpoints.down('sm')]: {
-      paddingLeft: 0,
-    },
+  statusContainer: {
+    padding: theme.spacing(0, 2, 0, 0),
+    //What is all this for (This can be deleted)
+    //display: 'flex',
+    //flexDirection: 'column',
+    //alignItems: 'flex-start',
+    //[theme.breakpoints.down('sm')]: {
+      //paddingLeft: 0,
+    //},
   },
   stepperContainer: {
     'display': 'flex',
@@ -271,42 +266,39 @@ function VettingRequestResearcher(props) {
               support: [],
             }}
           />
-          <Paper className={classes.paper}>
+          <Paper variant="outlined" className={classes.paper}>
             <Grid container alignItems="center">
               <Grid item className={classes.title} md={5} xs={12}>
                 <Typography variant="caption" component="p">
-                  Vetting request · ID 0101-000000
+                  Project 20-SSH-UTO-1111 · Request 0101-000000
                 </Typography>
                 <Typography variant="h5" component="h1">
                   {state.title}
                 </Typography>
               </Grid>
-              <Divider />
               <Grid item md={7} xs={12} className={classes.gridDetails}>
                 <Grid item className={classes.alignCenter}>
-                  <div className={classes.statusLeft}>
-                    <Typography variant="caption">Status</Typography>
+                  <div className={classes.statusContainer}>
+                    <Typography variant="caption" component="p">Status</Typography>
                     <Grid
                       className={clsx(classes.alignCenter, classes.details)}
                     >
                       <Icon path={mdiFileEditOutline} size={1} />
-                      <Typography variant="body2" className={classes.icongrey}>
+                      <Typography variant="body2"  component="p" className={classes.icongrey}>
                         Draft
                       </Typography>
                     </Grid>
                   </div>
                 </Grid>
-                <Divider
-                  className={classes.dividerHeight}
-                  orientation="vertical"
-                />
+                <Divider orientation="vertical" flexItem />
                 <Grid item className={classes.assignee}>
-                  <div className={classes.statusRight}>
-                    <Typography variant="caption">Assignees</Typography>
+                  <div className={classes.assigneeContainer}>
+                    <Typography variant="caption" component="p">Assignee</Typography>
                     <div className={classes.details}>
                       <Typography
                         variant="body2"
                         color="textSecondary"
+                        component="p"
                         className={classes.details}
                       >
                         Unassigned

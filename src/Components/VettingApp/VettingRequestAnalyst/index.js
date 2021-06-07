@@ -45,17 +45,15 @@ const useStyles = makeStyles((theme) => ({
     margin: theme.spacing(3, 0),
   },
   dividercutcopypaste: {
-    marginBottom: theme.spacing(2),
+    marginBottom: theme.spacing(3),
     marginTop: theme.spacing(3),
   },
   paper: {
     maxWidth: '1280px',
     margin: 'auto',
     boxSizing: 'border-box',
-    padding: theme.spacing(3),
+    padding: theme.spacing(6),
     marginTop: theme.spacing(3),
-    border: '1px solid',
-    borderColor: theme.palette.divider,
   },
   title: {
     flexGrow: 1,
@@ -245,7 +243,7 @@ function VettingRequestAnalyst(props) {
             }}
             toggleManageTeamDrawer={toggleManageTeamDrawer}
           />
-          <Paper className={classes.paper}>
+          <Paper variant="outlined" className={classes.paper}>
             <Grid container alignItems="center">
               <AppBarAssign
                 title={state.title}
