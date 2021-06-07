@@ -1,18 +1,9 @@
 import React from 'react';
 import clsx from 'clsx';
 import {Card} from '../Components/CommonComponents/Card';
-import {
-  IconButton,
-  ListItemText,
-  Typography,
-  MenuItem,
-  Button,
-} from '@material-ui/core';
-import Icon from '@mdi/react';
+import {Typography, Button} from '@material-ui/core';
 import {grey} from '@material-ui/core/colors';
 import AddIcon from '@material-ui/icons/Add';
-import {mdiMenuDown, mdiFileDocumentOutline} from '@mdi/js';
-import MoreVertIcon from '@material-ui/icons/MoreVert';
 import {makeStyles} from '@material-ui/core/styles';
 
 export default {
@@ -21,10 +12,13 @@ export default {
 };
 const useStyles = makeStyles((theme) => ({
   addCard: {
-    width: '100%',
-    border: '2px dashed',
-    borderColor: grey[500],
-    justifyContent: 'start',
+    'width': '100%',
+    'borderStyle': 'dashed',
+    // borderColor: grey[500],
+    'justifyContent': 'start',
+    '&.MuiButton-outlinedPrimary:hover': {
+      borderStyle: 'dashed',
+    },
   },
   cardContainer: {
     maxWidth: '600px',
@@ -33,8 +27,6 @@ const useStyles = makeStyles((theme) => ({
 
 export const Default = (args) => {
   const classes = useStyles();
-  // const {t} = useTranslation();
-  // const [anchorEl, setAnchorEl] = React.useState(null);
 
   return (
     <div className={classes.cardContainer}>
@@ -53,8 +45,12 @@ export const Default = (args) => {
           </>
         }
       />
-      <Button color="primary" className={clsx(classes.addCard, 'mt-3')}>
-        <AddIcon />
+      <Button
+        variant="outlined"
+        color="primary"
+        startIcon={<AddIcon />}
+        className={clsx(classes.addCard, 'mt-3')}
+      >
         Add card
       </Button>
     </div>
@@ -63,8 +59,6 @@ export const Default = (args) => {
 
 export const Errors = (args) => {
   const classes = useStyles();
-  // const {t} = useTranslation();
-  // const [anchorEl, setAnchorEl] = React.useState(null);
 
   return (
     <div className={classes.cardContainer}>
@@ -83,10 +77,13 @@ export const Errors = (args) => {
             </Typography>
           </>
         }
-        // icon={mdiFileDocumentOutline}
       />
-      <Button color="primary" className={clsx(classes.addCard, 'mt-3')}>
-        <AddIcon />
+      <Button
+        variant="outlined"
+        color="primary"
+        startIcon={<AddIcon />}
+        className={clsx(classes.addCard, 'mt-3')}
+      >
         Add card
       </Button>
     </div>
