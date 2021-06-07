@@ -62,13 +62,13 @@ const useStyles = makeStyles((theme) => ({
   },
   statusContainer: {
     padding: theme.spacing(0, 2, 0, 0),
-    //What is all this for (This can be deleted)
-    //display: 'flex',
-    //flexDirection: 'column',
-    //alignItems: 'flex-start',
-    //[theme.breakpoints.down('sm')]: {
-      //paddingLeft: 0,
-    //},
+    // What is all this for (This can be deleted)
+    // display: 'flex',
+    // flexDirection: 'column',
+    // alignItems: 'flex-start',
+    // [theme.breakpoints.down('sm')]: {
+    // paddingLeft: 0,
+    // },
   },
   stepperContainer: {
     'display': 'flex',
@@ -279,12 +279,18 @@ function VettingRequestResearcher(props) {
               <Grid item md={7} xs={12} className={classes.gridDetails}>
                 <Grid item className={classes.alignCenter}>
                   <div className={classes.statusContainer}>
-                    <Typography variant="caption" component="p">Status</Typography>
+                    <Typography variant="caption" component="p">
+                      Status
+                    </Typography>
                     <Grid
                       className={clsx(classes.alignCenter, classes.details)}
                     >
                       <Icon path={mdiFileEditOutline} size={1} />
-                      <Typography variant="body2"  component="p" className={classes.icongrey}>
+                      <Typography
+                        variant="body2"
+                        component="p"
+                        className={classes.icongrey}
+                      >
                         Draft
                       </Typography>
                     </Grid>
@@ -293,7 +299,9 @@ function VettingRequestResearcher(props) {
                 <Divider orientation="vertical" flexItem />
                 <Grid item className={classes.assignee}>
                   <div className={classes.assigneeContainer}>
-                    <Typography variant="caption" component="p">Assignee</Typography>
+                    <Typography variant="caption" component="p">
+                      Assignee
+                    </Typography>
                     <div className={classes.details}>
                       <Typography
                         variant="body2"
