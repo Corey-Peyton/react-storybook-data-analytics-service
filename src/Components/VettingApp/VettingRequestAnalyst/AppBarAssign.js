@@ -21,13 +21,6 @@ const useStyles = makeStyles((theme) => ({
   },
   statusContainer: {
     padding: theme.spacing(0, 2, 0, 0),
-    // What is all this (This can be deleted)
-    // display: 'flex',
-    // flexDirection: 'column',
-    // alignItems: 'flex-start',
-    // [theme.breakpoints.down('sm')]: {
-    // paddingLeft: 0,
-    // },
   },
   requesterContainer: {
     padding: theme.spacing(0, 2, 0, 2),
@@ -164,7 +157,7 @@ function AppBarUnAssign(props) {
         <Grid item className={classes.assignee}>
           <div className={classes.assigneeContainer}>
             <Typography variant="caption" component="p">
-              Assignees
+              Assignee
             </Typography>
             <Assignee {...props} />
           </div>

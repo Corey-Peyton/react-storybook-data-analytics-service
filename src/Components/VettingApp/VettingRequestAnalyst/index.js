@@ -225,15 +225,6 @@ function VettingRequestAnalyst(props) {
       <Header />
       <main className={classes.main} tabIndex="-1">
         <Container maxWidth={false} className={classes.pageContainer}>
-          <ManageTeamDrawer
-            open={open.manageTeamDrawer}
-            clickHandler={toggleManageTeamDrawer}
-            toggleManageTeamDrawer={toggleManageTeamDrawer}
-          />
-          <DialogRequesterDetails
-            open={open.dialogRequesterDetails}
-            toggleDialog={toggleRequesterDetails}
-          />
           <RequestToolbar
             role="analyst"
             status="submitted"
@@ -378,6 +369,15 @@ function VettingRequestAnalyst(props) {
         </Container>
       </main>
       <Footer />
+      <ManageTeamDrawer
+        open={open.manageTeamDrawer}
+        clickHandler={toggleManageTeamDrawer}
+        toggleManageTeamDrawer={toggleManageTeamDrawer}
+      />
+      <DialogRequesterDetails
+        open={open.dialogRequesterDetails}
+        toggleDialog={toggleRequesterDetails}
+      />
     </>
   );
 }

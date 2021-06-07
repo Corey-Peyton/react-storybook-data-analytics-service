@@ -12,6 +12,7 @@ import {
   StepLabel,
   Typography,
   Divider,
+  Chip,
 } from '@material-ui/core';
 import ArrowForwardIosIcon from '@material-ui/icons/ArrowForwardIos';
 import ArrowBackIosIcon from '@material-ui/icons/ArrowBackIos';
@@ -27,6 +28,7 @@ import Footer from '../CommonComponents/Footer';
 import CutCopyPasteAlert from '../CommonComponents/CutCopyPasteAlert';
 import {SnackbarSubmitRequest} from '../CommonComponents/Snackbars';
 import RequestToolbar from '../CommonComponents/RequestToolbar';
+import {DialogRequesterDetails} from '../CommonComponents/DialogBox';
 
 const useStyles = makeStyles((theme) => ({
   pageContainer: {
@@ -57,18 +59,14 @@ const useStyles = makeStyles((theme) => ({
   icongrey: {
     marginLeft: theme.spacing(1),
   },
+  requesterContainer: {
+    padding: theme.spacing(0, 2, 0, 2),
+  },
   assigneeContainer: {
     padding: theme.spacing(0, 0, 0, 2),
   },
   statusContainer: {
     padding: theme.spacing(0, 2, 0, 0),
-    // What is all this for (This can be deleted)
-    // display: 'flex',
-    // flexDirection: 'column',
-    // alignItems: 'flex-start',
-    // [theme.breakpoints.down('sm')]: {
-    // paddingLeft: 0,
-    // },
   },
   stepperContainer: {
     'display': 'flex',
@@ -130,6 +128,7 @@ function VettingRequestResearcher(props) {
     open: false,
     errors: [0, 4, 0, 0],
     title: 'Untitled request',
+    dialogRequesterDetails: false,
   });
   const prevStep = React.useRef(null);
   const nextStep = React.useRef(null);
@@ -253,6 +252,13 @@ function VettingRequestResearcher(props) {
     return state.errors[step] !== 0;
   };
 
+  const toggleRequesterDetails = () => {
+    setState({
+      ...state,
+      dialogRequesterDetails: !state.dialogRequesterDetails,
+    });
+  };
+
   return (
     <React.Fragment>
       <Header />
@@ -294,6 +300,20 @@ function VettingRequestResearcher(props) {
                         Draft
                       </Typography>
                     </Grid>
+                  </div>
+                </Grid>
+                <Divider orientation="vertical" flexItem />
+                <Grid item>
+                  <div className={classes.requesterContainer}>
+                    <Typography variant="caption" component="p">
+                      Requester
+                    </Typography>
+                    <div className={classes.details}>
+                      <Chip
+                        label="Steve Rogers"
+                        onClick={toggleRequesterDetails}
+                      />
+                    </div>
                   </div>
                 </Grid>
                 <Divider orientation="vertical" flexItem />
@@ -441,6 +461,10 @@ function VettingRequestResearcher(props) {
         </Container>
       </main>
       <Footer />
+      <DialogRequesterDetails
+        open={state.dialogRequesterDetails}
+        toggleDialog={toggleRequesterDetails}
+      />
     </React.Fragment>
   );
 }
