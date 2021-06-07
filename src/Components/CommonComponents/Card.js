@@ -10,8 +10,6 @@ import {
   Button,
   Grid,
 } from '@material-ui/core';
-// import Alert from '@material-ui/lab/Alert';
-// import Icon from '@mdi/react';
 import {makeStyles} from '@material-ui/core/styles';
 
 const useStyles = makeStyles((theme) => ({
@@ -139,10 +137,3 @@ Card.propTypes = {
 */
   thirdClick: PropTypes.func,
 };
-
-// IconButton.defaultProps = {
-//   color: COLOR.DEFAULT,
-//   disabled: false,
-//   size: SIZE.MEDIUM,
-//   edge: EDGE.NONE,
-// };
