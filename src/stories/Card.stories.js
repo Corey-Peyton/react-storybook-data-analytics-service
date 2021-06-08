@@ -13,14 +13,13 @@ const useStyles = makeStyles((theme) => ({
   addCard: {
     'width': '100%',
     'borderStyle': 'dashed',
-    // borderColor: grey[500],
     'justifyContent': 'start',
     '&.MuiButton-outlinedPrimary:hover': {
       borderStyle: 'dashed',
     },
   },
   cardContainer: {
-    maxWidth: '600px',
+    maxWidth: '640px',
   },
 }));
 
@@ -29,8 +28,12 @@ export const Default = (args) => {
 
   return (
     <div className={classes.cardContainer}>
-      <Typography variant="h6">Add card *</Typography>
-      <Typography variant="body2">Helper text</Typography>
+      <Typography variant="body2" component="p">
+        Add card *
+      </Typography>
+      <Typography variant="caption" color="textSecondary" component="p">
+        At least one card must be added
+      </Typography>
       <Card
         title="Card title"
         error={false}
@@ -38,7 +41,7 @@ export const Default = (args) => {
         secondaryButton="Delete"
         content={
           <>
-            <Typography variant="body2">
+            <Typography variant="body2" component="p">
               This is the content for the card.
             </Typography>
           </>
@@ -48,7 +51,7 @@ export const Default = (args) => {
         variant="outlined"
         color="primary"
         startIcon={<AddIcon />}
-        className={clsx(classes.addCard, 'mt-3')}
+        className={clsx(classes.addCard, 'mt-2')}
       >
         Add card
       </Button>
@@ -61,8 +64,12 @@ export const Errors = (args) => {
 
   return (
     <div className={classes.cardContainer}>
-      <Typography variant="h6">Add card *</Typography>
-      <Typography variant="body2">Helper text</Typography>
+      <Typography variant="body2" component="p">
+        Add card *
+      </Typography>
+      <Typography variant="caption" color="textSecondary" component="p">
+        At least one card must be added
+      </Typography>
       <Card
         title="Card title"
         error={true}
@@ -71,7 +78,7 @@ export const Errors = (args) => {
         secondaryButton="Delete"
         content={
           <>
-            <Typography variant="body2">
+            <Typography variant="body2" component="p">
               This is the content for the card.
             </Typography>
           </>

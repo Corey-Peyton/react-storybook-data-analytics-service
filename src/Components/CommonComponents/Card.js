@@ -17,10 +17,10 @@ const useStyles = makeStyles((theme) => ({
     'marginTop': theme.spacing(2),
     'flexGrow': 1,
     '& .MuiCardHeader-root': {
-      paddingBottom: theme.spacing(2),
+      paddingBottom: theme.spacing(0),
     },
     '& .MuiCardContent-root': {
-      paddingTop: theme.spacing(1),
+      // paddingTop: theme.spacing(1),
     },
   },
   cardActions: {
@@ -44,16 +44,26 @@ export function Card(props) {
   const classes = useStyles();
   const errorHeaderMsg = function() {
     if (props.error && props.totalErrors === 1) {
-      return <Typography variant="caption">1 error</Typography>;
+      return (
+        <Typography variant="caption" component="p">
+          1 error
+        </Typography>
+      );
     } else if (props.error && props.totalErrors > 99) {
-      return <Typography variant="caption">99+ errors</Typography>;
+      return (
+        <Typography variant="caption" component="p">
+          99+ errors
+        </Typography>
+      );
     } else if (
       props.error &&
       props.totalErrors > 1 &&
       props.totalErrors <= 99
     ) {
       return (
-        <Typography variant="caption">{props.totalErrors} errors</Typography>
+        <Typography variant="caption" component="p">
+          {props.totalErrors} errors
+        </Typography>
       );
     }
   };
