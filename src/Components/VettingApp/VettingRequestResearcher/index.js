@@ -55,6 +55,10 @@ const useStyles = makeStyles((theme) => ({
   },
   title: {
     flexGrow: 1,
+    paddingRight: theme.spacing(2),
+    [theme.breakpoints.down('sm')]: {
+      padding: 0,
+    },
   },
   icongrey: {
     marginLeft: theme.spacing(1),
@@ -109,6 +113,14 @@ const useStyles = makeStyles((theme) => ({
     display: 'flex',
     alignItems: 'center',
   },
+  requestFormHeader: {
+    display: 'flex',
+    flexFlow: 'row',
+    alignItems: 'start',
+    [theme.breakpoints.down('sm')]: {
+      flexFlow: 'column',
+    },
+  },
 }));
 
 function getSteps() {
@@ -127,7 +139,8 @@ function VettingRequestResearcher(props) {
     completed: {},
     open: false,
     errors: [0, 4, 0, 0],
-    title: 'Untitled request',
+    title:
+      'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate',
     dialogRequesterDetails: false,
   });
   const prevStep = React.useRef(null);
@@ -273,8 +286,12 @@ function VettingRequestResearcher(props) {
             }}
           />
           <Paper variant="outlined" className={classes.paper}>
-            <Grid container alignItems="center">
-              <Grid item className={classes.title} md={5} xs={12}>
+            <Grid
+              container
+              alignItems="center"
+              className={classes.requestFormHeader}
+            >
+              <Grid item className={classes.title}>
                 <Typography variant="caption" component="p">
                   Project 20-SSH-UTO-1111 · Request 0101-000000
                 </Typography>
@@ -282,7 +299,7 @@ function VettingRequestResearcher(props) {
                   {state.title}
                 </Typography>
               </Grid>
-              <Grid item md={7} xs={12} className={classes.gridDetails}>
+              <Grid item className={classes.gridDetails}>
                 <Grid item className={classes.alignCenter}>
                   <div className={classes.statusContainer}>
                     <Typography variant="caption" component="p">

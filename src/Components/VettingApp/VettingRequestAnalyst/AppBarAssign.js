@@ -8,6 +8,10 @@ import Icon from '@mdi/react';
 const useStyles = makeStyles((theme) => ({
   title: {
     flexGrow: 1,
+    paddingRight: theme.spacing(2),
+    [theme.breakpoints.down('sm')]: {
+      padding: 0,
+    },
   },
   upperCase: {
     textTransform: 'uppercase',
@@ -48,6 +52,14 @@ const useStyles = makeStyles((theme) => ({
     height: theme.spacing(4),
     display: 'flex',
     alignItems: 'center',
+  },
+  requestFormHeader: {
+    display: 'flex',
+    flexFlow: 'row',
+    alignItems: 'start',
+    [theme.breakpoints.down('sm')]: {
+      flexFlow: 'column',
+    },
   },
 }));
 
@@ -112,8 +124,8 @@ function Assignee(props) {
 function AppBarUnAssign(props) {
   const classes = useStyles();
   return (
-    <Grid container alignItems="center">
-      <Grid item className={classes.title} md={5} xs={12}>
+    <Grid container alignItems="center" className={classes.requestFormHeader}>
+      <Grid item className={classes.title}>
         <Typography variant="caption" component="p">
           Project 20-SSH-UTO-1111 · Request 0101-000000
         </Typography>
@@ -121,7 +133,7 @@ function AppBarUnAssign(props) {
           {props.title}
         </Typography>
       </Grid>
-      <Grid item md={7} xs={12} className={classes.gridDetails}>
+      <Grid item className={classes.gridDetails}>
         <Grid item className={classes.alignCenter}>
           <div className={classes.statusContainer}>
             <Typography variant="caption" component="p">
