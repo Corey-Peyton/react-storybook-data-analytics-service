@@ -1,6 +1,6 @@
 import React from 'react';
 import clsx from 'clsx';
-import {Grid, Chip, Typography, Divider} from '@material-ui/core';
+import {Grid, Chip, Typography, Divider, Hidden} from '@material-ui/core';
 import {makeStyles} from '@material-ui/core/styles';
 import {mdiInboxArrowDown} from '@mdi/js';
 import Icon from '@mdi/react';
@@ -8,10 +8,6 @@ import Icon from '@mdi/react';
 const useStyles = makeStyles((theme) => ({
   title: {
     flexGrow: 1,
-    paddingRight: theme.spacing(2),
-    [theme.breakpoints.down('sm')]: {
-      padding: 0,
-    },
   },
   upperCase: {
     textTransform: 'uppercase',
@@ -23,14 +19,8 @@ const useStyles = makeStyles((theme) => ({
   icongrey: {
     marginLeft: theme.spacing(1),
   },
-  statusContainer: {
-    padding: theme.spacing(0, 2, 0, 0),
-  },
-  requesterContainer: {
-    padding: theme.spacing(0, 2, 0, 2),
-  },
-  assigneeContainer: {
-    padding: theme.spacing(0, 0, 0, 2),
+  formVerticalDivider: {
+    margin: theme.spacing(0, 2, 0, 2),
   },
   headerBtn: {
     marginLeft: theme.spacing(1),
@@ -134,8 +124,15 @@ function AppBarUnAssign(props) {
         </Typography>
       </Grid>
       <Grid item className={classes.gridDetails}>
+        <Hidden smDown>
+          <Divider
+            orientation="vertical"
+            className={classes.formVerticalDivider}
+            flexItem
+          />
+        </Hidden>
         <Grid item className={classes.alignCenter}>
-          <div className={classes.statusContainer}>
+          <div>
             <Typography variant="caption" component="p">
               Status
             </Typography>
@@ -150,9 +147,13 @@ function AppBarUnAssign(props) {
               </Typography>
             </Grid>
           </div>
-          <Divider orientation="vertical" flexItem />
+          <Divider
+            orientation="vertical"
+            className={classes.formVerticalDivider}
+            flexItem
+          />
           <Grid item>
-            <div className={classes.requesterContainer}>
+            <div>
               <Typography variant="caption" component="p">
                 Requester
               </Typography>
@@ -165,9 +166,13 @@ function AppBarUnAssign(props) {
             </div>
           </Grid>
         </Grid>
-        <Divider orientation="vertical" flexItem />
+        <Divider
+          orientation="vertical"
+          className={classes.formVerticalDivider}
+          flexItem
+        />
         <Grid item className={classes.assignee}>
-          <div className={classes.assigneeContainer}>
+          <div>
             <Typography variant="caption" component="p">
               Assignee
             </Typography>

@@ -13,6 +13,7 @@ import {
   Typography,
   Divider,
   Chip,
+  Hidden,
 } from '@material-ui/core';
 import ArrowForwardIosIcon from '@material-ui/icons/ArrowForwardIos';
 import ArrowBackIosIcon from '@material-ui/icons/ArrowBackIos';
@@ -55,22 +56,12 @@ const useStyles = makeStyles((theme) => ({
   },
   title: {
     flexGrow: 1,
-    paddingRight: theme.spacing(2),
-    [theme.breakpoints.down('sm')]: {
-      padding: 0,
-    },
   },
   icongrey: {
     marginLeft: theme.spacing(1),
   },
-  requesterContainer: {
-    padding: theme.spacing(0, 2, 0, 2),
-  },
-  assigneeContainer: {
-    padding: theme.spacing(0, 0, 0, 2),
-  },
-  statusContainer: {
-    padding: theme.spacing(0, 2, 0, 0),
+  formVerticalDivider: {
+    margin: theme.spacing(0, 2, 0, 2),
   },
   stepperContainer: {
     'display': 'flex',
@@ -299,8 +290,15 @@ function VettingRequestResearcher(props) {
                 </Typography>
               </Grid>
               <Grid item className={classes.gridDetails}>
+                <Hidden smDown>
+                  <Divider
+                    orientation="vertical"
+                    className={classes.formVerticalDivider}
+                    flexItem
+                  />
+                </Hidden>
                 <Grid item className={classes.alignCenter}>
-                  <div className={classes.statusContainer}>
+                  <div>
                     <Typography variant="caption" component="p">
                       Status
                     </Typography>
@@ -318,9 +316,13 @@ function VettingRequestResearcher(props) {
                     </Grid>
                   </div>
                 </Grid>
-                <Divider orientation="vertical" flexItem />
+                <Divider
+                  orientation="vertical"
+                  className={classes.formVerticalDivider}
+                  flexItem
+                />
                 <Grid item>
-                  <div className={classes.requesterContainer}>
+                  <div>
                     <Typography variant="caption" component="p">
                       Requester
                     </Typography>
@@ -332,9 +334,13 @@ function VettingRequestResearcher(props) {
                     </div>
                   </div>
                 </Grid>
-                <Divider orientation="vertical" flexItem />
+                <Divider
+                  orientation="vertical"
+                  className={classes.formVerticalDivider}
+                  flexItem
+                />
                 <Grid item className={classes.assignee}>
-                  <div className={classes.assigneeContainer}>
+                  <div>
                     <Typography variant="caption" component="p">
                       Assignee
                     </Typography>
