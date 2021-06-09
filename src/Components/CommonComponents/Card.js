@@ -19,9 +19,6 @@ const useStyles = makeStyles((theme) => ({
     '& .MuiCardHeader-root': {
       paddingBottom: theme.spacing(0),
     },
-    '& .MuiCardContent-root': {
-      // paddingTop: theme.spacing(1),
-    },
   },
   cardActions: {
     borderTop: '1px solid',
