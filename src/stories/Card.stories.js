@@ -109,7 +109,7 @@ export const NoCard = (args) => {
         Add card *
       </Typography>
       <Typography variant="caption" color="textSecondary" component="p">
-        Helper text
+        At least one card must be added
       </Typography>
       <Button
         variant="outlined"
