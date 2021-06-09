@@ -20,6 +20,9 @@ const useStyles = makeStyles((theme) => ({
   cardContainer: {
     maxWidth: '640px',
   },
+  errorText: {
+    color: theme.palette.error.main,
+  },
 }));
 
 export const Default = (args) => {
@@ -90,6 +93,59 @@ export const Errors = (args) => {
         startIcon={<AddIcon />}
         fullWidth="true"
         className={clsx(classes.addCard, 'mt-3')}
+      >
+        Add card
+      </Button>
+    </div>
+  );
+};
+
+export const NoCard = (args) => {
+  const classes = useStyles();
+
+  return (
+    <div className={classes.cardContainer}>
+      <Typography variant="body2" component="p">
+        Add card *
+      </Typography>
+      <Typography variant="caption" color="textSecondary" component="p">
+        Helper text
+      </Typography>
+      <Button
+        variant="outlined"
+        color="primary"
+        startIcon={<AddIcon />}
+        fullWidth="true"
+        className={clsx(classes.addCard, 'mt-2')}
+      >
+        Add card
+      </Button>
+    </div>
+  );
+};
+
+export const NoCardError = (args) => {
+  const classes = useStyles();
+
+  return (
+    <div className={classes.cardContainer}>
+      <Typography variant="body2" component="p" className={classes.errorText}>
+        Add card *
+      </Typography>
+      <Typography
+        variant="caption"
+        color="textSecondary"
+        component="p"
+        className={classes.errorText}
+      >
+        At least one card must be added
+      </Typography>
+      <Button
+        variant="outlined"
+        color="primary"
+        startIcon={<AddIcon />}
+        fullWidth="true"
+        className={clsx(classes.addCard, 'mt-2')}
       >
         Add card
       </Button>
