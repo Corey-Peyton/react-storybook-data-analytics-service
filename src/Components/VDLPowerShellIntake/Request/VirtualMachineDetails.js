@@ -1,13 +1,13 @@
 import React from 'react';
 import {Icon} from '@mdi/react';
-import {SnackbarDeleteVirtualMachine} from '../VettingApp/CommonComponents/Snackbars';
+import {SnackbarDeleteVirtualMachine} from '../../VettingApp/CommonComponents/Snackbars';
 import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
-import {DialogDelete} from '../VettingApp/CommonComponents/DialogBox';
+import {DialogDelete} from '../../VettingApp/CommonComponents/DialogBox';
 import {useTranslation} from 'react-i18next';
 import {AddVirtualMachine, EditVirtualMachine} from './MachineDetailsDrawer';
 import {green} from '@material-ui/core/colors';
-import {SnackbarEditVirtualMachine} from '../VettingApp/CommonComponents/Snackbars';
+import {SnackbarEditVirtualMachine} from '../../VettingApp/CommonComponents/Snackbars';
 import Collapse from '@material-ui/core/Collapse';
 import Avatar from '@material-ui/core/Avatar';
 import clsx from 'clsx';
@@ -17,7 +17,7 @@ import IconButton from '@material-ui/core/IconButton';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import Button from '@material-ui/core/Button';
 import {makeStyles} from '@material-ui/core/styles';
-import {SnackbarAddVirtualMachine} from '../VettingApp/CommonComponents/Snackbars';
+import {SnackbarAddVirtualMachine} from '../../VettingApp/CommonComponents/Snackbars';
 import {Typography, Divider, Grid} from '@material-ui/core';
 import Box from '@material-ui/core/Box';
 import {

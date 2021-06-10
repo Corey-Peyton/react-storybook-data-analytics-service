@@ -1,14 +1,28 @@
 import React from 'react';
 import {useTranslation} from 'react-i18next';
 import {Link as RouterLink, withRouter} from 'react-router-dom';
-import {Button, Checkbox, Divider, FormControl, FormControlLabel, FormGroup, Grid, IconButton, InputAdornment, InputLabel, OutlinedInput, Paper, TextField, Typography} from '@material-ui/core';
+import {
+  Button,
+  Checkbox,
+  Divider,
+  FormControl,
+  FormControlLabel,
+  FormGroup,
+  Grid,
+  IconButton,
+  InputAdornment,
+  InputLabel,
+  OutlinedInput,
+  Paper,
+  TextField,
+  Typography,
+} from '@material-ui/core';
 import {makeStyles} from '@material-ui/core/styles';
 import Visibility from '@material-ui/icons/Visibility';
 import VisibilityOff from '@material-ui/icons/VisibilityOff';
 
-import {XS_SCREEN} from '../Theme/constants';
-import CenteredFooter from './Footers/CenteredFooter';
-
+import {XS_SCREEN} from '../../Theme/constants';
+import CenteredFooter from '../Footers/CenteredFooter';
 
 const useStyles = makeStyles((theme) => ({
   container: {
@@ -78,9 +92,9 @@ const useStyles = makeStyles((theme) => ({
     left: 0,
     height: '100%',
     [theme.breakpoints.down('xs')]: {
-      'display': 'flex',
-      'justifyContent': 'flex-start',
-      'background': theme.palette.common.white,
+      display: 'flex',
+      justifyContent: 'flex-start',
+      background: theme.palette.common.white,
     },
   },
   loginContent: {
@@ -212,7 +226,9 @@ function SignInPage(props) {
               >
                 <InputLabel
                   htmlFor="outlined-adornment-password"
-                  className={classes.loginPasswordLabel + ' ' + classes.loginInputLabel}
+                  className={
+                    classes.loginPasswordLabel + ' ' + classes.loginInputLabel
+                  }
                   error={Boolean(state.pWordErr)}
                 >
                   {t('Password')}
@@ -274,7 +290,9 @@ function SignInPage(props) {
                     />
                   }
                   label={
-                    <Typography variant="body2">{t('Keep me signed in')}</Typography>
+                    <Typography variant="body2">
+                      {t('Keep me signed in')}
+                    </Typography>
                   }
                 />
               </Grid>

@@ -2,7 +2,7 @@ import React from 'react';
 import {makeStyles} from '@material-ui/core/styles';
 import {AppBar, Toolbar, Grid, Button, Typography} from '@material-ui/core';
 import {Link as RouterLink} from 'react-router-dom';
-import {SnackbarSubmitRequest} from '../VettingApp/CommonComponents/Snackbars';
+import {SnackbarSubmitRequest} from '../../VettingApp/CommonComponents/Snackbars';
 
 const useStyles = makeStyles((theme) => ({
   appBar: {
@@ -42,7 +42,7 @@ function RequestToolbar(props) {
               className={classes.headerBtn}
               onClick={handleClick}
               component={RouterLink}
-              to="SuccessfulSubmission"
+              to="Request/SuccessfulSubmission"
             >
               Submit
             </Button>

@@ -17,11 +17,11 @@ import ArrowForwardIosIcon from '@material-ui/icons/ArrowForwardIos';
 import ArrowBackIosIcon from '@material-ui/icons/ArrowBackIos';
 import SecurityGroup from './SecurityGroup';
 import Header from './Header';
-import Footer from '../VettingApp/CommonComponents/Footer';
+import Footer from '../../VettingApp/CommonComponents/Footer';
 import ProjectDetails from './ProjecDetails';
 import VirtualMachine from './VirtualMachineDetails';
 import SubmitToolbar from './SubmitToolbar';
-import {FOOT_H, HEAD_H_XS} from '../../Theme/constants';
+import {FOOT_H, HEAD_H_XS} from '../../../Theme/constants';
 
 const useStyles = makeStyles((theme) => ({
   pageContainer: {

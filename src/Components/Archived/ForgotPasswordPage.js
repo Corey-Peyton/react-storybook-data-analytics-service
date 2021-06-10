@@ -1,13 +1,26 @@
 import React from 'react';
 import {useTranslation} from 'react-i18next';
 import {Link as RouterLink, withRouter} from 'react-router-dom';
-import {Button, Divider, FormControl, FormGroup, Grid, IconButton, InputAdornment, InputLabel, OutlinedInput, Paper, TextField, Typography} from '@material-ui/core';
+import {
+  Button,
+  Divider,
+  FormControl,
+  FormGroup,
+  Grid,
+  IconButton,
+  InputAdornment,
+  InputLabel,
+  OutlinedInput,
+  Paper,
+  TextField,
+  Typography,
+} from '@material-ui/core';
 import {makeStyles} from '@material-ui/core/styles';
 import Visibility from '@material-ui/icons/Visibility';
 import VisibilityOff from '@material-ui/icons/VisibilityOff';
 
-import {XS_SCREEN} from '../Theme/constants';
-import CenteredFooter from './Footers/CenteredFooter';
+import {XS_SCREEN} from '../../Theme/constants';
+import CenteredFooter from '../Footers/CenteredFooter';
 
 // import ReactDOM from 'react-dom';
 
@@ -181,8 +194,9 @@ function ForgotPassword(props) {
       )
     ) {
       isError = true;
-      errors.pWordErr =
-        t('Choose a stronger password. Use 8 or more characters with a mix of letters, numbers and symbols.');
+      errors.pWordErr = t(
+          'Choose a stronger password. Use 8 or more characters with a mix of letters, numbers and symbols.',
+      );
     }
     if (state.confPassword === '') {
       isError = true;
@@ -301,7 +315,7 @@ function ForgotPassword(props) {
                 className={classes.loginLogo}
               />
               <span className="screen-reader-text">
-              Government of Canada /{' '}
+                Government of Canada /{' '}
                 <span lang="fr">Gouvernement du Canada</span>
               </span>
               <Typography
@@ -316,7 +330,9 @@ function ForgotPassword(props) {
             <Divider className={classes.loginDivider} />
             <div className={classes.container}>
               <Typography variant="body2" className={classes.bodyText}>
-                {t('An email was sent to peter.parker@gmail.com. Check your email to change your password.')}
+                {t(
+                    'An email was sent to peter.parker@gmail.com. Check your email to change your password.',
+                )}
               </Typography>
             </div>
             <Divider className={classes.loginDivider} />
@@ -351,7 +367,7 @@ function ForgotPassword(props) {
                 className={classes.loginLogo}
               />
               <span className="screen-reader-text">
-              Government of Canada /{' '}
+                Government of Canada /{' '}
                 <span lang="fr">Gouvernement du Canada</span>
               </span>
               <Typography
@@ -371,7 +387,9 @@ function ForgotPassword(props) {
                 >
                   <InputLabel
                     htmlFor="outlined-adornment-password"
-                    className={classes.loginPasswordLabel + ' ' + classes.loginInputLabel}
+                    className={
+                      classes.loginPasswordLabel + ' ' + classes.loginInputLabel
+                    }
                     error={Boolean(state.pWordErr)}
                   >
                     {t('Password')}
@@ -386,9 +404,7 @@ function ForgotPassword(props) {
                     error={Boolean(state.pWordErr)}
                     inputProps={{
                       'aria-describedby': `${
-                        state.pWordErr ?
-                          'passwordHelperErr' :
-                          'passwordHelper'
+                        state.pWordErr ? 'passwordHelperErr' : 'passwordHelper'
                       }`,
                     }}
                     endAdornment={
@@ -400,10 +416,10 @@ function ForgotPassword(props) {
                           edge="end"
                         >
                           {state.showPassword ? (
-                          <Visibility />
-                        ) : (
-                          <VisibilityOff />
-                        )}
+                            <Visibility />
+                          ) : (
+                            <VisibilityOff />
+                          )}
                         </IconButton>
                       </InputAdornment>
                     }
@@ -429,7 +445,9 @@ function ForgotPassword(props) {
                     variant="caption"
                     color="textSecondary"
                   >
-                    {t('Use 8 or more characters with a mix of letter, numbers and symbols.')}
+                    {t(
+                        'Use 8 or more characters with a mix of letter, numbers and symbols.',
+                    )}
                   </Typography>
                 )}
                 <FormControl
@@ -438,7 +456,9 @@ function ForgotPassword(props) {
                 >
                   <InputLabel
                     htmlFor="outlined-adornment-password-2"
-                    className={classes.loginPasswordLabel + ' ' + classes.loginInputLabel}
+                    className={
+                      classes.loginPasswordLabel + ' ' + classes.loginInputLabel
+                    }
                     error={Boolean(state.pWordConfErr)}
                   >
                     {t('Confirm password')}
@@ -452,11 +472,11 @@ function ForgotPassword(props) {
                     margin="dense"
                     error={Boolean(state.pWordConfErr)}
                     inputProps={
-                    state.pWordConfErr ?
-                      {
-                        'aria-describedby': 'passwordConfHelperErr',
-                      } :
-                      {}
+                      state.pWordConfErr ?
+                        {
+                          'aria-describedby': 'passwordConfHelperErr',
+                        } :
+                        {}
                     }
                     endAdornment={
                       <InputAdornment position="end">
@@ -467,10 +487,10 @@ function ForgotPassword(props) {
                           edge="end"
                         >
                           {state.showConfPassword ? (
-                          <Visibility />
-                        ) : (
-                          <VisibilityOff />
-                        )}
+                            <Visibility />
+                          ) : (
+                            <VisibilityOff />
+                          )}
                         </IconButton>
                       </InputAdornment>
                     }
