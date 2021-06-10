@@ -32,9 +32,6 @@ function Index() {
           <Link to="/VDLPowerShellIntake/">VDL PowerShell intake</Link>
         </li>
         <li>
-          <Link to="/VDLPowerShellIntake/Success">Request - Success</Link>
-        </li>
-        <li>
           <strong>Vetting app</strong>
         </li>
         <ul>
@@ -69,7 +66,7 @@ function Index() {
       </Typography>
       <ul>
         <li>
-          <Link to="/archived/splashv2">Splash 2.0</Link>
+          <Link to="/archived/splashv2">Splash v2.0</Link>
         </li>
         <li>
           <Link to="/archived/splash">Splash</Link>
