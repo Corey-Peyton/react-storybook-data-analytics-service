@@ -44,7 +44,7 @@ export default function AppRouter() {
             exact={true}
           />
           <Route
-            path="/Powershell/SuccessfulSubmission"
+            path="/VDLPowerShellIntake/SuccessfulSubmission"
             component={SuccessfulSubmission}
             exact={true}
           />

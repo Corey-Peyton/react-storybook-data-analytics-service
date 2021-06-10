@@ -42,7 +42,7 @@ function RequestToolbar(props) {
               className={classes.headerBtn}
               onClick={handleClick}
               component={RouterLink}
-              to="Request/SuccessfulSubmission"
+              to="SuccessfulSubmission"
             >
               Submit
             </Button>
