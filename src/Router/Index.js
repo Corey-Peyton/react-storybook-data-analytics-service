@@ -29,8 +29,13 @@ function Index() {
           </li>
         </ul>
         <li>
-          <Link to="/VDLPowerShellIntake/">VDL PowerShell intake</Link>
+          <strong>VDL PowerShell intake</strong>
         </li>
+        <ul>
+          <li>
+            <Link to="/VDLPowerShellIntake/">Request</Link>
+          </li>
+        </ul>
         <li>
           <strong>Vetting app</strong>
         </li>
