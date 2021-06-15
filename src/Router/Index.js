@@ -8,7 +8,7 @@ const styles = {
 
 function Index() {
   React.useEffect(() => {
-    document.title = `DAaaS - Indexs Page TEST`;
+    document.title = `DAaaS - Indexs Page`;
   }, []);
 
   return (
