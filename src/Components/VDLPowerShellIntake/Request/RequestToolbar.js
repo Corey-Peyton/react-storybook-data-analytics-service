@@ -33,7 +33,7 @@ function RequestToolbar(props) {
               variant="contained"
               color="primary"
               component={RouterLink}
-              to="/PowerShell/"
+              to="/VDLPowerShellIntake/"
             >
               New request
             </Button>

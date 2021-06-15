@@ -21,25 +21,6 @@ function Index() {
       </Typography>
       <ul>
         <li>
-          <Link to="/splash">Splash</Link>
-        </li>
-        <li>
-          <Link to="/results">Search results</Link>
-        </li>
-        <li>
-          <Link to="/projects">Projects</Link>
-        </li>
-        <li>
-          <Link to="/sign-in">Login</Link>
-        </li>
-        <li>
-          <Link to="/sign-in/create-account">Create account</Link>
-        </li>
-        <li>
-          <Link to="/sign-in/verify-identity">Forgot password</Link>
-        </li>
-
-        <li>
           <strong>Portal</strong>
         </li>
         <ul>
@@ -48,11 +29,13 @@ function Index() {
           </li>
         </ul>
         <li>
-          <Link to="/PowerShell/">PowerShell</Link>
+          <strong>VDL PowerShell intake</strong>
         </li>
-        <li>
-          <Link to="/PowerShell/Success">PowerShell success</Link>
-        </li>
+        <ul>
+          <li>
+            <Link to="/VDLPowerShellIntake/">Request</Link>
+          </li>
+        </ul>
         <li>
           <strong>Vetting app</strong>
         </li>
@@ -88,7 +71,25 @@ function Index() {
       </Typography>
       <ul>
         <li>
+          <Link to="/archived/splashv2">Splash v2.0</Link>
+        </li>
+        <li>
           <Link to="/archived/splash">Splash</Link>
+        </li>
+        <li>
+          <Link to="/archived/results">Search results</Link>
+        </li>
+        <li>
+          <Link to="/archived/projects">Projects</Link>
+        </li>
+        <li>
+          <Link to="/archived/sign-in">Sign in</Link>
+        </li>
+        <li>
+          <Link to="/archived/sign-in/create-account">Create account</Link>
+        </li>
+        <li>
+          <Link to="/archived/sign-in/verify-identity">Forgot password</Link>
         </li>
         <li>
           <Link to="/archived/home">Landing</Link>
