@@ -126,7 +126,7 @@ function getSteps() {
 function VettingRequestResearcher(props) {
   const classes = useStyles();
   const [state, setState] = React.useState({
-    activeStep: 0,
+    activeStep: 1,
     completed: {},
     open: false,
     errors: [0, 4, 0, 0],

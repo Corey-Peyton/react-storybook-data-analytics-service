@@ -17,10 +17,6 @@ import {
   InputLabel,
   Select,
   TextField,
-  Grid,
-  Card,
-  CardContent,
-  CardActions,
   FormLabel,
   FormControlLabel,
   RadioGroup,
@@ -29,10 +25,12 @@ import {
 } from '@material-ui/core';
 import Alert from '@material-ui/lab/Alert';
 import {AddFile, ModifyFile, ViewFile} from './ModifyFile';
+import {Card} from '../../../CommonComponents/Card';
 import CloseIcon from '@material-ui/icons/Close';
 import InfoIcon from '@material-ui/icons/Info';
+import AddIcon from '@material-ui/icons/Add';
 import Icon from '@mdi/react';
-import {mdiFileDocumentOutline} from '@mdi/js';
+import {mdiTableLarge} from '@mdi/js';
 import {
   SnackbarAddOutputFile,
   SnackbarAddSupportFile,
@@ -88,23 +86,12 @@ const useStyles = makeStyles((theme) => ({
       marginRight: 0,
     },
   },
-  card: {
-    marginTop: theme.spacing(2),
-  },
-  cardActions: {
-    borderTop: '1px solid',
-    borderTopColor: theme.palette.divider,
-  },
-  cardActionsError: {
-    borderTop: '1px solid',
-    borderTopColor: theme.palette.error.light,
-  },
-  cardError: {
-    border: '1px solid',
-    borderColor: theme.palette.error.light,
-  },
-  cardTitle: {
-    marginTop: theme.spacing(0.25),
+  addCard: {
+    'borderStyle': 'dashed',
+    'justifyContent': 'start',
+    '&.MuiButton-outlinedPrimary:hover': {
+      borderStyle: 'dashed',
+    },
   },
   dialogFooter: {
     padding: theme.spacing(1.75, 3),
@@ -119,9 +106,6 @@ const useStyles = makeStyles((theme) => ({
       maxWidth: '400px',
       boxSizing: 'border-box',
     },
-  },
-  icon: {
-    marginRight: theme.spacing(1.5),
   },
   root: {
     '& .MuiDialogTitle-root': {
@@ -159,20 +143,17 @@ const useStyles = makeStyles((theme) => ({
 
 const files = [
   {
-    name: 'Output file example with a very long name.',
+    name: 'File for output',
+    sheet: '{SheetName}',
+    path: [
+      '{ProjectFolderName}',
+      '{RequestFolderName}',
+      '{FolderName}',
+      '{FolderName}',
+      '{OutputFileName}.xls',
+    ],
     emptyFields: 0,
     error: false,
-  },
-  {
-    name:
-      'Another file with even a longer name for users who likes to be really descriptive. Yes, believe it happens!',
-    emptyFields: 4,
-    error: false,
-  },
-  {
-    name: 'Example output file card name',
-    emptyFields: 4,
-    error: true,
   },
 ];
 
@@ -313,9 +294,15 @@ function FilesList(props) {
 
   return (
     <React.Fragment>
+      <Typography component="h2" variant="h6" className="mb-2">
+        Files for output
+      </Typography>
       <Typography>
-        Please provide some information about this request as well as your
-        output and supporting files.
+        Please add and prepare your files for vetting. You will not have access
+        to your files from within the request and are simply adding the file
+        path to help Analyst locate the file on your virtual machince. If your
+        request is approved you will be granted access to your files outside of
+        your secure enviroment.
       </Typography>
       <Divider className={classes.divider} />
       <Typography component="h2" variant="h6" className="mb-2">
@@ -410,163 +397,69 @@ function FilesList(props) {
           />
         </RadioGroup>
       </FormControl>
-      <Typography component="h2" variant="h6" className="mb-2">
-        File location
+      <Typography display="inline" variant="body2">
+        Add file for output *
       </Typography>
-      <Grid container>
-        <Grid item xs={6}>
-          <FormControl
-            className={classes.inputMargin}
-            margin="dense"
-            variant="outlined"
-            fullWidth
-            required
-          >
-            <InputLabel id="outputFolder-label">Output folder</InputLabel>
-            <Select
-              id="outputFolder"
-              label="Output folder"
-              labelId="outputFolder-label"
-            >
-              <MenuItem>Folder 1</MenuItem>
-              <MenuItem>Folder 2</MenuItem>
-            </Select>
-          </FormControl>
-        </Grid>
-        <Grid item>
-          <BootstrapTooltip
-            className={classes.tooltip}
-            title="Please indicate the folder that contains your files for release for this request."
-          >
-            <InfoIcon />
-          </BootstrapTooltip>
-        </Grid>
-      </Grid>
-      <Grid container>
-        <Grid item xs={6}>
-          <FormControl
-            className={classes.inputMargin}
-            margin="dense"
-            variant="outlined"
-            fullWidth
-            required
-          >
-            <InputLabel id="supportFolder-label">Supporting folder</InputLabel>
-            <Select
-              id="supportFolder"
-              label="Supporting folder"
-              labelId="supportFolder-label"
-            >
-              <MenuItem>Folder 1</MenuItem>
-              <MenuItem>Folder 2</MenuItem>
-            </Select>
-          </FormControl>
-        </Grid>
-        <Grid item>
-          <BootstrapTooltip
-            className={classes.tooltip}
-            title=" Please indicate the folder that contains your supporting files for this request."
-          >
-            <InfoIcon />
-          </BootstrapTooltip>
-        </Grid>
-      </Grid>
-      <Grid
-        container
-        alignItems="center"
-        justify="space-between"
+      <Typography
+        variant="caption"
+        color="textSecondary"
+        component="p"
         className="mb-2"
       >
-        <Grid item>
-          <Typography display="inline" component="h2" variant="h6">
-            File details
-          </Typography>
-        </Grid>
-        {props.role === 'researcher' && (
-          <Grid item>
-            <Button
-              variant="contained"
-              color="primary"
-              onClick={(e) => toggleDrawer(e, 'addFile', true)}
-            >
-              Add file
-            </Button>
-          </Grid>
-        )}
-      </Grid>
-      <Typography variant="body2" color="textSecondary" className="mb-2">
-        No output files
+        At least one file must be added
       </Typography>
-      <Alert className="mt-2" severity="error">
-        Request cannot be submitted without an output file
-      </Alert>
-      {files.map((file) => {
+      {files.map((file, index) => {
         return (
           <Card
             key={file.name}
-            className={clsx(classes.card, {
-              [classes.cardError]: file.error,
-            })}
-            variant="outlined"
-          >
-            <CardContent>
-              <Grid container wrap="nowrap" alignItems="flex-start">
-                <Grid item>
-                  <Icon
-                    className={classes.icon}
-                    path={mdiFileDocumentOutline}
-                    size={1}
-                  />
-                </Grid>
-                <Grid item>
-                  <Typography
-                    variant="subtitle2"
-                    component="h3"
-                    className={classes.cardTitle}
-                  >
-                    {file.name}
-                  </Typography>
-                </Grid>
-              </Grid>
-              <FileValidationAlert
-                emptyFields={file.emptyFields}
-                error={file.error}
-              />
-            </CardContent>
-            <CardActions
-              className={clsx({
-                [classes.cardActions]: file.error === false,
-                [classes.cardActionsError]: file.error === true,
-              })}
-            >
-              {props.role === 'researcher' && (
-                <>
-                  <Button
-                    color="primary"
-                    onClick={(e) => toggleDrawer(e, 'editFile', true)}
-                  >
-                    Edit
-                  </Button>
-                  <Button
-                    color="primary"
-                    onClick={() => handleClickOpen('dialogDelete')}
-                  >
-                    Delete
-                  </Button>{' '}
-                </>
-              )}
-              {props.role === 'analyst' && (
-                <Button
-                  color="primary"
-                  onClick={(e) => toggleDrawer(e, 'viewFile', true)}
+            title={`${index + 1}. ${file.name}`}
+            error={file.error}
+            primaryButton={
+              props.role === 'researcher' ? 'Edit' : 'View details'
+            }
+            secondaryButton={props.role === 'researcher' ? 'Delete' : ''}
+            primaryClick={
+              props.role === 'researcher' ?
+                (e) => toggleDrawer(e, 'editFile', true) :
+                (e) => toggleDrawer(e, 'viewFile', true)
+            }
+            secondaryClick={() => handleClickOpen('dialogDelete')}
+            content={
+              <>
+                <Typography
+                  variant="caption"
+                  color="textSecondary"
+                  component="p"
                 >
-                  View details
-                </Button>
-              )}
-            </CardActions>
-          </Card>
+                  File path
+                </Typography>
+                <Typography
+                  variant="caption"
+                  color="textSecondary"
+                  component="p"
+                >
+                  Sheet name
+                </Typography>
+                <Typography variant="body2">
+                  <Icon path={mdiTableLarge} size={1} /> {file.sheet}
+                </Typography>
+              </>
+            }
+          />
         );
       })}
+      {props.role === 'researcher' && (
+        <Button
+          variant="outlined"
+          color="primary"
+          startIcon={<AddIcon />}
+          fullWidth="true"
+          className={clsx(classes.addCard, 'mt-2')}
+          onClick={(e) => toggleDrawer(e, 'addFile', true)}
+        >
+          Add file for output
+        </Button>
+      )}
       {/* Add output file drawer */}
       <Drawer anchor="right" open={open.addFile} className={classes.drawer}>
         <AddFile
@@ -709,26 +602,5 @@ function FilesList(props) {
       />
     </React.Fragment>
   );
-}
-
-function FileValidationAlert(props) {
-  const {emptyFields, error} = {...props};
-  if (emptyFields > 0 && error) {
-    return (
-      <Alert className="mt-2" severity="error">
-        {emptyFields} {emptyFields > 1 ? 'errors' : 'error'}
-      </Alert>
-    );
-  } else if (emptyFields > 0 && !error) {
-    return (
-      <Alert severity="warning" className="mt-2">
-        {emptyFields > 1 ?
-          `There are ${emptyFields} remaining fields that must be filled before submitting.` :
-          `There is ${emptyFields} remaining field that must be filled before submitting.`}
-      </Alert>
-    );
-  } else if (emptyFields === 0) {
-    return null;
-  }
 }
 export default FilesList;

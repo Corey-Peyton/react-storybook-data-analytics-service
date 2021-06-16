@@ -94,9 +94,11 @@ export function Card(props) {
         <Button color="primary" onClick={props.primaryClick}>
           {props.primaryButton}
         </Button>
-        <Button color="primary" onClick={props.secondaryClick}>
-          {props.secondaryButton}
-        </Button>{' '}
+        {props.secondaryButton && (
+          <Button color="primary" onClick={props.secondaryClick}>
+            {props.secondaryButton}
+          </Button>
+        )}
       </CardActions>
     </MUICard>
   );
