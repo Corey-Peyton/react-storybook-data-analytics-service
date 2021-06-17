@@ -2070,10 +2070,22 @@ export function DialogNewRequestTitle(props) {
       invalid: '',
       commands: '',
     },
+    path: {
+      text: '',
+      errorText: '',
+      invalid: '',
+      commands: '',
+    },
   };
   const [state, setState] = React.useState({
     name: {
       text: 'Untitled request',
+      errorText: '',
+      invalid: '',
+      commands: '',
+    },
+    path: {
+      text: '',
       errorText: '',
       invalid: '',
       commands: '',
@@ -2269,16 +2281,22 @@ export function DialogNewRequestTitle(props) {
             <div className={classes.vettingSection}>
               <div className={classes.vettingRow}>
                 <div className={classes.vettingColumn}>
+                  <Typography variant="body1" className="mb-2">
+                    {t('Enter the following details to start your request...')}
+                  </Typography>
                   <Typography variant="body2">
-                    {t('Please name your new request.')}
+                    {t(
+                        'Give your request a name to help identify it and select the folder you have created for this request. If you have not already created a folder for this request please go into the shared folder of your virtual machine and create it now. Ensure you store all the files you want released and their supporting files in this folder. ',
+                    )}
                   </Typography>
                 </div>
               </div>
               <div className={classes.vettingRow}>
                 <div className={classes.vettingColumn}>
-                  <FormControl variant="outlined" className={classes.textField}>
+                  <FormControl variant="outlined">
                     <TextField
                       id="name-input"
+                      className="input-margin"
                       label={t('Request name')}
                       aria-label={t('Request name')}
                       value={state.name.text}
@@ -2291,7 +2309,33 @@ export function DialogNewRequestTitle(props) {
                       onChange={(e) => handleChange(e, 'name')}
                       onClick={() => toggleHelperText('name')}
                       onBlur={() => toggleHelperText('name')}
-                      multiline
+                    />
+                  </FormControl>
+                </div>
+              </div>
+              <div className={classes.vettingRow}>
+                <div className={classes.vettingColumn}>
+                  <FormControl variant="outlined">
+                    <TextField
+                      id="path-input"
+                      className="input-margin"
+                      type="file"
+                      label={t('Request folder path')}
+                      aria-label={t('Request folder path')}
+                      value={state.path.text}
+                      variant="outlined"
+                      error={Boolean(state.path.errorText)}
+                      helperText={state.path.errorText}
+                      required
+                      InputLabelProps={{
+                        shrink: true,
+                      }}
+                      onCut={(e) => disableCutCopyPaste(e, 'cut', 'path')}
+                      onCopy={(e) => disableCutCopyPaste(e, 'copy', 'path')}
+                      onPaste={(e) => disableCutCopyPaste(e, 'paste', 'path')}
+                      onChange={(e) => handleChange(e, 'path')}
+                      onClick={() => toggleHelperText('path')}
+                      onBlur={() => toggleHelperText('path')}
                     />
                   </FormControl>
                 </div>
