@@ -26,6 +26,7 @@ import FloatingSupportButton from '../CommonComponents/Support';
 import CutCopyPasteAlert from '../CommonComponents/CutCopyPasteAlert';
 import {SnackbarSubmitRequest} from '../CommonComponents/Snackbars';
 import ManageTeamDrawer from '../CommonComponents/ManageTeamDrawer';
+import {DialogRequesterDetails} from '../CommonComponents/DialogBox';
 
 const useStyles = makeStyles((theme) => ({
   pageContainer: {
@@ -44,17 +45,15 @@ const useStyles = makeStyles((theme) => ({
     margin: theme.spacing(3, 0),
   },
   dividercutcopypaste: {
-    marginBottom: theme.spacing(2),
+    marginBottom: theme.spacing(3),
     marginTop: theme.spacing(3),
   },
   paper: {
     maxWidth: '1280px',
     margin: 'auto',
     boxSizing: 'border-box',
-    padding: theme.spacing(3),
+    padding: theme.spacing(6),
     marginTop: theme.spacing(3),
-    border: '1px solid',
-    borderColor: theme.palette.divider,
   },
   title: {
     flexGrow: 1,
@@ -93,13 +92,19 @@ function getSteps() {
 }
 
 function VettingRequestAnalyst(props) {
+  const classes = useStyles();
+
   const [open, setOpen] = React.useState({
     manageTeamDrawer: false,
+    dialogRequesterDetails: false,
   });
   const toggleManageTeamDrawer = () => {
     setOpen({...open, manageTeamDrawer: !open.manageTeamDrawer});
   };
-  const classes = useStyles();
+
+  const toggleRequesterDetails = () => {
+    setOpen({...open, dialogRequesterDetails: !open.dialogRequesterDetails});
+  };
 
   const [state, setState] = React.useState({
     activeStep: 0,
@@ -220,11 +225,6 @@ function VettingRequestAnalyst(props) {
       <Header />
       <main className={classes.main} tabIndex="-1">
         <Container maxWidth={false} className={classes.pageContainer}>
-          <ManageTeamDrawer
-            open={open.manageTeamDrawer}
-            clickHandler={toggleManageTeamDrawer}
-            toggleManageTeamDrawer={toggleManageTeamDrawer}
-          />
           <RequestToolbar
             role="analyst"
             status="submitted"
@@ -234,13 +234,14 @@ function VettingRequestAnalyst(props) {
             }}
             toggleManageTeamDrawer={toggleManageTeamDrawer}
           />
-          <Paper className={classes.paper}>
+          <Paper variant="outlined" className={classes.paper}>
             <Grid container alignItems="center">
               <AppBarAssign
                 title={state.title}
                 lead={state.lead}
                 support={state.support}
                 toggleManageTeamDrawer={toggleManageTeamDrawer}
+                toggleRequesterDetails={toggleRequesterDetails}
               />
             </Grid>
             <Divider className={classes.divider} />
@@ -368,6 +369,15 @@ function VettingRequestAnalyst(props) {
         </Container>
       </main>
       <Footer />
+      <ManageTeamDrawer
+        open={open.manageTeamDrawer}
+        clickHandler={toggleManageTeamDrawer}
+        toggleManageTeamDrawer={toggleManageTeamDrawer}
+      />
+      <DialogRequesterDetails
+        open={open.dialogRequesterDetails}
+        toggleDialog={toggleRequesterDetails}
+      />
     </>
   );
 }

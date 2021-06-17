@@ -19,8 +19,8 @@ import Visibility from '@material-ui/icons/Visibility';
 import VisibilityOff from '@material-ui/icons/VisibilityOff';
 import {Link as RouterLink, withRouter} from 'react-router-dom';
 
-import {XS_SCREEN} from '../Theme/constants';
-import CenteredFooter from './Footers/CenteredFooter';
+import {XS_SCREEN} from '../../Theme/constants';
+import CenteredFooter from '../Footers/CenteredFooter';
 
 const useStyles = makeStyles((theme) => ({
   bodyText: {

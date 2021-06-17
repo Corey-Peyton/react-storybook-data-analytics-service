@@ -1,4 +1,5 @@
 import React from 'react';
+import clsx from 'clsx';
 import {makeStyles} from '@material-ui/core/styles';
 import {
   Paper,
@@ -11,6 +12,8 @@ import {
   StepLabel,
   Typography,
   Divider,
+  Chip,
+  Hidden,
 } from '@material-ui/core';
 import ArrowForwardIosIcon from '@material-ui/icons/ArrowForwardIos';
 import ArrowBackIosIcon from '@material-ui/icons/ArrowBackIos';
@@ -26,6 +29,7 @@ import Footer from '../CommonComponents/Footer';
 import CutCopyPasteAlert from '../CommonComponents/CutCopyPasteAlert';
 import {SnackbarSubmitRequest} from '../CommonComponents/Snackbars';
 import RequestToolbar from '../CommonComponents/RequestToolbar';
+import {DialogRequesterDetails} from '../CommonComponents/DialogBox';
 
 const useStyles = makeStyles((theme) => ({
   pageContainer: {
@@ -40,21 +44,15 @@ const useStyles = makeStyles((theme) => ({
     margin: theme.spacing(3, 0),
   },
   dividercutcopypaste: {
-    marginBottom: theme.spacing(2),
+    marginBottom: theme.spacing(3),
     marginTop: theme.spacing(3),
-  },
-  dividerHeight: {
-    height: theme.spacing(5),
-    marginTop: theme.spacing(1.25),
   },
   paper: {
     maxWidth: '1280px',
     margin: 'auto',
     boxSizing: 'border-box',
-    padding: theme.spacing(3),
+    padding: theme.spacing(6),
     marginTop: theme.spacing(3),
-    border: '1px solid',
-    borderColor: theme.palette.divider,
   },
   title: {
     flexGrow: 1,
@@ -62,14 +60,8 @@ const useStyles = makeStyles((theme) => ({
   icongrey: {
     marginLeft: theme.spacing(1),
   },
-  statusRight: {
-    padding: theme.spacing(0.5, 2),
-    paddingRight: theme.spacing(0),
-  },
-  statusLeft: {
-    padding: theme.spacing(0.5, 2),
-    display: 'flex',
-    alignItems: 'center',
+  formVerticalDivider: {
+    margin: theme.spacing(0, 2, 0, 2),
   },
   stepperContainer: {
     'display': 'flex',
@@ -94,6 +86,32 @@ const useStyles = makeStyles((theme) => ({
     margin: 0,
     textAlign: 'left',
   },
+  gridDetails: {
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'flex-end',
+    [theme.breakpoints.down('sm')]: {
+      justifyContent: 'flex-start',
+      marginTop: theme.spacing(3),
+    },
+  },
+  alignCenter: {
+    display: 'flex',
+    alignItems: 'center',
+  },
+  details: {
+    height: theme.spacing(4),
+    display: 'flex',
+    alignItems: 'center',
+  },
+  requestFormHeader: {
+    display: 'flex',
+    flexFlow: 'row',
+    alignItems: 'start',
+    [theme.breakpoints.down('sm')]: {
+      flexFlow: 'column',
+    },
+  },
 }));
 
 function getSteps() {
@@ -113,6 +131,7 @@ function VettingRequestResearcher(props) {
     open: false,
     errors: [0, 4, 0, 0],
     title: 'Untitled request',
+    dialogRequesterDetails: false,
   });
   const prevStep = React.useRef(null);
   const nextStep = React.useRef(null);
@@ -236,6 +255,13 @@ function VettingRequestResearcher(props) {
     return state.errors[step] !== 0;
   };
 
+  const toggleRequesterDetails = () => {
+    setState({
+      ...state,
+      dialogRequesterDetails: !state.dialogRequesterDetails,
+    });
+  };
+
   return (
     <React.Fragment>
       <Header />
@@ -249,38 +275,87 @@ function VettingRequestResearcher(props) {
               support: [],
             }}
           />
-          <Paper className={classes.paper}>
-            <Grid container alignItems="center">
+          <Paper variant="outlined" className={classes.paper}>
+            <Grid
+              container
+              alignItems="center"
+              className={classes.requestFormHeader}
+            >
               <Grid item className={classes.title}>
-                <Typography variant="subtitle1" component="p">
-                  Vetting request · ID 0101-000000
+                <Typography variant="caption" component="p">
+                  Project 20-SSH-UTO-1111 · Request 0101-000000
                 </Typography>
-                <Typography variant="h6" component="h1">
+                <Typography variant="h5" component="h1">
                   {state.title}
                 </Typography>
               </Grid>
-              <Divider />
-              <Grid item>
-                <div className={classes.statusLeft}>
-                  <Icon path={mdiFileEditOutline} size={1} />
-                  <Typography variant="body2" className={classes.icongrey}>
-                    Draft
-                  </Typography>
-                </div>
-              </Grid>
-              <Divider
-                className={classes.dividerHeight}
-                orientation="vertical"
-                flexItem
-              />
-              <Grid item>
-                <Typography
-                  variant="body2"
-                  color="textSecondary"
-                  className={classes.statusRight}
-                >
-                  Unassigned
-                </Typography>
+              <Grid item className={classes.gridDetails}>
+                <Hidden smDown>
+                  <Divider
+                    orientation="vertical"
+                    className={classes.formVerticalDivider}
+                    flexItem
+                  />
+                </Hidden>
+                <Grid item className={classes.alignCenter}>
+                  <div>
+                    <Typography variant="caption" component="p">
+                      Status
+                    </Typography>
+                    <Grid
+                      className={clsx(classes.alignCenter, classes.details)}
+                    >
+                      <Icon path={mdiFileEditOutline} size={1} />
+                      <Typography
+                        variant="body2"
+                        component="p"
+                        className={classes.icongrey}
+                      >
+                        Draft
+                      </Typography>
+                    </Grid>
+                  </div>
+                </Grid>
+                <Divider
+                  orientation="vertical"
+                  className={classes.formVerticalDivider}
+                  flexItem
+                />
+                <Grid item>
+                  <div>
+                    <Typography variant="caption" component="p">
+                      Requester
+                    </Typography>
+                    <div className={classes.details}>
+                      <Chip
+                        label="Steve Rogers"
+                        onClick={toggleRequesterDetails}
+                      />
+                    </div>
+                  </div>
+                </Grid>
+                <Divider
+                  orientation="vertical"
+                  className={classes.formVerticalDivider}
+                  flexItem
+                />
+                <Grid item className={classes.assignee}>
+                  <div>
+                    <Typography variant="caption" component="p">
+                      Assignee
+                    </Typography>
+                    <div className={classes.details}>
+                      <Typography
+                        variant="body2"
+                        color="textSecondary"
+                        component="p"
+                        className={classes.details}
+                      >
+                        Unassigned
+                      </Typography>
+                    </div>
+                  </div>
+                </Grid>
               </Grid>
             </Grid>
             <Divider className={classes.divider} />
@@ -408,6 +483,10 @@ function VettingRequestResearcher(props) {
         </Container>
       </main>
       <Footer />
+      <DialogRequesterDetails
+        open={state.dialogRequesterDetails}
+        toggleDialog={toggleRequesterDetails}
+      />
     </React.Fragment>
   );
 }

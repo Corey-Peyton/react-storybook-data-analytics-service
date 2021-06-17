@@ -21,10 +21,10 @@ import {
   MuiPickersUtilsProvider,
 } from '@material-ui/pickers';
 import {makeStyles} from '@material-ui/styles';
-import {SM_SCREEN} from '../../Theme/constants';
+import {SM_SCREEN} from '../../../Theme/constants';
 
-import {subjects, surveys} from '../../Data/fakeData';
-import StickySearchableDropdown from '../StickySearchableDropdown';
+import {subjects, surveys} from '../../../Data/fakeData';
+import StickySearchableDropdown from '../../StickySearchableDropdown';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -135,9 +135,11 @@ const FiltersContent = React.forwardRef((props, ref) => {
 
   return (
     <React.Fragment>
-      {!props.isSmScreen && (<Button className="screen-reader-text" onClick={handleClick}>
-        {t('Skip filters')}
-      </Button>)}
+      {!props.isSmScreen && (
+        <Button className="screen-reader-text" onClick={handleClick}>
+          {t('Skip filters')}
+        </Button>
+      )}
       <div className={classes.filterHeader}>
         <Icon path={mdiTune} size={1} />
         <Typography variant="h6" component="h2" className="ml-2">
@@ -175,7 +177,9 @@ const FiltersContent = React.forwardRef((props, ref) => {
       />
       <ExpansionPanel>
         <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />}>
-          <Typography variant="subtitle2" component="h3">Date</Typography>
+          <Typography variant="subtitle2" component="h3">
+            Date
+          </Typography>
         </ExpansionPanelSummary>
         <ExpansionPanelDetails className={classes.dateDetails}>
           <FormControl component="fieldset">

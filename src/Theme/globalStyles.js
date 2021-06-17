@@ -49,6 +49,9 @@ export const useStyles = makeStyles({
     },
 
     // Textfields
+    '.MuiTextField-root': {
+      minWidth: theme.spacing(35),
+    },
     '.MuiOutlinedInput-notchedOutline': {
       borderColor: 'rgba(0, 0, 0, 0.42)',
     },
@@ -148,6 +151,8 @@ export const useStyles = makeStyles({
     },
     '.MuiFormGroup-root': {
       '& .MuiFormControlLabel-root': {
+        'marginLeft': theme.spacing(-1),
+        'marginRight': theme.spacing(0),
         'alignItems': 'start',
         '&:not(.Mui-disabled)': {
           '&:hover': {

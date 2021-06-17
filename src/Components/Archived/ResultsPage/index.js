@@ -14,15 +14,15 @@ import {
 import queryString from 'query-string';
 import Pagination from '@material-ui/lab/Pagination';
 import {makeStyles} from '@material-ui/styles';
-import {XS_SCREEN, SM_SCREEN} from '../../Theme/constants';
+import {XS_SCREEN, SM_SCREEN} from '../../../Theme/constants';
 import Icon from '@mdi/react';
 import {mdiTune} from '@mdi/js';
 
-import {datasets} from '../../Data/fakeData';
-import {sortByKey, sortByKeyDesc} from '../../Utils/sorting';
-import BypassBlocks from '../CommonComponents/BypassBlocks';
-import Footer from '../Footers/Footer';
-import DefaultHeader from '../Headers/DefaultHeader';
+import {datasets} from '../../../Data/fakeData';
+import {sortByKey, sortByKeyDesc} from '../../../Utils/sorting';
+import BypassBlocks from '../../CommonComponents/BypassBlocks';
+import Footer from '../../Footers/Footer';
+import DefaultHeader from '../../Headers/DefaultHeader';
 import FilterPills from './FilterPills';
 import Filters from './Filters';
 import ResultItem from './ResultItem';

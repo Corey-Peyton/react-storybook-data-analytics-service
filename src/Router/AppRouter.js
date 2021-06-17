@@ -9,18 +9,18 @@ import DocumentPage from '../Components/Archived/ResultsDetails/DocumentPage';
 import PublicTablePage from '../Components/Archived/ResultsDetails/PublicTablePage';
 import VisualizationPage from '../Components/Archived/ResultsDetails/VisualizationPage';
 import SplashPageArchived from '../Components/Archived/SplashPage';
-import CreateAccountPage from '../Components/CreateAccountPage';
-import ForgotPassword from '../Components/ForgotPasswordPage';
+import CreateAccountPage from '../Components/Archived/CreateAccountPage';
+import ForgotPassword from '../Components/Archived/ForgotPasswordPage';
 import NotFound from '../Components/NotFound';
 import ProjectsPage from '../Components/ProjectsPage';
-import ResultsPage from '../Components/ResultsPage';
-import SignInPage from '../Components/SignInPage';
-import SplashPage from '../Components/SplashPage';
+import ResultsPage from '../Components/Archived/ResultsPage';
+import SignInPage from '../Components/Archived/SignInPage';
+import SplashPage from '../Components/Archived/SplashPagev2';
 import VettingRequestResearcher from '../Components/VettingApp/VettingRequestResearcher';
 import DashboardPageResearcher from '../Components/VettingApp/Dashboard/DashboardPageResearcher';
 import DashboardPageAnalyst from '../Components/VettingApp/Dashboard/DashboardPageAnalyst';
-import PowerShell from '../Components/PowerShell';
-import SuccessfulSubmission from '../Components/PowerShell/SuccessfulSubmission';
+import PowerShell from '../Components/VDLPowerShellIntake/Request';
+import SuccessfulSubmission from '../Components/VDLPowerShellIntake/Request/SuccessfulSubmission';
 import LandingPage from '../Components/Portal/LandingPage';
 
 import {useStyles} from '../Theme/globalStyles';
@@ -38,14 +38,16 @@ export default function AppRouter() {
           {/* PROTOTYPE ONLY */}
           <Route path="/" component={Index} exact={true} />
           <Route path="/home" component={LandingPage} />
-          <Route path="/splash" component={SplashPage} />
-          <Route path="/sign-in" component={SignInPage} exact={true} />
-          <Route path="/sign-in/verify-identity" component={ForgotPassword} />
-          <Route path="/sign-in/create-account" component={CreateAccountPage} />
-          <Route path="/projects" component={ProjectsPage} />
-          <Route path="/results" component={ResultsPage} exact={true} />
-          <Route path="/Powershell" component={PowerShell} exact={true} />
-          <Route path="/Powershell/SuccessfulSubmission" component={SuccessfulSubmission} exact={true} />
+          <Route
+            path="/VDLPowerShellIntake"
+            component={PowerShell}
+            exact={true}
+          />
+          <Route
+            path="/VDLPowerShellIntake/SuccessfulSubmission"
+            component={SuccessfulSubmission}
+            exact={true}
+          />
           <Route
             path="/vetting-app/dashboard-researcher"
             component={DashboardPageResearcher}
@@ -79,10 +81,26 @@ export default function AppRouter() {
             )}
           />
           {/* Routes for archived pages */}
+          <Route
+            path="/archived/results"
+            component={ResultsPage}
+            exact={true}
+          />
           <Route path="/archived/home" component={OldLandingPage} />
+          <Route path="/archived/splashv2" component={SplashPage} />
           <Route path="/archived/splash" component={SplashPageArchived} />
           <Route path="/archived/results/content" component={ContentPage} />
           <Route path="/archived/results/doc" component={DocumentPage} />
+          <Route path="/archived/projects" component={ProjectsPage} />
+          <Route path="/archived/sign-in" component={SignInPage} exact={true} />
+          <Route
+            path="/archived/sign-in/verify-identity"
+            component={ForgotPassword}
+          />
+          <Route
+            path="/archived/sign-in/create-account"
+            component={CreateAccountPage}
+          />
           <Route
             path="/archived/results/table-conf"
             component={ConfidentialTablePage}
