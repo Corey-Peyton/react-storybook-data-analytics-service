@@ -23,14 +23,13 @@ import {
   Radio,
   Tooltip,
 } from '@material-ui/core';
-import Alert from '@material-ui/lab/Alert';
 import {AddFile, ModifyFile, ViewFile} from './ModifyFile';
 import {Card} from '../../../CommonComponents/Card';
 import CloseIcon from '@material-ui/icons/Close';
 import InfoIcon from '@material-ui/icons/Info';
 import AddIcon from '@material-ui/icons/Add';
 import Icon from '@mdi/react';
-import {mdiTableLarge} from '@mdi/js';
+import {mdiFile, mdiFolderOpen, mdiTableLarge} from '@mdi/js';
 import {
   SnackbarAddOutputFile,
   SnackbarAddSupportFile,
@@ -138,6 +137,15 @@ const useStyles = makeStyles((theme) => ({
   inputMargin: {
     marginTop: theme.spacing(0),
     marginBottom: theme.spacing(3),
+  },
+  iconText: {
+    'display': 'flex',
+    'alignItems': 'center',
+    '& svg': {
+      paddingRight: theme.spacing(1),
+      width: '1.25rem',
+      height: '1.25rem',
+    },
   },
 }));
 
@@ -411,7 +419,7 @@ function FilesList(props) {
       {files.map((file, index) => {
         return (
           <Card
-            key={file.name}
+            key={index}
             title={`${index + 1}. ${file.name}`}
             error={file.error}
             primaryButton={
@@ -433,6 +441,36 @@ function FilesList(props) {
                 >
                   File path
                 </Typography>
+                <div className={`mb-3`}>
+                  <ul className="list-horizontal">
+                    {file.path.map((folder, index) => {
+                      const len = file.path.length;
+                      if (index === len - 1) {
+                        return (
+                          <li key={index}>
+                            <Typography
+                              variant="body2"
+                              className={classes.iconText}
+                            >
+                              <Icon path={mdiFile} /> {folder}
+                            </Typography>
+                          </li>
+                        );
+                      }
+                      return (
+                        <li key={index}>
+                          <Typography
+                            variant="body2"
+                            className={classes.iconText}
+                          >
+                            <Icon path={mdiFolderOpen} /> {folder}
+                            <span className="ml-1 mr-1">&gt;</span>
+                          </Typography>
+                        </li>
+                      );
+                    })}
+                  </ul>
+                </div>
                 <Typography
                   variant="caption"
                   color="textSecondary"
@@ -440,8 +478,8 @@ function FilesList(props) {
                 >
                   Sheet name
                 </Typography>
-                <Typography variant="body2">
-                  <Icon path={mdiTableLarge} size={1} /> {file.sheet}
+                <Typography variant="body2" className={classes.iconText}>
+                  <Icon path={mdiTableLarge} /> {file.sheet}
                 </Typography>
               </>
             }
@@ -453,7 +491,7 @@ function FilesList(props) {
           variant="outlined"
           color="primary"
           startIcon={<AddIcon />}
-          fullWidth="true"
+          fullWidth={true}
           className={clsx(classes.addCard, 'mt-2')}
           onClick={(e) => toggleDrawer(e, 'addFile', true)}
         >

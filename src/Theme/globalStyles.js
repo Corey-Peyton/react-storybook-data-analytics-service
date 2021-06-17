@@ -327,6 +327,7 @@ export const useStyles = makeStyles({
     },
     '.list-horizontal': {
       'display': 'flex',
+      'flex-wrap': 'wrap',
       'alignItems': 'center',
       'padding': 0,
       '& li': {

@@ -53,7 +53,7 @@ export const Default = (args) => {
         variant="outlined"
         color="primary"
         startIcon={<AddIcon />}
-        fullWidth="true"
+        fullWidth={true}
         className={clsx(classes.addCard, 'mt-2')}
       >
         Add card

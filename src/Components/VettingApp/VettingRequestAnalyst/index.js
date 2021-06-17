@@ -319,50 +319,54 @@ function VettingRequestAnalyst(props) {
                 </div>
               )}
             </div>
-            <Grid
-              container
-              justify={state.activeStep === 0 ? 'flex-end' : 'space-between'}
-              className={classes.navButtons}
-            >
-              {state.activeStep !== 0 && (
-                <Grid item>
-                  <Button
-                    variant="contained"
-                    color="primary"
-                    className={classes.button}
-                    onClick={handleBack}
-                  >
-                    Back
-                  </Button>
+            <Grid container justify="center">
+              <Grid item xs={6}>
+                <Grid
+                  container
+                  justify="flex-end"
+                  className={classes.navButtons}
+                >
+                  {state.activeStep !== 0 && (
+                    <Grid item>
+                      <Button
+                        variant="outlined"
+                        color="primary"
+                        className="mr-2"
+                        onClick={handleBack}
+                      >
+                        Back
+                      </Button>
+                    </Grid>
+                  )}
+                  {state.activeStep === getSteps().length - 1 ? (
+                    <Grid item>
+                      <Button
+                        variant="contained"
+                        color="primary"
+                        onClick={() => snackbarHandleClick('snackbarSubmitted')}
+                      >
+                        Submit request
+                      </Button>
+                      <SnackbarSubmitRequest
+                        open={openSnackbar.snackbarSubmitted}
+                        handleClose={() =>
+                          snackbarHandleClose('snackbarSubmitted')
+                        }
+                      />
+                    </Grid>
+                  ) : (
+                    <Grid item>
+                      <Button
+                        variant="contained"
+                        color="primary"
+                        onClick={handleComplete}
+                      >
+                        Next
+                      </Button>
+                    </Grid>
+                  )}
                 </Grid>
-              )}
-              {state.activeStep === getSteps().length - 1 ? (
-                <Grid item>
-                  <Button
-                    variant="contained"
-                    color="primary"
-                    className={classes.button}
-                    onClick={() => snackbarHandleClick('snackbarSubmitted')}
-                  >
-                    Submit request
-                  </Button>
-                  <SnackbarSubmitRequest
-                    open={openSnackbar.snackbarSubmitted}
-                    handleClose={() => snackbarHandleClose('snackbarSubmitted')}
-                  />
-                </Grid>
-              ) : (
-                <Grid item>
-                  <Button
-                    variant="contained"
-                    color="primary"
-                    className={classes.button}
-                    onClick={handleComplete}
-                  >
-                    Next
-                  </Button>
-                </Grid>
-              )}
+              </Grid>
             </Grid>
           </Paper>
           <FloatingSupportButton form />
