@@ -7,6 +7,9 @@ import {useHistory, useLocation} from 'react-router-dom';
 import {makeStyles} from '@material-ui/core/styles';
 import {green} from '@material-ui/core/colors';
 import CloseIcon from '@material-ui/icons/Close';
+import KeyboardArrowDownIcon from '@material-ui/icons/KeyboardArrowDown';
+import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
+import ChevronRightIcon from '@material-ui/icons/ChevronRight';
 import {
   Typography,
   TextField,
@@ -27,10 +30,12 @@ import {
   MenuItem,
   FormControlLabel,
   FormHelperText,
+  Popover,
+  InputAdornment,
 } from '@material-ui/core';
+import {Alert, TreeView, TreeItem} from '@material-ui/lab';
 import {Dialog as CustomDialog} from '../../CommonComponents/Dialog';
 import NumberFormat from 'react-number-format';
-import Alert from '@material-ui/lab/Alert';
 
 import {
   SnackbarApproveRequest,
@@ -156,6 +161,27 @@ const useStyles = makeStyles((theme) => ({
   },
   alignStart: {
     alignItems: 'start',
+  },
+  divider: {
+    marginTop: theme.spacing(1),
+    marginBottom: theme.spacing(1),
+  },
+  filePath: {
+    display: 'flex',
+    flexFlow: 'wrap',
+    alignItems: 'flex-end',
+  },
+  filePathItem: {
+    display: 'flex',
+    alignItems: 'center',
+  },
+  textFieldPopover: {
+    width: '100%',
+  },
+  popoverPaper: {
+    width: theme.spacing(67),
+    maxWidth: 'none',
+    padding: theme.spacing(1),
   },
 }));
 
@@ -3134,6 +3160,404 @@ export function DialogDelete(props) {
             }}
           >
             {t('Delete')}
+          </Button>
+        </DialogActions>
+      </Dialog>
+    </React.Fragment>
+  );
+}
+
+// ////////////////////////////////////////// OUTPUT METHOD HELP
+export function DialogOutputMethodHelp(props) {
+  const classes = useStyles();
+  const {t} = useTranslation();
+  const {toggleDialog, open} = props;
+
+  const handleClick = (e) => {
+    e.stopPropagation();
+  };
+
+  return (
+    <React.Fragment>
+      <Dialog
+        onClose={(e) => {
+          toggleDialog(e);
+        }}
+        aria-labelledby="dialog-output-method-help"
+        open={open}
+        className={classes.root}
+        scroll="paper"
+        disableBackdropClick
+        onClick={handleClick}
+        onKeyPress={(e) => {
+          if (e.key === 'Enter') {
+            e.preventDefault();
+            e.stopPropagation();
+          }
+        }}
+      >
+        <DialogTitle id="dialog-output-method-help">
+          <div className={classes.vettingContainerTitle}>
+            <Typography variant="h6" component="h2">
+              {t('Output method help')}
+            </Typography>
+            <IconButton
+              id="dialog-close"
+              onClick={toggleDialog}
+              edge="end"
+              aria-label={t('Output method help - close')}
+              onKeyPress={(e) => {
+                e.preventDefault();
+                e.stopPropagation();
+                if (e.key === 'Enter') {
+                  toggleDialog(e);
+                }
+              }}
+            >
+              <CloseIcon />
+            </IconButton>
+          </div>
+        </DialogTitle>
+        <Divider />
+        <DialogContent>
+          <div className={classes.vettingSection}>
+            <div className={classes.vettingRow}>
+              <div className={classes.vettingColumn}>
+                <Typography variant="subtitle2" component="h3" className="mb-3">
+                  {t('1. Descriptive')}
+                </Typography>
+                <Typography variant="body2">
+                  {t(
+                      'The business partners should add a definition here to help explain what "Descripive" means. If they do not have the ability to provide a definition we can just show the examples for "Descriptive".',
+                  )}
+                </Typography>
+                <Typography variant="caption" color="textSecondary">
+                  {t(
+                      '(e.g. ANOVA, Correlation matrix, Cross-tabular analysis, Distributions, Frequencies, Kurtosis, Means, Medians, Modes, Percentages, Quartiles, Ranges, Ratios, Regression models with only one independant variable, Skewness, Standard deviations, Totals, Variances)',
+                  )}
+                </Typography>
+              </div>
+            </div>
+            <Divider className={classes.divider} />
+            <div className={classes.vettingRow}>
+              <div className={classes.vettingColumn}>
+                <Typography variant="subtitle2" component="h3" className="mb-3">
+                  {t('2. Scaling')}
+                </Typography>
+                <Typography variant="body2">
+                  {t(
+                      'The business partners should add a definition here to help explain what "Scaling" means. If they do not have the ability to provide a definition we can just show the examples for "Scaling".',
+                  )}
+                  '
+                </Typography>
+                <Typography variant="caption" color="textSecondary">
+                  {t('(e.g. Factor analysis)')}
+                </Typography>
+              </div>
+            </div>
+            <Divider className={classes.divider} />
+            <div className={classes.vettingRow}>
+              <div className={classes.vettingColumn}>
+                <Typography variant="subtitle2" component="h3" className="mb-3">
+                  {t('3. Graphs')}
+                </Typography>
+                <Typography variant="body2">
+                  {t(
+                      'The business partners should add a definition here to help explain what "Graphs" means. If they do not have the ability to provide a definition we an just show the examples for "Graphs".',
+                  )}
+                </Typography>
+                <Typography variant="caption" color="textSecondary">
+                  {t('(e.g. Histograms)')}
+                </Typography>
+              </div>
+            </div>
+            <Divider className={classes.divider} />
+            <div className={classes.vettingRow}>
+              <div className={classes.vettingColumn}>
+                <Typography variant="subtitle2" component="h3" className="mb-3">
+                  {t('4. Multivariable regression analysis')}
+                </Typography>
+                <Typography variant="body2">
+                  {t(
+                      'The business partners should add a definition here to help explain what "Multivariable regression analysis" means. If they do not have the ability to provide a definition we can just show the examples for "Multivariable regression analysis".',
+                  )}
+                </Typography>
+                <Typography variant="caption" color="textSecondary">
+                  {t('(e.g. Logistic regression, OLS, Poisson, Probit, Tobit)')}
+                </Typography>
+              </div>
+            </div>
+            <Divider className={classes.divider} />
+            <div className={classes.vettingRow}>
+              <div className={classes.vettingColumn}>
+                <Typography variant="subtitle2" component="h3" className="mb-3">
+                  {t('5. Complex modeling')}
+                </Typography>
+                <Typography variant="body2">
+                  {t(
+                      'The business partners should add a definition here to help explain what "Complex modeling" means. If they do not have the ability to provide a definition we can just show the examples for "Complex modeling".',
+                  )}
+                </Typography>
+                <Typography variant="caption" color="textSecondary">
+                  {t(
+                      '(e.g. Event history analysis, Fixed effects models, Growth analysis, Hierarchical linear modeling, Random effects models, Simultaneous-equations models, Structural equation modeling, Survival analysis)',
+                  )}
+                </Typography>
+              </div>
+            </div>
+          </div>
+        </DialogContent>
+        <Divider />
+        <DialogActions>
+          <Button
+            type="submit"
+            variant="contained"
+            color="primary"
+            className={classes.footerBtns}
+            onClick={(e) => {
+              toggleDialog(e);
+            }}
+            onKeyPress={(e) => {
+              e.stopPropagation();
+              if (e.key === 'Enter') {
+                toggleDialog(e);
+              }
+            }}
+          >
+            {t('Close')}
+          </Button>
+        </DialogActions>
+      </Dialog>
+    </React.Fragment>
+  );
+}
+
+// ////////////////////////////////////////// ADD FILE
+export function DialogAddFile(props) {
+  const classes = useStyles();
+  const {t} = useTranslation();
+  const {toggleDialog, open} = props;
+  const [anchorEl, setAnchorEl] = React.useState(null);
+  const isOpen = Boolean(anchorEl);
+  const id = open ? 'simple-popover' : undefined;
+  const [state, setState] = React.useState({
+    fileNotes: {
+      text:
+        'Notes section to include any details regarding the syntax file added. This will be helpful for the Researcher/Analyst during the vetting process.',
+      errorText: '',
+      invalid: '',
+      commands: '',
+      helperText: '',
+    },
+  });
+
+  const handleClick = (e) => {
+    e.stopPropagation();
+  };
+
+  const handleAnchorClick = (event) => {
+    setAnchorEl(event.currentTarget);
+  };
+
+  const handleAnchorClose = () => {
+    setAnchorEl(null);
+  };
+
+  const handleChange = (event) => {
+    const name = event.target.name;
+    const val = event.target.value;
+    setState({
+      ...state,
+      [name]: {
+        ...state[name],
+        text: val,
+      },
+    });
+  };
+
+  return (
+    <React.Fragment>
+      <Dialog
+        onClose={(e) => {
+          toggleDialog(e);
+        }}
+        aria-labelledby="dashboard-dialog-title"
+        open={open}
+        className={classes.root}
+        scroll="paper"
+        disableBackdropClick
+        onClick={handleClick}
+        onKeyPress={(e) => {
+          if (e.key === 'Enter') {
+            e.preventDefault();
+            e.stopPropagation();
+          }
+        }}
+      >
+        <DialogTitle id="dashboard-dialog-title">
+          <div className={classes.vettingContainerTitle}>
+            <Typography variant="h6" component="h2">
+              {t('Add file')}
+            </Typography>
+            <IconButton
+              id="dialog-close"
+              onClick={toggleDialog}
+              edge="end"
+              aria-label={t('Add file - close')}
+              onKeyPress={(e) => {
+                e.preventDefault();
+                e.stopPropagation();
+                if (e.key === 'Enter') {
+                  toggleDialog(e);
+                }
+              }}
+            >
+              <CloseIcon />
+            </IconButton>
+          </div>
+        </DialogTitle>
+        <Divider />
+        <DialogContent>
+          <div className={classes.vettingSection}>
+            <div className={classes.vettingRow}>
+              <div className={classes.vettingColumn}>
+                <Typography variant="subtitle2" component="h3" className="mb-3">
+                  {t('Select the file for syntax')}
+                </Typography>
+                <Typography variant="body2">
+                  {t(
+                      'An example of an explanation of what the Analysts are looking for for this specific file type. Example text example text example text example text example text example text example text',
+                  )}
+                </Typography>
+              </div>
+            </div>
+            <div className={classes.vettingRow}>
+              <div className={classes.vettingColumn}>
+                <TextField
+                  label={t('File path')}
+                  required
+                  aria-describedby={id}
+                  onClick={handleAnchorClick}
+                  InputProps={{
+                    disabled: true,
+                    endAdornment: (
+                      <InputAdornment position="end">
+                        <KeyboardArrowDownIcon />
+                      </InputAdornment>
+                    ),
+                  }}
+                  className={classes.textFieldPopover}
+                />
+                <Popover
+                  id={id}
+                  open={isOpen}
+                  anchorEl={anchorEl}
+                  onClose={handleAnchorClose}
+                  classes={{
+                    paper: classes.popoverPaper,
+                  }}
+                  anchorOrigin={{
+                    vertical: 'bottom',
+                    horizontal: 'left',
+                  }}
+                  transformOrigin={{
+                    vertical: 'top',
+                    horizontal: 'left',
+                  }}
+                >
+                  <TreeView
+                    defaultCollapseIcon={<ExpandMoreIcon />}
+                    defaultExpandIcon={<ChevronRightIcon />}
+                  >
+                    <TreeItem nodeId="1" label="ProjectFolderName">
+                      <TreeItem nodeId="2" label="RequestFolderName">
+                        <TreeItem nodeId="3" label="FolderName">
+                          <TreeItem nodeId="4" label="FolderName">
+                            <TreeItem nodeId="5" label="OutputFileName.doc" />
+                            <TreeItem nodeId="6" label="OutputFileName.xls" />
+                            <TreeItem nodeId="7" label="OutputFileName.doc" />
+                            <TreeItem nodeId="8" label="OutputFileName.doc" />
+                            <TreeItem nodeId="9" label="OutputFileName.doc" />
+                          </TreeItem>
+                          <TreeItem nodeId="10" label="FolderName">
+                            <TreeItem
+                              nodeId="11"
+                              label={
+                                <Typography color="textSecondary">
+                                  No files
+                                </Typography>
+                              }
+                            />
+                          </TreeItem>
+                          <TreeItem nodeId="12" label="FolderName">
+                            <TreeItem nodeId="13" label="OutputFileName.xls" />
+                            <TreeItem nodeId="14" label="OutputFileName.xls" />
+                            <TreeItem nodeId="15" label="OutputFileName.xls" />
+                          </TreeItem>
+                        </TreeItem>
+                      </TreeItem>
+                    </TreeItem>
+                  </TreeView>
+                </Popover>
+              </div>
+            </div>
+
+            <div className={classes.vettingRow}>
+              <div className={classes.vettingColumn}>
+                <TextField
+                  className={classes.inputMargin}
+                  margin="dense"
+                  id="fileNotes"
+                  name="fileNotes"
+                  label={t('Notes')}
+                  variant="outlined"
+                  fullWidth
+                  required
+                  multiline
+                  onChange={handleChange}
+                  value={state.fileNotes.text}
+                  error={Boolean(state.fileNotes.errorText)}
+                  helperText={state.fileNotes.errorText}
+                />
+              </div>
+            </div>
+          </div>
+        </DialogContent>
+        <Divider />
+        <DialogActions>
+          <Button
+            variant="outlined"
+            color="primary"
+            onClick={(e) => {
+              toggleDialog(e);
+            }}
+            className={classes.footerBtns}
+            onKeyPress={(e) => {
+              e.preventDefault();
+              e.stopPropagation();
+              if (e.key === 'Enter') {
+                toggleDialog(e);
+              }
+            }}
+          >
+            {t('Cancel')}
+          </Button>
+          <Button
+            type="submit"
+            variant="contained"
+            color="primary"
+            className={classes.footerBtns}
+            onClick={(e) => {
+              toggleDialog(e);
+            }}
+            onKeyPress={(e) => {
+              e.stopPropagation();
+              if (e.key === 'Enter') {
+                toggleDialog(e);
+              }
+            }}
+          >
+            {t('Add')}
           </Button>
         </DialogActions>
       </Dialog>

@@ -28,7 +28,7 @@ import {
   Tooltip,
 } from '@material-ui/core';
 import Alert from '@material-ui/lab/Alert';
-import {AddFile, ModifyFile, ViewFile} from './ModifyFile';
+import {OutputFile, ViewFile} from './ModifyFile';
 import CloseIcon from '@material-ui/icons/Close';
 import InfoIcon from '@material-ui/icons/Info';
 import Icon from '@mdi/react';
@@ -116,7 +116,7 @@ const useStyles = makeStyles((theme) => ({
   },
   drawer: {
     '& .MuiDrawer-paper': {
-      maxWidth: '400px',
+      width: theme.spacing(50),
       boxSizing: 'border-box',
     },
   },
@@ -185,6 +185,7 @@ function BootstrapTooltip(props) {
 function FilesList(props) {
   const classes = useStyles();
   const [state, setState] = React.useState({
+    outputFileHeader: '',
     notes: {
       text: '',
       errorText: '',
@@ -198,20 +199,24 @@ function FilesList(props) {
     snackbarCreate: false,
     snackbarUpdate: false,
     snackbarDelete: false,
-    addFile: false,
-    editFile: false,
+    outputFile: false,
     viewFile: false,
     dialogDelete: false,
   });
 
-  const toggleDrawer = (event, drawer, state) => {
+  const toggleDrawer = (event, drawer, shown) => {
     if (
       event.type === 'keydown' &&
       (event.key === 'Tab' || event.key === 'Shift')
     ) {
       return;
     }
-    setOpen({...open, [drawer]: state});
+    if (drawer === 'addFile') {
+      state.outputFileHeader = 'Add output file';
+    } else if (drawer === 'editFile') {
+      state.outputFileHeader = 'Edit output file';
+    }
+    setOpen({...open, outputFile: shown});
   };
 
   const handleClickOpen = (state) => {
@@ -567,20 +572,14 @@ function FilesList(props) {
           </Card>
         );
       })}
-      {/* Add output file drawer */}
-      <Drawer anchor="right" open={open.addFile} className={classes.drawer}>
-        <AddFile
-          toggleDrawer={toggleDrawer}
-          createFile={createFile}
-          handleClickOpen={handleClickOpen}
-        />
-      </Drawer>
-      {/* Edit output file drawer */}
-      <Drawer anchor="right" open={open.editFile} className={classes.drawer}>
-        <ModifyFile
+      {/* Output file drawer */}
+      <Drawer anchor="right" open={open.outputFile} className={classes.drawer}>
+        <OutputFile
           toggleDrawer={toggleDrawer}
           updateFile={updateFile}
+          createFile={createFile}
           handleClickOpen={handleClickOpen}
+          header={state.outputFileHeader}
         />
       </Drawer>
       {/* View output file drawer */}

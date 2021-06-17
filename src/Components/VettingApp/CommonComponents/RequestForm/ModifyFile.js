@@ -1,9 +1,7 @@
 import React from 'react';
 import {useTranslation} from 'react-i18next';
 import {makeStyles} from '@material-ui/core/styles';
-import DeleteIcon from '@material-ui/icons/Delete';
 import clsx from 'clsx';
-import {SnackbarDeleteSupportFile} from '../Snackbars';
 import {
   FormControl,
   InputLabel,
@@ -15,20 +13,26 @@ import {
   RadioGroup,
   FormControlLabel,
   Radio,
-  Tooltip,
   Typography,
   Button,
   AppBar,
   Toolbar,
   IconButton,
-  Grid,
   Link,
+  Popover,
+  InputAdornment,
+  Divider,
 } from '@material-ui/core';
-import {Alert, AlertTitle} from '@material-ui/lab';
-import Autocomplete from '@material-ui/lab/Autocomplete';
-import InfoIcon from '@material-ui/icons/Info';
+import {TreeView, TreeItem} from '@material-ui/lab';
 import CloseIcon from '@material-ui/icons/Close';
-import {DialogDelete} from '../DialogBox';
+import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
+import ChevronRightIcon from '@material-ui/icons/ChevronRight';
+import KeyboardArrowDownIcon from '@material-ui/icons/KeyboardArrowDown';
+import AddIcon from '@material-ui/icons/Add';
+import Icon from '@mdi/react';
+import {mdiFolderOpen} from '@mdi/js';
+import {DialogOutputMethodHelp, DialogAddFile} from '../DialogBox';
+import {Card} from '../../../../Components/CommonComponents/Card';
 
 const useStyles = makeStyles((theme) => ({
   inputMargin: {
@@ -99,16 +103,53 @@ const useStyles = makeStyles((theme) => ({
       cursor: 'pointer',
     },
   },
+  textFieldPopover: {
+    width: '100%',
+  },
+  popoverPaper: {
+    width: theme.spacing(40),
+    maxWidth: 'none',
+    padding: theme.spacing(1),
+  },
+  addBtn: {
+    'borderStyle': 'dashed',
+    'justifyContent': 'start',
+    'width': '100%',
+    'textAlign': 'left',
+    '&.MuiButton-outlinedPrimary:hover': {
+      borderStyle: 'dashed',
+    },
+  },
+  filePath: {
+    display: 'flex',
+    flexFlow: 'wrap',
+    alignItems: 'flex-end',
+  },
+  filePathItem: {
+    display: 'flex',
+    alignItems: 'center',
+  },
+  indentedSection: {
+    'paddingLeft': theme.spacing(3),
+    'paddingTop': theme.spacing(3),
+    'paddingBottom': theme.spacing(3),
+    'marginBottom': theme.spacing(3),
+    'borderLeft': '1px solid',
+    'borderLeftColor': theme.palette.divider,
+    '&>*:last-child': {
+      marginBottom: 0,
+    },
+  },
 }));
 
-const useStylesBootstrap = makeStyles((theme) => ({
-  arrow: {
-    color: theme.palette.common.black,
-  },
-  tooltip: {
-    backgroundColor: theme.palette.common.black,
-  },
-}));
+// const useStylesBootstrap = makeStyles((theme) => ({
+//   arrow: {
+//     color: theme.palette.common.black,
+//   },
+//   tooltip: {
+//     backgroundColor: theme.palette.common.black,
+//   },
+// }));
 
 const outputMethods = {
   '1.Descriptive': [
@@ -162,7 +203,16 @@ for (const [key, value] of Object.entries(outputMethods)) {
   }
 }
 
-export function AddFile(props) {
+const outputMethodsList = [
+  'Descriptive',
+  'Scaling',
+  'Graphs',
+  'Multivariable regression analysis',
+  'Complex modeling',
+  'Other',
+];
+
+export function OutputFile(props) {
   const classes = useStyles();
 
   return (
@@ -170,7 +220,7 @@ export function AddFile(props) {
       <AppBar position="static" className={classes.appBar} color="default">
         <Toolbar>
           <Typography variant="h6" component="h2" className={classes.title}>
-            Add output file
+            {props.header}
           </Typography>
           <IconButton
             aria-label="Close add output file"
@@ -183,7 +233,7 @@ export function AddFile(props) {
         </Toolbar>
       </AppBar>
       <div className={classes.body}>
-        <OutputFileForm {...props} />
+        <AddFileForm {...props} />
       </div>
       <div className={classes.footer}>
         <Button
@@ -195,52 +245,52 @@ export function AddFile(props) {
           Cancel
         </Button>
         <Button variant="contained" color="primary" onClick={props.createFile}>
-          Create
+          Add
         </Button>
       </div>
     </React.Fragment>
   );
 }
 
-export function ModifyFile(props) {
-  const classes = useStyles();
+// export function ModifyFile(props) {
+//   const classes = useStyles();
 
-  return (
-    <React.Fragment>
-      <AppBar position="static" className={classes.appBar} color="default">
-        <Toolbar>
-          <Typography variant="h6" component="h2" className={classes.title}>
-            Edit output file
-          </Typography>
-          <IconButton
-            aria-label="Close edit output file"
-            className={classes.margin}
-            edge="end"
-            onClick={(e) => props.toggleDrawer(e, 'editFile', false)}
-          >
-            <CloseIcon />
-          </IconButton>
-        </Toolbar>
-      </AppBar>
-      <div className={classes.body}>
-        <OutputFileForm {...props} />
-      </div>
-      <div className={classes.footer}>
-        <Button
-          className="mr-2"
-          variant="outlined"
-          color="primary"
-          onClick={(e) => props.toggleDrawer(e, 'editFile', false)}
-        >
-          Cancel
-        </Button>
-        <Button variant="contained" color="primary" onClick={props.updateFile}>
-          Update
-        </Button>
-      </div>
-    </React.Fragment>
-  );
-}
+//   return (
+//     <React.Fragment>
+//       <AppBar position="static" className={classes.appBar} color="default">
+//         <Toolbar>
+//           <Typography variant="h6" component="h2" className={classes.title}>
+//             Edit output file
+//           </Typography>
+//           <IconButton
+//             aria-label="Close edit output file"
+//             className={classes.margin}
+//             edge="end"
+//             onClick={(e) => props.toggleDrawer(e, 'editFile', false)}
+//           >
+//             <CloseIcon />
+//           </IconButton>
+//         </Toolbar>
+//       </AppBar>
+//       <div className={classes.body}>
+//         <OutputFileForm {...props} />
+//       </div>
+//       <div className={classes.footer}>
+//         <Button
+//           className="mr-2"
+//           variant="outlined"
+//           color="primary"
+//           onClick={(e) => props.toggleDrawer(e, 'editFile', false)}
+//         >
+//           Cancel
+//         </Button>
+//         <Button variant="contained" color="primary" onClick={props.updateFile}>
+//           Update
+//         </Button>
+//       </div>
+//     </React.Fragment>
+//   );
+// }
 
 export function ViewFile(props) {
   const classes = useStyles();
@@ -263,7 +313,7 @@ export function ViewFile(props) {
         </Toolbar>
       </AppBar>
       <div className={classes.body}>
-        <OutputFileForm {...props} />
+        <AddFileForm {...props} />
       </div>
       <div className={classes.footer}>
         <Button
@@ -278,17 +328,19 @@ export function ViewFile(props) {
   );
 }
 
-function BootstrapTooltip(props) {
-  const classes = useStylesBootstrap();
+// function BootstrapTooltip(props) {
+//   const classes = useStylesBootstrap();
 
-  return <Tooltip arrow classes={classes} {...props} />;
-}
+//   return <Tooltip arrow classes={classes} {...props} />;
+// }
 
-function OutputFileForm(props) {
-  const {errors} = props;
-  const classes = useStyles();
+function AddFileForm(props) {
+  // const {errors} = props;
   const {t} = useTranslation();
-  const required = 'This field is required';
+  const classes = useStyles();
+  const [anchorEl, setAnchorEl] = React.useState(null);
+  const open = Boolean(anchorEl);
+  const id = open ? 'simple-popover' : undefined;
 
   const [state, setState] = React.useState({
     includeWeightVariable: null,
@@ -298,6 +350,14 @@ function OutputFileForm(props) {
     covariance: null,
     snackbarDelete: false,
     dialogDelete: false,
+    dialogOutputMethodHelp: false,
+    dialogAddFile: false,
+    dollarIncluded: null,
+    equivalentDescriptiveStats: null,
+    matrixContinuous: null,
+    matrixDichotomous: null,
+    matrixCorrelated: null,
+    roundingOutput: null,
     sheetname: {
       text: '',
       errorText: '',
@@ -312,7 +372,14 @@ function OutputFileForm(props) {
       commands: '',
       helperText: 'Seperate by semicolon (e.g. LFS 2012; LFS 2011; CCHS 2009)',
     },
-    outputmethod: {
+    outputMethod: {
+      value: '',
+      errorText: '',
+      invalid: '',
+      commands: '',
+      helperText: '',
+    },
+    outputMethodDescription: {
       text: '',
       errorText: '',
       invalid: '',
@@ -320,7 +387,7 @@ function OutputFileForm(props) {
       helperText: '',
     },
     weightvariable: {
-      text: '',
+      text: 'Example weighted variable name',
       errorText: '',
       invalid: '',
       commands: '',
@@ -341,230 +408,24 @@ function OutputFileForm(props) {
       helperText: 'Examples: national, provincial',
     },
     linkage: {
-      text: '',
+      text: 'Person based',
       errorText: '',
       invalid: '',
       commands: '',
-      helperText: '(e.g. person-based, record-based, matching geographies)',
-    },
-    modified: {
-      text: '',
-      errorText: '',
-      invalid: '',
-      commands: '',
-      helperText: '',
+      helperText: '(e.g. Person based, Record based, Matching geographies)',
     },
     rounding: {
-      text: '',
-      errorText: '',
-      invalid: '',
-      commands: '',
-      helperText: '',
-    },
-    contents: {
-      text: '',
-      errorText: '',
-      invalid: '',
-      commands: '',
-      helperText: '',
-    },
-    notes: {
-      text: '',
-      errorText: '',
-      invalid: '',
-      commands: '',
-      helperText: '',
-    },
-    contents2: {
-      text: '',
-      errorText: '',
-      invalid: '',
-      commands: '',
-      helperText: '',
-    },
-    notes2: {
-      text: '',
+      text:
+        'Some example describing the approach to rounding and rounding base.',
       errorText: '',
       invalid: '',
       commands: '',
       helperText: '',
     },
   });
-  const [selected, setSelected] = React.useState('');
 
-  const initial = {
-    // blank object used to reset state
-    sheetname: {
-      text: '',
-      errorText: '',
-      invalid: '',
-      commands: '',
-      helperText: 'For spreadsheets only. Add a file for each sheet.',
-    },
-    survey: {
-      text: '',
-      errorText: '',
-      invalid: '',
-      commands: '',
-      helperText: 'Seperate by semicolon (e.g. LFS 2012; LFS 2011; CCHS 2009)',
-    },
-    outputmethod: {
-      text: '',
-      errorText: '',
-      invalid: '',
-      commands: '',
-      helperText: '',
-    },
-    weightvariable: {
-      text: '',
-      errorText: '',
-      invalid: '',
-      commands: '',
-      helperText: '',
-    },
-    sample: {
-      text: '',
-      errorText: '',
-      invalid: '',
-      commands: '',
-      helperText: '(e.g. Males 50 years of age or older)',
-    },
-    geography: {
-      text: '',
-      errorText: '',
-      invalid: '',
-      commands: '',
-      helperText: 'Examples: national, provincial',
-    },
-    linkage: {
-      text: '',
-      errorText: '',
-      invalid: '',
-      commands: '',
-      helperText: '(e.g. person-based, record-based, matching geographies)',
-    },
-    modified: {
-      text: '',
-      errorText: '',
-      invalid: '',
-      commands: '',
-      helperText: '',
-    },
-    rounding: {
-      text: '',
-      errorText: '',
-      invalid: '',
-      commands: '',
-      helperText: '',
-    },
-    contents: {
-      text: '',
-      errorText: '',
-      invalid: '',
-      commands: '',
-      helperText: '',
-    },
-    notes: {
-      text: '',
-      errorText: '',
-      invalid: '',
-      commands: '',
-      helperText: '',
-    },
-    contents2: {
-      text: '',
-      errorText: '',
-      invalid: '',
-      commands: '',
-      helperText: '',
-    },
-    notes2: {
-      text: '',
-      errorText: '',
-      invalid: '',
-      commands: '',
-      helperText: '',
-    },
-  };
-
-  if (errors) {
-    state.sheetname.helperText = required;
-    state.sample.helperText = required;
-  }
-
-  const disableCutCopyPaste = (e, command, value) => {
-    // display error if user tries to cut/copy/paste
-    let msg;
-    e.preventDefault();
-    switch (command) {
-      case 'cut':
-        msg = t('Cut has been disabled for security purposes.');
-        setState({
-          ...state,
-          [value]: {
-            ...state[value],
-            commands: msg,
-            errorText: msg,
-            helperText: msg,
-          },
-        });
-        break;
-      case 'copy':
-        msg = t('Copy has been disabled for security purposes.');
-        setState({
-          ...state,
-          [value]: {
-            ...state[value],
-            commands: msg,
-            errorText: msg,
-            helperText: msg,
-          },
-        });
-        break;
-      case 'paste':
-        msg = t('Paste has been disabled for security purposes.');
-        setState({
-          ...state,
-          [value]: {
-            ...state[value],
-            commands: msg,
-            errorText: msg,
-            helperText: msg,
-          },
-        });
-        break;
-      default:
-        break;
-    }
-  };
-
-  const toggleHelperText = (value) => {
-    if (state[value].commands === state[value].errorText) {
-      if (Boolean(state[value].invalid)) {
-        // set error text back to invalid error
-        setState({
-          ...state,
-          [value]: {
-            ...state[value],
-            helperText: state[value].invalid,
-          },
-        });
-      } else {
-        // clear error text if no invalid error exists
-        setState({
-          ...state,
-          [value]: {
-            ...state[value],
-            helperText: initial[value].helperText,
-            errorText: initial[value].errorText,
-          },
-        });
-      }
-    }
-  };
-
-  const handleChange = (event) => {
-    setSelected(event.target.value);
+  const handleClick = (event) => {
+    setAnchorEl(event.currentTarget);
   };
 
   const handleClickOpen = (element) => {
@@ -575,6 +436,10 @@ function OutputFileForm(props) {
     setState({...state, [element]: false});
   };
 
+  const handleClose = () => {
+    setAnchorEl(null);
+  };
+
   const handleRadioChange = (event) => {
     const name = event.target.name;
     setState({
@@ -583,104 +448,227 @@ function OutputFileForm(props) {
     });
   };
 
-  const handleDeleteFile = () => {
-    setState({...state, dialogDelete: false, snackbarDelete: true});
+  const handleSelectChange = (event) => {
+    const name = event.target.name;
+    const val = event.target.value;
+    setState({
+      ...state,
+      [name]: {
+        ...state[name],
+        value: val,
+      },
+    });
   };
 
   return (
     <>
-      {errors && (
-        <Alert severity="error" className={clsx(classes.alert, 'mb-2')}>
-          <AlertTitle>Please correct the following errors...</AlertTitle>
-          <ul>
-            <li>
-              <Link
-                color="inherit"
-                onClick={() => {
-                  document.getElementById('sheetName').focus();
-                }}
-                underline="always"
-              >
-                {`{Textfield 1} is required`}
-              </Link>
-            </li>
-            <li>
-              <Link
-                color="inherit"
-                onClick={() => {
-                  document.getElementById('sampleUsed').focus();
-                }}
-                underline="always"
-              >
-                {`{Textfield 2} is required`}
-              </Link>
-            </li>
-            <li>
-              <Link
-                color="inherit"
-                onClick={() => {
-                  document.getElementById('dollarIncluded').scrollIntoView({
-                    block: 'center',
-                  });
-                }}
-                underline="always"
-              >
-                {`{Radio 1} is required`}
-              </Link>
-            </li>
-          </ul>
-        </Alert>
-      )}
-
-      <FormControl
-        className={classes.inputMargin}
-        margin="dense"
-        required
-        variant="outlined"
-        fullWidth
-      >
-        <InputLabel id="outputFile-label">File for release</InputLabel>
-        <Select
-          id="outputFile"
-          label="File for release *"
-          labelId="outputFile-label"
-        >
-          <MenuItem>File number 2</MenuItem>
-        </Select>
-        <FormHelperText></FormHelperText>
-      </FormControl>
+      <Typography variant="h6" component="h3" className="mb-3">
+        {t('Select the file you want to released')}
+      </Typography>
+      <Typography variant="body2" component="p" className="mb-3">
+        {t(
+            'If you have not already added the file you want released to the request folder associated with this request, go into the shared folder of your virtual machine and add it now. If a spreadsheet file is selected you will be required to add each sheet as a seperate file for release.',
+        )}
+      </Typography>
       <TextField
-        className={classes.inputMargin}
-        margin="dense"
-        id="sheetName"
-        label="Sheet name"
-        variant="outlined"
-        fullWidth
-        onCut={(e) => disableCutCopyPaste(e, 'cut', 'sheetname')}
-        onCopy={(e) => disableCutCopyPaste(e, 'copy', 'sheetname')}
-        onPaste={(e) => disableCutCopyPaste(e, 'paste', 'sheetname')}
-        onChange={(e) => handleChange(e, 'info')}
-        onClick={() => toggleHelperText('sheetname')}
-        onBlur={() => toggleHelperText('sheetname')}
-        onFocus={() => toggleHelperText('sheetname')}
-        defaultValue={state.sheetname.text}
-        error={errors}
-        helperText={state.sheetname.helperText}
+        label={t('File path')}
+        required
+        aria-describedby={id}
+        onClick={handleClick}
+        InputProps={{
+          disabled: true,
+          endAdornment: (
+            <InputAdornment position="end">
+              <KeyboardArrowDownIcon />
+            </InputAdornment>
+          ),
+        }}
+        className={clsx(classes.textFieldPopover, 'mb-3')}
       />
+      <Popover
+        id={id}
+        open={open}
+        anchorEl={anchorEl}
+        onClose={handleClose}
+        classes={{
+          paper: classes.popoverPaper,
+        }}
+        anchorOrigin={{
+          vertical: 'bottom',
+          horizontal: 'left',
+        }}
+        transformOrigin={{
+          vertical: 'top',
+          horizontal: 'left',
+        }}
+      >
+        <TreeView
+          defaultCollapseIcon={<ExpandMoreIcon />}
+          defaultExpandIcon={<ChevronRightIcon />}
+        >
+          <TreeItem nodeId="1" label="ProjectFolderName">
+            <TreeItem nodeId="2" label="RequestFolderName">
+              <TreeItem nodeId="3" label="FolderName">
+                <TreeItem nodeId="4" label="FolderName">
+                  <TreeItem nodeId="5" label="OutputFileName.doc" />
+                  <TreeItem nodeId="6" label="OutputFileName.xls" />
+                  <TreeItem nodeId="7" label="OutputFileName.doc" />
+                  <TreeItem nodeId="8" label="OutputFileName.doc" />
+                  <TreeItem nodeId="9" label="OutputFileName.doc" />
+                </TreeItem>
+                <TreeItem nodeId="10" label="FolderName">
+                  <TreeItem
+                    nodeId="11"
+                    label={
+                      <Typography color="textSecondary">No files</Typography>
+                    }
+                  />
+                </TreeItem>
+                <TreeItem nodeId="12" label="FolderName">
+                  <TreeItem nodeId="13" label="OutputFileName.xls" />
+                  <TreeItem nodeId="14" label="OutputFileName.xls" />
+                  <TreeItem nodeId="15" label="OutputFileName.xls" />
+                </TreeItem>
+              </TreeItem>
+            </TreeItem>
+          </TreeItem>
+        </TreeView>
+      </Popover>
+
+      <div className={clsx(classes.indentedSection, 'mb-3')}>
+        <TextField
+          label={t('Sheet name')}
+          value="Sheet name"
+          InputProps={{
+            readOnly: true,
+          }}
+          fullWidth
+        />
+      </div>
+
+      <Divider className="mb-3" />
+      <Typography variant="h6" component="h3" className="mb-3">
+        {t('Mandatory supporting files')}
+      </Typography>
+      <Typography variant="body2" component="p" className="mb-3">
+        {t(
+            'All files you want released will require the following supporting file types. During this process you may be asked to enter additional supporting files but this will depend on how you answer the screening questions.',
+        )}
+      </Typography>
+
+      <Typography variant="body2" component="p">
+        {t('Add files for syntax *')}
+      </Typography>
+      <Typography
+        variant="caption"
+        color="textSecondary"
+        component="p"
+        className="mb-3"
+      >
+        {t('At least one file must be added')}
+      </Typography>
+
+      <Card
+        title={t('1. File for syntax')}
+        error={false}
+        primaryButton="Edit"
+        secondaryButton="Delete"
+        primaryClick={() => handleClickOpen('dialogAddFile')}
+        content={
+          <>
+            <Typography variant="subtitle2" component="p">
+              {t('File path')}
+            </Typography>
+            <div className={clsx(classes.filePath, 'mb-3')}>
+              <div className={classes.filePathItem}>
+                <Icon path={mdiFolderOpen} size={1} />
+                <Typography variant="body2" component="p">
+                  {'{ProjectFolderName} > '}
+                </Typography>
+              </div>
+              <div className={classes.filePathItem}>
+                <Icon path={mdiFolderOpen} size={1} />
+                <Typography variant="body2" component="p">
+                  {'{RequestFolderName} > '}
+                </Typography>
+              </div>
+              <div className={classes.filePathItem}>
+                <Icon path={mdiFolderOpen} size={1} />
+                <Typography variant="body2" component="p">
+                  {'{FolderName} > '}
+                </Typography>
+              </div>
+              <div className={classes.filePathItem}>
+                <Icon path={mdiFolderOpen} size={1} />
+                <Typography variant="body2" component="p">
+                  {'{FolderName} > '}
+                </Typography>
+              </div>
+              <div className={classes.filePathItem}>
+                <Icon path={mdiFolderOpen} size={1} />
+                <Typography variant="body2" component="p">
+                  {'{SupportingFileName}.doc'}
+                </Typography>
+              </div>
+            </div>
+
+            <Typography variant="subtitle2" component="p">
+              {t('Notes')}
+            </Typography>
+            <Typography variant="body2" component="p">
+              {t(
+                  'Notes section to include any details regarding the syntax file added. This will be helpful for the Researcher/Analyst during the vetting process.',
+              )}
+            </Typography>
+          </>
+        }
+      />
+      <Button
+        variant="outlined"
+        color="primary"
+        startIcon={<AddIcon />}
+        className={clsx(classes.addBtn, 'mt-3 mb-3')}
+      >
+        {t('Add file for syntax')}
+      </Button>
+
+      <Typography variant="body2" component="p">
+        {t('Add file for variable list / description *')}
+      </Typography>
+      <Typography
+        variant="caption"
+        color="textSecondary"
+        component="p"
+        className="mb-3"
+      >
+        {t('At least one file must be added')}
+      </Typography>
+
+      <Button
+        variant="outlined"
+        color="primary"
+        startIcon={<AddIcon />}
+        className={clsx(classes.addBtn, 'mb-3')}
+      >
+        {t('Add file for variable list / description')}
+      </Button>
+      <Divider className="mb-3" />
+      <Typography variant="h6" component="h3" className="mb-3">
+        {t('Screening question and other details')}
+      </Typography>
+      <Typography variant="body2" component="p" className="mb-3">
+        {t(
+            'Answer the following questions and enter any details that are required. Depending on how the questions are answered, more details may be required. These details are required to help the Analyst vet the file you want released.',
+        )}
+      </Typography>
       <TextField
         className={classes.inputMargin}
         margin="dense"
         id="datasetName"
-        label="Survey or dataset name(s) and cycle(s)"
+        label={t('Surveys / Datasets and cycles')}
         variant="outlined"
         fullWidth
         required
-        onCut={(e) => disableCutCopyPaste(e, 'cut', 'survey')}
-        onCopy={(e) => disableCutCopyPaste(e, 'copy', 'survey')}
-        onPaste={(e) => disableCutCopyPaste(e, 'paste', 'survey')}
-        onClick={() => toggleHelperText('survey')}
-        onBlur={() => toggleHelperText('survey')}
-        onFocus={() => toggleHelperText('survey')}
         defaultValue={state.survey.text}
         error={Boolean(state.survey.errorText)}
         helperText={state.survey.helperText}
@@ -688,115 +676,100 @@ function OutputFileForm(props) {
       <FormControl
         className={classes.inputMargin}
         margin="dense"
+        required
         variant="outlined"
         fullWidth
-        required
       >
-        <InputLabel id="outputMethod-label">Output method</InputLabel>
+        <InputLabel id="output-select-label">{t('Output Method')}</InputLabel>
         <Select
           id="outputMethod"
-          label="Output Method"
-          labelId="outputMethod-label"
-          onChange={handleChange}
-          value={selected}
+          label={t('Output Method')}
+          labelId="output-select-label"
+          onChange={handleSelectChange}
+          name="outputMethod"
+          value={state.outputMethod.value}
           required
         >
-          <MenuItem value="Descriptive">Descriptive</MenuItem>
-          <MenuItem value="Scaling">Scaling</MenuItem>
-          <MenuItem value="Graphs">Graphs</MenuItem>
-          <MenuItem value="Multivariable regression analysis">
-            Multivariable regression analysis
-          </MenuItem>
-          <MenuItem value="Complex modeling">Complex modeling</MenuItem>
-          <MenuItem value="Other">Other</MenuItem>
+          {outputMethodsList.map((term, index) => (
+            <MenuItem value={term} key={index}>
+              {term}
+            </MenuItem>
+          ))}
         </Select>
-        <FormHelperText></FormHelperText>
+        <FormHelperText>
+          {t('Need help?')}{' '}
+          <Link
+            underline="always"
+            color="primary"
+            onClick={() => handleClickOpen('dialogOutputMethodHelp')}
+            component="button"
+          >
+            {t('Learn about output methods')}
+          </Link>
+        </FormHelperText>
       </FormControl>
-      <div
-        className={clsx(classes.inputMargin, {
-          [classes.hiddenRow]: selected !== 'Other',
-        })}
-      >
-        <TextField
-          className={classes.inputMargin}
-          margin="dense"
-          id="DescriptionOfOutputMethod"
-          label="Description of output method"
-          variant="outlined"
-          fullWidth
-          required
-          multiline
-          onCut={(e) => disableCutCopyPaste(e, 'cut', 'outputmethod')}
-          onCopy={(e) => disableCutCopyPaste(e, 'copy', 'outputmethod')}
-          onPaste={(e) => disableCutCopyPaste(e, 'paste', 'outputmethod')}
-          onClick={() => toggleHelperText('outputmethod')}
-          onBlur={() => toggleHelperText('outputmethod')}
-          onFocus={() => toggleHelperText('outputmethod')}
-          defaultValue={state.outputmethod.text}
-          error={Boolean(state.outputmethod.errorText)}
-          helperText={state.outputmethod.errorText}
-        />
-      </div>
-      <div className="emphasisBox mb-3">
-        <Typography variant="subtitle2" component="p">
-          If you are not sure about the Output Method above, you can search for
-          the proper one below:
-        </Typography>
-        <Autocomplete
-          id="outputMethodSearch"
-          options={outputMethodsTerms}
-          getOptionLabel={(option) => option.term}
-          renderOption={(option) => (
-            <>
-              {option.term} - {option.method}
-            </>
-          )}
-          renderInput={(params) => (
-            <TextField
-              {...params}
-              margin="dense"
-              name="outputMethodSearch"
-              label="Search output method"
-              variant="outlined"
-            />
-          )}
-          getOptionSelected={(option, value) => {
-            return option.term === value.term && option.method === value.method;
-          }}
-        />
-      </div>
+
+      {state.outputMethod.value === 'Graphs' && (
+        <div className={clsx(classes.indentedSection, 'mb-3')}>
+          <Typography variant="body2" component="p">
+            {t('Add file for supporting tabulations for graphs *')}
+          </Typography>
+          <Typography
+            variant="caption"
+            color="textSecondary"
+            component="p"
+            className="mb-3"
+          >
+            {t('At least one file must be added')}
+          </Typography>
+          <Button
+            variant="outlined"
+            color="primary"
+            startIcon={<AddIcon />}
+            className={clsx(classes.addBtn)}
+          >
+            {t('Add file for syntax')}
+          </Button>
+        </div>
+      )}
+
+      {state.outputMethod.value === 'Other' && (
+        <div className={clsx(classes.indentedSection, 'mb-3')}>
+          <TextField
+            className={classes.inputMargin}
+            margin="dense"
+            id="outputMethodDescription"
+            label={t('Output method description')}
+            variant="outlined"
+            fullWidth
+            required
+            multiline
+            defaultValue={state.outputMethodDescription.text}
+            error={Boolean(state.outputMethodDescription.errorText)}
+            helperText={state.outputMethodDescription.errorText}
+          />
+        </div>
+      )}
       <TextField
         className={classes.inputMargin}
         margin="dense"
-        id="sampleUsed"
-        label="Sample, sub-sample or inclusions/exclusions used"
+        id="sample-input"
+        label={t('Sample, sub-smaple or inclusion / exclusion')}
         variant="outlined"
         fullWidth
         required
-        onCut={(e) => disableCutCopyPaste(e, 'cut', 'sample')}
-        onCopy={(e) => disableCutCopyPaste(e, 'copy', 'sample')}
-        onPaste={(e) => disableCutCopyPaste(e, 'paste', 'sample')}
-        onClick={() => toggleHelperText('sample')}
-        onBlur={() => toggleHelperText('sample')}
-        onFocus={() => toggleHelperText('sample')}
         defaultValue={state.sample.text}
-        error={errors}
+        error={Boolean(state.sample.errorText)}
         helperText={state.sample.helperText}
       />
       <TextField
         className={classes.inputMargin}
         margin="dense"
-        id="geographyLevel"
-        label="Level of geography"
+        id="geography-input"
+        label={t('Level of geography')}
         variant="outlined"
         fullWidth
         required
-        onCut={(e) => disableCutCopyPaste(e, 'cut', 'geography')}
-        onCopy={(e) => disableCutCopyPaste(e, 'copy', 'geography')}
-        onPaste={(e) => disableCutCopyPaste(e, 'paste', 'geography')}
-        onClick={() => toggleHelperText('geography')}
-        onBlur={() => toggleHelperText('geography')}
-        onFocus={() => toggleHelperText('geography')}
         defaultValue={state.geography.text}
         error={Boolean(state.geography.errorText)}
         helperText={state.geography.helperText}
@@ -807,7 +780,7 @@ function OutputFileForm(props) {
         required
       >
         <FormLabel component="legend">
-          Does this output include a weight variable?
+          {t('Does this output include a weight variable?')}
         </FormLabel>
         <RadioGroup
           id="includeWeightVariable"
@@ -829,22 +802,15 @@ function OutputFileForm(props) {
         <FormHelperText></FormHelperText>
       </FormControl>
       {state.includeWeightVariable === 'Yes' && (
-        <>
+        <div className={clsx(classes.indentedSection, 'mb-3')}>
           <TextField
             className={classes.inputMargin}
             margin="dense"
             id="weightVariableName"
-            label="Name of weight variable"
+            label={t('Weighted variable name')}
             variant="outlined"
             required
             fullWidth
-            onCut={(e) => disableCutCopyPaste(e, 'cut', 'weightvariable')}
-            onCopy={(e) => disableCutCopyPaste(e, 'copy', 'weightvariable')}
-            onPaste={(e) => disableCutCopyPaste(e, 'paste', 'weightvariable')}
-            onChange={(e) => handleChange(e, 'info')}
-            onClick={() => toggleHelperText('weightvariable')}
-            onBlur={() => toggleHelperText('weightvariable')}
-            onFocus={() => toggleHelperText('weightvariable')}
             defaultValue={state.weightvariable.text}
             error={Boolean(state.weightvariable.errorText)}
             helperText={state.weightvariable.errorText}
@@ -855,7 +821,7 @@ function OutputFileForm(props) {
             required
           >
             <FormLabel component="legend">
-              Was the weighted variable scaled/normalized?
+              {t('Was the weighted variable scaled/normalized?')}
             </FormLabel>
             <RadioGroup id="weightVariableType">
               <FormControlLabel
@@ -871,17 +837,14 @@ function OutputFileForm(props) {
             </RadioGroup>
             <FormHelperText></FormHelperText>
           </FormControl>
-        </>
+        </div>
       )}
-      <Typography variant="subtitle2" className="mb-2 mt-1" component="h3">
-        Output supporting files
-      </Typography>
       <FormControl
         component="fieldset"
         className={classes.radioMargin}
         required
       >
-        <FormLabel component="legend">Is linked data used?</FormLabel>
+        <FormLabel component="legend">{t('Is linked data used?')}</FormLabel>
         <RadioGroup
           id="linkedData"
           value={state.linkedData}
@@ -902,24 +865,20 @@ function OutputFileForm(props) {
         <FormHelperText></FormHelperText>
       </FormControl>
       {state.linkedData === 'Yes' && (
-        <TextField
-          className={classes.inputMargin}
-          margin="dense"
-          id="linkageDescription"
-          label="Describe linkage method"
-          variant="outlined"
-          fullWidth
-          required
-          onCut={(e) => disableCutCopyPaste(e, 'cut', 'linkage')}
-          onCopy={(e) => disableCutCopyPaste(e, 'copy', 'linkage')}
-          onPaste={(e) => disableCutCopyPaste(e, 'paste', 'linkage')}
-          onClick={() => toggleHelperText('linkage')}
-          onBlur={() => toggleHelperText('linkage')}
-          onFocus={() => toggleHelperText('linkage')}
-          defaultValue={state.linkage.text}
-          error={Boolean(state.linkage.errorText)}
-          helperText={state.linkage.helperText}
-        />
+        <div className={clsx(classes.indentedSection, 'mb-3')}>
+          <TextField
+            className={classes.inputMargin}
+            margin="dense"
+            id="linkageDescription"
+            label={t('Linkage method')}
+            variant="outlined"
+            fullWidth
+            required
+            defaultValue={state.linkage.text}
+            error={Boolean(state.linkage.errorText)}
+            helperText={state.linkage.helperText}
+          />
+        </div>
       )}
       <FormControl
         className={classes.radioMargin}
@@ -928,13 +887,16 @@ function OutputFileForm(props) {
         error={Boolean(props.errors)}
       >
         <FormLabel component="legend" className={classes.tooltipLabel}>
-          Are variables related to income, earnings, tax and/or dollar values
-          included?{' '}
-          <BootstrapTooltip title="If no, future vetting release reuests under this contract may be restricted due to residual disclosure. You are strongly encouraged to consult with your Analyst.">
-            <InfoIcon />
-          </BootstrapTooltip>
+          {t(
+              'Are variables related to income, earnings, tax and/or dollar values included?',
+          )}
         </FormLabel>
-        <RadioGroup id="dollarIncluded">
+        <RadioGroup
+          id="dollarIncluded"
+          value={state.dollarIncluded}
+          name="dollarIncluded"
+          onChange={handleRadioChange}
+        >
           <FormControlLabel
             value="Yes"
             control={<Radio color="primary" />}
@@ -948,9 +910,78 @@ function OutputFileForm(props) {
         </RadioGroup>
         <FormHelperText></FormHelperText>
       </FormControl>
+
+      {state.dollarIncluded === 'Yes' && (
+        <div className={clsx(classes.indentedSection, 'mb-3')}>
+          <Typography variant="body2" component="p">
+            {t('Add file for unweighted supporting sample counts *')}
+          </Typography>
+          <Typography
+            variant="caption"
+            color="textSecondary"
+            component="p"
+            className="mb-3"
+          >
+            {t('At least one file must be added')}
+          </Typography>
+
+          <Button
+            variant="outlined"
+            color="primary"
+            startIcon={<AddIcon />}
+            className={clsx(classes.addBtn, 'mb-3')}
+          >
+            {t('Add file for unweighted supporting sample counts')}
+          </Button>
+          <Typography variant="body2" component="p">
+            {t(
+                'Add file for syntax used for variable creation / analysis / running vetting tests *',
+            )}
+          </Typography>
+          <Typography
+            variant="caption"
+            color="textSecondary"
+            component="p"
+            className="mb-3"
+          >
+            {t('At least one file must be added')}
+          </Typography>
+
+          <Button
+            variant="outlined"
+            color="primary"
+            startIcon={<AddIcon />}
+            className={clsx(classes.addBtn, 'mb-3')}
+          >
+            {t(
+                'Add file for syntax used for variable creation / analysis / running vetting tests',
+            )}
+          </Button>
+          <Typography variant="body2" component="p">
+            {t('Add file for vetting test results *')}
+          </Typography>
+          <Typography
+            variant="caption"
+            color="textSecondary"
+            component="p"
+            className="mb-3"
+          >
+            {t('At least one file must be added')}
+          </Typography>
+
+          <Button
+            variant="outlined"
+            color="primary"
+            startIcon={<AddIcon />}
+            className={clsx(classes.addBtn)}
+          >
+            {t('Add file for vetting test results')}
+          </Button>
+        </div>
+      )}
       <FormControl className={classes.radioMargin} component="fieldset">
         <FormLabel component="legend">
-          Does the request include descriptive statistics?
+          {t('Does the request include descriptive statistics?')}
         </FormLabel>
         <RadioGroup
           id="descriptiveStats"
@@ -972,11 +1003,12 @@ function OutputFileForm(props) {
         <FormHelperText></FormHelperText>
       </FormControl>
       {state.descriptiveStats === 'Yes' && (
-        <>
+        <div className={clsx(classes.indentedSection, 'mb-3')}>
           <FormControl className={classes.radioMargin} component="fieldset">
             <FormLabel component="legend" className={classes.lineHeight}>
-              Is the output clearly labelled (tables have a title and every
-              variable and category is labelled)?
+              {t(
+                  'Is the output clearly labelled (tables have a title and variables / categories are labelled)?',
+              )}
             </FormLabel>
             <RadioGroup id="outpuLabelled">
               <FormControlLabel
@@ -994,7 +1026,7 @@ function OutputFileForm(props) {
           </FormControl>
           <FormControl className={classes.radioMargin} component="fieldset">
             <FormLabel component="legend">
-              Are minimum cell sizes met as per the rules for the data?
+              {t('Are minimum cell sizes met as per the rules for the data? *')}
             </FormLabel>
             <RadioGroup id="minimumCellSizes">
               <FormControlLabel
@@ -1010,7 +1042,29 @@ function OutputFileForm(props) {
             </RadioGroup>
             <FormHelperText></FormHelperText>
           </FormControl>
-        </>
+          <Typography variant="body2" component="p">
+            {t(
+                'Add file for supporting documentation (requirements in vetting rules) *',
+            )}
+          </Typography>
+          <Typography
+            variant="caption"
+            color="textSecondary"
+            component="p"
+            className="mb-3"
+          >
+            {t('At least one file must be added')}
+          </Typography>
+
+          <Button
+            variant="outlined"
+            color="primary"
+            startIcon={<AddIcon />}
+            className={classes.addBtn}
+          >
+            {t('Add file for supporting documentation')}
+          </Button>
+        </div>
       )}
       <FormControl
         className={classes.radioMargin}
@@ -1018,13 +1072,16 @@ function OutputFileForm(props) {
         required
       >
         <FormLabel component="legend" className={classes.tooltipLabel}>
-          Does this request include model output or graphs that are equivalent
-          to a descriptive statistics?{' '}
-          <BootstrapTooltip title="Examples: a model with a single independant variable, a model with all possible interactions, histograms.">
-            <InfoIcon />
-          </BootstrapTooltip>
+          {t(
+              'Does this request include model output or graphs that are equivalent to a descriptive statistics?',
+          )}
         </FormLabel>
-        <RadioGroup id="equivalentDescriptiveStats">
+        <RadioGroup
+          id="equivalentDescriptiveStats"
+          value={state.equivalentDescriptiveStats}
+          name="equivalentDescriptiveStats"
+          onChange={handleRadioChange}
+        >
           <FormControlLabel
             value="Yes"
             control={<Radio color="primary" />}
@@ -1038,9 +1095,35 @@ function OutputFileForm(props) {
         </RadioGroup>
         <FormHelperText></FormHelperText>
       </FormControl>
+      {state.equivalentDescriptiveStats === 'Yes' && (
+        <div className={clsx(classes.indentedSection, 'mb-3')}>
+          <Typography variant="body2" component="p">
+            {t(
+                'Add file for unweighted frequency table for respondent counts *',
+            )}
+          </Typography>
+          <Typography
+            variant="caption"
+            color="textSecondary"
+            component="p"
+            className="mb-3"
+          >
+            {t('At least one file must be added')}
+          </Typography>
+
+          <Button
+            variant="outlined"
+            color="primary"
+            startIcon={<AddIcon />}
+            className={classes.addBtn}
+          >
+            {t('Add file for unweighted frequency table for respondent counts')}
+          </Button>
+        </div>
+      )}
       <FormControl className={classes.radioMargin} component="fieldset">
         <FormLabel component="legend">
-          Does this output include a correlation or covariance matrix?
+          {t('Does this output include a correlation or covariance matrix?')}
         </FormLabel>
         <RadioGroup
           id="includeMatrix"
@@ -1061,12 +1144,17 @@ function OutputFileForm(props) {
         </RadioGroup>
       </FormControl>
       {state.covariance === 'Yes' && (
-        <>
+        <div className={clsx(classes.indentedSection, 'mb-3')}>
           <FormControl className={classes.radioMargin} component="fieldset">
             <FormLabel component="legend">
-              Does the matrix include continuous variables?
+              {t('Does the matrix include continuous variables?')}
             </FormLabel>
-            <RadioGroup id="continuousVariables">
+            <RadioGroup
+              id="matrixContinuous"
+              value={state.matrixContinuous}
+              name="matrixContinuous"
+              onChange={handleRadioChange}
+            >
               <FormControlLabel
                 value="Yes"
                 control={<Radio color="primary" />}
@@ -1079,11 +1167,40 @@ function OutputFileForm(props) {
               />
             </RadioGroup>
           </FormControl>
+          {state.matrixContinuous === 'Yes' && (
+            <div className={clsx(classes.indentedSection, 'mb-3')}>
+              <Typography variant="body2" component="p">
+                {t('Add file for unweighted sample size *')}
+              </Typography>
+              <Typography
+                variant="caption"
+                color="textSecondary"
+                component="p"
+                className="mb-3"
+              >
+                {t('At least one file must be added')}
+              </Typography>
+
+              <Button
+                variant="outlined"
+                color="primary"
+                startIcon={<AddIcon />}
+                className={clsx(classes.addBtn, 'mb-3')}
+              >
+                {t('Add file for unweighted sample size')}
+              </Button>
+            </div>
+          )}
           <FormControl className={classes.radioMargin} component="fieldset">
             <FormLabel component="legend">
-              Does the matrix inclue dichotomous variables?
+              {t('Does the matrix inclue dichotomous variables?')}
             </FormLabel>
-            <RadioGroup id="dichotomousVariables">
+            <RadioGroup
+              id="matrixDichotomous"
+              value={state.matrixDichotomous}
+              name="matrixDichotomous"
+              onChange={handleRadioChange}
+            >
               <FormControlLabel
                 value="Yes"
                 control={<Radio color="primary" />}
@@ -1096,12 +1213,42 @@ function OutputFileForm(props) {
               />
             </RadioGroup>
           </FormControl>
+          {state.matrixDichotomous === 'Yes' && (
+            <div className={clsx(classes.indentedSection, 'mb-3')}>
+              <Typography variant="body2" component="p">
+                {t('Add file for unweighted cross-tabulation table *')}
+              </Typography>
+              <Typography
+                variant="caption"
+                color="textSecondary"
+                component="p"
+                className="mb-3"
+              >
+                {t('At least one file must be added')}
+              </Typography>
+
+              <Button
+                variant="outlined"
+                color="primary"
+                startIcon={<AddIcon />}
+                className={clsx(classes.addBtn, 'mb-3')}
+              >
+                {t('Add file for unweighted cross-tabulation table')}
+              </Button>
+            </div>
+          )}
           <FormControl className={classes.radioMargin} component="fieldset">
             <FormLabel component="legend" className={classes.lineHeight}>
-              Does the matrix include a dichotomous variable correlated with a
-              continuous variable?
+              {t(
+                  'Does the matrix include a dichotomous variable correlated with continuous variable?',
+              )}
             </FormLabel>
-            <RadioGroup id="dichotomousVariable">
+            <RadioGroup
+              id="matrixCorrelated"
+              value={state.matrixCorrelated}
+              name="matrixCorrelated"
+              onChange={handleRadioChange}
+            >
               <FormControlLabel
                 value="Yes"
                 control={<Radio color="primary" />}
@@ -1114,18 +1261,43 @@ function OutputFileForm(props) {
               />
             </RadioGroup>
           </FormControl>
-        </>
+          {state.matrixCorrelated === 'Yes' && (
+            <div className={clsx(classes.indentedSection, 'mb-3')}>
+              <Typography variant="body2" component="p">
+                {t(
+                    'Add file for unweighted sub-totals for the categories of the dichotomous variable correlatedwith a continuous variable *',
+                )}
+              </Typography>
+              <Typography
+                variant="caption"
+                color="textSecondary"
+                component="p"
+                className="mb-3"
+              >
+                {t('At least one file must be added')}
+              </Typography>
+
+              <Button
+                variant="outlined"
+                color="primary"
+                startIcon={<AddIcon />}
+                className={clsx(classes.addBtn, 'mb-3')}
+              >
+                {t(
+                    'Add file for unweighted sub-totals for the categories of the dichotomous variable correlatedwith a continuous variable',
+                )}
+              </Button>
+            </div>
+          )}
+        </div>
       )}
       <FormControl
         className={classes.radioMargin}
         component="fieldset"
         required
       >
-        <FormLabel component="legend" className={classes.tooltipLabel}>
-          Is rounding of output required for this vetting request?{' '}
-          <BootstrapTooltip title="If yes, ensure that any forced rounding to zero is shown.">
-            <InfoIcon />
-          </BootstrapTooltip>
+        <FormLabel component="legend">
+          {t('Is rounding of output required for this vetting request?')}
         </FormLabel>
         <RadioGroup
           id="roundingOutput"
@@ -1147,216 +1319,1131 @@ function OutputFileForm(props) {
         <FormHelperText></FormHelperText>
       </FormControl>
       {state.roundingOutput === 'Yes' && (
-        <TextField
-          className={classes.inputMargin}
-          margin="dense"
-          id="roundingDesc"
-          label="Describe the approach to rounding and rounding base"
-          variant="outlined"
-          fullWidth
-          required
-          onCut={(e) => disableCutCopyPaste(e, 'cut', 'rounding')}
-          onCopy={(e) => disableCutCopyPaste(e, 'copy', 'rounding')}
-          onPaste={(e) => disableCutCopyPaste(e, 'paste', 'rounding')}
-          onClick={() => toggleHelperText('rounding')}
-          onBlur={() => toggleHelperText('rounding')}
-          onFocus={() => toggleHelperText('rounding')}
-          defaultValue={state.rounding.text}
-          error={Boolean(state.rounding.errorText)}
-          helperText={state.rounding.errorText}
-        />
-      )}
-      <div className="emphasisBox mb-3">
-        <Typography variant="subtitle2" className="mb-2" component="h3">
-          Mandatory supporting files:
-        </Typography>
-        <ul className="mb-3">
-          <li>
-            <Typography variant="body2" gutterBottom={true}>
-              Unweighted supporting sample counts.
-            </Typography>
-          </li>
-          <li>
-            <Typography variant="body2" gutterBottom={true}>
-              Syntax used for variable creation, analysis and running the
-              vetting tests.
-            </Typography>
-          </li>
-          <li>
-            <Typography variant="body2" gutterBottom={true}>
-              Vetting the results (e..g. test of magnitude, dominance, etc).
-            </Typography>
-          </li>
-        </ul>
-        <Typography variant="subtitle2" component="p">
-          NOTE: supporting files will not be released. Please name your support
-          files to allow easy pairing of the corresponding output file.
-        </Typography>
-      </div>
-      <Grid container justify="space-between" alignItems="center">
-        <Grid item>
-          <Typography variant="subtitle2" component="h3">
-            Supporting file #1
+        <div className={clsx(classes.indentedSection, 'mb-3')}>
+          <TextField
+            className={classes.inputMargin}
+            margin="dense"
+            id="roundingDesc"
+            label={t('Describe rounding / rounding base approach')}
+            variant="outlined"
+            fullWidth
+            required
+            multiline
+            defaultValue={state.rounding.text}
+            error={Boolean(state.rounding.errorText)}
+            helperText={state.rounding.errorText}
+          />
+          <Typography variant="body2" component="p">
+            {t('Add file for unrounded version this output *')}
           </Typography>
-        </Grid>
-        <Grid item>
-          <IconButton
-            aria-label="delete"
-            className={classes.margin}
-            onClick={() => handleClickOpen('dialogDelete')}
+          <Typography
+            variant="caption"
+            color="textSecondary"
+            component="p"
+            className="mb-3"
           >
-            <DeleteIcon />
-          </IconButton>
-        </Grid>
-      </Grid>
-      <FormControl
-        className={classes.inputMargin}
-        margin="dense"
-        required
-        variant="outlined"
-        fullWidth
-      >
-        <InputLabel id="suppFolder1-label">Supporting folder</InputLabel>
-        <Select
-          id="suppFolder1"
-          label="Supporting folder *"
-          labelId="suppFolder1-label"
-        >
-          <MenuItem value="Folder 1">Folder 1</MenuItem>
-          <MenuItem value="Folder 2">Folder 2</MenuItem>
-        </Select>
-      </FormControl>
-      <TextField
-        className={classes.inputMargin}
-        margin="dense"
-        id="fileContents1"
-        label="File contents"
-        variant="outlined"
-        fullWidth
-        required
-        onCut={(e) => disableCutCopyPaste(e, 'cut', 'contents')}
-        onCopy={(e) => disableCutCopyPaste(e, 'copy', 'contents')}
-        onPaste={(e) => disableCutCopyPaste(e, 'paste', 'contents')}
-        onClick={() => toggleHelperText('contents')}
-        onBlur={() => toggleHelperText('contents')}
-        onFocus={() => toggleHelperText('contents')}
-        defaultValue={state.contents.text}
-        error={Boolean(state.contents.errorText)}
-        helperText={state.contents.errorText}
-      />
-      <TextField
-        className={classes.inputMargin}
-        margin="dense"
-        id="notes1"
-        label="Notes"
-        multiline
-        variant="outlined"
-        fullWidth
-        required
-        onCut={(e) => disableCutCopyPaste(e, 'cut', 'notes')}
-        onCopy={(e) => disableCutCopyPaste(e, 'copy', 'notes')}
-        onPaste={(e) => disableCutCopyPaste(e, 'paste', 'notes')}
-        onClick={() => toggleHelperText('notes')}
-        onBlur={() => toggleHelperText('notes')}
-        onFocus={() => toggleHelperText('notes')}
-        defaultValue={state.notes.text}
-        error={Boolean(state.notes.errorText)}
-        helperText={state.notes.errorText}
-      />
-      <Grid container justify="space-between" alignItems="center">
-        <Grid item>
-          <Typography variant="subtitle2" component="h3">
-            Supporting file #2
+            {t('At least one file must be added')}
           </Typography>
-        </Grid>
-        <Grid item>
-          <IconButton
-            aria-label="delete"
-            className={classes.margin}
-            onClick={() => handleClickOpen('dialogDelete')}
-          >
-            <DeleteIcon />
-          </IconButton>
-        </Grid>
-      </Grid>
-      <FormControl
-        className={classes.inputMargin}
-        margin="dense"
-        required
-        variant="outlined"
-        fullWidth
-      >
-        <InputLabel id="suppFolder2-label">Supporting folder</InputLabel>
-        <Select
-          id="suppFolder2"
-          label="Supporting folder *"
-          labelId="suppFolder2-label"
-        >
-          <MenuItem value="Folder 1">Folder 1</MenuItem>
-          <MenuItem value="Folder 2">Folder 2</MenuItem>
-        </Select>
-      </FormControl>
-      <TextField
-        className={classes.inputMargin}
-        margin="dense"
-        id="fileContents2"
-        label="File contents"
-        variant="outlined"
-        fullWidth
-        required
-        onCut={(e) => disableCutCopyPaste(e, 'cut', 'contents2')}
-        onCopy={(e) => disableCutCopyPaste(e, 'copy', 'contents2')}
-        onPaste={(e) => disableCutCopyPaste(e, 'paste', 'contents2')}
-        onClick={() => toggleHelperText('contents2')}
-        onBlur={() => toggleHelperText('contents2')}
-        onFocus={() => toggleHelperText('contents2')}
-        defaultValue={state.contents2.text}
-        error={Boolean(state.contents2.errorText)}
-        helperText={state.contents2.errorText}
-      />
-      <TextField
-        className={classes.inputMargin}
-        margin="dense"
-        id="notes2"
-        label="Notes"
-        multiline
-        variant="outlined"
-        fullWidth
-        required
-        onCut={(e) => disableCutCopyPaste(e, 'cut', 'notes2')}
-        onCopy={(e) => disableCutCopyPaste(e, 'copy', 'notes2')}
-        onPaste={(e) => disableCutCopyPaste(e, 'paste', 'notes2')}
-        onClick={() => toggleHelperText('notes2')}
-        onBlur={() => toggleHelperText('notes2')}
-        onFocus={() => toggleHelperText('notes2')}
-        defaultValue={state.notes2.text}
-        error={Boolean(state.notes2.errorText)}
-        helperText={state.notes2.errorText}
-      />
 
-      <div className={classes.buttonTooltip}>
-        <Button
-          variant="contained"
-          color="primary"
-          onClick={() => props.handleClickOpen('dialogAddSupporting')}
-        >
-          Add supporting file
-        </Button>
-        <BootstrapTooltip title="In addition to the mandatory files listed, include other files as required by the Survey Specific Guidelines, syntax files or other files requested by the Analyst.">
-          <InfoIcon />
-        </BootstrapTooltip>
-        {/* Delete file snackbar */}
-        <SnackbarDeleteSupportFile
-          open={state.snackbarDelete}
-          handleClose={() => handleClickClose('snackbarDelete')}
-        />
-        {/* Delete dialog */}
-        <DialogDelete
-          submitDialog={handleDeleteFile}
-          toggleDialog={() => handleClickClose('dialogDelete')}
-          open={state.dialogDelete}
-        />
-      </div>
+          <Button
+            variant="outlined"
+            color="primary"
+            startIcon={<AddIcon />}
+            className={clsx(classes.addBtn, 'mb-3')}
+          >
+            {t('Add file for unrounded version this output')}
+          </Button>
+        </div>
+      )}
+      {/* Output method help dialog */}
+      <DialogOutputMethodHelp
+        toggleDialog={() => handleClickClose('dialogOutputMethodHelp')}
+        open={state.dialogOutputMethodHelp}
+      />
+      {/* Add file dialog */}
+      <DialogAddFile
+        submitDialog={() => handleClickClose('dialogAddFile')}
+        toggleDialog={() => handleClickClose('dialogAddFile')}
+        open={state.dialogAddFile}
+      />
     </>
   );
 }
+
+// function OutputFileForm(props) {
+//   const {errors} = props;
+//   const classes = useStyles();
+//   const {t} = useTranslation();
+//   const required = 'This field is required';
+
+//   const [state, setState] = React.useState({
+//     includeWeightVariable: null,
+//     linkedData: null,
+//     descriptiveStats: null,
+//     modifiedWeights: null,
+//     covariance: null,
+
+//     snackbarDelete: false,
+//     dialogDelete: false,
+//     sheetname: {
+//       text: '',
+//       errorText: '',
+//       invalid: '',
+//       commands: '',
+//       helperText: 'For spreadsheets only. Add a file for each sheet.',
+//     },
+//     survey: {
+//       text: '',
+//       errorText: '',
+//       invalid: '',
+//       commands: '',
+//       helperText: 'Seperate by semicolon (e.g. LFS 2012; LFS 2011; CCHS 2009)',
+//     },
+//     outputmethod: {
+//       text: '',
+//       errorText: '',
+//       invalid: '',
+//       commands: '',
+//       helperText: '',
+//     },
+//     weightvariable: {
+//       text: '',
+//       errorText: '',
+//       invalid: '',
+//       commands: '',
+//       helperText: '',
+//     },
+//     sample: {
+//       text: '',
+//       errorText: '',
+//       invalid: '',
+//       commands: '',
+//       helperText: '(e.g. Males 50 years of age or older)',
+//     },
+//     geography: {
+//       text: '',
+//       errorText: '',
+//       invalid: '',
+//       commands: '',
+//       helperText: 'Examples: national, provincial',
+//     },
+//     linkage: {
+//       text: '',
+//       errorText: '',
+//       invalid: '',
+//       commands: '',
+//       helperText: '(e.g. person-based, record-based, matching geographies)',
+//     },
+//     modified: {
+//       text: '',
+//       errorText: '',
+//       invalid: '',
+//       commands: '',
+//       helperText: '',
+//     },
+//     rounding: {
+//       text: '',
+//       errorText: '',
+//       invalid: '',
+//       commands: '',
+//       helperText: '',
+//     },
+//     contents: {
+//       text: '',
+//       errorText: '',
+//       invalid: '',
+//       commands: '',
+//       helperText: '',
+//     },
+//     notes: {
+//       text: '',
+//       errorText: '',
+//       invalid: '',
+//       commands: '',
+//       helperText: '',
+//     },
+//     contents2: {
+//       text: '',
+//       errorText: '',
+//       invalid: '',
+//       commands: '',
+//       helperText: '',
+//     },
+//     notes2: {
+//       text: '',
+//       errorText: '',
+//       invalid: '',
+//       commands: '',
+//       helperText: '',
+//     },
+//   });
+//   const [selected, setSelected] = React.useState('');
+
+//   const initial = {
+//     // blank object used to reset state
+//     sheetname: {
+//       text: '',
+//       errorText: '',
+//       invalid: '',
+//       commands: '',
+//       helperText: 'For spreadsheets only. Add a file for each sheet.',
+//     },
+//     survey: {
+//       text: '',
+//       errorText: '',
+//       invalid: '',
+//       commands: '',
+//       helperText: 'Seperate by semicolon (e.g. LFS 2012; LFS 2011; CCHS 2009)',
+//     },
+//     outputmethod: {
+//       text: '',
+//       errorText: '',
+//       invalid: '',
+//       commands: '',
+//       helperText: '',
+//     },
+//     weightvariable: {
+//       text: '',
+//       errorText: '',
+//       invalid: '',
+//       commands: '',
+//       helperText: '',
+//     },
+//     sample: {
+//       text: '',
+//       errorText: '',
+//       invalid: '',
+//       commands: '',
+//       helperText: '(e.g. Males 50 years of age or older)',
+//     },
+//     geography: {
+//       text: '',
+//       errorText: '',
+//       invalid: '',
+//       commands: '',
+//       helperText: 'Examples: national, provincial',
+//     },
+//     linkage: {
+//       text: '',
+//       errorText: '',
+//       invalid: '',
+//       commands: '',
+//       helperText: '(e.g. person-based, record-based, matching geographies)',
+//     },
+//     modified: {
+//       text: '',
+//       errorText: '',
+//       invalid: '',
+//       commands: '',
+//       helperText: '',
+//     },
+//     rounding: {
+//       text: '',
+//       errorText: '',
+//       invalid: '',
+//       commands: '',
+//       helperText: '',
+//     },
+//     contents: {
+//       text: '',
+//       errorText: '',
+//       invalid: '',
+//       commands: '',
+//       helperText: '',
+//     },
+//     notes: {
+//       text: '',
+//       errorText: '',
+//       invalid: '',
+//       commands: '',
+//       helperText: '',
+//     },
+//     contents2: {
+//       text: '',
+//       errorText: '',
+//       invalid: '',
+//       commands: '',
+//       helperText: '',
+//     },
+//     notes2: {
+//       text: '',
+//       errorText: '',
+//       invalid: '',
+//       commands: '',
+//       helperText: '',
+//     },
+//   };
+
+//   if (errors) {
+//     state.sheetname.helperText = required;
+//     state.sample.helperText = required;
+//   }
+
+//   const disableCutCopyPaste = (e, command, value) => {
+//     // display error if user tries to cut/copy/paste
+//     let msg;
+//     e.preventDefault();
+//     switch (command) {
+//       case 'cut':
+//         msg = t('Cut has been disabled for security purposes.');
+//         setState({
+//           ...state,
+//           [value]: {
+//             ...state[value],
+//             commands: msg,
+//             errorText: msg,
+//             helperText: msg,
+//           },
+//         });
+//         break;
+//       case 'copy':
+//         msg = t('Copy has been disabled for security purposes.');
+//         setState({
+//           ...state,
+//           [value]: {
+//             ...state[value],
+//             commands: msg,
+//             errorText: msg,
+//             helperText: msg,
+//           },
+//         });
+//         break;
+//       case 'paste':
+//         msg = t('Paste has been disabled for security purposes.');
+//         setState({
+//           ...state,
+//           [value]: {
+//             ...state[value],
+//             commands: msg,
+//             errorText: msg,
+//             helperText: msg,
+//           },
+//         });
+//         break;
+//       default:
+//         break;
+//     }
+//   };
+
+//   const toggleHelperText = (value) => {
+//     if (state[value].commands === state[value].errorText) {
+//       if (Boolean(state[value].invalid)) {
+//         // set error text back to invalid error
+//         setState({
+//           ...state,
+//           [value]: {
+//             ...state[value],
+//             helperText: state[value].invalid,
+//           },
+//         });
+//       } else {
+//         // clear error text if no invalid error exists
+//         setState({
+//           ...state,
+//           [value]: {
+//             ...state[value],
+//             helperText: initial[value].helperText,
+//             errorText: initial[value].errorText,
+//           },
+//         });
+//       }
+//     }
+//   };
+
+//   const handleChange = (event) => {
+//     setSelected(event.target.value);
+//   };
+
+//   const handleClickOpen = (element) => {
+//     setState({...state, [element]: true});
+//   };
+
+//   const handleClickClose = (element) => {
+//     setState({...state, [element]: false});
+//   };
+
+//   const handleRadioChange = (event) => {
+//     const name = event.target.name;
+//     setState({
+//       ...state,
+//       [name]: event.target.value,
+//     });
+//   };
+
+//   const handleDeleteFile = () => {
+//     setState({...state, dialogDelete: false, snackbarDelete: true});
+//   };
+
+//   return (
+//     <>
+//       {errors && (
+//         <Alert severity="error" className={clsx(classes.alert, 'mb-2')}>
+//           <AlertTitle>Please correct the following errors...</AlertTitle>
+//           <ul>
+//             <li>
+//               <Link
+//                 color="inherit"
+//                 onClick={() => {
+//                   document.getElementById('sheetName').focus();
+//                 }}
+//                 underline="always"
+//               >
+//                 {`{Textfield 1} is required`}
+//               </Link>
+//             </li>
+//             <li>
+//               <Link
+//                 color="inherit"
+//                 onClick={() => {
+//                   document.getElementById('sampleUsed').focus();
+//                 }}
+//                 underline="always"
+//               >
+//                 {`{Textfield 2} is required`}
+//               </Link>
+//             </li>
+//             <li>
+//               <Link
+//                 color="inherit"
+//                 onClick={() => {
+//                   document.getElementById('dollarIncluded').scrollIntoView({
+//                     block: 'center',
+//                   });
+//                 }}
+//                 underline="always"
+//               >
+//                 {`{Radio 1} is required`}
+//               </Link>
+//             </li>
+//           </ul>
+//         </Alert>
+//       )}
+
+//       <FormControl
+//         className={classes.inputMargin}
+//         margin="dense"
+//         required
+//         variant="outlined"
+//         fullWidth
+//       >
+//         <InputLabel id="outputFile-label">File for release</InputLabel>
+//         <Select
+//           id="outputFile"
+//           label="File for release *"
+//           labelId="outputFile-label"
+//         >
+//           <MenuItem>File number 2</MenuItem>
+//         </Select>
+//         <FormHelperText></FormHelperText>
+//       </FormControl>
+//       <TextField
+//         className={classes.inputMargin}
+//         margin="dense"
+//         id="sheetName"
+//         label="Sheet name"
+//         variant="outlined"
+//         fullWidth
+//         onCut={(e) => disableCutCopyPaste(e, 'cut', 'sheetname')}
+//         onCopy={(e) => disableCutCopyPaste(e, 'copy', 'sheetname')}
+//         onPaste={(e) => disableCutCopyPaste(e, 'paste', 'sheetname')}
+//         onChange={(e) => handleChange(e, 'info')}
+//         onClick={() => toggleHelperText('sheetname')}
+//         onBlur={() => toggleHelperText('sheetname')}
+//         onFocus={() => toggleHelperText('sheetname')}
+//         defaultValue={state.sheetname.text}
+//         error={errors}
+//         helperText={state.sheetname.helperText}
+//       />
+//       <TextField
+//         className={classes.inputMargin}
+//         margin="dense"
+//         id="datasetName"
+//         label="Survey or dataset name(s) and cycle(s)"
+//         variant="outlined"
+//         fullWidth
+//         required
+//         onCut={(e) => disableCutCopyPaste(e, 'cut', 'survey')}
+//         onCopy={(e) => disableCutCopyPaste(e, 'copy', 'survey')}
+//         onPaste={(e) => disableCutCopyPaste(e, 'paste', 'survey')}
+//         onClick={() => toggleHelperText('survey')}
+//         onBlur={() => toggleHelperText('survey')}
+//         onFocus={() => toggleHelperText('survey')}
+//         defaultValue={state.survey.text}
+//         error={Boolean(state.survey.errorText)}
+//         helperText={state.survey.helperText}
+//       />
+//       <FormControl
+//         className={classes.inputMargin}
+//         margin="dense"
+//         variant="outlined"
+//         fullWidth
+//         required
+//       >
+//         <InputLabel id="outputMethod-label">Output method</InputLabel>
+//         <Select
+//           id="outputMethod"
+//           label="Output Method"
+//           labelId="outputMethod-label"
+//           onChange={handleChange}
+//           value={selected}
+//           required
+//         >
+//           <MenuItem value="Descriptive">Descriptive</MenuItem>
+//           <MenuItem value="Scaling">Scaling</MenuItem>
+//           <MenuItem value="Graphs">Graphs</MenuItem>
+//           <MenuItem value="Multivariable regression analysis">
+//             Multivariable regression analysis
+//           </MenuItem>
+//           <MenuItem value="Complex modeling">Complex modeling</MenuItem>
+//           <MenuItem value="Other">Other</MenuItem>
+//         </Select>
+//         <FormHelperText></FormHelperText>
+//       </FormControl>
+//       <div
+//         className={clsx(classes.inputMargin, {
+//           [classes.hiddenRow]: selected !== 'Other',
+//         })}
+//       >
+//         <TextField
+//           className={classes.inputMargin}
+//           margin="dense"
+//           id="DescriptionOfOutputMethod"
+//           label="Description of output method"
+//           variant="outlined"
+//           fullWidth
+//           required
+//           multiline
+//           onCut={(e) => disableCutCopyPaste(e, 'cut', 'outputmethod')}
+//           onCopy={(e) => disableCutCopyPaste(e, 'copy', 'outputmethod')}
+//           onPaste={(e) => disableCutCopyPaste(e, 'paste', 'outputmethod')}
+//           onClick={() => toggleHelperText('outputmethod')}
+//           onBlur={() => toggleHelperText('outputmethod')}
+//           onFocus={() => toggleHelperText('outputmethod')}
+//           defaultValue={state.outputmethod.text}
+//           error={Boolean(state.outputmethod.errorText)}
+//           helperText={state.outputmethod.errorText}
+//         />
+//       </div>
+//       <div className="emphasisBox mb-3">
+//         <Typography variant="subtitle2" component="p">
+//           If you are not sure about the Output Method above, you can search for
+//           the proper one below:
+//         </Typography>
+//         <Autocomplete
+//           id="outputMethodSearch"
+//           options={outputMethodsTerms}
+//           getOptionLabel={(option) => option.term}
+//           renderOption={(option) => (
+//             <>
+//               {option.term} - {option.method}
+//             </>
+//           )}
+//           renderInput={(params) => (
+//             <TextField
+//               {...params}
+//               margin="dense"
+//               name="outputMethodSearch"
+//               label="Search output method"
+//               variant="outlined"
+//             />
+//           )}
+//           getOptionSelected={(option, value) => {
+//             return option.term === value.term && option.method === value.method;
+//           }}
+//         />
+//       </div>
+//       <TextField
+//         className={classes.inputMargin}
+//         margin="dense"
+//         id="sampleUsed"
+//         label="Sample, sub-sample or inclusions/exclusions used"
+//         variant="outlined"
+//         fullWidth
+//         required
+//         onCut={(e) => disableCutCopyPaste(e, 'cut', 'sample')}
+//         onCopy={(e) => disableCutCopyPaste(e, 'copy', 'sample')}
+//         onPaste={(e) => disableCutCopyPaste(e, 'paste', 'sample')}
+//         onClick={() => toggleHelperText('sample')}
+//         onBlur={() => toggleHelperText('sample')}
+//         onFocus={() => toggleHelperText('sample')}
+//         defaultValue={state.sample.text}
+//         error={errors}
+//         helperText={state.sample.helperText}
+//       />
+//       <TextField
+//         className={classes.inputMargin}
+//         margin="dense"
+//         id="geographyLevel"
+//         label="Level of geography"
+//         variant="outlined"
+//         fullWidth
+//         required
+//         onCut={(e) => disableCutCopyPaste(e, 'cut', 'geography')}
+//         onCopy={(e) => disableCutCopyPaste(e, 'copy', 'geography')}
+//         onPaste={(e) => disableCutCopyPaste(e, 'paste', 'geography')}
+//         onClick={() => toggleHelperText('geography')}
+//         onBlur={() => toggleHelperText('geography')}
+//         onFocus={() => toggleHelperText('geography')}
+//         defaultValue={state.geography.text}
+//         error={Boolean(state.geography.errorText)}
+//         helperText={state.geography.helperText}
+//       />
+//       <FormControl
+//         component="fieldset"
+//         className={classes.radioMargin}
+//         required
+//       >
+//         <FormLabel component="legend">
+//           Does this output include a weight variable?
+//         </FormLabel>
+//         <RadioGroup
+//           id="includeWeightVariable"
+//           value={state.includeWeightVariable}
+//           name="includeWeightVariable"
+//           onChange={handleRadioChange}
+//         >
+//           <FormControlLabel
+//             value="Yes"
+//             control={<Radio color="primary" />}
+//             label="Yes"
+//           />
+//           <FormControlLabel
+//             value="No"
+//             control={<Radio color="primary" />}
+//             label="No"
+//           />
+//         </RadioGroup>
+//         <FormHelperText></FormHelperText>
+//       </FormControl>
+//       {state.includeWeightVariable === 'Yes' && (
+//         <>
+//           <TextField
+//             className={classes.inputMargin}
+//             margin="dense"
+//             id="weightVariableName"
+//             label="Name of weight variable"
+//             variant="outlined"
+//             required
+//             fullWidth
+//             onCut={(e) => disableCutCopyPaste(e, 'cut', 'weightvariable')}
+//             onCopy={(e) => disableCutCopyPaste(e, 'copy', 'weightvariable')}
+//             onPaste={(e) => disableCutCopyPaste(e, 'paste', 'weightvariable')}
+//             onChange={(e) => handleChange(e, 'info')}
+//             onClick={() => toggleHelperText('weightvariable')}
+//             onBlur={() => toggleHelperText('weightvariable')}
+//             onFocus={() => toggleHelperText('weightvariable')}
+//             defaultValue={state.weightvariable.text}
+//             error={Boolean(state.weightvariable.errorText)}
+//             helperText={state.weightvariable.errorText}
+//           />
+//           <FormControl
+//             component="fieldset"
+//             className={classes.radioMargin}
+//             required
+//           >
+//             <FormLabel component="legend">
+//               Was the weighted variable scaled/normalized?
+//             </FormLabel>
+//             <RadioGroup id="weightVariableType">
+//               <FormControlLabel
+//                 value="Yes"
+//                 control={<Radio color="primary" />}
+//                 label="Yes"
+//               />
+//               <FormControlLabel
+//                 value="No"
+//                 control={<Radio color="primary" />}
+//                 label="No"
+//               />
+//             </RadioGroup>
+//             <FormHelperText></FormHelperText>
+//           </FormControl>
+//         </>
+//       )}
+//       <Typography variant="subtitle2" className="mb-2 mt-1" component="h3">
+//         Output supporting files
+//       </Typography>
+//       <FormControl
+//         component="fieldset"
+//         className={classes.radioMargin}
+//         required
+//       >
+//         <FormLabel component="legend">Is linked data used?</FormLabel>
+//         <RadioGroup
+//           id="linkedData"
+//           value={state.linkedData}
+//           name="linkedData"
+//           onChange={handleRadioChange}
+//         >
+//           <FormControlLabel
+//             value="Yes"
+//             control={<Radio color="primary" />}
+//             label="Yes"
+//           />
+//           <FormControlLabel
+//             value="No"
+//             control={<Radio color="primary" />}
+//             label="No"
+//           />
+//         </RadioGroup>
+//         <FormHelperText></FormHelperText>
+//       </FormControl>
+//       {state.linkedData === 'Yes' && (
+//         <TextField
+//           className={classes.inputMargin}
+//           margin="dense"
+//           id="linkageDescription"
+//           label="Describe linkage method"
+//           variant="outlined"
+//           fullWidth
+//           required
+//           onCut={(e) => disableCutCopyPaste(e, 'cut', 'linkage')}
+//           onCopy={(e) => disableCutCopyPaste(e, 'copy', 'linkage')}
+//           onPaste={(e) => disableCutCopyPaste(e, 'paste', 'linkage')}
+//           onClick={() => toggleHelperText('linkage')}
+//           onBlur={() => toggleHelperText('linkage')}
+//           onFocus={() => toggleHelperText('linkage')}
+//           defaultValue={state.linkage.text}
+//           error={Boolean(state.linkage.errorText)}
+//           helperText={state.linkage.helperText}
+//         />
+//       )}
+//       <FormControl
+//         className={classes.radioMargin}
+//         component="fieldset"
+//         required
+//         error={Boolean(props.errors)}
+//       >
+//         <FormLabel component="legend" className={classes.tooltipLabel}>
+//           Are variables related to income, earnings, tax and/or dollar values
+//           included?{' '}
+//           <BootstrapTooltip title="If no, future vetting release reuests under this contract may be restricted due to residual disclosure. You are strongly encouraged to consult with your Analyst.">
+//             <InfoIcon />
+//           </BootstrapTooltip>
+//         </FormLabel>
+//         <RadioGroup id="dollarIncluded">
+//           <FormControlLabel
+//             value="Yes"
+//             control={<Radio color="primary" />}
+//             label="Yes"
+//           />
+//           <FormControlLabel
+//             value="No"
+//             control={<Radio color="primary" />}
+//             label="No"
+//           />
+//         </RadioGroup>
+//         <FormHelperText></FormHelperText>
+//       </FormControl>
+//       <FormControl className={classes.radioMargin} component="fieldset">
+//         <FormLabel component="legend">
+//           Does the request include descriptive statistics?
+//         </FormLabel>
+//         <RadioGroup
+//           id="descriptiveStats"
+//           value={state.descriptiveStats}
+//           name="descriptiveStats"
+//           onChange={handleRadioChange}
+//         >
+//           <FormControlLabel
+//             value="Yes"
+//             control={<Radio color="primary" />}
+//             label="Yes"
+//           />
+//           <FormControlLabel
+//             value="No"
+//             control={<Radio color="primary" />}
+//             label="No"
+//           />
+//         </RadioGroup>
+//         <FormHelperText></FormHelperText>
+//       </FormControl>
+//       {state.descriptiveStats === 'Yes' && (
+//         <>
+//           <FormControl className={classes.radioMargin} component="fieldset">
+//             <FormLabel component="legend" className={classes.lineHeight}>
+//               Is the output clearly labelled (tables have a title and every
+//               variable and category is labelled)?
+//             </FormLabel>
+//             <RadioGroup id="outpuLabelled">
+//               <FormControlLabel
+//                 value="Yes"
+//                 control={<Radio color="primary" />}
+//                 label="Yes"
+//               />
+//               <FormControlLabel
+//                 value="No"
+//                 control={<Radio color="primary" />}
+//                 label="No"
+//               />
+//             </RadioGroup>
+//             <FormHelperText></FormHelperText>
+//           </FormControl>
+//           <FormControl className={classes.radioMargin} component="fieldset">
+//             <FormLabel component="legend">
+//               Are minimum cell sizes met as per the rules for the data?
+//             </FormLabel>
+//             <RadioGroup id="minimumCellSizes">
+//               <FormControlLabel
+//                 value="Yes"
+//                 control={<Radio color="primary" />}
+//                 label="Yes"
+//               />
+//               <FormControlLabel
+//                 value="No"
+//                 control={<Radio color="primary" />}
+//                 label="No"
+//               />
+//             </RadioGroup>
+//             <FormHelperText></FormHelperText>
+//           </FormControl>
+//         </>
+//       )}
+//       <FormControl
+//         className={classes.radioMargin}
+//         component="fieldset"
+//         required
+//       >
+//         <FormLabel component="legend" className={classes.tooltipLabel}>
+//           Does this request include model output or graphs that are equivalent
+//           to a descriptive statistics?{' '}
+//           <BootstrapTooltip title="Examples: a model with a single independant variable, a model with all possible interactions, histograms.">
+//             <InfoIcon />
+//           </BootstrapTooltip>
+//         </FormLabel>
+//         <RadioGroup id="equivalentDescriptiveStats">
+//           <FormControlLabel
+//             value="Yes"
+//             control={<Radio color="primary" />}
+//             label="Yes"
+//           />
+//           <FormControlLabel
+//             value="No"
+//             control={<Radio color="primary" />}
+//             label="No"
+//           />
+//         </RadioGroup>
+//         <FormHelperText></FormHelperText>
+//       </FormControl>
+//       <FormControl className={classes.radioMargin} component="fieldset">
+//         <FormLabel component="legend">
+//           Does this output include a correlation or covariance matrix?
+//         </FormLabel>
+//         <RadioGroup
+//           id="includeMatrix"
+//           value={state.covariance}
+//           name="covariance"
+//           onChange={handleRadioChange}
+//         >
+//           <FormControlLabel
+//             value="Yes"
+//             control={<Radio color="primary" />}
+//             label="Yes"
+//           />
+//           <FormControlLabel
+//             value="No"
+//             control={<Radio color="primary" />}
+//             label="No"
+//           />
+//         </RadioGroup>
+//       </FormControl>
+//       {state.covariance === 'Yes' && (
+//         <>
+//           <FormControl className={classes.radioMargin} component="fieldset">
+//             <FormLabel component="legend">
+//               Does the matrix include continuous variables?
+//             </FormLabel>
+//             <RadioGroup id="continuousVariables">
+//               <FormControlLabel
+//                 value="Yes"
+//                 control={<Radio color="primary" />}
+//                 label="Yes"
+//               />
+//               <FormControlLabel
+//                 value="No"
+//                 control={<Radio color="primary" />}
+//                 label="No"
+//               />
+//             </RadioGroup>
+//           </FormControl>
+//           <FormControl className={classes.radioMargin} component="fieldset">
+//             <FormLabel component="legend">
+//               Does the matrix inclue dichotomous variables?
+//             </FormLabel>
+//             <RadioGroup id="dichotomousVariables">
+//               <FormControlLabel
+//                 value="Yes"
+//                 control={<Radio color="primary" />}
+//                 label="Yes"
+//               />
+//               <FormControlLabel
+//                 value="No"
+//                 control={<Radio color="primary" />}
+//                 label="No"
+//               />
+//             </RadioGroup>
+//           </FormControl>
+//           <FormControl className={classes.radioMargin} component="fieldset">
+//             <FormLabel component="legend" className={classes.lineHeight}>
+//               Does the matrix include a dichotomous variable correlated with a
+//               continuous variable?
+//             </FormLabel>
+//             <RadioGroup id="dichotomousVariable">
+//               <FormControlLabel
+//                 value="Yes"
+//                 control={<Radio color="primary" />}
+//                 label="Yes"
+//               />
+//               <FormControlLabel
+//                 value="No"
+//                 control={<Radio color="primary" />}
+//                 label="No"
+//               />
+//             </RadioGroup>
+//           </FormControl>
+//         </>
+//       )}
+//       <FormControl
+//         className={classes.radioMargin}
+//         component="fieldset"
+//         required
+//       >
+//         <FormLabel component="legend" className={classes.tooltipLabel}>
+//           Is rounding of output required for this vetting request?{' '}
+//           <BootstrapTooltip title="If yes, ensure that any forced rounding to zero is shown.">
+//             <InfoIcon />
+//           </BootstrapTooltip>
+//         </FormLabel>
+//         <RadioGroup
+//           id="roundingOutput"
+//           value={state.roundingOutput}
+//           name="roundingOutput"
+//           onChange={handleRadioChange}
+//         >
+//           <FormControlLabel
+//             value="Yes"
+//             control={<Radio color="primary" />}
+//             label="Yes"
+//           />
+//           <FormControlLabel
+//             value="No"
+//             control={<Radio color="primary" />}
+//             label="No"
+//           />
+//         </RadioGroup>
+//         <FormHelperText></FormHelperText>
+//       </FormControl>
+//       {state.roundingOutput === 'Yes' && (
+//         <TextField
+//           className={classes.inputMargin}
+//           margin="dense"
+//           id="roundingDesc"
+//           label="Describe the approach to rounding and rounding base"
+//           variant="outlined"
+//           fullWidth
+//           required
+//           onCut={(e) => disableCutCopyPaste(e, 'cut', 'rounding')}
+//           onCopy={(e) => disableCutCopyPaste(e, 'copy', 'rounding')}
+//           onPaste={(e) => disableCutCopyPaste(e, 'paste', 'rounding')}
+//           onClick={() => toggleHelperText('rounding')}
+//           onBlur={() => toggleHelperText('rounding')}
+//           onFocus={() => toggleHelperText('rounding')}
+//           defaultValue={state.rounding.text}
+//           error={Boolean(state.rounding.errorText)}
+//           helperText={state.rounding.errorText}
+//         />
+//       )}
+//       <div className="emphasisBox mb-3">
+//         <Typography variant="subtitle2" className="mb-2" component="h3">
+//           Mandatory supporting files:
+//         </Typography>
+//         <ul className="mb-3">
+//           <li>
+//             <Typography variant="body2" gutterBottom={true}>
+//               Unweighted supporting sample counts.
+//             </Typography>
+//           </li>
+//           <li>
+//             <Typography variant="body2" gutterBottom={true}>
+//               Syntax used for variable creation, analysis and running the
+//               vetting tests.
+//             </Typography>
+//           </li>
+//           <li>
+//             <Typography variant="body2" gutterBottom={true}>
+//               Vetting the results (e..g. test of magnitude, dominance, etc).
+//             </Typography>
+//           </li>
+//         </ul>
+//         <Typography variant="subtitle2" component="p">
+//           NOTE: supporting files will not be released. Please name your support
+//           files to allow easy pairing of the corresponding output file.
+//         </Typography>
+//       </div>
+//       <Grid container justify="space-between" alignItems="center">
+//         <Grid item>
+//           <Typography variant="subtitle2" component="h3">
+//             Supporting file #1
+//           </Typography>
+//         </Grid>
+//         <Grid item>
+//           <IconButton
+//             aria-label="delete"
+//             className={classes.margin}
+//             onClick={() => handleClickOpen('dialogDelete')}
+//           >
+//             <DeleteIcon />
+//           </IconButton>
+//         </Grid>
+//       </Grid>
+//       <FormControl
+//         className={classes.inputMargin}
+//         margin="dense"
+//         required
+//         variant="outlined"
+//         fullWidth
+//       >
+//         <InputLabel id="suppFolder1-label">Supporting folder</InputLabel>
+//         <Select
+//           id="suppFolder1"
+//           label="Supporting folder *"
+//           labelId="suppFolder1-label"
+//         >
+//           <MenuItem value="Folder 1">Folder 1</MenuItem>
+//           <MenuItem value="Folder 2">Folder 2</MenuItem>
+//         </Select>
+//       </FormControl>
+//       <TextField
+//         className={classes.inputMargin}
+//         margin="dense"
+//         id="fileContents1"
+//         label="File contents"
+//         variant="outlined"
+//         fullWidth
+//         required
+//         onCut={(e) => disableCutCopyPaste(e, 'cut', 'contents')}
+//         onCopy={(e) => disableCutCopyPaste(e, 'copy', 'contents')}
+//         onPaste={(e) => disableCutCopyPaste(e, 'paste', 'contents')}
+//         onClick={() => toggleHelperText('contents')}
+//         onBlur={() => toggleHelperText('contents')}
+//         onFocus={() => toggleHelperText('contents')}
+//         defaultValue={state.contents.text}
+//         error={Boolean(state.contents.errorText)}
+//         helperText={state.contents.errorText}
+//       />
+//       <TextField
+//         className={classes.inputMargin}
+//         margin="dense"
+//         id="notes1"
+//         label="Notes"
+//         multiline
+//         variant="outlined"
+//         fullWidth
+//         required
+//         onCut={(e) => disableCutCopyPaste(e, 'cut', 'notes')}
+//         onCopy={(e) => disableCutCopyPaste(e, 'copy', 'notes')}
+//         onPaste={(e) => disableCutCopyPaste(e, 'paste', 'notes')}
+//         onClick={() => toggleHelperText('notes')}
+//         onBlur={() => toggleHelperText('notes')}
+//         onFocus={() => toggleHelperText('notes')}
+//         defaultValue={state.notes.text}
+//         error={Boolean(state.notes.errorText)}
+//         helperText={state.notes.errorText}
+//       />
+//       <Grid container justify="space-between" alignItems="center">
+//         <Grid item>
+//           <Typography variant="subtitle2" component="h3">
+//             Supporting file #2
+//           </Typography>
+//         </Grid>
+//         <Grid item>
+//           <IconButton
+//             aria-label="delete"
+//             className={classes.margin}
+//             onClick={() => handleClickOpen('dialogDelete')}
+//           >
+//             <DeleteIcon />
+//           </IconButton>
+//         </Grid>
+//       </Grid>
+//       <FormControl
+//         className={classes.inputMargin}
+//         margin="dense"
+//         required
+//         variant="outlined"
+//         fullWidth
+//       >
+//         <InputLabel id="suppFolder2-label">Supporting folder</InputLabel>
+//         <Select
+//           id="suppFolder2"
+//           label="Supporting folder *"
+//           labelId="suppFolder2-label"
+//         >
+//           <MenuItem value="Folder 1">Folder 1</MenuItem>
+//           <MenuItem value="Folder 2">Folder 2</MenuItem>
+//         </Select>
+//       </FormControl>
+//       <TextField
+//         className={classes.inputMargin}
+//         margin="dense"
+//         id="fileContents2"
+//         label="File contents"
+//         variant="outlined"
+//         fullWidth
+//         required
+//         onCut={(e) => disableCutCopyPaste(e, 'cut', 'contents2')}
+//         onCopy={(e) => disableCutCopyPaste(e, 'copy', 'contents2')}
+//         onPaste={(e) => disableCutCopyPaste(e, 'paste', 'contents2')}
+//         onClick={() => toggleHelperText('contents2')}
+//         onBlur={() => toggleHelperText('contents2')}
+//         onFocus={() => toggleHelperText('contents2')}
+//         defaultValue={state.contents2.text}
+//         error={Boolean(state.contents2.errorText)}
+//         helperText={state.contents2.errorText}
+//       />
+//       <TextField
+//         className={classes.inputMargin}
+//         margin="dense"
+//         id="notes2"
+//         label="Notes"
+//         multiline
+//         variant="outlined"
+//         fullWidth
+//         required
+//         onCut={(e) => disableCutCopyPaste(e, 'cut', 'notes2')}
+//         onCopy={(e) => disableCutCopyPaste(e, 'copy', 'notes2')}
+//         onPaste={(e) => disableCutCopyPaste(e, 'paste', 'notes2')}
+//         onClick={() => toggleHelperText('notes2')}
+//         onBlur={() => toggleHelperText('notes2')}
+//         onFocus={() => toggleHelperText('notes2')}
+//         defaultValue={state.notes2.text}
+//         error={Boolean(state.notes2.errorText)}
+//         helperText={state.notes2.errorText}
+//       />
+
+//       <div className={classes.buttonTooltip}>
+//         <Button
+//           variant="contained"
+//           color="primary"
+//           onClick={() => props.handleClickOpen('dialogAddSupporting')}
+//         >
+//           Add supporting file
+//         </Button>
+//         <BootstrapTooltip title="In addition to the mandatory files listed, include other files as required by the Survey Specific Guidelines, syntax files or other files requested by the Analyst.">
+//           <InfoIcon />
+//         </BootstrapTooltip>
+//         {/* Delete file snackbar */}
+//         <SnackbarDeleteSupportFile
+//           open={state.snackbarDelete}
+//           handleClose={() => handleClickClose('snackbarDelete')}
+//         />
+//         {/* Delete dialog */}
+//         <DialogDelete
+//           submitDialog={handleDeleteFile}
+//           toggleDialog={() => handleClickClose('dialogDelete')}
+//           open={state.dialogDelete}
+//         />
+//       </div>
+//     </>
+//   );
+// }
