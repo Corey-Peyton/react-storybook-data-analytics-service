@@ -134,10 +134,6 @@ const useStyles = makeStyles((theme) => ({
     paddingLeft: theme.spacing(1),
     marginTop: theme.spacing(1),
   },
-  inputMargin: {
-    marginTop: theme.spacing(0),
-    marginBottom: theme.spacing(3),
-  },
   iconText: {
     'display': 'flex',
     'alignItems': 'center',
@@ -336,11 +332,7 @@ function FilesList(props) {
           This request will be stored as part of the request record.
         </Typography>
       </div>
-      <FormControl
-        component="fieldset"
-        className={classes.inputMargin}
-        required
-      >
+      <FormControl component="fieldset" className="radio-margin" required>
         <FormLabel component="legend">
           Is the requested output consistent with the approved proposal for this
           project?
@@ -358,11 +350,7 @@ function FilesList(props) {
           />
         </RadioGroup>
       </FormControl>
-      <FormControl
-        component="fieldset"
-        className={classes.inputMargin}
-        required
-      >
+      <FormControl component="fieldset" className="radio-margin" required>
         <FormLabel component="legend">
           Have you checked the vetting rules to determine if there are
           geographical, institutional, household size and/or population
@@ -381,11 +369,7 @@ function FilesList(props) {
           />
         </RadioGroup>
       </FormControl>
-      <FormControl
-        component="fieldset"
-        className={classes.inputMargin}
-        required
-      >
+      <FormControl component="fieldset" className="radio-margin" required>
         <FormLabel component="legend" className={classes.tooltipLabel}>
           Is the requested output your final output?
           <BootstrapTooltip title="If no, future vetting release requests under this contract may be restricted due to residual disclosure. You are strongly encouraged to consult with your Analyst.">
