@@ -235,6 +235,12 @@ export const OutlinedTextField = (args) => {
       />
       <TextField
         className="input-margin"
+        id="readonly"
+        label="Read only"
+        inputProps={{readOnly: true}}
+      />
+      <TextField
+        className="input-margin"
         id="placeholder"
         label="Placeholder"
         placeholder="Placeholder text"
@@ -306,12 +312,6 @@ export const OutlinedTextField = (args) => {
         label="Multiline"
         multiline
         rows={1}
-      />
-      <TextField
-        className="input-margin"
-        id="readonly"
-        label="Read only"
-        inputProps={{readOnly: true}}
       />
     </div>
   );
