@@ -307,6 +307,12 @@ export const OutlinedTextField = (args) => {
         multiline
         rows={1}
       />
+      <TextField
+        className="input-margin"
+        id="readonly"
+        label="Read only"
+        inputProps={{readOnly: true}}
+      />
     </div>
   );
 };
