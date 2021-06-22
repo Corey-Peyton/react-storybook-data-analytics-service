@@ -91,12 +91,18 @@ export const useStyles = makeStyles({
           paddingTop: theme.spacing(1.625),
           paddingBottom: theme.spacing(1.625),
         },
+        '& .MuiSelect-icon': {
+          color: theme.palette.buttons.default,
+        },
         // Autocomplete
         '&.MuiAutocomplete-inputRoot': {
           'paddingTop': theme.spacing(1.0625),
           'paddingBottom': theme.spacing(1.0625),
           '& .MuiAutocomplete-endAdornment': {
             top: 0,
+          },
+          '& .MuiAutocomplete-clearIndicatorDirty': {
+            visibility: 'visible',
           },
         },
         // Placeholder
