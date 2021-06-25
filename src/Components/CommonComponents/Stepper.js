@@ -9,7 +9,7 @@ import {
   StepButton,
   StepConnector,
   Grid,
-  Button,
+  IconButton,
   Typography,
 } from '@material-ui/core/';
 import {grey} from '@material-ui/core/colors';
@@ -97,11 +97,9 @@ export default function Stepper(props) {
   const handleNext = () => {
     window.scrollTo(0, 0);
     const prevActiveStep = state.activeStep;
-    const newActiveStep =
-      isLastStep() && !allStepsCompleted() ?
-        steps.findIndex((step, i) => !(i in state.completed)) :
-        setState({...state, activeStep: prevActiveStep + 1});
-    triggerErrors(newActiveStep);
+    isLastStep() && !allStepsCompleted() ?
+      steps.findIndex((step, i) => !(i in state.completed)) :
+      setState({...state, activeStep: prevActiveStep + 1});
   };
 
   const handleBack = () => {
@@ -115,8 +113,6 @@ export default function Stepper(props) {
   const handleJumpStep = (step) => {
     setState({...state, activeStep: step});
   };
-
-  const triggerErrors = (step) => {};
 
   const isStepFailed = (step) => {
     return state.stepperErrors[step] !== 0;
@@ -165,9 +161,13 @@ export default function Stepper(props) {
   return (
     <div className={classes.root}>
       <div className={classes.stepperContainer}>
-        <Button onClick={handleBack} className={classes.stepperBackBtn}>
+        <IconButton
+          onClick={handleBack}
+          className={classes.stepperBackBtn}
+          disabled={state.activeStep === 0}
+        >
           <ArrowBackIosIcon />
-        </Button>
+        </IconButton>
         <div className={classes.customStepConnector}></div>
         <MUIStepper
           nonLinear
@@ -182,7 +182,7 @@ export default function Stepper(props) {
               buttonProps.optional = (
                 <Typography
                   className={classes.errorMsg}
-                  variant="body2"
+                  variant="caption"
                   color="error"
                   align="left"
                 >
@@ -199,7 +199,6 @@ export default function Stepper(props) {
                   {...buttonProps}
                   onClick={() => {
                     handleJumpStep(index);
-                    triggerErrors(index);
                   }}
                   completed={state.completed[index]}
                   className={classes.stepButton}
@@ -228,9 +227,13 @@ export default function Stepper(props) {
           })}
         </MUIStepper>
         <div className={classes.customStepConnector}></div>
-        <Button onClick={handleNext} className={classes.stepperNextBtn}>
+        <IconButton
+          onClick={handleNext}
+          className={classes.stepperNextBtn}
+          disabled={state.activeStep === totalSteps() - 1}
+        >
           <ArrowForwardIosIcon />
-        </Button>
+        </IconButton>
       </div>
       <div>
         <Grid container justify="center" className="mb-4 mt-4">
