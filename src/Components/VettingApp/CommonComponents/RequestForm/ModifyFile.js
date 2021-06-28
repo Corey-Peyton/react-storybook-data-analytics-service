@@ -22,9 +22,7 @@ import {
   Popover,
   InputAdornment,
   Divider,
-  Paper,
 } from '@material-ui/core';
-import Box from '@material-ui/core/Box';
 import {TreeView, TreeItem} from '@material-ui/lab';
 import CloseIcon from '@material-ui/icons/Close';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
@@ -32,13 +30,7 @@ import ChevronRightIcon from '@material-ui/icons/ChevronRight';
 import KeyboardArrowDownIcon from '@material-ui/icons/KeyboardArrowDown';
 import AddIcon from '@material-ui/icons/Add';
 import Icon from '@mdi/react';
-import {
-  mdiChevronRight,
-  mdiFile,
-  mdiFileOutline,
-  mdiFolderOpen,
-  mdiFolderOutline,
-} from '@mdi/js';
+import {mdiChevronRight} from '@mdi/js';
 import {DialogOutputMethodHelp, DialogAddFile} from '../DialogBox';
 import {Card} from '../../../../Components/CommonComponents/Card';
 
