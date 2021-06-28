@@ -163,8 +163,8 @@ const useStyles = makeStyles((theme) => ({
     alignItems: 'start',
   },
   divider: {
-    marginTop: theme.spacing(1),
-    marginBottom: theme.spacing(1),
+    marginTop: theme.spacing(1.5),
+    marginBottom: theme.spacing(1.5),
   },
   filePath: {
     display: 'flex',
@@ -3224,16 +3224,18 @@ export function DialogOutputMethodHelp(props) {
             <div className={classes.vettingRow}>
               <div className={classes.vettingColumn}>
                 <Typography variant="subtitle2" component="h3" className="mb-3">
-                  {t('1. Descriptive')}
+                  {t('Descriptive')}
                 </Typography>
-                <Typography variant="body2">
-                  {t(
-                      'The business partners should add a definition here to help explain what "Descripive" means. If they do not have the ability to provide a definition we can just show the examples for "Descriptive".',
-                  )}
+                <Typography variant="body2" component="p" className="mb-3">
+                  {t('{Definition speak with business partners}')}
                 </Typography>
-                <Typography variant="caption" color="textSecondary">
+                <Typography
+                  variant="caption"
+                  component="p"
+                  color="textSecondary"
+                >
                   {t(
-                      '(e.g. ANOVA, Correlation matrix, Cross-tabular analysis, Distributions, Frequencies, Kurtosis, Means, Medians, Modes, Percentages, Quartiles, Ranges, Ratios, Regression models with only one independant variable, Skewness, Standard deviations, Totals, Variances)',
+                      '(e.g. ANOVA, correlation matrix, cross-tabular analysis, distributions, frequencies, kurtosis, means, medians, modes, percentages, quartiles, ranges, ratios, regression models with only one independant variable, skewness, standard deviations, totals, variances)',
                   )}
                 </Typography>
               </div>
@@ -3242,15 +3244,16 @@ export function DialogOutputMethodHelp(props) {
             <div className={classes.vettingRow}>
               <div className={classes.vettingColumn}>
                 <Typography variant="subtitle2" component="h3" className="mb-3">
-                  {t('2. Scaling')}
+                  {t('Scaling')}
                 </Typography>
-                <Typography variant="body2">
-                  {t(
-                      'The business partners should add a definition here to help explain what "Scaling" means. If they do not have the ability to provide a definition we can just show the examples for "Scaling".',
-                  )}
-                  '
+                <Typography variant="body2" component="p" className="mb-3">
+                  {t('{Definition speak with business partners}')}
                 </Typography>
-                <Typography variant="caption" color="textSecondary">
+                <Typography
+                  variant="caption"
+                  component="p"
+                  color="textSecondary"
+                >
                   {t('(e.g. Factor analysis)')}
                 </Typography>
               </div>
@@ -3259,14 +3262,16 @@ export function DialogOutputMethodHelp(props) {
             <div className={classes.vettingRow}>
               <div className={classes.vettingColumn}>
                 <Typography variant="subtitle2" component="h3" className="mb-3">
-                  {t('3. Graphs')}
+                  {t('Graphs')}
                 </Typography>
-                <Typography variant="body2">
-                  {t(
-                      'The business partners should add a definition here to help explain what "Graphs" means. If they do not have the ability to provide a definition we an just show the examples for "Graphs".',
-                  )}
+                <Typography variant="body2" component="p" className="mb-3">
+                  {t('{Definition speak with business partners}')}
                 </Typography>
-                <Typography variant="caption" color="textSecondary">
+                <Typography
+                  variant="caption"
+                  component="p"
+                  color="textSecondary"
+                >
                   {t('(e.g. Histograms)')}
                 </Typography>
               </div>
@@ -3275,15 +3280,17 @@ export function DialogOutputMethodHelp(props) {
             <div className={classes.vettingRow}>
               <div className={classes.vettingColumn}>
                 <Typography variant="subtitle2" component="h3" className="mb-3">
-                  {t('4. Multivariable regression analysis')}
+                  {t('Multivariable regression analysis')}
                 </Typography>
-                <Typography variant="body2">
-                  {t(
-                      'The business partners should add a definition here to help explain what "Multivariable regression analysis" means. If they do not have the ability to provide a definition we can just show the examples for "Multivariable regression analysis".',
-                  )}
+                <Typography variant="body2" component="p" className="mb-3">
+                  {t('{Definition speak with business partners}')}
                 </Typography>
-                <Typography variant="caption" color="textSecondary">
-                  {t('(e.g. Logistic regression, OLS, Poisson, Probit, Tobit)')}
+                <Typography
+                  variant="caption"
+                  component="p"
+                  color="textSecondary"
+                >
+                  {t('(e.g. Logistic regression, OLS, poisson, probit, tobit)')}
                 </Typography>
               </div>
             </div>
@@ -3291,16 +3298,18 @@ export function DialogOutputMethodHelp(props) {
             <div className={classes.vettingRow}>
               <div className={classes.vettingColumn}>
                 <Typography variant="subtitle2" component="h3" className="mb-3">
-                  {t('5. Complex modeling')}
+                  {t('Complex modeling')}
                 </Typography>
-                <Typography variant="body2">
-                  {t(
-                      'The business partners should add a definition here to help explain what "Complex modeling" means. If they do not have the ability to provide a definition we can just show the examples for "Complex modeling".',
-                  )}
+                <Typography variant="body2" component="p" className="mb-3">
+                  {t('{Definition speak with business partners}')}
                 </Typography>
-                <Typography variant="caption" color="textSecondary">
+                <Typography
+                  variant="caption"
+                  component="p"
+                  color="textSecondary"
+                >
                   {t(
-                      '(e.g. Event history analysis, Fixed effects models, Growth analysis, Hierarchical linear modeling, Random effects models, Simultaneous-equations models, Structural equation modeling, Survival analysis)',
+                      '(e.g. Event history analysis, fixed effects models, growth analysis, hierarchical linear modeling, random effects models, simultaneous-equations models, structural equation modeling, survival analysis)',
                   )}
                 </Typography>
               </div>
@@ -3342,8 +3351,7 @@ export function DialogAddFile(props) {
   const id = open ? 'simple-popover' : undefined;
   const [state, setState] = React.useState({
     fileNotes: {
-      text:
-        'Notes section to include any details regarding the syntax file added. This will be helpful for the Researcher/Analyst during the vetting process.',
+      text: '',
       errorText: '',
       invalid: '',
       commands: '',
@@ -3397,7 +3405,7 @@ export function DialogAddFile(props) {
         <DialogTitle id="dashboard-dialog-title">
           <div className={classes.vettingContainerTitle}>
             <Typography variant="h6" component="h2">
-              {t('Add file')}
+              {t('Add file for support')}
             </Typography>
             <IconButton
               id="dialog-close"
@@ -3421,13 +3429,8 @@ export function DialogAddFile(props) {
           <div className={classes.vettingSection}>
             <div className={classes.vettingRow}>
               <div className={classes.vettingColumn}>
-                <Typography variant="subtitle2" component="h3" className="mb-3">
-                  {t('Select the file for syntax')}
-                </Typography>
-                <Typography variant="body2">
-                  {t(
-                      'An example of an explanation of what the Analysts are looking for for this specific file type. Example text example text example text example text example text example text example text',
-                  )}
+                <Typography variant="subtitle2" component="h3">
+                  {t('Select file for unweighted supporting sample counts')}
                 </Typography>
               </div>
             </div>

@@ -14,6 +14,7 @@ const useStyles = makeStyles((theme) => ({
     'borderStyle': 'dashed',
     'justifyContent': 'start',
     'textAlign': 'left',
+    'borderColor': 'rgba(0, 0, 0, 0.23)',
     '&.MuiButton-outlinedPrimary:hover': {
       borderStyle: 'dashed',
     },

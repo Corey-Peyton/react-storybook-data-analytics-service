@@ -212,9 +212,9 @@ function FilesList(props) {
       return;
     }
     if (drawer === 'addFile') {
-      state.outputFileHeader = 'Add output file';
+      state.outputFileHeader = 'Add file for output';
     } else if (drawer === 'editFile') {
-      state.outputFileHeader = 'Edit output file';
+      state.outputFileHeader = 'Edit file for output';
     }
     setOpen({...open, outputFile: shown});
   };

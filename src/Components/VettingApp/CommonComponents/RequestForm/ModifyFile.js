@@ -22,7 +22,9 @@ import {
   Popover,
   InputAdornment,
   Divider,
+  Paper,
 } from '@material-ui/core';
+import Box from '@material-ui/core/Box';
 import {TreeView, TreeItem} from '@material-ui/lab';
 import CloseIcon from '@material-ui/icons/Close';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
@@ -30,7 +32,13 @@ import ChevronRightIcon from '@material-ui/icons/ChevronRight';
 import KeyboardArrowDownIcon from '@material-ui/icons/KeyboardArrowDown';
 import AddIcon from '@material-ui/icons/Add';
 import Icon from '@mdi/react';
-import {mdiFolderOpen} from '@mdi/js';
+import {
+  mdiChevronRight,
+  mdiFile,
+  mdiFileOutline,
+  mdiFolderOpen,
+  mdiFolderOutline,
+} from '@mdi/js';
 import {DialogOutputMethodHelp, DialogAddFile} from '../DialogBox';
 import {Card} from '../../../../Components/CommonComponents/Card';
 
@@ -39,16 +47,16 @@ const useStyles = makeStyles((theme) => ({
     marginTop: theme.spacing(0),
     marginBottom: theme.spacing(3),
   },
-  radioMargin: {
-    marginTop: theme.spacing(0),
-    marginBottom: theme.spacing(2),
-  },
+  // radioMargin: {
+  // marginTop: theme.spacing(0),
+  // marginBottom: theme.spacing(2),
+  // },
   lineHeight: {
     lineHeight: 'normal',
   },
-  divider: {
-    margin: theme.spacing(3, 0),
-  },
+  // divider: {
+  // margin: theme.spacing(3, 0),
+  // },
   hiddenRow: {
     display: 'none',
   },
@@ -70,7 +78,7 @@ const useStyles = makeStyles((theme) => ({
   body: {
     marginTop: theme.spacing(8),
     marginBottom: theme.spacing(8),
-    padding: theme.spacing(2, 3, 2, 3),
+    padding: theme.spacing(3, 3, 3, 3),
     overflowY: 'auto',
     overflowX: 'hidden',
   },
@@ -116,6 +124,7 @@ const useStyles = makeStyles((theme) => ({
     'justifyContent': 'start',
     'width': '100%',
     'textAlign': 'left',
+    'borderColor': 'rgba(0, 0, 0, 0.23)',
     '&.MuiButton-outlinedPrimary:hover': {
       borderStyle: 'dashed',
     },
@@ -130,15 +139,10 @@ const useStyles = makeStyles((theme) => ({
     alignItems: 'center',
   },
   indentedSection: {
-    'paddingLeft': theme.spacing(3),
-    'paddingTop': theme.spacing(3),
-    'paddingBottom': theme.spacing(3),
-    'marginBottom': theme.spacing(3),
-    'borderLeft': '1px solid',
-    'borderLeftColor': theme.palette.divider,
-    '&>*:last-child': {
-      marginBottom: 0,
-    },
+    paddingTop: theme.spacing(3),
+    paddingLeft: theme.spacing(3),
+    borderLeft: '1px solid',
+    borderLeftColor: theme.palette.divider,
   },
 }));
 
@@ -300,7 +304,7 @@ export function ViewFile(props) {
       <AppBar position="static" className={classes.appBar} color="default">
         <Toolbar>
           <Typography variant="h6" component="h2" className={classes.title}>
-            View output file
+            View file for output
           </Typography>
           <IconButton
             aria-label="Close view output file"
@@ -387,7 +391,7 @@ function AddFileForm(props) {
       helperText: '',
     },
     weightvariable: {
-      text: 'Example weighted variable name',
+      text: '',
       errorText: '',
       invalid: '',
       commands: '',
@@ -405,18 +409,17 @@ function AddFileForm(props) {
       errorText: '',
       invalid: '',
       commands: '',
-      helperText: 'Examples: national, provincial',
+      helperText: '(e.g. National, provincial, municipal)',
     },
     linkage: {
-      text: 'Person based',
+      text: '',
       errorText: '',
       invalid: '',
       commands: '',
-      helperText: '(e.g. Person based, Record based, Matching geographies)',
+      helperText: '(e.g. Person based, record based, matching geographies)',
     },
     rounding: {
-      text:
-        'Some example describing the approach to rounding and rounding base.',
+      text: '',
       errorText: '',
       invalid: '',
       commands: '',
@@ -462,14 +465,14 @@ function AddFileForm(props) {
 
   return (
     <>
-      <Typography variant="h6" component="h3" className="mb-3">
-        {t('Select the file you want to released')}
+      <Typography variant="subtitle2" component="h3" className="mb-3">
+        {t('Select output file')}
       </Typography>
-      <Typography variant="body2" component="p" className="mb-3">
+      {/* <Typography variant="body2" component="p" className="mb-3">
         {t(
-            'If you have not already added the file you want released to the request folder associated with this request, go into the shared folder of your virtual machine and add it now. If a spreadsheet file is selected you will be required to add each sheet as a seperate file for release.',
+            'If you have not already added the file you want released to the request folder associated with this request, go into the shared folder of your virtual machine and add it now. If a spreadsheet file is selected you will need to add a file for each sheet.',
         )}
-      </Typography>
+      </Typography> */}
       <TextField
         label={t('File path')}
         required
@@ -483,7 +486,9 @@ function AddFileForm(props) {
             </InputAdornment>
           ),
         }}
-        className={clsx(classes.textFieldPopover, 'mb-3')}
+        // className={clsx(classes.textFieldPopover, 'mb-3')}
+        className="mb-3"
+        fullWidth
       />
       <Popover
         id={id}
@@ -534,20 +539,18 @@ function AddFileForm(props) {
           </TreeItem>
         </TreeView>
       </Popover>
-
       <div className={clsx(classes.indentedSection, 'mb-3')}>
         <TextField
           label={t('Sheet name')}
-          value="Sheet name"
-          InputProps={{
-            readOnly: true,
-          }}
           fullWidth
+          margin="dense"
+          variant="outlined"
+          required
+          className="mb-3"
         />
       </div>
-
       <Divider className="mb-3" />
-      <Typography variant="h6" component="h3" className="mb-3">
+      {/* <Typography variant="subtitle2" component="h3" className="mb-3">
         {t('Mandatory supporting files')}
       </Typography>
       <Typography variant="body2" component="p" className="mb-3">
@@ -555,19 +558,12 @@ function AddFileForm(props) {
             'All files you want released will require the following supporting file types. During this process you may be asked to enter additional supporting files but this will depend on how you answer the screening questions.',
         )}
       </Typography>
-
       <Typography variant="body2" component="p">
         {t('Add files for syntax *')}
       </Typography>
-      <Typography
-        variant="caption"
-        color="textSecondary"
-        component="p"
-        className="mb-3"
-      >
+      <Typography variant="caption" color="textSecondary" component="p">
         {t('At least one file must be added')}
       </Typography>
-
       <Card
         title={t('1. File for syntax')}
         error={false}
@@ -576,10 +572,10 @@ function AddFileForm(props) {
         primaryClick={() => handleClickOpen('dialogAddFile')}
         content={
           <>
-            <Typography variant="subtitle2" component="p">
+            <Typography variant="caption" component="p">
               {t('File path')}
             </Typography>
-            <div className={clsx(classes.filePath, 'mb-3')}>
+            <div className={clsx(classes.filePath, 'mb-2')}>
               <div className={classes.filePathItem}>
                 <Icon path={mdiFolderOpen} size={1} />
                 <Typography variant="body2" component="p">
@@ -612,7 +608,7 @@ function AddFileForm(props) {
               </div>
             </div>
 
-            <Typography variant="subtitle2" component="p">
+            <Typography variant="caption" component="p">
               {t('Notes')}
             </Typography>
             <Typography variant="body2" component="p">
@@ -627,45 +623,39 @@ function AddFileForm(props) {
         variant="outlined"
         color="primary"
         startIcon={<AddIcon />}
-        className={clsx(classes.addBtn, 'mt-3 mb-3')}
+        className={clsx(classes.addBtn, 'mt-2 mb-3')}
       >
         {t('Add file for syntax')}
       </Button>
-
       <Typography variant="body2" component="p">
         {t('Add file for variable list / description *')}
       </Typography>
-      <Typography
-        variant="caption"
-        color="textSecondary"
-        component="p"
-        className="mb-3"
-      >
+      <Typography variant="caption" color="textSecondary" component="p">
         {t('At least one file must be added')}
       </Typography>
-
       <Button
         variant="outlined"
         color="primary"
         startIcon={<AddIcon />}
-        className={clsx(classes.addBtn, 'mb-3')}
+        className={clsx(classes.addBtn, 'mt-2 mb-3')}
       >
         {t('Add file for variable list / description')}
       </Button>
-      <Divider className="mb-3" />
-      <Typography variant="h6" component="h3" className="mb-3">
-        {t('Screening question and other details')}
+      <Divider className="mb-3" />*/}
+      <Typography variant="subtitle2" component="h3" className="mb-3">
+        {t('Output details')}
       </Typography>
-      <Typography variant="body2" component="p" className="mb-3">
+      {/* <Typography variant="body2" component="p" className="mb-3">
         {t(
             'Answer the following questions and enter any details that are required. Depending on how the questions are answered, more details may be required. These details are required to help the Analyst vet the file you want released.',
         )}
-      </Typography>
+        </Typography>*/}
+
       <TextField
-        className={classes.inputMargin}
+        className="mb-3"
         margin="dense"
         id="datasetName"
-        label={t('Surveys / Datasets and cycles')}
+        label={t('Surveys/Datasets and cycles')}
         variant="outlined"
         fullWidth
         required
@@ -674,16 +664,16 @@ function AddFileForm(props) {
         helperText={state.survey.helperText}
       />
       <FormControl
-        className={classes.inputMargin}
+        className="mb-3"
         margin="dense"
         required
         variant="outlined"
         fullWidth
       >
-        <InputLabel id="output-select-label">{t('Output Method')}</InputLabel>
+        <InputLabel id="output-select-label">{t('Output method')}</InputLabel>
         <Select
           id="outputMethod"
-          label={t('Output Method')}
+          label={t('Output method')}
           labelId="output-select-label"
           onChange={handleSelectChange}
           name="outputMethod"
@@ -700,7 +690,7 @@ function AddFileForm(props) {
           {t('Need help?')}{' '}
           <Link
             underline="always"
-            color="primary"
+            color="inherit"
             onClick={() => handleClickOpen('dialogOutputMethodHelp')}
             component="button"
           >
@@ -708,35 +698,28 @@ function AddFileForm(props) {
           </Link>
         </FormHelperText>
       </FormControl>
-
       {state.outputMethod.value === 'Graphs' && (
         <div className={clsx(classes.indentedSection, 'mb-3')}>
           <Typography variant="body2" component="p">
             {t('Add file for supporting tabulations for graphs *')}
           </Typography>
-          <Typography
-            variant="caption"
-            color="textSecondary"
-            component="p"
-            className="mb-3"
-          >
+          <Typography variant="caption" color="textSecondary" component="p">
             {t('At least one file must be added')}
           </Typography>
           <Button
             variant="outlined"
             color="primary"
             startIcon={<AddIcon />}
-            className={clsx(classes.addBtn)}
+            className={clsx(classes.addBtn, 'mt-2 mb-3')}
           >
-            {t('Add file for syntax')}
+            {t('Add file for support')}
           </Button>
         </div>
       )}
-
       {state.outputMethod.value === 'Other' && (
         <div className={clsx(classes.indentedSection, 'mb-3')}>
           <TextField
-            className={classes.inputMargin}
+            className="mb-3"
             margin="dense"
             id="outputMethodDescription"
             label={t('Output method description')}
@@ -751,10 +734,10 @@ function AddFileForm(props) {
         </div>
       )}
       <TextField
-        className={classes.inputMargin}
+        className="mb-3"
         margin="dense"
         id="sample-input"
-        label={t('Sample, sub-smaple or inclusion / exclusion')}
+        label={t('Sample, sub-samaple, inclusion/exclusion')}
         variant="outlined"
         fullWidth
         required
@@ -763,10 +746,10 @@ function AddFileForm(props) {
         helperText={state.sample.helperText}
       />
       <TextField
-        className={classes.inputMargin}
+        className="mb-3"
         margin="dense"
         id="geography-input"
-        label={t('Level of geography')}
+        label={t('Geography level')}
         variant="outlined"
         fullWidth
         required
@@ -774,11 +757,11 @@ function AddFileForm(props) {
         error={Boolean(state.geography.errorText)}
         helperText={state.geography.helperText}
       />
-      <FormControl
-        component="fieldset"
-        className={classes.radioMargin}
-        required
-      >
+      <Divider className="mb-3" />
+      <Typography variant="subtitle2" component="h3" className="mb-3">
+        {t('Weighted variable')}
+      </Typography>
+      <FormControl component="fieldset" className="mb-2" required>
         <FormLabel component="legend">
           {t('Does this output include a weight variable?')}
         </FormLabel>
@@ -804,7 +787,7 @@ function AddFileForm(props) {
       {state.includeWeightVariable === 'Yes' && (
         <div className={clsx(classes.indentedSection, 'mb-3')}>
           <TextField
-            className={classes.inputMargin}
+            className="mb-3"
             margin="dense"
             id="weightVariableName"
             label={t('Weighted variable name')}
@@ -815,11 +798,7 @@ function AddFileForm(props) {
             error={Boolean(state.weightvariable.errorText)}
             helperText={state.weightvariable.errorText}
           />
-          <FormControl
-            component="fieldset"
-            className={classes.radioMargin}
-            required
-          >
+          <FormControl component="fieldset" className="mb-2" required>
             <FormLabel component="legend">
               {t('Was the weighted variable scaled/normalized?')}
             </FormLabel>
@@ -839,11 +818,11 @@ function AddFileForm(props) {
           </FormControl>
         </div>
       )}
-      <FormControl
-        component="fieldset"
-        className={classes.radioMargin}
-        required
-      >
+      <Divider className="mb-3" />
+      <Typography variant="subtitle2" component="h3" className="mb-3">
+        {t('Linked data')}
+      </Typography>
+      <FormControl component="fieldset" className="mb-2" required>
         <FormLabel component="legend">{t('Is linked data used?')}</FormLabel>
         <RadioGroup
           id="linkedData"
@@ -867,7 +846,7 @@ function AddFileForm(props) {
       {state.linkedData === 'Yes' && (
         <div className={clsx(classes.indentedSection, 'mb-3')}>
           <TextField
-            className={classes.inputMargin}
+            className="mb-3"
             margin="dense"
             id="linkageDescription"
             label={t('Linkage method')}
@@ -880,8 +859,12 @@ function AddFileForm(props) {
           />
         </div>
       )}
+      <Divider className="mb-3" />
+      <Typography variant="subtitle2" component="h3" className="mb-3">
+        {t('Finacial variables')}
+      </Typography>
       <FormControl
-        className={classes.radioMargin}
+        className="mb-2"
         component="fieldset"
         required
         error={Boolean(props.errors)}
@@ -910,76 +893,181 @@ function AddFileForm(props) {
         </RadioGroup>
         <FormHelperText></FormHelperText>
       </FormControl>
-
       {state.dollarIncluded === 'Yes' && (
         <div className={clsx(classes.indentedSection, 'mb-3')}>
           <Typography variant="body2" component="p">
             {t('Add file for unweighted supporting sample counts *')}
           </Typography>
-          <Typography
-            variant="caption"
-            color="textSecondary"
-            component="p"
-            className="mb-3"
-          >
+          <Typography variant="caption" color="textSecondary" component="p">
             {t('At least one file must be added')}
           </Typography>
-
+          <Card
+            title={t('File 1 · Unweighted supporting sample counts')}
+            error={false}
+            primaryButton="Edit"
+            secondaryButton="Delete"
+            primaryClick={() => handleClickOpen('dialogAddFile')}
+            content={
+              <>
+                <Typography
+                  variant="caption"
+                  component="p"
+                  color="textSecondary"
+                >
+                  {t('File path')}
+                </Typography>
+                <div className={clsx(classes.filePath, 'mb-2')}>
+                  <div className={classes.filePathItem}>
+                    <Typography variant="body2" component="p" className="mr-1">
+                      {'Project folder example'}
+                    </Typography>
+                    <Icon path={mdiChevronRight} size={0.5} className="mr-1" />
+                  </div>
+                  <div className={classes.filePathItem}>
+                    <Typography variant="body2" component="p" className="mr-1">
+                      {'Request folder example'}
+                    </Typography>
+                    <Icon path={mdiChevronRight} size={0.5} className="mr-1" />
+                  </div>
+                  <div className={classes.filePathItem}>
+                    <Typography variant="body2" component="p" className="mr-1">
+                      {'First level folder example'}
+                    </Typography>
+                    <Icon path={mdiChevronRight} size={0.5} className="mr-1" />
+                  </div>
+                  <div className={classes.filePathItem}>
+                    <Typography variant="body2" component="p" className="mr-1">
+                      {'Second level folder example'}
+                    </Typography>
+                    <Icon path={mdiChevronRight} size={0.5} className="mr-1" />
+                  </div>
+                  <div className={classes.filePathItem}>
+                    <Typography variant="body2" component="p">
+                      {'Suporting file name example.doc'}
+                    </Typography>
+                  </div>
+                </div>
+                <Typography
+                  variant="caption"
+                  component="p"
+                  color="textSecondary"
+                >
+                  {t('Notes')}
+                </Typography>
+                <Typography variant="body2" component="p">
+                  {t(
+                      'Notes section to include any details regarding the syntax file added. This will be helpful for the Researcher/Analyst during the vetting process.',
+                  )}
+                </Typography>
+              </>
+            }
+          />
+          <Card
+            title={t('File 2 · Unweighted supporting sample counts')}
+            error={false}
+            primaryButton="Edit"
+            secondaryButton="Delete"
+            primaryClick={() => handleClickOpen('dialogAddFile')}
+            content={
+              <>
+                <Typography
+                  variant="caption"
+                  component="p"
+                  color="textSecondary"
+                >
+                  {t('File path')}
+                </Typography>
+                <div className={clsx(classes.filePath, 'mb-2')}>
+                  <div className={classes.filePathItem}>
+                    <Typography variant="body2" component="p" className="mr-1">
+                      {'Project folder example'}
+                    </Typography>
+                    <Icon path={mdiChevronRight} size={0.5} className="mr-1" />
+                  </div>
+                  <div className={classes.filePathItem}>
+                    <Typography variant="body2" component="p" className="mr-1">
+                      {'Request folder example'}
+                    </Typography>
+                    <Icon path={mdiChevronRight} size={0.5} className="mr-1" />
+                  </div>
+                  <div className={classes.filePathItem}>
+                    <Typography variant="body2" component="p" className="mr-1">
+                      {'First level folder example'}
+                    </Typography>
+                    <Icon path={mdiChevronRight} size={0.5} className="mr-1" />
+                  </div>
+                  <div className={classes.filePathItem}>
+                    <Typography variant="body2" component="p" className="mr-1">
+                      {'Second level folder example'}
+                    </Typography>
+                    <Icon path={mdiChevronRight} size={0.5} className="mr-1" />
+                  </div>
+                  <div className={classes.filePathItem}>
+                    <Typography variant="body2" component="p">
+                      {'Suporting file name example.doc'}
+                    </Typography>
+                  </div>
+                </div>
+                <Typography
+                  variant="caption"
+                  component="p"
+                  color="textSecondary"
+                >
+                  {t('Notes')}
+                </Typography>
+                <Typography variant="body2" component="p">
+                  {t(
+                      'Notes section to include any details regarding the syntax file added. This will be helpful for the Researcher/Analyst during the vetting process.',
+                  )}
+                </Typography>
+              </>
+            }
+          />
           <Button
             variant="outlined"
             color="primary"
             startIcon={<AddIcon />}
-            className={clsx(classes.addBtn, 'mb-3')}
+            className={clsx(classes.addBtn, ' mt-2', 'mb-3')}
           >
-            {t('Add file for unweighted supporting sample counts')}
+            {t('Add file for support')}
           </Button>
           <Typography variant="body2" component="p">
             {t(
-                'Add file for syntax used for variable creation / analysis / running vetting tests *',
+                'Add file for syntax used for variable creation/analysis/running vetting tests *',
             )}
           </Typography>
-          <Typography
-            variant="caption"
-            color="textSecondary"
-            component="p"
-            className="mb-3"
-          >
+          <Typography variant="caption" color="textSecondary" component="p">
             {t('At least one file must be added')}
           </Typography>
-
           <Button
             variant="outlined"
             color="primary"
             startIcon={<AddIcon />}
-            className={clsx(classes.addBtn, 'mb-3')}
+            className={clsx(classes.addBtn, 'mt-2', 'mb-3')}
           >
-            {t(
-                'Add file for syntax used for variable creation / analysis / running vetting tests',
-            )}
+            {t('Add file for support')}
           </Button>
           <Typography variant="body2" component="p">
             {t('Add file for vetting test results *')}
           </Typography>
-          <Typography
-            variant="caption"
-            color="textSecondary"
-            component="p"
-            className="mb-3"
-          >
+          <Typography variant="caption" color="textSecondary" component="p">
             {t('At least one file must be added')}
           </Typography>
-
           <Button
             variant="outlined"
             color="primary"
             startIcon={<AddIcon />}
-            className={clsx(classes.addBtn)}
+            className={clsx(classes.addBtn, 'mt-2', 'mb-3')}
           >
-            {t('Add file for vetting test results')}
+            {t('Add file for support')}
           </Button>
         </div>
       )}
-      <FormControl className={classes.radioMargin} component="fieldset">
+      <Divider className="mb-3" />
+      <Typography variant="subtitle2" component="h3" className="mb-3">
+        {t('Descriptive statistics')}
+      </Typography>
+      <FormControl className="mb-2" component="fieldset">
         <FormLabel component="legend">
           {t('Does the request include descriptive statistics?')}
         </FormLabel>
@@ -1004,10 +1092,10 @@ function AddFileForm(props) {
       </FormControl>
       {state.descriptiveStats === 'Yes' && (
         <div className={clsx(classes.indentedSection, 'mb-3')}>
-          <FormControl className={classes.radioMargin} component="fieldset">
+          <FormControl className="mb-2" component="fieldset">
             <FormLabel component="legend" className={classes.lineHeight}>
               {t(
-                  'Is the output clearly labelled (tables have a title and variables / categories are labelled)?',
+                  'Is the output clearly labelled (tables have a title and variables/categories are labelled)?',
               )}
             </FormLabel>
             <RadioGroup id="outpuLabelled">
@@ -1024,7 +1112,7 @@ function AddFileForm(props) {
             </RadioGroup>
             <FormHelperText></FormHelperText>
           </FormControl>
-          <FormControl className={classes.radioMargin} component="fieldset">
+          <FormControl className="mb-2" component="fieldset">
             <FormLabel component="legend">
               {t('Are minimum cell sizes met as per the rules for the data? *')}
             </FormLabel>
@@ -1047,12 +1135,7 @@ function AddFileForm(props) {
                 'Add file for supporting documentation (requirements in vetting rules) *',
             )}
           </Typography>
-          <Typography
-            variant="caption"
-            color="textSecondary"
-            component="p"
-            className="mb-3"
-          >
+          <Typography variant="caption" color="textSecondary" component="p">
             {t('At least one file must be added')}
           </Typography>
 
@@ -1060,17 +1143,13 @@ function AddFileForm(props) {
             variant="outlined"
             color="primary"
             startIcon={<AddIcon />}
-            className={classes.addBtn}
+            className={clsx(classes.addBtn, 'mt-2', 'mb-3')}
           >
-            {t('Add file for supporting documentation')}
+            {t('Add file for support')}
           </Button>
         </div>
       )}
-      <FormControl
-        className={classes.radioMargin}
-        component="fieldset"
-        required
-      >
+      <FormControl className="mb-2" component="fieldset" required>
         <FormLabel component="legend" className={classes.tooltipLabel}>
           {t(
               'Does this request include model output or graphs that are equivalent to a descriptive statistics?',
@@ -1102,12 +1181,7 @@ function AddFileForm(props) {
                 'Add file for unweighted frequency table for respondent counts *',
             )}
           </Typography>
-          <Typography
-            variant="caption"
-            color="textSecondary"
-            component="p"
-            className="mb-3"
-          >
+          <Typography variant="caption" color="textSecondary" component="p">
             {t('At least one file must be added')}
           </Typography>
 
@@ -1115,13 +1189,17 @@ function AddFileForm(props) {
             variant="outlined"
             color="primary"
             startIcon={<AddIcon />}
-            className={classes.addBtn}
+            className={clsx(classes.addBtn, 'mt-2', 'mb-3')}
           >
-            {t('Add file for unweighted frequency table for respondent counts')}
+            {t('Add file for support')}
           </Button>
         </div>
       )}
-      <FormControl className={classes.radioMargin} component="fieldset">
+      <Divider className="mb-3" />
+      <Typography variant="subtitle2" component="h3" className="mb-3">
+        {t('Correlation/Covariance matrix')}
+      </Typography>
+      <FormControl className="mb-2" component="fieldset">
         <FormLabel component="legend">
           {t('Does this output include a correlation or covariance matrix?')}
         </FormLabel>
@@ -1144,8 +1222,8 @@ function AddFileForm(props) {
         </RadioGroup>
       </FormControl>
       {state.covariance === 'Yes' && (
-        <div className={clsx(classes.indentedSection, 'mb-3')}>
-          <FormControl className={classes.radioMargin} component="fieldset">
+        <div className={clsx(classes.indentedSection, 'pb-3', 'mb-3')}>
+          <FormControl className="mb-2" component="fieldset">
             <FormLabel component="legend">
               {t('Does the matrix include continuous variables?')}
             </FormLabel>
@@ -1172,12 +1250,7 @@ function AddFileForm(props) {
               <Typography variant="body2" component="p">
                 {t('Add file for unweighted sample size *')}
               </Typography>
-              <Typography
-                variant="caption"
-                color="textSecondary"
-                component="p"
-                className="mb-3"
-              >
+              <Typography variant="caption" color="textSecondary" component="p">
                 {t('At least one file must be added')}
               </Typography>
 
@@ -1185,13 +1258,13 @@ function AddFileForm(props) {
                 variant="outlined"
                 color="primary"
                 startIcon={<AddIcon />}
-                className={clsx(classes.addBtn, 'mb-3')}
+                className={clsx(classes.addBtn, 'mb-3', 'mt-2')}
               >
-                {t('Add file for unweighted sample size')}
+                {t('Add file for support')}
               </Button>
             </div>
           )}
-          <FormControl className={classes.radioMargin} component="fieldset">
+          <FormControl className="mb-2" component="fieldset">
             <FormLabel component="legend">
               {t('Does the matrix inclue dichotomous variables?')}
             </FormLabel>
@@ -1218,12 +1291,7 @@ function AddFileForm(props) {
               <Typography variant="body2" component="p">
                 {t('Add file for unweighted cross-tabulation table *')}
               </Typography>
-              <Typography
-                variant="caption"
-                color="textSecondary"
-                component="p"
-                className="mb-3"
-              >
+              <Typography variant="caption" color="textSecondary" component="p">
                 {t('At least one file must be added')}
               </Typography>
 
@@ -1231,13 +1299,13 @@ function AddFileForm(props) {
                 variant="outlined"
                 color="primary"
                 startIcon={<AddIcon />}
-                className={clsx(classes.addBtn, 'mb-3')}
+                className={clsx(classes.addBtn, 'mb-3', 'mt-2')}
               >
-                {t('Add file for unweighted cross-tabulation table')}
+                {t('Add file for support')}
               </Button>
             </div>
           )}
-          <FormControl className={classes.radioMargin} component="fieldset">
+          <FormControl className="n-mb-1" component="fieldset">
             <FormLabel component="legend" className={classes.lineHeight}>
               {t(
                   'Does the matrix include a dichotomous variable correlated with continuous variable?',
@@ -1262,40 +1330,32 @@ function AddFileForm(props) {
             </RadioGroup>
           </FormControl>
           {state.matrixCorrelated === 'Yes' && (
-            <div className={clsx(classes.indentedSection, 'mb-3')}>
+            <div className={clsx(classes.indentedSection, 'mt-3')}>
               <Typography variant="body2" component="p">
                 {t(
-                    'Add file for unweighted sub-totals for the categories of the dichotomous variable correlatedwith a continuous variable *',
+                    'Add file for unweighted sub-totals for the categories of the dichotomous variable correlated with a continuous variable *',
                 )}
               </Typography>
-              <Typography
-                variant="caption"
-                color="textSecondary"
-                component="p"
-                className="mb-3"
-              >
+              <Typography variant="caption" color="textSecondary" component="p">
                 {t('At least one file must be added')}
               </Typography>
-
               <Button
                 variant="outlined"
                 color="primary"
                 startIcon={<AddIcon />}
-                className={clsx(classes.addBtn, 'mb-3')}
+                className={clsx(classes.addBtn, 'mt-2', 'mb-3')}
               >
-                {t(
-                    'Add file for unweighted sub-totals for the categories of the dichotomous variable correlatedwith a continuous variable',
-                )}
+                {t('Add file for support')}
               </Button>
             </div>
           )}
         </div>
       )}
-      <FormControl
-        className={classes.radioMargin}
-        component="fieldset"
-        required
-      >
+      <Divider className="mb-3" />
+      <Typography variant="subtitle2" component="h3" className="mb-3">
+        {t('Rounding')}
+      </Typography>
+      <FormControl component="fieldset" className="n-mb-1" required>
         <FormLabel component="legend">
           {t('Is rounding of output required for this vetting request?')}
         </FormLabel>
@@ -1319,12 +1379,12 @@ function AddFileForm(props) {
         <FormHelperText></FormHelperText>
       </FormControl>
       {state.roundingOutput === 'Yes' && (
-        <div className={clsx(classes.indentedSection, 'mb-3')}>
+        <div className={clsx(classes.indentedSection, 'mt-3')}>
           <TextField
-            className={classes.inputMargin}
+            className="mb-3"
             margin="dense"
             id="roundingDesc"
-            label={t('Describe rounding / rounding base approach')}
+            label={t('Rounding approach description')}
             variant="outlined"
             fullWidth
             required
@@ -1334,24 +1394,18 @@ function AddFileForm(props) {
             helperText={state.rounding.errorText}
           />
           <Typography variant="body2" component="p">
-            {t('Add file for unrounded version this output *')}
+            {t('Add file for unrounded version of this output *')}
           </Typography>
-          <Typography
-            variant="caption"
-            color="textSecondary"
-            component="p"
-            className="mb-3"
-          >
+          <Typography variant="caption" color="textSecondary" component="p">
             {t('At least one file must be added')}
           </Typography>
-
           <Button
             variant="outlined"
             color="primary"
             startIcon={<AddIcon />}
-            className={clsx(classes.addBtn, 'mb-3')}
+            className={clsx(classes.addBtn, 'mb-3', 'mt-2')}
           >
-            {t('Add file for unrounded version this output')}
+            {t('Add file for support')}
           </Button>
         </div>
       )}
