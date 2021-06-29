@@ -185,7 +185,6 @@ function BootstrapTooltip(props) {
 function FilesList(props) {
   const classes = useStyles();
   const [state, setState] = React.useState({
-    outputFileHeader: '',
     notes: {
       text: '',
       errorText: '',
@@ -200,25 +199,18 @@ function FilesList(props) {
     snackbarUpdate: false,
     snackbarDelete: false,
     outputFile: false,
-    viewFile: false,
     dialogDelete: false,
+    drawerType: '',
   });
 
-  const toggleDrawer = (event, drawer, shown) => {
+  const toggleDrawer = (event, drawer) => {
     if (
       event.type === 'keydown' &&
       (event.key === 'Tab' || event.key === 'Shift')
     ) {
       return;
     }
-    if (drawer === 'addFile') {
-      state.outputFileHeader = 'Add file for output';
-    } else if (drawer === 'editFile') {
-      state.outputFileHeader = 'Edit file for output';
-    } else if (drawer === 'viewFile') {
-      state.outputFileHeader = 'View file for output';
-    }
-    setOpen({...open, outputFile: shown});
+    setOpen({...open, outputFile: !open.outputFile, drawerType: drawer});
   };
 
   const handleClickOpen = (state) => {
@@ -230,11 +222,11 @@ function FilesList(props) {
   };
 
   const createFile = () => {
-    setOpen({...open, snackbarCreate: true, addFile: false});
+    setOpen({...open, snackbarCreate: true, outputFile: false});
   };
 
   const updateFile = () => {
-    setOpen({...open, snackbarUpdate: true, editFile: false});
+    setOpen({...open, snackbarUpdate: true, outputFile: false});
   };
 
   const deleteFile = () => {
@@ -494,7 +486,7 @@ function FilesList(props) {
             <Button
               variant="contained"
               color="primary"
-              onClick={(e) => toggleDrawer(e, 'addFile', true)}
+              onClick={(e) => toggleDrawer(e, 'addFile')}
             >
               Add file
             </Button>
@@ -550,7 +542,7 @@ function FilesList(props) {
                 <>
                   <Button
                     color="primary"
-                    onClick={(e) => toggleDrawer(e, 'editFile', true)}
+                    onClick={(e) => toggleDrawer(e, 'editFile')}
                   >
                     Edit
                   </Button>
@@ -565,7 +557,7 @@ function FilesList(props) {
               {props.role === 'analyst' && (
                 <Button
                   color="primary"
-                  onClick={(e) => toggleDrawer(e, 'viewFile', true)}
+                  onClick={(e) => toggleDrawer(e, 'viewFile')}
                 >
                   View details
                 </Button>
@@ -581,17 +573,9 @@ function FilesList(props) {
           updateFile={updateFile}
           createFile={createFile}
           handleClickOpen={handleClickOpen}
-          header={state.outputFileHeader}
+          drawerType={open.drawerType}
         />
       </Drawer>
-      {/* View output file drawer */}
-      <Drawer anchor="right" open={open.viewFile} className={classes.drawer}>
-        <ViewFile
-          toggleDrawer={toggleDrawer}
-          handleClickOpen={handleClickOpen}
-        />
-      </Drawer>
-      {/* Add supporting file dialog */}
       <Dialog
         open={open.dialogAddSupporting}
         aria-labelledby="form-dialog-title"

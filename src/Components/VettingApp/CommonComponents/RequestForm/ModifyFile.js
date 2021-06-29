@@ -33,16 +33,9 @@ const useStyles = makeStyles((theme) => ({
     marginTop: theme.spacing(0),
     marginBottom: theme.spacing(3),
   },
-  // radioMargin: {
-  // marginTop: theme.spacing(0),
-  // marginBottom: theme.spacing(2),
-  // },
   lineHeight: {
     lineHeight: 'normal',
   },
-  // divider: {
-  // margin: theme.spacing(3, 0),
-  // },
   hiddenRow: {
     display: 'none',
   },
@@ -218,13 +211,17 @@ export function OutputFile(props) {
       <AppBar position="static" className={classes.appBar} color="default">
         <Toolbar>
           <Typography variant="h6" component="h2" className={classes.title}>
-            {props.header}
+            {props.drawerType === 'addFile' ?
+              'Add file for output' :
+              props.drawerType === 'editFile' ?
+              'Edit for for output' :
+              'View file for output'}
           </Typography>
           <IconButton
             aria-label="Close add output file"
             className={classes.margin}
             edge="end"
-            onClick={(e) => props.toggleDrawer(e, 'addFile', false)}
+            onClick={(e) => props.toggleDrawer(e, props.drawerType)}
           >
             <CloseIcon />
           </IconButton>
@@ -233,55 +230,55 @@ export function OutputFile(props) {
       <div className={classes.body}>
         <AddFileForm {...props} />
       </div>
-      <div className={classes.footer}>
-        <Button
-          className="mr-2"
-          variant="outlined"
-          color="primary"
-          onClick={(e) => props.toggleDrawer(e, 'addFile', false)}
-        >
-          Cancel
-        </Button>
-        <Button variant="contained" color="primary" onClick={props.createFile}>
-          Add
-        </Button>
-      </div>
-    </React.Fragment>
-  );
-}
-
-export function ViewFile(props) {
-  const classes = useStyles();
-
-  return (
-    <React.Fragment>
-      <AppBar position="static" className={classes.appBar} color="default">
-        <Toolbar>
-          <Typography variant="h6" component="h2" className={classes.title}>
-            View file for output
-          </Typography>
-          <IconButton
-            aria-label="Close view output file"
-            className={classes.margin}
-            edge="end"
-            onClick={(e) => props.toggleDrawer(e, 'viewFile', false)}
+      {props.drawerType === 'addFile' && (
+        <div className={classes.footer}>
+          <Button
+            className="mr-2"
+            variant="outlined"
+            color="primary"
+            onClick={(e) => props.toggleDrawer(e, props.drawerType)}
           >
-            <CloseIcon />
-          </IconButton>
-        </Toolbar>
-      </AppBar>
-      <div className={classes.body}>
-        <AddFileForm {...props} />
-      </div>
-      <div className={classes.footer}>
-        <Button
-          variant="contained"
-          color="primary"
-          onClick={(e) => props.toggleDrawer(e, 'viewFile', false)}
-        >
-          Close
-        </Button>
-      </div>
+            Cancel
+          </Button>
+          <Button
+            variant="contained"
+            color="primary"
+            onClick={props.createFile}
+          >
+            Add
+          </Button>
+        </div>
+      )}
+      {props.drawerType === 'editFile' && (
+        <div className={classes.footer}>
+          <Button
+            className="mr-2"
+            variant="outlined"
+            color="primary"
+            onClick={(e) => props.toggleDrawer(e, props.drawerType)}
+          >
+            Cancel
+          </Button>
+          <Button
+            variant="contained"
+            color="primary"
+            onClick={props.updateFile}
+          >
+            Update
+          </Button>
+        </div>
+      )}
+      {props.drawerType === 'viewFile' && (
+        <div className={classes.footer}>
+          <Button
+            variant="contained"
+            color="primary"
+            onClick={(e) => props.toggleDrawer(e, props.drawerType)}
+          >
+            Close
+          </Button>
+        </div>
+      )}
     </React.Fragment>
   );
 }
@@ -291,6 +288,13 @@ function AddFileForm(props) {
   const classes = useStyles();
 
   const [state, setState] = React.useState({
+    researcher: () => {
+      if (props.drawerType === 'addFile' || props.drawerType === 'editFile') {
+        return true;
+      } else {
+        return false;
+      }
+    },
     includeWeightVariable: null,
     linkedData: null,
     descriptiveStats: null,
@@ -715,128 +719,384 @@ function AddFileForm(props) {
           <Typography variant="caption" color="textSecondary" component="p">
             {t('At least one file must be added')}
           </Typography>
-          <Card
-            title={t('File 1 · Unweighted supporting sample counts')}
-            error={false}
-            primaryButton="Edit"
-            secondaryButton="Delete"
-            primaryClick={() => handleClickOpen('dialogAddFile', 'edit')}
-            content={
-              <>
-                <Typography
-                  variant="caption"
-                  component="p"
-                  color="textSecondary"
-                >
-                  {t('File path')}
-                </Typography>
-                <div className={clsx(classes.filePath, 'mb-2')}>
-                  <div className={classes.filePathItem}>
-                    <Typography variant="body2" component="p" className="mr-1">
-                      {'Project folder example'}
+          {state.researcher() ? (
+            <>
+              <Card
+                title={t('File 1 · Unweighted supporting sample counts')}
+                error={false}
+                primaryButton={t('Edit')}
+                secondaryButton={t('Delete')}
+                primaryClick={() => handleClickOpen('dialogAddFile', 'edit')}
+                content={
+                  <>
+                    <Typography
+                      variant="caption"
+                      component="p"
+                      color="textSecondary"
+                    >
+                      {t('File path')}
                     </Typography>
-                    <Icon path={mdiChevronRight} size={0.5} className="mr-1" />
-                  </div>
-                  <div className={classes.filePathItem}>
-                    <Typography variant="body2" component="p" className="mr-1">
-                      {'Request folder example'}
+                    <div className={clsx(classes.filePath, 'mb-2')}>
+                      <div className={classes.filePathItem}>
+                        <Typography
+                          variant="body2"
+                          component="p"
+                          className="mr-1"
+                        >
+                          {'Project folder example'}
+                        </Typography>
+                        <Icon
+                          path={mdiChevronRight}
+                          size={0.5}
+                          className="mr-1"
+                        />
+                      </div>
+                      <div className={classes.filePathItem}>
+                        <Typography
+                          variant="body2"
+                          component="p"
+                          className="mr-1"
+                        >
+                          {'Request folder example'}
+                        </Typography>
+                        <Icon
+                          path={mdiChevronRight}
+                          size={0.5}
+                          className="mr-1"
+                        />
+                      </div>
+                      <div className={classes.filePathItem}>
+                        <Typography
+                          variant="body2"
+                          component="p"
+                          className="mr-1"
+                        >
+                          {'First level folder example'}
+                        </Typography>
+                        <Icon
+                          path={mdiChevronRight}
+                          size={0.5}
+                          className="mr-1"
+                        />
+                      </div>
+                      <div className={classes.filePathItem}>
+                        <Typography
+                          variant="body2"
+                          component="p"
+                          className="mr-1"
+                        >
+                          {'Second level folder example'}
+                        </Typography>
+                        <Icon
+                          path={mdiChevronRight}
+                          size={0.5}
+                          className="mr-1"
+                        />
+                      </div>
+                      <div className={classes.filePathItem}>
+                        <Typography variant="body2" component="p">
+                          {'Suporting file name example.doc'}
+                        </Typography>
+                      </div>
+                    </div>
+                    <Typography
+                      variant="caption"
+                      component="p"
+                      color="textSecondary"
+                    >
+                      {t('Notes')}
                     </Typography>
-                    <Icon path={mdiChevronRight} size={0.5} className="mr-1" />
-                  </div>
-                  <div className={classes.filePathItem}>
-                    <Typography variant="body2" component="p" className="mr-1">
-                      {'First level folder example'}
-                    </Typography>
-                    <Icon path={mdiChevronRight} size={0.5} className="mr-1" />
-                  </div>
-                  <div className={classes.filePathItem}>
-                    <Typography variant="body2" component="p" className="mr-1">
-                      {'Second level folder example'}
-                    </Typography>
-                    <Icon path={mdiChevronRight} size={0.5} className="mr-1" />
-                  </div>
-                  <div className={classes.filePathItem}>
                     <Typography variant="body2" component="p">
-                      {'Suporting file name example.doc'}
+                      {t(
+                          'Notes section to include any details regarding the syntax file added. This will be helpful for the Researcher/Analyst during the vetting process.',
+                      )}
                     </Typography>
-                  </div>
-                </div>
-                <Typography
-                  variant="caption"
-                  component="p"
-                  color="textSecondary"
-                >
-                  {t('Notes')}
-                </Typography>
-                <Typography variant="body2" component="p">
-                  {t(
-                      'Notes section to include any details regarding the syntax file added. This will be helpful for the Researcher/Analyst during the vetting process.',
-                  )}
-                </Typography>
-              </>
-            }
-          />
-          <Card
-            title={t('File 2 · Unweighted supporting sample counts')}
-            error={false}
-            primaryButton="Edit"
-            secondaryButton="Delete"
-            primaryClick={() => handleClickOpen('dialogAddFile', 'edit')}
-            content={
-              <>
-                <Typography
-                  variant="caption"
-                  component="p"
-                  color="textSecondary"
-                >
-                  {t('File path')}
-                </Typography>
-                <div className={clsx(classes.filePath, 'mb-2')}>
-                  <div className={classes.filePathItem}>
-                    <Typography variant="body2" component="p" className="mr-1">
-                      {'Project folder example'}
+                  </>
+                }
+              />
+              <Card
+                title={t('File 2 · Unweighted supporting sample counts')}
+                error={false}
+                primaryButton={t('Edit')}
+                secondaryButton={t('Delete')}
+                primaryClick={() => handleClickOpen('dialogAddFile', 'edit')}
+                content={
+                  <>
+                    <Typography
+                      variant="caption"
+                      component="p"
+                      color="textSecondary"
+                    >
+                      {t('File path')}
                     </Typography>
-                    <Icon path={mdiChevronRight} size={0.5} className="mr-1" />
-                  </div>
-                  <div className={classes.filePathItem}>
-                    <Typography variant="body2" component="p" className="mr-1">
-                      {'Request folder example'}
+                    <div className={clsx(classes.filePath, 'mb-2')}>
+                      <div className={classes.filePathItem}>
+                        <Typography
+                          variant="body2"
+                          component="p"
+                          className="mr-1"
+                        >
+                          {'Project folder example'}
+                        </Typography>
+                        <Icon
+                          path={mdiChevronRight}
+                          size={0.5}
+                          className="mr-1"
+                        />
+                      </div>
+                      <div className={classes.filePathItem}>
+                        <Typography
+                          variant="body2"
+                          component="p"
+                          className="mr-1"
+                        >
+                          {'Request folder example'}
+                        </Typography>
+                        <Icon
+                          path={mdiChevronRight}
+                          size={0.5}
+                          className="mr-1"
+                        />
+                      </div>
+                      <div className={classes.filePathItem}>
+                        <Typography
+                          variant="body2"
+                          component="p"
+                          className="mr-1"
+                        >
+                          {'First level folder example'}
+                        </Typography>
+                        <Icon
+                          path={mdiChevronRight}
+                          size={0.5}
+                          className="mr-1"
+                        />
+                      </div>
+                      <div className={classes.filePathItem}>
+                        <Typography
+                          variant="body2"
+                          component="p"
+                          className="mr-1"
+                        >
+                          {'Second level folder example'}
+                        </Typography>
+                        <Icon
+                          path={mdiChevronRight}
+                          size={0.5}
+                          className="mr-1"
+                        />
+                      </div>
+                      <div className={classes.filePathItem}>
+                        <Typography variant="body2" component="p">
+                          {'Suporting file name example.doc'}
+                        </Typography>
+                      </div>
+                    </div>
+                    <Typography
+                      variant="caption"
+                      component="p"
+                      color="textSecondary"
+                    >
+                      {t('Notes')}
                     </Typography>
-                    <Icon path={mdiChevronRight} size={0.5} className="mr-1" />
-                  </div>
-                  <div className={classes.filePathItem}>
-                    <Typography variant="body2" component="p" className="mr-1">
-                      {'First level folder example'}
-                    </Typography>
-                    <Icon path={mdiChevronRight} size={0.5} className="mr-1" />
-                  </div>
-                  <div className={classes.filePathItem}>
-                    <Typography variant="body2" component="p" className="mr-1">
-                      {'Second level folder example'}
-                    </Typography>
-                    <Icon path={mdiChevronRight} size={0.5} className="mr-1" />
-                  </div>
-                  <div className={classes.filePathItem}>
                     <Typography variant="body2" component="p">
-                      {'Suporting file name example.doc'}
+                      {t(
+                          'Notes section to include any details regarding the syntax file added. This will be helpful for the Researcher/Analyst during the vetting process.',
+                      )}
                     </Typography>
-                  </div>
-                </div>
-                <Typography
-                  variant="caption"
-                  component="p"
-                  color="textSecondary"
-                >
-                  {t('Notes')}
-                </Typography>
-                <Typography variant="body2" component="p">
-                  {t(
-                      'Notes section to include any details regarding the syntax file added. This will be helpful for the Researcher/Analyst during the vetting process.',
-                  )}
-                </Typography>
-              </>
-            }
-          />
+                  </>
+                }
+              />
+            </>
+          ) : (
+            <>
+              <Card
+                title={t('File 1 · Unweighted supporting sample counts')}
+                error={false}
+                primaryButton={t('View details')}
+                primaryClick={() => handleClickOpen('dialogAddFile', 'view')}
+                content={
+                  <>
+                    <Typography
+                      variant="caption"
+                      component="p"
+                      color="textSecondary"
+                    >
+                      {t('File path')}
+                    </Typography>
+                    <div className={clsx(classes.filePath, 'mb-2')}>
+                      <div className={classes.filePathItem}>
+                        <Typography
+                          variant="body2"
+                          component="p"
+                          className="mr-1"
+                        >
+                          {'Project folder example'}
+                        </Typography>
+                        <Icon
+                          path={mdiChevronRight}
+                          size={0.5}
+                          className="mr-1"
+                        />
+                      </div>
+                      <div className={classes.filePathItem}>
+                        <Typography
+                          variant="body2"
+                          component="p"
+                          className="mr-1"
+                        >
+                          {'Request folder example'}
+                        </Typography>
+                        <Icon
+                          path={mdiChevronRight}
+                          size={0.5}
+                          className="mr-1"
+                        />
+                      </div>
+                      <div className={classes.filePathItem}>
+                        <Typography
+                          variant="body2"
+                          component="p"
+                          className="mr-1"
+                        >
+                          {'First level folder example'}
+                        </Typography>
+                        <Icon
+                          path={mdiChevronRight}
+                          size={0.5}
+                          className="mr-1"
+                        />
+                      </div>
+                      <div className={classes.filePathItem}>
+                        <Typography
+                          variant="body2"
+                          component="p"
+                          className="mr-1"
+                        >
+                          {'Second level folder example'}
+                        </Typography>
+                        <Icon
+                          path={mdiChevronRight}
+                          size={0.5}
+                          className="mr-1"
+                        />
+                      </div>
+                      <div className={classes.filePathItem}>
+                        <Typography variant="body2" component="p">
+                          {'Suporting file name example.doc'}
+                        </Typography>
+                      </div>
+                    </div>
+                    <Typography
+                      variant="caption"
+                      component="p"
+                      color="textSecondary"
+                    >
+                      {t('Notes')}
+                    </Typography>
+                    <Typography variant="body2" component="p">
+                      {t(
+                          'Notes section to include any details regarding the syntax file added. This will be helpful for the Researcher/Analyst during the vetting process.',
+                      )}
+                    </Typography>
+                  </>
+                }
+              />
+              <Card
+                title={t('File 2 · Unweighted supporting sample counts')}
+                error={false}
+                primaryButton={t('View details')}
+                primaryClick={() => handleClickOpen('dialogAddFile', 'view')}
+                content={
+                  <>
+                    <Typography
+                      variant="caption"
+                      component="p"
+                      color="textSecondary"
+                    >
+                      {t('File path')}
+                    </Typography>
+                    <div className={clsx(classes.filePath, 'mb-2')}>
+                      <div className={classes.filePathItem}>
+                        <Typography
+                          variant="body2"
+                          component="p"
+                          className="mr-1"
+                        >
+                          {'Project folder example'}
+                        </Typography>
+                        <Icon
+                          path={mdiChevronRight}
+                          size={0.5}
+                          className="mr-1"
+                        />
+                      </div>
+                      <div className={classes.filePathItem}>
+                        <Typography
+                          variant="body2"
+                          component="p"
+                          className="mr-1"
+                        >
+                          {'Request folder example'}
+                        </Typography>
+                        <Icon
+                          path={mdiChevronRight}
+                          size={0.5}
+                          className="mr-1"
+                        />
+                      </div>
+                      <div className={classes.filePathItem}>
+                        <Typography
+                          variant="body2"
+                          component="p"
+                          className="mr-1"
+                        >
+                          {'First level folder example'}
+                        </Typography>
+                        <Icon
+                          path={mdiChevronRight}
+                          size={0.5}
+                          className="mr-1"
+                        />
+                      </div>
+                      <div className={classes.filePathItem}>
+                        <Typography
+                          variant="body2"
+                          component="p"
+                          className="mr-1"
+                        >
+                          {'Second level folder example'}
+                        </Typography>
+                        <Icon
+                          path={mdiChevronRight}
+                          size={0.5}
+                          className="mr-1"
+                        />
+                      </div>
+                      <div className={classes.filePathItem}>
+                        <Typography variant="body2" component="p">
+                          {'Suporting file name example.doc'}
+                        </Typography>
+                      </div>
+                    </div>
+                    <Typography
+                      variant="caption"
+                      component="p"
+                      color="textSecondary"
+                    >
+                      {t('Notes')}
+                    </Typography>
+                    <Typography variant="body2" component="p">
+                      {t(
+                          'Notes section to include any details regarding the syntax file added. This will be helpful for the Researcher/Analyst during the vetting process.',
+                      )}
+                    </Typography>
+                  </>
+                }
+              />
+            </>
+          )}
+
           <Button
             variant="outlined"
             color="primary"

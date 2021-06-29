@@ -3411,9 +3411,11 @@ export function DialogAddFile(props) {
         <DialogTitle id="dashboard-dialog-title">
           <div className={classes.vettingContainerTitle}>
             <Typography variant="h6" component="h2">
-              {fileFunction === 'add' ?
-                t('Add file for support') :
-                t('Edit file for support')}
+              {fileFunction === 'view' ?
+                t('View file for support') :
+                fileFunction === 'edit' ?
+                t('Edit file for support') :
+                t('Add file for support')}
             </Typography>
             <IconButton
               id="dialog-close"
@@ -3491,42 +3493,101 @@ export function DialogAddFile(props) {
           </div>
         </DialogContent>
         <Divider />
-        <DialogActions>
-          <Button
-            variant="outlined"
-            color="primary"
-            onClick={(e) => {
-              toggleDialog(e);
-            }}
-            className={classes.footerBtns}
-            onKeyPress={(e) => {
-              e.preventDefault();
-              e.stopPropagation();
-              if (e.key === 'Enter') {
+        {fileFunction === 'edit' ? (
+          <DialogActions>
+            <Button
+              variant="outlined"
+              color="primary"
+              onClick={(e) => {
                 toggleDialog(e);
-              }
-            }}
-          >
-            {t('Cancel')}
-          </Button>
-          <Button
-            type="submit"
-            variant="contained"
-            color="primary"
-            className={classes.footerBtns}
-            onClick={(e) => {
-              toggleDialog(e);
-            }}
-            onKeyPress={(e) => {
-              e.stopPropagation();
-              if (e.key === 'Enter') {
+              }}
+              className={classes.footerBtns}
+              onKeyPress={(e) => {
+                e.preventDefault();
+                e.stopPropagation();
+                if (e.key === 'Enter') {
+                  toggleDialog(e);
+                }
+              }}
+            >
+              {t('Cancel')}
+            </Button>
+            <Button
+              type="submit"
+              variant="contained"
+              color="primary"
+              className={classes.footerBtns}
+              onClick={(e) => {
                 toggleDialog(e);
-              }
-            }}
-          >
-            {t('Add')}
-          </Button>
-        </DialogActions>
+              }}
+              onKeyPress={(e) => {
+                e.stopPropagation();
+                if (e.key === 'Enter') {
+                  toggleDialog(e);
+                }
+              }}
+            >
+              {t('Update')}
+            </Button>
+          </DialogActions>
+        ) : fileFunction === 'add' ? (
+          <DialogActions>
+            <Button
+              variant="outlined"
+              color="primary"
+              onClick={(e) => {
+                toggleDialog(e);
+              }}
+              className={classes.footerBtns}
+              onKeyPress={(e) => {
+                e.preventDefault();
+                e.stopPropagation();
+                if (e.key === 'Enter') {
+                  toggleDialog(e);
+                }
+              }}
+            >
+              {t('Cancel')}
+            </Button>
+            <Button
+              type="submit"
+              variant="contained"
+              color="primary"
+              className={classes.footerBtns}
+              onClick={(e) => {
+                toggleDialog(e);
+              }}
+              onKeyPress={(e) => {
+                e.stopPropagation();
+                if (e.key === 'Enter') {
+                  toggleDialog(e);
+                }
+              }}
+            >
+              {t('Add')}
+            </Button>
+          </DialogActions>
+        ) : (
+          <DialogActions>
+            <Button
+              type="submit"
+              variant="contained"
+              color="primary"
+              className={classes.footerBtns}
+              onClick={(e) => {
+                toggleDialog(e);
+              }}
+              onKeyPress={(e) => {
+                e.stopPropagation();
+                if (e.key === 'Enter') {
+                  toggleDialog(e);
+                }
+              }}
+            >
+              {t('Close')}
+            </Button>
+          </DialogActions>
+        )}
       </Dialog>
     </React.Fragment>
   );
