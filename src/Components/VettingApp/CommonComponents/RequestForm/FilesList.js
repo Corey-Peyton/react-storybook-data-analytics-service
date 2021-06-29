@@ -215,6 +215,8 @@ function FilesList(props) {
       state.outputFileHeader = 'Add file for output';
     } else if (drawer === 'editFile') {
       state.outputFileHeader = 'Edit file for output';
+    } else if (drawer === 'viewFile') {
+      state.outputFileHeader = 'View file for output';
     }
     setOpen({...open, outputFile: shown});
   };

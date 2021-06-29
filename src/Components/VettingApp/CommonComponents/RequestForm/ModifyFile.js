@@ -348,12 +348,20 @@ function AddFileForm(props) {
     dialogDelete: false,
     dialogOutputMethodHelp: false,
     dialogAddFile: false,
+    dialogFileFunction: '',
     dollarIncluded: null,
     equivalentDescriptiveStats: null,
     matrixContinuous: null,
     matrixDichotomous: null,
     matrixCorrelated: null,
     roundingOutput: null,
+    filePath: {
+      value: '',
+      errorText: '',
+      invalid: '',
+      commands: '',
+      helperText: '',
+    },
     sheetname: {
       text: '',
       errorText: '',
@@ -423,8 +431,20 @@ function AddFileForm(props) {
     setAnchorEl(event.currentTarget);
   };
 
-  const handleClickOpen = (element) => {
+  const handleClickOpen = (element, val) => {
     setState({...state, [element]: true});
+    if (val) {
+      setState({
+        ...state,
+        [element]: true,
+        dialogFileFunction: val,
+      });
+    } else {
+      setState({
+        ...state,
+        [element]: true,
+      });
+    }
   };
 
   const handleClickClose = (element) => {
@@ -465,7 +485,30 @@ function AddFileForm(props) {
             'If you have not already added the file you want released to the request folder associated with this request, go into the shared folder of your virtual machine and add it now. If a spreadsheet file is selected you will need to add a file for each sheet.',
         )}
       </Typography> */}
-      <TextField
+      <FormControl
+        className="mb-3"
+        margin="dense"
+        required
+        variant="outlined"
+        fullWidth
+      >
+        <InputLabel id="file-path-select-label">File path</InputLabel>
+        <Select
+          label={t('File path')}
+          labelId="file-path-select-label"
+          id="filePath"
+          name="filePath"
+          value={state.filePath.value}
+          onChange={handleSelectChange}
+          required
+        >
+          <MenuItem value="">None</MenuItem>
+          <MenuItem value={'spreadsheet1'}>spreadsheet1.xls</MenuItem>
+          <MenuItem value={'spreadsheet2'}>spreadsheet2.doc</MenuItem>
+          <MenuItem value={'spreadsheet3'}>spreadsheet3.xls</MenuItem>
+        </Select>
+      </FormControl>
+      {/* <TextField
         label={t('File path')}
         required
         aria-describedby={id}
@@ -481,8 +524,8 @@ function AddFileForm(props) {
         // className={clsx(classes.textFieldPopover, 'mb-3')}
         className="mb-3"
         fullWidth
-      />
-      <Popover
+      /> */}
+      {/* <Popover
         id={id}
         open={open}
         anchorEl={anchorEl}
@@ -530,110 +573,20 @@ function AddFileForm(props) {
             </TreeItem>
           </TreeItem>
         </TreeView>
-      </Popover>
-      <div className={clsx(classes.indentedSection, 'mb-3')}>
-        <TextField
-          label={t('Sheet name')}
-          fullWidth
-          margin="dense"
-          variant="outlined"
-          required
-          className="mb-3"
-        />
-      </div>
+      </Popover> */}
+      {Boolean(state.filePath.value) && (
+        <div className={clsx(classes.indentedSection, 'mb-3')}>
+          <TextField
+            label={t('Sheet name')}
+            fullWidth
+            margin="dense"
+            variant="outlined"
+            required
+            className="mb-3"
+          />
+        </div>
+      )}
       <Divider className="mb-3" />
-      {/* <Typography variant="subtitle2" component="h3" className="mb-3">
-        {t('Mandatory supporting files')}
-      </Typography>
-      <Typography variant="body2" component="p" className="mb-3">
-        {t(
-            'All files you want released will require the following supporting file types. During this process you may be asked to enter additional supporting files but this will depend on how you answer the screening questions.',
-        )}
-      </Typography>
-      <Typography variant="body2" component="p">
-        {t('Add files for syntax *')}
-      </Typography>
-      <Typography variant="caption" color="textSecondary" component="p">
-        {t('At least one file must be added')}
-      </Typography>
-      <Card
-        title={t('1. File for syntax')}
-        error={false}
-        primaryButton="Edit"
-        secondaryButton="Delete"
-        primaryClick={() => handleClickOpen('dialogAddFile')}
-        content={
-          <>
-            <Typography variant="caption" component="p">
-              {t('File path')}
-            </Typography>
-            <div className={clsx(classes.filePath, 'mb-2')}>
-              <div className={classes.filePathItem}>
-                <Icon path={mdiFolderOpen} size={1} />
-                <Typography variant="body2" component="p">
-                  {'{ProjectFolderName} > '}
-                </Typography>
-              </div>
-              <div className={classes.filePathItem}>
-                <Icon path={mdiFolderOpen} size={1} />
-                <Typography variant="body2" component="p">
-                  {'{RequestFolderName} > '}
-                </Typography>
-              </div>
-              <div className={classes.filePathItem}>
-                <Icon path={mdiFolderOpen} size={1} />
-                <Typography variant="body2" component="p">
-                  {'{FolderName} > '}
-                </Typography>
-              </div>
-              <div className={classes.filePathItem}>
-                <Icon path={mdiFolderOpen} size={1} />
-                <Typography variant="body2" component="p">
-                  {'{FolderName} > '}
-                </Typography>
-              </div>
-              <div className={classes.filePathItem}>
-                <Icon path={mdiFolderOpen} size={1} />
-                <Typography variant="body2" component="p">
-                  {'{SupportingFileName}.doc'}
-                </Typography>
-              </div>
-            </div>
-
-            <Typography variant="caption" component="p">
-              {t('Notes')}
-            </Typography>
-            <Typography variant="body2" component="p">
-              {t(
-                  'Notes section to include any details regarding the syntax file added. This will be helpful for the Researcher/Analyst during the vetting process.',
-              )}
-            </Typography>
-          </>
-        }
-      />
-      <Button
-        variant="outlined"
-        color="primary"
-        startIcon={<AddIcon />}
-        className={clsx(classes.addBtn, 'mt-2 mb-3')}
-      >
-        {t('Add file for syntax')}
-      </Button>
-      <Typography variant="body2" component="p">
-        {t('Add file for variable list / description *')}
-      </Typography>
-      <Typography variant="caption" color="textSecondary" component="p">
-        {t('At least one file must be added')}
-      </Typography>
-      <Button
-        variant="outlined"
-        color="primary"
-        startIcon={<AddIcon />}
-        className={clsx(classes.addBtn, 'mt-2 mb-3')}
-      >
-        {t('Add file for variable list / description')}
-      </Button>
-      <Divider className="mb-3" />*/}
       <Typography variant="subtitle2" component="h3" className="mb-3">
         {t('Output details')}
       </Typography>
@@ -703,6 +656,7 @@ function AddFileForm(props) {
             color="primary"
             startIcon={<AddIcon />}
             className={clsx(classes.addBtn, 'mt-2 mb-3')}
+            onClick={() => handleClickOpen('dialogAddFile', 'add')}
           >
             {t('Add file for support')}
           </Button>
@@ -853,7 +807,7 @@ function AddFileForm(props) {
       )}
       <Divider className="mb-3" />
       <Typography variant="subtitle2" component="h3" className="mb-3">
-        {t('Finacial variables')}
+        {t('Financial variables')}
       </Typography>
       <FormControl
         className="mb-2"
@@ -898,7 +852,7 @@ function AddFileForm(props) {
             error={false}
             primaryButton="Edit"
             secondaryButton="Delete"
-            primaryClick={() => handleClickOpen('dialogAddFile')}
+            primaryClick={() => handleClickOpen('dialogAddFile', 'edit')}
             content={
               <>
                 <Typography
@@ -959,7 +913,7 @@ function AddFileForm(props) {
             error={false}
             primaryButton="Edit"
             secondaryButton="Delete"
-            primaryClick={() => handleClickOpen('dialogAddFile')}
+            primaryClick={() => handleClickOpen('dialogAddFile', 'edit')}
             content={
               <>
                 <Typography
@@ -1020,6 +974,7 @@ function AddFileForm(props) {
             color="primary"
             startIcon={<AddIcon />}
             className={clsx(classes.addBtn, ' mt-2', 'mb-3')}
+            onClick={() => handleClickOpen('dialogAddFile', 'add')}
           >
             {t('Add file for support')}
           </Button>
@@ -1036,6 +991,7 @@ function AddFileForm(props) {
             color="primary"
             startIcon={<AddIcon />}
             className={clsx(classes.addBtn, 'mt-2', 'mb-3')}
+            onClick={() => handleClickOpen('dialogAddFile', 'add')}
           >
             {t('Add file for support')}
           </Button>
@@ -1050,6 +1006,7 @@ function AddFileForm(props) {
             color="primary"
             startIcon={<AddIcon />}
             className={clsx(classes.addBtn, 'mt-2', 'mb-3')}
+            onClick={() => handleClickOpen('dialogAddFile', 'add')}
           >
             {t('Add file for support')}
           </Button>
@@ -1136,6 +1093,7 @@ function AddFileForm(props) {
             color="primary"
             startIcon={<AddIcon />}
             className={clsx(classes.addBtn, 'mt-2', 'mb-3')}
+            onClick={() => handleClickOpen('dialogAddFile', 'add')}
           >
             {t('Add file for support')}
           </Button>
@@ -1182,6 +1140,7 @@ function AddFileForm(props) {
             color="primary"
             startIcon={<AddIcon />}
             className={clsx(classes.addBtn, 'mt-2', 'mb-3')}
+            onClick={() => handleClickOpen('dialogAddFile', 'add')}
           >
             {t('Add file for support')}
           </Button>
@@ -1251,6 +1210,7 @@ function AddFileForm(props) {
                 color="primary"
                 startIcon={<AddIcon />}
                 className={clsx(classes.addBtn, 'mb-3', 'mt-2')}
+                onClick={() => handleClickOpen('dialogAddFile', 'add')}
               >
                 {t('Add file for support')}
               </Button>
@@ -1292,6 +1252,7 @@ function AddFileForm(props) {
                 color="primary"
                 startIcon={<AddIcon />}
                 className={clsx(classes.addBtn, 'mb-3', 'mt-2')}
+                onClick={() => handleClickOpen('dialogAddFile', 'add')}
               >
                 {t('Add file for support')}
               </Button>
@@ -1336,6 +1297,7 @@ function AddFileForm(props) {
                 color="primary"
                 startIcon={<AddIcon />}
                 className={clsx(classes.addBtn, 'mt-2', 'mb-3')}
+                onClick={() => handleClickOpen('dialogAddFile', 'add')}
               >
                 {t('Add file for support')}
               </Button>
@@ -1396,6 +1358,7 @@ function AddFileForm(props) {
             color="primary"
             startIcon={<AddIcon />}
             className={clsx(classes.addBtn, 'mb-3', 'mt-2')}
+            onClick={() => handleClickOpen('dialogAddFile', 'add')}
           >
             {t('Add file for support')}
           </Button>
@@ -1411,6 +1374,7 @@ function AddFileForm(props) {
         submitDialog={() => handleClickClose('dialogAddFile')}
         toggleDialog={() => handleClickClose('dialogAddFile')}
         open={state.dialogAddFile}
+        fileFunction={state.dialogFileFunction}
       />
     </>
   );

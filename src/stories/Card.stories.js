@@ -94,7 +94,7 @@ export const Errors = (args) => {
         color="primary"
         startIcon={<AddIcon />}
         fullWidth="true"
-        className={clsx(classes.addBtn, 'mt-3')}
+        className={clsx(classes.addCard, 'mt-2')}
       >
         Add card
       </Button>

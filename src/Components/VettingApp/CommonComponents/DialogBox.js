@@ -76,9 +76,12 @@ const useStyles = makeStyles((theme) => ({
       padding: theme.spacing(1.5, 3),
     },
     '& .MuiSelect-select': {
-      height: [theme.spacing(7), '!important'],
+      height: [theme.spacing(5), '!important'],
       paddingTop: 0,
       paddingBottom: 0,
+    },
+    '& .MuiDialog-paperWidthSm .MuiOutlinedInput-inputMultiline': {
+      maxHeight: 'none',
     },
   },
   avatar: {
@@ -3345,11 +3348,18 @@ export function DialogOutputMethodHelp(props) {
 export function DialogAddFile(props) {
   const classes = useStyles();
   const {t} = useTranslation();
-  const {toggleDialog, open} = props;
+  const {toggleDialog, open, fileFunction} = props;
   const [anchorEl, setAnchorEl] = React.useState(null);
   const isOpen = Boolean(anchorEl);
   const id = open ? 'simple-popover' : undefined;
   const [state, setState] = React.useState({
+    filePath: {
+      value: '',
+      errorText: '',
+      invalid: '',
+      commands: '',
+      helperText: '',
+    },
     fileNotes: {
       text: '',
       errorText: '',
@@ -3369,6 +3379,18 @@ export function DialogAddFile(props) {
 
   const handleAnchorClose = () => {
     setAnchorEl(null);
+  };
+
+  const handleSelectChange = (event) => {
+    const name = event.target.name;
+    const val = event.target.value;
+    setState({
+      ...state,
+      [name]: {
+        ...state[name],
+        value: val,
+      },
+    });
   };
 
   const handleChange = (event) => {
@@ -3405,7 +3427,9 @@ export function DialogAddFile(props) {
         <DialogTitle id="dashboard-dialog-title">
           <div className={classes.vettingContainerTitle}>
             <Typography variant="h6" component="h2">
-              {t('Add file for support')}
+              {fileFunction === 'add' ?
+                t('Add file for support') :
+                t('Edit file for support')}
             </Typography>
             <IconButton
               id="dialog-close"
@@ -3430,13 +3454,35 @@ export function DialogAddFile(props) {
             <div className={classes.vettingRow}>
               <div className={classes.vettingColumn}>
                 <Typography variant="subtitle2" component="h3">
-                  {t('Select file for unweighted supporting sample counts')}
+                  {t('Select {supportFileType} file')}
                 </Typography>
               </div>
             </div>
             <div className={classes.vettingRow}>
               <div className={classes.vettingColumn}>
-                <TextField
+                <FormControl
+                  margin="dense"
+                  required
+                  variant="outlined"
+                  fullWidth
+                >
+                  <InputLabel id="file-path-select-label">File path</InputLabel>
+                  <Select
+                    label={t('File path')}
+                    labelId="file-path-select-label"
+                    id="filePath"
+                    name="filePath"
+                    value={state.filePath.value}
+                    onChange={handleSelectChange}
+                    required
+                  >
+                    <MenuItem value="">None</MenuItem>
+                    <MenuItem value={'spreadsheet1'}>spreadsheet1.xls</MenuItem>
+                    <MenuItem value={'spreadsheet2'}>spreadsheet2.doc</MenuItem>
+                    <MenuItem value={'spreadsheet3'}>spreadsheet3.xls</MenuItem>
+                  </Select>
+                </FormControl>
+                {/* <TextField
                   label={t('File path')}
                   required
                   aria-describedby={id}
@@ -3501,7 +3547,7 @@ export function DialogAddFile(props) {
                       </TreeItem>
                     </TreeItem>
                   </TreeView>
-                </Popover>
+                </Popover> */}
               </div>
             </div>
 
