@@ -28,7 +28,7 @@ import {
   Tooltip,
 } from '@material-ui/core';
 import Alert from '@material-ui/lab/Alert';
-import {OutputFile, ViewFile} from './ModifyFile';
+import {OutputFile} from './ModifyFile';
 import CloseIcon from '@material-ui/icons/Close';
 import InfoIcon from '@material-ui/icons/Info';
 import Icon from '@mdi/react';
