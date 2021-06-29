@@ -7,9 +7,6 @@ import {useHistory, useLocation} from 'react-router-dom';
 import {makeStyles} from '@material-ui/core/styles';
 import {green} from '@material-ui/core/colors';
 import CloseIcon from '@material-ui/icons/Close';
-import KeyboardArrowDownIcon from '@material-ui/icons/KeyboardArrowDown';
-import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
-import ChevronRightIcon from '@material-ui/icons/ChevronRight';
 import {
   Typography,
   TextField,
@@ -30,10 +27,8 @@ import {
   MenuItem,
   FormControlLabel,
   FormHelperText,
-  Popover,
-  InputAdornment,
 } from '@material-ui/core';
-import {Alert, TreeView, TreeItem} from '@material-ui/lab';
+import {Alert} from '@material-ui/lab';
 import {Dialog as CustomDialog} from '../../CommonComponents/Dialog';
 import NumberFormat from 'react-number-format';
 
@@ -3349,9 +3344,6 @@ export function DialogAddFile(props) {
   const classes = useStyles();
   const {t} = useTranslation();
   const {toggleDialog, open, fileFunction} = props;
-  const [anchorEl, setAnchorEl] = React.useState(null);
-  const isOpen = Boolean(anchorEl);
-  const id = open ? 'simple-popover' : undefined;
   const [state, setState] = React.useState({
     filePath: {
       value: '',
@@ -3371,14 +3363,6 @@ export function DialogAddFile(props) {
 
   const handleClick = (e) => {
     e.stopPropagation();
-  };
-
-  const handleAnchorClick = (event) => {
-    setAnchorEl(event.currentTarget);
-  };
-
-  const handleAnchorClose = () => {
-    setAnchorEl(null);
   };
 
   const handleSelectChange = (event) => {
@@ -3482,72 +3466,6 @@ export function DialogAddFile(props) {
                     <MenuItem value={'spreadsheet3'}>spreadsheet3.xls</MenuItem>
                   </Select>
                 </FormControl>
-                {/* <TextField
-                  label={t('File path')}
-                  required
-                  aria-describedby={id}
-                  onClick={handleAnchorClick}
-                  InputProps={{
-                    disabled: true,
-                    endAdornment: (
-                      <InputAdornment position="end">
-                        <KeyboardArrowDownIcon />
-                      </InputAdornment>
-                    ),
-                  }}
-                  className={classes.textFieldPopover}
-                />
-                <Popover
-                  id={id}
-                  open={isOpen}
-                  anchorEl={anchorEl}
-                  onClose={handleAnchorClose}
-                  classes={{
-                    paper: classes.popoverPaper,
-                  }}
-                  anchorOrigin={{
-                    vertical: 'bottom',
-                    horizontal: 'left',
-                  }}
-                  transformOrigin={{
-                    vertical: 'top',
-                    horizontal: 'left',
-                  }}
-                >
-                  <TreeView
-                    defaultCollapseIcon={<ExpandMoreIcon />}
-                    defaultExpandIcon={<ChevronRightIcon />}
-                  >
-                    <TreeItem nodeId="1" label="ProjectFolderName">
-                      <TreeItem nodeId="2" label="RequestFolderName">
-                        <TreeItem nodeId="3" label="FolderName">
-                          <TreeItem nodeId="4" label="FolderName">
-                            <TreeItem nodeId="5" label="OutputFileName.doc" />
-                            <TreeItem nodeId="6" label="OutputFileName.xls" />
-                            <TreeItem nodeId="7" label="OutputFileName.doc" />
-                            <TreeItem nodeId="8" label="OutputFileName.doc" />
-                            <TreeItem nodeId="9" label="OutputFileName.doc" />
-                          </TreeItem>
-                          <TreeItem nodeId="10" label="FolderName">
-                            <TreeItem
-                              nodeId="11"
-                              label={
-                                <Typography color="textSecondary">
-                                  No files
-                                </Typography>
-                              }
-                            />
-                          </TreeItem>
-                          <TreeItem nodeId="12" label="FolderName">
-                            <TreeItem nodeId="13" label="OutputFileName.xls" />
-                            <TreeItem nodeId="14" label="OutputFileName.xls" />
-                            <TreeItem nodeId="15" label="OutputFileName.xls" />
-                          </TreeItem>
-                        </TreeItem>
-                      </TreeItem>
-                    </TreeItem>
-                  </TreeView>
-                </Popover> */}
               </div>
             </div>
 
