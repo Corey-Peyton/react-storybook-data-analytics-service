@@ -10,9 +10,11 @@ export default {
   component: Card,
 };
 const useStyles = makeStyles((theme) => ({
-  addCard: {
+  addBtn: {
     'borderStyle': 'dashed',
     'justifyContent': 'start',
+    'textAlign': 'left',
+    'borderColor': 'rgba(0, 0, 0, 0.23)',
     '&.MuiButton-outlinedPrimary:hover': {
       borderStyle: 'dashed',
     },
@@ -54,7 +56,7 @@ export const Default = (args) => {
         color="primary"
         startIcon={<AddIcon />}
         fullWidth="true"
-        className={clsx(classes.addCard, 'mt-2')}
+        className={clsx(classes.addBtn, 'mt-2')}
       >
         Add card
       </Button>
@@ -116,7 +118,7 @@ export const NoCard = (args) => {
         color="primary"
         startIcon={<AddIcon />}
         fullWidth="true"
-        className={clsx(classes.addCard, 'mt-2')}
+        className={clsx(classes.addBtn, 'mt-2')}
       >
         Add card
       </Button>
@@ -145,7 +147,7 @@ export const NoCardError = (args) => {
         color="primary"
         startIcon={<AddIcon />}
         fullWidth="true"
-        className={clsx(classes.addCard, 'mt-2')}
+        className={clsx(classes.addBtn, 'mt-2')}
       >
         Add card
       </Button>

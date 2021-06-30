@@ -57,6 +57,7 @@ export const useStyles = makeStyles({
     },
     // Dense
     '.MuiFormControl-marginDense': {
+      'margin': theme.spacing(0, 0, 0, 0),
       // Outlined label
       '& .MuiInputLabel-outlined': {
         'fontSize': theme.typography.body2.fontSize,
@@ -493,90 +494,7 @@ export const useStyles = makeStyles({
       borderBottom: '1px solid',
       borderBottomColor: theme.palette.divider,
     },
-    '.mb-6': {
-      marginBottom: theme.spacing(6),
-    },
-    '.mb-5': {
-      marginBottom: theme.spacing(5),
-    },
-    '.mb-4': {
-      marginBottom: theme.spacing(4),
-    },
-    '.mb-3': {
-      marginBottom: theme.spacing(3),
-    },
-    '.mb-2': {
-      marginBottom: theme.spacing(2),
-    },
-    '.mb-1': {
-      marginBottom: theme.spacing(1),
-    },
-    '.mb-0': {
-      marginBottom: theme.spacing(0),
-    },
-    '.mt-6': {
-      marginTop: theme.spacing(6),
-    },
-    '.mt-5': {
-      marginTop: theme.spacing(5),
-    },
-    '.mt-4': {
-      marginTop: theme.spacing(4),
-    },
-    '.mt-3': {
-      marginTop: theme.spacing(3),
-    },
-    '.mt-2': {
-      marginTop: theme.spacing(2),
-    },
-    '.mt-1': {
-      marginTop: theme.spacing(1),
-    },
-    '.mt-0': {
-      marginTop: theme.spacing(0),
-    },
-    '.mr-6': {
-      marginRight: theme.spacing(6),
-    },
-    '.mr-5': {
-      marginRight: theme.spacing(5),
-    },
-    '.mr-4': {
-      marginRight: theme.spacing(4),
-    },
-    '.mr-3': {
-      marginRight: theme.spacing(3),
-    },
-    '.mr-2': {
-      marginRight: theme.spacing(2),
-    },
-    '.mr-1': {
-      marginRight: theme.spacing(1),
-    },
-    '.mr-0': {
-      marginRight: theme.spacing(0),
-    },
-    '.ml-6': {
-      marginLeft: theme.spacing(6),
-    },
-    '.ml-5': {
-      marginLeft: theme.spacing(5),
-    },
-    '.ml-4': {
-      marginLeft: theme.spacing(4),
-    },
-    '.ml-3': {
-      marginLeft: theme.spacing(3),
-    },
-    '.ml-2': {
-      marginLeft: theme.spacing(2),
-    },
-    '.ml-1': {
-      marginLeft: theme.spacing(1),
-    },
-    '.ml-0': {
-      marginLeft: theme.spacing(0),
-    },
+    // Margin
     '.m-6': {
       margin: theme.spacing(6),
     },
@@ -598,6 +516,167 @@ export const useStyles = makeStyles({
     '.m-0': {
       margin: theme.spacing(0),
     },
+    // Margin top
+    '.mt-6': {
+      marginTop: theme.spacing(6),
+    },
+    '.mt-5': {
+      marginTop: theme.spacing(5),
+    },
+    '.mt-4': {
+      marginTop: theme.spacing(4),
+    },
+    '.mt-3': {
+      marginTop: theme.spacing(3),
+    },
+    '.mt-2': {
+      marginTop: theme.spacing(2),
+    },
+    '.mt-1': {
+      marginTop: theme.spacing(1),
+    },
+    '.mt-0': {
+      marginTop: theme.spacing(0),
+    },
+    '.n-mt-1': {
+      marginTop: theme.spacing(-1),
+    },
+    '.n-mt-2': {
+      marginTop: theme.spacing(-2),
+    },
+    '.n-mt-3': {
+      marginTop: theme.spacing(-3),
+    },
+    '.n-mt-4': {
+      marginTop: theme.spacing(-4),
+    },
+    '.n-mt-5': {
+      marginTop: theme.spacing(-5),
+    },
+    '.n-mt-6': {
+      marginTop: theme.spacing(-6),
+    },
+    // Margin bottom
+    '.mb-6': {
+      marginBottom: theme.spacing(6),
+    },
+    '.mb-5': {
+      marginBottom: theme.spacing(5),
+    },
+    '.mb-4': {
+      marginBottom: theme.spacing(4),
+    },
+    '.mb-3': {
+      marginBottom: theme.spacing(3),
+    },
+    '.mb-2': {
+      marginBottom: theme.spacing(2),
+    },
+    '.mb-1': {
+      marginBottom: theme.spacing(1),
+    },
+    '.mb-0': {
+      marginBottom: theme.spacing(0),
+    },
+    '.n-mb-1': {
+      marginBottom: theme.spacing(-1),
+    },
+    '.n-mb-2': {
+      marginBottom: theme.spacing(-2),
+    },
+    '.n-mb-3': {
+      marginBottom: theme.spacing(-3),
+    },
+    '.n-mb-4': {
+      marginBottom: theme.spacing(-4),
+    },
+    '.n-mb-5': {
+      marginBottom: theme.spacing(-5),
+    },
+    '.n-mb-6': {
+      marginBottom: theme.spacing(-6),
+    },
+    // Margin right
+    '.mr-6': {
+      marginRight: theme.spacing(6),
+    },
+    '.mr-5': {
+      marginRight: theme.spacing(5),
+    },
+    '.mr-4': {
+      marginRight: theme.spacing(4),
+    },
+    '.mr-3': {
+      marginRight: theme.spacing(3),
+    },
+    '.mr-2': {
+      marginRight: theme.spacing(2),
+    },
+    '.mr-1': {
+      marginRight: theme.spacing(1),
+    },
+    '.mr-0': {
+      marginRight: theme.spacing(0),
+    },
+    '.n-mr-1': {
+      marginRight: theme.spacing(-1),
+    },
+    '.n-mr-2': {
+      marginRight: theme.spacing(-2),
+    },
+    '.n-mr-3': {
+      marginRight: theme.spacing(-3),
+    },
+    '.n-mr-4': {
+      marginRight: theme.spacing(-4),
+    },
+    '.n-mr-5': {
+      marginRight: theme.spacing(-5),
+    },
+    '.n-mr-6': {
+      marginRight: theme.spacing(-6),
+    },
+    // Margin left
+    '.ml-6': {
+      marginLeft: theme.spacing(6),
+    },
+    '.ml-5': {
+      marginLeft: theme.spacing(5),
+    },
+    '.ml-4': {
+      marginLeft: theme.spacing(4),
+    },
+    '.ml-3': {
+      marginLeft: theme.spacing(3),
+    },
+    '.ml-2': {
+      marginLeft: theme.spacing(2),
+    },
+    '.ml-1': {
+      marginLeft: theme.spacing(1),
+    },
+    '.ml-0': {
+      marginLeft: theme.spacing(0),
+    },
+    '.n-ml-1': {
+      marginLeft: theme.spacing(-1),
+    },
+    '.n-ml-2': {
+      marginLeft: theme.spacing(-2),
+    },
+    '.n-ml-3': {
+      marginLeft: theme.spacing(-3),
+    },
+    '.n-ml-4': {
+      marginLeft: theme.spacing(-4),
+    },
+    '.n-ml-5': {
+      marginLeft: theme.spacing(-5),
+    },
+    '.n-ml-6': {
+      marginLeft: theme.spacing(-6),
+    },
+    // Padding
     '.p-6': {
       padding: theme.spacing(6),
     },
@@ -619,6 +698,7 @@ export const useStyles = makeStyles({
     '.p-0': {
       padding: theme.spacing(0),
     },
+    // Padding top
     '.pt-6': {
       paddingTop: theme.spacing(6),
     },
@@ -640,6 +720,7 @@ export const useStyles = makeStyles({
     '.pt-0': {
       paddingTop: theme.spacing(0),
     },
+    // Padding bottom
     '.pb-6': {
       paddingBottom: theme.spacing(6),
     },
@@ -661,6 +742,7 @@ export const useStyles = makeStyles({
     '.pb-0': {
       paddingBottom: theme.spacing(0),
     },
+    // Padding right
     '.pr-6': {
       paddingRight: theme.spacing(6),
     },
@@ -682,6 +764,7 @@ export const useStyles = makeStyles({
     '.pr-0': {
       paddingRight: theme.spacing(0),
     },
+    // Padding left
     '.pl-6': {
       paddingLeft: theme.spacing(6),
     },
