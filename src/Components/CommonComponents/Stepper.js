@@ -13,55 +13,59 @@ import {
   Typography,
 } from '@material-ui/core/';
 import {grey} from '@material-ui/core/colors';
-import ArrowForwardIosIcon from '@material-ui/icons/ArrowForwardIos';
-import ArrowBackIosIcon from '@material-ui/icons/ArrowBackIos';
 import Icon from '@mdi/react';
 import {
   mdiCheckboxBlankCircleOutline,
-  mdiCircleEditOutline,
   mdiAlertCircleOutline,
+  mdiPencil,
   mdiCheckboxMarkedCircleOutline,
+  mdiChevronLeft,
+  mdiChevronRight,
 } from '@mdi/js';
 
 const useStyles = makeStyles((theme) => ({
   stepperContainer: {
     'display': 'flex',
+    'alignItems': 'center',
     '& .MuiStepper-root': {
       flexGrow: 1,
-      padding: 0,
+      paddingLeft: 0,
+      paddingRight: 0,
     },
-    '& .MuiSvgIcon-root': {
-      transform: 'none',
+    '& .MuiStep-root': {
+      paddingLeft: theme.spacing(2),
+      paddingRight: theme.spacing(2),
     },
-    '& .MuiButtonBase-root:first-child .MuiSvgIcon-root': {
-      transform: 'translateX(5px)',
+    '& .MuiStepButton-root': {
+      paddingLeft: theme.spacing(2),
+      paddingRight: theme.spacing(2),
+      marginLeft: theme.spacing(-2),
+      marginRight: theme.spacing(-2),
+    },
+    '& .MuiStepLabel-iconContainer': {
+      color: 'rgb(0 0 0 / 42%)',
+    },
+    '& .MuiStepConnector-line': {
+      borderColor: theme.palette.divider,
     },
   },
-  root: {
-    width: '100%',
-    textAlign: 'left',
-  },
-  button: {
-    marginRight: theme.spacing(1),
-  },
-  instructions: {
-    marginTop: theme.spacing(1),
-    marginBottom: theme.spacing(1),
-  },
+
   active: {
-    color: theme.palette.primary.main,
+    '& *': {
+      color: [theme.palette.primary.main, '!important'],
+    },
   },
+
   error: {
     '& *': {
       color: [theme.palette.error.main, '!important'],
     },
   },
-  customStepConnector: {
-    display: 'block',
-    width: '10%',
-    borderBottom: ['1px solid'],
-    borderColor: [grey[400], '!important'],
-    height: theme.spacing(2.5),
+
+  additionalStepConnector: {
+    width: '24px',
+    borderTop: '1px solid',
+    borderColor: theme.palette.divider,
   },
 }));
 
@@ -144,7 +148,7 @@ export default function Stepper(props) {
       1: <Icon path={mdiCheckboxMarkedCircleOutline} size={1} />, // completed
       2: <Icon path={mdiAlertCircleOutline} size={1} />, // error
       3: <Icon path={mdiCheckboxBlankCircleOutline} size={1} />, // incomplete
-      4: <Icon path={mdiCircleEditOutline} size={1} />, // active
+      4: <Icon path={mdiPencil} size={1} />, // active
     };
 
     const icon = () => {
@@ -163,12 +167,12 @@ export default function Stepper(props) {
       <div className={classes.stepperContainer}>
         <IconButton
           onClick={handleBack}
-          className={classes.stepperBackBtn}
           disabled={state.activeStep === 0}
+          className="ml-n1 mr-1"
         >
-          <ArrowBackIosIcon />
+          <Icon path={mdiChevronLeft} size={1} />
         </IconButton>
-        <div className={classes.customStepConnector}></div>
+        <div className={classes.additionalStepConnector}></div>
         <MUIStepper
           nonLinear
           activeStep={state.activeStep}
@@ -182,6 +186,7 @@ export default function Stepper(props) {
               buttonProps.optional = (
                 <Typography
                   className={classes.errorMsg}
+                  component="p"
                   variant="caption"
                   color="error"
                   align="left"
@@ -204,6 +209,7 @@ export default function Stepper(props) {
                   className={classes.stepButton}
                 >
                   <StepLabel
+                    align="left"
                     {...labelProps}
                     StepIconComponent={() =>
                       getStatusIcon(
@@ -226,24 +232,22 @@ export default function Stepper(props) {
             );
           })}
         </MUIStepper>
-        <div className={classes.customStepConnector}></div>
+        <div className={classes.additionalStepConnector}></div>
         <IconButton
           onClick={handleNext}
-          className={classes.stepperNextBtn}
           disabled={state.activeStep === totalSteps() - 1}
+          className="ml-1 mr-n1"
         >
-          <ArrowForwardIosIcon />
+          <Icon path={mdiChevronRight} size={1} />
         </IconButton>
       </div>
-      <div>
-        <Grid container justify="center" className="mb-4 mt-4">
-          <Grid item xs={6}>
-            <Typography variant="body2">
-              {state.stepContent(state.activeStep)}
-            </Typography>
-          </Grid>
+      <Grid container className="mb-3 mt-3">
+        <Grid item align="center" xs={12}>
+          <Typography variant="h5">
+            {state.stepContent(state.activeStep)}
+          </Typography>
         </Grid>
-      </div>
+      </Grid>
     </div>
   );
 }
