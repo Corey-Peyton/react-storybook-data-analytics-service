@@ -122,3 +122,33 @@ export const StepCompleted = (args) => {
     </>
   );
 };
+
+export const StepperReadonly = (args) => {
+  return (
+    <>
+      <Stepper
+        steps={[
+          'Step 1 example title',
+          'Step 2 example title',
+          'Step 3 example title',
+        ]}
+        stepperErrors={[0, 0, 0]}
+        completed={[true, false, false]}
+        activeStep={1}
+        stepContent={(step) => {
+          switch (step) {
+            case 0:
+              return 'Step 1 example title';
+            case 1:
+              return 'Step 2 example title';
+            case 2:
+              return 'Step 3 example title';
+            default:
+              break;
+          }
+        }}
+        readonly={true}
+      />
+    </>
+  );
+};

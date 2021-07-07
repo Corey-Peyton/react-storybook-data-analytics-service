@@ -12,7 +12,6 @@ import {
   IconButton,
   Typography,
 } from '@material-ui/core/';
-import {grey} from '@material-ui/core/colors';
 import Icon from '@mdi/react';
 import {
   mdiCheckboxBlankCircleOutline,
@@ -21,6 +20,7 @@ import {
   mdiCheckboxMarkedCircleOutline,
   mdiChevronLeft,
   mdiChevronRight,
+  mdiEye,
 } from '@mdi/js';
 
 const useStyles = makeStyles((theme) => ({
@@ -73,7 +73,7 @@ export default function Stepper(props) {
   const classes = useStyles();
   const [state, setState] = React.useState({
     activeStep: props.activeStep,
-    completed: {},
+    completed: props.completed,
     stepperErrors: props.stepperErrors,
     stepCompleted: props.completed,
     stepContent: props.stepContent,
@@ -136,6 +136,7 @@ export default function Stepper(props) {
   const getStatusIcon = (status, index, error) => {
     const statusIcon = () => {
       if (Boolean(error)) {
+        // error
         return 2;
       } else if (status) {
         return 1;
@@ -143,16 +144,18 @@ export default function Stepper(props) {
         return 3;
       }
     };
-
     const icons = {
       1: <Icon path={mdiCheckboxMarkedCircleOutline} size={1} />, // completed
       2: <Icon path={mdiAlertCircleOutline} size={1} />, // error
       3: <Icon path={mdiCheckboxBlankCircleOutline} size={1} />, // incomplete
       4: <Icon path={mdiPencil} size={1} />, // active
+      5: <Icon path={mdiEye} size={1} />, // readonly
     };
 
     const icon = () => {
-      if (index === state.activeStep) {
+      if (index === state.activeStep && props.readonly) {
+        return icons[5];
+      } else if (index === state.activeStep) {
         return icons[4];
       } else {
         return icons[statusIcon()];
@@ -177,6 +180,7 @@ export default function Stepper(props) {
           nonLinear
           activeStep={state.activeStep}
           connector={<StepConnector />}
+          // readonly={props.readonly}
         >
           {steps.map((label, index) => {
             const labelProps = {};
@@ -199,13 +203,17 @@ export default function Stepper(props) {
               );
             }
             return (
-              <Step key={label} ref={getStepRef(index)} tabIndex="-1">
+              <Step
+                key={label}
+                ref={getStepRef(index)}
+                tabIndex="-1"
+                completed={state.completed[index]}
+              >
                 <StepButton
                   {...buttonProps}
                   onClick={() => {
                     handleJumpStep(index);
                   }}
-                  completed={state.completed[index]}
                   className={classes.stepButton}
                 >
                   <StepLabel
@@ -258,11 +266,15 @@ Stepper.propTypes = {
   */
   steps: PropTypes.array.isRequired,
   /**
+    Whether the stepper is readonly or not.
+  */
+  readonly: PropTypes.bool.isRequired,
+  /**
       The amount of errors on each step.
     */
   stepperErrors: PropTypes.array,
   /**
-      The completed/incompleted state of each step
+      The completed/incompleted state of each step.
     */
   completed: PropTypes.array,
   /**
@@ -275,6 +287,7 @@ Stepper.propTypes = {
   stepContent: PropTypes.func.isRequired,
 };
 
-Stepper.defaultPropps = {
+Stepper.defaultProps = {
   activeStep: 0,
+  readonly: false,
 };
