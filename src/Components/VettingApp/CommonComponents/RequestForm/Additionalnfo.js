@@ -3,14 +3,7 @@ import {makeStyles} from '@material-ui/core/styles';
 import {Typography, Divider, TextField} from '@material-ui/core';
 import {useTranslation} from 'react-i18next';
 
-const useStyles = makeStyles((theme) => ({
-  inputMargin: {
-    marginBottom: theme.spacing(2),
-  },
-  divider: {
-    margin: theme.spacing(3, 0),
-  },
-}));
+const useStyles = makeStyles((theme) => ({}));
 
 function AdditionalInfo(props) {
   const classes = useStyles();
@@ -109,16 +102,16 @@ function AdditionalInfo(props) {
 
   return (
     <React.Fragment>
-      <Typography>
+      <Typography component="h2" variant="h6" className="mb-3">
+        Additional information
+      </Typography>
+      <Typography component="p" variant="body1" className="mb-3">
         Use this section to add any information that you think might be helpful
         for the Analyst(s) while reviewing your vetting request.
       </Typography>
-      <Divider className={classes.divider} />
-      <Typography component="h2" variant="h6" className="mb-2">
-        Additional information
-      </Typography>
+      <Divider className="mb-3" />
       <TextField
-        className={classes.inputMargin}
+        className="mb-3"
         margin="dense"
         id="additionalInfo"
         label="Additional information"

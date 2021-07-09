@@ -22,11 +22,12 @@ import {
   RadioGroup,
   Radio,
   Tooltip,
+  Grid,
 } from '@material-ui/core';
 import {AddFile, ModifyFile, ViewFile} from './ModifyFile';
 import {Card} from '../../../CommonComponents/Card';
 import CloseIcon from '@material-ui/icons/Close';
-import InfoIcon from '@material-ui/icons/Info';
+import InfoOutlinedIcon from '@material-ui/icons/InfoOutlined';
 import AddIcon from '@material-ui/icons/Add';
 import Icon from '@mdi/react';
 import {mdiFile, mdiFolderOpen, mdiTableLarge} from '@mdi/js';
@@ -97,9 +98,6 @@ const useStyles = makeStyles((theme) => ({
     borderTop: '1px solid',
     borderTopColor: theme.palette.divider,
   },
-  divider: {
-    margin: theme.spacing(3, 0),
-  },
   drawer: {
     '& .MuiDrawer-paper': {
       maxWidth: '400px',
@@ -117,22 +115,14 @@ const useStyles = makeStyles((theme) => ({
     },
   },
   emphasisBox: {
-    background: theme.palette.grey[200],
+    background: theme.palette.grey[100],
     padding: theme.spacing(2),
     marginBottom: theme.spacing(3),
     borderLeftStyle: 'solid',
-    borderLeftWidth: '5px',
+    borderLeftWidth: '4px',
     borderLeftColor: theme.palette.primary.main,
-  },
-  tooltipLabel: {
-    '& svg': {
-      verticalAlign: 'middle',
-      paddingLeft: theme.spacing(1),
-    },
-  },
-  tooltip: {
-    paddingLeft: theme.spacing(1),
-    marginTop: theme.spacing(1),
+    borderTopRightRadius: theme.shape.borderRadius,
+    borderBottomRightRadius: theme.shape.borderRadius,
   },
   iconText: {
     'display': 'flex',
@@ -142,6 +132,10 @@ const useStyles = makeStyles((theme) => ({
       width: '1.25rem',
       height: '1.25rem',
     },
+  },
+  legendInfoIcon: {
+    marginTop: theme.spacing(-0.25),
+    marginLeft: theme.spacing(1),
   },
 }));
 
@@ -298,25 +292,25 @@ function FilesList(props) {
 
   return (
     <React.Fragment>
-      <Typography component="h2" variant="h6" className="mb-2">
+      <Typography component="h2" variant="h6" className="mb-3">
         Files for output
       </Typography>
-      <Typography>
+      <Typography component="p" variant="body1" className="mb-3">
         Please add and prepare your files for vetting. You will not have access
         to your files from within the request and are simply adding the file
         path to help Analyst locate the file on your virtual machince. If your
         request is approved you will be granted access to your files outside of
         your secure enviroment.
       </Typography>
-      <Divider className={classes.divider} />
-      <Typography component="h2" variant="h6" className="mb-2">
+      <Divider className="mb-3" />
+      <Typography component="h3" variant="subtitle2" className="mb-3">
         Screening questions
       </Typography>
       <div className={classes.emphasisBox}>
-        <Typography variant="subtitle2" component="h3" className="mb-3">
+        <Typography component="p" variant="body2" className="mb-2">
           Please consider the following guidelines:
         </Typography>
-        <ul>
+        <ul className="mb-2">
           <li>
             <Typography variant="body2">
               Check your output against the vetting guidelines.
@@ -328,11 +322,11 @@ function FilesList(props) {
             </Typography>
           </li>
         </ul>
-        <Typography variant="body2" className="mt-3">
+        <Typography component="p" variant="body2">
           This request will be stored as part of the request record.
         </Typography>
       </div>
-      <FormControl component="fieldset" className="radio-margin" required>
+      <FormControl component="fieldset" className="mb-2" required>
         <FormLabel component="legend">
           Is the requested output consistent with the approved proposal for this
           project?
@@ -350,7 +344,7 @@ function FilesList(props) {
           />
         </RadioGroup>
       </FormControl>
-      <FormControl component="fieldset" className="radio-margin" required>
+      <FormControl component="fieldset" className="mb-2" required>
         <FormLabel component="legend">
           Have you checked the vetting rules to determine if there are
           geographical, institutional, household size and/or population
@@ -369,13 +363,19 @@ function FilesList(props) {
           />
         </RadioGroup>
       </FormControl>
-      <FormControl component="fieldset" className="radio-margin" required>
-        <FormLabel component="legend" className={classes.tooltipLabel}>
-          Is the requested output your final output?
-          <BootstrapTooltip title="If no, future vetting release requests under this contract may be restricted due to residual disclosure. You are strongly encouraged to consult with your Analyst.">
-            <InfoIcon />
-          </BootstrapTooltip>
-        </FormLabel>
+      <FormControl component="fieldset" className="mb-2" required>
+        <Grid component="span" container>
+          <Grid component="span" xs item>
+            <FormLabel component="legend">
+              Is the requested output your final output?
+            </FormLabel>
+          </Grid>
+          <Grid component="span" className={classes.legendInfoIcon} item>
+            <BootstrapTooltip title="If no, future vetting release requests under this contract may be restricted due to residual disclosure. You are strongly encouraged to consult with your Analyst.">
+              <InfoOutlinedIcon />
+            </BootstrapTooltip>
+          </Grid>
+        </Grid>
         <RadioGroup id="finalOutput" name="finalOutput">
           <FormControlLabel
             value="Yes"
@@ -389,6 +389,10 @@ function FilesList(props) {
           />
         </RadioGroup>
       </FormControl>
+      <Divider className="mb-3" />
+      <Typography component="h3" variant="subtitle2" className="mb-3">
+        Output files
+      </Typography>
       <Typography display="inline" variant="body2">
         Add file for output *
       </Typography>
@@ -425,7 +429,7 @@ function FilesList(props) {
                 >
                   File path
                 </Typography>
-                <div className={`mb-3`}>
+                <div className="mb-2">
                   <ul className="list-horizontal">
                     {file.path.map((folder, index) => {
                       const len = file.path.length;
@@ -476,12 +480,20 @@ function FilesList(props) {
           color="primary"
           startIcon={<AddIcon />}
           fullWidth={true}
-          className={clsx(classes.addCard, 'mt-2')}
+          className={clsx(classes.addCard, 'mt-2 mb-3')}
           onClick={(e) => toggleDrawer(e, 'addFile', true)}
         >
           Add file for output
         </Button>
       )}
+      <Divider className="mb-3" />
+      <Typography component="h3" variant="subtitle2" className="mb-3">
+        Suporting files
+      </Typography>
+      <Divider className="mb-3" />
+      <Typography component="h3" variant="subtitle2" className="mb-3">
+        Other files
+      </Typography>
       {/* Add output file drawer */}
       <Drawer anchor="right" open={open.addFile} className={classes.drawer}>
         <AddFile
