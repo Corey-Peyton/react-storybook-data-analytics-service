@@ -28,6 +28,7 @@ import {
 import Alert from '@material-ui/lab/Alert';
 import {AddFile, ModifyFile, ViewFile} from './ModifyFile';
 import {Card} from '../../../CommonComponents/Card';
+import {OutputFile} from './ModifyFile';
 import CloseIcon from '@material-ui/icons/Close';
 import InfoOutlinedIcon from '@material-ui/icons/InfoOutlined';
 import AddIcon from '@material-ui/icons/Add';
@@ -107,7 +108,7 @@ const useStyles = makeStyles((theme) => ({
   },
   drawer: {
     '& .MuiDrawer-paper': {
-      maxWidth: '400px',
+      width: theme.spacing(50),
       boxSizing: 'border-box',
     },
   },
@@ -179,21 +180,20 @@ function FilesList(props) {
     snackbarCreate: false,
     snackbarUpdate: false,
     snackbarDelete: false,
-    addFile: false,
-    editFile: false,
-    viewFile: false,
+    outputFile: false,
     dialogDelete: false,
     alert: true,
+    drawerType: '',
   });
 
-  const toggleDrawer = (event, drawer, state) => {
+  const toggleDrawer = (event, drawer) => {
     if (
       event.type === 'keydown' &&
       (event.key === 'Tab' || event.key === 'Shift')
     ) {
       return;
     }
-    setOpen({...open, [drawer]: state});
+    setOpen({...open, outputFile: !open.outputFile, drawerType: drawer});
   };
 
   const handleClickOpen = (state) => {
@@ -205,11 +205,11 @@ function FilesList(props) {
   };
 
   const createFile = () => {
-    setOpen({...open, snackbarCreate: true, addFile: false});
+    setOpen({...open, snackbarCreate: true, outputFile: false});
   };
 
   const updateFile = () => {
-    setOpen({...open, snackbarUpdate: true, editFile: false});
+    setOpen({...open, snackbarUpdate: true, outputFile: false});
   };
 
   const deleteFile = () => {
@@ -581,17 +581,11 @@ function FilesList(props) {
         <ModifyFile
           toggleDrawer={toggleDrawer}
           updateFile={updateFile}
+          createFile={createFile}
           handleClickOpen={handleClickOpen}
+          drawerType={open.drawerType}
         />
       </Drawer>
-      {/* View output file drawer */}
-      <Drawer anchor="right" open={open.viewFile} className={classes.drawer}>
-        <ViewFile
-          toggleDrawer={toggleDrawer}
-          handleClickOpen={handleClickOpen}
-        />
-      </Drawer>
-      {/* Add supporting file dialog */}
       <Dialog
         open={open.dialogAddSupporting}
         aria-labelledby="form-dialog-title"

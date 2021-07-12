@@ -17,7 +17,8 @@ const useStyles = makeStyles((theme) => ({
     'marginTop': theme.spacing(2),
     'flexGrow': 1,
     '& .MuiCardHeader-root': {
-      paddingBottom: theme.spacing(0),
+      borderBottom: '1px solid',
+      borderBottomColor: theme.palette.divider,
     },
   },
   cardActions: {
@@ -33,6 +34,8 @@ const useStyles = makeStyles((theme) => ({
     'borderColor': theme.palette.error.light,
     '& .MuiCardHeader-root': {
       color: theme.palette.error.main,
+      borderBottom: '1px solid',
+      borderBottomColor: theme.palette.error.light,
     },
   },
 }));
