@@ -98,7 +98,7 @@ function VettingRequestAnalyst(props) {
   };
 
   const [state, setState] = React.useState({
-    activeStep: 0,
+    activeStep: 1,
     completed: {},
     title: 'Untitled request',
     open: false,

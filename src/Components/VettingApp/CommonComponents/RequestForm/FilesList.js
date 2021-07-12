@@ -2,11 +2,11 @@ import React from 'react';
 import {useTranslation} from 'react-i18next';
 import {makeStyles} from '@material-ui/core/styles';
 import clsx from 'clsx';
-import Dialog from '@material-ui/core/Dialog';
-import DialogActions from '@material-ui/core/DialogActions';
-import DialogContent from '@material-ui/core/DialogContent';
-import DialogTitle from '@material-ui/core/DialogTitle';
 import {
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogTitle,
   Divider,
   Typography,
   IconButton,
@@ -23,14 +23,21 @@ import {
   Radio,
   Tooltip,
   Grid,
+  Collapse,
 } from '@material-ui/core';
+import Alert from '@material-ui/lab/Alert';
 import {AddFile, ModifyFile, ViewFile} from './ModifyFile';
 import {Card} from '../../../CommonComponents/Card';
 import CloseIcon from '@material-ui/icons/Close';
 import InfoOutlinedIcon from '@material-ui/icons/InfoOutlined';
 import AddIcon from '@material-ui/icons/Add';
 import Icon from '@mdi/react';
-import {mdiFile, mdiFolderOpen, mdiTableLarge} from '@mdi/js';
+import {
+  mdiFile,
+  mdiFolderOpen,
+  mdiTableLarge,
+  mdiChevronRight,
+} from '@mdi/js';
 import {
   SnackbarAddOutputFile,
   SnackbarAddSupportFile,
@@ -114,15 +121,10 @@ const useStyles = makeStyles((theme) => ({
       paddingBottom: 0,
     },
   },
-  emphasisBox: {
-    background: theme.palette.grey[100],
-    padding: theme.spacing(2),
-    marginBottom: theme.spacing(3),
-    borderLeftStyle: 'solid',
-    borderLeftWidth: '4px',
-    borderLeftColor: theme.palette.primary.main,
-    borderTopRightRadius: theme.shape.borderRadius,
-    borderBottomRightRadius: theme.shape.borderRadius,
+  alert: {
+    '& .MuiAlert-action': {
+      alignItems: 'start',
+    },
   },
   iconText: {
     'display': 'flex',
@@ -181,6 +183,7 @@ function FilesList(props) {
     editFile: false,
     viewFile: false,
     dialogDelete: false,
+    alert: true,
   });
 
   const toggleDrawer = (event, drawer, state) => {
@@ -306,26 +309,43 @@ function FilesList(props) {
       <Typography component="h3" variant="subtitle2" className="mb-3">
         Screening questions
       </Typography>
-      <div className={classes.emphasisBox}>
-        <Typography component="p" variant="body2" className="mb-2">
-          Please consider the following guidelines:
-        </Typography>
-        <ul className="mb-2">
-          <li>
-            <Typography variant="body2">
-              Check your output against the vetting guidelines.
-            </Typography>
-          </li>
-          <li>
-            <Typography variant="body2">
-              Delete values you do not need released at this time.
-            </Typography>
-          </li>
-        </ul>
-        <Typography component="p" variant="body2">
-          This request will be stored as part of the request record.
-        </Typography>
-      </div>
+      <Collapse in={open.alert}>
+        <Alert
+          severity="info"
+          className={`mb-3 ${classes.alert}`}
+          action={
+            <IconButton
+              aria-label="clear"
+              color="inherit"
+              size="small"
+              onClick={() => {
+                handleClickClose('alert');
+              }}
+            >
+              <CloseIcon fontSize="inherit" />
+            </IconButton>
+          }
+        >
+          <Typography component="p" variant="body2" className="mb-2">
+            Please consider the following guidelines:
+          </Typography>
+          <ul className="mb-2">
+            <li>
+              <Typography variant="body2">
+                Check your output against the vetting guidelines.
+              </Typography>
+            </li>
+            <li>
+              <Typography variant="body2">
+                Delete values you do not need released at this time.
+              </Typography>
+            </li>
+          </ul>
+          <Typography component="p" variant="body2">
+            This request will be stored as part of the request record.
+          </Typography>
+        </Alert>
+      </Collapse>
       <FormControl component="fieldset" className="mb-2" required>
         <FormLabel component="legend">
           Is the requested output consistent with the approved proposal for this
@@ -404,6 +424,60 @@ function FilesList(props) {
       >
         At least one file must be added
       </Typography>
+      <Card
+        title={t('File 1 · Unweighted supporting sample counts')}
+        error={false}
+        primaryButton={t('Edit')}
+        secondaryButton={t('Delete')}
+        primaryClick={() => handleClickOpen('dialogAddFile', 'edit')}
+        content={
+          <>
+            <Typography variant="caption" component="p" color="textSecondary">
+              {t('File path')}
+            </Typography>
+            <div className={clsx(classes.filePath, 'mb-2')}>
+              <div className={classes.filePathItem}>
+                <Typography variant="body2" component="p" className="mr-1">
+                  {'Project folder example'}
+                </Typography>
+                <Icon path={mdiChevronRight} size={0.5} className="mr-1" />
+              </div>
+              <div className={classes.filePathItem}>
+                <Typography variant="body2" component="p" className="mr-1">
+                  {'Request folder example'}
+                </Typography>
+                <Icon path={mdiChevronRight} size={0.5} className="mr-1" />
+              </div>
+              <div className={classes.filePathItem}>
+                <Typography variant="body2" component="p" className="mr-1">
+                  {'First level folder example'}
+                </Typography>
+                <Icon path={mdiChevronRight} size={0.5} className="mr-1" />
+              </div>
+              <div className={classes.filePathItem}>
+                <Typography variant="body2" component="p" className="mr-1">
+                  {'Second level folder example'}
+                </Typography>
+                <Icon path={mdiChevronRight} size={0.5} className="mr-1" />
+              </div>
+              <div className={classes.filePathItem}>
+                <Typography variant="body2" component="p">
+                  {'Suporting file name example.doc'}
+                </Typography>
+              </div>
+            </div>
+            <Typography variant="caption" component="p" color="textSecondary">
+              {t('Notes')}
+            </Typography>
+            <Typography variant="body2" component="p">
+              {t(
+                  'Notes section to include any details regarding the syntax file added. This will be helpful for the Researcher/Analyst during the vetting process.',
+              )}
+            </Typography>
+          </>
+        }
+      />
+
       {files.map((file, index) => {
         return (
           <Card
