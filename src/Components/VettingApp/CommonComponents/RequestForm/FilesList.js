@@ -26,7 +26,7 @@ import {
   Collapse,
 } from '@material-ui/core';
 import Alert from '@material-ui/lab/Alert';
-import {AddFile, ModifyFile, ViewFile} from './ModifyFile';
+// import {AddFile, ModifyFile, ViewFile} from './ModifyFile';
 import {Card} from '../../../CommonComponents/Card';
 import {OutputFile} from './ModifyFile';
 import CloseIcon from '@material-ui/icons/Close';
@@ -140,9 +140,19 @@ const useStyles = makeStyles((theme) => ({
     marginTop: theme.spacing(-0.25),
     marginLeft: theme.spacing(1),
   },
+  filePath: {
+    display: 'flex',
+    flexFlow: 'wrap',
+    alignItems: 'flex-end',
+  },
+  filePathItem: {
+    display: 'flex',
+    alignItems: 'center',
+  },
 }));
 
-const files = [
+// FAKE DATA
+const outputFiles = [
   {
     name: 'File for output',
     sheet: '{SheetName}',
@@ -153,10 +163,43 @@ const files = [
       '{FolderName}',
       '{OutputFileName}.xls',
     ],
-    emptyFields: 0,
-    error: false,
+    numErrors: 0,
   },
 ];
+
+const syntaxFiles = [
+  {
+    name: 'Syntax file',
+    path: [
+      '{ProjectFolderName}',
+      '{RequestFolderName}',
+      '{FolderName}',
+      '{FolderName}',
+      '{SyntaxFileName}.doc',
+    ],
+    notes:
+      'Notes section to include any details regarding the syntax file added. This will be helpful for the Researcher/Analyst during the vetting process.',
+    numErrors: 0,
+  },
+];
+
+const variableFiles = [
+  {
+    name: 'Variable file',
+    path: [
+      '{ProjectFolderName}',
+      '{RequestFolderName}',
+      '{FolderName}',
+      '{FolderName}',
+      '{VariableFileName}.doc',
+    ],
+    notes:
+      'Notes section to include any details regarding the variable file added. This will be helpful for the Researcher/Analyst during the vetting process.',
+    numErrors: 0,
+  },
+];
+
+const additionalFiles = [];
 
 function BootstrapTooltip(props) {
   const classes = useStylesBootstrap();
@@ -166,6 +209,7 @@ function BootstrapTooltip(props) {
 
 function FilesList(props) {
   const classes = useStyles();
+  const {t} = useTranslation();
   const [state, setState] = React.useState({
     notes: {
       text: '',
@@ -223,8 +267,6 @@ function FilesList(props) {
       snackbarAddSupporting: true,
     });
   };
-
-  const {t} = useTranslation();
 
   const disableCutCopyPaste = (e, command, value) => {
     // display error if user tries to cut/copy/paste
@@ -410,181 +452,136 @@ function FilesList(props) {
         </RadioGroup>
       </FormControl>
       <Divider className="mb-3" />
+      {/* OUTPUT FILES */}
       <Typography component="h3" variant="subtitle2" className="mb-3">
         Output files
       </Typography>
-      <Typography display="inline" variant="body2">
-        Add file for output *
-      </Typography>
-      <Typography
-        variant="caption"
-        color="textSecondary"
-        component="p"
-        className="mb-2"
-      >
+      <Typography variant="body2">Add file for output *</Typography>
+      <Typography variant="caption" color="textSecondary" component="p">
         At least one file must be added
       </Typography>
-      <Card
-        title={t('File 1 · Unweighted supporting sample counts')}
-        error={false}
-        primaryButton={t('Edit')}
-        secondaryButton={t('Delete')}
-        primaryClick={() => handleClickOpen('dialogAddFile', 'edit')}
-        content={
-          <>
-            <Typography variant="caption" component="p" color="textSecondary">
-              {t('File path')}
-            </Typography>
-            <div className={clsx(classes.filePath, 'mb-2')}>
-              <div className={classes.filePathItem}>
-                <Typography variant="body2" component="p" className="mr-1">
-                  {'Project folder example'}
-                </Typography>
-                <Icon path={mdiChevronRight} size={0.5} className="mr-1" />
-              </div>
-              <div className={classes.filePathItem}>
-                <Typography variant="body2" component="p" className="mr-1">
-                  {'Request folder example'}
-                </Typography>
-                <Icon path={mdiChevronRight} size={0.5} className="mr-1" />
-              </div>
-              <div className={classes.filePathItem}>
-                <Typography variant="body2" component="p" className="mr-1">
-                  {'First level folder example'}
-                </Typography>
-                <Icon path={mdiChevronRight} size={0.5} className="mr-1" />
-              </div>
-              <div className={classes.filePathItem}>
-                <Typography variant="body2" component="p" className="mr-1">
-                  {'Second level folder example'}
-                </Typography>
-                <Icon path={mdiChevronRight} size={0.5} className="mr-1" />
-              </div>
-              <div className={classes.filePathItem}>
-                <Typography variant="body2" component="p">
-                  {'Suporting file name example.doc'}
-                </Typography>
-              </div>
-            </div>
-            <Typography variant="caption" component="p" color="textSecondary">
-              {t('Notes')}
-            </Typography>
-            <Typography variant="body2" component="p">
-              {t(
-                  'Notes section to include any details regarding the syntax file added. This will be helpful for the Researcher/Analyst during the vetting process.',
-              )}
-            </Typography>
-          </>
-        }
-      />
-
-      {files.map((file, index) => {
-        return (
-          <Card
-            key={index}
-            title={`${index + 1}. ${file.name}`}
-            error={file.error}
-            primaryButton={
-              props.role === 'researcher' ? 'Edit' : 'View details'
-            }
-            secondaryButton={props.role === 'researcher' ? 'Delete' : ''}
-            primaryClick={
-              props.role === 'researcher' ?
-                (e) => toggleDrawer(e, 'editFile', true) :
-                (e) => toggleDrawer(e, 'viewFile', true)
-            }
-            secondaryClick={() => handleClickOpen('dialogDelete')}
-            content={
-              <>
-                <Typography
-                  variant="caption"
-                  color="textSecondary"
-                  component="p"
-                >
-                  File path
-                </Typography>
-                <div className="mb-2">
-                  <ul className="list-horizontal">
-                    {file.path.map((folder, index) => {
-                      const len = file.path.length;
-                      if (index === len - 1) {
-                        return (
-                          <li key={index}>
-                            <Typography
-                              variant="body2"
-                              className={classes.iconText}
-                            >
-                              <Icon path={mdiFile} /> {folder}
-                            </Typography>
-                          </li>
-                        );
-                      }
-                      return (
-                        <li key={index}>
-                          <Typography
-                            variant="body2"
-                            className={classes.iconText}
-                          >
-                            <Icon path={mdiFolderOpen} /> {folder}
-                            <span className="ml-1 mr-1">&gt;</span>
-                          </Typography>
-                        </li>
-                      );
-                    })}
-                  </ul>
-                </div>
-                <Typography
-                  variant="caption"
-                  color="textSecondary"
-                  component="p"
-                >
-                  Sheet name
-                </Typography>
-                <Typography variant="body2" className={classes.iconText}>
-                  <Icon path={mdiTableLarge} /> {file.sheet}
-                </Typography>
-              </>
-            }
-          />
-        );
-      })}
+      {outputFiles.length > 0 ?
+        outputFiles.map((file, index) => (
+          <OutputFileCard file={file} index={index} role={props.role} />
+        )) :
+        ''
+      // <Typography variant="body2" color="textSecondary" className="mb-2">
+      //   No output files
+      // </Typography>
+      }
       {props.role === 'researcher' && (
         <Button
           variant="outlined"
           color="primary"
           startIcon={<AddIcon />}
           fullWidth={true}
-          className={clsx(classes.addCard, 'mt-2 mb-3')}
+          className={clsx(classes.addCard, 'mt-2')}
           onClick={(e) => toggleDrawer(e, 'addFile', true)}
         >
           Add file for output
         </Button>
       )}
-      <Divider className="mb-3" />
+      <Divider className="mt-3 mb-3" />
+      {/* MANDATORY SUPPORTING FILES */}
       <Typography component="h3" variant="subtitle2" className="mb-3">
-        Suporting files
+        Mandatory supporting files
       </Typography>
-      <Divider className="mb-3" />
+      <Typography variant="body2">Add file for syntax *</Typography>
+      <Typography variant="caption" color="textSecondary" component="p">
+        At least one file must be added
+      </Typography>
+      {syntaxFiles.length > 0 ?
+        syntaxFiles.map((file, index) => (
+          <SupportingFileCard file={file} index={index} role={props.role} />
+        )) :
+        ''
+      // <Typography variant="body2" color="textSecondary" className="mb-2">
+      //   No syntax files
+      // </Typography>
+      }
+      {props.role === 'researcher' && (
+        <Button
+          variant="outlined"
+          color="primary"
+          startIcon={<AddIcon />}
+          fullWidth={true}
+          className={clsx(classes.addCard, 'mt-2')}
+          // onClick={(e) => toggleDrawer(e, 'addFile', true)}
+        >
+          Add file for support
+        </Button>
+      )}
+      <Typography variant="body2" className="mt-3">
+        Add file for variable list/description *
+      </Typography>
+      <Typography variant="caption" color="textSecondary" component="p">
+        At least one file must be added
+      </Typography>
+      {variableFiles.length > 0 ?
+        variableFiles.map((file, index) => (
+          <SupportingFileCard file={file} index={index} role={props.role} />
+        )) :
+        ''
+      // <Typography variant="body2" color="textSecondary">
+      //   No variable list/description files
+      // </Typography>
+      }
+      {props.role === 'researcher' && (
+        <Button
+          variant="outlined"
+          color="primary"
+          startIcon={<AddIcon />}
+          fullWidth={true}
+          className={clsx(classes.addCard, 'mt-2')}
+          // onClick={(e) => toggleDrawer(e, 'addFile', true)}
+        >
+          Add file for support
+        </Button>
+      )}
+      <Divider className="mt-3 mb-3" />
       <Typography component="h3" variant="subtitle2" className="mb-3">
-        Other files
+        Additional supporting files
       </Typography>
+      <Typography variant="body2">Add file for additional details</Typography>
+      {additionalFiles.length > 0 ?
+        additionalFiles.map((file, index) => (
+          <SupportingFileCard file={file} index={index} role={props.role} />
+        )) :
+        ''
+      // <Typography variant="body2" color="textSecondary">
+      //   No additional supporting files
+      // </Typography>
+      }
+      {props.role === 'researcher' && (
+        <Button
+          variant="outlined"
+          color="primary"
+          startIcon={<AddIcon />}
+          fullWidth={true}
+          className={clsx(classes.addCard, 'mt-2')}
+          // onClick={(e) => toggleDrawer(e, 'addFile', true)}
+        >
+          Add file for support
+        </Button>
+      )}
+
       {/* Add output file drawer */}
       <Drawer anchor="right" open={open.addFile} className={classes.drawer}>
-        <AddFile
+        {/* <AddFile
           toggleDrawer={toggleDrawer}
           createFile={createFile}
           handleClickOpen={handleClickOpen}
-        />
+        /> */}
       </Drawer>
       {/* Edit output file drawer */}
       <Drawer anchor="right" open={open.editFile} className={classes.drawer}>
-        <ModifyFile
+        {/* <ModifyFile
           toggleDrawer={toggleDrawer}
           updateFile={updateFile}
           createFile={createFile}
           handleClickOpen={handleClickOpen}
           drawerType={open.drawerType}
-        />
+        /> */}
       </Drawer>
       <Dialog
         open={open.dialogAddSupporting}
@@ -706,3 +703,113 @@ function FilesList(props) {
   );
 }
 export default FilesList;
+
+function OutputFileCard(props) {
+  const classes = useStyles();
+  const {t} = useTranslation();
+  const {file, index, role} = props;
+  return (
+    <Card
+      title={`${t('File')} ${index + 1} · ${file.name}`}
+      error={file.numErrors > 0}
+      totalErrors={file.numErrors}
+      primaryButton={role === 'researcher' ? 'Edit' : 'View details'}
+      secondaryButton={role === 'researcher' ? 'Delete' : ''}
+      // primaryClick={
+      //   role === 'researcher' ?
+      //     (e) => toggleDrawer(e, 'editFile', true) :
+      //     (e) => toggleDrawer(e, 'viewFile', true)
+      // }
+      // secondaryClick={() => handleClickOpen('dialogDelete')}
+      content={
+        <>
+          <Typography variant="caption" component="p" color="textSecondary">
+            {t('File path')}
+          </Typography>
+          <div className={clsx(classes.filePath, 'mb-2')}>
+            {file.path.map((dir, index) => {
+              const last = index === file.path.length - 1;
+              return (
+                <div className={classes.filePathItem}>
+                  <Typography
+                    variant="body2"
+                    component="p"
+                    className={clsx({
+                      'mr-1': !last,
+                    })}
+                  >
+                    {dir}
+                  </Typography>
+                  {!last && (
+                    <Icon path={mdiChevronRight} size={0.5} className="mr-1" />
+                  )}
+                </div>
+              );
+            })}
+          </div>
+          <Typography variant="caption" color="textSecondary" component="p">
+            Sheet name
+          </Typography>
+          <Typography variant="body2" className={classes.iconText}>
+            {file.sheet}
+          </Typography>
+        </>
+      }
+    />
+  );
+}
+
+function SupportingFileCard(props) {
+  const classes = useStyles();
+  const {t} = useTranslation();
+  const {file, index, role} = props;
+  return (
+    <Card
+      title={`${t('File')} ${index + 1} · ${file.name}`}
+      error={file.numErrors > 0}
+      totalErrors={file.numErrors}
+      primaryButton={role === 'researcher' ? 'Edit' : ''}
+      secondaryButton={role === 'researcher' ? 'Delete' : ''}
+      // primaryClick={
+      //   role === 'researcher' ?
+      //     (e) => toggleDrawer(e, 'editFile', true) :
+      //     null
+      // }
+      // secondaryClick={() => handleClickOpen('dialogDelete')}
+      content={
+        <>
+          <Typography variant="caption" component="p" color="textSecondary">
+            {t('File path')}
+          </Typography>
+          <div className={clsx(classes.filePath, 'mb-2')}>
+            {file.path.map((dir, index) => {
+              const last = index === file.path.length - 1;
+              return (
+                <div className={classes.filePathItem}>
+                  <Typography
+                    variant="body2"
+                    component="p"
+                    className={clsx({
+                      'mr-1': !last,
+                    })}
+                  >
+                    {dir}
+                  </Typography>
+                  {!last && (
+                    <Icon path={mdiChevronRight} size={0.5} className="mr-1" />
+                  )}
+                </div>
+              );
+            })}
+          </div>
+          <Typography variant="caption" component="p" color="textSecondary">
+            {t('Notes')}
+          </Typography>
+          <Typography variant="body2" component="p">
+            {file.notes}
+          </Typography>
+        </>
+      }
+    />
+  );
+}

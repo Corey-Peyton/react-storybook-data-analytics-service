@@ -122,7 +122,7 @@ function getSteps() {
 function VettingRequestResearcher(props) {
   const classes = useStyles();
   const [state, setState] = React.useState({
-    activeStep: 0,
+    activeStep: 1,
     completed: {},
     open: false,
     errors: [0, 4, 0, 0],
@@ -424,7 +424,7 @@ function VettingRequestResearcher(props) {
                 <Grid className={classes.maxWidth640} container>
                   <Grid item>{getStepContent(state.activeStep)}</Grid>
                   <Grid xs={12} item>
-                    <Divider className="mb-3" />
+                    <Divider className="mt-3 mb-3" />
                   </Grid>
                   <Grid justify="flex-end" container>
                     <Grid item>

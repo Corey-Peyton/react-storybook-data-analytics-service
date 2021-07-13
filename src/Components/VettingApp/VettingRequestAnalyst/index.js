@@ -305,7 +305,7 @@ function VettingRequestAnalyst(props) {
                 <Grid className={classes.maxWidth640} container>
                   <Grid item>{getStepContent(state.activeStep)}</Grid>
                   <Grid xs={12} item>
-                    <Divider className="mb-3" />
+                    <Divider className="mb-3 mt-3" />
                   </Grid>
                   <Grid justify="flex-end" container>
                     <Grid item>

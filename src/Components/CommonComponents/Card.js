@@ -88,21 +88,23 @@ export function Card(props) {
           </Grid>
         </CardContent>
       )}
-      <CardActions
-        className={clsx({
-          [classes.cardActions]: props.error === false,
-          [classes.cardActionsError]: props.error === true,
-        })}
-      >
-        <Button color="primary" onClick={props.primaryClick}>
-          {props.primaryButton}
-        </Button>
-        {props.secondaryButton && (
-          <Button color="primary" onClick={props.secondaryClick}>
-            {props.secondaryButton}
+      {(props.primaryButton || props.secondaryButton) && (
+        <CardActions
+          className={clsx({
+            [classes.cardActions]: props.error === false,
+            [classes.cardActionsError]: props.error === true,
+          })}
+        >
+          <Button color="primary" onClick={props.primaryClick}>
+            {props.primaryButton}
           </Button>
-        )}
-      </CardActions>
+          {props.secondaryButton && (
+            <Button color="primary" onClick={props.secondaryClick}>
+              {props.secondaryButton}
+            </Button>
+          )}
+        </CardActions>
+      )}
     </MUICard>
   );
 }
@@ -133,10 +135,6 @@ Card.propTypes = {
   */
   secondaryButton: PropTypes.string,
   /**
-   The label text of the third button.
- */
-  thirdButton: PropTypes.string,
-  /**
   The function of the primary button.
 */
   primaryClick: PropTypes.func,
@@ -144,8 +142,4 @@ Card.propTypes = {
   The function of the secondary button.
 */
   secondaryClick: PropTypes.func,
-  /**
- The function of the third button.
-*/
-  thirdClick: PropTypes.func,
 };
