@@ -3,20 +3,12 @@ import {useTranslation} from 'react-i18next';
 import {makeStyles} from '@material-ui/core/styles';
 import clsx from 'clsx';
 import {
-  Dialog,
-  DialogActions,
-  DialogContent,
-  DialogTitle,
   Divider,
   Typography,
   IconButton,
   Button,
   Drawer,
-  MenuItem,
   FormControl,
-  InputLabel,
-  Select,
-  TextField,
   FormLabel,
   FormControlLabel,
   RadioGroup,
@@ -26,26 +18,20 @@ import {
   Collapse,
 } from '@material-ui/core';
 import Alert from '@material-ui/lab/Alert';
-// import {AddFile, ModifyFile, ViewFile} from './ModifyFile';
 import {Card} from '../../../CommonComponents/Card';
 import {OutputFile} from './ModifyFile';
 import CloseIcon from '@material-ui/icons/Close';
 import InfoOutlinedIcon from '@material-ui/icons/InfoOutlined';
 import AddIcon from '@material-ui/icons/Add';
 import Icon from '@mdi/react';
-import {
-  mdiFile,
-  mdiFolderOpen,
-  mdiTableLarge,
-  mdiChevronRight,
-} from '@mdi/js';
+import {mdiChevronRight} from '@mdi/js';
 import {
   SnackbarAddOutputFile,
-  SnackbarAddSupportFile,
   SnackbarDeleteOutputFile,
+  SnackbarDeleteSupportFile,
   SnackbarUpdateOutputFile,
 } from '../Snackbars';
-import {DialogDelete} from '../DialogBox';
+import {DialogDelete, DialogAddFile} from '../DialogBox';
 
 const useStylesBootstrap = makeStyles((theme) => ({
   arrow: {
@@ -57,43 +43,6 @@ const useStylesBootstrap = makeStyles((theme) => ({
 }));
 
 const useStyles = makeStyles((theme) => ({
-  vettingContainerTitle: {
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'space-between',
-  },
-  vettingSection: {
-    display: 'flex',
-    flexFlow: 'column',
-    padding: theme.spacing(3),
-    overflowY: 'auto',
-  },
-  vettingRow: {
-    'display': 'flex',
-    'margin': theme.spacing(1.5, 0),
-    'flexFlow': 'row',
-    'height': '100%',
-    'justifyContent': 'center',
-    'width': '100%',
-    'alignItems': 'center',
-    '&:first-child': {
-      marginTop: 0,
-    },
-    '&:last-child': {
-      marginBottom: 0,
-    },
-  },
-  vettingColumn: {
-    'display': 'flex',
-    'flexDirection': 'column',
-    'width': '100%',
-    'justifyContent': 'center',
-    'marginRight': theme.spacing(1),
-    'height': '100%',
-    '&:last-child': {
-      marginRight: 0,
-    },
-  },
   addCard: {
     'borderStyle': 'dashed',
     'justifyContent': 'start',
@@ -101,39 +50,15 @@ const useStyles = makeStyles((theme) => ({
       borderStyle: 'dashed',
     },
   },
-  dialogFooter: {
-    padding: theme.spacing(1.75, 3),
-    borderTop: '1px solid',
-    borderTopColor: theme.palette.divider,
-  },
   drawer: {
     '& .MuiDrawer-paper': {
       width: theme.spacing(50),
       boxSizing: 'border-box',
     },
   },
-  root: {
-    '& .MuiDialogTitle-root': {
-      padding: theme.spacing(1.5, 3),
-    },
-    '& .MuiSelect-select': {
-      height: [theme.spacing(7), '!important'],
-      paddingTop: 0,
-      paddingBottom: 0,
-    },
-  },
   alert: {
     '& .MuiAlert-action': {
       alignItems: 'start',
-    },
-  },
-  iconText: {
-    'display': 'flex',
-    'alignItems': 'center',
-    '& svg': {
-      paddingRight: theme.spacing(1),
-      width: '1.25rem',
-      height: '1.25rem',
     },
   },
   legendInfoIcon: {
@@ -209,25 +134,18 @@ function BootstrapTooltip(props) {
 
 function FilesList(props) {
   const classes = useStyles();
-  const {t} = useTranslation();
-  const [state, setState] = React.useState({
-    notes: {
-      text: '',
-      errorText: '',
-      invalid: '',
-      commands: '',
-    },
-  });
   const [open, setOpen] = React.useState({
-    dialogAddSupporting: false,
     snackbarAddSupporting: false,
     snackbarCreate: false,
     snackbarUpdate: false,
-    snackbarDelete: false,
+    snackbarOututputDelete: false,
+    snackbarSupportDelete: false,
     outputFile: false,
-    dialogDelete: false,
+    dialogOutputDelete: false,
+    dialogSupportDelete: false,
+    dialogAddSupporting: false,
+    dialogEditSupporting: false,
     alert: true,
-    drawerType: '',
   });
 
   const toggleDrawer = (event, drawer) => {
@@ -256,83 +174,16 @@ function FilesList(props) {
     setOpen({...open, snackbarUpdate: true, outputFile: false});
   };
 
-  const deleteFile = () => {
-    setOpen({...open, snackbarDelete: true, dialogDelete: false});
+  const deleteOutputFile = () => {
+    setOpen({...open, snackbarOutputDelete: true, dialogOutputDelete: false});
   };
 
-  const addSupportingFile = () => {
+  const deleteSupportFile = () => {
     setOpen({
       ...open,
-      dialogAddSupporting: false,
-      snackbarAddSupporting: true,
+      snackbarSupportDelete: true,
+      dialogSupportDelete: false,
     });
-  };
-
-  const disableCutCopyPaste = (e, command, value) => {
-    // display error if user tries to cut/copy/paste
-    let msg;
-    e.preventDefault();
-    switch (command) {
-      case 'cut':
-        msg = t('Cut has been disabled for security purposes.');
-        setState({
-          ...state,
-          [value]: {
-            ...state[value],
-            commands: msg,
-            errorText: msg,
-          },
-        });
-        break;
-      case 'copy':
-        msg = t('Copy has been disabled for security purposes.');
-        setState({
-          ...state,
-          [value]: {
-            ...state[value],
-            commands: msg,
-            errorText: msg,
-          },
-        });
-        break;
-      case 'paste':
-        msg = t('Paste has been disabled for security purposes.');
-        setState({
-          ...state,
-          [value]: {
-            ...state[value],
-            commands: msg,
-            errorText: msg,
-          },
-        });
-        break;
-      default:
-        break;
-    }
-  };
-
-  const toggleHelperText = (value) => {
-    if (state[value].commands === state[value].errorText) {
-      if (Boolean(state[value].invalid)) {
-        // set error text back to invalid error
-        setState({
-          ...state,
-          [value]: {
-            ...state[value],
-            errorText: state[value].invalid,
-          },
-        });
-      } else {
-        // clear error text if no invalid error exists
-        setState({
-          ...state,
-          [value]: {
-            ...state[value],
-            errorText: '',
-          },
-        });
-      }
-    }
   };
 
   return (
@@ -462,7 +313,14 @@ function FilesList(props) {
       </Typography>
       {outputFiles.length > 0 ?
         outputFiles.map((file, index) => (
-          <OutputFileCard file={file} index={index} role={props.role} />
+          <OutputFileCard
+            key={`output-file-${index}`}
+            file={file}
+            index={index}
+            role={props.role}
+            toggleDrawer={toggleDrawer}
+            handleClickOpen={handleClickOpen}
+          />
         )) :
         ''
       // <Typography variant="body2" color="textSecondary" className="mb-2">
@@ -492,7 +350,13 @@ function FilesList(props) {
       </Typography>
       {syntaxFiles.length > 0 ?
         syntaxFiles.map((file, index) => (
-          <SupportingFileCard file={file} index={index} role={props.role} />
+          <SupportingFileCard
+            key={`syntax-file-${index}`}
+            file={file}
+            index={index}
+            role={props.role}
+            handleClickOpen={handleClickOpen}
+          />
         )) :
         ''
       // <Typography variant="body2" color="textSecondary" className="mb-2">
@@ -506,7 +370,7 @@ function FilesList(props) {
           startIcon={<AddIcon />}
           fullWidth={true}
           className={clsx(classes.addCard, 'mt-2')}
-          // onClick={(e) => toggleDrawer(e, 'addFile', true)}
+          onClick={(e) => handleClickOpen('dialogAddSupporting')}
         >
           Add file for support
         </Button>
@@ -519,7 +383,13 @@ function FilesList(props) {
       </Typography>
       {variableFiles.length > 0 ?
         variableFiles.map((file, index) => (
-          <SupportingFileCard file={file} index={index} role={props.role} />
+          <SupportingFileCard
+            key={`var-file-${index}`}
+            file={file}
+            index={index}
+            role={props.role}
+            handleClickOpen={handleClickOpen}
+          />
         )) :
         ''
       // <Typography variant="body2" color="textSecondary">
@@ -533,7 +403,7 @@ function FilesList(props) {
           startIcon={<AddIcon />}
           fullWidth={true}
           className={clsx(classes.addCard, 'mt-2')}
-          // onClick={(e) => toggleDrawer(e, 'addFile', true)}
+          onClick={(e) => handleClickOpen('dialogAddSupporting')}
         >
           Add file for support
         </Button>
@@ -545,7 +415,13 @@ function FilesList(props) {
       <Typography variant="body2">Add file for additional details</Typography>
       {additionalFiles.length > 0 ?
         additionalFiles.map((file, index) => (
-          <SupportingFileCard file={file} index={index} role={props.role} />
+          <SupportingFileCard
+            key={`additional-file-${index}`}
+            file={file}
+            index={index}
+            role={props.role}
+            handleClickOpen={handleClickOpen}
+          />
         )) :
         ''
       // <Typography variant="body2" color="textSecondary">
@@ -559,130 +435,46 @@ function FilesList(props) {
           startIcon={<AddIcon />}
           fullWidth={true}
           className={clsx(classes.addCard, 'mt-2')}
-          // onClick={(e) => toggleDrawer(e, 'addFile', true)}
+          onClick={(e) => handleClickOpen('dialogAddSupporting')}
         >
           Add file for support
         </Button>
       )}
-
-      {/* Add output file drawer */}
-      <Drawer anchor="right" open={open.addFile} className={classes.drawer}>
-        {/* <AddFile
-          toggleDrawer={toggleDrawer}
-          createFile={createFile}
-          handleClickOpen={handleClickOpen}
-        /> */}
-      </Drawer>
-      {/* Edit output file drawer */}
-      <Drawer anchor="right" open={open.editFile} className={classes.drawer}>
-        {/* <ModifyFile
+      {/* Output file drawer */}
+      <Drawer anchor="right" open={open.outputFile} className={classes.drawer}>
+        <OutputFile
           toggleDrawer={toggleDrawer}
           updateFile={updateFile}
           createFile={createFile}
           handleClickOpen={handleClickOpen}
           drawerType={open.drawerType}
-        /> */}
+        />
       </Drawer>
-      <Dialog
+      {/* Add supporting file dialog */}
+      <DialogAddFile
+        submitDialog={() => handleClickClose('dialogAddSupporting')}
+        toggleDialog={() => handleClickClose('dialogAddSupporting')}
         open={open.dialogAddSupporting}
-        aria-labelledby="form-dialog-title"
-        fullWidth
-        className={classes.root}
-        scroll="paper"
-      >
-        <DialogTitle
-          id="form-dialog-title"
-          className={classes.vettingContainerTitle}
-          disableTypography
-        >
-          <Typography variant="h6" component="h2">
-            Add supporting file
-          </Typography>
-          <IconButton
-            onClick={() => handleClickClose('dialogAddSupporting')}
-            edge="end"
-            aria-label="Close add supporting file"
-          >
-            <CloseIcon />
-          </IconButton>
-        </DialogTitle>
-        <Divider />
-        <DialogContent>
-          <div className={classes.vettingSection}>
-            <div className={classes.vettingRow}>
-              <div className={classes.vettingColumn}>
-                <FormControl required variant="outlined" fullWidth>
-                  <InputLabel id="supportingFilesFolder-label">
-                    Supporting folder
-                  </InputLabel>
-                  <Select
-                    id="supportingFilesFolder"
-                    label="Supporting folder *"
-                    labelId="supportingFilesFolder-label"
-                  >
-                    <MenuItem key={-1} value="">
-                      None
-                    </MenuItem>
-                  </Select>
-                </FormControl>
-              </div>
-            </div>
-            <Typography variant="subtitle2">File #1 *</Typography>
-            <Typography variant="subtitle2">
-              Residual tables (see the vetting orientation)
-            </Typography>
-            <div className={classes.vettingRow}>
-              <div className={classes.vettingColumn}>
-                <TextField
-                  id="notes2"
-                  label="Notes"
-                  multiline
-                  rows={4}
-                  variant="outlined"
-                  fullWidth
-                  required
-                  onCut={(e) => disableCutCopyPaste(e, 'cut', 'notes')}
-                  onCopy={(e) => disableCutCopyPaste(e, 'copy', 'notes')}
-                  onPaste={(e) => disableCutCopyPaste(e, 'paste', 'notes')}
-                  onClick={() => toggleHelperText('notes')}
-                  onBlur={() => toggleHelperText('notes')}
-                  onFocus={() => toggleHelperText('notes')}
-                  defaultvalue={state.notes.text}
-                  error={Boolean(state.notes.errorText)}
-                  helperText={state.notes.errorText}
-                />
-              </div>
-            </div>
-          </div>
-        </DialogContent>
-        <DialogActions className={classes.dialogFooter}>
-          <Button
-            color="primary"
-            variant="outlined"
-            onClick={() => handleClickClose('dialogAddSupporting')}
-          >
-            Cancel
-          </Button>
-          <Button
-            color="primary"
-            variant="contained"
-            onClick={addSupportingFile}
-            className={classes.footerBtns}
-          >
-            Add supporting file
-          </Button>
-        </DialogActions>
-      </Dialog>
-      {/* Delete dialog */}
-      <DialogDelete
-        submitDialog={deleteFile}
-        open={open.dialogDelete}
-        toggleDialog={() => handleClickClose('dialogDelete')}
+        fileFunction="add"
       />
-      {/* Add supporting file snackbar */}
-      <SnackbarAddSupportFile
-        open={open.snackbarAddSupporting}
-        handleClose={() => handleClickClose('snackbarAddSupporting')}
+      {/* Edit supporting file dialog */}
+      <DialogAddFile
+        submitDialog={() => handleClickClose('dialogEditSupporting')}
+        toggleDialog={() => handleClickClose('dialogEditSupporting')}
+        open={open.dialogEditSupporting}
+        fileFunction="edit"
+      />
+      {/* Delete output file dialog */}
+      <DialogDelete
+        submitDialog={deleteOutputFile}
+        open={open.dialogOutputDelete}
+        toggleDialog={() => handleClickClose('dialogOutputDelete')}
+      />
+      {/* Delete supporting file dialog */}
+      <DialogDelete
+        submitDialog={deleteSupportFile}
+        open={open.dialogSupportDelete}
+        toggleDialog={() => handleClickClose('dialogSupportDelete')}
       />
       {/* Create output file snackbar */}
       <SnackbarAddOutputFile
@@ -696,8 +488,13 @@ function FilesList(props) {
       />
       {/* Delete output file snackbar */}
       <SnackbarDeleteOutputFile
-        open={open.snackbarDelete}
-        handleClose={() => handleClickClose('snackbarDelete')}
+        open={open.snackbarOutputDelete}
+        handleClose={() => handleClickClose('snackbarOutputDelete')}
+      />
+      {/* Delete supporting file snackbar */}
+      <SnackbarDeleteSupportFile
+        open={open.snackbarSupportDelete}
+        handleClose={() => handleClickClose('snackbarSupportDelete')}
       />
     </React.Fragment>
   );
@@ -707,7 +504,7 @@ export default FilesList;
 function OutputFileCard(props) {
   const classes = useStyles();
   const {t} = useTranslation();
-  const {file, index, role} = props;
+  const {file, index, role, toggleDrawer, handleClickOpen} = props;
   return (
     <Card
       title={`${t('File')} ${index + 1} · ${file.name}`}
@@ -715,12 +512,12 @@ function OutputFileCard(props) {
       totalErrors={file.numErrors}
       primaryButton={role === 'researcher' ? 'Edit' : 'View details'}
       secondaryButton={role === 'researcher' ? 'Delete' : ''}
-      // primaryClick={
-      //   role === 'researcher' ?
-      //     (e) => toggleDrawer(e, 'editFile', true) :
-      //     (e) => toggleDrawer(e, 'viewFile', true)
-      // }
-      // secondaryClick={() => handleClickOpen('dialogDelete')}
+      primaryClick={
+        role === 'researcher' ?
+          (e) => toggleDrawer(e, 'editFile', true) :
+          (e) => toggleDrawer(e, 'viewFile', true)
+      }
+      secondaryClick={() => handleClickOpen('dialogOutputDelete')}
       content={
         <>
           <Typography variant="caption" component="p" color="textSecondary">
@@ -730,7 +527,10 @@ function OutputFileCard(props) {
             {file.path.map((dir, index) => {
               const last = index === file.path.length - 1;
               return (
-                <div className={classes.filePathItem}>
+                <div
+                  key={`output-path-${index}`}
+                  className={classes.filePathItem}
+                >
                   <Typography
                     variant="body2"
                     component="p"
@@ -750,9 +550,7 @@ function OutputFileCard(props) {
           <Typography variant="caption" color="textSecondary" component="p">
             Sheet name
           </Typography>
-          <Typography variant="body2" className={classes.iconText}>
-            {file.sheet}
-          </Typography>
+          <Typography variant="body2">{file.sheet}</Typography>
         </>
       }
     />
@@ -762,7 +560,7 @@ function OutputFileCard(props) {
 function SupportingFileCard(props) {
   const classes = useStyles();
   const {t} = useTranslation();
-  const {file, index, role} = props;
+  const {file, index, role, handleClickOpen} = props;
   return (
     <Card
       title={`${t('File')} ${index + 1} · ${file.name}`}
@@ -770,12 +568,8 @@ function SupportingFileCard(props) {
       totalErrors={file.numErrors}
       primaryButton={role === 'researcher' ? 'Edit' : ''}
       secondaryButton={role === 'researcher' ? 'Delete' : ''}
-      // primaryClick={
-      //   role === 'researcher' ?
-      //     (e) => toggleDrawer(e, 'editFile', true) :
-      //     null
-      // }
-      // secondaryClick={() => handleClickOpen('dialogDelete')}
+      primaryClick={() => handleClickOpen('dialogEditSupporting')}
+      secondaryClick={() => handleClickOpen('dialogSupportDelete')}
       content={
         <>
           <Typography variant="caption" component="p" color="textSecondary">
@@ -785,7 +579,10 @@ function SupportingFileCard(props) {
             {file.path.map((dir, index) => {
               const last = index === file.path.length - 1;
               return (
-                <div className={classes.filePathItem}>
+                <div
+                  key={`support-path-${index}`}
+                  className={classes.filePathItem}
+                >
                   <Typography
                     variant="body2"
                     component="p"

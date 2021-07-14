@@ -247,6 +247,19 @@ export function SnackbarAddSupportFile(props) {
   );
 }
 
+export function SnackbarUpdateSupportFile(props) {
+  const {t} = useTranslation();
+
+  return (
+    <Snackbar
+      message={t('Support file updated')}
+      severity="success"
+      open={props.open}
+      handleClose={props.handleClose}
+    />
+  );
+}
+
 export function SnackbarDeleteSupportFile(props) {
   const {t} = useTranslation();
 

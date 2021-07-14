@@ -41,6 +41,8 @@ import {
   SnackbarUnassign,
   SnackbarWithdrawRequest,
   SnackbarSupportFab,
+  SnackbarAddSupportFile,
+  SnackbarUpdateSupportFile,
 } from './Snackbars';
 
 const ROW_HEIGHT = 56;
@@ -3388,6 +3390,10 @@ export function DialogAddFile(props) {
   const classes = useStyles();
   const {t} = useTranslation();
   const {toggleDialog, open, fileFunction} = props;
+  const [snackbar, setSnackbar] = React.useState({
+    snackbarAdd: false,
+    snackbarEdit: false,
+  });
   const [state, setState] = React.useState({
     filePath: {
       value: '',
@@ -3407,6 +3413,14 @@ export function DialogAddFile(props) {
 
   const handleClick = (e) => {
     e.stopPropagation();
+  };
+
+  const snackbarOpen = (state) => {
+    setSnackbar({...snackbar, [state]: true});
+  };
+
+  const snackbarClose = (state) => {
+    setSnackbar({...snackbar, [state]: false});
   };
 
   const handleSelectChange = (event) => {
@@ -3563,6 +3577,7 @@ export function DialogAddFile(props) {
               className={classes.footerBtns}
               onClick={(e) => {
                 toggleDialog(e);
+                snackbarOpen('snackbarEdit');
               }}
               onKeyPress={(e) => {
                 e.stopPropagation();
@@ -3600,6 +3615,7 @@ export function DialogAddFile(props) {
               className={classes.footerBtns}
               onClick={(e) => {
                 toggleDialog(e);
+                snackbarOpen('snackbarAdd');
               }}
               onKeyPress={(e) => {
                 e.stopPropagation();
@@ -3633,6 +3649,16 @@ export function DialogAddFile(props) {
           </DialogActions>
         )}
       </Dialog>
+      {/* Add supporting file snackbar */}
+      <SnackbarAddSupportFile
+        open={snackbar.snackbarAdd}
+        handleClose={() => snackbarClose('snackbarAdd')}
+      />
+      {/* Edit supporting file snackbar */}
+      <SnackbarUpdateSupportFile
+        open={snackbar.snackbarEdit}
+        handleClose={() => snackbarClose('snackbarEdit')}
+      />
     </React.Fragment>
   );
 }
