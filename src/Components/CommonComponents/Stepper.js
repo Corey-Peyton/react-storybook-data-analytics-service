@@ -45,6 +45,10 @@ const useStyles = makeStyles((theme) => ({
     '& .MuiStepLabel-iconContainer': {
       color: 'rgb(0 0 0 / 42%)',
     },
+    '& .MuiStepLabel-completed:not(.MuiStepLabel-active)': {
+      color: theme.palette.text.secondary,
+      fontWeight: 'inherit',
+    },
     '& .MuiStepConnector-line': {
       borderColor: theme.palette.divider,
     },
