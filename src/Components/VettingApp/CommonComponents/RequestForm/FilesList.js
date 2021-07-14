@@ -46,6 +46,9 @@ const useStyles = makeStyles((theme) => ({
   addCard: {
     'borderStyle': 'dashed',
     'justifyContent': 'start',
+    'width': '100%',
+    'textAlign': 'left',
+    'borderColor': 'rgba(0, 0, 0, 0.23)',
     '&.MuiButton-outlinedPrimary:hover': {
       borderStyle: 'dashed',
     },
