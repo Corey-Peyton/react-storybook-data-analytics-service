@@ -26,19 +26,17 @@ import CloseIcon from '@material-ui/icons/Close';
 import AddIcon from '@material-ui/icons/Add';
 import Icon from '@mdi/react';
 import {mdiChevronRight} from '@mdi/js';
-import {DialogOutputMethodHelp, DialogAddFile} from '../DialogBox';
+import {
+  DialogOutputMethodHelp,
+  DialogAddFile,
+  DialogDelete,
+} from '../DialogBox';
+import {SnackbarDeleteSupportFile} from '../Snackbars';
 import {Card} from '../../../../Components/CommonComponents/Card';
 
 const useStyles = makeStyles((theme) => ({
-  inputMargin: {
-    marginTop: theme.spacing(0),
-    marginBottom: theme.spacing(3),
-  },
   lineHeight: {
     lineHeight: 'normal',
-  },
-  hiddenRow: {
-    display: 'none',
   },
   appBar: {
     'backgroundColor': theme.palette.common.white,
@@ -80,24 +78,6 @@ const useStyles = makeStyles((theme) => ({
     '& svg': {
       verticalAlign: 'middle',
     },
-  },
-  buttonTooltip: {
-    display: 'flex',
-    alignItems: 'center',
-    marginBottom: theme.spacing(3),
-  },
-  alert: {
-    '& a': {
-      cursor: 'pointer',
-    },
-  },
-  textFieldPopover: {
-    width: '100%',
-  },
-  popoverPaper: {
-    width: theme.spacing(40),
-    maxWidth: 'none',
-    padding: theme.spacing(1),
   },
   addBtn: {
     'borderStyle': 'dashed',
@@ -211,7 +191,6 @@ const outputMethodsList = [
 
 export function OutputFile(props) {
   const classes = useStyles();
-
   return (
     <React.Fragment>
       <AppBar position="static" className={classes.appBar} color="default">
@@ -304,19 +283,18 @@ function AddFileForm(props) {
     includeWeightVariable: null,
     linkedData: null,
     descriptiveStats: null,
-    modifiedWeights: null,
     covariance: null,
-    snackbarDelete: false,
-    dialogDelete: false,
-    dialogOutputMethodHelp: false,
-    dialogAddFile: false,
-    dialogFileFunction: '',
     dollarIncluded: null,
     equivalentDescriptiveStats: null,
     matrixContinuous: null,
     matrixDichotomous: null,
     matrixCorrelated: null,
     roundingOutput: null,
+    dialogOutputMethodHelp: false,
+    dialogAddFile: false,
+    snackbarSupportDelete: false,
+    dialogSupportDelete: false,
+    dialogFileFunction: '',
     filePath: {
       value: '',
       errorText: '',
@@ -426,6 +404,14 @@ function AddFileForm(props) {
         ...state[name],
         value: val,
       },
+    });
+  };
+
+  const deleteSupportFile = () => {
+    setState({
+      ...state,
+      snackbarSupportDelete: true,
+      dialogSupportDelete: false,
     });
   };
 
@@ -751,6 +737,7 @@ function AddFileForm(props) {
                   primaryButton={t('Edit')}
                   secondaryButton={t('Delete')}
                   primaryClick={() => handleClickOpen('dialogAddFile', 'edit')}
+                  secondaryClick={() => handleClickOpen('dialogSupportDelete')}
                   content={
                     <>
                       <Typography
@@ -844,6 +831,7 @@ function AddFileForm(props) {
                   primaryButton={t('Edit')}
                   secondaryButton={t('Delete')}
                   primaryClick={() => handleClickOpen('dialogAddFile', 'edit')}
+                  secondaryClick={() => handleClickOpen('dialogSupportDelete')}
                   content={
                     <>
                       <Typography
@@ -1619,6 +1607,17 @@ function AddFileForm(props) {
         toggleDialog={() => handleClickClose('dialogAddFile')}
         open={state.dialogAddFile}
         fileFunction={state.dialogFileFunction}
+      />
+      {/* Delete supporting file dialog */}
+      <DialogDelete
+        submitDialog={deleteSupportFile}
+        open={state.dialogSupportDelete}
+        toggleDialog={() => handleClickClose('dialogSupportDelete')}
+      />
+      {/* Delete supporting file snackbar */}
+      <SnackbarDeleteSupportFile
+        open={state.snackbarSupportDelete}
+        handleClose={() => handleClickClose('snackbarSupportDelete')}
       />
     </>
   );

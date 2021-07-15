@@ -103,7 +103,7 @@ const outputFiles = [
 
 const syntaxFiles = [
   {
-    name: 'Syntax file',
+    name: 'Syntax',
     path: [
       '{ProjectFolderName}',
       '{RequestFolderName}',
@@ -119,7 +119,7 @@ const syntaxFiles = [
 
 const variableFiles = [
   {
-    name: 'Variable file',
+    name: 'Variable list/description',
     path: [
       '{ProjectFolderName}',
       '{RequestFolderName}',
