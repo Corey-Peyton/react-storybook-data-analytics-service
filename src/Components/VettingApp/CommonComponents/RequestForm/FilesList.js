@@ -1,6 +1,6 @@
 import React from 'react';
 import {useTranslation} from 'react-i18next';
-import {makeStyles} from '@material-ui/core/styles';
+import {makeStyles, fade} from '@material-ui/core/styles';
 import clsx from 'clsx';
 import {
   Divider,
@@ -16,6 +16,7 @@ import {
   Tooltip,
   Grid,
   Collapse,
+  Paper,
 } from '@material-ui/core';
 import Alert from '@material-ui/lab/Alert';
 import {Card} from '../../../CommonComponents/Card';
@@ -48,10 +49,15 @@ const useStyles = makeStyles((theme) => ({
     'justifyContent': 'start',
     'width': '100%',
     'textAlign': 'left',
-    'borderColor': 'rgba(0, 0, 0, 0.23)',
+    'borderColor': fade(theme.palette.common.black, 0.23),
     '&.MuiButton-outlinedPrimary:hover': {
       borderStyle: 'dashed',
     },
+  },
+  cardContainer: {
+    padding: theme.spacing(2),
+    backgroundColor: theme.palette.grey[100],
+    borderColor: fade(theme.palette.common.black, 0.08),
   },
   drawer: {
     '& .MuiDrawer-paper': {
@@ -311,25 +317,32 @@ function FilesList(props) {
         Output files
       </Typography>
       <Typography variant="body2">Add file for output *</Typography>
-      <Typography variant="caption" color="textSecondary" component="p">
+      <Typography
+        variant="caption"
+        color="textSecondary"
+        component="p"
+        className="mb-2"
+      >
         At least one file must be added
       </Typography>
-      {outputFiles.length > 0 ?
-        outputFiles.map((file, index) => (
-          <OutputFileCard
-            key={`output-file-${index}`}
-            file={file}
-            index={index}
-            role={props.role}
-            toggleDrawer={toggleDrawer}
-            handleClickOpen={handleClickOpen}
-          />
-        )) :
-        ''
-      // <Typography variant="body2" color="textSecondary" className="mb-2">
-      //   No output files
-      // </Typography>
-      }
+      <Paper className={classes.cardContainer} variant="outlined">
+        {outputFiles.length > 0 ? (
+          outputFiles.map((file, index) => (
+            <OutputFileCard
+              key={`output-file-${index}`}
+              file={file}
+              index={index}
+              role={props.role}
+              toggleDrawer={toggleDrawer}
+              handleClickOpen={handleClickOpen}
+            />
+          ))
+        ) : (
+          <Typography variant="body2" component="p" color="textSecondary">
+            No files for output added
+          </Typography>
+        )}
+      </Paper>
       {props.role === 'researcher' && (
         <Button
           variant="outlined"
@@ -348,24 +361,31 @@ function FilesList(props) {
         Mandatory supporting files
       </Typography>
       <Typography variant="body2">Add file for syntax *</Typography>
-      <Typography variant="caption" color="textSecondary" component="p">
+      <Typography
+        variant="caption"
+        color="textSecondary"
+        component="p"
+        className="mb-2"
+      >
         At least one file must be added
       </Typography>
-      {syntaxFiles.length > 0 ?
-        syntaxFiles.map((file, index) => (
-          <SupportingFileCard
-            key={`syntax-file-${index}`}
-            file={file}
-            index={index}
-            role={props.role}
-            handleClickOpen={handleClickOpen}
-          />
-        )) :
-        ''
-      // <Typography variant="body2" color="textSecondary" className="mb-2">
-      //   No syntax files
-      // </Typography>
-      }
+      <Paper className={classes.cardContainer} variant="outlined">
+        {syntaxFiles.length > 0 ? (
+          syntaxFiles.map((file, index) => (
+            <SupportingFileCard
+              key={`syntax-file-${index}`}
+              file={file}
+              index={index}
+              role={props.role}
+              handleClickOpen={handleClickOpen}
+            />
+          ))
+        ) : (
+          <Typography variant="body2" component="p" color="textSecondary">
+            No files for support added
+          </Typography>
+        )}
+      </Paper>
       {props.role === 'researcher' && (
         <Button
           variant="outlined"
@@ -381,24 +401,31 @@ function FilesList(props) {
       <Typography variant="body2" className="mt-3">
         Add file for variable list/description *
       </Typography>
-      <Typography variant="caption" color="textSecondary" component="p">
+      <Typography
+        variant="caption"
+        color="textSecondary"
+        component="p"
+        className="mb-2"
+      >
         At least one file must be added
       </Typography>
-      {variableFiles.length > 0 ?
-        variableFiles.map((file, index) => (
-          <SupportingFileCard
-            key={`var-file-${index}`}
-            file={file}
-            index={index}
-            role={props.role}
-            handleClickOpen={handleClickOpen}
-          />
-        )) :
-        ''
-      // <Typography variant="body2" color="textSecondary">
-      //   No variable list/description files
-      // </Typography>
-      }
+      <Paper className={classes.cardContainer} variant="outlined">
+        {variableFiles.length > 0 ? (
+          variableFiles.map((file, index) => (
+            <SupportingFileCard
+              key={`var-file-${index}`}
+              file={file}
+              index={index}
+              role={props.role}
+              handleClickOpen={handleClickOpen}
+            />
+          ))
+        ) : (
+          <Typography variant="body2" component="p" color="textSecondary">
+            No files for support added
+          </Typography>
+        )}
+      </Paper>
       {props.role === 'researcher' && (
         <Button
           variant="outlined"
@@ -415,22 +442,26 @@ function FilesList(props) {
       <Typography component="h3" variant="subtitle2" className="mb-3">
         Additional supporting files
       </Typography>
-      <Typography variant="body2">Add file for additional details</Typography>
-      {additionalFiles.length > 0 ?
-        additionalFiles.map((file, index) => (
-          <SupportingFileCard
-            key={`additional-file-${index}`}
-            file={file}
-            index={index}
-            role={props.role}
-            handleClickOpen={handleClickOpen}
-          />
-        )) :
-        ''
-      // <Typography variant="body2" color="textSecondary">
-      //   No additional supporting files
-      // </Typography>
-      }
+      <Typography variant="body2" className="mb-2">
+        Add file for additional details
+      </Typography>
+      <Paper className={classes.cardContainer} variant="outlined">
+        {additionalFiles.length > 0 ? (
+          additionalFiles.map((file, index) => (
+            <SupportingFileCard
+              key={`additional-file-${index}`}
+              file={file}
+              index={index}
+              role={props.role}
+              handleClickOpen={handleClickOpen}
+            />
+          ))
+        ) : (
+          <Typography variant="body2" component="p" color="textSecondary">
+            No files for support added
+          </Typography>
+        )}
+      </Paper>
       {props.role === 'researcher' && (
         <Button
           variant="outlined"
