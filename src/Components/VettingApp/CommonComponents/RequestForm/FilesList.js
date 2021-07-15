@@ -94,18 +94,6 @@ const outputFiles = [
     ],
     numErrors: 0,
   },
-  {
-    name: 'File for output',
-    sheet: '{SheetName}',
-    path: [
-      '{ProjectFolderName}',
-      '{RequestFolderName}',
-      '{FolderName}',
-      '{FolderName}',
-      '{OutputFileName}.xls',
-    ],
-    numErrors: 0,
-  },
 ];
 
 const syntaxFiles = [
