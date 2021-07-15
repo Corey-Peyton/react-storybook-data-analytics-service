@@ -54,11 +54,6 @@ const useStyles = makeStyles((theme) => ({
       borderStyle: 'dashed',
     },
   },
-  cardContainer: {
-    padding: theme.spacing(2),
-    backgroundColor: theme.palette.grey[100],
-    borderColor: fade(theme.palette.common.black, 0.08),
-  },
   drawer: {
     '& .MuiDrawer-paper': {
       width: theme.spacing(50),
@@ -87,6 +82,18 @@ const useStyles = makeStyles((theme) => ({
 
 // FAKE DATA
 const outputFiles = [
+  {
+    name: 'File for output',
+    sheet: '{SheetName}',
+    path: [
+      '{ProjectFolderName}',
+      '{RequestFolderName}',
+      '{FolderName}',
+      '{FolderName}',
+      '{OutputFileName}.xls',
+    ],
+    numErrors: 0,
+  },
   {
     name: 'File for output',
     sheet: '{SheetName}',
@@ -325,7 +332,7 @@ function FilesList(props) {
       >
         At least one file must be added
       </Typography>
-      <Paper className={classes.cardContainer} variant="outlined">
+      <Paper className="paper-grey mb-2" variant="outlined">
         {outputFiles.length > 0 ? (
           outputFiles.map((file, index) => (
             <OutputFileCard
@@ -349,7 +356,7 @@ function FilesList(props) {
           color="primary"
           startIcon={<AddIcon />}
           fullWidth={true}
-          className={clsx(classes.addCard, 'mt-2')}
+          className={classes.addCard}
           onClick={(e) => toggleDrawer(e, 'addFile', true)}
         >
           Add file for output
@@ -369,7 +376,7 @@ function FilesList(props) {
       >
         At least one file must be added
       </Typography>
-      <Paper className={classes.cardContainer} variant="outlined">
+      <Paper className="paper-grey mb-2" variant="outlined">
         {syntaxFiles.length > 0 ? (
           syntaxFiles.map((file, index) => (
             <SupportingFileCard
@@ -392,7 +399,7 @@ function FilesList(props) {
           color="primary"
           startIcon={<AddIcon />}
           fullWidth={true}
-          className={clsx(classes.addCard, 'mt-2')}
+          className={classes.addCard}
           onClick={(e) => handleClickOpen('dialogAddSupporting')}
         >
           Add file for support
@@ -409,7 +416,7 @@ function FilesList(props) {
       >
         At least one file must be added
       </Typography>
-      <Paper className={classes.cardContainer} variant="outlined">
+      <Paper className="paper-grey mb-2" variant="outlined">
         {variableFiles.length > 0 ? (
           variableFiles.map((file, index) => (
             <SupportingFileCard
@@ -432,7 +439,7 @@ function FilesList(props) {
           color="primary"
           startIcon={<AddIcon />}
           fullWidth={true}
-          className={clsx(classes.addCard, 'mt-2')}
+          className={classes.addCard}
           onClick={(e) => handleClickOpen('dialogAddSupporting')}
         >
           Add file for support
@@ -445,7 +452,13 @@ function FilesList(props) {
       <Typography variant="body2" className="mb-2">
         Add file for additional details
       </Typography>
-      <Paper className={classes.cardContainer} variant="outlined">
+      <Paper
+        className={clsx('paper-grey mb-2', {
+          'mb-2': props.role === 'researcher',
+          'mb-3': props.role === 'analyst',
+        })}
+        variant="outlined"
+      >
         {additionalFiles.length > 0 ? (
           additionalFiles.map((file, index) => (
             <SupportingFileCard
@@ -468,7 +481,7 @@ function FilesList(props) {
           color="primary"
           startIcon={<AddIcon />}
           fullWidth={true}
-          className={clsx(classes.addCard, 'mt-2')}
+          className={`${classes.addCard} mb-3`}
           onClick={(e) => handleClickOpen('dialogAddSupporting')}
         >
           Add file for support

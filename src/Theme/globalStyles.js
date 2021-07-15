@@ -345,6 +345,11 @@ export const useStyles = makeStyles({
         marginTop: theme.spacing(16),
       },
     },
+    '.paper-grey': {
+      padding: theme.spacing(2),
+      backgroundColor: theme.palette.grey[100],
+      borderColor: fade(theme.palette.common.black, 0.08),
+    },
     '.paper-heading': {
       display: 'flex',
       alignItems: 'center',
