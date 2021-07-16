@@ -54,7 +54,6 @@ const useStyles = makeStyles((theme) => ({
     borderLeftColor: theme.palette.divider,
   },
   textFieldInfoIcon: {
-    marginTop: theme.spacing(1), // Can remove before merge as the top margin of the text field will be removed
     marginBottom: theme.spacing(3),
     paddingTop: theme.spacing(1),
     paddingBottom: theme.spacing(1),

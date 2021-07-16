@@ -1,8 +1,9 @@
 import React from 'react';
 import clsx from 'clsx';
 import {Card} from '../Components/CommonComponents/Card';
-import {Paper, Typography, Button} from '@material-ui/core';
-import AddIcon from '@material-ui/icons/Add';
+import {Paper, Typography, Button, Box} from '@material-ui/core';
+import Icon from '@mdi/react';
+import {mdiPlus} from '@mdi/js';
 import {makeStyles, fade} from '@material-ui/core/styles';
 
 export default {
@@ -39,7 +40,7 @@ export const Default = (args) => {
   return (
     <div className={classes.maxWidth}>
       <Typography variant="body2" component="p">
-        Add card *
+        Add card... *
       </Typography>
       <Typography
         variant="caption"
@@ -67,7 +68,7 @@ export const Default = (args) => {
       <Button
         variant="outlined"
         color="primary"
-        startIcon={<AddIcon />}
+        startIcon={<Icon path={mdiPlus} size={1} />}
         fullWidth={true}
         className={clsx(classes.addBtn, 'mt-2')}
       >
@@ -83,7 +84,7 @@ export const Errors = (args) => {
   return (
     <div className={classes.maxWidth}>
       <Typography variant="body2" component="p">
-        Add card *
+        Add card... *
       </Typography>
       <Typography
         variant="caption"
@@ -112,7 +113,7 @@ export const Errors = (args) => {
       <Button
         variant="outlined"
         color="primary"
-        startIcon={<AddIcon />}
+        startIcon={<Icon path={mdiPlus} size={1} />}
         fullWidth="true"
         className={clsx(classes.addBtn, 'mt-2')}
       >
@@ -128,7 +129,7 @@ export const NoCard = (args) => {
   return (
     <div className={classes.maxWidth}>
       <Typography variant="body2" component="p">
-        Add card *
+        Add card... *
       </Typography>
       <Typography
         variant="caption"
@@ -139,14 +140,14 @@ export const NoCard = (args) => {
         At least one card must be added
       </Typography>
       <Paper className={classes.cardContainer} variant="outlined">
-        <Typography variant="body2" component="p" color="textSecondary">
+        <Typography variant="caption" component="p" color="textSecondary">
           No cards added
         </Typography>
       </Paper>
       <Button
         variant="outlined"
         color="primary"
-        startIcon={<AddIcon />}
+        startIcon={<Icon path={mdiPlus} size={1} />}
         fullWidth="true"
         className={clsx(classes.addBtn, 'mt-2')}
       >
@@ -162,7 +163,7 @@ export const NoCardError = (args) => {
   return (
     <div className={classes.maxWidth}>
       <Typography variant="body2" component="p" className={classes.errorText}>
-        Add card *
+        Add card... *
       </Typography>
       <Typography
         variant="caption"
@@ -173,14 +174,14 @@ export const NoCardError = (args) => {
         At least one card must be added
       </Typography>
       <Paper className={classes.cardContainer} variant="outlined">
-        <Typography variant="body2" component="p" color="textSecondary">
+        <Typography variant="caption" component="p" color="textSecondary">
           No cards added
         </Typography>
       </Paper>
       <Button
         variant="outlined"
         color="primary"
-        startIcon={<AddIcon />}
+        startIcon={<Icon path={mdiPlus} size={1} />}
         fullWidth="true"
         className={clsx(classes.addBtn, 'mt-2')}
       >

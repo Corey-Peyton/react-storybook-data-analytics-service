@@ -23,9 +23,8 @@ import {
   Paper,
 } from '@material-ui/core';
 import CloseIcon from '@material-ui/icons/Close';
-import AddIcon from '@material-ui/icons/Add';
 import Icon from '@mdi/react';
-import {mdiChevronRight} from '@mdi/js';
+import {mdiChevronRight, mdiPlus} from '@mdi/js';
 import {
   DialogOutputMethodHelp,
   DialogAddFile,
@@ -510,7 +509,7 @@ function AddFileForm(props) {
       {state.outputMethod.value === 'Graphs' && (
         <div className={clsx(classes.indentedSection, 'mb-3')}>
           <Typography variant="body2" component="p">
-            {t('Add file for supporting tabulations for graphs *')}
+            {t('Add file for supporting tabulations for graphs... *')}
           </Typography>
           <Typography
             variant="caption"
@@ -526,7 +525,7 @@ function AddFileForm(props) {
             })}
             variant="outlined"
           >
-            <Typography variant="body2" component="p" color="textSecondary">
+            <Typography variant="caption" component="p" color="textSecondary">
               No files for support added
             </Typography>
           </Paper>
@@ -534,7 +533,7 @@ function AddFileForm(props) {
             <Button
               variant="outlined"
               color="primary"
-              startIcon={<AddIcon />}
+              startIcon={<Icon path={mdiPlus} size={1} />}
               className={clsx(classes.addBtn, 'mt-2 mb-3')}
               onClick={() => handleClickOpen('dialogAddFile', 'add')}
             >
@@ -723,7 +722,7 @@ function AddFileForm(props) {
       {state.dollarIncluded === 'Yes' && (
         <div className={clsx(classes.indentedSection, 'mb-3')}>
           <Typography variant="body2" component="p">
-            {t('Add file for unweighted supporting sample counts *')}
+            {t('Add file for unweighted supporting sample counts... *')}
           </Typography>
           <Typography
             variant="caption"
@@ -1126,7 +1125,7 @@ function AddFileForm(props) {
             <Button
               variant="outlined"
               color="primary"
-              startIcon={<AddIcon />}
+              startIcon={<Icon path={mdiPlus} size={1} />}
               className={clsx(classes.addBtn, 'mt-2 mb-3')}
               onClick={() => handleClickOpen('dialogAddFile', 'add')}
             >
@@ -1135,7 +1134,7 @@ function AddFileForm(props) {
           )}
           <Typography variant="body2" component="p">
             {t(
-                'Add file for syntax used for variable creation/analysis/running vetting tests *',
+                'Add file for syntax used for variable creation/analysis/running vetting tests... *',
             )}
           </Typography>
           <Typography
@@ -1152,7 +1151,7 @@ function AddFileForm(props) {
             })}
             variant="outlined"
           >
-            <Typography variant="body2" component="p" color="textSecondary">
+            <Typography variant="caption" component="p" color="textSecondary">
               No files for support added
             </Typography>
           </Paper>
@@ -1160,7 +1159,7 @@ function AddFileForm(props) {
             <Button
               variant="outlined"
               color="primary"
-              startIcon={<AddIcon />}
+              startIcon={<Icon path={mdiPlus} size={1} />}
               className={clsx(classes.addBtn, 'mt-2 mb-3')}
               onClick={() => handleClickOpen('dialogAddFile', 'add')}
             >
@@ -1168,7 +1167,7 @@ function AddFileForm(props) {
             </Button>
           )}
           <Typography variant="body2" component="p">
-            {t('Add file for vetting test results *')}
+            {t('Add file for vetting test results... *')}
           </Typography>
           <Typography
             variant="caption"
@@ -1184,7 +1183,7 @@ function AddFileForm(props) {
             })}
             variant="outlined"
           >
-            <Typography variant="body2" component="p" color="textSecondary">
+            <Typography variant="caption" component="p" color="textSecondary">
               No files for support added
             </Typography>
           </Paper>
@@ -1192,7 +1191,7 @@ function AddFileForm(props) {
             <Button
               variant="outlined"
               color="primary"
-              startIcon={<AddIcon />}
+              startIcon={<Icon path={mdiPlus} size={1} />}
               className={clsx(classes.addBtn, 'mt-2 mb-3')}
               onClick={() => handleClickOpen('dialogAddFile', 'add')}
             >
@@ -1270,7 +1269,7 @@ function AddFileForm(props) {
           </FormControl>
           <Typography variant="body2" component="p">
             {t(
-                'Add file for supporting documentation (requirements in vetting rules) *',
+                'Add file for supporting documentation (requirements in vetting rules)... *',
             )}
           </Typography>
           <Typography
@@ -1287,7 +1286,7 @@ function AddFileForm(props) {
             })}
             variant="outlined"
           >
-            <Typography variant="body2" component="p" color="textSecondary">
+            <Typography variant="caption" component="p" color="textSecondary">
               No files for support added
             </Typography>
           </Paper>
@@ -1295,7 +1294,7 @@ function AddFileForm(props) {
             <Button
               variant="outlined"
               color="primary"
-              startIcon={<AddIcon />}
+              startIcon={<Icon path={mdiPlus} size={1} />}
               className={clsx(classes.addBtn, 'mt-2 mb-3')}
               onClick={() => handleClickOpen('dialogAddFile', 'add')}
             >
@@ -1333,7 +1332,7 @@ function AddFileForm(props) {
         <div className={clsx(classes.indentedSection, 'mb-3')}>
           <Typography variant="body2" component="p">
             {t(
-                'Add file for unweighted frequency table for respondent counts *',
+                'Add file for unweighted frequency table for respondent counts... *',
             )}
           </Typography>
           <Typography
@@ -1350,7 +1349,7 @@ function AddFileForm(props) {
             })}
             variant="outlined"
           >
-            <Typography variant="body2" component="p" color="textSecondary">
+            <Typography variant="caption" component="p" color="textSecondary">
               No files for support added
             </Typography>
           </Paper>
@@ -1358,7 +1357,7 @@ function AddFileForm(props) {
             <Button
               variant="outlined"
               color="primary"
-              startIcon={<AddIcon />}
+              startIcon={<Icon path={mdiPlus} size={1} />}
               className={clsx(classes.addBtn, 'mt-2 mb-3')}
               onClick={() => handleClickOpen('dialogAddFile', 'add')}
             >
@@ -1420,7 +1419,7 @@ function AddFileForm(props) {
           {state.matrixContinuous === 'Yes' && (
             <div className={clsx(classes.indentedSection, 'mb-3')}>
               <Typography variant="body2" component="p">
-                {t('Add file for unweighted sample size *')}
+                {t('Add file for unweighted sample size... *')}
               </Typography>
               <Typography
                 variant="caption"
@@ -1436,7 +1435,11 @@ function AddFileForm(props) {
                 })}
                 variant="outlined"
               >
-                <Typography variant="body2" component="p" color="textSecondary">
+                <Typography
+                  variant="caption"
+                  component="p"
+                  color="textSecondary"
+                >
                   No files for support added
                 </Typography>
               </Paper>
@@ -1444,7 +1447,7 @@ function AddFileForm(props) {
                 <Button
                   variant="outlined"
                   color="primary"
-                  startIcon={<AddIcon />}
+                  startIcon={<Icon path={mdiPlus} size={1} />}
                   className={clsx(classes.addBtn, 'mt-2 mb-3')}
                   onClick={() => handleClickOpen('dialogAddFile', 'add')}
                 >
@@ -1478,7 +1481,7 @@ function AddFileForm(props) {
           {state.matrixDichotomous === 'Yes' && (
             <div className={clsx(classes.indentedSection, 'mb-3')}>
               <Typography variant="body2" component="p">
-                {t('Add file for unweighted cross-tabulation table *')}
+                {t('Add file for unweighted cross-tabulation table... *')}
               </Typography>
               <Typography
                 variant="caption"
@@ -1494,7 +1497,11 @@ function AddFileForm(props) {
                 })}
                 variant="outlined"
               >
-                <Typography variant="body2" component="p" color="textSecondary">
+                <Typography
+                  variant="caption"
+                  component="p"
+                  color="textSecondary"
+                >
                   No files for support added
                 </Typography>
               </Paper>
@@ -1502,7 +1509,7 @@ function AddFileForm(props) {
                 <Button
                   variant="outlined"
                   color="primary"
-                  startIcon={<AddIcon />}
+                  startIcon={<Icon path={mdiPlus} size={1} />}
                   className={clsx(classes.addBtn, 'mt-2 mb-3')}
                   onClick={() => handleClickOpen('dialogAddFile', 'add')}
                 >
@@ -1539,7 +1546,7 @@ function AddFileForm(props) {
             <div className={clsx(classes.indentedSection, 'mt-3')}>
               <Typography variant="body2" component="p">
                 {t(
-                    'Add file for unweighted sub-totals for the categories of the dichotomous variable correlated with a continuous variable *',
+                    'Add file for unweighted sub-totals for the categories of the dichotomous variable correlated with a continuous variable... *',
                 )}
               </Typography>
               <Typography
@@ -1556,7 +1563,11 @@ function AddFileForm(props) {
                 })}
                 variant="outlined"
               >
-                <Typography variant="body2" component="p" color="textSecondary">
+                <Typography
+                  variant="caption"
+                  component="p"
+                  color="textSecondary"
+                >
                   No files for support added
                 </Typography>
               </Paper>
@@ -1564,7 +1575,7 @@ function AddFileForm(props) {
                 <Button
                   variant="outlined"
                   color="primary"
-                  startIcon={<AddIcon />}
+                  startIcon={<Icon path={mdiPlus} size={1} />}
                   className={clsx(classes.addBtn, 'mt-2 mb-3')}
                   onClick={() => handleClickOpen('dialogAddFile', 'add')}
                 >
@@ -1618,7 +1629,7 @@ function AddFileForm(props) {
             helperText={state.rounding.errorText}
           />
           <Typography variant="body2" component="p">
-            {t('Add file for unrounded version of this output *')}
+            {t('Add file for unrounded version of this output... *')}
           </Typography>
           <Typography
             variant="caption"
@@ -1634,7 +1645,7 @@ function AddFileForm(props) {
             })}
             variant="outlined"
           >
-            <Typography variant="body2" component="p" color="textSecondary">
+            <Typography variant="caption" component="p" color="textSecondary">
               No files for support added
             </Typography>
           </Paper>
@@ -1642,7 +1653,7 @@ function AddFileForm(props) {
             <Button
               variant="outlined"
               color="primary"
-              startIcon={<AddIcon />}
+              startIcon={<Icon path={mdiPlus} size={1} />}
               className={clsx(classes.addBtn, 'mt-2 mb-3')}
               onClick={() => handleClickOpen('dialogAddFile', 'add')}
             >

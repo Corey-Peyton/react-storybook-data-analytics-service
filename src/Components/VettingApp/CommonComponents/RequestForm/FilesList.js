@@ -23,9 +23,8 @@ import {Card} from '../../../CommonComponents/Card';
 import {OutputFile} from './ModifyFile';
 import CloseIcon from '@material-ui/icons/Close';
 import InfoOutlinedIcon from '@material-ui/icons/InfoOutlined';
-import AddIcon from '@material-ui/icons/Add';
 import Icon from '@mdi/react';
-import {mdiChevronRight} from '@mdi/js';
+import {mdiChevronRight, mdiPlus} from '@mdi/js';
 import {
   SnackbarAddOutputFile,
   SnackbarDeleteOutputFile,
@@ -311,7 +310,7 @@ function FilesList(props) {
       <Typography component="h3" variant="subtitle2" className="mb-3">
         Output files
       </Typography>
-      <Typography variant="body2">Add file for output *</Typography>
+      <Typography variant="body2">Add file for output... *</Typography>
       <Typography
         variant="caption"
         color="textSecondary"
@@ -342,7 +341,7 @@ function FilesList(props) {
         <Button
           variant="outlined"
           color="primary"
-          startIcon={<AddIcon />}
+          startIcon={<Icon path={mdiPlus} size={1} />}
           fullWidth={true}
           className={classes.addCard}
           onClick={(e) => toggleDrawer(e, 'addFile', true)}
@@ -355,7 +354,7 @@ function FilesList(props) {
       <Typography component="h3" variant="subtitle2" className="mb-3">
         Mandatory supporting files
       </Typography>
-      <Typography variant="body2">Add file for syntax *</Typography>
+      <Typography variant="body2">Add file for syntax... *</Typography>
       <Typography
         variant="caption"
         color="textSecondary"
@@ -385,7 +384,7 @@ function FilesList(props) {
         <Button
           variant="outlined"
           color="primary"
-          startIcon={<AddIcon />}
+          startIcon={<Icon path={mdiPlus} size={1} />}
           fullWidth={true}
           className={classes.addCard}
           onClick={(e) => handleClickOpen('dialogAddSupporting')}
@@ -394,7 +393,7 @@ function FilesList(props) {
         </Button>
       )}
       <Typography variant="body2" className="mt-3">
-        Add file for variable list/description *
+        Add file for variable list/description... *
       </Typography>
       <Typography
         variant="caption"
@@ -425,7 +424,7 @@ function FilesList(props) {
         <Button
           variant="outlined"
           color="primary"
-          startIcon={<AddIcon />}
+          startIcon={<Icon path={mdiPlus} size={1} />}
           fullWidth={true}
           className={classes.addCard}
           onClick={(e) => handleClickOpen('dialogAddSupporting')}
@@ -438,7 +437,7 @@ function FilesList(props) {
         Additional supporting files
       </Typography>
       <Typography variant="body2" className="mb-2">
-        Add file for additional details
+        Add file for additional details...
       </Typography>
       <Paper
         className={clsx('paper-grey mb-2', {
@@ -458,7 +457,7 @@ function FilesList(props) {
             />
           ))
         ) : (
-          <Typography variant="body2" component="p" color="textSecondary">
+          <Typography variant="caption" component="p" color="textSecondary">
             No files for support added
           </Typography>
         )}
@@ -467,7 +466,7 @@ function FilesList(props) {
         <Button
           variant="outlined"
           color="primary"
-          startIcon={<AddIcon />}
+          startIcon={<Icon path={mdiPlus} size={1} />}
           fullWidth={true}
           className={`${classes.addCard} mb-3`}
           onClick={(e) => handleClickOpen('dialogAddSupporting')}
