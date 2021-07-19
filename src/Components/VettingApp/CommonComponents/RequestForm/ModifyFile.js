@@ -79,6 +79,7 @@ const useStyles = makeStyles((theme) => ({
     },
   },
   addBtn: {
+    'marginTop': theme.spacing(-1),
     'borderStyle': 'dashed',
     'justifyContent': 'start',
     'width': '100%',
@@ -520,9 +521,7 @@ function AddFileForm(props) {
             {t('At least one file must be added')}
           </Typography>
           <Paper
-            className={clsx('paper-grey', classes.cardContainer, {
-              'mb-3': !state.researcher(),
-            })}
+            className={clsx('paper-grey mb-3', classes.cardContainer)}
             variant="outlined"
           >
             <Typography variant="caption" component="p" color="textSecondary">
@@ -534,7 +533,7 @@ function AddFileForm(props) {
               variant="outlined"
               color="primary"
               startIcon={<Icon path={mdiPlus} size={1} />}
-              className={clsx(classes.addBtn, 'mt-2 mb-3')}
+              className={clsx(classes.addBtn, 'mb-3')}
               onClick={() => handleClickOpen('dialogAddFile', 'add')}
             >
               {t('Add file for support')}
@@ -735,9 +734,7 @@ function AddFileForm(props) {
           {state.researcher() ? (
             <>
               <Paper
-                className={clsx('paper-grey', classes.cardContainer, {
-                  'mb-3': !state.researcher(),
-                })}
+                className={clsx('paper-grey mb-3', classes.cardContainer)}
                 variant="outlined"
               >
                 <Card
@@ -933,9 +930,7 @@ function AddFileForm(props) {
           ) : (
             <>
               <Paper
-                className={clsx('paper-grey', classes.cardContainer, {
-                  'mb-3': !state.researcher(),
-                })}
+                className={clsx('paper-grey mb-3', classes.cardContainer)}
                 variant="outlined"
               >
                 <Card
@@ -1126,7 +1121,7 @@ function AddFileForm(props) {
               variant="outlined"
               color="primary"
               startIcon={<Icon path={mdiPlus} size={1} />}
-              className={clsx(classes.addBtn, 'mt-2 mb-3')}
+              className={clsx(classes.addBtn, 'mb-3')}
               onClick={() => handleClickOpen('dialogAddFile', 'add')}
             >
               {t('Add file for support')}
@@ -1146,9 +1141,7 @@ function AddFileForm(props) {
             {t('At least one file must be added')}
           </Typography>
           <Paper
-            className={clsx('paper-grey', classes.cardContainer, {
-              'mb-3': !state.researcher(),
-            })}
+            className={clsx('paper-grey mb-3', classes.cardContainer)}
             variant="outlined"
           >
             <Typography variant="caption" component="p" color="textSecondary">
@@ -1160,7 +1153,7 @@ function AddFileForm(props) {
               variant="outlined"
               color="primary"
               startIcon={<Icon path={mdiPlus} size={1} />}
-              className={clsx(classes.addBtn, 'mt-2 mb-3')}
+              className={clsx(classes.addBtn, 'mb-3')}
               onClick={() => handleClickOpen('dialogAddFile', 'add')}
             >
               {t('Add file for support')}
@@ -1178,9 +1171,7 @@ function AddFileForm(props) {
             {t('At least one file must be added')}
           </Typography>
           <Paper
-            className={clsx('paper-grey', classes.cardContainer, {
-              'mb-3': !state.researcher(),
-            })}
+            className={clsx('paper-grey mb-3', classes.cardContainer)}
             variant="outlined"
           >
             <Typography variant="caption" component="p" color="textSecondary">
@@ -1192,7 +1183,7 @@ function AddFileForm(props) {
               variant="outlined"
               color="primary"
               startIcon={<Icon path={mdiPlus} size={1} />}
-              className={clsx(classes.addBtn, 'mt-2 mb-3')}
+              className={clsx(classes.addBtn, 'mb-3')}
               onClick={() => handleClickOpen('dialogAddFile', 'add')}
             >
               {t('Add file for support')}
@@ -1281,9 +1272,7 @@ function AddFileForm(props) {
             {t('At least one file must be added')}
           </Typography>
           <Paper
-            className={clsx('paper-grey', classes.cardContainer, {
-              'mb-3': !state.researcher(),
-            })}
+            className={clsx('paper-grey mb-3', classes.cardContainer)}
             variant="outlined"
           >
             <Typography variant="caption" component="p" color="textSecondary">
@@ -1295,7 +1284,7 @@ function AddFileForm(props) {
               variant="outlined"
               color="primary"
               startIcon={<Icon path={mdiPlus} size={1} />}
-              className={clsx(classes.addBtn, 'mt-2 mb-3')}
+              className={clsx(classes.addBtn, 'mb-3')}
               onClick={() => handleClickOpen('dialogAddFile', 'add')}
             >
               {t('Add file for support')}
@@ -1344,9 +1333,7 @@ function AddFileForm(props) {
             {t('At least one file must be added')}
           </Typography>
           <Paper
-            className={clsx('paper-grey', classes.cardContainer, {
-              'mb-3': !state.researcher(),
-            })}
+            className={clsx('paper-grey mb-3', classes.cardContainer)}
             variant="outlined"
           >
             <Typography variant="caption" component="p" color="textSecondary">
@@ -1358,7 +1345,7 @@ function AddFileForm(props) {
               variant="outlined"
               color="primary"
               startIcon={<Icon path={mdiPlus} size={1} />}
-              className={clsx(classes.addBtn, 'mt-2 mb-3')}
+              className={clsx(classes.addBtn, 'mb-3')}
               onClick={() => handleClickOpen('dialogAddFile', 'add')}
             >
               {t('Add file for support')}
@@ -1430,9 +1417,7 @@ function AddFileForm(props) {
                 {t('At least one file must be added')}
               </Typography>
               <Paper
-                className={clsx('paper-grey', classes.cardContainer, {
-                  'mb-3': !state.researcher(),
-                })}
+                className={clsx('paper-grey mb-3', classes.cardContainer)}
                 variant="outlined"
               >
                 <Typography
@@ -1448,7 +1433,7 @@ function AddFileForm(props) {
                   variant="outlined"
                   color="primary"
                   startIcon={<Icon path={mdiPlus} size={1} />}
-                  className={clsx(classes.addBtn, 'mt-2 mb-3')}
+                  className={clsx(classes.addBtn, 'mb-3')}
                   onClick={() => handleClickOpen('dialogAddFile', 'add')}
                 >
                   {t('Add file for support')}
@@ -1492,9 +1477,7 @@ function AddFileForm(props) {
                 {t('At least one file must be added')}
               </Typography>
               <Paper
-                className={clsx('paper-grey', classes.cardContainer, {
-                  'mb-3': !state.researcher(),
-                })}
+                className={clsx('paper-grey mb-3', classes.cardContainer)}
                 variant="outlined"
               >
                 <Typography
@@ -1510,7 +1493,7 @@ function AddFileForm(props) {
                   variant="outlined"
                   color="primary"
                   startIcon={<Icon path={mdiPlus} size={1} />}
-                  className={clsx(classes.addBtn, 'mt-2 mb-3')}
+                  className={clsx(classes.addBtn, 'mb-3')}
                   onClick={() => handleClickOpen('dialogAddFile', 'add')}
                 >
                   {t('Add file for support')}
@@ -1558,9 +1541,7 @@ function AddFileForm(props) {
                 {t('At least one file must be added')}
               </Typography>
               <Paper
-                className={clsx('paper-grey', classes.cardContainer, {
-                  'mb-3': !state.researcher(),
-                })}
+                className={clsx('paper-grey mb-3', classes.cardContainer)}
                 variant="outlined"
               >
                 <Typography
@@ -1576,7 +1557,7 @@ function AddFileForm(props) {
                   variant="outlined"
                   color="primary"
                   startIcon={<Icon path={mdiPlus} size={1} />}
-                  className={clsx(classes.addBtn, 'mt-2 mb-3')}
+                  className={clsx(classes.addBtn, 'mb-3')}
                   onClick={() => handleClickOpen('dialogAddFile', 'add')}
                 >
                   {t('Add file for support')}
@@ -1640,9 +1621,7 @@ function AddFileForm(props) {
             {t('At least one file must be added')}
           </Typography>
           <Paper
-            className={clsx('paper-grey', classes.cardContainer, {
-              'mb-3': !state.researcher(),
-            })}
+            className={clsx('paper-grey mb-3', classes.cardContainer)}
             variant="outlined"
           >
             <Typography variant="caption" component="p" color="textSecondary">
@@ -1654,7 +1633,7 @@ function AddFileForm(props) {
               variant="outlined"
               color="primary"
               startIcon={<Icon path={mdiPlus} size={1} />}
-              className={clsx(classes.addBtn, 'mt-2 mb-3')}
+              className={clsx(classes.addBtn, 'mb-3')}
               onClick={() => handleClickOpen('dialogAddFile', 'add')}
             >
               {t('Add file for support')}

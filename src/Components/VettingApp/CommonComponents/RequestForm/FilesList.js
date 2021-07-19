@@ -44,6 +44,7 @@ const useStylesBootstrap = makeStyles((theme) => ({
 
 const useStyles = makeStyles((theme) => ({
   addCard: {
+    'marginTop': theme.spacing(-1),
     'borderStyle': 'dashed',
     'justifyContent': 'start',
     'width': '100%',
@@ -319,7 +320,7 @@ function FilesList(props) {
       >
         At least one file must be added
       </Typography>
-      <Paper className="paper-grey mb-2" variant="outlined">
+      <Paper className="paper-grey mb-3" variant="outlined">
         {outputFiles.length > 0 ? (
           outputFiles.map((file, index) => (
             <OutputFileCard
@@ -363,7 +364,7 @@ function FilesList(props) {
       >
         At least one file must be added
       </Typography>
-      <Paper className="paper-grey mb-2" variant="outlined">
+      <Paper className="paper-grey mb-3" variant="outlined">
         {syntaxFiles.length > 0 ? (
           syntaxFiles.map((file, index) => (
             <SupportingFileCard
@@ -403,7 +404,7 @@ function FilesList(props) {
       >
         At least one file must be added
       </Typography>
-      <Paper className="paper-grey mb-2" variant="outlined">
+      <Paper className="paper-grey mb-3" variant="outlined">
         {variableFiles.length > 0 ? (
           variableFiles.map((file, index) => (
             <SupportingFileCard
@@ -439,13 +440,7 @@ function FilesList(props) {
       <Typography variant="body2" className="mb-2">
         Add file for additional details...
       </Typography>
-      <Paper
-        className={clsx('paper-grey mb-2', {
-          'mb-2': props.role === 'researcher',
-          'mb-3': props.role === 'analyst',
-        })}
-        variant="outlined"
-      >
+      <Paper className="paper-grey mb-3" variant="outlined">
         {additionalFiles.length > 0 ? (
           additionalFiles.map((file, index) => (
             <SupportingFileCard
