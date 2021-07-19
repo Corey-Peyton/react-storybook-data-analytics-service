@@ -1,7 +1,7 @@
 import React from 'react';
 import clsx from 'clsx';
 import {Card} from '../Components/CommonComponents/Card';
-import {Paper, Typography, Button, Box} from '@material-ui/core';
+import {Paper, Typography, Button} from '@material-ui/core';
 import Icon from '@mdi/react';
 import {mdiPlus} from '@mdi/js';
 import {makeStyles, fade} from '@material-ui/core/styles';
