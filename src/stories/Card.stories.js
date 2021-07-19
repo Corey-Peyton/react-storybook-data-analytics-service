@@ -12,6 +12,7 @@ export default {
 };
 const useStyles = makeStyles((theme) => ({
   addBtn: {
+    'marginTop': theme.spacing(-1),
     'borderStyle': 'dashed',
     'justifyContent': 'start',
     'width': '100%',
@@ -28,6 +29,7 @@ const useStyles = makeStyles((theme) => ({
     padding: theme.spacing(2),
     backgroundColor: theme.palette.grey[100],
     borderColor: fade(theme.palette.common.black, 0.08),
+    marginBottom: theme.spacing(3),
   },
   errorText: {
     color: theme.palette.error.main,
@@ -187,6 +189,65 @@ export const NoCardError = (args) => {
       >
         Add card
       </Button>
+    </div>
+  );
+};
+
+export const ReadOnly = (args) => {
+  const classes = useStyles();
+
+  return (
+    <div className={classes.maxWidth}>
+      <Typography variant="body2" component="p">
+        Add card... *
+      </Typography>
+      <Typography
+        variant="caption"
+        color="textSecondary"
+        component="p"
+        className="mb-2"
+      >
+        At least one card must be added
+      </Typography>
+      <Paper className={classes.cardContainer} variant="outlined">
+        <Card
+          title="Card title"
+          error={false}
+          primaryButton="View details"
+          content={
+            <>
+              <Typography variant="body2" component="p">
+                This is the content for the card.
+              </Typography>
+            </>
+          }
+        />
+      </Paper>
+    </div>
+  );
+};
+
+export const NoCardReadOnly = (args) => {
+  const classes = useStyles();
+
+  return (
+    <div className={classes.maxWidth}>
+      <Typography variant="body2" component="p">
+        Add card... *
+      </Typography>
+      <Typography
+        variant="caption"
+        color="textSecondary"
+        component="p"
+        className="mb-2"
+      >
+        At least one card must be added
+      </Typography>
+      <Paper className={classes.cardContainer} variant="outlined">
+        <Typography variant="caption" component="p" color="textSecondary">
+          No cards added
+        </Typography>
+      </Paper>
     </div>
   );
 };
