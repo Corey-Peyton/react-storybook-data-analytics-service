@@ -7,6 +7,10 @@ import {makeStyles} from '@material-ui/core/styles';
 
 const useStyles = makeStyles((theme) => ({
   root: {
+    'minWidth': theme.spacing(49),
+    '& .MuiAlert-root': {
+      width: '100%',
+    },
     [theme.breakpoints.down('xs')]: {
       'bottom': theme.spacing(10),
       '& .MuiAlert-root': {
