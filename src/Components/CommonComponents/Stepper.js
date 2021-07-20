@@ -184,7 +184,6 @@ export default function Stepper(props) {
           nonLinear
           activeStep={state.activeStep}
           connector={<StepConnector />}
-          // readonly={props.readonly}
         >
           {steps.map((label, index) => {
             const labelProps = {};
