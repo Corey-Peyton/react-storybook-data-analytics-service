@@ -1,12 +1,8 @@
 import React from 'react';
-// import {makeStyles} from '@material-ui/core/styles';
 import {Typography, Divider, TextField} from '@material-ui/core';
 import {useTranslation} from 'react-i18next';
 
-// const useStyles = makeStyles((theme) => ({}));
-
 function AdditionalInfo(props) {
-  // const classes = useStyles();
   const {t} = useTranslation();
 
   const [state, setState] = React.useState({
