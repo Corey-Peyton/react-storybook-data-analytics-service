@@ -1,45 +1,37 @@
 import React from 'react';
 import {useTranslation} from 'react-i18next';
-import {makeStyles} from '@material-ui/core/styles';
+import {makeStyles, fade} from '@material-ui/core/styles';
 import clsx from 'clsx';
-import Dialog from '@material-ui/core/Dialog';
-import DialogActions from '@material-ui/core/DialogActions';
-import DialogContent from '@material-ui/core/DialogContent';
-import DialogTitle from '@material-ui/core/DialogTitle';
 import {
   Divider,
   Typography,
   IconButton,
   Button,
   Drawer,
-  MenuItem,
   FormControl,
-  InputLabel,
-  Select,
-  TextField,
-  Grid,
-  Card,
-  CardContent,
-  CardActions,
   FormLabel,
   FormControlLabel,
   RadioGroup,
   Radio,
   Tooltip,
+  Grid,
+  Collapse,
+  Paper,
 } from '@material-ui/core';
 import Alert from '@material-ui/lab/Alert';
+import {Card} from '../../../CommonComponents/Card';
 import {OutputFile} from './ModifyFile';
 import CloseIcon from '@material-ui/icons/Close';
-import InfoIcon from '@material-ui/icons/Info';
+import InfoOutlinedIcon from '@material-ui/icons/InfoOutlined';
 import Icon from '@mdi/react';
-import {mdiFileDocumentOutline} from '@mdi/js';
+import {mdiChevronRight, mdiPlus} from '@mdi/js';
 import {
   SnackbarAddOutputFile,
-  SnackbarAddSupportFile,
   SnackbarDeleteOutputFile,
+  SnackbarDeleteSupportFile,
   SnackbarUpdateOutputFile,
 } from '../Snackbars';
-import {DialogDelete} from '../DialogBox';
+import {DialogDelete, DialogAddFile} from '../DialogBox';
 
 const useStylesBootstrap = makeStyles((theme) => ({
   arrow: {
@@ -51,68 +43,16 @@ const useStylesBootstrap = makeStyles((theme) => ({
 }));
 
 const useStyles = makeStyles((theme) => ({
-  vettingContainerTitle: {
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'space-between',
-  },
-  vettingSection: {
-    display: 'flex',
-    flexFlow: 'column',
-    padding: theme.spacing(3),
-    overflowY: 'auto',
-  },
-  vettingRow: {
-    'display': 'flex',
-    'margin': theme.spacing(1.5, 0),
-    'flexFlow': 'row',
-    'height': '100%',
-    'justifyContent': 'center',
+  addCard: {
+    'marginTop': theme.spacing(-1),
+    'borderStyle': 'dashed',
+    'justifyContent': 'start',
     'width': '100%',
-    'alignItems': 'center',
-    '&:first-child': {
-      marginTop: 0,
+    'textAlign': 'left',
+    'borderColor': fade(theme.palette.common.black, 0.23),
+    '&.MuiButton-outlinedPrimary:hover': {
+      borderStyle: 'dashed',
     },
-    '&:last-child': {
-      marginBottom: 0,
-    },
-  },
-  vettingColumn: {
-    'display': 'flex',
-    'flexDirection': 'column',
-    'width': '100%',
-    'justifyContent': 'center',
-    'marginRight': theme.spacing(1),
-    'height': '100%',
-    '&:last-child': {
-      marginRight: 0,
-    },
-  },
-  card: {
-    marginTop: theme.spacing(2),
-  },
-  cardActions: {
-    borderTop: '1px solid',
-    borderTopColor: theme.palette.divider,
-  },
-  cardActionsError: {
-    borderTop: '1px solid',
-    borderTopColor: theme.palette.error.light,
-  },
-  cardError: {
-    border: '1px solid',
-    borderColor: theme.palette.error.light,
-  },
-  cardTitle: {
-    marginTop: theme.spacing(0.25),
-  },
-  dialogFooter: {
-    padding: theme.spacing(1.75, 3),
-    borderTop: '1px solid',
-    borderTopColor: theme.palette.divider,
-  },
-  divider: {
-    margin: theme.spacing(3, 0),
   },
   drawer: {
     '& .MuiDrawer-paper': {
@@ -120,61 +60,75 @@ const useStyles = makeStyles((theme) => ({
       boxSizing: 'border-box',
     },
   },
-  icon: {
-    marginRight: theme.spacing(1.5),
-  },
-  root: {
-    '& .MuiDialogTitle-root': {
-      padding: theme.spacing(1.5, 3),
-    },
-    '& .MuiSelect-select': {
-      height: [theme.spacing(7), '!important'],
-      paddingTop: 0,
-      paddingBottom: 0,
+  alert: {
+    '& .MuiAlert-action': {
+      alignItems: 'start',
     },
   },
-  emphasisBox: {
-    background: theme.palette.grey[200],
-    padding: theme.spacing(2),
-    marginBottom: theme.spacing(3),
-    borderLeftStyle: 'solid',
-    borderLeftWidth: '5px',
-    borderLeftColor: theme.palette.primary.main,
+  legendInfoIcon: {
+    marginTop: theme.spacing(-0.25),
+    marginLeft: theme.spacing(1),
   },
-  tooltipLabel: {
-    '& svg': {
-      verticalAlign: 'middle',
-      paddingLeft: theme.spacing(1),
-    },
+  filePath: {
+    display: 'flex',
+    flexFlow: 'wrap',
+    alignItems: 'flex-end',
   },
-  tooltip: {
-    paddingLeft: theme.spacing(1),
-    marginTop: theme.spacing(1),
-  },
-  inputMargin: {
-    marginTop: theme.spacing(0),
-    marginBottom: theme.spacing(3),
+  filePathItem: {
+    display: 'flex',
+    alignItems: 'center',
   },
 }));
 
-const files = [
+// FAKE DATA
+const outputFiles = [
   {
-    name: 'Output file example with a very long name.',
-    emptyFields: 0,
-    error: false,
-  },
-  {
-    name:
-      'Another file with even a longer name for users who likes to be really descriptive. Yes, believe it happens!',
-    emptyFields: 4,
-    error: false,
-  },
-  {
-    name: 'Example output file card name',
-    emptyFields: 4,
-    error: true,
+    name: 'File for output',
+    sheet: '{SheetName}',
+    path: [
+      '{ProjectFolderName}',
+      '{RequestFolderName}',
+      '{FolderName}',
+      '{FolderName}',
+      '{OutputFileName}.xls',
+    ],
+    numErrors: 0,
   },
 ];
+
+const syntaxFiles = [
+  {
+    name: 'Syntax',
+    path: [
+      '{ProjectFolderName}',
+      '{RequestFolderName}',
+      '{FolderName}',
+      '{FolderName}',
+      '{SyntaxFileName}.doc',
+    ],
+    notes:
+      'Notes section to include any details regarding the syntax file added. This will be helpful for the Researcher/Analyst during the vetting process.',
+    numErrors: 0,
+  },
+];
+
+const variableFiles = [
+  {
+    name: 'Variable list/description',
+    path: [
+      '{ProjectFolderName}',
+      '{RequestFolderName}',
+      '{FolderName}',
+      '{FolderName}',
+      '{VariableFileName}.doc',
+    ],
+    notes:
+      'Notes section to include any details regarding the variable file added. This will be helpful for the Researcher/Analyst during the vetting process.',
+    numErrors: 0,
+  },
+];
+
+const additionalFiles = [];
 
 function BootstrapTooltip(props) {
   const classes = useStylesBootstrap();
@@ -184,23 +138,18 @@ function BootstrapTooltip(props) {
 
 function FilesList(props) {
   const classes = useStyles();
-  const [state, setState] = React.useState({
-    notes: {
-      text: '',
-      errorText: '',
-      invalid: '',
-      commands: '',
-    },
-  });
   const [open, setOpen] = React.useState({
-    dialogAddSupporting: false,
     snackbarAddSupporting: false,
     snackbarCreate: false,
     snackbarUpdate: false,
-    snackbarDelete: false,
+    snackbarOututputDelete: false,
+    snackbarSupportDelete: false,
     outputFile: false,
-    dialogDelete: false,
-    drawerType: '',
+    dialogOutputDelete: false,
+    dialogSupportDelete: false,
+    dialogAddSupporting: false,
+    dialogEditSupporting: false,
+    alert: true,
   });
 
   const toggleDrawer = (event, drawer) => {
@@ -229,122 +178,72 @@ function FilesList(props) {
     setOpen({...open, snackbarUpdate: true, outputFile: false});
   };
 
-  const deleteFile = () => {
-    setOpen({...open, snackbarDelete: true, dialogDelete: false});
+  const deleteOutputFile = () => {
+    setOpen({...open, snackbarOutputDelete: true, dialogOutputDelete: false});
   };
 
-  const addSupportingFile = () => {
+  const deleteSupportFile = () => {
     setOpen({
       ...open,
-      dialogAddSupporting: false,
-      snackbarAddSupporting: true,
+      snackbarSupportDelete: true,
+      dialogSupportDelete: false,
     });
-  };
-
-  const {t} = useTranslation();
-
-  const disableCutCopyPaste = (e, command, value) => {
-    // display error if user tries to cut/copy/paste
-    let msg;
-    e.preventDefault();
-    switch (command) {
-      case 'cut':
-        msg = t('Cut has been disabled for security purposes.');
-        setState({
-          ...state,
-          [value]: {
-            ...state[value],
-            commands: msg,
-            errorText: msg,
-          },
-        });
-        break;
-      case 'copy':
-        msg = t('Copy has been disabled for security purposes.');
-        setState({
-          ...state,
-          [value]: {
-            ...state[value],
-            commands: msg,
-            errorText: msg,
-          },
-        });
-        break;
-      case 'paste':
-        msg = t('Paste has been disabled for security purposes.');
-        setState({
-          ...state,
-          [value]: {
-            ...state[value],
-            commands: msg,
-            errorText: msg,
-          },
-        });
-        break;
-      default:
-        break;
-    }
-  };
-
-  const toggleHelperText = (value) => {
-    if (state[value].commands === state[value].errorText) {
-      if (Boolean(state[value].invalid)) {
-        // set error text back to invalid error
-        setState({
-          ...state,
-          [value]: {
-            ...state[value],
-            errorText: state[value].invalid,
-          },
-        });
-      } else {
-        // clear error text if no invalid error exists
-        setState({
-          ...state,
-          [value]: {
-            ...state[value],
-            errorText: '',
-          },
-        });
-      }
-    }
   };
 
   return (
     <React.Fragment>
-      <Typography>
-        Please provide some information about this request as well as your
-        output and supporting files.
+      <Typography component="h2" variant="h6" className="mb-3">
+        Files for output
       </Typography>
-      <Divider className={classes.divider} />
-      <Typography component="h2" variant="h6" className="mb-2">
+      <Typography component="p" variant="body1" className="mb-3">
+        Please add and prepare your files for vetting. You will not have access
+        to your files from within the request and are simply adding the file
+        path to help Analyst locate the file on your virtual machince. If your
+        request is approved you will be granted access to your files outside of
+        your secure enviroment.
+      </Typography>
+      <Divider className="mb-3" />
+      <Typography component="h3" variant="subtitle2" className="mb-3">
         Screening questions
       </Typography>
-      <div className={classes.emphasisBox}>
-        <Typography variant="subtitle2" component="h3" className="mb-3">
-          Please consider the following guidelines:
-        </Typography>
-        <ul>
-          <li>
-            <Typography variant="body2">
-              Check your output against the vetting guidelines.
-            </Typography>
-          </li>
-          <li>
-            <Typography variant="body2">
-              Delete values you do not need released at this time.
-            </Typography>
-          </li>
-        </ul>
-        <Typography variant="body2" className="mt-3">
-          This request will be stored as part of the request record.
-        </Typography>
-      </div>
-      <FormControl
-        component="fieldset"
-        className={classes.inputMargin}
-        required
-      >
+      <Collapse in={open.alert}>
+        <Alert
+          severity="info"
+          className={`mb-3 ${classes.alert}`}
+          action={
+            <IconButton
+              aria-label="clear"
+              color="inherit"
+              size="small"
+              onClick={() => {
+                handleClickClose('alert');
+              }}
+            >
+              <CloseIcon fontSize="inherit" />
+            </IconButton>
+          }
+        >
+          <Typography component="p" variant="body2" className="mb-2">
+            Please consider the following guidelines:
+          </Typography>
+          <ul className="mb-2">
+            <li>
+              <Typography variant="body2">
+                Check your output against the vetting guidelines.
+              </Typography>
+            </li>
+            <li>
+              <Typography variant="body2">
+                Delete values you do not need released at this time.
+              </Typography>
+            </li>
+          </ul>
+          <Typography component="p" variant="body2">
+            This request will be stored as part of the request record.
+          </Typography>
+        </Alert>
+      </Collapse>
+      <FormControl component="fieldset" className="mb-2" required>
         <FormLabel component="legend">
           Is the requested output consistent with the approved proposal for this
           project?
@@ -362,11 +261,7 @@ function FilesList(props) {
           />
         </RadioGroup>
       </FormControl>
-      <FormControl
-        component="fieldset"
-        className={classes.inputMargin}
-        required
-      >
+      <FormControl component="fieldset" className="mb-2" required>
         <FormLabel component="legend">
           Have you checked the vetting rules to determine if there are
           geographical, institutional, household size and/or population
@@ -385,17 +280,19 @@ function FilesList(props) {
           />
         </RadioGroup>
       </FormControl>
-      <FormControl
-        component="fieldset"
-        className={classes.inputMargin}
-        required
-      >
-        <FormLabel component="legend" className={classes.tooltipLabel}>
-          Is the requested output your final output?
-          <BootstrapTooltip title="If no, future vetting release requests under this contract may be restricted due to residual disclosure. You are strongly encouraged to consult with your Analyst.">
-            <InfoIcon />
-          </BootstrapTooltip>
-        </FormLabel>
+      <FormControl component="fieldset" className="mb-2" required>
+        <Grid component="span" container>
+          <Grid component="span" xs item>
+            <FormLabel component="legend">
+              Is the requested output your final output?
+            </FormLabel>
+          </Grid>
+          <Grid component="span" className={classes.legendInfoIcon} item>
+            <BootstrapTooltip title="If no, future vetting release requests under this contract may be restricted due to residual disclosure. You are strongly encouraged to consult with your Analyst.">
+              <InfoOutlinedIcon />
+            </BootstrapTooltip>
+          </Grid>
+        </Grid>
         <RadioGroup id="finalOutput" name="finalOutput">
           <FormControlLabel
             value="Yes"
@@ -409,163 +306,169 @@ function FilesList(props) {
           />
         </RadioGroup>
       </FormControl>
-      <Typography component="h2" variant="h6" className="mb-2">
-        File location
+      <Divider className="mb-3" />
+      {/* OUTPUT FILES */}
+      <Typography component="h3" variant="subtitle2" className="mb-3">
+        Output files
       </Typography>
-      <Grid container>
-        <Grid item xs={6}>
-          <FormControl
-            className={classes.inputMargin}
-            margin="dense"
-            variant="outlined"
-            fullWidth
-            required
-          >
-            <InputLabel id="outputFolder-label">Output folder</InputLabel>
-            <Select
-              id="outputFolder"
-              label="Output folder"
-              labelId="outputFolder-label"
-            >
-              <MenuItem>Folder 1</MenuItem>
-              <MenuItem>Folder 2</MenuItem>
-            </Select>
-          </FormControl>
-        </Grid>
-        <Grid item>
-          <BootstrapTooltip
-            className={classes.tooltip}
-            title="Please indicate the folder that contains your files for release for this request."
-          >
-            <InfoIcon />
-          </BootstrapTooltip>
-        </Grid>
-      </Grid>
-      <Grid container>
-        <Grid item xs={6}>
-          <FormControl
-            className={classes.inputMargin}
-            margin="dense"
-            variant="outlined"
-            fullWidth
-            required
-          >
-            <InputLabel id="supportFolder-label">Supporting folder</InputLabel>
-            <Select
-              id="supportFolder"
-              label="Supporting folder"
-              labelId="supportFolder-label"
-            >
-              <MenuItem>Folder 1</MenuItem>
-              <MenuItem>Folder 2</MenuItem>
-            </Select>
-          </FormControl>
-        </Grid>
-        <Grid item>
-          <BootstrapTooltip
-            className={classes.tooltip}
-            title=" Please indicate the folder that contains your supporting files for this request."
-          >
-            <InfoIcon />
-          </BootstrapTooltip>
-        </Grid>
-      </Grid>
-      <Grid
-        container
-        alignItems="center"
-        justify="space-between"
+      <Typography variant="body2">Add file for output... *</Typography>
+      <Typography
+        variant="caption"
+        color="textSecondary"
+        component="p"
         className="mb-2"
       >
-        <Grid item>
-          <Typography display="inline" component="h2" variant="h6">
-            File details
-          </Typography>
-        </Grid>
-        {props.role === 'researcher' && (
-          <Grid item>
-            <Button
-              variant="contained"
-              color="primary"
-              onClick={(e) => toggleDrawer(e, 'addFile')}
-            >
-              Add file
-            </Button>
-          </Grid>
-        )}
-      </Grid>
-      <Typography variant="body2" color="textSecondary" className="mb-2">
-        No output files
+        At least one file must be added
       </Typography>
-      <Alert className="mt-2" severity="error">
-        Request cannot be submitted without an output file
-      </Alert>
-      {files.map((file) => {
-        return (
-          <Card
-            key={file.name}
-            className={clsx(classes.card, {
-              [classes.cardError]: file.error,
-            })}
-            variant="outlined"
-          >
-            <CardContent>
-              <Grid container wrap="nowrap" alignItems="flex-start">
-                <Grid item>
-                  <Icon
-                    className={classes.icon}
-                    path={mdiFileDocumentOutline}
-                    size={1}
-                  />
-                </Grid>
-                <Grid item>
-                  <Typography
-                    variant="subtitle2"
-                    component="h3"
-                    className={classes.cardTitle}
-                  >
-                    {file.name}
-                  </Typography>
-                </Grid>
-              </Grid>
-              <FileValidationAlert
-                emptyFields={file.emptyFields}
-                error={file.error}
-              />
-            </CardContent>
-            <CardActions
-              className={clsx({
-                [classes.cardActions]: file.error === false,
-                [classes.cardActionsError]: file.error === true,
-              })}
-            >
-              {props.role === 'researcher' && (
-                <>
-                  <Button
-                    color="primary"
-                    onClick={(e) => toggleDrawer(e, 'editFile')}
-                  >
-                    Edit
-                  </Button>
-                  <Button
-                    color="primary"
-                    onClick={() => handleClickOpen('dialogDelete')}
-                  >
-                    Delete
-                  </Button>{' '}
-                </>
-              )}
-              {props.role === 'analyst' && (
-                <Button
-                  color="primary"
-                  onClick={(e) => toggleDrawer(e, 'viewFile')}
-                >
-                  View details
-                </Button>
-              )}
-            </CardActions>
-          </Card>
-        );
-      })}
+      <Paper className="paper-grey mb-3" variant="outlined">
+        {outputFiles.length > 0 ? (
+          outputFiles.map((file, index) => (
+            <OutputFileCard
+              key={`output-file-${index}`}
+              file={file}
+              index={index}
+              role={props.role}
+              toggleDrawer={toggleDrawer}
+              handleClickOpen={handleClickOpen}
+            />
+          ))
+        ) : (
+          <Typography variant="body2" component="p" color="textSecondary">
+            No files for output added
+          </Typography>
+        )}
+      </Paper>
+      {props.role === 'researcher' && (
+        <Button
+          variant="outlined"
+          color="primary"
+          startIcon={<Icon path={mdiPlus} size={1} />}
+          fullWidth={true}
+          className={classes.addCard}
+          onClick={(e) => toggleDrawer(e, 'addFile', true)}
+        >
+          Add file for output
+        </Button>
+      )}
+      <Divider className="mt-3 mb-3" />
+      {/* MANDATORY SUPPORTING FILES */}
+      <Typography component="h3" variant="subtitle2" className="mb-3">
+        Mandatory supporting files
+      </Typography>
+      <Typography variant="body2">Add file for syntax... *</Typography>
+      <Typography
+        variant="caption"
+        color="textSecondary"
+        component="p"
+        className="mb-2"
+      >
+        At least one file must be added
+      </Typography>
+      <Paper className="paper-grey mb-3" variant="outlined">
+        {syntaxFiles.length > 0 ? (
+          syntaxFiles.map((file, index) => (
+            <SupportingFileCard
+              key={`syntax-file-${index}`}
+              file={file}
+              index={index}
+              role={props.role}
+              handleClickOpen={handleClickOpen}
+            />
+          ))
+        ) : (
+          <Typography variant="body2" component="p" color="textSecondary">
+            No files for support added
+          </Typography>
+        )}
+      </Paper>
+      {props.role === 'researcher' && (
+        <Button
+          variant="outlined"
+          color="primary"
+          startIcon={<Icon path={mdiPlus} size={1} />}
+          fullWidth={true}
+          className={classes.addCard}
+          onClick={(e) => handleClickOpen('dialogAddSupporting')}
+        >
+          Add file for support
+        </Button>
+      )}
+      <Typography variant="body2" className="mt-3">
+        Add file for variable list/description... *
+      </Typography>
+      <Typography
+        variant="caption"
+        color="textSecondary"
+        component="p"
+        className="mb-2"
+      >
+        At least one file must be added
+      </Typography>
+      <Paper className="paper-grey mb-3" variant="outlined">
+        {variableFiles.length > 0 ? (
+          variableFiles.map((file, index) => (
+            <SupportingFileCard
+              key={`var-file-${index}`}
+              file={file}
+              index={index}
+              role={props.role}
+              handleClickOpen={handleClickOpen}
+            />
+          ))
+        ) : (
+          <Typography variant="body2" component="p" color="textSecondary">
+            No files for support added
+          </Typography>
+        )}
+      </Paper>
+      {props.role === 'researcher' && (
+        <Button
+          variant="outlined"
+          color="primary"
+          startIcon={<Icon path={mdiPlus} size={1} />}
+          fullWidth={true}
+          className={classes.addCard}
+          onClick={(e) => handleClickOpen('dialogAddSupporting')}
+        >
+          Add file for support
+        </Button>
+      )}
+      <Divider className="mt-3 mb-3" />
+      <Typography component="h3" variant="subtitle2" className="mb-3">
+        Additional supporting files
+      </Typography>
+      <Typography variant="body2" className="mb-2">
+        Add file for additional details...
+      </Typography>
+      <Paper className="paper-grey mb-3" variant="outlined">
+        {additionalFiles.length > 0 ? (
+          additionalFiles.map((file, index) => (
+            <SupportingFileCard
+              key={`additional-file-${index}`}
+              file={file}
+              index={index}
+              role={props.role}
+              handleClickOpen={handleClickOpen}
+            />
+          ))
+        ) : (
+          <Typography variant="caption" component="p" color="textSecondary">
+            No files for support added
+          </Typography>
+        )}
+      </Paper>
+      {props.role === 'researcher' && (
+        <Button
+          variant="outlined"
+          color="primary"
+          startIcon={<Icon path={mdiPlus} size={1} />}
+          fullWidth={true}
+          className={`${classes.addCard} mb-3`}
+          onClick={(e) => handleClickOpen('dialogAddSupporting')}
+        >
+          Add file for support
+        </Button>
+      )}
       {/* Output file drawer */}
       <Drawer anchor="right" open={open.outputFile} className={classes.drawer}>
         <OutputFile
@@ -576,106 +479,31 @@ function FilesList(props) {
           drawerType={open.drawerType}
         />
       </Drawer>
-      <Dialog
+      {/* Add supporting file dialog */}
+      <DialogAddFile
+        submitDialog={() => handleClickClose('dialogAddSupporting')}
+        toggleDialog={() => handleClickClose('dialogAddSupporting')}
         open={open.dialogAddSupporting}
-        aria-labelledby="form-dialog-title"
-        fullWidth
-        className={classes.root}
-        scroll="paper"
-      >
-        <DialogTitle
-          id="form-dialog-title"
-          className={classes.vettingContainerTitle}
-          disableTypography
-        >
-          <Typography variant="h6" component="h2">
-            Add supporting file
-          </Typography>
-          <IconButton
-            onClick={() => handleClickClose('dialogAddSupporting')}
-            edge="end"
-            aria-label="Close add supporting file"
-          >
-            <CloseIcon />
-          </IconButton>
-        </DialogTitle>
-        <Divider />
-        <DialogContent>
-          <div className={classes.vettingSection}>
-            <div className={classes.vettingRow}>
-              <div className={classes.vettingColumn}>
-                <FormControl required variant="outlined" fullWidth>
-                  <InputLabel id="supportingFilesFolder-label">
-                    Supporting folder
-                  </InputLabel>
-                  <Select
-                    id="supportingFilesFolder"
-                    label="Supporting folder *"
-                    labelId="supportingFilesFolder-label"
-                  >
-                    <MenuItem key={-1} value="">
-                      None
-                    </MenuItem>
-                  </Select>
-                </FormControl>
-              </div>
-            </div>
-            <Typography variant="subtitle2">File #1 *</Typography>
-            <Typography variant="subtitle2">
-              Residual tables (see the vetting orientation)
-            </Typography>
-            <div className={classes.vettingRow}>
-              <div className={classes.vettingColumn}>
-                <TextField
-                  id="notes2"
-                  label="Notes"
-                  multiline
-                  rows={4}
-                  variant="outlined"
-                  fullWidth
-                  required
-                  onCut={(e) => disableCutCopyPaste(e, 'cut', 'notes')}
-                  onCopy={(e) => disableCutCopyPaste(e, 'copy', 'notes')}
-                  onPaste={(e) => disableCutCopyPaste(e, 'paste', 'notes')}
-                  onClick={() => toggleHelperText('notes')}
-                  onBlur={() => toggleHelperText('notes')}
-                  onFocus={() => toggleHelperText('notes')}
-                  defaultvalue={state.notes.text}
-                  error={Boolean(state.notes.errorText)}
-                  helperText={state.notes.errorText}
-                />
-              </div>
-            </div>
-          </div>
-        </DialogContent>
-        <DialogActions className={classes.dialogFooter}>
-          <Button
-            color="primary"
-            variant="outlined"
-            onClick={() => handleClickClose('dialogAddSupporting')}
-          >
-            Cancel
-          </Button>
-          <Button
-            color="primary"
-            variant="contained"
-            onClick={addSupportingFile}
-            className={classes.footerBtns}
-          >
-            Add supporting file
-          </Button>
-        </DialogActions>
-      </Dialog>
-      {/* Delete dialog */}
-      <DialogDelete
-        submitDialog={deleteFile}
-        open={open.dialogDelete}
-        toggleDialog={() => handleClickClose('dialogDelete')}
+        fileFunction="add"
       />
-      {/* Add supporting file snackbar */}
-      <SnackbarAddSupportFile
-        open={open.snackbarAddSupporting}
-        handleClose={() => handleClickClose('snackbarAddSupporting')}
+      {/* Edit supporting file dialog */}
+      <DialogAddFile
+        submitDialog={() => handleClickClose('dialogEditSupporting')}
+        toggleDialog={() => handleClickClose('dialogEditSupporting')}
+        open={open.dialogEditSupporting}
+        fileFunction="edit"
+      />
+      {/* Delete output file dialog */}
+      <DialogDelete
+        submitDialog={deleteOutputFile}
+        open={open.dialogOutputDelete}
+        toggleDialog={() => handleClickClose('dialogOutputDelete')}
+      />
+      {/* Delete supporting file dialog */}
+      <DialogDelete
+        submitDialog={deleteSupportFile}
+        open={open.dialogSupportDelete}
+        toggleDialog={() => handleClickClose('dialogSupportDelete')}
       />
       {/* Create output file snackbar */}
       <SnackbarAddOutputFile
@@ -689,31 +517,125 @@ function FilesList(props) {
       />
       {/* Delete output file snackbar */}
       <SnackbarDeleteOutputFile
-        open={open.snackbarDelete}
-        handleClose={() => handleClickClose('snackbarDelete')}
+        open={open.snackbarOutputDelete}
+        handleClose={() => handleClickClose('snackbarOutputDelete')}
+      />
+      {/* Delete supporting file snackbar */}
+      <SnackbarDeleteSupportFile
+        open={open.snackbarSupportDelete}
+        handleClose={() => handleClickClose('snackbarSupportDelete')}
       />
     </React.Fragment>
   );
 }
-
-function FileValidationAlert(props) {
-  const {emptyFields, error} = {...props};
-  if (emptyFields > 0 && error) {
-    return (
-      <Alert className="mt-2" severity="error">
-        {emptyFields} {emptyFields > 1 ? 'errors' : 'error'}
-      </Alert>
-    );
-  } else if (emptyFields > 0 && !error) {
-    return (
-      <Alert severity="warning" className="mt-2">
-        {emptyFields > 1 ?
-          `There are ${emptyFields} remaining fields that must be filled before submitting.` :
-          `There is ${emptyFields} remaining field that must be filled before submitting.`}
-      </Alert>
-    );
-  } else if (emptyFields === 0) {
-    return null;
-  }
-}
 export default FilesList;
+
+function OutputFileCard(props) {
+  const classes = useStyles();
+  const {t} = useTranslation();
+  const {file, index, role, toggleDrawer, handleClickOpen} = props;
+  return (
+    <Card
+      title={`${t('File')} ${index + 1} · ${file.name}`}
+      error={file.numErrors > 0}
+      totalErrors={file.numErrors}
+      primaryButton={role === 'researcher' ? 'Edit' : 'View details'}
+      secondaryButton={role === 'researcher' ? 'Delete' : ''}
+      primaryClick={
+        role === 'researcher' ?
+          (e) => toggleDrawer(e, 'editFile', true) :
+          (e) => toggleDrawer(e, 'viewFile', true)
+      }
+      secondaryClick={() => handleClickOpen('dialogOutputDelete')}
+      content={
+        <>
+          <Typography variant="caption" component="p" color="textSecondary">
+            {t('File path')}
+          </Typography>
+          <div className={clsx(classes.filePath, 'mb-2')}>
+            {file.path.map((dir, index) => {
+              const last = index === file.path.length - 1;
+              return (
+                <div
+                  key={`output-path-${index}`}
+                  className={classes.filePathItem}
+                >
+                  <Typography
+                    variant="body2"
+                    component="p"
+                    className={clsx({
+                      'mr-1': !last,
+                    })}
+                  >
+                    {dir}
+                  </Typography>
+                  {!last && (
+                    <Icon path={mdiChevronRight} size={0.5} className="mr-1" />
+                  )}
+                </div>
+              );
+            })}
+          </div>
+          <Typography variant="caption" color="textSecondary" component="p">
+            Sheet name
+          </Typography>
+          <Typography variant="body2">{file.sheet}</Typography>
+        </>
+      }
+    />
+  );
+}
+
+function SupportingFileCard(props) {
+  const classes = useStyles();
+  const {t} = useTranslation();
+  const {file, index, role, handleClickOpen} = props;
+  return (
+    <Card
+      title={`${t('File')} ${index + 1} · ${file.name}`}
+      error={file.numErrors > 0}
+      totalErrors={file.numErrors}
+      primaryButton={role === 'researcher' ? 'Edit' : ''}
+      secondaryButton={role === 'researcher' ? 'Delete' : ''}
+      primaryClick={() => handleClickOpen('dialogEditSupporting')}
+      secondaryClick={() => handleClickOpen('dialogSupportDelete')}
+      content={
+        <>
+          <Typography variant="caption" component="p" color="textSecondary">
+            {t('File path')}
+          </Typography>
+          <div className={clsx(classes.filePath, 'mb-2')}>
+            {file.path.map((dir, index) => {
+              const last = index === file.path.length - 1;
+              return (
+                <div
+                  key={`support-path-${index}`}
+                  className={classes.filePathItem}
+                >
+                  <Typography
+                    variant="body2"
+                    component="p"
+                    className={clsx({
+                      'mr-1': !last,
+                    })}
+                  >
+                    {dir}
+                  </Typography>
+                  {!last && (
+                    <Icon path={mdiChevronRight} size={0.5} className="mr-1" />
+                  )}
+                </div>
+              );
+            })}
+          </div>
+          <Typography variant="caption" component="p" color="textSecondary">
+            {t('Notes')}
+          </Typography>
+          <Typography variant="body2" component="p">
+            {file.notes}
+          </Typography>
+        </>
+      }
+    />
+  );
+}

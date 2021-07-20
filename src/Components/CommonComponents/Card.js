@@ -15,6 +15,9 @@ import {makeStyles} from '@material-ui/core/styles';
 const useStyles = makeStyles((theme) => ({
   card: {
     'marginTop': theme.spacing(2),
+    '&:first-child': {
+      marginTop: theme.spacing(0),
+    },
     'flexGrow': 1,
     '& .MuiCardHeader-root': {
       borderBottom: '1px solid',
@@ -88,19 +91,23 @@ export function Card(props) {
           </Grid>
         </CardContent>
       )}
-      <CardActions
-        className={clsx({
-          [classes.cardActions]: props.error === false,
-          [classes.cardActionsError]: props.error === true,
-        })}
-      >
-        <Button color="primary" onClick={props.primaryClick}>
-          {props.primaryButton}
-        </Button>
-        <Button color="primary" onClick={props.secondaryClick}>
-          {props.secondaryButton}
-        </Button>{' '}
-      </CardActions>
+      {(props.primaryButton || props.secondaryButton) && (
+        <CardActions
+          className={clsx({
+            [classes.cardActions]: props.error === false,
+            [classes.cardActionsError]: props.error === true,
+          })}
+        >
+          <Button color="primary" onClick={props.primaryClick}>
+            {props.primaryButton}
+          </Button>
+          {props.secondaryButton && (
+            <Button color="primary" onClick={props.secondaryClick}>
+              {props.secondaryButton}
+            </Button>
+          )}
+        </CardActions>
+      )}
     </MUICard>
   );
 }
@@ -131,10 +138,6 @@ Card.propTypes = {
   */
   secondaryButton: PropTypes.string,
   /**
-   The label text of the third button.
- */
-  thirdButton: PropTypes.string,
-  /**
   The function of the primary button.
 */
   primaryClick: PropTypes.func,
@@ -142,8 +145,4 @@ Card.propTypes = {
   The function of the secondary button.
 */
   secondaryClick: PropTypes.func,
-  /**
- The function of the third button.
-*/
-  thirdClick: PropTypes.func,
 };

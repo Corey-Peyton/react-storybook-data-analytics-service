@@ -331,6 +331,7 @@ export const useStyles = makeStyles({
     },
     '.list-horizontal': {
       'display': 'flex',
+      'flex-wrap': 'wrap',
       'alignItems': 'center',
       'padding': 0,
       '& li': {
@@ -343,6 +344,11 @@ export const useStyles = makeStyles({
       [theme.breakpoints.down('sm')]: {
         marginTop: theme.spacing(16),
       },
+    },
+    '.paper-grey': {
+      padding: theme.spacing(2),
+      backgroundColor: theme.palette.grey[100],
+      borderColor: fade(theme.palette.common.black, 0.08),
     },
     '.paper-heading': {
       display: 'flex',
