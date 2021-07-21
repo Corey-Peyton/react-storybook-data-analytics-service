@@ -22,7 +22,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export default {
-  title: 'Molecules/Selects',
+  title: 'Lab/Selects',
   component: Select,
 };
 
