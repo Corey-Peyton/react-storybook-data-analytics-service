@@ -75,7 +75,7 @@ export const useStyles = makeStyles({
         },
       },
       // Outlined input
-      '& .MuiOutlinedInput-root ': {
+      '& .MuiOutlinedInput-root': {
         'fontSize': theme.typography.body2.fontSize,
         'letterSpacing': theme.typography.body2.letterSpacing,
         '& input.MuiOutlinedInput-inputMarginDense': {
@@ -83,6 +83,27 @@ export const useStyles = makeStyles({
           'paddingBottom': theme.spacing(1.625),
           '&:not(.MuiInputBase-inputMultiline)': {
             height: '1em',
+          },
+        },
+        // Select
+        '& .MuiSelect-selectMenu': {
+          height: '1em',
+          minHeight: 0,
+          paddingTop: theme.spacing(1.625),
+          paddingBottom: theme.spacing(1.625),
+        },
+        '& .MuiSelect-icon': {
+          color: theme.palette.buttons.default,
+        },
+        // Autocomplete
+        '&.MuiAutocomplete-inputRoot': {
+          'paddingTop': theme.spacing(1.0625),
+          'paddingBottom': theme.spacing(1.0625),
+          '& .MuiAutocomplete-endAdornment': {
+            top: 0,
+          },
+          '& .MuiAutocomplete-clearIndicatorDirty': {
+            visibility: 'visible',
           },
         },
         // Placeholder

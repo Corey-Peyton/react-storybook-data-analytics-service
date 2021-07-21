@@ -10,12 +10,23 @@ const props = {
   },
   MuiFormControl: {
     fullWidth: true,
+    margin: 'dense',
+    variant: 'outlined',
   },
   MuiTextField: {
     margin: 'dense',
     variant: 'outlined',
     rows: 3,
     rowsMax: 100,
+  },
+  MuiSelect: {
+    MenuProps: {
+      anchorOrigin: {
+        vertical: 'bottom',
+        horizontal: 'left',
+      },
+      getContentAnchorEl: null,
+    },
   },
 };
 
