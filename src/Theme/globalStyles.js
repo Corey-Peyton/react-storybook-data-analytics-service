@@ -106,21 +106,21 @@ export const useStyles = makeStyles({
       },
     },
     // Radio buttons & checkboxes
-    'legend.MuiFormLabel-root': {
+    'legend.MuiFormLabel-root:not(.MuiInputLabel-root)': {
       lineHeight: theme.typography.body2.lineHeight,
       fontSize: theme.typography.body2.fontSize,
       letterSpacing: theme.typography.body2.letterSpacing,
       color: theme.palette.text.primary,
       marginBottom: theme.spacing(1),
     },
-    'legend.MuiFormLabel-root + .MuiFormHelperText-root': {
+    'legend.MuiFormLabel-root:not(.MuiInputLabel-root) + .MuiFormHelperText-root': {
       marginTop: theme.spacing(-1),
       marginBottom: theme.spacing(1),
     },
-    'legend.MuiFormLabel-root.Mui-focused': {
+    'legend.MuiFormLabel-root:not(.MuiInputLabel-root).Mui-focused': {
       color: theme.palette.text.primary,
     },
-    'legend.MuiFormLabel-root.Mui-error': {
+    'legend.MuiFormLabel-root:not(.MuiInputLabel-root).Mui-error': {
       'color': theme.palette.error.main,
       '& +.MuiFormGroup-root': {
         '& .MuiRadio-root, & .MuiCheckbox-root': {

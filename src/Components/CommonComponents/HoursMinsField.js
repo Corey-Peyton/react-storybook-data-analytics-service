@@ -2,7 +2,6 @@ import React from 'react';
 import {makeStyles} from '@material-ui/core/styles';
 import PropTypes from 'prop-types';
 import clsx from 'clsx';
-// import InputMask from 'react-input-mask';
 import {
   OutlinedInput,
   FormControl,
@@ -12,14 +11,13 @@ import {
 } from '@material-ui/core';
 import {InputGroup} from 'react-bootstrap';
 import NumberFormat from 'react-number-format';
-// import moment from 'moment';
+import {useTranslation} from 'react-i18next';
 
 const useStyles = makeStyles((theme) => ({
   hoursInputGroup: {
     borderRight: '1px solid',
     borderRightColor: theme.palette.divider,
     paddingRight: theme.spacing(1),
-    marginRight: theme.spacing(2),
   },
   input: {
     '&::placeholder': {
@@ -27,6 +25,9 @@ const useStyles = makeStyles((theme) => ({
     },
   },
   inputComponent: {
+    '& .MuiOutlinedInput-notchedOutline': {
+      border: 'none',
+    },
     '& .MuiInput-underline:before': {
       borderBottom: 'none !important',
     },
@@ -37,17 +38,26 @@ const useStyles = makeStyles((theme) => ({
   inputGroup: {
     display: 'flex',
     alignItems: 'center',
-    padding: theme.spacing(1.5),
+    padding: theme.spacing(1.5, 0),
     height: '1em',
   },
   inputGroupText: {
     color: theme.palette.text.secondary,
-    fontSize: '0.875em',
+    fontSize: theme.typography.body2.fontSize,
+    letterSpacing: theme.typography.body2.letterSpacing,
   },
   inputLabel: {
     'marginTop': 0,
+    'fontSize': theme.typography.body2.fontSize,
     '&$shrink': {
-      transform: 'translate(14px, -8px) scale(0.75)',
+      'transform': 'translate(14px, -5px) scale(0.857)',
+      'letterSpacing': theme.typography.caption.letterSpacing,
+      '&+ .MuiOutlinedInput-root': {
+        '& > fieldset > legend ': {
+          fontSize: theme.typography.caption.fontSize,
+          letterSpacing: theme.typography.caption.letterSpacing,
+        },
+      },
     },
   },
   shrink: {},
@@ -55,7 +65,6 @@ const useStyles = makeStyles((theme) => ({
 
 export function HoursMinsField(props) {
   const classes = useStyles();
-  // const {t} = useTranslation();
 
   const [state, setState] = React.useState({
     focused: false,
@@ -70,27 +79,36 @@ export function HoursMinsField(props) {
   };
 
   return (
-    <FormControl>
+    <FormControl component="fieldset">
       <InputLabel
         classes={{root: classes.inputLabel, shrink: classes.shrink}}
-        htmlFor={props.id}
         error={Boolean(props.error)}
+        component="legend"
         shrink
+        required={props.required}
+        variant="outlined"
+        color="primary"
       >
         {props.label}
       </InputLabel>
       <OutlinedInput
-        {...props}
+        required={props.required}
+        readOnly={props.readOnly}
+        disabled={props.disabled}
         id={props.id}
-        label={props.label}
-        value={props.value}
+        label={props.required ? `${props.label} *` : props.label}
         inputComponent={MultiInput}
         className={clsx({'Mui-focused': state.focused})}
         inputProps={{
-          onFocus: () => handleFocus(),
-          onBlur: () => handleBlur(),
-          handleHoursChange: props.handleHoursChange,
-          handleMinsChange: props.handleMinsChange,
+          onFocus: () => {
+            handleFocus();
+            props.onFocus && props.onFocus();
+          },
+          onBlur: () => {
+            handleBlur();
+            props.onBlur && props.onBlur();
+          },
+          ...props,
         }}
         error={Boolean(props.error)}
         notched
@@ -106,85 +124,77 @@ export function HoursMinsField(props) {
 
 function MultiInput(props) {
   const classes = useStyles();
+  const {t} = useTranslation();
 
   return (
     <InputGroup className={classes.inputGroup}>
-      {/* <InputMask
-        className={classes.input}
-        placeholder="--"
-        mask="999999"
-        name={`${props.id}-hours`}
-        onFocus={props.onFocus}
-        onBlur={props.onBlur}
-        maskChar=" "
-        size="6"
-        onChange={props.handleHoursChange}
-      /> */}
+      <InputLabel className="screen-reader-text" htmlFor={`${props.id}-hours`}>
+        {t('hours')}
+      </InputLabel>
       <NumberFormat
+        id={`${props.id}-hours`}
         className={classes.inputComponent}
         placeholder="--"
-        aria-label="hours"
         customInput={TextField}
         type="text"
         format="######"
-        required
+        required={props.required}
         inputProps={{
           size: 6,
           className: classes.input,
+          readOnly: props.readOnly,
+          disabled: props.disabled,
         }}
+        onChange={props.handleHoursChange}
         onFocus={props.onFocus}
         onBlur={props.onBlur}
-        onChange={props.handleHoursChange}
+        onCut={props.onCut}
+        onCopy={props.onCopy}
+        onPaste={props.onPaste}
+        onClick={props.onClick}
       />
       <InputGroup.Append className={classes.hoursInputGroup}>
         <InputGroup.Text className={classes.inputGroupText}>
-          hours
+          {t('hours')}
         </InputGroup.Text>
       </InputGroup.Append>
-      {/* <InputMask
-        className={classes.input}
-        placeholder="--"
-        mask="99"
-        name={`${props.id}-minutes`}
-        onFocus={props.onFocus}
-        onBlur={props.onBlur}
-        maskChar=" "
-        size="2"
-        onChange={props.handleMinsChange}
-      /> */}
+      <InputLabel className="screen-reader-text" htmlFor={`${props.id}-mins`}>
+        {t('minutes')}
+      </InputLabel>
       <NumberFormat
+        id={`${props.id}-mins`}
         className={classes.inputComponent}
         placeholder="--"
-        aria-label="minutes"
         customInput={TextField}
         type="text"
         format="##"
         isAllowed={(values) => {
           const {formattedValue, floatValue} = values;
-          return formattedValue === '' || floatValue <= 60;
+          return formattedValue === '' || floatValue <= 59;
         }}
-        required
+        required={props.required}
         inputProps={{
           size: 2,
           className: classes.input,
+          readOnly: props.readOnly,
+          disabled: props.disabled,
         }}
+        onChange={props.handleMinsChange}
         onFocus={props.onFocus}
         onBlur={props.onBlur}
-        onChange={props.handleMinsChange}
+        onCut={props.onCut}
+        onCopy={props.onCopy}
+        onPaste={props.onPaste}
+        onClick={props.onClick}
       />
       <InputGroup.Append>
         <InputGroup.Text className={classes.inputGroupText}>
-          minutes
+          {t('minutes')}
         </InputGroup.Text>
       </InputGroup.Append>
     </InputGroup>
   );
 }
-
-const COLOR = {
-  PRIMARY: 'primary',
-  SECONDARY: 'secondary',
-};
 
 HoursMinsField.propTypes = {
   /**
@@ -196,19 +206,34 @@ HoursMinsField.propTypes = {
   */
   label: PropTypes.string.isRequired,
   /**
-    If true, the input element will be focused during the first mount.
+   If true, the input elements will be required.
    */
-  autoFocus: PropTypes.bool,
+  required: PropTypes.bool,
   /**
-    The color of the component.
-   */
-  color: PropTypes.oneOf(Object.values(COLOR)),
-  /**
-    If true, the input element will be disabled.
+    If true, the input elements will be disabled.
    */
   disabled: PropTypes.bool,
   /**
    It prevents the user from changing the value of the field (not from interacting with the field).
    */
   readOnly: PropTypes.bool,
+  /**
+    If true, the field is in an error state.
+    */
+  error: PropTypes.bool,
+  /**
+   Function used for hours field validation.
+   */
+  handleHoursChange: PropTypes.func,
+  /**
+   Function used for minutes field validation.
+   */
+  handleMinsChange: PropTypes.func,
+};
+
+HoursMinsField.defaultProps = {
+  required: false,
+  disabled: false,
+  readOnly: false,
+  error: false,
 };

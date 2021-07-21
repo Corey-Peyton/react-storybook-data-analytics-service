@@ -35,20 +35,19 @@ export const BasicField = (args) => {
   const handleValidation = (event) => {
     const hours = parseInt(state.hours, 10);
     const mins = parseInt(state.minutes, 10);
-    if (hours === 0 && mins === 0) {
-      setState({...state, error: 'The minimum accepted value is 1 minute.'});
-    } else if (!hours && !mins) {
-      setState({...state, error: 'Enter an estimated time.'});
-    } else {
+    if (hours > 0 || mins > 0) {
       setState({...state, error: ''});
+    } else if (hours === 0 || mins === 0) {
+      setState({...state, error: 'The minimum accepted value is 1 minute.'});
+    } else {
+      setState({...state, error: 'Enter an estimated time.'});
     }
   };
 
   return (
     <div className={classes.displayFlex}>
       <HoursMinsField
-        id="estimated-time"
-        label="Estimated time"
+        {...args}
         handleHoursChange={handleHoursChange}
         handleMinsChange={handleMinsChange}
         error={state.error}
@@ -63,4 +62,9 @@ export const BasicField = (args) => {
       </Button>
     </div>
   );
+};
+BasicField.args = {
+  id: 'estimated-time',
+  label: 'Estimated time',
+  required: true,
 };
