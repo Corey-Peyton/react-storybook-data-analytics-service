@@ -114,7 +114,7 @@ function Assignee(props) {
 function AppBarUnAssign(props) {
   const classes = useStyles();
   return (
-    <Grid container alignItems="center" className={classes.requestFormHeader}>
+    <Grid container className={classes.requestFormHeader}>
       <Grid item className={classes.title}>
         <Typography variant="caption" component="p">
           Project 20-SSH-UTO-1111 · Request 0101-000000

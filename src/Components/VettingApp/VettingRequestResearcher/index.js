@@ -72,15 +72,15 @@ const useStyles = makeStyles((theme) => ({
   stepperBackBtn: {
     marginRight: theme.spacing(6),
   },
+  stepperText: {
+    margin: 0,
+    textAlign: 'left',
+  },
   navButtons: {
     paddingTop: theme.spacing(3),
     borderTopStyle: 'solid',
     borderTopWidth: '1px',
     borderTopColor: theme.palette.divider,
-  },
-  errorMsg: {
-    margin: 0,
-    textAlign: 'left',
   },
   gridDetails: {
     display: 'flex',
@@ -272,11 +272,7 @@ function VettingRequestResearcher(props) {
             }}
           />
           <Paper variant="outlined" className={classes.paper}>
-            <Grid
-              container
-              alignItems="center"
-              className={classes.requestFormHeader}
-            >
+            <Grid container className={classes.requestFormHeader}>
               <Grid item className={classes.title}>
                 <Typography variant="caption" component="p">
                   Project 20-SSH-UTO-1111 · Request 0101-000000
@@ -373,7 +369,7 @@ function VettingRequestResearcher(props) {
                     labelProps.error = true;
                     buttonProps.optional = (
                       <Typography
-                        className={classes.errorMsg}
+                        className={classes.stepperText}
                         variant="body2"
                         color="error"
                       >
@@ -389,7 +385,10 @@ function VettingRequestResearcher(props) {
                         onClick={handleStep(index)}
                         completed={state.completed[index]}
                       >
-                        <StepLabel {...labelProps}>
+                        <StepLabel
+                          {...labelProps}
+                          className={classes.stepperText}
+                        >
                           <span className="screen-reader-text">{`Step ${index +
                             1}: `}</span>
                           {label}

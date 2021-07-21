@@ -49,9 +49,6 @@ export const useStyles = makeStyles({
     },
 
     // Textfields
-    '.MuiTextField-root': {
-      minWidth: theme.spacing(35),
-    },
     '.MuiOutlinedInput-notchedOutline': {
       borderColor: 'rgba(0, 0, 0, 0.42)',
     },
