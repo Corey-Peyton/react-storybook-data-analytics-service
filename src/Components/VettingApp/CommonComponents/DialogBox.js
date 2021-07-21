@@ -44,7 +44,6 @@ import {
   SnackbarAddSupportFile,
   SnackbarUpdateSupportFile,
 } from './Snackbars';
-import {HoursMinsField} from '../../CommonComponents/HoursMinsField';
 
 const ROW_HEIGHT = 56;
 
@@ -1750,12 +1749,6 @@ export function DialogApprove(props) {
       invalid: '',
       commands: '',
     },
-    billableHours: {
-      text: '',
-      errorText: '',
-      invalid: '',
-      commands: '',
-    },
   };
   const [state, setState] = React.useState({
     hours: {
@@ -1765,12 +1758,6 @@ export function DialogApprove(props) {
       commands: '',
     },
     minutes: {
-      text: '',
-      errorText: '',
-      invalid: '',
-      commands: '',
-    },
-    billableHours: {
       text: '',
       errorText: '',
       invalid: '',
@@ -1810,34 +1797,16 @@ export function DialogApprove(props) {
 
   const validateForm = () => {
     let isError = false;
-    const hours = parseInt(state.hours.text, 10);
-    const mins = parseInt(state.minutes.text, 10);
-    if (Number.isNaN(hours) && Number.isNaN(mins)) {
+    if (state.hours.text.trim() === '') {
       isError = true;
-      state.billableHours.invalid = t('Enter billable hours.');
-      state.billableHours.errorText = t('Enter billable hours.');
-    } else if (
-      (hours === 0 || Number.isNaN(hours)) &&
-      (mins === 0 || Number.isNaN(mins))
-    ) {
-      isError = true;
-      state.billableHours.invalid = t(
-          'The minimum accepted value is 1 minute.',
-      );
-      state.billableHours.errorText = t(
-          'The minimum accepted value is 1 minute.',
-      );
+      state.hours.invalid = t('Enter total hours.');
+      state.hours.errorText = t('Enter total hours.');
     }
-    // if (state.hours.text.trim() === '') {
-    //   isError = true;
-    //   state.hours.invalid = t('Enter total hours.');
-    //   state.hours.errorText = t('Enter total hours.');
-    // }
-    // if (state.minutes.text.trim() === '' || state.minutes.text.trim() === '.') {
-    //   isError = true;
-    //   state.minutes.invalid = t('Enter total minutes.');
-    //   state.minutes.errorText = t('Enter total minutes.');
-    // }
+    if (state.minutes.text.trim() === '' || state.minutes.text.trim() === '.') {
+      isError = true;
+      state.minutes.invalid = t('Enter total minutes.');
+      state.minutes.errorText = t('Enter total minutes.');
+    }
 
     if (isError) {
       setState({
@@ -1862,8 +1831,11 @@ export function DialogApprove(props) {
         // focus on the first input that has an error on submit
         if (state[property].invalid) {
           switch (property) {
-            case 'billableHours':
-              document.getElementById('billable-hours-hours').focus();
+            case 'hours':
+              document.getElementById('hours-input').focus();
+              break;
+            case 'minutes':
+              document.getElementById('minutes-input').focus();
               break;
             default:
               break;
@@ -1987,27 +1959,8 @@ export function DialogApprove(props) {
           <form onSubmit={submitForm} noValidate id="approve-form">
             <div className={classes.vettingSection}>
               <div className={classes.vettingRow}>
-                <HoursMinsField
-                  required
-                  id="billable-hours"
-                  label="Billable hours"
-                  handleHoursChange={(e) => handleChange(e, 'hours')}
-                  handleMinsChange={(e) => handleChange(e, 'minutes')}
-                  onCut={(e) => disableCutCopyPaste(e, 'cut', 'billableHours')}
-                  onCopy={(e) =>
-                    disableCutCopyPaste(e, 'copy', 'billableHours')
-                  }
-                  onPaste={(e) =>
-                    disableCutCopyPaste(e, 'paste', 'billableHours')
-                  }
-                  onChange={(e) => handleChange(e, 'billableHours')}
-                  onClick={() => toggleHelperText('billableHours')}
-                  onBlur={() => toggleHelperText('billableHours')}
-                  onFocus={() => toggleHelperText('billableHours')}
-                  error={state.billableHours.errorText}
-                />
-                {/* <div className={classes.vettingColumn}> */}
-                {/* <Typography variant="subtitle2">
+                <div className={classes.vettingColumn}>
+                  <Typography variant="subtitle2">
                     {t('Billable hours')}
                   </Typography>
                 </div>
@@ -2042,8 +1995,8 @@ export function DialogApprove(props) {
                         />
                       }
                     />
-                  </FormControl> */}
-                {/* </div>
+                  </FormControl>
+                </div>
                 <div className={classes.vettingColumn}>
                   <FormControl variant="outlined">
                     <FormControlLabel
@@ -2079,7 +2032,8 @@ export function DialogApprove(props) {
                         />
                       }
                     />
-                  </FormControl> */}
+                  </FormControl>
+                </div>
               </div>
             </div>
           </form>
