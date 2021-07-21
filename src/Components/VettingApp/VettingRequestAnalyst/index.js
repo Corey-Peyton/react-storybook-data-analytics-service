@@ -67,7 +67,7 @@ const useStyles = makeStyles((theme) => ({
   stepperBackBtn: {
     marginRight: theme.spacing(6),
   },
-  errorMsg: {
+  stepperText: {
     margin: 0,
     textAlign: 'left',
   },
@@ -254,7 +254,7 @@ function VettingRequestAnalyst(props) {
                     labelProps.error = true;
                     buttonProps.optional = (
                       <Typography
-                        className={classes.errorMsg}
+                        className={classes.stepperText}
                         variant="body2"
                         color="error"
                       >
@@ -270,7 +270,10 @@ function VettingRequestAnalyst(props) {
                         onClick={handleStep(index)}
                         completed={state.completed[index]}
                       >
-                        <StepLabel {...labelProps}>
+                        <StepLabel
+                          {...labelProps}
+                          className={classes.stepperText}
+                        >
                           <span className="screen-reader-text">{`Step ${index +
                             1}: `}</span>
                           {label}
