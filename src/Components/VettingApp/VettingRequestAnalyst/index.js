@@ -26,6 +26,7 @@ import FloatingSupportButton from '../CommonComponents/Support';
 import CutCopyPasteAlert from '../CommonComponents/CutCopyPasteAlert';
 import {SnackbarSubmitRequest} from '../CommonComponents/Snackbars';
 import ManageTeamDrawer from '../CommonComponents/ManageTeamDrawer';
+import {DialogRequesterDetails} from '../CommonComponents/DialogBox';
 
 const useStyles = makeStyles((theme) => ({
   pageContainer: {
@@ -40,21 +41,15 @@ const useStyles = makeStyles((theme) => ({
     background: theme.palette.grey[100],
     paddingBottom: theme.spacing(6),
   },
-  divider: {
-    margin: theme.spacing(3, 0),
-  },
-  dividercutcopypaste: {
-    marginBottom: theme.spacing(2),
-    marginTop: theme.spacing(3),
-  },
   paper: {
     maxWidth: '1280px',
     margin: 'auto',
     boxSizing: 'border-box',
-    padding: theme.spacing(3),
+    padding: theme.spacing(6),
     marginTop: theme.spacing(3),
-    border: '1px solid',
-    borderColor: theme.palette.divider,
+  },
+  maxWidth640: {
+    maxWidth: '640px',
   },
   title: {
     flexGrow: 1,
@@ -72,11 +67,6 @@ const useStyles = makeStyles((theme) => ({
   stepperBackBtn: {
     marginRight: theme.spacing(6),
   },
-  navButtons: {
-    paddingTop: theme.spacing(3),
-    borderTop: 'solid 1px',
-    borderTopColor: theme.palette.divider,
-  },
   errorMsg: {
     margin: 0,
     textAlign: 'left',
@@ -86,20 +76,26 @@ const useStyles = makeStyles((theme) => ({
 function getSteps() {
   return [
     'Request details',
-    'Output details',
+    'Files for output',
     'Residual disclosure',
     'Additional information',
   ];
 }
 
 function VettingRequestAnalyst(props) {
+  const classes = useStyles();
+
   const [open, setOpen] = React.useState({
     manageTeamDrawer: false,
+    dialogRequesterDetails: false,
   });
   const toggleManageTeamDrawer = () => {
     setOpen({...open, manageTeamDrawer: !open.manageTeamDrawer});
   };
-  const classes = useStyles();
+
+  const toggleRequesterDetails = () => {
+    setOpen({...open, dialogRequesterDetails: !open.dialogRequesterDetails});
+  };
 
   const [state, setState] = React.useState({
     activeStep: 0,
@@ -220,11 +216,6 @@ function VettingRequestAnalyst(props) {
       <Header />
       <main className={classes.main} tabIndex="-1">
         <Container maxWidth={false} className={classes.pageContainer}>
-          <ManageTeamDrawer
-            open={open.manageTeamDrawer}
-            clickHandler={toggleManageTeamDrawer}
-            toggleManageTeamDrawer={toggleManageTeamDrawer}
-          />
           <RequestToolbar
             role="analyst"
             status="submitted"
@@ -234,16 +225,17 @@ function VettingRequestAnalyst(props) {
             }}
             toggleManageTeamDrawer={toggleManageTeamDrawer}
           />
-          <Paper className={classes.paper}>
+          <Paper variant="outlined" className={classes.paper}>
             <Grid container alignItems="center">
               <AppBarAssign
                 title={state.title}
                 lead={state.lead}
                 support={state.support}
                 toggleManageTeamDrawer={toggleManageTeamDrawer}
+                toggleRequesterDetails={toggleRequesterDetails}
               />
             </Grid>
-            <Divider className={classes.divider} />
+            <Divider className="mt-3 mb-3" />
             <div className={classes.stepperContainer}>
               {state.activeStep !== 0 && (
                 <Button
@@ -298,76 +290,77 @@ function VettingRequestAnalyst(props) {
                 </Button>
               )}
             </div>
-            <Divider className={classes.dividercutcopypaste} />
+            <Divider className="mt-3 mb-3" />
             <CutCopyPasteAlert />
-            <div>
-              {allStepsCompleted() ? (
-                <div>
-                  <Typography className={classes.instructions}>
-                    All steps completed - you&apos;re finished
-                  </Typography>
-                  <Button onClick={handleReset}>Reset</Button>
-                </div>
-              ) : (
-                <div>
-                  <Grid container justify="center" className="mb-4">
-                    <Grid item xs={6}>
-                      {getStepContent(state.activeStep)}
+            {/* What is this "allStepsCompleted"? Can we remove it?*/}
+            {allStepsCompleted() ? (
+              <div>
+                <Typography className={classes.instructions}>
+                  All steps completed - you&apos;re finished
+                </Typography>
+                <Button onClick={handleReset}>Reset</Button>
+              </div>
+            ) : (
+              <Grid justify="center" container>
+                <Grid className={classes.maxWidth640} container>
+                  <Grid item>{getStepContent(state.activeStep)}</Grid>
+                  <Grid xs={12} item>
+                    <Divider className="mb-3" />
+                  </Grid>
+                  <Grid justify="flex-end" container>
+                    <Grid item>
+                      {state.activeStep !== 0 && (
+                        <Button
+                          variant="outlined"
+                          color="primary"
+                          className="mr-2"
+                          onClick={handleBack}
+                        >
+                          Back
+                        </Button>
+                      )}
+                      {state.activeStep === getSteps().length - 1 ? (
+                        <Button
+                          variant="contained"
+                          color="primary"
+                          onClick={() =>
+                            snackbarHandleClick('snackbarSubmitted')
+                          }
+                        >
+                          Submit
+                        </Button>
+                      ) : (
+                        <Button
+                          variant="contained"
+                          color="primary"
+                          onClick={handleComplete}
+                        >
+                          Next
+                        </Button>
+                      )}
                     </Grid>
                   </Grid>
-                </div>
-              )}
-            </div>
-            <Grid
-              container
-              justify={state.activeStep === 0 ? 'flex-end' : 'space-between'}
-              className={classes.navButtons}
-            >
-              {state.activeStep !== 0 && (
-                <Grid item>
-                  <Button
-                    variant="contained"
-                    color="primary"
-                    className={classes.button}
-                    onClick={handleBack}
-                  >
-                    Back
-                  </Button>
                 </Grid>
-              )}
-              {state.activeStep === getSteps().length - 1 ? (
-                <Grid item>
-                  <Button
-                    variant="contained"
-                    color="primary"
-                    className={classes.button}
-                    onClick={() => snackbarHandleClick('snackbarSubmitted')}
-                  >
-                    Submit request
-                  </Button>
-                  <SnackbarSubmitRequest
-                    open={openSnackbar.snackbarSubmitted}
-                    handleClose={() => snackbarHandleClose('snackbarSubmitted')}
-                  />
-                </Grid>
-              ) : (
-                <Grid item>
-                  <Button
-                    variant="contained"
-                    color="primary"
-                    className={classes.button}
-                    onClick={handleComplete}
-                  >
-                    Next
-                  </Button>
-                </Grid>
-              )}
-            </Grid>
+              </Grid>
+            )}
           </Paper>
           <FloatingSupportButton form />
         </Container>
       </main>
       <Footer />
+      <ManageTeamDrawer
+        open={open.manageTeamDrawer}
+        clickHandler={toggleManageTeamDrawer}
+        toggleManageTeamDrawer={toggleManageTeamDrawer}
+      />
+      <DialogRequesterDetails
+        open={open.dialogRequesterDetails}
+        toggleDialog={toggleRequesterDetails}
+      />
+      <SnackbarSubmitRequest
+        open={openSnackbar.snackbarSubmitted}
+        handleClose={() => snackbarHandleClose('snackbarSubmitted')}
+      />
     </>
   );
 }

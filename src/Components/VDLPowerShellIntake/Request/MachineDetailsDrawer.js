@@ -3,7 +3,7 @@ import Link from '@material-ui/core/Link';
 import PropTypes from 'prop-types';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
 import DateFnsUtils from '@date-io/date-fns';
-import {Drawer} from '../CommonComponents/Drawer';
+import {Drawer} from '../../CommonComponents/Drawer';
 import {
   KeyboardDatePicker,
   MuiPickersUtilsProvider,

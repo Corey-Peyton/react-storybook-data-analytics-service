@@ -213,10 +213,6 @@ export const StepperErrors = (args) => {
     prevStep.current.focus();
   };
 
-  const handleStep = (step) => () => {
-    setState({...state, activeStep: step});
-  };
-
   const isStepFailed = (step) => {
     return state.stepperErrors[step] !== 0;
   };

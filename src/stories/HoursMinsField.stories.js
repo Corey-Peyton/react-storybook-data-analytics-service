@@ -5,7 +5,7 @@ import {HoursMinsField} from '../Components/CommonComponents/HoursMinsField';
 import {Button} from '@material-ui/core';
 
 export default {
-  title: 'Molecules/HoursMinsField',
+  title: 'Lab/HoursMinsField',
   component: HoursMinsField,
 };
 

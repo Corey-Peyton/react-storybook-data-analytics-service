@@ -1,4 +1,5 @@
 import React from 'react';
+import clsx from 'clsx';
 import {makeStyles} from '@material-ui/core/styles';
 import {
   Paper,
@@ -11,6 +12,8 @@ import {
   StepLabel,
   Typography,
   Divider,
+  Chip,
+  Hidden,
 } from '@material-ui/core';
 import ArrowForwardIosIcon from '@material-ui/icons/ArrowForwardIos';
 import ArrowBackIosIcon from '@material-ui/icons/ArrowBackIos';
@@ -26,6 +29,7 @@ import Footer from '../CommonComponents/Footer';
 import CutCopyPasteAlert from '../CommonComponents/CutCopyPasteAlert';
 import {SnackbarSubmitRequest} from '../CommonComponents/Snackbars';
 import RequestToolbar from '../CommonComponents/RequestToolbar';
+import {DialogRequesterDetails} from '../CommonComponents/DialogBox';
 
 const useStyles = makeStyles((theme) => ({
   pageContainer: {
@@ -36,25 +40,15 @@ const useStyles = makeStyles((theme) => ({
     background: theme.palette.grey[100],
     paddingBottom: theme.spacing(6),
   },
-  divider: {
-    margin: theme.spacing(3, 0),
-  },
-  dividercutcopypaste: {
-    marginBottom: theme.spacing(2),
-    marginTop: theme.spacing(3),
-  },
-  dividerHeight: {
-    height: theme.spacing(5),
-    marginTop: theme.spacing(1.25),
-  },
   paper: {
     maxWidth: '1280px',
     margin: 'auto',
     boxSizing: 'border-box',
-    padding: theme.spacing(3),
+    padding: theme.spacing(6),
     marginTop: theme.spacing(3),
-    border: '1px solid',
-    borderColor: theme.palette.divider,
+  },
+  maxWidth640: {
+    maxWidth: '640px',
   },
   title: {
     flexGrow: 1,
@@ -62,14 +56,8 @@ const useStyles = makeStyles((theme) => ({
   icongrey: {
     marginLeft: theme.spacing(1),
   },
-  statusRight: {
-    padding: theme.spacing(0.5, 2),
-    paddingRight: theme.spacing(0),
-  },
-  statusLeft: {
-    padding: theme.spacing(0.5, 2),
-    display: 'flex',
-    alignItems: 'center',
+  formVerticalDivider: {
+    margin: theme.spacing(0, 2, 0, 2),
   },
   stepperContainer: {
     'display': 'flex',
@@ -94,12 +82,38 @@ const useStyles = makeStyles((theme) => ({
     margin: 0,
     textAlign: 'left',
   },
+  gridDetails: {
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'flex-end',
+    [theme.breakpoints.down('sm')]: {
+      justifyContent: 'flex-start',
+      marginTop: theme.spacing(3),
+    },
+  },
+  alignCenter: {
+    display: 'flex',
+    alignItems: 'center',
+  },
+  details: {
+    height: theme.spacing(4),
+    display: 'flex',
+    alignItems: 'center',
+  },
+  requestFormHeader: {
+    display: 'flex',
+    flexFlow: 'row',
+    alignItems: 'start',
+    [theme.breakpoints.down('sm')]: {
+      flexFlow: 'column',
+    },
+  },
 }));
 
 function getSteps() {
   return [
     'Request details',
-    'Output details',
+    'Files for output',
     'Residual disclosure',
     'Additional information',
   ];
@@ -113,6 +127,7 @@ function VettingRequestResearcher(props) {
     open: false,
     errors: [0, 4, 0, 0],
     title: 'Untitled request',
+    dialogRequesterDetails: false,
   });
   const prevStep = React.useRef(null);
   const nextStep = React.useRef(null);
@@ -236,6 +251,13 @@ function VettingRequestResearcher(props) {
     return state.errors[step] !== 0;
   };
 
+  const toggleRequesterDetails = () => {
+    setState({
+      ...state,
+      dialogRequesterDetails: !state.dialogRequesterDetails,
+    });
+  };
+
   return (
     <React.Fragment>
       <Header />
@@ -249,41 +271,90 @@ function VettingRequestResearcher(props) {
               support: [],
             }}
           />
-          <Paper className={classes.paper}>
-            <Grid container alignItems="center">
+          <Paper variant="outlined" className={classes.paper}>
+            <Grid
+              container
+              alignItems="center"
+              className={classes.requestFormHeader}
+            >
               <Grid item className={classes.title}>
-                <Typography variant="subtitle1" component="p">
-                  Vetting request · ID 0101-000000
+                <Typography variant="caption" component="p">
+                  Project 20-SSH-UTO-1111 · Request 0101-000000
                 </Typography>
-                <Typography variant="h6" component="h1">
+                <Typography variant="h5" component="h1">
                   {state.title}
                 </Typography>
               </Grid>
-              <Divider />
-              <Grid item>
-                <div className={classes.statusLeft}>
-                  <Icon path={mdiFileEditOutline} size={1} />
-                  <Typography variant="body2" className={classes.icongrey}>
-                    Draft
-                  </Typography>
-                </div>
-              </Grid>
-              <Divider
-                className={classes.dividerHeight}
-                orientation="vertical"
-                flexItem
-              />
-              <Grid item>
-                <Typography
-                  variant="body2"
-                  color="textSecondary"
-                  className={classes.statusRight}
-                >
-                  Unassigned
-                </Typography>
+              <Grid item className={classes.gridDetails}>
+                <Hidden smDown>
+                  <Divider
+                    orientation="vertical"
+                    className={classes.formVerticalDivider}
+                    flexItem
+                  />
+                </Hidden>
+                <Grid item className={classes.alignCenter}>
+                  <div>
+                    <Typography variant="caption" component="p">
+                      Status
+                    </Typography>
+                    <Grid
+                      className={clsx(classes.alignCenter, classes.details)}
+                    >
+                      <Icon path={mdiFileEditOutline} size={1} />
+                      <Typography
+                        variant="body2"
+                        component="p"
+                        className={classes.icongrey}
+                      >
+                        Draft
+                      </Typography>
+                    </Grid>
+                  </div>
+                </Grid>
+                <Divider
+                  orientation="vertical"
+                  className={classes.formVerticalDivider}
+                  flexItem
+                />
+                <Grid item>
+                  <div>
+                    <Typography variant="caption" component="p">
+                      Requester
+                    </Typography>
+                    <div className={classes.details}>
+                      <Chip
+                        label="Steve Rogers"
+                        onClick={toggleRequesterDetails}
+                      />
+                    </div>
+                  </div>
+                </Grid>
+                <Divider
+                  orientation="vertical"
+                  className={classes.formVerticalDivider}
+                  flexItem
+                />
+                <Grid item className={classes.assignee}>
+                  <div>
+                    <Typography variant="caption" component="p">
+                      Assignee
+                    </Typography>
+                    <div className={classes.details}>
+                      <Typography
+                        variant="body2"
+                        color="textSecondary"
+                        component="p"
+                        className={classes.details}
+                      >
+                        Unassigned
+                      </Typography>
+                    </div>
+                  </div>
+                </Grid>
               </Grid>
             </Grid>
-            <Divider className={classes.divider} />
+            <Divider className="mt-3 mb-3" />
             <div className={classes.stepperContainer}>
               {state.activeStep !== 0 && (
                 <Button
@@ -338,76 +409,71 @@ function VettingRequestResearcher(props) {
                 </Button>
               )}
             </div>
-            <Divider className={classes.dividercutcopypaste} />
+            <Divider className="mt-3 mb-3" />
             <CutCopyPasteAlert />
-            <div>
-              {allStepsCompleted() ? (
-                <div>
-                  <Typography className={classes.instructions}>
-                    All steps completed - you&apos;re finished
-                  </Typography>
-                  <Button onClick={handleReset}>Reset</Button>
-                </div>
-              ) : (
-                <div>
-                  <Grid container justify="center" className="mb-4">
-                    <Grid item xs={6}>
-                      {getStepContent(state.activeStep)}
+            {/* What is this "allStepsCompleted"? Can we remove it?*/}
+            {allStepsCompleted() ? (
+              <div>
+                <Typography className={classes.instructions}>
+                  All steps completed - you&apos;re finished
+                </Typography>
+                <Button onClick={handleReset}>Reset</Button>
+              </div>
+            ) : (
+              <Grid justify="center" container>
+                <Grid className={classes.maxWidth640} container>
+                  <Grid item>{getStepContent(state.activeStep)}</Grid>
+                  <Grid xs={12} item>
+                    <Divider className="mb-3" />
+                  </Grid>
+                  <Grid justify="flex-end" container>
+                    <Grid item>
+                      {state.activeStep !== 0 && (
+                        <Button
+                          variant="outlined"
+                          color="primary"
+                          className="mr-2"
+                          onClick={handleBack}
+                        >
+                          Back
+                        </Button>
+                      )}
+                      {state.activeStep === getSteps().length - 1 ? (
+                        <Button
+                          variant="contained"
+                          color="primary"
+                          onClick={handleClick}
+                        >
+                          Submit
+                        </Button>
+                      ) : (
+                        <Button
+                          variant="contained"
+                          color="primary"
+                          onClick={handleComplete}
+                        >
+                          Next
+                        </Button>
+                      )}
                     </Grid>
                   </Grid>
-                </div>
-              )}
-            </div>
-            <Grid
-              container
-              justify={state.activeStep === 0 ? 'flex-end' : 'space-between'}
-              className={classes.navButtons}
-            >
-              {state.activeStep !== 0 && (
-                <Grid item>
-                  <Button
-                    variant="contained"
-                    color="primary"
-                    className={classes.button}
-                    onClick={handleBack}
-                  >
-                    Back
-                  </Button>
                 </Grid>
-              )}
-              {state.activeStep === getSteps().length - 1 ? (
-                <Grid item>
-                  <Button
-                    variant="contained"
-                    color="primary"
-                    className={classes.button}
-                    onClick={handleClick}
-                  >
-                    Submit request
-                  </Button>
-                  <SnackbarSubmitRequest
-                    open={openSnackbar}
-                    handleClose={snackbarhandleClose}
-                  />
-                </Grid>
-              ) : (
-                <Grid item>
-                  <Button
-                    variant="contained"
-                    color="primary"
-                    className={classes.button}
-                    onClick={handleComplete}
-                  >
-                    Next
-                  </Button>
-                </Grid>
-              )}
-            </Grid>
+              </Grid>
+            )}
           </Paper>
           <FloatingSupportButton form />
         </Container>
       </main>
       <Footer />
+      <DialogRequesterDetails
+        open={state.dialogRequesterDetails}
+        toggleDialog={toggleRequesterDetails}
+      />
+      {/* Submit request snackbar */}
+      <SnackbarSubmitRequest
+        open={openSnackbar}
+        handleClose={snackbarhandleClose}
+      />
     </React.Fragment>
   );
 }

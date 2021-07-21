@@ -28,9 +28,9 @@ import {
   FormControlLabel,
   FormHelperText,
 } from '@material-ui/core';
+import {Alert} from '@material-ui/lab';
 import {Dialog as CustomDialog} from '../../CommonComponents/Dialog';
 import NumberFormat from 'react-number-format';
-import Alert from '@material-ui/lab/Alert';
 
 import {
   SnackbarApproveRequest,
@@ -41,6 +41,8 @@ import {
   SnackbarUnassign,
   SnackbarWithdrawRequest,
   SnackbarSupportFab,
+  SnackbarAddSupportFile,
+  SnackbarUpdateSupportFile,
 } from './Snackbars';
 import {HoursMinsField} from '../../CommonComponents/HoursMinsField';
 
@@ -72,9 +74,12 @@ const useStyles = makeStyles((theme) => ({
       padding: theme.spacing(1.5, 3),
     },
     '& .MuiSelect-select': {
-      height: [theme.spacing(7), '!important'],
+      height: [theme.spacing(5), '!important'],
       paddingTop: 0,
       paddingBottom: 0,
+    },
+    '& .MuiDialog-paperWidthSm .MuiOutlinedInput-inputMultiline': {
+      maxHeight: 'none',
     },
   },
   avatar: {
@@ -157,6 +162,27 @@ const useStyles = makeStyles((theme) => ({
   },
   alignStart: {
     alignItems: 'start',
+  },
+  divider: {
+    marginTop: theme.spacing(1.5),
+    marginBottom: theme.spacing(1.5),
+  },
+  filePath: {
+    display: 'flex',
+    flexFlow: 'wrap',
+    alignItems: 'flex-end',
+  },
+  filePathItem: {
+    display: 'flex',
+    alignItems: 'center',
+  },
+  textFieldPopover: {
+    width: '100%',
+  },
+  popoverPaper: {
+    width: theme.spacing(67),
+    maxWidth: 'none',
+    padding: theme.spacing(1),
   },
 }));
 
@@ -2116,10 +2142,22 @@ export function DialogNewRequestTitle(props) {
       invalid: '',
       commands: '',
     },
+    path: {
+      text: '',
+      errorText: '',
+      invalid: '',
+      commands: '',
+    },
   };
   const [state, setState] = React.useState({
     name: {
       text: 'Untitled request',
+      errorText: '',
+      invalid: '',
+      commands: '',
+    },
+    path: {
+      text: '',
       errorText: '',
       invalid: '',
       commands: '',
@@ -2315,16 +2353,22 @@ export function DialogNewRequestTitle(props) {
             <div className={classes.vettingSection}>
               <div className={classes.vettingRow}>
                 <div className={classes.vettingColumn}>
+                  <Typography variant="body1" className="mb-2">
+                    {t('Enter the following details to start your request...')}
+                  </Typography>
                   <Typography variant="body2">
-                    {t('Please name your new request.')}
+                    {t(
+                        'Give your request a name to help identify it and select the folder you have created for this request. If you have not already created a folder for this request please go into the shared folder of your virtual machine and create it now. Ensure you store all the files you want released and their supporting files in this folder. ',
+                    )}
                   </Typography>
                 </div>
               </div>
               <div className={classes.vettingRow}>
                 <div className={classes.vettingColumn}>
-                  <FormControl variant="outlined" className={classes.textField}>
+                  <FormControl variant="outlined">
                     <TextField
                       id="name-input"
+                      className="input-margin"
                       label={t('Request name')}
                       aria-label={t('Request name')}
                       value={state.name.text}
@@ -2337,7 +2381,33 @@ export function DialogNewRequestTitle(props) {
                       onChange={(e) => handleChange(e, 'name')}
                       onClick={() => toggleHelperText('name')}
                       onBlur={() => toggleHelperText('name')}
-                      multiline
+                    />
+                  </FormControl>
+                </div>
+              </div>
+              <div className={classes.vettingRow}>
+                <div className={classes.vettingColumn}>
+                  <FormControl variant="outlined">
+                    <TextField
+                      id="path-input"
+                      className="input-margin"
+                      type="file"
+                      label={t('Request folder path')}
+                      aria-label={t('Request folder path')}
+                      value={state.path.text}
+                      variant="outlined"
+                      error={Boolean(state.path.errorText)}
+                      helperText={state.path.errorText}
+                      required
+                      InputLabelProps={{
+                        shrink: true,
+                      }}
+                      onCut={(e) => disableCutCopyPaste(e, 'cut', 'path')}
+                      onCopy={(e) => disableCutCopyPaste(e, 'copy', 'path')}
+                      onPaste={(e) => disableCutCopyPaste(e, 'paste', 'path')}
+                      onChange={(e) => handleChange(e, 'path')}
+                      onClick={() => toggleHelperText('path')}
+                      onBlur={() => toggleHelperText('path')}
                     />
                   </FormControl>
                 </div>
@@ -3183,6 +3253,458 @@ export function DialogDelete(props) {
           </Button>
         </DialogActions>
       </Dialog>
+    </React.Fragment>
+  );
+}
+
+// ////////////////////////////////////////// OUTPUT METHOD HELP
+export function DialogOutputMethodHelp(props) {
+  const classes = useStyles();
+  const {t} = useTranslation();
+  const {toggleDialog, open} = props;
+
+  const handleClick = (e) => {
+    e.stopPropagation();
+  };
+
+  return (
+    <React.Fragment>
+      <Dialog
+        onClose={(e) => {
+          toggleDialog(e);
+        }}
+        aria-labelledby="dialog-output-method-help"
+        open={open}
+        className={classes.root}
+        scroll="paper"
+        disableBackdropClick
+        onClick={handleClick}
+        onKeyPress={(e) => {
+          if (e.key === 'Enter') {
+            e.preventDefault();
+            e.stopPropagation();
+          }
+        }}
+      >
+        <DialogTitle id="dialog-output-method-help">
+          <div className={classes.vettingContainerTitle}>
+            <Typography variant="h6" component="h2">
+              {t('Output method help')}
+            </Typography>
+            <IconButton
+              id="dialog-close"
+              onClick={toggleDialog}
+              edge="end"
+              aria-label={t('Output method help - close')}
+              onKeyPress={(e) => {
+                e.preventDefault();
+                e.stopPropagation();
+                if (e.key === 'Enter') {
+                  toggleDialog(e);
+                }
+              }}
+            >
+              <CloseIcon />
+            </IconButton>
+          </div>
+        </DialogTitle>
+        <Divider />
+        <DialogContent>
+          <div className={classes.vettingSection}>
+            <div className={classes.vettingRow}>
+              <div className={classes.vettingColumn}>
+                <Typography variant="subtitle2" component="h3" className="mb-3">
+                  {t('Descriptive')}
+                </Typography>
+                <Typography variant="body2" component="p" className="mb-3">
+                  {t('{Definition speak with business partners}')}
+                </Typography>
+                <Typography
+                  variant="caption"
+                  component="p"
+                  color="textSecondary"
+                >
+                  {t(
+                      '(e.g. ANOVA, correlation matrix, cross-tabular analysis, distributions, frequencies, kurtosis, means, medians, modes, percentages, quartiles, ranges, ratios, regression models with only one independant variable, skewness, standard deviations, totals, variances)',
+                  )}
+                </Typography>
+              </div>
+            </div>
+            <Divider className={classes.divider} />
+            <div className={classes.vettingRow}>
+              <div className={classes.vettingColumn}>
+                <Typography variant="subtitle2" component="h3" className="mb-3">
+                  {t('Scaling')}
+                </Typography>
+                <Typography variant="body2" component="p" className="mb-3">
+                  {t('{Definition speak with business partners}')}
+                </Typography>
+                <Typography
+                  variant="caption"
+                  component="p"
+                  color="textSecondary"
+                >
+                  {t('(e.g. Factor analysis)')}
+                </Typography>
+              </div>
+            </div>
+            <Divider className={classes.divider} />
+            <div className={classes.vettingRow}>
+              <div className={classes.vettingColumn}>
+                <Typography variant="subtitle2" component="h3" className="mb-3">
+                  {t('Graphs')}
+                </Typography>
+                <Typography variant="body2" component="p" className="mb-3">
+                  {t('{Definition speak with business partners}')}
+                </Typography>
+                <Typography
+                  variant="caption"
+                  component="p"
+                  color="textSecondary"
+                >
+                  {t('(e.g. Histograms)')}
+                </Typography>
+              </div>
+            </div>
+            <Divider className={classes.divider} />
+            <div className={classes.vettingRow}>
+              <div className={classes.vettingColumn}>
+                <Typography variant="subtitle2" component="h3" className="mb-3">
+                  {t('Multivariable regression analysis')}
+                </Typography>
+                <Typography variant="body2" component="p" className="mb-3">
+                  {t('{Definition speak with business partners}')}
+                </Typography>
+                <Typography
+                  variant="caption"
+                  component="p"
+                  color="textSecondary"
+                >
+                  {t('(e.g. Logistic regression, OLS, poisson, probit, tobit)')}
+                </Typography>
+              </div>
+            </div>
+            <Divider className={classes.divider} />
+            <div className={classes.vettingRow}>
+              <div className={classes.vettingColumn}>
+                <Typography variant="subtitle2" component="h3" className="mb-3">
+                  {t('Complex modeling')}
+                </Typography>
+                <Typography variant="body2" component="p" className="mb-3">
+                  {t('{Definition speak with business partners}')}
+                </Typography>
+                <Typography
+                  variant="caption"
+                  component="p"
+                  color="textSecondary"
+                >
+                  {t(
+                      '(e.g. Event history analysis, fixed effects models, growth analysis, hierarchical linear modeling, random effects models, simultaneous-equations models, structural equation modeling, survival analysis)',
+                  )}
+                </Typography>
+              </div>
+            </div>
+          </div>
+        </DialogContent>
+        <Divider />
+        <DialogActions>
+          <Button
+            type="submit"
+            variant="contained"
+            color="primary"
+            className={classes.footerBtns}
+            onClick={(e) => {
+              toggleDialog(e);
+            }}
+            onKeyPress={(e) => {
+              e.stopPropagation();
+              if (e.key === 'Enter') {
+                toggleDialog(e);
+              }
+            }}
+          >
+            {t('Close')}
+          </Button>
+        </DialogActions>
+      </Dialog>
+    </React.Fragment>
+  );
+}
+
+// ////////////////////////////////////////// ADD FILE
+export function DialogAddFile(props) {
+  const classes = useStyles();
+  const {t} = useTranslation();
+  const {toggleDialog, open, fileFunction} = props;
+  const [snackbar, setSnackbar] = React.useState({
+    snackbarAdd: false,
+    snackbarEdit: false,
+  });
+  const [state, setState] = React.useState({
+    filePath: {
+      value: '',
+      errorText: '',
+      invalid: '',
+      commands: '',
+      helperText: '',
+    },
+    fileNotes: {
+      text: '',
+      errorText: '',
+      invalid: '',
+      commands: '',
+      helperText: '',
+    },
+  });
+
+  const handleClick = (e) => {
+    e.stopPropagation();
+  };
+
+  const snackbarOpen = (state) => {
+    setSnackbar({...snackbar, [state]: true});
+  };
+
+  const snackbarClose = (state) => {
+    setSnackbar({...snackbar, [state]: false});
+  };
+
+  const handleSelectChange = (event) => {
+    const name = event.target.name;
+    const val = event.target.value;
+    setState({
+      ...state,
+      [name]: {
+        ...state[name],
+        value: val,
+      },
+    });
+  };
+
+  const handleChange = (event) => {
+    const name = event.target.name;
+    const val = event.target.value;
+    setState({
+      ...state,
+      [name]: {
+        ...state[name],
+        text: val,
+      },
+    });
+  };
+
+  return (
+    <React.Fragment>
+      <Dialog
+        onClose={(e) => {
+          toggleDialog(e);
+        }}
+        aria-labelledby="dashboard-dialog-title"
+        open={open}
+        className={classes.root}
+        scroll="paper"
+        disableBackdropClick
+        onClick={handleClick}
+        onKeyPress={(e) => {
+          if (e.key === 'Enter') {
+            e.preventDefault();
+            e.stopPropagation();
+          }
+        }}
+      >
+        <DialogTitle id="dashboard-dialog-title">
+          <div className={classes.vettingContainerTitle}>
+            <Typography variant="h6" component="h2">
+              {fileFunction === 'view' ?
+                t('View file for support') :
+                fileFunction === 'edit' ?
+                t('Edit file for support') :
+                t('Add file for support')}
+            </Typography>
+            <IconButton
+              id="dialog-close"
+              onClick={toggleDialog}
+              edge="end"
+              aria-label={t('Add file - close')}
+              onKeyPress={(e) => {
+                e.preventDefault();
+                e.stopPropagation();
+                if (e.key === 'Enter') {
+                  toggleDialog(e);
+                }
+              }}
+            >
+              <CloseIcon />
+            </IconButton>
+          </div>
+        </DialogTitle>
+        <Divider />
+        <DialogContent>
+          <div className={classes.vettingSection}>
+            <div className={classes.vettingRow}>
+              <div className={classes.vettingColumn}>
+                <Typography variant="subtitle2" component="h3">
+                  {t('Select {supportFileType} file')}
+                </Typography>
+              </div>
+            </div>
+            <div className={classes.vettingRow}>
+              <div className={classes.vettingColumn}>
+                <FormControl
+                  margin="dense"
+                  required
+                  variant="outlined"
+                  fullWidth
+                >
+                  <InputLabel id="file-path-select-label">File path</InputLabel>
+                  <Select
+                    label={t('File path')}
+                    labelId="file-path-select-label"
+                    id="filePath"
+                    name="filePath"
+                    value={state.filePath.value}
+                    onChange={handleSelectChange}
+                    required
+                  >
+                    <MenuItem value="">None</MenuItem>
+                    <MenuItem value={'spreadsheet1'}>spreadsheet1.xls</MenuItem>
+                    <MenuItem value={'spreadsheet2'}>spreadsheet2.doc</MenuItem>
+                    <MenuItem value={'spreadsheet3'}>spreadsheet3.xls</MenuItem>
+                  </Select>
+                </FormControl>
+              </div>
+            </div>
+
+            <div className={classes.vettingRow}>
+              <div className={classes.vettingColumn}>
+                <TextField
+                  className={classes.inputMargin}
+                  margin="dense"
+                  id="fileNotes"
+                  name="fileNotes"
+                  label={t('Notes')}
+                  variant="outlined"
+                  fullWidth
+                  required
+                  multiline
+                  onChange={handleChange}
+                  value={state.fileNotes.text}
+                  error={Boolean(state.fileNotes.errorText)}
+                  helperText={state.fileNotes.errorText}
+                />
+              </div>
+            </div>
+          </div>
+        </DialogContent>
+        <Divider />
+        {fileFunction === 'edit' ? (
+          <DialogActions>
+            <Button
+              variant="outlined"
+              color="primary"
+              onClick={(e) => {
+                toggleDialog(e);
+              }}
+              className={classes.footerBtns}
+              onKeyPress={(e) => {
+                e.preventDefault();
+                e.stopPropagation();
+                if (e.key === 'Enter') {
+                  toggleDialog(e);
+                }
+              }}
+            >
+              {t('Cancel')}
+            </Button>
+            <Button
+              type="submit"
+              variant="contained"
+              color="primary"
+              className={classes.footerBtns}
+              onClick={(e) => {
+                toggleDialog(e);
+                snackbarOpen('snackbarEdit');
+              }}
+              onKeyPress={(e) => {
+                e.stopPropagation();
+                if (e.key === 'Enter') {
+                  toggleDialog(e);
+                }
+              }}
+            >
+              {t('Update')}
+            </Button>
+          </DialogActions>
+        ) : fileFunction === 'add' ? (
+          <DialogActions>
+            <Button
+              variant="outlined"
+              color="primary"
+              onClick={(e) => {
+                toggleDialog(e);
+              }}
+              className={classes.footerBtns}
+              onKeyPress={(e) => {
+                e.preventDefault();
+                e.stopPropagation();
+                if (e.key === 'Enter') {
+                  toggleDialog(e);
+                }
+              }}
+            >
+              {t('Cancel')}
+            </Button>
+            <Button
+              type="submit"
+              variant="contained"
+              color="primary"
+              className={classes.footerBtns}
+              onClick={(e) => {
+                toggleDialog(e);
+                snackbarOpen('snackbarAdd');
+              }}
+              onKeyPress={(e) => {
+                e.stopPropagation();
+                if (e.key === 'Enter') {
+                  toggleDialog(e);
+                }
+              }}
+            >
+              {t('Add')}
+            </Button>
+          </DialogActions>
+        ) : (
+          <DialogActions>
+            <Button
+              type="submit"
+              variant="contained"
+              color="primary"
+              className={classes.footerBtns}
+              onClick={(e) => {
+                toggleDialog(e);
+              }}
+              onKeyPress={(e) => {
+                e.stopPropagation();
+                if (e.key === 'Enter') {
+                  toggleDialog(e);
+                }
+              }}
+            >
+              {t('Close')}
+            </Button>
+          </DialogActions>
+        )}
+      </Dialog>
+      {/* Add supporting file snackbar */}
+      <SnackbarAddSupportFile
+        open={snackbar.snackbarAdd}
+        handleClose={() => snackbarClose('snackbarAdd')}
+      />
+      {/* Edit supporting file snackbar */}
+      <SnackbarUpdateSupportFile
+        open={snackbar.snackbarEdit}
+        handleClose={() => snackbarClose('snackbarEdit')}
+      />
     </React.Fragment>
   );
 }

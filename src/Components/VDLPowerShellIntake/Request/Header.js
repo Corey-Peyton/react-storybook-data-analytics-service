@@ -1,12 +1,8 @@
 import React from 'react';
-import {
-  AppBar,
-  Toolbar,
-} from '@material-ui/core';
+import {AppBar, Toolbar} from '@material-ui/core';
 import {makeStyles} from '@material-ui/styles';
-import BrandingStatsCan from '../../Components/Headers/BrandingStatsCan';
-import Language from '../../Components/Headers/Language';
-
+import BrandingStatsCan from '../../../Components/Headers/BrandingStatsCan';
+import Language from '../../../Components/Headers/Language';
 
 const defaultStyles = makeStyles((theme) => ({
   appBar: {

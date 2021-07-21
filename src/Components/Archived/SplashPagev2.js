@@ -4,8 +4,8 @@ import {Link as RouterLink, withRouter} from 'react-router-dom';
 import {Button, Divider, Grid, Paper} from '@material-ui/core';
 import {makeStyles} from '@material-ui/core/styles';
 
-import {XS_SCREEN} from '../Theme/constants';
-import CenteredFooter from './Footers/CenteredFooter';
+import {XS_SCREEN} from '../../Theme/constants';
+import CenteredFooter from '../Footers/CenteredFooter';
 
 const useStyles = makeStyles((theme) => ({
   container: {
@@ -47,9 +47,9 @@ const useStyles = makeStyles((theme) => ({
     left: 0,
     height: '100%',
     [theme.breakpoints.down('xs')]: {
-      'display': 'flex',
-      'justifyContent': 'flex-start',
-      'background': theme.palette.common.white,
+      display: 'flex',
+      justifyContent: 'flex-start',
+      background: theme.palette.common.white,
     },
   },
   splashContent: {
@@ -110,11 +110,7 @@ function SplashPage(props) {
           </div>
           <Divider className={classes.splashDivider} />
           <div className={classes.container}>
-            <Grid
-              container
-              justify="space-between"
-              alignItems="center"
-            >
+            <Grid container justify="space-between" alignItems="center">
               <Grid item className={classes.splashBtns}>
                 <Button
                   variant="contained"
@@ -122,7 +118,7 @@ function SplashPage(props) {
                   component={RouterLink}
                   to="/home"
                 >
-                English
+                  English
                 </Button>
               </Grid>
               <Grid item className={classes.splashBtns}>

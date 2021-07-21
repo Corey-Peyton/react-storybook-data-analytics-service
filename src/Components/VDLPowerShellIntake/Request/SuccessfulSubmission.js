@@ -7,8 +7,8 @@ import {Button, Typography, Paper, Container} from '@material-ui/core';
 import CloseIcon from '@material-ui/icons/Close';
 import Collapse from '@material-ui/core/Collapse';
 import Header from './Header';
-import Footer from '../VettingApp/CommonComponents/Footer';
-import {FOOT_H, HEAD_H_XS} from '../../Theme/constants';
+import Footer from '../../VettingApp/CommonComponents/Footer';
+import {FOOT_H, HEAD_H_XS} from '../../../Theme/constants';
 
 const useStyles = makeStyles((theme) => ({
   root: {
