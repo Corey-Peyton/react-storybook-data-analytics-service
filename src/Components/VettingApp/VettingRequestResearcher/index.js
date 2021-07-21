@@ -40,19 +40,15 @@ const useStyles = makeStyles((theme) => ({
     background: theme.palette.grey[100],
     paddingBottom: theme.spacing(6),
   },
-  divider: {
-    margin: theme.spacing(3, 0),
-  },
-  dividercutcopypaste: {
-    marginBottom: theme.spacing(3),
-    marginTop: theme.spacing(3),
-  },
   paper: {
     maxWidth: '1280px',
     margin: 'auto',
     boxSizing: 'border-box',
     padding: theme.spacing(6),
     marginTop: theme.spacing(3),
+  },
+  maxWidth640: {
+    maxWidth: '640px',
   },
   title: {
     flexGrow: 1,
@@ -117,7 +113,7 @@ const useStyles = makeStyles((theme) => ({
 function getSteps() {
   return [
     'Request details',
-    'Output details',
+    'Files for output',
     'Residual disclosure',
     'Additional information',
   ];
@@ -358,7 +354,7 @@ function VettingRequestResearcher(props) {
                 </Grid>
               </Grid>
             </Grid>
-            <Divider className={classes.divider} />
+            <Divider className="mt-3 mb-3" />
             <div className={classes.stepperContainer}>
               {state.activeStep !== 0 && (
                 <Button
@@ -413,71 +409,57 @@ function VettingRequestResearcher(props) {
                 </Button>
               )}
             </div>
-            <Divider className={classes.dividercutcopypaste} />
+            <Divider className="mt-3 mb-3" />
             <CutCopyPasteAlert />
-            <div>
-              {allStepsCompleted() ? (
-                <div>
-                  <Typography className={classes.instructions}>
-                    All steps completed - you&apos;re finished
-                  </Typography>
-                  <Button onClick={handleReset}>Reset</Button>
-                </div>
-              ) : (
-                <div>
-                  <Grid container justify="center" className="mb-4">
-                    <Grid item xs={6}>
-                      {getStepContent(state.activeStep)}
+            {/* What is this "allStepsCompleted"? Can we remove it?*/}
+            {allStepsCompleted() ? (
+              <div>
+                <Typography className={classes.instructions}>
+                  All steps completed - you&apos;re finished
+                </Typography>
+                <Button onClick={handleReset}>Reset</Button>
+              </div>
+            ) : (
+              <Grid justify="center" container>
+                <Grid className={classes.maxWidth640} container>
+                  <Grid item>{getStepContent(state.activeStep)}</Grid>
+                  <Grid xs={12} item>
+                    <Divider className="mb-3" />
+                  </Grid>
+                  <Grid justify="flex-end" container>
+                    <Grid item>
+                      {state.activeStep !== 0 && (
+                        <Button
+                          variant="outlined"
+                          color="primary"
+                          className="mr-2"
+                          onClick={handleBack}
+                        >
+                          Back
+                        </Button>
+                      )}
+                      {state.activeStep === getSteps().length - 1 ? (
+                        <Button
+                          variant="contained"
+                          color="primary"
+                          onClick={handleClick}
+                        >
+                          Submit
+                        </Button>
+                      ) : (
+                        <Button
+                          variant="contained"
+                          color="primary"
+                          onClick={handleComplete}
+                        >
+                          Next
+                        </Button>
+                      )}
                     </Grid>
                   </Grid>
-                </div>
-              )}
-            </div>
-            <Grid
-              container
-              justify={state.activeStep === 0 ? 'flex-end' : 'space-between'}
-              className={classes.navButtons}
-            >
-              {state.activeStep !== 0 && (
-                <Grid item>
-                  <Button
-                    variant="contained"
-                    color="primary"
-                    className={classes.button}
-                    onClick={handleBack}
-                  >
-                    Back
-                  </Button>
                 </Grid>
-              )}
-              {state.activeStep === getSteps().length - 1 ? (
-                <Grid item>
-                  <Button
-                    variant="contained"
-                    color="primary"
-                    className={classes.button}
-                    onClick={handleClick}
-                  >
-                    Submit request
-                  </Button>
-                  <SnackbarSubmitRequest
-                    open={openSnackbar}
-                    handleClose={snackbarhandleClose}
-                  />
-                </Grid>
-              ) : (
-                <Grid item>
-                  <Button
-                    variant="contained"
-                    color="primary"
-                    className={classes.button}
-                    onClick={handleComplete}
-                  >
-                    Next
-                  </Button>
-                </Grid>
-              )}
-            </Grid>
+              </Grid>
+            )}
           </Paper>
           <FloatingSupportButton form />
         </Container>
@@ -486,6 +468,11 @@ function VettingRequestResearcher(props) {
       <DialogRequesterDetails
         open={state.dialogRequesterDetails}
         toggleDialog={toggleRequesterDetails}
+      />
+      {/* Submit request snackbar */}
+      <SnackbarSubmitRequest
+        open={openSnackbar}
+        handleClose={snackbarhandleClose}
       />
     </React.Fragment>
   );

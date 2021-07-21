@@ -17,7 +17,8 @@ export default {
 const useStyles = makeStyles((theme) => ({
   container: {
     margin: 'auto',
-    width: '500px',
+    maxWidth: '500px',
+    width: '100%',
   },
 }));
 
